@@ -13,6 +13,15 @@ export const ALWAYS_SHARED_FILES = [
   'components/icons/icon.tsx',
   'components/icons/icon-context.tsx',
   'components/icons/icon-map.ts',
+  'components/inspector/inspector.tsx',
+  'components/inspector/inspector-context.tsx',
+  'components/inspector/inspector-toggle.tsx',
+  'components/inspector/inspector-overlay.tsx',
+  'components/inspector/inspector-panel.tsx',
+  'components/inspector/use-element-tracking.ts',
+  'components/inspector/style-reader.ts',
+  'components/inspector/find-target.ts',
+  'components/inspector/use-mounted.ts',
 ]
 
 export const ALWAYS_NEXT_FILES = [

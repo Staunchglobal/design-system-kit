@@ -93,29 +93,32 @@ export function generateDesignSystemPage(opts: {
     : `/** Mount this wherever your router renders \`/design-system\`. */\n`
 
   return `${metadataImport}import { SidebarNav } from '${sidebarImport}'
+import { Inspector } from '@/components/inspector/inspector'
 ${imports}
 
 ${metadataBlock}export default function DesignSystemPage() {
   return (
-    <div className="bg-background text-foreground mx-auto flex w-full max-w-[1400px] flex-1 gap-10 px-6 py-10 lg:px-10">
-      <aside className="hidden w-56 shrink-0 lg:block">
-        <div className="sticky top-10 max-h-[calc(100vh-5rem)] overflow-y-auto pb-10">
-          <SidebarNav />
-        </div>
-      </aside>
+    <Inspector>
+      <div className="bg-background text-foreground mx-auto flex w-full max-w-[1400px] flex-1 gap-10 px-6 py-10 lg:px-10">
+        <aside className="hidden w-56 shrink-0 lg:block">
+          <div className="sticky top-10 max-h-[calc(100vh-5rem)] overflow-y-auto pb-10">
+            <SidebarNav />
+          </div>
+        </aside>
 
-      <main className="min-w-0 flex-1">
-        <header className="space-y-2 pb-10">
-          <h1 className="text-3xl font-semibold tracking-tight">Design System</h1>
-          <p className="text-muted-foreground max-w-2xl text-sm">
-            Every shadcn/ui component installed in this app, rendered with its full range of
-            variants, sizes, and states for visual QA.
-          </p>
-        </header>
+        <main className="min-w-0 flex-1">
+          <header className="space-y-2 pb-10">
+            <h1 className="text-3xl font-semibold tracking-tight">Design System</h1>
+            <p className="text-muted-foreground max-w-2xl text-sm">
+              Every shadcn/ui component installed in this app, rendered with its full range of
+              variants, sizes, and states for visual QA.
+            </p>
+          </header>
 
 ${renders}
-      </main>
-    </div>
+        </main>
+      </div>
+    </Inspector>
   )
 }
 `
