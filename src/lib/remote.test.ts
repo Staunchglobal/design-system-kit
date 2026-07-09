@@ -1,3 +1,6 @@
+import fs from 'node:fs'
+import os from 'node:os'
+import path from 'node:path'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   fetchRequiredTemplateText,
@@ -133,5 +136,38 @@ describe('mapWithConcurrency', () => {
 
   it('handles an empty item list without error', async () => {
     expect(await mapWithConcurrency([], 5, async () => 1)).toEqual([])
+  })
+})
+
+describe('local shadowing (DESIGN_KIT_LOCAL_TEMPLATES)', () => {
+  it('reads a locally-present file instead of fetching, and falls back to the CDN when absent', async () => {
+    const localRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'design-kit-local-'))
+    fs.mkdirSync(path.join(localRoot, 'template-shared'), { recursive: true })
+    fs.writeFileSync(path.join(localRoot, 'template-shared', 'present.tsx'), 'export const local = true')
+
+    const prevEnv = process.env.DESIGN_KIT_LOCAL_TEMPLATES
+    process.env.DESIGN_KIT_LOCAL_TEMPLATES = localRoot
+    vi.resetModules()
+    try {
+      const remote = await import('./remote.js')
+      const base = remote.cdnBaseFor('template-shared')
+
+      const fetchMock = vi.fn().mockResolvedValue(jsonResponse({ text: 'from cdn' }))
+      vi.stubGlobal('fetch', fetchMock)
+
+      // Present locally — read straight off disk, no network call at all.
+      const present = await remote.fetchTemplateText(remote.remoteUrl(base, 'present.tsx'))
+      expect(present).toBe('export const local = true')
+      expect(fetchMock).not.toHaveBeenCalled()
+
+      // Absent locally — falls through to the (mocked) CDN.
+      const absent = await remote.fetchTemplateText(remote.remoteUrl(base, 'missing.tsx'))
+      expect(absent).toBe('from cdn')
+      expect(fetchMock).toHaveBeenCalledTimes(1)
+    } finally {
+      process.env.DESIGN_KIT_LOCAL_TEMPLATES = prevEnv
+      fs.rmSync(localRoot, { recursive: true, force: true })
+      vi.resetModules()
+    }
   })
 })

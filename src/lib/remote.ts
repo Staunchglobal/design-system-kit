@@ -18,11 +18,15 @@ export const TEMPLATES_REPO = 'Staunchglobal/design-system-kit'
 declare const __TEMPLATES_REF__: string
 export const TEMPLATES_REF = typeof __TEMPLATES_REF__ !== 'undefined' ? __TEMPLATES_REF__ : 'main'
 
+const CDN_PREFIX = `https://cdn.jsdelivr.net/gh/${TEMPLATES_REPO}@${TEMPLATES_REF}/`
+
 /**
  * Set by CLI maintainers to a local checkout root (the repo dir containing
  * template-shared/, template-next/, etc.) to develop against local disk instead of
  * the network — avoids a push-and-wait-for-the-CDN loop while iterating. Never set
- * by end users; not part of the public interface.
+ * by end users; not part of the public interface. A local file always wins when
+ * present (see localShadowPath below); the CDN is only used when it's absent, so a
+ * partial local checkout (only the files you're actively editing) works fine.
  */
 const LOCAL_TEMPLATES_ROOT = process.env.DESIGN_KIT_LOCAL_TEMPLATES
 
@@ -31,15 +35,20 @@ export function isRemoteUrl(base: string): boolean {
 }
 
 export function cdnBaseFor(templateDirName: string): string {
-  if (LOCAL_TEMPLATES_ROOT) {
-    return `${LOCAL_TEMPLATES_ROOT}/${templateDirName}`
-  }
-  return `https://cdn.jsdelivr.net/gh/${TEMPLATES_REPO}@${TEMPLATES_REF}/${templateDirName}`
+  return `${CDN_PREFIX}${templateDirName}`
 }
 
-/** Joins a base (URL or local path, per cdnBaseFor) with segments, always with `/`. */
+/** Joins a base (a CDN URL from cdnBaseFor) with segments, always with `/`. */
 export function remoteUrl(base: string, ...segments: string[]): string {
   return [base, ...segments].join('/').replace(/([^:])\/{2,}/g, '$1/')
+}
+
+/** If DESIGN_KIT_LOCAL_TEMPLATES is set and this CDN url's repo-relative path exists
+ *  under it, returns that local path — local always takes priority over the CDN. */
+function localShadowPath(url: string): string | null {
+  if (!LOCAL_TEMPLATES_ROOT || !url.startsWith(CDN_PREFIX)) return null
+  const localPath = `${LOCAL_TEMPLATES_ROOT}/${url.slice(CDN_PREFIX.length)}`
+  return fs.existsSync(localPath) ? localPath : null
 }
 
 async function sleep(ms: number): Promise<void> {
@@ -55,6 +64,9 @@ async function sleep(ms: number): Promise<void> {
  * are exhausted, so a real network problem surfaces as an actionable CLI message.
  */
 export async function fetchTemplateText(url: string, { retries = 2 } = {}): Promise<string | null> {
+  const shadow = localShadowPath(url)
+  if (shadow) return fs.readFileSync(shadow, 'utf8')
+
   if (!isRemoteUrl(url)) {
     return fs.existsSync(url) ? fs.readFileSync(url, 'utf8') : null
   }
@@ -95,6 +107,9 @@ export async function fetchRequiredTemplateText(url: string): Promise<string> {
 
 /** HEAD request for a file's byte size — used only by `--report`, so a full GET isn't needed. */
 export async function fetchTemplateSize(url: string): Promise<number | null> {
+  const shadow = localShadowPath(url)
+  if (shadow) return fs.statSync(shadow).size
+
   if (!isRemoteUrl(url)) {
     return fs.existsSync(url) ? fs.statSync(url).size : null
   }
