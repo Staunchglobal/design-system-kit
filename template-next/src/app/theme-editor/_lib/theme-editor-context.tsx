@@ -77,10 +77,15 @@ export function ThemeEditorProvider({
     }
     return set
   }, [manifest])
+  // Colors/typography that get saved are folded into the regular manifest-parsed
+  // variable set on the next load (still fully editable, just no longer tracked here).
+  // Fonts aren't: Save rewrites tokens/fonts.css wholesale from this state, so starting
+  // empty after a reload would silently delete every previously saved font on the next
+  // Save. Seed from the manifest (recovered from tokens/fonts.css) instead.
   const [values, setValues] = React.useState<Record<string, string>>(() => ({ ...baseline }))
   const [customColors, setCustomColors] = React.useState<CustomColor[]>([])
   const [customTypography, setCustomTypography] = React.useState<CustomTypography[]>([])
-  const [customFonts, setCustomFonts] = React.useState<CustomFont[]>([])
+  const [customFonts, setCustomFonts] = React.useState<CustomFont[]>(() => manifest.customFonts ?? [])
   const [iconMap, setIconMap] = React.useState<Record<string, string>>(() => ({
     ...defaultIconMap,
   }))
@@ -220,7 +225,9 @@ ${typoRules}`
     setValues({ ...baseline })
     setCustomColors([])
     setCustomTypography([])
-    setCustomFonts([])
+    // Back to what's on disk, not empty — an empty array here would delete every
+    // previously saved font on the very next Save (see the state init above).
+    setCustomFonts(manifest.customFonts ?? [])
     setIconMap({ ...defaultIconMap })
     setDirty(false)
     const host = document.querySelector('[data-theme-editor]') as HTMLElement | null

@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
-import { inferScope, parseVars } from './generate-theme-manifest.mjs'
+import { inferScope, parseCustomFonts, parseVars } from './generate-theme-manifest.mjs'
 
 describe('inferScope', () => {
   it('does not attribute a variant to a size-only rule that merely follows a variant block', () => {
@@ -69,6 +69,60 @@ describe('inferScope', () => {
     expect(inferScope(css, css.indexOf('--drawer-content-radius'))).toBe(
       'drawer-content/vaul-drawer-direction=top|bottom'
     )
+  })
+})
+
+describe('parseCustomFonts', () => {
+  it('returns nothing for the default fonts.css with no custom fonts', () => {
+    const css = `:root {\n  --font-heading: var(--font-sans);\n}`
+    expect(parseCustomFonts(css)).toEqual([])
+  })
+
+  it('recovers a file font from its @font-face block — id round-trips exactly', () => {
+    const css = `@font-face {
+  font-family: 'my-brand-font';
+  src: url('/fonts/my-brand-font.woff2') format('woff2');
+  font-display: swap;
+}
+:root {
+  --font-heading: var(--font-sans);
+  --font-my-brand-font: 'my-brand-font', sans-serif;
+}`
+    expect(parseCustomFonts(css)).toEqual([
+      { id: 'my-brand-font', source: 'file', fileName: 'my-brand-font.woff2', path: '/fonts/my-brand-font.woff2' },
+    ])
+  })
+
+  it('recovers a google font, matching the @import family back to its --font-<id> var', () => {
+    // The id (chosen by the user when adding the font) isn't in the @import URL at all —
+    // only the family is. Without matching it back via the --font-<id> var, a reload
+    // would either lose the font or regenerate it under a different, wrong id.
+    const css = `@import url('https://fonts.googleapis.com/css2?family=Fira%20Code:wght@400;700&display=swap');
+:root {
+  --font-heading: var(--font-sans);
+  --font-code: 'Fira Code', sans-serif;
+}`
+    expect(parseCustomFonts(css)).toEqual([
+      { id: 'code', source: 'google', googleFamily: 'Fira Code', weights: '400,700' },
+    ])
+  })
+
+  it('recovers multiple fonts of both kinds together', () => {
+    const css = `@import url('https://fonts.googleapis.com/css2?family=Fira%20Code:wght@400;700&display=swap');
+@font-face {
+  font-family: 'my-brand-font';
+  src: url('/fonts/my-brand-font.woff2') format('woff2');
+  font-display: swap;
+}
+:root {
+  --font-heading: var(--font-sans);
+  --font-code: 'Fira Code', sans-serif;
+  --font-my-brand-font: 'my-brand-font', sans-serif;
+}`
+    const fonts = parseCustomFonts(css)
+    expect(fonts).toHaveLength(2)
+    expect(fonts.find((f) => f.source === 'file').id).toBe('my-brand-font')
+    expect(fonts.find((f) => f.source === 'google').id).toBe('code')
   })
 })
 

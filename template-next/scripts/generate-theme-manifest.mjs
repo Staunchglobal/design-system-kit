@@ -157,11 +157,50 @@ export function sectionTitle(css, fallback) {
   return m ? m[1].trim() : fallback
 }
 
+/**
+ * Recover the custom font list from tokens/fonts.css so the theme editor can
+ * rehydrate them on reload — without this, `customFonts` state always starts
+ * empty, and a subsequent Save would overwrite this file with an empty one,
+ * silently deleting any font added in a previous session.
+ *
+ * File fonts round-trip exactly (their @font-face `font-family` IS the id).
+ * Google fonts don't carry their id in the @import URL, so it's recovered by
+ * matching the @import's family against the `--font-<id>: 'family', ...;` var
+ * that `writeFontsCss` always writes alongside it.
+ */
+export function parseCustomFonts(css) {
+  const fonts = []
+
+  const faceRe = /@font-face\s*\{\s*font-family:\s*'([^']+)';\s*src:\s*url\('([^']+)'\)/g
+  let m
+  while ((m = faceRe.exec(css))) {
+    fonts.push({ id: m[1], source: 'file', fileName: path.basename(m[2]), path: m[2] })
+  }
+
+  const idByFamily = new Map()
+  const varRe = /--font-([a-zA-Z0-9_-]+):\s*'([^']+)',\s*sans-serif;/g
+  while ((m = varRe.exec(css))) {
+    idByFamily.set(m[2], m[1])
+  }
+
+  const importRe =
+    /@import url\('https:\/\/fonts\.googleapis\.com\/css2\?family=([^:]+):wght@([^&]+)&display=swap'\);/g
+  while ((m = importRe.exec(css))) {
+    const family = decodeURIComponent(m[1])
+    const weights = m[2].replace(/;/g, ',')
+    const id = idByFamily.get(family) ?? family.toLowerCase().replace(/\s+/g, '-')
+    fonts.push({ id, source: 'google', googleFamily: family, weights })
+  }
+
+  return fonts
+}
+
 // Guarded so importing this module (e.g. from a test) doesn't try to read a
 // theme dir that may not exist relative to the importer's cwd.
 const isMain = import.meta.url === `file://${process.argv[1]}`
 if (isMain) {
   const groups = []
+  let customFonts = []
 
   const tokenFiles = [
     ['colors', 'Colors', 'tokens/colors.css'],
@@ -180,6 +219,7 @@ if (isMain) {
       file: `theme/${rel}`,
       variables: parseVars(css, id),
     })
+    if (id === 'fonts') customFonts = parseCustomFonts(css)
   }
 
   const compDir = path.join(themeRoot, 'components')
@@ -198,7 +238,7 @@ if (isMain) {
     })
   }
 
-  const manifest = { version: 1, groups }
+  const manifest = { version: 1, groups, customFonts }
   fs.writeFileSync(
     path.join(themeRoot, 'theme.manifest.json'),
     JSON.stringify(manifest, null, 2) + '\n'

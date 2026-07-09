@@ -24,6 +24,9 @@ export type ThemeGroup = {
 export type ThemeManifest = {
   version: number
   groups: ThemeGroup[]
+  /** Recovered from tokens/fonts.css by generate-theme-manifest.mjs, so a previously
+   *  saved custom font survives a reload instead of the editor starting with none. */
+  customFonts?: CustomFont[]
 }
 
 export type CustomColor = { name: string; hex: string }
