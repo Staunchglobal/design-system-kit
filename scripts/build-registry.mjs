@@ -14,7 +14,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const root = path.dirname(fileURLToPath(import.meta.url)) + '/..'
+const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
 const uiDir = path.join(root, 'template-shared/src/components/ui')
 const navPath = path.join(root, 'template-next/src/app/design-system/_lib/nav.ts')
 const sectionsDir = path.join(root, 'template-next/src/app/design-system/_sections')

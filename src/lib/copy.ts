@@ -26,7 +26,10 @@ export function copyTemplateDir(srcDir: string, destDir: string): CopyResult {
   const skipped: string[] = []
 
   for (const file of walk(srcDir)) {
-    const rel = path.relative(srcDir, file)
+    // path.relative returns backslash-separated paths on Windows — normalize to forward slashes
+    // so these rel paths stay consistent with copySelectedFiles' (always forward-slash, since
+    // its inputs are string literals) for anything that keys off them, e.g. fileHashes.
+    const rel = path.relative(srcDir, file).split(path.sep).join('/')
     const dest = path.join(destDir, rel)
     if (fs.existsSync(dest)) {
       skipped.push(rel)

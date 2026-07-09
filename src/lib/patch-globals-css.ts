@@ -1,4 +1,5 @@
 import fs from 'node:fs'
+import path from 'node:path'
 import postcss from 'postcss'
 import type { AtRule, ChildNode, Root } from 'postcss'
 
@@ -36,7 +37,7 @@ export type GlobalsCssPatchResult =
  */
 export function patchGlobalsCss(filePath: string, templateContent: string): GlobalsCssPatchResult {
   if (!fs.existsSync(filePath)) {
-    fs.mkdirSync(filePath.replace(/\/[^/]+$/, ''), { recursive: true })
+    fs.mkdirSync(path.dirname(filePath), { recursive: true })
     fs.writeFileSync(filePath, templateContent)
     return { action: 'created' }
   }
