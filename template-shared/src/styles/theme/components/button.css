@@ -73,7 +73,7 @@
 
 [data-slot='button'][data-variant='ghost'] {
   --button-bg: transparent;
-  --button-fg: inherit;
+  --button-fg: var(--foreground);
   --button-hover-bg: var(--muted);
   --button-hover-fg: var(--foreground);
   background-color: var(--button-bg);

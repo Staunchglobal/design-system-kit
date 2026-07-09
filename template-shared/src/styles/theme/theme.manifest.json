@@ -795,7 +795,7 @@
           "id": "colors:--overlay-bg:0",
           "name": "--overlay-bg",
           "value": "color-mix(in oklch, var(--neutral-950), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "root"
         },
@@ -955,7 +955,7 @@
           "id": "colors:--border:1",
           "name": "--border",
           "value": "color-mix(in oklch, var(--neutral-0), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 1,
           "scope": "dark"
         },
@@ -963,7 +963,7 @@
           "id": "colors:--input:1",
           "name": "--input",
           "value": "color-mix(in oklch, var(--neutral-0), transparent 85%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 1,
           "scope": "dark"
         },
@@ -1067,7 +1067,7 @@
           "id": "colors:--sidebar-border:1",
           "name": "--sidebar-border",
           "value": "color-mix(in oklch, var(--neutral-0), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 1,
           "scope": "dark"
         },
@@ -2243,7 +2243,7 @@
           "id": "accordion:--accordion-trigger-disabled-opacity:0",
           "name": "--accordion-trigger-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "accordion-trigger"
         },
@@ -2347,7 +2347,7 @@
           "id": "alert-dialog:--alert-dialog-content-ring-color:0",
           "name": "--alert-dialog-content-ring-color",
           "value": "color-mix(in oklch, var(--foreground), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "alert-dialog-content"
         },
@@ -2427,7 +2427,7 @@
           "id": "alert-dialog:--alert-dialog-footer-bg:0",
           "name": "--alert-dialog-footer-bg",
           "value": "color-mix(in oklch, var(--muted), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "alert-dialog-footer"
         },
@@ -2659,7 +2659,7 @@
           "id": "alert:--alert-destructive-description-fg:0",
           "name": "--alert-destructive-description-fg",
           "value": "color-mix(in oklch, var(--destructive), transparent 10%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "alert/variant=destructive"
         },
@@ -2731,7 +2731,7 @@
           "id": "aspect-ratio:--aspect-ratio-overflow:0",
           "name": "--aspect-ratio-overflow",
           "value": "visible",
-          "fieldType": "raw",
+          "fieldType": "overflow",
           "occurrence": 0,
           "scope": "default"
         }
@@ -2779,7 +2779,7 @@
           "id": "attachment:--attachment-hover-bg:0",
           "name": "--attachment-hover-bg",
           "value": "color-mix(in oklch, var(--muted), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "attachment"
         },
@@ -2787,7 +2787,7 @@
           "id": "attachment:--attachment-error-border-color:0",
           "name": "--attachment-error-border-color",
           "value": "color-mix(in oklch, var(--destructive), transparent 70%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "attachment/state=error"
         },
@@ -2795,7 +2795,7 @@
           "id": "attachment:--attachment-idle-border-style:0",
           "name": "--attachment-idle-border-style",
           "value": "dashed",
-          "fieldType": "raw",
+          "fieldType": "border-style",
           "occurrence": 0,
           "scope": "attachment/state=idle"
         },
@@ -2899,7 +2899,7 @@
           "id": "attachment:--attachment-media-error-bg:0",
           "name": "--attachment-media-error-bg",
           "value": "color-mix(in oklch, var(--destructive), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "attachment-media/ancestor-slot=attachment/state=error"
         },
@@ -2979,7 +2979,7 @@
           "id": "attachment:--attachment-description-error-fg:0",
           "name": "--attachment-description-error-fg",
           "value": "color-mix(in oklch, var(--destructive), transparent 20%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "attachment-description/ancestor-slot=attachment/state=error"
         },
@@ -3275,7 +3275,7 @@
           "id": "badge:--badge-border-color:0",
           "name": "--badge-border-color",
           "value": "transparent",
-          "fieldType": "raw",
+          "fieldType": "color-keyword",
           "occurrence": 0,
           "scope": "badge"
         },
@@ -3299,7 +3299,7 @@
           "id": "badge:--badge-link-hover-bg:0",
           "name": "--badge-link-hover-bg",
           "value": "color-mix(in oklch, var(--badge-bg), transparent 20%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "badge/variant=default"
         },
@@ -3323,7 +3323,7 @@
           "id": "badge:--badge-link-hover-bg:1",
           "name": "--badge-link-hover-bg",
           "value": "color-mix(in oklch, var(--badge-bg), transparent 20%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 1,
           "scope": "badge/variant=secondary"
         },
@@ -3331,7 +3331,7 @@
           "id": "badge:--badge-bg:2",
           "name": "--badge-bg",
           "value": "color-mix(in oklch, var(--destructive), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 2,
           "scope": "badge/variant=destructive"
         },
@@ -3347,7 +3347,7 @@
           "id": "badge:--badge-link-hover-bg:2",
           "name": "--badge-link-hover-bg",
           "value": "color-mix(in oklch, var(--destructive), transparent 80%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 2,
           "scope": "badge/variant=destructive"
         },
@@ -3467,7 +3467,7 @@
           "id": "breadcrumb:--breadcrumb-link-transition:0",
           "name": "--breadcrumb-link-transition",
           "value": "color 0.15s",
-          "fieldType": "raw",
+          "fieldType": "transition",
           "occurrence": 0,
           "scope": "breadcrumb-link"
         },
@@ -3579,7 +3579,7 @@
           "id": "bubble:--bubble-content-border-color:0",
           "name": "--bubble-content-border-color",
           "value": "transparent",
-          "fieldType": "raw",
+          "fieldType": "color-keyword",
           "occurrence": 0,
           "scope": "bubble-content"
         },
@@ -3603,7 +3603,7 @@
           "id": "bubble:--bubble-default-hover-bg:0",
           "name": "--bubble-default-hover-bg",
           "value": "color-mix(in oklch, var(--bubble-default-bg), transparent 20%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "bubble-content/ancestor-slot=bubble/variant=default"
         },
@@ -3627,7 +3627,7 @@
           "id": "bubble:--bubble-secondary-hover-bg:0",
           "name": "--bubble-secondary-hover-bg",
           "value": "color-mix(in oklch, var(--secondary), var(--foreground) 5%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "bubble-content/ancestor-slot=bubble/variant=secondary"
         },
@@ -3643,7 +3643,7 @@
           "id": "bubble:--bubble-muted-hover-bg:0",
           "name": "--bubble-muted-hover-bg",
           "value": "color-mix(in oklch, var(--muted), var(--foreground) 5%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "bubble-content/ancestor-slot=bubble/variant=muted"
         },
@@ -3739,7 +3739,7 @@
           "id": "bubble:--bubble-ghost-bg:0",
           "name": "--bubble-ghost-bg",
           "value": "transparent",
-          "fieldType": "raw",
+          "fieldType": "color-keyword",
           "occurrence": 0,
           "scope": "bubble-content/ancestor-slot=bubble/variant=ghost"
         },
@@ -3763,7 +3763,7 @@
           "id": "bubble:--bubble-destructive-bg:0",
           "name": "--bubble-destructive-bg",
           "value": "color-mix(in oklch, var(--destructive), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "bubble-content/ancestor-slot=bubble/variant=destructive"
         },
@@ -3779,7 +3779,7 @@
           "id": "bubble:--bubble-destructive-hover-bg:0",
           "name": "--bubble-destructive-hover-bg",
           "value": "color-mix(in oklch, var(--destructive), transparent 80%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "bubble-content/ancestor-slot=bubble/variant=destructive"
         },
@@ -3931,7 +3931,7 @@
           "id": "button:--button-transition:0",
           "name": "--button-transition",
           "value": "all 0.15s ease",
-          "fieldType": "raw",
+          "fieldType": "transition",
           "occurrence": 0,
           "scope": "button"
         },
@@ -3939,7 +3939,7 @@
           "id": "button:--button-disabled-opacity:0",
           "name": "--button-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "button"
         },
@@ -3979,7 +3979,7 @@
           "id": "button:--button-invalid-ring-color:0",
           "name": "--button-invalid-ring-color",
           "value": "color-mix(in oklch, var(--destructive), transparent 80%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "button"
         },
@@ -4003,7 +4003,7 @@
           "id": "button:--button-hover-bg:0",
           "name": "--button-hover-bg",
           "value": "color-mix(in oklch, var(--button-bg), transparent 20%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "button/variant=default"
         },
@@ -4067,7 +4067,7 @@
           "id": "button:--button-hover-bg:2",
           "name": "--button-hover-bg",
           "value": "color-mix(in oklch, var(--secondary), var(--foreground) 5%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 2,
           "scope": "button/variant=secondary"
         },
@@ -4075,15 +4075,15 @@
           "id": "button:--button-bg:3",
           "name": "--button-bg",
           "value": "transparent",
-          "fieldType": "raw",
+          "fieldType": "color-keyword",
           "occurrence": 3,
           "scope": "button/variant=ghost"
         },
         {
           "id": "button:--button-fg:3",
           "name": "--button-fg",
-          "value": "inherit",
-          "fieldType": "raw",
+          "value": "var(--foreground)",
+          "fieldType": "color-ref",
           "occurrence": 3,
           "scope": "button/variant=ghost"
         },
@@ -4107,7 +4107,7 @@
           "id": "button:--button-bg:4",
           "name": "--button-bg",
           "value": "color-mix(in oklch, var(--destructive), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 4,
           "scope": "button/variant=destructive"
         },
@@ -4123,7 +4123,7 @@
           "id": "button:--button-hover-bg:4",
           "name": "--button-hover-bg",
           "value": "color-mix(in oklch, var(--destructive), transparent 80%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 4,
           "scope": "button/variant=destructive"
         },
@@ -4131,7 +4131,7 @@
           "id": "button:--button-focus-border-color:1",
           "name": "--button-focus-border-color",
           "value": "color-mix(in oklch, var(--destructive), transparent 60%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 1,
           "scope": "button/variant=destructive"
         },
@@ -4139,7 +4139,7 @@
           "id": "button:--button-focus-ring-color:1",
           "name": "--button-focus-ring-color",
           "value": "color-mix(in oklch, var(--destructive), transparent 80%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 1,
           "scope": "button/variant=destructive"
         },
@@ -4147,7 +4147,7 @@
           "id": "button:--button-bg:5",
           "name": "--button-bg",
           "value": "transparent",
-          "fieldType": "raw",
+          "fieldType": "color-keyword",
           "occurrence": 5,
           "scope": "button/variant=link"
         },
@@ -4395,7 +4395,7 @@
           "id": "calendar:--cell-size:0",
           "name": "--cell-size",
           "value": "var(--calendar-cell-size)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "calendar"
         },
@@ -4403,7 +4403,7 @@
           "id": "calendar:--cell-radius:0",
           "name": "--cell-radius",
           "value": "var(--calendar-cell-radius)",
-          "fieldType": "raw",
+          "fieldType": "radius-ref",
           "occurrence": 0,
           "scope": "calendar"
         },
@@ -4483,7 +4483,7 @@
           "id": "calendar:--calendar-disabled-opacity:0",
           "name": "--calendar-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "calendar"
         },
@@ -4531,7 +4531,7 @@
           "id": "calendar:--calendar-focus-ring-color:0",
           "name": "--calendar-focus-ring-color",
           "value": "color-mix(in oklch, var(--ring), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "button/ancestor-slot=calendar/focused=true"
         }
@@ -4563,7 +4563,7 @@
           "id": "card:--card-ring-color:0",
           "name": "--card-ring-color",
           "value": "color-mix(in oklch, var(--foreground), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "card"
         },
@@ -4619,7 +4619,7 @@
           "id": "card:--card-header-padding-x:0",
           "name": "--card-header-padding-x",
           "value": "var(--card-spacing, 1rem)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "card-header"
         },
@@ -4627,7 +4627,7 @@
           "id": "card:--card-header-border-padding-bottom:0",
           "name": "--card-header-border-padding-bottom",
           "value": "var(--card-spacing, 1rem)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "card-header"
         },
@@ -4691,7 +4691,7 @@
           "id": "card:--card-content-padding-x:0",
           "name": "--card-content-padding-x",
           "value": "var(--card-spacing, 1rem)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "card-content"
         },
@@ -4699,7 +4699,7 @@
           "id": "card:--card-footer-bg:0",
           "name": "--card-footer-bg",
           "value": "color-mix(in oklch, var(--muted), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "card-footer"
         },
@@ -4731,7 +4731,7 @@
           "id": "card:--card-footer-padding:0",
           "name": "--card-footer-padding",
           "value": "var(--card-spacing, 1rem)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "card-footer"
         }
@@ -4843,7 +4843,7 @@
           "id": "chart:--chart-tooltip-border-color:0",
           "name": "--chart-tooltip-border-color",
           "value": "color-mix(in oklch, var(--border), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "chart"
         },
@@ -4851,7 +4851,7 @@
           "id": "chart:--chart-tooltip-shadow:0",
           "name": "--chart-tooltip-shadow",
           "value": "var(--shadow-xl)",
-          "fieldType": "raw",
+          "fieldType": "shadow-ref",
           "occurrence": 0,
           "scope": "chart"
         },
@@ -4947,7 +4947,7 @@
           "id": "checkbox:--checkbox-bg:0",
           "name": "--checkbox-bg",
           "value": "transparent",
-          "fieldType": "raw",
+          "fieldType": "color-keyword",
           "occurrence": 0,
           "scope": "checkbox"
         },
@@ -4995,7 +4995,7 @@
           "id": "checkbox:--checkbox-focus-ring-color:0",
           "name": "--checkbox-focus-ring-color",
           "value": "color-mix(in oklch, var(--ring), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "checkbox"
         },
@@ -5011,7 +5011,7 @@
           "id": "checkbox:--checkbox-invalid-ring-color:0",
           "name": "--checkbox-invalid-ring-color",
           "value": "color-mix(in oklch, var(--destructive), transparent 80%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "checkbox"
         },
@@ -5019,7 +5019,7 @@
           "id": "checkbox:--checkbox-disabled-opacity:0",
           "name": "--checkbox-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "checkbox"
         },
@@ -5082,7 +5082,7 @@
           "id": "combobox:--combobox-content-ring-color:0",
           "name": "--combobox-content-ring-color",
           "value": "color-mix(in oklch, var(--foreground), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "combobox-content"
         },
@@ -5098,7 +5098,7 @@
           "id": "combobox:--combobox-content-shadow:0",
           "name": "--combobox-content-shadow",
           "value": "var(--shadow-md)",
-          "fieldType": "raw",
+          "fieldType": "shadow-ref",
           "occurrence": 0,
           "scope": "combobox-content"
         },
@@ -5178,7 +5178,7 @@
           "id": "combobox:--combobox-item-disabled-opacity:0",
           "name": "--combobox-item-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "combobox-item"
         },
@@ -5290,7 +5290,7 @@
           "id": "combobox:--combobox-chips-bg:0",
           "name": "--combobox-chips-bg",
           "value": "transparent",
-          "fieldType": "raw",
+          "fieldType": "color-keyword",
           "occurrence": 0,
           "scope": "combobox-chips"
         },
@@ -5354,7 +5354,7 @@
           "id": "combobox:--combobox-chips-focus-ring-color:0",
           "name": "--combobox-chips-focus-ring-color",
           "value": "color-mix(in oklch, var(--ring), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "combobox-chips"
         },
@@ -5370,7 +5370,7 @@
           "id": "combobox:--combobox-chips-invalid-ring-color:0",
           "name": "--combobox-chips-invalid-ring-color",
           "value": "color-mix(in oklch, var(--destructive), transparent 80%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "combobox-chips"
         },
@@ -5442,7 +5442,7 @@
           "id": "combobox:--combobox-chip-disabled-opacity:0",
           "name": "--combobox-chip-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "combobox-chip"
         },
@@ -5450,7 +5450,7 @@
           "id": "combobox:--combobox-chip-remove-opacity:0",
           "name": "--combobox-chip-remove-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "combobox-chip-remove"
         },
@@ -5458,7 +5458,7 @@
           "id": "combobox:--combobox-chip-remove-hover-opacity:0",
           "name": "--combobox-chip-remove-hover-opacity",
           "value": "1",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "combobox-chip-remove"
         },
@@ -5530,7 +5530,7 @@
           "id": "command:--command-input-disabled-opacity:0",
           "name": "--command-input-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "command-input"
         },
@@ -5698,7 +5698,7 @@
           "id": "command:--command-item-disabled-opacity:0",
           "name": "--command-item-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "command-item"
         },
@@ -5762,7 +5762,7 @@
           "id": "context-menu:--context-menu-ring-color:0",
           "name": "--context-menu-ring-color",
           "value": "color-mix(in oklch, var(--foreground), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "context-menu-content"
         },
@@ -5802,7 +5802,7 @@
           "id": "context-menu:--context-menu-shadow:0",
           "name": "--context-menu-shadow",
           "value": "var(--shadow-md)",
-          "fieldType": "raw",
+          "fieldType": "shadow-ref",
           "occurrence": 0,
           "scope": "context-menu-content"
         },
@@ -5874,7 +5874,7 @@
           "id": "context-menu:--context-menu-sub-shadow:0",
           "name": "--context-menu-sub-shadow",
           "value": "var(--shadow-lg)",
-          "fieldType": "raw",
+          "fieldType": "shadow-ref",
           "occurrence": 0,
           "scope": "context-menu-sub-content"
         },
@@ -5946,7 +5946,7 @@
           "id": "context-menu:--context-menu-item-disabled-opacity:0",
           "name": "--context-menu-item-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "context-menu-item"
         },
@@ -6114,7 +6114,7 @@
           "id": "dialog:--dialog-content-ring-color:0",
           "name": "--dialog-content-ring-color",
           "value": "color-mix(in oklch, var(--foreground), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "dialog-content"
         },
@@ -6202,7 +6202,7 @@
           "id": "dialog:--dialog-footer-bg:0",
           "name": "--dialog-footer-bg",
           "value": "color-mix(in oklch, var(--muted), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "dialog-footer"
         },
@@ -6562,7 +6562,7 @@
           "id": "dropdown-menu:--dropdown-menu-ring-color:0",
           "name": "--dropdown-menu-ring-color",
           "value": "color-mix(in oklch, var(--foreground), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "dropdown-menu-content"
         },
@@ -6594,7 +6594,7 @@
           "id": "dropdown-menu:--dropdown-menu-shadow:0",
           "name": "--dropdown-menu-shadow",
           "value": "var(--shadow-md)",
-          "fieldType": "raw",
+          "fieldType": "shadow-ref",
           "occurrence": 0,
           "scope": "dropdown-menu-content"
         },
@@ -6682,7 +6682,7 @@
           "id": "dropdown-menu:--dropdown-menu-item-disabled-opacity:0",
           "name": "--dropdown-menu-item-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "dropdown-menu-item"
         },
@@ -6714,7 +6714,7 @@
           "id": "dropdown-menu:--dropdown-menu-indicator-fg:0",
           "name": "--dropdown-menu-indicator-fg",
           "value": "currentColor",
-          "fieldType": "raw",
+          "fieldType": "color-keyword",
           "occurrence": 0,
           "scope": "dropdown-menu-checkbox-item-indicator"
         },
@@ -7090,7 +7090,7 @@
           "id": "field:--field-label-disabled-opacity:0",
           "name": "--field-label-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "field-label"
         },
@@ -7098,7 +7098,7 @@
           "id": "field:--field-label-checked-border-color:0",
           "name": "--field-label-checked-border-color",
           "value": "color-mix(in oklch, var(--primary), transparent 70%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "field-label"
         },
@@ -7106,7 +7106,7 @@
           "id": "field:--field-label-checked-bg:0",
           "name": "--field-label-checked-bg",
           "value": "color-mix(in oklch, var(--primary), transparent 95%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "field-label"
         },
@@ -7250,7 +7250,7 @@
           "id": "hover-card:--hover-card-content-ring-color:0",
           "name": "--hover-card-content-ring-color",
           "value": "color-mix(in oklch, var(--foreground), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "hover-card-content"
         },
@@ -7298,7 +7298,7 @@
           "id": "hover-card:--hover-card-content-shadow:0",
           "name": "--hover-card-content-shadow",
           "value": "var(--shadow-md)",
-          "fieldType": "raw",
+          "fieldType": "shadow-ref",
           "occurrence": 0,
           "scope": "hover-card-content"
         },
@@ -7322,7 +7322,7 @@
           "id": "input-group:--input-group-radius:0",
           "name": "--input-group-radius",
           "value": "var(--input-radius)",
-          "fieldType": "raw",
+          "fieldType": "radius-ref",
           "occurrence": 0,
           "scope": "input-group"
         },
@@ -7330,7 +7330,7 @@
           "id": "input-group:--input-group-border-width:0",
           "name": "--input-group-border-width",
           "value": "var(--input-border-width)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "input-group"
         },
@@ -7338,7 +7338,7 @@
           "id": "input-group:--input-group-border-color:0",
           "name": "--input-group-border-color",
           "value": "var(--input-border-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "input-group"
         },
@@ -7346,7 +7346,7 @@
           "id": "input-group:--input-group-bg:0",
           "name": "--input-group-bg",
           "value": "var(--input-bg)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "input-group"
         },
@@ -7354,7 +7354,7 @@
           "id": "input-group:--input-group-height:0",
           "name": "--input-group-height",
           "value": "var(--input-height)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "input-group"
         },
@@ -7362,7 +7362,7 @@
           "id": "input-group:--input-group-focus-border-color:0",
           "name": "--input-group-focus-border-color",
           "value": "var(--input-focus-border-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "input-group"
         },
@@ -7370,7 +7370,7 @@
           "id": "input-group:--input-group-focus-ring-width:0",
           "name": "--input-group-focus-ring-width",
           "value": "var(--input-focus-ring-width)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "input-group"
         },
@@ -7378,7 +7378,7 @@
           "id": "input-group:--input-group-focus-ring-color:0",
           "name": "--input-group-focus-ring-color",
           "value": "var(--input-focus-ring-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "input-group"
         },
@@ -7386,7 +7386,7 @@
           "id": "input-group:--input-group-invalid-border-color:0",
           "name": "--input-group-invalid-border-color",
           "value": "var(--input-invalid-border-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "input-group"
         },
@@ -7394,7 +7394,7 @@
           "id": "input-group:--input-group-invalid-ring-color:0",
           "name": "--input-group-invalid-ring-color",
           "value": "var(--input-invalid-ring-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "input-group"
         },
@@ -7402,7 +7402,7 @@
           "id": "input-group:--input-group-disabled-bg:0",
           "name": "--input-group-disabled-bg",
           "value": "var(--input-disabled-bg)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "input-group"
         },
@@ -7410,7 +7410,7 @@
           "id": "input-group:--input-group-disabled-opacity:0",
           "name": "--input-group-disabled-opacity",
           "value": "var(--input-disabled-opacity)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "input-group"
         },
@@ -7458,7 +7458,7 @@
           "id": "input-group:--input-group-addon-disabled-opacity:0",
           "name": "--input-group-addon-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "input-group-addon"
         },
@@ -7530,7 +7530,7 @@
           "id": "input-otp:--input-otp-disabled-opacity:0",
           "name": "--input-otp-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "input-otp"
         },
@@ -7538,7 +7538,7 @@
           "id": "input-otp:--input-otp-group-radius:0",
           "name": "--input-otp-group-radius",
           "value": "var(--input-radius)",
-          "fieldType": "raw",
+          "fieldType": "radius-ref",
           "occurrence": 0,
           "scope": "input-otp-group"
         },
@@ -7546,7 +7546,7 @@
           "id": "input-otp:--input-otp-group-invalid-border-color:0",
           "name": "--input-otp-group-invalid-border-color",
           "value": "var(--input-invalid-border-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "input-otp-group"
         },
@@ -7554,7 +7554,7 @@
           "id": "input-otp:--input-otp-group-invalid-ring-color:0",
           "name": "--input-otp-group-invalid-ring-color",
           "value": "var(--input-invalid-ring-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "input-otp-group"
         },
@@ -7562,7 +7562,7 @@
           "id": "input-otp:--input-otp-group-focus-ring-width:0",
           "name": "--input-otp-group-focus-ring-width",
           "value": "var(--input-focus-ring-width)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "input-otp-group"
         },
@@ -7570,7 +7570,7 @@
           "id": "input-otp:--input-otp-slot-size:0",
           "name": "--input-otp-slot-size",
           "value": "var(--input-height)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "input-otp-slot"
         },
@@ -7578,7 +7578,7 @@
           "id": "input-otp:--input-otp-slot-border-color:0",
           "name": "--input-otp-slot-border-color",
           "value": "var(--input-border-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "input-otp-slot"
         },
@@ -7586,7 +7586,7 @@
           "id": "input-otp:--input-otp-slot-bg:0",
           "name": "--input-otp-slot-bg",
           "value": "var(--input-bg)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "input-otp-slot"
         },
@@ -7594,7 +7594,7 @@
           "id": "input-otp:--input-otp-slot-font-size:0",
           "name": "--input-otp-slot-font-size",
           "value": "var(--input-file-font-size)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "input-otp-slot"
         },
@@ -7602,7 +7602,7 @@
           "id": "input-otp:--input-otp-slot-radius:0",
           "name": "--input-otp-slot-radius",
           "value": "var(--input-radius)",
-          "fieldType": "raw",
+          "fieldType": "radius-ref",
           "occurrence": 0,
           "scope": "input-otp-slot"
         },
@@ -7610,7 +7610,7 @@
           "id": "input-otp:--input-otp-slot-active-border-color:0",
           "name": "--input-otp-slot-active-border-color",
           "value": "var(--input-focus-border-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "input-otp-slot"
         },
@@ -7618,7 +7618,7 @@
           "id": "input-otp:--input-otp-slot-active-ring-width:0",
           "name": "--input-otp-slot-active-ring-width",
           "value": "var(--input-focus-ring-width)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "input-otp-slot"
         },
@@ -7626,7 +7626,7 @@
           "id": "input-otp:--input-otp-slot-active-ring-color:0",
           "name": "--input-otp-slot-active-ring-color",
           "value": "var(--input-focus-ring-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "input-otp-slot"
         },
@@ -7634,7 +7634,7 @@
           "id": "input-otp:--input-otp-slot-invalid-border-color:0",
           "name": "--input-otp-slot-invalid-border-color",
           "value": "var(--input-invalid-border-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "input-otp-slot"
         },
@@ -7642,7 +7642,7 @@
           "id": "input-otp:--input-otp-slot-caret-color:0",
           "name": "--input-otp-slot-caret-color",
           "value": "var(--input-fg)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "input-otp-slot"
         },
@@ -7706,7 +7706,7 @@
           "id": "input:--input-bg:0",
           "name": "--input-bg",
           "value": "transparent",
-          "fieldType": "raw",
+          "fieldType": "color-keyword",
           "occurrence": 0,
           "scope": "root"
         },
@@ -7802,7 +7802,7 @@
           "id": "input:--input-focus-ring-color:0",
           "name": "--input-focus-ring-color",
           "value": "color-mix(in oklch, var(--ring), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "root"
         },
@@ -7810,7 +7810,7 @@
           "id": "input:--input-disabled-bg:0",
           "name": "--input-disabled-bg",
           "value": "color-mix(in oklch, var(--input), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "root"
         },
@@ -7818,7 +7818,7 @@
           "id": "input:--input-disabled-opacity:0",
           "name": "--input-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "root"
         },
@@ -7834,7 +7834,7 @@
           "id": "input:--input-invalid-ring-color:0",
           "name": "--input-invalid-ring-color",
           "value": "color-mix(in oklch, var(--destructive), transparent 80%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "root"
         }
@@ -7906,7 +7906,7 @@
           "id": "item:--item-focus-ring-color:0",
           "name": "--item-focus-ring-color",
           "value": "color-mix(in oklch, var(--ring), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "item"
         },
@@ -7914,7 +7914,7 @@
           "id": "item:--item-border-color:0",
           "name": "--item-border-color",
           "value": "transparent",
-          "fieldType": "raw",
+          "fieldType": "color-keyword",
           "occurrence": 0,
           "scope": "item/variant=default"
         },
@@ -7930,7 +7930,7 @@
           "id": "item:--item-border-color:2",
           "name": "--item-border-color",
           "value": "transparent",
-          "fieldType": "raw",
+          "fieldType": "color-keyword",
           "occurrence": 2,
           "scope": "item/variant=muted"
         },
@@ -7938,7 +7938,7 @@
           "id": "item:--item-bg:0",
           "name": "--item-bg",
           "value": "color-mix(in oklch, var(--muted), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "item/variant=muted"
         },
@@ -8226,7 +8226,7 @@
           "id": "kbd:--kbd-bg:1",
           "name": "--kbd-bg",
           "value": "color-mix(in oklch, var(--background), transparent 80%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 1,
           "scope": "kbd/ancestor-slot=tooltip-content"
         },
@@ -8290,7 +8290,7 @@
           "id": "label:--label-disabled-opacity:0",
           "name": "--label-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "label"
         }
@@ -8514,7 +8514,7 @@
           "id": "menubar:--menubar-content-ring-color:0",
           "name": "--menubar-content-ring-color",
           "value": "color-mix(in oklch, var(--foreground), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "menubar-content"
         },
@@ -8562,7 +8562,7 @@
           "id": "menubar:--menubar-content-shadow:0",
           "name": "--menubar-content-shadow",
           "value": "var(--shadow-md)",
-          "fieldType": "raw",
+          "fieldType": "shadow-ref",
           "occurrence": 0,
           "scope": "menubar-content"
         },
@@ -8570,7 +8570,7 @@
           "id": "menubar:--menubar-sub-content-shadow:0",
           "name": "--menubar-sub-content-shadow",
           "value": "var(--shadow-lg)",
-          "fieldType": "raw",
+          "fieldType": "shadow-ref",
           "occurrence": 0,
           "scope": "menubar-sub-content"
         },
@@ -8642,7 +8642,7 @@
           "id": "menubar:--menubar-item-disabled-opacity:0",
           "name": "--menubar-item-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "menubar-item"
         },
@@ -8658,7 +8658,7 @@
           "id": "menubar:--menubar-item-destructive-focus-bg:0",
           "name": "--menubar-item-destructive-focus-bg",
           "value": "color-mix(in oklch, var(--destructive), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "menubar-item/variant=destructive"
         },
@@ -8898,7 +8898,7 @@
           "id": "native-select:--native-select-disabled-opacity:0",
           "name": "--native-select-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "native-select-wrapper"
         },
@@ -8906,7 +8906,7 @@
           "id": "native-select:--native-select-radius:0",
           "name": "--native-select-radius",
           "value": "var(--input-radius)",
-          "fieldType": "raw",
+          "fieldType": "radius-ref",
           "occurrence": 0,
           "scope": "native-select"
         },
@@ -8914,7 +8914,7 @@
           "id": "native-select:--native-select-border-width:0",
           "name": "--native-select-border-width",
           "value": "var(--input-border-width)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "native-select"
         },
@@ -8922,7 +8922,7 @@
           "id": "native-select:--native-select-border-color:0",
           "name": "--native-select-border-color",
           "value": "var(--input-border-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "native-select"
         },
@@ -8930,7 +8930,7 @@
           "id": "native-select:--native-select-bg:0",
           "name": "--native-select-bg",
           "value": "var(--input-bg)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "native-select"
         },
@@ -8938,7 +8938,7 @@
           "id": "native-select:--native-select-fg:0",
           "name": "--native-select-fg",
           "value": "var(--input-fg)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "native-select"
         },
@@ -8962,7 +8962,7 @@
           "id": "native-select:--native-select-placeholder-color:0",
           "name": "--native-select-placeholder-color",
           "value": "var(--input-placeholder-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "native-select"
         },
@@ -8970,7 +8970,7 @@
           "id": "native-select:--native-select-height:0",
           "name": "--native-select-height",
           "value": "var(--input-height)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "native-select"
         },
@@ -8978,7 +8978,7 @@
           "id": "native-select:--native-select-padding-inline-start:0",
           "name": "--native-select-padding-inline-start",
           "value": "var(--input-padding-x)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "native-select"
         },
@@ -8994,7 +8994,7 @@
           "id": "native-select:--native-select-padding-block:0",
           "name": "--native-select-padding-block",
           "value": "var(--input-padding-y)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "native-select"
         },
@@ -9002,7 +9002,7 @@
           "id": "native-select:--native-select-font-size:0",
           "name": "--native-select-font-size",
           "value": "var(--input-file-font-size)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "native-select"
         },
@@ -9010,7 +9010,7 @@
           "id": "native-select:--native-select-focus-border-color:0",
           "name": "--native-select-focus-border-color",
           "value": "var(--input-focus-border-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "native-select"
         },
@@ -9018,7 +9018,7 @@
           "id": "native-select:--native-select-focus-ring-width:0",
           "name": "--native-select-focus-ring-width",
           "value": "var(--input-focus-ring-width)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "native-select"
         },
@@ -9026,7 +9026,7 @@
           "id": "native-select:--native-select-focus-ring-color:0",
           "name": "--native-select-focus-ring-color",
           "value": "var(--input-focus-ring-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "native-select"
         },
@@ -9034,7 +9034,7 @@
           "id": "native-select:--native-select-invalid-border-color:0",
           "name": "--native-select-invalid-border-color",
           "value": "var(--input-invalid-border-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "native-select"
         },
@@ -9042,7 +9042,7 @@
           "id": "native-select:--native-select-invalid-ring-color:0",
           "name": "--native-select-invalid-ring-color",
           "value": "var(--input-invalid-ring-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "native-select"
         },
@@ -9186,7 +9186,7 @@
           "id": "navigation-menu:--navigation-menu-trigger-open-bg:0",
           "name": "--navigation-menu-trigger-open-bg",
           "value": "color-mix(in oklch, var(--muted), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "navigation-menu-trigger"
         },
@@ -9194,7 +9194,7 @@
           "id": "navigation-menu:--navigation-menu-trigger-disabled-opacity:0",
           "name": "--navigation-menu-trigger-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "navigation-menu-trigger"
         },
@@ -9250,7 +9250,7 @@
           "id": "navigation-menu:--navigation-menu-link-active-bg:0",
           "name": "--navigation-menu-link-active-bg",
           "value": "color-mix(in oklch, var(--muted), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "navigation-menu-link"
         },
@@ -9290,7 +9290,7 @@
           "id": "navigation-menu:--navigation-menu-content-ring:0",
           "name": "--navigation-menu-content-ring",
           "value": "color-mix(in oklch, var(--foreground), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "default"
         },
@@ -9314,7 +9314,7 @@
           "id": "navigation-menu:--navigation-menu-viewport-ring:0",
           "name": "--navigation-menu-viewport-ring",
           "value": "color-mix(in oklch, var(--foreground), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "navigation-menu-viewport"
         },
@@ -9426,7 +9426,7 @@
           "id": "popover:--popover-content-ring-color:0",
           "name": "--popover-content-ring-color",
           "value": "color-mix(in oklch, var(--foreground), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "popover-content"
         },
@@ -9482,7 +9482,7 @@
           "id": "popover:--popover-content-shadow:0",
           "name": "--popover-content-shadow",
           "value": "var(--shadow-md)",
-          "fieldType": "raw",
+          "fieldType": "shadow-ref",
           "occurrence": 0,
           "scope": "popover-content"
         },
@@ -9578,7 +9578,7 @@
           "id": "progress:--progress-indicator-transition:0",
           "name": "--progress-indicator-transition",
           "value": "all 0.2s ease",
-          "fieldType": "raw",
+          "fieldType": "transition",
           "occurrence": 0,
           "scope": "progress-indicator"
         }
@@ -9626,7 +9626,7 @@
           "id": "radio-group:--radio-group-item-bg:0",
           "name": "--radio-group-item-bg",
           "value": "transparent",
-          "fieldType": "raw",
+          "fieldType": "color-keyword",
           "occurrence": 0,
           "scope": "radio-group-item"
         },
@@ -9674,7 +9674,7 @@
           "id": "radio-group:--radio-group-item-focus-ring-color:0",
           "name": "--radio-group-item-focus-ring-color",
           "value": "color-mix(in oklch, var(--ring), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "radio-group-item"
         },
@@ -9690,7 +9690,7 @@
           "id": "radio-group:--radio-group-item-invalid-ring-color:0",
           "name": "--radio-group-item-invalid-ring-color",
           "value": "color-mix(in oklch, var(--destructive), transparent 80%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "radio-group-item"
         },
@@ -9698,7 +9698,7 @@
           "id": "radio-group:--radio-group-item-disabled-opacity:0",
           "name": "--radio-group-item-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "radio-group-item"
         },
@@ -9858,7 +9858,7 @@
           "id": "select:--select-trigger-radius:0",
           "name": "--select-trigger-radius",
           "value": "var(--input-radius)",
-          "fieldType": "raw",
+          "fieldType": "radius-ref",
           "occurrence": 0,
           "scope": "select-trigger"
         },
@@ -9866,7 +9866,7 @@
           "id": "select:--select-trigger-border-width:0",
           "name": "--select-trigger-border-width",
           "value": "var(--input-border-width)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "select-trigger"
         },
@@ -9874,7 +9874,7 @@
           "id": "select:--select-trigger-border-color:0",
           "name": "--select-trigger-border-color",
           "value": "var(--input-border-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "select-trigger"
         },
@@ -9882,7 +9882,7 @@
           "id": "select:--select-trigger-bg:0",
           "name": "--select-trigger-bg",
           "value": "var(--input-bg)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "select-trigger"
         },
@@ -9898,7 +9898,7 @@
           "id": "select:--select-trigger-padding-inline-start:0",
           "name": "--select-trigger-padding-inline-start",
           "value": "var(--input-padding-x)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "select-trigger"
         },
@@ -9922,7 +9922,7 @@
           "id": "select:--select-trigger-font-size:0",
           "name": "--select-trigger-font-size",
           "value": "var(--input-file-font-size)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "select-trigger"
         },
@@ -9930,7 +9930,7 @@
           "id": "select:--select-trigger-placeholder-color:0",
           "name": "--select-trigger-placeholder-color",
           "value": "var(--input-placeholder-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "select-trigger"
         },
@@ -9938,7 +9938,7 @@
           "id": "select:--select-trigger-focus-border-color:0",
           "name": "--select-trigger-focus-border-color",
           "value": "var(--input-focus-border-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "select-trigger"
         },
@@ -9946,7 +9946,7 @@
           "id": "select:--select-trigger-focus-ring-width:0",
           "name": "--select-trigger-focus-ring-width",
           "value": "var(--input-focus-ring-width)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "select-trigger"
         },
@@ -9954,7 +9954,7 @@
           "id": "select:--select-trigger-focus-ring-color:0",
           "name": "--select-trigger-focus-ring-color",
           "value": "var(--input-focus-ring-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "select-trigger"
         },
@@ -9962,7 +9962,7 @@
           "id": "select:--select-trigger-invalid-border-color:0",
           "name": "--select-trigger-invalid-border-color",
           "value": "var(--input-invalid-border-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "select-trigger"
         },
@@ -9970,7 +9970,7 @@
           "id": "select:--select-trigger-invalid-ring-color:0",
           "name": "--select-trigger-invalid-ring-color",
           "value": "var(--input-invalid-ring-color)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "select-trigger"
         },
@@ -9978,7 +9978,7 @@
           "id": "select:--select-trigger-disabled-opacity:0",
           "name": "--select-trigger-disabled-opacity",
           "value": "var(--input-disabled-opacity)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "select-trigger"
         },
@@ -9986,7 +9986,7 @@
           "id": "select:--select-trigger-height:0",
           "name": "--select-trigger-height",
           "value": "var(--input-height)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "select-trigger/size=default"
         },
@@ -10026,7 +10026,7 @@
           "id": "select:--select-content-ring-color:0",
           "name": "--select-content-ring-color",
           "value": "color-mix(in oklch, var(--foreground), transparent 90%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "select-content"
         },
@@ -10042,7 +10042,7 @@
           "id": "select:--select-content-shadow:0",
           "name": "--select-content-shadow",
           "value": "var(--shadow-md)",
-          "fieldType": "raw",
+          "fieldType": "shadow-ref",
           "occurrence": 0,
           "scope": "select-content"
         },
@@ -10162,7 +10162,7 @@
           "id": "select:--select-item-disabled-opacity:0",
           "name": "--select-item-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "select-item"
         },
@@ -10298,7 +10298,7 @@
           "id": "sheet:--sheet-content-shadow:0",
           "name": "--sheet-content-shadow",
           "value": "var(--shadow-lg)",
-          "fieldType": "raw",
+          "fieldType": "shadow-ref",
           "occurrence": 0,
           "scope": "sheet-content"
         },
@@ -10570,7 +10570,7 @@
           "id": "sidebar:--sidebar-floating-shadow:0",
           "name": "--sidebar-floating-shadow",
           "value": "var(--shadow-sm)",
-          "fieldType": "raw",
+          "fieldType": "shadow-ref",
           "occurrence": 0,
           "scope": "sidebar-inner/ancestor-slot=sidebar/variant=floating"
         },
@@ -10618,7 +10618,7 @@
           "id": "sidebar:--sidebar-inset-shadow:0",
           "name": "--sidebar-inset-shadow",
           "value": "var(--shadow-sm)",
-          "fieldType": "raw",
+          "fieldType": "shadow-ref",
           "occurrence": 0,
           "scope": "sidebar-inset"
         },
@@ -10714,7 +10714,7 @@
           "id": "sidebar:--sidebar-group-label-fg:0",
           "name": "--sidebar-group-label-fg",
           "value": "color-mix(in oklch, var(--sidebar-foreground), transparent 30%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "sidebar-group-label"
         },
@@ -10850,7 +10850,7 @@
           "id": "sidebar:--sidebar-menu-button-disabled-opacity:0",
           "name": "--sidebar-menu-button-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "sidebar-menu-button"
         },
@@ -11226,7 +11226,7 @@
           "id": "slider:--slider-disabled-opacity:0",
           "name": "--slider-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "slider"
         },
@@ -11306,7 +11306,7 @@
           "id": "slider:--slider-thumb-ring-color:0",
           "name": "--slider-thumb-ring-color",
           "value": "color-mix(in oklch, var(--ring), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "slider-thumb"
         },
@@ -11314,7 +11314,7 @@
           "id": "slider:--slider-thumb-disabled-opacity:0",
           "name": "--slider-thumb-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "slider-thumb"
         }
@@ -11362,7 +11362,7 @@
           "id": "sonner-toast:--normal-bg:0",
           "name": "--normal-bg",
           "value": "var(--sonner-bg)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
         },
@@ -11370,7 +11370,7 @@
           "id": "sonner-toast:--normal-text:0",
           "name": "--normal-text",
           "value": "var(--sonner-text)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "default"
         },
@@ -11378,7 +11378,7 @@
           "id": "sonner-toast:--normal-border:0",
           "name": "--normal-border",
           "value": "var(--sonner-border)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
         },
@@ -11386,7 +11386,7 @@
           "id": "sonner-toast:--border-radius:0",
           "name": "--border-radius",
           "value": "var(--sonner-radius)",
-          "fieldType": "raw",
+          "fieldType": "radius-ref",
           "occurrence": 0,
           "scope": "default"
         },
@@ -11426,7 +11426,7 @@
           "id": "sonner-toast:--sonner-error-bg:0",
           "name": "--sonner-error-bg",
           "value": "color-mix(in oklch, var(--destructive), var(--popover) 85%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "default"
         },
@@ -11442,7 +11442,7 @@
           "id": "sonner-toast:--sonner-error-border:0",
           "name": "--sonner-error-border",
           "value": "color-mix(in oklch, var(--destructive), transparent 70%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "default"
         },
@@ -11450,7 +11450,7 @@
           "id": "sonner-toast:--error-bg:0",
           "name": "--error-bg",
           "value": "var(--sonner-error-bg)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
         },
@@ -11458,7 +11458,7 @@
           "id": "sonner-toast:--error-text:0",
           "name": "--error-text",
           "value": "var(--sonner-error-text)",
-          "fieldType": "raw",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "default"
         },
@@ -11466,7 +11466,7 @@
           "id": "sonner-toast:--error-border:0",
           "name": "--error-border",
           "value": "var(--sonner-error-border)",
-          "fieldType": "raw",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
         }
@@ -11490,7 +11490,7 @@
           "id": "spinner:--spinner-color:0",
           "name": "--spinner-color",
           "value": "currentColor",
-          "fieldType": "raw",
+          "fieldType": "color-keyword",
           "occurrence": 0,
           "scope": "spinner"
         },
@@ -11522,7 +11522,7 @@
           "id": "switch:--switch-border-color:0",
           "name": "--switch-border-color",
           "value": "transparent",
-          "fieldType": "raw",
+          "fieldType": "color-keyword",
           "occurrence": 0,
           "scope": "switch"
         },
@@ -11562,7 +11562,7 @@
           "id": "switch:--switch-focus-ring-color:0",
           "name": "--switch-focus-ring-color",
           "value": "color-mix(in oklch, var(--ring), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "switch"
         },
@@ -11578,7 +11578,7 @@
           "id": "switch:--switch-invalid-ring-color:0",
           "name": "--switch-invalid-ring-color",
           "value": "color-mix(in oklch, var(--destructive), transparent 80%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "switch"
         },
@@ -11586,7 +11586,7 @@
           "id": "switch:--switch-disabled-opacity:0",
           "name": "--switch-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "switch"
         },
@@ -11698,7 +11698,7 @@
           "id": "table:--table-footer-bg:0",
           "name": "--table-footer-bg",
           "value": "color-mix(in oklch, var(--muted), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "table-footer"
         },
@@ -11746,7 +11746,7 @@
           "id": "table:--table-row-hover-bg:0",
           "name": "--table-row-hover-bg",
           "value": "color-mix(in oklch, var(--muted), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "table-row"
         },
@@ -11890,7 +11890,7 @@
           "id": "tabs:--tabs-list-bg:1",
           "name": "--tabs-list-bg",
           "value": "transparent",
-          "fieldType": "raw",
+          "fieldType": "color-keyword",
           "occurrence": 1,
           "scope": "tabs-list/variant=line"
         },
@@ -11962,7 +11962,7 @@
           "id": "tabs:--tabs-trigger-fg:0",
           "name": "--tabs-trigger-fg",
           "value": "color-mix(in oklch, var(--foreground), transparent 40%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "tabs-trigger"
         },
@@ -11994,7 +11994,7 @@
           "id": "tabs:--tabs-trigger-disabled-opacity:0",
           "name": "--tabs-trigger-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "tabs-trigger"
         },
@@ -12026,7 +12026,7 @@
           "id": "tabs:--tabs-trigger-active-bg:1",
           "name": "--tabs-trigger-active-bg",
           "value": "transparent",
-          "fieldType": "raw",
+          "fieldType": "color-keyword",
           "occurrence": 1,
           "scope": "tabs-trigger/ancestor-slot=tabs-list/variant=line/state=active"
         },
@@ -12074,7 +12074,7 @@
           "id": "textarea:--textarea-bg:0",
           "name": "--textarea-bg",
           "value": "transparent",
-          "fieldType": "raw",
+          "fieldType": "color-keyword",
           "occurrence": 0,
           "scope": "textarea"
         },
@@ -12146,7 +12146,7 @@
           "id": "textarea:--textarea-focus-ring-color:0",
           "name": "--textarea-focus-ring-color",
           "value": "color-mix(in oklch, var(--ring), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "textarea"
         },
@@ -12154,7 +12154,7 @@
           "id": "textarea:--textarea-disabled-bg:0",
           "name": "--textarea-disabled-bg",
           "value": "color-mix(in oklch, var(--input), transparent 50%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "textarea"
         },
@@ -12162,7 +12162,7 @@
           "id": "textarea:--textarea-disabled-opacity:0",
           "name": "--textarea-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "textarea"
         },
@@ -12178,7 +12178,7 @@
           "id": "textarea:--textarea-invalid-ring-color:0",
           "name": "--textarea-invalid-ring-color",
           "value": "color-mix(in oklch, var(--destructive), transparent 80%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "textarea"
         }
@@ -12258,15 +12258,15 @@
           "id": "toggle:--toggle-transition:0",
           "name": "--toggle-transition",
           "value": "all 0.15s ease",
-          "fieldType": "raw",
+          "fieldType": "transition",
           "occurrence": 0,
           "scope": "toggle"
         },
         {
           "id": "toggle:--toggle-fg:0",
           "name": "--toggle-fg",
-          "value": "inherit",
-          "fieldType": "raw",
+          "value": "var(--foreground)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "toggle"
         },
@@ -12298,7 +12298,7 @@
           "id": "toggle:--toggle-disabled-opacity:0",
           "name": "--toggle-disabled-opacity",
           "value": "0.5",
-          "fieldType": "raw",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "toggle"
         },
@@ -12330,7 +12330,7 @@
           "id": "toggle:--toggle-invalid-ring-color:0",
           "name": "--toggle-invalid-ring-color",
           "value": "color-mix(in oklch, var(--destructive), transparent 80%)",
-          "fieldType": "raw",
+          "fieldType": "color-mix",
           "occurrence": 0,
           "scope": "toggle"
         },
@@ -12338,7 +12338,7 @@
           "id": "toggle:--toggle-bg:0",
           "name": "--toggle-bg",
           "value": "transparent",
-          "fieldType": "raw",
+          "fieldType": "color-keyword",
           "occurrence": 0,
           "scope": "toggle/variant=default"
         },
@@ -12346,7 +12346,7 @@
           "id": "toggle:--toggle-bg:1",
           "name": "--toggle-bg",
           "value": "transparent",
-          "fieldType": "raw",
+          "fieldType": "color-keyword",
           "occurrence": 1,
           "scope": "toggle/variant=outline"
         },

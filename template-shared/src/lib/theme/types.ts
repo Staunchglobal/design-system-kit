@@ -1,74 +1,87 @@
 export type ThemeFieldType =
-  'hex' | 'color-ref' | 'typography-ref' | 'font-ref' | 'radius-ref' | 'raw'
+  | "hex"
+  | "color-ref"
+  | "color-mix"
+  | "color-keyword"
+  | "typography-ref"
+  | "font-ref"
+  | "radius-ref"
+  | "shadow-ref"
+  | "token-ref"
+  | "opacity"
+  | "overflow"
+  | "border-style"
+  | "transition"
+  | "raw";
 
 export type ThemeVariable = {
   /** Unique across the manifest — safe for React keys. */
-  id: string
-  name: string
-  value: string
-  fieldType: ThemeFieldType
+  id: string;
+  name: string;
+  value: string;
+  fieldType: ThemeFieldType;
   /** 0-based index among same `name` in the source CSS file. */
-  occurrence: number
+  occurrence: number;
   /** Human hint: root / dark / slot / variant / size. */
-  scope?: string
-}
+  scope?: string;
+};
 
 export type ThemeGroup = {
-  id: string
-  title: string
-  kind: 'token' | 'component'
-  file: string
-  variables: ThemeVariable[]
-}
+  id: string;
+  title: string;
+  kind: "token" | "component";
+  file: string;
+  variables: ThemeVariable[];
+};
 
 export type ThemeManifest = {
-  version: number
-  groups: ThemeGroup[]
+  version: number;
+  groups: ThemeGroup[];
   /** Recovered from tokens/fonts.css by generate-theme-manifest.mjs, so a previously
    *  saved custom font survives a reload instead of the editor starting with none. */
-  customFonts?: CustomFont[]
-}
+  customFonts?: CustomFont[];
+};
 
-export type CustomColor = { name: string; hex: string }
+export type CustomColor = { name: string; hex: string };
 
 export type CustomTypography = {
-  id: string
-  fontFamily: string
-  fontSize: string
-  fontWeight: string
-  lineHeight: string
-  letterSpacing: string
-}
+  id: string;
+  fontFamily: string;
+  fontSize: string;
+  fontWeight: string;
+  lineHeight: string;
+  letterSpacing: string;
+};
 
 export type CustomFont =
   | {
-      id: string
-      source: 'google'
-      googleFamily: string
-      weights: string
+      id: string;
+      source: "google";
+      googleFamily: string;
+      weights: string;
     }
   | {
-      id: string
-      source: 'file'
-      fileName: string
+      id: string;
+      source: "file";
+      fileName: string;
       /** data URL or path after save */
-      dataUrl?: string
-      path?: string
-    }
+      dataUrl?: string;
+      path?: string;
+    };
 
 export type ThemeEditorState = {
-  values: Record<string, string>
-  customColors: CustomColor[]
-  customTypography: CustomTypography[]
-  customFonts: CustomFont[]
-  iconMap: Record<string, string>
-  dirty: boolean
-}
+  values: Record<string, string>;
+  customColors: CustomColor[];
+  customTypography: CustomTypography[];
+  customFonts: CustomFont[];
+  iconMap: Record<string, string>;
+  dirty: boolean;
+};
 
 export type ThemeSavePayload = {
-  values: Record<string, string>
-  customColors: CustomColor[]
-  customTypography: CustomTypography[]
-  customFonts: CustomFont[]
-  iconMap: Record<string, string>
-}
+  values: Record<string, string>;
+  customColors: CustomColor[];
+  customTypography: CustomTypography[];
+  customFonts: CustomFont[];
+  iconMap: Record<string, string>;
+};

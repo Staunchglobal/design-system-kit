@@ -8,7 +8,7 @@
   --toggle-font-weight: var(--typography-small-font-weight);
   --toggle-gap: 0.25rem;
   --toggle-transition: all 0.15s ease;
-  --toggle-fg: inherit;
+  --toggle-fg: var(--foreground);
   --toggle-hover-bg: var(--muted);
   --toggle-hover-fg: var(--foreground);
   --toggle-on-bg: var(--muted);

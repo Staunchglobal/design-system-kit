@@ -7,6 +7,7 @@ export const ALWAYS_SHARED_FILES = [
   'lib/utils.ts',
   'lib/theme/types.ts',
   'lib/theme/field-types.ts',
+  'lib/theme/value-parsers.ts',
   'lib/theme/humanize.ts',
   'lib/theme/descriptions.ts',
   'lib/theme/validation.ts',
