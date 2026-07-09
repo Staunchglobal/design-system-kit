@@ -9,10 +9,31 @@ import { AppIcon } from '@/components/icons/icon'
 function InputOTP({
   className,
   containerClassName,
+  value,
+  defaultValue,
+  onChange,
   ...props
 }: React.ComponentProps<typeof OTPInput> & {
   containerClassName?: string
 }) {
+  // input-otp forwards rest props onto the native <input> while also setting
+  // value={l} internally. If defaultValue is in rest, React warns about having
+  // both value and defaultValue — so we own state here and never pass defaultValue through.
+  const [uncontrolledValue, setUncontrolledValue] = React.useState(
+    typeof defaultValue === 'string' ? defaultValue : ''
+  )
+  const isControlled = value !== undefined
+  const resolvedValue: string = isControlled
+    ? typeof value === 'string'
+      ? value
+      : String(value ?? '')
+    : uncontrolledValue
+
+  function handleChange(next: string) {
+    if (!isControlled) setUncontrolledValue(next)
+    onChange?.(next)
+  }
+
   return (
     <OTPInput
       data-slot="input-otp"
@@ -22,6 +43,8 @@ function InputOTP({
       )}
       spellCheck={false}
       className={cn('disabled:cursor-not-allowed', className)}
+      value={resolvedValue}
+      onChange={handleChange}
       {...props}
     />
   )

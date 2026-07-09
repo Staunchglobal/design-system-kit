@@ -25,7 +25,7 @@ export default function InputOtpDemo() {
         </Example>
 
         <Example title="Disabled">
-          <InputOTP maxLength={6} disabled defaultValue="123456">
+          <InputOTP maxLength={6} disabled value="123456">
             <InputOTPGroup>
               <InputOTPSlot index={0} />
               <InputOTPSlot index={1} />
