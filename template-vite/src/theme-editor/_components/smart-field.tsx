@@ -404,7 +404,6 @@ function ColorKeywordField({
 
   const options = [
     ...COLOR_KEYWORD_OPTIONS.map((k) => ({ value: k, label: k })),
-    { value: "transparent", label: "transparent" },
     ...colorOptions
       .filter((o) => o.name !== "transparent")
       .map((o) => ({ value: o.name, label: o.label })),
