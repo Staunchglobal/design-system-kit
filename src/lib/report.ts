@@ -1,15 +1,14 @@
-import fs from 'node:fs'
-import path from 'node:path'
+import { fetchTemplateSize, mapWithConcurrency, remoteUrl } from './remote.js'
 import { log } from './log.js'
 
-function sizeOf(baseDir: string, relPaths: Iterable<string>): { count: number; bytes: number } {
+async function sizeOf(baseDir: string, relPaths: Iterable<string>): Promise<{ count: number; bytes: number }> {
   let count = 0
   let bytes = 0
-  for (const rel of relPaths) {
-    const p = path.join(baseDir, rel)
-    if (!fs.existsSync(p)) continue
+  const sizes = await mapWithConcurrency([...relPaths], 8, (rel) => fetchTemplateSize(remoteUrl(baseDir, rel)))
+  for (const size of sizes) {
+    if (size === null) continue
     count++
-    bytes += fs.statSync(p).size
+    bytes += size
   }
   return { count, bytes }
 }
@@ -23,24 +22,24 @@ export type ReportCategory = { label: string; baseDir: string; relPaths: Iterabl
 
 /**
  * Prints a deterministic "how much does this selection add" summary — total source bytes/file
- * counts per category (read straight off the bundled template files, no build/bundler needed)
- * plus the npm package lists. Deliberately doesn't estimate real npm install/node_modules size:
- * that needs either a registry round-trip per package or an actual install, and either would
- * make --report slow or unreliable offline for a number this tool can already answer honestly —
- * "how much source lands in your repo" is the metric that's actually meaningful for a CLI that
- * copies files rather than shipping a bundled library.
+ * counts per category (sized via a HEAD request per file against the templates CDN, no
+ * build/bundler needed) plus the npm package lists. Deliberately doesn't estimate real npm
+ * install/node_modules size: that needs either a registry round-trip per package or an actual
+ * install, and either would make --report slow or unreliable for a number this tool can already
+ * answer honestly — "how much source lands in your repo" is the metric that's actually
+ * meaningful for a CLI that copies files rather than shipping a bundled library.
  */
-export function printBundleReport(opts: {
+export async function printBundleReport(opts: {
   categories: ReportCategory[]
   runtimeDeps: string[]
   devDeps: string[]
-}): void {
+}): Promise<void> {
   log.title('Bundle impact report')
 
   let totalCount = 0
   let totalBytes = 0
   for (const { label, baseDir, relPaths } of opts.categories) {
-    const { count, bytes } = sizeOf(baseDir, relPaths)
+    const { count, bytes } = await sizeOf(baseDir, relPaths)
     if (!count) continue
     totalCount += count
     totalBytes += bytes

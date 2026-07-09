@@ -12,6 +12,7 @@ import {
   runInstall,
 } from '../lib/deps.js'
 import { copySelectedFiles, copyTemplateFile, hashEntriesFor, writeGeneratedFile } from '../lib/copy.js'
+import { fetchRequiredTemplateText, remoteUrl } from '../lib/remote.js'
 import { patchGlobalsCss } from '../lib/patch-globals-css.js'
 import { patchPostcssConfig } from '../lib/patch-postcss-config.js'
 import { patchTsconfig } from '../lib/patch-tsconfig.js'
@@ -143,15 +144,18 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
   const navGroups = navGroupsFor(userClosure)
   const sectionFiles = demoFilesFor(navGroups).map((f) => `app/design-system/_sections/${f}`)
 
+  const sharedSrc = remoteUrl(templateSharedDir, 'src')
+  const nextSrc = remoteUrl(templateNextDir, 'src')
+
   if (options.report) {
-    printBundleReport({
+    await printBundleReport({
       categories: [
-        { label: 'Shared fixed files', baseDir: path.join(templateSharedDir, 'src'), relPaths: ALWAYS_SHARED_FILES },
-        { label: 'UI components', baseDir: path.join(templateSharedDir, 'src'), relPaths: uiFiles },
-        { label: 'Theme CSS', baseDir: path.join(templateSharedDir, 'src'), relPaths: cssFiles },
-        { label: 'Extra files', baseDir: path.join(templateSharedDir, 'src'), relPaths: extraFiles },
-        { label: 'Next.js fixed files', baseDir: path.join(templateNextDir, 'src'), relPaths: ALWAYS_NEXT_FILES },
-        { label: 'Design-system demo files', baseDir: path.join(templateNextDir, 'src'), relPaths: sectionFiles },
+        { label: 'Shared fixed files', baseDir: sharedSrc, relPaths: ALWAYS_SHARED_FILES },
+        { label: 'UI components', baseDir: sharedSrc, relPaths: uiFiles },
+        { label: 'Theme CSS', baseDir: sharedSrc, relPaths: cssFiles },
+        { label: 'Extra files', baseDir: sharedSrc, relPaths: extraFiles },
+        { label: 'Next.js fixed files', baseDir: nextSrc, relPaths: ALWAYS_NEXT_FILES },
+        { label: 'Design-system demo files', baseDir: nextSrc, relPaths: sectionFiles },
       ],
       runtimeDeps: Object.keys(neededRuntime),
       devDeps: Object.keys(NEXT_DEV_DEPENDENCIES),
@@ -159,12 +163,12 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
   }
 
   const dryRun = !!options.dryRun
-  const sharedFixed = copySelectedFiles(path.join(templateSharedDir, 'src'), destRoot, ALWAYS_SHARED_FILES, dryRun)
-  const sharedUi = copySelectedFiles(path.join(templateSharedDir, 'src'), destRoot, uiFiles, dryRun)
-  const sharedCss = copySelectedFiles(path.join(templateSharedDir, 'src'), destRoot, cssFiles, dryRun)
-  const sharedExtra = copySelectedFiles(path.join(templateSharedDir, 'src'), destRoot, extraFiles, dryRun)
-  const sharedTokens = copySelectedFiles(
-    path.join(templateSharedDir, 'src'),
+  const sharedFixed = await copySelectedFiles(sharedSrc, destRoot, ALWAYS_SHARED_FILES, dryRun)
+  const sharedUi = await copySelectedFiles(sharedSrc, destRoot, uiFiles, dryRun)
+  const sharedCss = await copySelectedFiles(sharedSrc, destRoot, cssFiles, dryRun)
+  const sharedExtra = await copySelectedFiles(sharedSrc, destRoot, extraFiles, dryRun)
+  const sharedTokens = await copySelectedFiles(
+    sharedSrc,
     destRoot,
     [
       'styles/theme/tokens/colors.css',
@@ -175,8 +179,8 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
     ],
     dryRun
   )
-  const nextFixed = copySelectedFiles(path.join(templateNextDir, 'src'), destRoot, ALWAYS_NEXT_FILES, dryRun)
-  const nextSections = copySelectedFiles(path.join(templateNextDir, 'src'), destRoot, sectionFiles, dryRun)
+  const nextFixed = await copySelectedFiles(nextSrc, destRoot, ALWAYS_NEXT_FILES, dryRun)
+  const nextSections = await copySelectedFiles(nextSrc, destRoot, sectionFiles, dryRun)
 
   const copied = [sharedFixed, sharedUi, sharedCss, sharedExtra, sharedTokens, nextFixed, nextSections].flatMap(
     (r) => r.copied
@@ -189,13 +193,13 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
 
   if (!dryRun) {
     recordFileHashes(root, [
-      ...hashEntriesFor(path.join(templateSharedDir, 'src'), sharedFixed),
-      ...hashEntriesFor(path.join(templateSharedDir, 'src'), sharedUi),
-      ...hashEntriesFor(path.join(templateSharedDir, 'src'), sharedCss),
-      ...hashEntriesFor(path.join(templateSharedDir, 'src'), sharedExtra),
-      ...hashEntriesFor(path.join(templateSharedDir, 'src'), sharedTokens),
-      ...hashEntriesFor(path.join(templateNextDir, 'src'), nextFixed),
-      ...hashEntriesFor(path.join(templateNextDir, 'src'), nextSections),
+      ...hashEntriesFor(sharedFixed),
+      ...hashEntriesFor(sharedUi),
+      ...hashEntriesFor(sharedCss),
+      ...hashEntriesFor(sharedExtra),
+      ...hashEntriesFor(sharedTokens),
+      ...hashEntriesFor(nextFixed),
+      ...hashEntriesFor(nextSections),
     ])
   }
 
@@ -238,14 +242,14 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
   } else if (dryRun) {
     log.info('Would create components.json')
   } else {
-    const componentsJson = JSON.parse(fs.readFileSync(path.join(templateNextDir, 'components.json'), 'utf8'))
+    const componentsJson = JSON.parse(await fetchRequiredTemplateText(remoteUrl(templateNextDir, 'components.json')))
     componentsJson.tailwind.css = rel('app/globals.css')
     fs.writeFileSync(componentsJsonDest, JSON.stringify(componentsJson, null, 2) + '\n')
     log.success('components.json')
   }
 
-  const manifestScriptResult = copyTemplateFile(
-    path.join(templateNextDir, 'scripts/generate-theme-manifest.mjs'),
+  const manifestScriptResult = await copyTemplateFile(
+    remoteUrl(templateNextDir, 'scripts/generate-theme-manifest.mjs'),
     path.join(root, 'scripts/generate-theme-manifest.mjs'),
     dryRun
   )
@@ -278,7 +282,7 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
   }
 
   const globalsCssPath = path.join(destRoot, 'app/globals.css')
-  const globalsTemplate = fs.readFileSync(path.join(templateRootDir, 'globals.css'), 'utf8')
+  const globalsTemplate = await fetchRequiredTemplateText(remoteUrl(templateRootDir, 'globals.css'))
   const globalsResult = patchGlobalsCss(globalsCssPath, globalsTemplate)
   switch (globalsResult.action) {
     case 'created':

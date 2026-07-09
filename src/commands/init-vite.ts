@@ -1,4 +1,3 @@
-import fs from 'node:fs'
 import path from 'node:path'
 import { spawnSync } from 'node:child_process'
 import pc from 'picocolors'
@@ -21,6 +20,7 @@ import { patchViteConfig, VITE_CONFIG_MANUAL_SNIPPET } from '../lib/patch-vite-c
 import { patchMainEntry } from '../lib/patch-main-entry.js'
 import { confirm } from '../lib/confirm.js'
 import { templateSharedDir, templateViteDir, templateRootDir } from '../lib/paths.js'
+import { fetchRequiredTemplateText, remoteUrl } from '../lib/remote.js'
 import { pickComponents, priorSelectionFor } from '../lib/prompt-components.js'
 import {
   THEME_EDITOR_REQUIRED_COMPONENTS,
@@ -128,15 +128,18 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   const navGroups = navGroupsFor(userClosure)
   const sectionFiles = demoFilesFor(navGroups).map((f) => `design-system/_sections/${f}`)
 
+  const sharedSrc = remoteUrl(templateSharedDir, 'src')
+  const viteSrc = remoteUrl(templateViteDir, 'src')
+
   if (options.report) {
-    printBundleReport({
+    await printBundleReport({
       categories: [
-        { label: 'Shared fixed files', baseDir: path.join(templateSharedDir, 'src'), relPaths: ALWAYS_SHARED_FILES },
-        { label: 'UI components', baseDir: path.join(templateSharedDir, 'src'), relPaths: uiFiles },
-        { label: 'Theme CSS', baseDir: path.join(templateSharedDir, 'src'), relPaths: cssFiles },
-        { label: 'Extra files', baseDir: path.join(templateSharedDir, 'src'), relPaths: extraFiles },
-        { label: 'Vite fixed files', baseDir: path.join(templateViteDir, 'src'), relPaths: ALWAYS_VITE_FILES },
-        { label: 'Design-system demo files', baseDir: path.join(templateViteDir, 'src'), relPaths: sectionFiles },
+        { label: 'Shared fixed files', baseDir: sharedSrc, relPaths: ALWAYS_SHARED_FILES },
+        { label: 'UI components', baseDir: sharedSrc, relPaths: uiFiles },
+        { label: 'Theme CSS', baseDir: sharedSrc, relPaths: cssFiles },
+        { label: 'Extra files', baseDir: sharedSrc, relPaths: extraFiles },
+        { label: 'Vite fixed files', baseDir: viteSrc, relPaths: ALWAYS_VITE_FILES },
+        { label: 'Design-system demo files', baseDir: viteSrc, relPaths: sectionFiles },
       ],
       runtimeDeps: Object.keys(neededRuntime),
       devDeps: Object.keys(VITE_DEV_DEPENDENCIES),
@@ -144,12 +147,12 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   }
 
   const dryRun = !!options.dryRun
-  const sharedFixed = copySelectedFiles(path.join(templateSharedDir, 'src'), path.join(root, 'src'), ALWAYS_SHARED_FILES, dryRun)
-  const sharedUi = copySelectedFiles(path.join(templateSharedDir, 'src'), path.join(root, 'src'), uiFiles, dryRun)
-  const sharedCss = copySelectedFiles(path.join(templateSharedDir, 'src'), path.join(root, 'src'), cssFiles, dryRun)
-  const sharedExtra = copySelectedFiles(path.join(templateSharedDir, 'src'), path.join(root, 'src'), extraFiles, dryRun)
-  const sharedTokens = copySelectedFiles(
-    path.join(templateSharedDir, 'src'),
+  const sharedFixed = await copySelectedFiles(sharedSrc, path.join(root, 'src'), ALWAYS_SHARED_FILES, dryRun)
+  const sharedUi = await copySelectedFiles(sharedSrc, path.join(root, 'src'), uiFiles, dryRun)
+  const sharedCss = await copySelectedFiles(sharedSrc, path.join(root, 'src'), cssFiles, dryRun)
+  const sharedExtra = await copySelectedFiles(sharedSrc, path.join(root, 'src'), extraFiles, dryRun)
+  const sharedTokens = await copySelectedFiles(
+    sharedSrc,
     path.join(root, 'src'),
     [
       'styles/theme/tokens/colors.css',
@@ -160,8 +163,8 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
     ],
     dryRun
   )
-  const viteFixed = copySelectedFiles(path.join(templateViteDir, 'src'), path.join(root, 'src'), ALWAYS_VITE_FILES, dryRun)
-  const viteSections = copySelectedFiles(path.join(templateViteDir, 'src'), path.join(root, 'src'), sectionFiles, dryRun)
+  const viteFixed = await copySelectedFiles(viteSrc, path.join(root, 'src'), ALWAYS_VITE_FILES, dryRun)
+  const viteSections = await copySelectedFiles(viteSrc, path.join(root, 'src'), sectionFiles, dryRun)
 
   const copied = [sharedFixed, sharedUi, sharedCss, sharedExtra, sharedTokens, viteFixed, viteSections].flatMap(
     (r) => r.copied
@@ -174,13 +177,13 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
 
   if (!dryRun) {
     recordFileHashes(root, [
-      ...hashEntriesFor(path.join(templateSharedDir, 'src'), sharedFixed),
-      ...hashEntriesFor(path.join(templateSharedDir, 'src'), sharedUi),
-      ...hashEntriesFor(path.join(templateSharedDir, 'src'), sharedCss),
-      ...hashEntriesFor(path.join(templateSharedDir, 'src'), sharedExtra),
-      ...hashEntriesFor(path.join(templateSharedDir, 'src'), sharedTokens),
-      ...hashEntriesFor(path.join(templateViteDir, 'src'), viteFixed),
-      ...hashEntriesFor(path.join(templateViteDir, 'src'), viteSections),
+      ...hashEntriesFor(sharedFixed),
+      ...hashEntriesFor(sharedUi),
+      ...hashEntriesFor(sharedCss),
+      ...hashEntriesFor(sharedExtra),
+      ...hashEntriesFor(sharedTokens),
+      ...hashEntriesFor(viteFixed),
+      ...hashEntriesFor(viteSections),
     ])
   }
 
@@ -217,8 +220,8 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   )
   log.success(`${dryRun ? 'Would generate' : 'Generated'} src/styles/theme/index.css`)
 
-  const componentsJsonResult = copyTemplateFile(
-    path.join(templateViteDir, 'components.json'),
+  const componentsJsonResult = await copyTemplateFile(
+    remoteUrl(templateViteDir, 'components.json'),
     path.join(root, 'components.json'),
     dryRun
   )
@@ -228,8 +231,8 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
       : 'components.json (already exists — left untouched)'
   )
 
-  const manifestScriptResult = copyTemplateFile(
-    path.join(templateViteDir, 'scripts/generate-theme-manifest.mjs'),
+  const manifestScriptResult = await copyTemplateFile(
+    remoteUrl(templateViteDir, 'scripts/generate-theme-manifest.mjs'),
     path.join(root, 'scripts/generate-theme-manifest.mjs'),
     dryRun
   )
@@ -239,8 +242,8 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
       : 'scripts/generate-theme-manifest.mjs (already exists — left untouched)'
   )
 
-  const pluginResult = copyTemplateFile(
-    path.join(templateViteDir, 'vite-plugin-design-kit.ts'),
+  const pluginResult = await copyTemplateFile(
+    remoteUrl(templateViteDir, 'vite-plugin-design-kit.ts'),
     path.join(root, 'vite-plugin-design-kit.ts'),
     dryRun
   )
@@ -262,7 +265,7 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   log.title('Wiring it up')
 
   const cssPath = path.join(root, 'src/index.css')
-  const cssTemplate = fs.readFileSync(path.join(templateRootDir, 'index.css'), 'utf8')
+  const cssTemplate = await fetchRequiredTemplateText(remoteUrl(templateRootDir, 'index.css'))
   const cssResult = patchGlobalsCss(cssPath, cssTemplate)
   switch (cssResult.action) {
     case 'created':

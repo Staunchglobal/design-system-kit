@@ -7,6 +7,7 @@ import { detectProject } from '../lib/detect.js'
 import { confirm } from '../lib/confirm.js'
 import { readSelectionConfig, recordFileHashes, hashContent } from '../lib/selection-state.js'
 import { templateSharedDir, templateNextDir, templateViteDir } from '../lib/paths.js'
+import { fetchTemplateText, mapWithConcurrency, remoteUrl } from '../lib/remote.js'
 import { ALWAYS_SHARED_FILES, ALWAYS_NEXT_FILES, ALWAYS_VITE_FILES } from '../lib/managed-files.js'
 import {
   THEME_EDITOR_REQUIRED_COMPONENTS,
@@ -85,35 +86,37 @@ export async function update(options: UpdateOptions) {
 
   const alwaysFixed = project.framework === 'next' ? ALWAYS_NEXT_FILES : ALWAYS_VITE_FILES
   const frameworkTemplateDir = project.framework === 'next' ? templateNextDir : templateViteDir
+  const sharedSrc = remoteUrl(templateSharedDir, 'src')
+  const frameworkSrc = remoteUrl(frameworkTemplateDir, 'src')
 
   const managed: Managed[] = [
-    ...ALWAYS_SHARED_FILES.map((f) => ({ relPath: f, templateSrc: path.join(templateSharedDir, 'src', f) })),
-    ...uiFiles.map((f) => ({ relPath: f, templateSrc: path.join(templateSharedDir, 'src', f) })),
-    ...cssFiles.map((f) => ({ relPath: f, templateSrc: path.join(templateSharedDir, 'src', f) })),
-    ...extraFilesList.map((f) => ({ relPath: f, templateSrc: path.join(templateSharedDir, 'src', f) })),
-    ...TOKEN_FILES.map((f) => ({ relPath: f, templateSrc: path.join(templateSharedDir, 'src', f) })),
-    ...alwaysFixed.map((f) => ({ relPath: f, templateSrc: path.join(frameworkTemplateDir, 'src', f) })),
-    ...sectionFiles.map((f) => ({ relPath: f, templateSrc: path.join(frameworkTemplateDir, 'src', f) })),
+    ...ALWAYS_SHARED_FILES.map((f) => ({ relPath: f, templateSrc: remoteUrl(sharedSrc, f) })),
+    ...uiFiles.map((f) => ({ relPath: f, templateSrc: remoteUrl(sharedSrc, f) })),
+    ...cssFiles.map((f) => ({ relPath: f, templateSrc: remoteUrl(sharedSrc, f) })),
+    ...extraFilesList.map((f) => ({ relPath: f, templateSrc: remoteUrl(sharedSrc, f) })),
+    ...TOKEN_FILES.map((f) => ({ relPath: f, templateSrc: remoteUrl(sharedSrc, f) })),
+    ...alwaysFixed.map((f) => ({ relPath: f, templateSrc: remoteUrl(frameworkSrc, f) })),
+    ...sectionFiles.map((f) => ({ relPath: f, templateSrc: remoteUrl(frameworkSrc, f) })),
   ]
 
   const toWrite: Pending[] = []
   const skippedCustomized: string[] = []
   let upToDateCount = 0
 
-  for (const { relPath, templateSrc } of managed) {
-    if (!fs.existsSync(templateSrc)) continue // renamed/removed in a newer template — nothing to sync to
-    const newContent = fs.readFileSync(templateSrc, 'utf8')
+  await mapWithConcurrency(managed, 8, async ({ relPath, templateSrc }) => {
+    const newContent = await fetchTemplateText(templateSrc)
+    if (newContent === null) return // renamed/removed in a newer template — nothing to sync to
     const destPath = path.join(destRoot, relPath)
 
     if (!fs.existsSync(destPath)) {
       toWrite.push({ relPath, templateSrc, newContent })
-      continue
+      return
     }
 
     const currentContent = fs.readFileSync(destPath, 'utf8')
     if (currentContent === newContent) {
       upToDateCount++
-      continue
+      return
     }
 
     const currentHash = hashContent(currentContent)
@@ -125,7 +128,7 @@ export async function update(options: UpdateOptions) {
     } else {
       skippedCustomized.push(relPath)
     }
-  }
+  })
 
   log.title('Files')
   log.info(`${upToDateCount} file(s) already match the current template.`)

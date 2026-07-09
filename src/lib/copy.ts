@@ -1,85 +1,61 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import { fetchRequiredTemplateText, fetchTemplateText, mapWithConcurrency, remoteUrl } from './remote.js'
 
 export type CopyResult = {
   copied: string[]
   skipped: string[]
+  /** Content fetched for every path in `copied`/`skipped`, keyed by relPath — populated once
+   *  here so callers that also need it (hashEntriesFor) never issue a second fetch for it. */
+  contents: Map<string, string>
 }
 
-function walk(dir: string): string[] {
-  const out: string[] = []
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const full = path.join(dir, entry.name)
-    if (entry.isDirectory()) out.push(...walk(full))
-    else out.push(full)
-  }
-  return out
-}
-
-/**
- * Copies every file under `srcDir` into `destDir`, preserving relative structure.
- * Never overwrites an existing file — those are reported back as `skipped` so the
- * caller can tell the user what wasn't touched (their own edits are never at risk).
- */
-export function copyTemplateDir(srcDir: string, destDir: string): CopyResult {
-  const copied: string[] = []
-  const skipped: string[] = []
-
-  for (const file of walk(srcDir)) {
-    // path.relative returns backslash-separated paths on Windows — normalize to forward slashes
-    // so these rel paths stay consistent with copySelectedFiles' (always forward-slash, since
-    // its inputs are string literals) for anything that keys off them, e.g. fileHashes.
-    const rel = path.relative(srcDir, file).split(path.sep).join('/')
-    const dest = path.join(destDir, rel)
-    if (fs.existsSync(dest)) {
-      skipped.push(rel)
-      continue
-    }
-    fs.mkdirSync(path.dirname(dest), { recursive: true })
-    fs.copyFileSync(file, dest)
-    copied.push(rel)
-  }
-
-  return { copied, skipped }
-}
-
-export function copyTemplateFile(srcFile: string, destFile: string, dryRun = false): 'copied' | 'skipped' {
+export async function copyTemplateFile(srcUrl: string, destFile: string, dryRun = false): Promise<'copied' | 'skipped'> {
   if (fs.existsSync(destFile)) return 'skipped'
+  const content = await fetchRequiredTemplateText(srcUrl)
   if (!dryRun) {
     fs.mkdirSync(path.dirname(destFile), { recursive: true })
-    fs.copyFileSync(srcFile, destFile)
+    fs.writeFileSync(destFile, content)
   }
   return 'copied'
 }
 
 /**
- * Like copyTemplateDir, but only for the given relative paths (used for selective installs).
- * `dryRun: true` computes the exact same copied/skipped classification (by existence checks
- * alone) without writing anything — used by `init --dry-run` to preview what would happen.
+ * Fetches and copies only the given relative paths (used for selective installs).
+ * Never overwrites an existing file — those are reported back as `skipped` so the
+ * caller can tell the user what wasn't touched (their own edits are never at risk).
+ * A path that 404s at `srcBase` (removed/renamed in a newer template version) is
+ * silently omitted from both lists, matching the old `fs.existsSync(src)` guard.
+ * `dryRun: true` computes the exact same copied/skipped classification without
+ * writing anything — used by `init --dry-run` to preview what would happen.
  */
-export function copySelectedFiles(
-  srcDir: string,
+export async function copySelectedFiles(
+  srcBase: string,
   destDir: string,
   relativePaths: Iterable<string>,
   dryRun = false
-): CopyResult {
+): Promise<CopyResult> {
   const copied: string[] = []
   const skipped: string[] = []
-  for (const rel of relativePaths) {
-    const src = path.join(srcDir, rel)
-    if (!fs.existsSync(src)) continue
+  const contents = new Map<string, string>()
+
+  await mapWithConcurrency([...relativePaths], 8, async (rel) => {
+    const content = await fetchTemplateText(remoteUrl(srcBase, rel))
+    if (content === null) return
+    contents.set(rel, content)
     const dest = path.join(destDir, rel)
     if (fs.existsSync(dest)) {
       skipped.push(rel)
-      continue
+      return
     }
     if (!dryRun) {
       fs.mkdirSync(path.dirname(dest), { recursive: true })
-      fs.copyFileSync(src, dest)
+      fs.writeFileSync(dest, content)
     }
     copied.push(rel)
-  }
-  return { copied, skipped }
+  })
+
+  return { copied, skipped, contents }
 }
 
 /** Overwrites a file unconditionally — used for CLI-generated files (nav.ts, page.tsx, index.css). */
@@ -89,17 +65,15 @@ export function writeGeneratedFile(destFile: string, content: string, dryRun = f
   fs.writeFileSync(destFile, content)
 }
 
-/** Turns a copySelectedFiles/copyTemplateDir CopyResult into recordFileHashes-ready entries. */
-export function hashEntriesFor(
-  srcDir: string,
-  result: CopyResult
-): { destRel: string; templateContent: string; written: boolean }[] {
+/** Turns a copySelectedFiles CopyResult into recordFileHashes-ready entries — pure data
+ *  reshaping, no I/O, since `result.contents` already has everything it needs. */
+export function hashEntriesFor(result: CopyResult): { destRel: string; templateContent: string; written: boolean }[] {
   const entries: { destRel: string; templateContent: string; written: boolean }[] = []
   for (const rel of result.copied) {
-    entries.push({ destRel: rel, templateContent: fs.readFileSync(path.join(srcDir, rel), 'utf8'), written: true })
+    entries.push({ destRel: rel, templateContent: result.contents.get(rel)!, written: true })
   }
   for (const rel of result.skipped) {
-    entries.push({ destRel: rel, templateContent: fs.readFileSync(path.join(srcDir, rel), 'utf8'), written: false })
+    entries.push({ destRel: rel, templateContent: result.contents.get(rel)!, written: false })
   }
   return entries
 }
