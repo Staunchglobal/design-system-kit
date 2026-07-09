@@ -3,6 +3,7 @@ import path from 'node:path'
 import { execFileSync } from 'node:child_process'
 import { NextResponse } from 'next/server'
 import type { ThemeSavePayload } from '@/lib/theme/types'
+import { SAFE_HEX_RE, SAFE_ICON_KEY_RE, SAFE_ICON_NAME_RE, SAFE_TOKEN_RE, isSafeCustomFont } from '@/lib/theme/validation'
 
 export const runtime = 'nodejs'
 
@@ -92,7 +93,6 @@ function writeFontsCss(
 ): string {
   const faceBlocks: string[] = []
   const varLines: string[] = []
-  const googleImports: string[] = []
 
   for (const f of fonts) {
     if (f.source === 'file' && f.path) {
@@ -110,11 +110,10 @@ function writeFontsCss(
 }`)
       varLines.push(`  --font-${f.id}: '${f.id}', sans-serif;`)
     } else if (f.source === 'google') {
-      const family = encodeURIComponent(f.googleFamily)
-      const weights = (f.weights || '400;700').replace(/,/g, ';')
-      googleImports.push(
-        `@import url('https://fonts.googleapis.com/css2?family=${family}:wght@${weights}&display=swap');`
-      )
+      // Loaded via a <link> in layout.tsx (see patchLayoutFonts), not @import here —
+      // this file gets nested-imported into globals.css, and CSS requires @import to
+      // be the first rule in a stylesheet; buried this deep, it never is, and Next's
+      // build fails with "@import rules must precede all rules" for the whole app.
       varLines.push(`  --font-${f.id}: '${f.googleFamily}', sans-serif;`)
     }
   }
@@ -124,10 +123,11 @@ function writeFontsCss(
    Font Families
    ==========================================================================
    \`--font-sans\` / \`--font-mono\` come from next/font (layout.tsx).
-   Custom fonts below are managed by /theme-editor.
+   Custom fonts below are managed by /theme-editor. Google fonts load via a
+   <link> in layout.tsx (see THEME_GOOGLE_FONTS markers there), not @import
+   here — see the comment above for why.
    ========================================================================== */
 
-${googleImports.join('\n')}
 ${faceBlocks.join('\n\n')}
 :root {
   --font-heading: ${heading};
@@ -136,27 +136,57 @@ ${varLines.join('\n')}
 `
 }
 
+function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+/**
+ * Loads Google fonts via real <link> tags in <html>, not a CSS @import — see the
+ * comment in writeFontsCss for why @import can't work here. `<html>` is guaranteed
+ * to exist in any App Router root layout, so appending as its first children works
+ * regardless of how the rest of the file is structured. `rel="preconnect"` links are
+ * plain resource hints — React auto-hoists them into <head> from anywhere in the
+ * tree. `rel="stylesheet"` is different: without a `precedence` prop, React renders
+ * it literally in place rather than hoisting it, and a `<link>` isn't a valid direct
+ * child of `<html>` (only `<head>`/`<body>` are), which throws a hydration mismatch —
+ * `precedence` is what tells React to treat it as a hoistable resource instead.
+ */
 function patchLayoutFonts(fonts: ThemeSavePayload['customFonts']) {
   const layoutPath = path.join(process.cwd(), srcRoot(), 'app/layout.tsx')
   let src = fs.readFileSync(layoutPath, 'utf8')
 
-  const lines = fonts.map((f) => {
-    if (f.source === 'google') {
-      return `// --font-${f.id}: Google "${f.googleFamily}" (loaded via tokens/fonts.css @import)`
-    }
-    return `// --font-${f.id}: file ${f.path ?? f.fileName} (@font-face in tokens/fonts.css)`
-  })
+  const googleFonts = fonts.filter((f) => f.source === 'google')
 
-  const start = '// THEME_FONTS_START'
-  const end = '// THEME_FONTS_END'
-  const block = `${start}
-${lines.length ? lines.join('\n') : '// (no custom fonts)'}
-${end}`
+  const start = '{/* THEME_GOOGLE_FONTS_START */}'
+  const end = '{/* THEME_GOOGLE_FONTS_END */}'
+
+  const links: string[] = []
+  if (googleFonts.length) {
+    links.push('<link rel="preconnect" href="https://fonts.googleapis.com" />')
+    links.push('<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />')
+    for (const f of googleFonts) {
+      const family = encodeURIComponent(f.googleFamily)
+      const weights = (f.weights || '400;700').replace(/,/g, ';')
+      // precedence is required for React 19+ to hoist/dedupe a stylesheet link
+      // rendered outside <head> — without it, React renders it literally as a
+      // child of <html>, which isn't a valid place for a <link> and throws a
+      // hydration mismatch.
+      links.push(
+        `<link rel="stylesheet" precedence="default" href="https://fonts.googleapis.com/css2?family=${family}:wght@${weights}&display=swap" />`
+      )
+    }
+  }
+
+  const block = links.length ? `${start}\n      ${links.join('\n      ')}\n      ${end}` : `${start}\n      ${end}`
 
   if (src.includes(start) && src.includes(end)) {
-    src = src.replace(new RegExp(`${start}[\\s\\S]*?${end}`), block)
+    src = src.replace(new RegExp(`${escapeRegExp(start)}[\\s\\S]*?${escapeRegExp(end)}`), block)
   } else {
-    src = src.replace(/from 'next\/font\/google'\n/, `from 'next/font/google'\n\n${block}\n`)
+    const htmlOpenTag = src.match(/<html\b[^>]*>/)
+    if (htmlOpenTag) {
+      const insertAt = htmlOpenTag.index! + htmlOpenTag[0].length
+      src = src.slice(0, insertAt) + `\n      ${block}` + src.slice(insertAt)
+    }
   }
 
   fs.writeFileSync(layoutPath, src)
@@ -222,6 +252,22 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, message: 'Invalid JSON' }, { status: 400 })
   }
 
+  // Reject identifiers that would land in a filename, a generated .ts/.tsx source
+  // file, or a CSS selector/property name rather than an already-scoped CSS value —
+  // see the comment above isSafeCustomFont for what this is (and isn't) guarding.
+  payload.customFonts = payload.customFonts.filter(isSafeCustomFont)
+  payload.customColors = payload.customColors.filter(
+    (c) => SAFE_TOKEN_RE.test(c.name.replace(/^--/, '')) && SAFE_HEX_RE.test(c.hex)
+  )
+  payload.customTypography = payload.customTypography.filter((t) =>
+    SAFE_TOKEN_RE.test(t.id.replace(/^typography-/, ''))
+  )
+  payload.iconMap = Object.fromEntries(
+    Object.entries(payload.iconMap).filter(
+      ([k, v]) => SAFE_ICON_KEY_RE.test(k) && SAFE_ICON_NAME_RE.test(v)
+    )
+  )
+
   const root = themeRoot()
   const manifestPath = path.join(root, 'theme.manifest.json')
   const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8')) as {
@@ -242,6 +288,9 @@ export async function POST(request: Request) {
       const ext = path.extname(f.fileName) || '.woff2'
       const outName = `${f.id}${ext}`
       const outPath = path.join(fontsDir, outName)
+      // Belt-and-suspenders on top of the id charset filter above: refuse to write
+      // anywhere the resolved path escapes fontsDir.
+      if (!outPath.startsWith(fontsDir + path.sep)) continue
       const base64 = f.dataUrl.replace(/^data:[^;]+;base64,/, '')
       fs.writeFileSync(outPath, Buffer.from(base64, 'base64'))
       fonts[i] = { ...f, path: `/fonts/${outName}`, dataUrl: undefined }

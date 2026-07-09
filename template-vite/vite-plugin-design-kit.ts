@@ -74,7 +74,6 @@ function appendTypographyRole(css: string, id: string, t: CustomTypography): str
 function writeFontsCss(fonts: CustomFont[], values: Record<string, string>): string {
   const faceBlocks: string[] = []
   const varLines: string[] = []
-  const googleImports: string[] = []
 
   for (const f of fonts) {
     if (f.source === 'file' && f.path) {
@@ -90,11 +89,10 @@ function writeFontsCss(fonts: CustomFont[], values: Record<string, string>): str
       )
       varLines.push(`  --font-${f.id}: '${f.id}', sans-serif;`)
     } else if (f.source === 'google') {
-      const family = encodeURIComponent(f.googleFamily)
-      const weights = (f.weights || '400;700').replace(/,/g, ';')
-      googleImports.push(
-        `@import url('https://fonts.googleapis.com/css2?family=${family}:wght@${weights}&display=swap');`
-      )
+      // Loaded via a <link> in index.html (see patchIndexHtmlFonts), not @import here —
+      // this file gets nested-imported into src/index.css, and CSS requires @import to
+      // be the first rule in a stylesheet; buried this deep, it never is, and the build
+      // fails with "@import rules must precede all rules" for the whole app.
       varLines.push(`  --font-${f.id}: '${f.googleFamily}', sans-serif;`)
     }
   }
@@ -104,16 +102,63 @@ function writeFontsCss(fonts: CustomFont[], values: Record<string, string>): str
    Font Families
    ==========================================================================
    Custom fonts below are managed by the theme editor. \`--font-sans\`/\`--font-mono\`
-   are set in src/index.css — point them at whatever font loading you use.
+   are set in src/index.css — point them at whatever font loading you use. Google
+   fonts load via a <link> in index.html (see THEME_GOOGLE_FONTS markers there),
+   not @import here — see the comment above for why.
    ========================================================================== */
 
-${googleImports.join('\n')}
 ${faceBlocks.join('\n\n')}
 :root {
   --font-heading: ${heading};
 ${varLines.join('\n')}
 }
 `
+}
+
+function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+/**
+ * Loads Google fonts via real <link> tags in index.html's <head>, not a CSS @import —
+ * see the comment in writeFontsCss for why @import can't work here.
+ */
+function patchIndexHtmlFonts(root: string, fonts: CustomFont[]) {
+  const indexHtmlPath = path.join(root, 'index.html')
+  if (!fs.existsSync(indexHtmlPath)) return
+  let html = fs.readFileSync(indexHtmlPath, 'utf8')
+
+  const googleFonts = fonts.filter((f) => f.source === 'google')
+
+  const start = '<!-- THEME_GOOGLE_FONTS_START -->'
+  const end = '<!-- THEME_GOOGLE_FONTS_END -->'
+
+  const links: string[] = []
+  if (googleFonts.length) {
+    links.push('<link rel="preconnect" href="https://fonts.googleapis.com" />')
+    links.push('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />')
+    for (const f of googleFonts) {
+      const family = encodeURIComponent(f.googleFamily)
+      const weights = (f.weights || '400;700').replace(/,/g, ';')
+      links.push(
+        `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=${family}:wght@${weights}&display=swap" />`
+      )
+    }
+  }
+
+  const block = links.length ? `${start}\n    ${links.join('\n    ')}\n    ${end}` : `${start}\n    ${end}`
+
+  if (html.includes(start) && html.includes(end)) {
+    html = html.replace(new RegExp(`${escapeRegExp(start)}[\\s\\S]*?${escapeRegExp(end)}`), block)
+  } else {
+    const headOpenTag = html.match(/<head\b[^>]*>/)
+    if (headOpenTag) {
+      const insertAt = headOpenTag.index! + headOpenTag[0].length
+      html = html.slice(0, insertAt) + `\n    ${block}` + html.slice(insertAt)
+    }
+  }
+
+  fs.writeFileSync(indexHtmlPath, html)
 }
 
 function writeIconMap(root: string, iconMap: Record<string, string>) {
@@ -162,6 +207,27 @@ function patchIndexCssColorBridge(root: string, customColors: CustomColor[]) {
   fs.writeFileSync(indexCssPath, css)
 }
 
+// This endpoint takes an arbitrary JSON payload from the client and writes it into
+// files on disk — including generated .ts source that gets imported and executed,
+// and font ids that become filesystem paths. Editing an existing CSS variable's
+// *value* is the theme editor's actual feature and is already scoped inside a
+// `property: <value>;` slot, so it's intentionally left free-form; these checks
+// cover the identifiers that instead become selectors, property names, filenames,
+// or literal source code, where an unescaped value would let a request break out
+// of its intended syntactic slot.
+export const SAFE_TOKEN_RE = /^[a-zA-Z0-9_-]+$/
+export const SAFE_ICON_KEY_RE = /^[a-zA-Z][a-zA-Z0-9.-]*$/
+export const SAFE_ICON_NAME_RE = /^[A-Za-z][A-Za-z0-9]*$/
+export const SAFE_FONT_FAMILY_RE = /^[A-Za-z0-9 ]+$/
+export const SAFE_WEIGHTS_RE = /^[0-9,; ]+$/
+export const SAFE_HEX_RE = /^#[0-9a-fA-F]{3,8}$/
+
+export function isSafeCustomFont(f: CustomFont): boolean {
+  if (!SAFE_TOKEN_RE.test(f.id)) return false
+  if (f.source === 'google') return SAFE_FONT_FAMILY_RE.test(f.googleFamily) && SAFE_WEIGHTS_RE.test(f.weights || '')
+  return true
+}
+
 function readBody(req: import('node:http').IncomingMessage): Promise<string> {
   return new Promise((resolve, reject) => {
     let data = ''
@@ -198,6 +264,23 @@ export function designKit(): Plugin {
           return
         }
 
+        // Reject identifiers that would land in a filename, a generated .ts source
+        // file, or a CSS selector/property name rather than an already-scoped CSS
+        // value — see the comment above isSafeCustomFont for what this is (and
+        // isn't) guarding.
+        payload.customFonts = payload.customFonts.filter(isSafeCustomFont)
+        payload.customColors = payload.customColors.filter(
+          (c) => SAFE_TOKEN_RE.test(c.name.replace(/^--/, '')) && SAFE_HEX_RE.test(c.hex)
+        )
+        payload.customTypography = payload.customTypography.filter((t) =>
+          SAFE_TOKEN_RE.test(t.id.replace(/^typography-/, ''))
+        )
+        payload.iconMap = Object.fromEntries(
+          Object.entries(payload.iconMap).filter(
+            ([k, v]) => SAFE_ICON_KEY_RE.test(k) && SAFE_ICON_NAME_RE.test(v)
+          )
+        )
+
         const themeRoot = path.join(root, 'src/styles/theme')
         const manifestPath = path.join(themeRoot, 'theme.manifest.json')
         const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8')) as {
@@ -216,10 +299,11 @@ export function designKit(): Plugin {
           if (f.source === 'file' && f.dataUrl) {
             const ext = path.extname(f.fileName) || '.woff2'
             const outName = `${f.id}${ext}`
-            fs.writeFileSync(
-              path.join(fontsDir, outName),
-              Buffer.from(f.dataUrl.replace(/^data:[^;]+;base64,/, ''), 'base64')
-            )
+            const outPath = path.join(fontsDir, outName)
+            // Belt-and-suspenders on top of the id charset filter above: refuse to
+            // write anywhere the resolved path escapes fontsDir.
+            if (!outPath.startsWith(fontsDir + path.sep)) continue
+            fs.writeFileSync(outPath, Buffer.from(f.dataUrl.replace(/^data:[^;]+;base64,/, ''), 'base64'))
             fonts[i] = { ...f, path: `/fonts/${outName}`, dataUrl: undefined }
           }
         }
@@ -248,6 +332,7 @@ export function designKit(): Plugin {
         }
 
         patchIndexCssColorBridge(root, payload.customColors)
+        patchIndexHtmlFonts(root, fonts)
         writeIconMap(root, payload.iconMap)
 
         res.setHeader('Content-Type', 'application/json')
