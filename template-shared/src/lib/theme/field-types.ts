@@ -196,6 +196,72 @@ export function clearAppliedCssVars(names: string[], root: HTMLElement = documen
   }
 }
 
+/**
+ * Component CSS declares its own override vars (e.g. `--button-bg`) directly on the
+ * same selector that consumes them (`[data-slot="button"][data-variant="default"]`).
+ * A rule that targets an element directly always wins over a value the element only
+ * *inherits* from an ancestor — so writing these via `host.style.setProperty(...)` on
+ * an ancestor (what `applyCssVars` does) can never be visible live; it only becomes
+ * visible once Save rewrites the literal value inside that same selector on disk.
+ * Reconstruct the selector from `scope` (as produced by generate-theme-manifest.mjs's
+ * `inferScope`) so these can be applied as real, higher-specificity CSS rules instead.
+ * Returns null for global/token scopes (root, dark, editor, default) with no slot.
+ */
+export function scopeToSelector(scope?: string): string | null {
+  if (!scope) return null
+  const parts = scope.split('/')
+  if (parts[0] === 'root' || parts[0] === 'dark' || parts[0] === 'editor') parts.shift()
+  if (!parts.length || parts[0] === 'default') return null
+  const slot = parts[0]
+  if (/^(variant|size)=/.test(slot)) return null
+  let selector = `[data-slot="${slot}"]`
+  for (const part of parts.slice(1)) {
+    const m = part.match(/^(variant|size)=(.+)$/)
+    if (m) selector += `[data-${m[1]}="${m[2]}"]`
+  }
+  return selector
+}
+
+/**
+ * Builds selector-qualified override rules for every component-scoped variable
+ * (see `scopeToSelector`), scoped under `hostSelector` so they only affect the live
+ * preview. Dark-scoped entries are skipped — the editor chrome always previews light.
+ *
+ * `scopeToSelector` only recovers `data-variant`/`data-size` qualifiers. A few
+ * components distinguish occurrences of the same variable name by some other DOM
+ * attribute instead (e.g. drawer's `data-vaul-drawer-direction`, scroll-area's
+ * `data-orientation`, sheet's `data-side`) — those collapse onto the same
+ * reconstructed selector. When that happens we can no longer tell which occurrence
+ * a live edit belongs to, so skip emitting a rule for that name+selector entirely
+ * rather than have one occurrence silently overwrite another's preview.
+ */
+export function buildScopedVarsCss(
+  values: Record<string, string>,
+  manifest: ThemeManifest,
+  hostSelector = '[data-theme-editor]'
+): string {
+  const bySelectorName = new Map<string, { selector: string; name: string; value: string }[]>()
+  for (const g of manifest.groups) {
+    for (const v of g.variables) {
+      if (isDarkScopeVar(v.id, v.scope)) continue
+      const selector = scopeToSelector(v.scope)
+      if (!selector) continue
+      const value = values[v.id] ?? v.value
+      const key = `${selector}|${v.name}`
+      const entries = bySelectorName.get(key) ?? []
+      entries.push({ selector, name: v.name, value })
+      bySelectorName.set(key, entries)
+    }
+  }
+  const lines: string[] = []
+  for (const entries of bySelectorName.values()) {
+    if (entries.length > 1) continue
+    const { selector, name, value } = entries[0]
+    lines.push(`${hostSelector} ${selector} { ${name}: ${value}; }`)
+  }
+  return lines.join('\n')
+}
+
 const UNIT_RE = /^(-?\d+(?:\.\d+)?)(px|rem|em|%|deg|ms|s|vh|vw|vmin|vmax)$/
 
 /** Splits e.g. "0.375rem" into { num: 0.375, unit: 'rem' }; null if not a plain number+unit value. */

@@ -8,7 +8,13 @@ import type {
   ThemeManifest,
   ThemeSavePayload,
 } from '@/lib/theme/types'
-import { applyCssVars, defaultsFromManifest, idToNameMap } from '@/lib/theme/field-types'
+import {
+  applyCssVars,
+  buildScopedVarsCss,
+  defaultsFromManifest,
+  idToNameMap,
+  scopeToSelector,
+} from '@/lib/theme/field-types'
 import { defaultIconMap } from '@/components/icons/icon-map'
 
 type ThemeEditorContextValue = {
@@ -59,6 +65,18 @@ export function ThemeEditorProvider({
     }
     return map
   }, [manifest])
+  // Vars whose scope resolves to a component selector (e.g. `--button-bg`) must be
+  // applied as real selector-qualified CSS rules, not inline vars on an ancestor —
+  // see `scopeToSelector` for why inheritance can't reach them live.
+  const scopedIds = React.useMemo(() => {
+    const set = new Set<string>()
+    for (const g of manifest.groups) {
+      for (const v of g.variables) {
+        if (scopeToSelector(v.scope)) set.add(v.id)
+      }
+    }
+    return set
+  }, [manifest])
   const [values, setValues] = React.useState<Record<string, string>>(() => ({ ...baseline }))
   const [customColors, setCustomColors] = React.useState<CustomColor[]>([])
   const [customTypography, setCustomTypography] = React.useState<CustomTypography[]>([])
@@ -82,8 +100,21 @@ export function ThemeEditorProvider({
       }
     }
 
-    applyCssVars(values, nameById, host, scopeById)
-  }, [values, nameById, scopeById])
+    const globalValues: Record<string, string> = {}
+    for (const [id, v] of Object.entries(values)) {
+      if (!scopedIds.has(id)) globalValues[id] = v
+    }
+    applyCssVars(globalValues, nameById, host, scopeById)
+
+    const scopedStyleId = 'theme-editor-scoped-vars'
+    let scopedEl = document.getElementById(scopedStyleId) as HTMLStyleElement | null
+    if (!scopedEl) {
+      scopedEl = document.createElement('style')
+      scopedEl.id = scopedStyleId
+      document.head.appendChild(scopedEl)
+    }
+    scopedEl.textContent = buildScopedVarsCss(values, manifest)
+  }, [values, nameById, scopeById, scopedIds, manifest])
 
   // Inject preview style for custom colors / fonts / typography
   React.useEffect(() => {
@@ -193,8 +224,16 @@ ${typoRules}`
     setIconMap({ ...defaultIconMap })
     setDirty(false)
     const host = document.querySelector('[data-theme-editor]') as HTMLElement | null
-    if (host) applyCssVars(baseline, nameById, host, scopeById)
-  }, [baseline, nameById, scopeById])
+    if (host) {
+      const globalValues: Record<string, string> = {}
+      for (const [id, v] of Object.entries(baseline)) {
+        if (!scopedIds.has(id)) globalValues[id] = v
+      }
+      applyCssVars(globalValues, nameById, host, scopeById)
+    }
+    const scopedEl = document.getElementById('theme-editor-scoped-vars') as HTMLStyleElement | null
+    if (scopedEl) scopedEl.textContent = buildScopedVarsCss(baseline, manifest)
+  }, [baseline, nameById, scopeById, scopedIds, manifest])
 
   const save = React.useCallback(async () => {
     setSaving(true)

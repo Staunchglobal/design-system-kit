@@ -65,18 +65,30 @@ function inferType(name, value) {
   return 'raw'
 }
 
-/** Infer a short scope label from CSS text before the match. */
+/**
+ * Infer a short scope label from the selector of the CSS rule that directly
+ * encloses the variable declaration at `index` — i.e. the text between the
+ * previous rule's closing `}` and this rule's opening `{`. Scanning the whole
+ * file backward (the old approach) picks up slot/variant/size attributes from
+ * unrelated earlier rules — e.g. button.css's un-variant-scoped `[data-size='icon']`
+ * block would inherit `variant=link` merely because `[data-variant='link']` was
+ * the last variant rule textually before it, mislabeling every size-only variable.
+ */
 function inferScope(css, index) {
   const before = css.slice(0, index)
-  const lastEditor = before.lastIndexOf('[data-theme-editor]')
-  const lastDark = before.lastIndexOf('.dark')
-  const lastRoot = before.lastIndexOf(':root')
-  const slotMatch = [...before.matchAll(/\[data-slot=['"]([^'"]+)['"]\]/g)].pop()
-  const variantMatch = [...before.matchAll(/\[data-variant=['"]([^'"]+)['"]\]/g)].pop()
-  const sizeMatch = [...before.matchAll(/\[data-size=['"]([^'"]+)['"]\]/g)].pop()
+  const selectorStart = before.lastIndexOf('}') + 1
+  const openBrace = before.lastIndexOf('{')
+  const selector = before.slice(selectorStart, openBrace)
+
+  const lastEditor = selector.lastIndexOf('[data-theme-editor]')
+  const lastDark = selector.lastIndexOf('.dark')
+  const lastRoot = selector.lastIndexOf(':root')
+  const slotMatch = [...selector.matchAll(/\[data-slot=['"]([^'"]+)['"]\]/g)].pop()
+  const variantMatch = [...selector.matchAll(/\[data-variant=['"]([^'"]+)['"]\]/g)].pop()
+  const sizeMatch = [...selector.matchAll(/\[data-size=['"]([^'"]+)['"]\]/g)].pop()
   const parts = []
-  // Nearest block wins — editor light lock must not be tagged as dark
-  // just because `.dark` appears earlier in the file.
+  // Nearest marker wins — editor light lock must not be tagged as dark
+  // just because `.dark` appears earlier in the same selector text.
   const nearest = Math.max(lastEditor, lastDark, lastRoot)
   if (nearest === lastEditor && lastEditor !== -1) parts.push('editor')
   else if (nearest === lastDark && lastDark !== -1) parts.push('dark')
