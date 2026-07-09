@@ -1,4 +1,4 @@
-# nextjs-design-system-kit
+# staunch-shadcn-design-system-kit
 
 A CLI that scaffolds a full [shadcn/ui](https://ui.shadcn.com)-based component set, a token-driven
 theme system, a `/design-system` showcase page, and a live `/theme-editor` into a **Next.js (App
@@ -47,7 +47,7 @@ required for the theme editor's "Save" button, which rewrites your own CSS/TS fi
 
 ```bash
 # From inside your Next.js or Vite project:
-npx nextjs-design-system-kit init
+npx staunch-shadcn-design-system-kit init
 ```
 
 You'll be asked which components to install (grouped the same way the shadcn docs group them —
@@ -75,13 +75,13 @@ project root) and pre-checked in the picker, so you only need to check the *new*
 that already exists on disk is ever overwritten — files you've hand-edited are always left alone.
 
 ```bash
-npx nextjs-design-system-kit init --components calendar,chart
+npx staunch-shadcn-design-system-kit init --components calendar,chart
 ```
 
 ### Removing components later
 
 ```bash
-npx nextjs-design-system-kit remove calendar,chart
+npx staunch-shadcn-design-system-kit remove calendar,chart
 ```
 
 Deletes that component's `ui/*.tsx`, theme CSS, and design-system demo file — but only if nothing
@@ -104,7 +104,7 @@ one-line manual step:
 ### Pulling in template fixes/improvements later
 
 ```bash
-npx nextjs-design-system-kit update
+npx staunch-shadcn-design-system-kit update
 ```
 
 `init` copies real source files into your repo, so a bug fix or improvement made to this package
@@ -228,9 +228,9 @@ npx create-next-app@latest my-next-test \
   --typescript --src-dir --app --tailwind --eslint --use-npm --import-alias "@/*"
 
 cd my-next-test
-node /path/to/nextjs-design-system-kit/dist/cli.js init
+node /path/to/staunch-shadcn-design-system-kit/dist/cli.js init
 # or non-interactively:
-# node /path/to/nextjs-design-system-kit/dist/cli.js init --yes --components button,dialog,input
+# node /path/to/staunch-shadcn-design-system-kit/dist/cli.js init --yes --components button,dialog,input
 
 npm run dev
 # visit http://localhost:3000/design-system and /theme-editor
@@ -251,7 +251,7 @@ npm run build   # next build — catches anything the picker/codegen/patchers go
 npm create vite@latest my-vite-test -- --template react-ts
 cd my-vite-test
 npm install
-node /path/to/nextjs-design-system-kit/dist/cli.js init
+node /path/to/staunch-shadcn-design-system-kit/dist/cli.js init
 ```
 
 Vite has no built-in router, so wire up the pages it printed instructions for — minimally, edit
@@ -288,7 +288,7 @@ Re-run `init` against the same project with different `--components` — your pr
 remembered (`design-kit.json`) and unioned with the new ones, never replaced:
 
 ```bash
-node /path/to/nextjs-design-system-kit/dist/cli.js init --yes --components calendar,chart
+node /path/to/staunch-shadcn-design-system-kit/dist/cli.js init --yes --components calendar,chart
 ```
 
 ### Useful flags while iterating
