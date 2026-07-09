@@ -1,0 +1,160 @@
+/* ==========================================================================
+   Combobox
+   ========================================================================== */
+
+[data-slot='combobox-trigger'] {
+  --combobox-trigger-icon-size: 1rem;
+  --combobox-trigger-icon-color: var(--muted-foreground);
+}
+
+[data-slot='combobox-content'] {
+  --combobox-content-bg: var(--popover);
+  --combobox-content-fg: var(--popover-foreground);
+  --combobox-content-ring-color: color-mix(in oklch, var(--foreground), transparent 90%);
+  --combobox-content-radius: var(--radius-lg);
+  --combobox-content-shadow: var(--shadow-md);
+
+  background-color: var(--combobox-content-bg);
+  color: var(--combobox-content-fg);
+  box-shadow:
+    0 0 0 1px var(--combobox-content-ring-color),
+    var(--combobox-content-shadow);
+  border-radius: var(--combobox-content-radius);
+}
+
+[data-slot='combobox-list'] {
+  --combobox-list-padding: 0.25rem;
+  padding: var(--combobox-list-padding);
+}
+
+[data-slot='combobox-item'] {
+  --combobox-item-radius: var(--radius-md);
+  --combobox-item-padding-block: 0.25rem;
+  --combobox-item-padding-inline-end: 2rem;
+  --combobox-item-padding-inline-start: 0.375rem;
+  --combobox-item-font-size: var(--typography-small-font-size);
+  --combobox-item-gap: 0.5rem;
+  --combobox-item-highlighted-bg: var(--accent);
+  --combobox-item-highlighted-fg: var(--accent-foreground);
+  --combobox-item-disabled-opacity: 0.5;
+
+  border-radius: var(--combobox-item-radius);
+  padding-block: var(--combobox-item-padding-block);
+  padding-inline-start: var(--combobox-item-padding-inline-start);
+  padding-inline-end: var(--combobox-item-padding-inline-end);
+  font-size: var(--combobox-item-font-size);
+  gap: var(--combobox-item-gap);
+}
+[data-slot='combobox-item'][data-highlighted] {
+  background-color: var(--combobox-item-highlighted-bg);
+  color: var(--combobox-item-highlighted-fg);
+}
+[data-slot='combobox-item'][data-disabled] {
+  opacity: var(--combobox-item-disabled-opacity);
+}
+
+[data-slot='combobox-label'] {
+  --combobox-label-fg: var(--muted-foreground);
+  --combobox-label-padding-x: 0.5rem;
+  --combobox-label-padding-y: 0.375rem;
+  --combobox-label-font-size: var(--typography-caption-font-size);
+  color: var(--combobox-label-fg);
+  padding-inline: var(--combobox-label-padding-x);
+  padding-block: var(--combobox-label-padding-y);
+  font-size: var(--combobox-label-font-size);
+}
+
+[data-slot='combobox-empty'] {
+  --combobox-empty-fg: var(--muted-foreground);
+  --combobox-empty-padding-y: 0.5rem;
+  --combobox-empty-font-size: var(--typography-muted-font-size);
+  color: var(--combobox-empty-fg);
+  padding-block: var(--combobox-empty-padding-y);
+  font-size: var(--combobox-empty-font-size);
+}
+
+[data-slot='combobox-separator'] {
+  --combobox-separator-color: var(--border);
+  --combobox-separator-thickness: 1px;
+  --combobox-separator-margin: 0.25rem;
+  background-color: var(--combobox-separator-color);
+  height: var(--combobox-separator-thickness);
+  margin-block: var(--combobox-separator-margin);
+}
+
+[data-slot='combobox-chips'] {
+  --combobox-chips-radius: var(--radius-lg);
+  --combobox-chips-border-width: 1px;
+  --combobox-chips-border-color: var(--border);
+  --combobox-chips-bg: transparent;
+  --combobox-chips-min-height: 2rem;
+  --combobox-chips-padding-x: 0.625rem;
+  --combobox-chips-padding-y: 0.25rem;
+  --combobox-chips-gap: 0.25rem;
+  --combobox-chips-font-size: var(--typography-small-font-size);
+  --combobox-chips-focus-border-color: var(--ring);
+  --combobox-chips-focus-ring-width: 3px;
+  --combobox-chips-focus-ring-color: color-mix(in oklch, var(--ring), transparent 50%);
+  --combobox-chips-invalid-border-color: var(--destructive);
+  --combobox-chips-invalid-ring-color: color-mix(in oklch, var(--destructive), transparent 80%);
+
+  border-radius: var(--combobox-chips-radius);
+  border-width: var(--combobox-chips-border-width);
+  border-color: var(--combobox-chips-border-color);
+  background-color: var(--combobox-chips-bg);
+  min-height: var(--combobox-chips-min-height);
+  padding-inline: var(--combobox-chips-padding-x);
+  padding-block: var(--combobox-chips-padding-y);
+  gap: var(--combobox-chips-gap);
+  font-size: var(--combobox-chips-font-size);
+}
+[data-slot='combobox-chips']:focus-within {
+  border-color: var(--combobox-chips-focus-border-color);
+  box-shadow: 0 0 0 var(--combobox-chips-focus-ring-width) var(--combobox-chips-focus-ring-color);
+}
+[data-slot='combobox-chips']:has([aria-invalid='true']) {
+  border-color: var(--combobox-chips-invalid-border-color);
+  box-shadow: 0 0 0 var(--combobox-chips-focus-ring-width) var(--combobox-chips-invalid-ring-color);
+}
+
+[data-slot='combobox-chip'] {
+  --combobox-chip-bg: var(--muted);
+  --combobox-chip-fg: var(--foreground);
+  --combobox-chip-height: 1.3125rem;
+  --combobox-chip-padding-x: 0.375rem;
+  --combobox-chip-radius: var(--radius-sm);
+  --combobox-chip-font-size: var(--typography-caption-font-size);
+  --combobox-chip-font-weight: var(--typography-caption-font-weight);
+  --combobox-chip-gap: 0.25rem;
+  --combobox-chip-disabled-opacity: 0.5;
+
+  background-color: var(--combobox-chip-bg);
+  color: var(--combobox-chip-fg);
+  height: var(--combobox-chip-height);
+  padding-inline: var(--combobox-chip-padding-x);
+  border-radius: var(--combobox-chip-radius);
+  font-size: var(--combobox-chip-font-size);
+  font-weight: var(--combobox-chip-font-weight);
+  gap: var(--combobox-chip-gap);
+}
+[data-slot='combobox-chip']:has(:disabled) {
+  opacity: var(--combobox-chip-disabled-opacity);
+}
+
+[data-slot='combobox-chip-remove'] {
+  --combobox-chip-remove-opacity: 0.5;
+  --combobox-chip-remove-hover-opacity: 1;
+  opacity: var(--combobox-chip-remove-opacity);
+}
+[data-slot='combobox-chip-remove']:hover {
+  opacity: var(--combobox-chip-remove-hover-opacity);
+}
+
+[data-slot='combobox-chip-input'] {
+  --combobox-chip-input-min-width: 4rem;
+  min-width: var(--combobox-chip-input-min-width);
+}
+
+/* ComboboxValue, ComboboxGroup and ComboboxCollection render no styling of
+   their own beyond structural layout inherited from their parent — nothing
+   independently visual to expose here. */

@@ -1,0 +1,74 @@
+/* ==========================================================================
+   Switch
+   ========================================================================== */
+
+[data-slot='switch'] {
+  --switch-border-width: 1px;
+  --switch-border-color: transparent;
+  --switch-checked-bg: var(--primary);
+  --switch-unchecked-bg: var(--input);
+  --switch-focus-ring-width: 3px;
+  --switch-focus-border-color: var(--ring);
+  --switch-focus-ring-color: color-mix(in oklch, var(--ring), transparent 50%);
+  --switch-invalid-border-color: var(--destructive);
+  --switch-invalid-ring-color: color-mix(in oklch, var(--destructive), transparent 80%);
+  --switch-disabled-opacity: 0.5;
+
+  border-radius: 9999px;
+  border-width: var(--switch-border-width);
+  border-color: var(--switch-border-color);
+}
+[data-slot='switch']:focus-visible {
+  border-color: var(--switch-focus-border-color);
+  box-shadow: 0 0 0 var(--switch-focus-ring-width) var(--switch-focus-ring-color);
+}
+[data-slot='switch'][aria-invalid='true'] {
+  border-color: var(--switch-invalid-border-color);
+  box-shadow: 0 0 0 var(--switch-focus-ring-width) var(--switch-invalid-ring-color);
+}
+[data-slot='switch'][data-state='checked'] {
+  background-color: var(--switch-checked-bg);
+}
+[data-slot='switch'][data-state='unchecked'] {
+  background-color: var(--switch-unchecked-bg);
+}
+[data-slot='switch'][data-disabled] {
+  opacity: var(--switch-disabled-opacity);
+  cursor: not-allowed;
+}
+[data-slot='switch'][data-size='default'] {
+  --switch-track-height: 18.4px;
+  --switch-track-width: 32px;
+  height: var(--switch-track-height);
+  width: var(--switch-track-width);
+}
+[data-slot='switch'][data-size='sm'] {
+  --switch-track-height: 14px;
+  --switch-track-width: 24px;
+  height: var(--switch-track-height);
+  width: var(--switch-track-width);
+}
+
+[data-slot='switch-thumb'] {
+  --switch-thumb-bg: var(--background);
+  --switch-thumb-translate-checked: calc(100% - 2px);
+  --switch-thumb-translate-unchecked: 0px;
+  background-color: var(--switch-thumb-bg);
+  border-radius: 9999px;
+}
+[data-slot='switch-thumb'][data-state='checked'] {
+  transform: translateX(var(--switch-thumb-translate-checked));
+}
+[data-slot='switch-thumb'][data-state='unchecked'] {
+  transform: translateX(var(--switch-thumb-translate-unchecked));
+}
+[data-slot='switch'][data-size='default'] [data-slot='switch-thumb'] {
+  --switch-thumb-size: 1rem;
+  width: var(--switch-thumb-size);
+  height: var(--switch-thumb-size);
+}
+[data-slot='switch'][data-size='sm'] [data-slot='switch-thumb'] {
+  --switch-thumb-size: 0.75rem;
+  width: var(--switch-thumb-size);
+  height: var(--switch-thumb-size);
+}

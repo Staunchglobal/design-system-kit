@@ -1,0 +1,47 @@
+/* ==========================================================================
+   Popover
+   ========================================================================== */
+
+[data-slot='popover-content'] {
+  --popover-content-bg: var(--popover);
+  --popover-content-fg: var(--popover-foreground);
+  --popover-content-ring-color: color-mix(in oklch, var(--foreground), transparent 90%);
+  --popover-content-ring-width: 1px;
+  --popover-content-radius: var(--radius-lg);
+  --popover-content-width: 18rem;
+  --popover-content-gap: 0.625rem;
+  --popover-content-padding: 0.625rem;
+  --popover-content-font-size: var(--typography-small-font-size);
+  --popover-content-shadow: var(--shadow-md);
+  --popover-content-duration: 100ms;
+  background-color: var(--popover-content-bg);
+  color: var(--popover-content-fg);
+  box-shadow:
+    0 0 0 var(--popover-content-ring-width) var(--popover-content-ring-color),
+    var(--popover-content-shadow);
+  border-radius: var(--popover-content-radius);
+  width: var(--popover-content-width);
+  gap: var(--popover-content-gap);
+  padding: var(--popover-content-padding);
+  font-size: var(--popover-content-font-size);
+  transition-duration: var(--popover-content-duration);
+}
+
+[data-slot='popover-header'] {
+  --popover-header-gap: 0.125rem;
+  --popover-header-font-size: var(--typography-small-font-size);
+  gap: var(--popover-header-gap);
+  font-size: var(--popover-header-font-size);
+}
+
+[data-slot='popover-title'] {
+  --popover-title-font-family: var(--font-heading);
+  --popover-title-font-weight: var(--typography-small-font-weight);
+  font-family: var(--popover-title-font-family);
+  font-weight: var(--popover-title-font-weight);
+}
+
+[data-slot='popover-description'] {
+  --popover-description-fg: var(--muted-foreground);
+  color: var(--popover-description-fg);
+}

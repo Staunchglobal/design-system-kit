@@ -1,0 +1,30 @@
+/* ==========================================================================
+   Scroll Area
+   ========================================================================== */
+
+[data-slot='scroll-area-viewport'] {
+  --scroll-area-focus-ring: var(--ring);
+}
+[data-slot='scroll-area-viewport']:focus-visible {
+  box-shadow: 0 0 0 3px var(--scroll-area-focus-ring);
+}
+
+[data-slot='scroll-area-scrollbar'] {
+  --scroll-area-scrollbar-padding: 1px;
+  padding: var(--scroll-area-scrollbar-padding);
+}
+[data-slot='scroll-area-scrollbar'][data-orientation='horizontal'] {
+  --scroll-area-scrollbar-size: 0.625rem;
+  height: var(--scroll-area-scrollbar-size);
+}
+[data-slot='scroll-area-scrollbar'][data-orientation='vertical'] {
+  --scroll-area-scrollbar-size: 0.625rem;
+  width: var(--scroll-area-scrollbar-size);
+}
+
+[data-slot='scroll-area-thumb'] {
+  --scroll-area-thumb-bg: var(--border);
+  --scroll-area-thumb-radius: 9999px;
+  background-color: var(--scroll-area-thumb-bg);
+  border-radius: var(--scroll-area-thumb-radius);
+}

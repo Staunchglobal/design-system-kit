@@ -1,0 +1,66 @@
+/* ==========================================================================
+   Accordion
+   ========================================================================== */
+
+[data-slot='accordion'] {
+  --accordion-width: 100%;
+  width: var(--accordion-width);
+}
+
+[data-slot='accordion-item'] {
+  --accordion-item-border-color: var(--border);
+  --accordion-item-border-width: 1px;
+}
+[data-slot='accordion-item']:not(:last-child) {
+  border-bottom: var(--accordion-item-border-width) solid var(--accordion-item-border-color);
+}
+
+[data-slot='accordion-trigger'] {
+  --accordion-trigger-radius: var(--radius-lg);
+  --accordion-trigger-padding-y: 0.625rem;
+  --accordion-trigger-font-size: var(--typography-small-font-size);
+  --accordion-trigger-font-weight: var(--typography-small-font-weight);
+  --accordion-trigger-focus-ring-color: var(--ring);
+  --accordion-trigger-focus-ring-width: 3px;
+  --accordion-trigger-disabled-opacity: 0.5;
+  border-radius: var(--accordion-trigger-radius);
+  padding-block: var(--accordion-trigger-padding-y);
+  font-size: var(--accordion-trigger-font-size);
+  font-weight: var(--accordion-trigger-font-weight);
+}
+[data-slot='accordion-trigger']:focus-visible {
+  box-shadow: 0 0 0 var(--accordion-trigger-focus-ring-width)
+    color-mix(in oklch, var(--accordion-trigger-focus-ring-color), transparent 50%);
+}
+[data-slot='accordion-trigger']:disabled {
+  opacity: var(--accordion-trigger-disabled-opacity);
+}
+
+[data-slot='accordion-trigger-icon'] {
+  --accordion-trigger-icon-fg: var(--muted-foreground);
+  --accordion-trigger-icon-size: 1rem;
+  color: var(--accordion-trigger-icon-fg);
+  width: var(--accordion-trigger-icon-size);
+  height: var(--accordion-trigger-icon-size);
+}
+
+[data-slot='accordion-content'] {
+  --accordion-content-font-size: var(--typography-small-font-size);
+  font-size: var(--accordion-content-font-size);
+}
+[data-slot='accordion-content'] > div {
+  --accordion-content-padding-bottom: 0.625rem;
+  --accordion-content-link-hover-fg: var(--foreground);
+  --accordion-content-link-underline-offset: 3px;
+  --accordion-content-paragraph-gap: 1rem;
+  padding-block-end: var(--accordion-content-padding-bottom);
+}
+[data-slot='accordion-content'] > div a {
+  text-underline-offset: var(--accordion-content-link-underline-offset);
+}
+[data-slot='accordion-content'] > div a:hover {
+  color: var(--accordion-content-link-hover-fg);
+}
+[data-slot='accordion-content'] > div p:not(:last-child) {
+  margin-block-end: var(--accordion-content-paragraph-gap);
+}

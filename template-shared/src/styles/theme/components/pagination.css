@@ -1,0 +1,22 @@
+/* ==========================================================================
+   Pagination
+   ========================================================================== */
+
+[data-slot='pagination-content'] {
+  --pagination-content-gap: 0.125rem;
+  gap: var(--pagination-content-gap);
+}
+
+/* PaginationLink is a real Button (outline when active, ghost otherwise).
+   Colors/sizes come from the Button section — no visual overrides here. */
+
+[data-slot='pagination-ellipsis'] {
+  --pagination-ellipsis-size: 2rem;
+  --pagination-ellipsis-icon-size: 1rem;
+  inline-size: var(--pagination-ellipsis-size);
+  block-size: var(--pagination-ellipsis-size);
+}
+[data-slot='pagination-ellipsis'] svg {
+  width: var(--pagination-ellipsis-icon-size);
+  height: var(--pagination-ellipsis-icon-size);
+}

@@ -1,0 +1,212 @@
+/* ==========================================================================
+   Typography
+   ==========================================================================
+   Drop any class below onto ANY element, anywhere in the app, to apply a
+   complete text style — font family, size, weight, line height, letter
+   spacing — in one go. For example:
+
+     <DialogTitle className="typography-h3">Delete project?</DialogTitle>
+     <CardDescription className="typography-muted">Last updated 2 days ago</CardDescription>
+
+   These classes never set `color` (except typography-code's background,
+   which is a container decoration, not text color) or `margin`, so they
+   never fight with a text-color utility or the spacing of whatever
+   component they're used inside. Change color separately, e.g.
+   className="typography-h3 text-muted-foreground".
+   ========================================================================== */
+
+.typography-display {
+  --typography-display-font-family: var(--font-heading);
+  --typography-display-font-size: 3.75rem;
+  --typography-display-font-weight: 800;
+  --typography-display-line-height: 1;
+  --typography-display-letter-spacing: -0.025em;
+  font-family: var(--typography-display-font-family);
+  font-size: var(--typography-display-font-size);
+  font-weight: var(--typography-display-font-weight);
+  line-height: var(--typography-display-line-height);
+  letter-spacing: var(--typography-display-letter-spacing);
+}
+
+.typography-h1 {
+  --typography-h1-font-family: var(--font-heading);
+  --typography-h1-font-size: 2.25rem;
+  --typography-h1-font-weight: 800;
+  --typography-h1-line-height: 2.5rem;
+  --typography-h1-letter-spacing: -0.025em;
+  font-family: var(--typography-h1-font-family);
+  font-size: var(--typography-h1-font-size);
+  font-weight: var(--typography-h1-font-weight);
+  line-height: var(--typography-h1-line-height);
+  letter-spacing: var(--typography-h1-letter-spacing);
+}
+
+.typography-h2 {
+  --typography-h2-font-family: var(--font-heading);
+  --typography-h2-font-size: 1.875rem;
+  --typography-h2-font-weight: 600;
+  --typography-h2-line-height: 2.25rem;
+  --typography-h2-letter-spacing: -0.025em;
+  font-family: var(--typography-h2-font-family);
+  font-size: var(--typography-h2-font-size);
+  font-weight: var(--typography-h2-font-weight);
+  line-height: var(--typography-h2-line-height);
+  letter-spacing: var(--typography-h2-letter-spacing);
+}
+
+.typography-h3 {
+  --typography-h3-font-family: var(--font-heading);
+  --typography-h3-font-size: 1.5rem;
+  --typography-h3-font-weight: 600;
+  --typography-h3-line-height: 2rem;
+  --typography-h3-letter-spacing: -0.0125em;
+  font-family: var(--typography-h3-font-family);
+  font-size: var(--typography-h3-font-size);
+  font-weight: var(--typography-h3-font-weight);
+  line-height: var(--typography-h3-line-height);
+  letter-spacing: var(--typography-h3-letter-spacing);
+}
+
+.typography-h4 {
+  --typography-h4-font-family: var(--font-heading);
+  --typography-h4-font-size: 1.25rem;
+  --typography-h4-font-weight: 600;
+  --typography-h4-line-height: 1.75rem;
+  --typography-h4-letter-spacing: -0.0125em;
+  font-family: var(--typography-h4-font-family);
+  font-size: var(--typography-h4-font-size);
+  font-weight: var(--typography-h4-font-weight);
+  line-height: var(--typography-h4-line-height);
+  letter-spacing: var(--typography-h4-letter-spacing);
+}
+
+.typography-h5 {
+  --typography-h5-font-family: var(--font-heading);
+  --typography-h5-font-size: 1.125rem;
+  --typography-h5-font-weight: 600;
+  --typography-h5-line-height: 1.75rem;
+  font-family: var(--typography-h5-font-family);
+  font-size: var(--typography-h5-font-size);
+  font-weight: var(--typography-h5-font-weight);
+  line-height: var(--typography-h5-line-height);
+}
+
+.typography-h6 {
+  --typography-h6-font-family: var(--font-heading);
+  --typography-h6-font-size: 1rem;
+  --typography-h6-font-weight: 600;
+  --typography-h6-line-height: 1.5rem;
+  font-family: var(--typography-h6-font-family);
+  font-size: var(--typography-h6-font-size);
+  font-weight: var(--typography-h6-font-weight);
+  line-height: var(--typography-h6-line-height);
+}
+
+.typography-lead {
+  --typography-lead-font-family: var(--font-sans);
+  --typography-lead-font-size: 1.25rem;
+  --typography-lead-font-weight: 400;
+  --typography-lead-line-height: 1.75rem;
+  font-family: var(--typography-lead-font-family);
+  font-size: var(--typography-lead-font-size);
+  font-weight: var(--typography-lead-font-weight);
+  line-height: var(--typography-lead-line-height);
+}
+
+.typography-large {
+  --typography-large-font-family: var(--font-sans);
+  --typography-large-font-size: 1.125rem;
+  --typography-large-font-weight: 600;
+  --typography-large-line-height: 1.75rem;
+  font-family: var(--typography-large-font-family);
+  font-size: var(--typography-large-font-size);
+  font-weight: var(--typography-large-font-weight);
+  line-height: var(--typography-large-line-height);
+}
+
+.typography-p {
+  --typography-p-font-family: var(--font-sans);
+  --typography-p-font-size: 1rem;
+  --typography-p-font-weight: 400;
+  --typography-p-line-height: 1.75rem;
+  font-family: var(--typography-p-font-family);
+  font-size: var(--typography-p-font-size);
+  font-weight: var(--typography-p-font-weight);
+  line-height: var(--typography-p-line-height);
+}
+
+.typography-small {
+  --typography-small-font-family: var(--font-sans);
+  --typography-small-font-size: 0.875rem;
+  --typography-small-font-weight: 500;
+  --typography-small-line-height: 1rem;
+  font-family: var(--typography-small-font-family);
+  font-size: var(--typography-small-font-size);
+  font-weight: var(--typography-small-font-weight);
+  line-height: var(--typography-small-line-height);
+}
+
+.typography-muted {
+  --typography-muted-font-family: var(--font-sans);
+  --typography-muted-font-size: 0.875rem;
+  --typography-muted-font-weight: 400;
+  --typography-muted-line-height: 1.25rem;
+  font-family: var(--typography-muted-font-family);
+  font-size: var(--typography-muted-font-size);
+  font-weight: var(--typography-muted-font-weight);
+  line-height: var(--typography-muted-line-height);
+}
+
+.typography-blockquote {
+  --typography-blockquote-font-family: var(--font-sans);
+  --typography-blockquote-font-size: 1rem;
+  --typography-blockquote-font-style: italic;
+  --typography-blockquote-line-height: 1.75rem;
+  font-family: var(--typography-blockquote-font-family);
+  font-size: var(--typography-blockquote-font-size);
+  font-style: var(--typography-blockquote-font-style);
+  line-height: var(--typography-blockquote-line-height);
+}
+
+.typography-code {
+  --typography-code-font-family: var(--font-mono);
+  --typography-code-font-size: 0.875rem;
+  --typography-code-font-weight: 600;
+  --typography-code-bg: var(--muted);
+  --typography-code-radius: var(--radius-sm);
+  --typography-code-padding-x: 0.3rem;
+  --typography-code-padding-y: 0.2rem;
+  font-family: var(--typography-code-font-family);
+  font-size: var(--typography-code-font-size);
+  font-weight: var(--typography-code-font-weight);
+  background-color: var(--typography-code-bg);
+  border-radius: var(--typography-code-radius);
+  padding-inline: var(--typography-code-padding-x);
+  padding-block: var(--typography-code-padding-y);
+}
+
+.typography-caption {
+  --typography-caption-font-family: var(--font-sans);
+  --typography-caption-font-size: 0.75rem;
+  --typography-caption-font-weight: 400;
+  --typography-caption-line-height: 1rem;
+  font-family: var(--typography-caption-font-family);
+  font-size: var(--typography-caption-font-size);
+  font-weight: var(--typography-caption-font-weight);
+  line-height: var(--typography-caption-line-height);
+}
+
+.typography-overline {
+  --typography-overline-font-family: var(--font-sans);
+  --typography-overline-font-size: 0.75rem;
+  --typography-overline-font-weight: 600;
+  --typography-overline-line-height: 1rem;
+  --typography-overline-letter-spacing: 0.05em;
+  --typography-overline-text-transform: uppercase;
+  font-family: var(--typography-overline-font-family);
+  font-size: var(--typography-overline-font-size);
+  font-weight: var(--typography-overline-font-weight);
+  line-height: var(--typography-overline-line-height);
+  letter-spacing: var(--typography-overline-letter-spacing);
+  text-transform: var(--typography-overline-text-transform);
+}

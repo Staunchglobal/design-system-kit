@@ -1,0 +1,46 @@
+/* ==========================================================================
+   Marker
+   ========================================================================== */
+
+[data-slot='marker'] {
+  --marker-gap: 0.5rem;
+  --marker-font-size: var(--typography-muted-font-size);
+  --marker-fg: var(--muted-foreground);
+  --marker-min-height: 1rem;
+  --marker-link-hover-fg: var(--foreground);
+  gap: var(--marker-gap);
+  font-size: var(--marker-font-size);
+  color: var(--marker-fg);
+  min-height: var(--marker-min-height);
+}
+[data-slot='marker'] a:hover {
+  color: var(--marker-link-hover-fg);
+}
+
+[data-slot='marker'][data-variant='separator'] {
+  --marker-separator-line-color: var(--border);
+  --marker-separator-gap: 0.25rem;
+}
+[data-slot='marker'][data-variant='separator']::before,
+[data-slot='marker'][data-variant='separator']::after {
+  background-color: var(--marker-separator-line-color);
+}
+[data-slot='marker'][data-variant='separator']::before {
+  margin-right: var(--marker-separator-gap);
+}
+[data-slot='marker'][data-variant='separator']::after {
+  margin-left: var(--marker-separator-gap);
+}
+
+[data-slot='marker'][data-variant='border'] {
+  --marker-border-color: var(--border);
+  --marker-border-padding-bottom: 0.5rem;
+  border-bottom-color: var(--marker-border-color);
+  padding-bottom: var(--marker-border-padding-bottom);
+}
+
+[data-slot='marker-icon'] {
+  --marker-icon-size: 1rem;
+  width: var(--marker-icon-size);
+  height: var(--marker-icon-size);
+}

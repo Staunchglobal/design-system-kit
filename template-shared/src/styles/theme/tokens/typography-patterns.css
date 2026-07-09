@@ -1,0 +1,33 @@
+/* ==========================================================================
+   Typography — Content Patterns
+   ==========================================================================
+   Structural, layout-bearing patterns (spacing, borders, list markers) for
+   flowing content — e.g. a blog post or docs page — scoped under
+   [data-slot='typography'] so they don't leak onto unrelated elements the
+   way the drop-in classes above are designed to. Kept for the demo table
+   and list on the design-system page.
+   ========================================================================== */
+
+[data-slot='typography'] table {
+  --typography-table-margin-y: 1.5rem;
+  --typography-table-border-color: var(--border);
+}
+[data-slot='typography'] th,
+[data-slot='typography'] td {
+  --typography-table-cell-padding-x: 1rem;
+  --typography-table-cell-padding-y: 0.5rem;
+  --typography-table-cell-border-color: var(--border);
+  padding-inline: var(--typography-table-cell-padding-x);
+  padding-block: var(--typography-table-cell-padding-y);
+  border-color: var(--typography-table-cell-border-color);
+}
+[data-slot='typography'] tr:nth-child(even) {
+  --typography-table-row-even-bg: var(--muted);
+  background-color: var(--typography-table-row-even-bg);
+}
+
+[data-slot='typography'] ul {
+  --typography-list-margin-y: 1.5rem;
+  --typography-list-margin-left: 1.5rem;
+  --typography-list-item-margin-top: 0.5rem;
+}

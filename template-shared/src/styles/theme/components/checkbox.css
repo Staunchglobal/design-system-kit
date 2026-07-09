@@ -1,0 +1,56 @@
+/* ==========================================================================
+   Checkbox
+   ========================================================================== */
+
+[data-slot='checkbox'] {
+  --checkbox-size: 1rem;
+  --checkbox-radius: 4px;
+  --checkbox-border-width: 1px;
+  --checkbox-border-color: var(--border);
+  --checkbox-bg: transparent;
+  --checkbox-checked-border-color: var(--primary);
+  --checkbox-checked-bg: var(--primary);
+  --checkbox-checked-fg: var(--primary-foreground);
+  --checkbox-focus-ring-width: 3px;
+  --checkbox-focus-border-color: var(--ring);
+  --checkbox-focus-ring-color: color-mix(in oklch, var(--ring), transparent 50%);
+  --checkbox-invalid-border-color: var(--destructive);
+  --checkbox-invalid-ring-color: color-mix(in oklch, var(--destructive), transparent 80%);
+  --checkbox-disabled-opacity: 0.5;
+
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  border-radius: var(--checkbox-radius);
+  border-width: var(--checkbox-border-width);
+  border-color: var(--checkbox-border-color);
+  background-color: var(--checkbox-bg);
+}
+[data-slot='checkbox']:focus-visible {
+  border-color: var(--checkbox-focus-border-color);
+  box-shadow: 0 0 0 var(--checkbox-focus-ring-width) var(--checkbox-focus-ring-color);
+}
+[data-slot='checkbox'][data-state='checked'] {
+  border-color: var(--checkbox-checked-border-color);
+  background-color: var(--checkbox-checked-bg);
+  color: var(--checkbox-checked-fg);
+}
+[data-slot='checkbox'][aria-invalid='true'] {
+  border-color: var(--checkbox-invalid-border-color);
+  box-shadow: 0 0 0 var(--checkbox-focus-ring-width) var(--checkbox-invalid-ring-color);
+}
+[data-slot='checkbox'][aria-invalid='true'][data-state='checked'] {
+  border-color: var(--checkbox-checked-border-color);
+}
+[data-slot='checkbox']:disabled {
+  opacity: var(--checkbox-disabled-opacity);
+  cursor: not-allowed;
+}
+
+[data-slot='checkbox-indicator'] {
+  --checkbox-indicator-icon-size: 0.875rem;
+  color: currentColor;
+}
+[data-slot='checkbox-indicator'] svg {
+  width: var(--checkbox-indicator-icon-size);
+  height: var(--checkbox-indicator-icon-size);
+}

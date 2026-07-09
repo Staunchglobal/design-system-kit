@@ -1,0 +1,70 @@
+/* ==========================================================================
+   Card
+   ========================================================================== */
+
+[data-slot='card'] {
+  --card-bg: var(--card);
+  --card-fg: var(--card-foreground);
+  --card-ring-color: color-mix(in oklch, var(--foreground), transparent 90%);
+  --card-ring-width: 1px;
+  --card-radius: var(--radius-xl);
+  --card-spacing: 1rem;
+  --card-font-size: var(--typography-small-font-size);
+  background-color: var(--card-bg);
+  color: var(--card-fg);
+  box-shadow: 0 0 0 var(--card-ring-width) var(--card-ring-color);
+  border-radius: var(--card-radius);
+  gap: var(--card-spacing);
+  padding-block: var(--card-spacing);
+  font-size: var(--card-font-size);
+}
+[data-slot='card'][data-size='sm'] {
+  --card-spacing: 0.75rem;
+}
+
+[data-slot='card-header'] {
+  --card-header-gap: 0.25rem;
+  --card-header-padding-x: var(--card-spacing, 1rem);
+  --card-header-border-padding-bottom: var(--card-spacing, 1rem);
+  gap: var(--card-header-gap);
+  padding-inline: var(--card-header-padding-x);
+}
+
+[data-slot='card-title'] {
+  --card-title-font-family: var(--font-heading);
+  --card-title-font-size: var(--typography-h6-font-size);
+  --card-title-line-height: var(--typography-h6-line-height);
+  --card-title-font-weight: var(--typography-h6-font-weight);
+  font-family: var(--card-title-font-family);
+  font-size: var(--card-title-font-size);
+  line-height: var(--card-title-line-height);
+  font-weight: var(--card-title-font-weight);
+}
+[data-slot='card'][data-size='sm'] [data-slot='card-title'] {
+  --card-title-font-size: var(--typography-small-font-size);
+}
+
+[data-slot='card-description'] {
+  --card-description-fg: var(--muted-foreground);
+  --card-description-font-size: var(--typography-muted-font-size);
+  color: var(--card-description-fg);
+  font-size: var(--card-description-font-size);
+}
+
+[data-slot='card-content'] {
+  --card-content-padding-x: var(--card-spacing, 1rem);
+  padding-inline: var(--card-content-padding-x);
+}
+
+[data-slot='card-footer'] {
+  --card-footer-bg: color-mix(in oklch, var(--muted), transparent 50%);
+  --card-footer-border-color: var(--border);
+  --card-footer-border-width: 1px;
+  --card-footer-radius: var(--radius-xl);
+  --card-footer-padding: var(--card-spacing, 1rem);
+  background-color: var(--card-footer-bg);
+  border-top: var(--card-footer-border-width) solid var(--card-footer-border-color);
+  border-end-start-radius: var(--card-footer-radius);
+  border-end-end-radius: var(--card-footer-radius);
+  padding: var(--card-footer-padding);
+}

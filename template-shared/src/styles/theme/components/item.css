@@ -1,0 +1,127 @@
+/* ==========================================================================
+   Item
+   ========================================================================== */
+
+[data-slot='item-group'] {
+  --item-group-gap: 1rem;
+  gap: var(--item-group-gap);
+}
+[data-slot='item-group']:has([data-slot='item'][data-size='sm']) {
+  --item-group-gap: 0.625rem;
+}
+[data-slot='item-group']:has([data-slot='item'][data-size='xs']) {
+  --item-group-gap: 0.5rem;
+}
+
+[data-slot='item-separator'] {
+  --item-separator-margin-block: 0.5rem;
+  margin-block: var(--item-separator-margin-block);
+}
+
+[data-slot='item'] {
+  --item-radius: var(--radius-lg);
+  --item-font-size: var(--typography-small-font-size);
+  border-radius: var(--item-radius);
+  font-size: var(--item-font-size);
+}
+[data-slot='item']:focus-visible {
+  --item-focus-border-color: var(--ring);
+  --item-focus-ring-color: color-mix(in oklch, var(--ring), transparent 50%);
+  border-color: var(--item-focus-border-color);
+  box-shadow: 0 0 0 3px var(--item-focus-ring-color);
+}
+[data-slot='item'][data-variant='default'] {
+  --item-border-color: transparent;
+  border-color: var(--item-border-color);
+}
+[data-slot='item'][data-variant='outline'] {
+  --item-border-color: var(--border);
+  border-color: var(--item-border-color);
+}
+[data-slot='item'][data-variant='muted'] {
+  --item-border-color: transparent;
+  --item-bg: color-mix(in oklch, var(--muted), transparent 50%);
+  border-color: var(--item-border-color);
+  background-color: var(--item-bg);
+}
+[data-slot='item'][data-size='default'],
+[data-slot='item'][data-size='sm'] {
+  --item-gap: 0.625rem;
+  --item-padding-x: 0.75rem;
+  --item-padding-y: 0.625rem;
+  gap: var(--item-gap);
+  padding-inline: var(--item-padding-x);
+  padding-block: var(--item-padding-y);
+}
+[data-slot='item'][data-size='xs'] {
+  --item-gap: 0.5rem;
+  --item-padding-x: 0.625rem;
+  --item-padding-y: 0.5rem;
+  gap: var(--item-gap);
+  padding-inline: var(--item-padding-x);
+  padding-block: var(--item-padding-y);
+}
+
+[data-slot='item-media'] {
+  --item-media-gap: 0.5rem;
+  gap: var(--item-media-gap);
+}
+[data-slot='item-media'][data-variant='image'] {
+  --item-media-image-size: 2.5rem;
+  --item-media-image-radius: var(--radius-sm);
+  width: var(--item-media-image-size);
+  height: var(--item-media-image-size);
+  border-radius: var(--item-media-image-radius);
+}
+[data-slot='item'][data-size='sm'] [data-slot='item-media'][data-variant='image'] {
+  --item-media-image-size: 2rem;
+}
+[data-slot='item'][data-size='xs'] [data-slot='item-media'][data-variant='image'] {
+  --item-media-image-size: 1.5rem;
+}
+
+[data-slot='item-content'] {
+  --item-content-gap: 0.25rem;
+  gap: var(--item-content-gap);
+}
+[data-slot='item'][data-size='xs'] [data-slot='item-content'] {
+  --item-content-gap: 0px;
+}
+
+[data-slot='item-title'] {
+  --item-title-font-family: var(--font-heading);
+  --item-title-font-size: var(--typography-h6-font-size);
+  --item-title-font-weight: var(--typography-h6-font-weight);
+  --item-title-line-height: var(--typography-h6-line-height);
+  font-family: var(--item-title-font-family);
+  font-size: var(--item-title-font-size);
+  font-weight: var(--item-title-font-weight);
+  line-height: var(--item-title-line-height);
+}
+
+[data-slot='item-description'] {
+  --item-description-font-size: var(--typography-muted-font-size);
+  --item-description-fg: var(--muted-foreground);
+  --item-description-link-hover-fg: var(--primary);
+  --item-description-line-height: var(--typography-muted-line-height);
+  font-size: var(--item-description-font-size);
+  color: var(--item-description-fg);
+  line-height: var(--item-description-line-height);
+}
+[data-slot='item-description'] a:hover {
+  color: var(--item-description-link-hover-fg);
+}
+[data-slot='item'][data-size='xs'] [data-slot='item-description'] {
+  --item-description-font-size: var(--typography-caption-font-size);
+}
+
+[data-slot='item-actions'] {
+  --item-actions-gap: 0.5rem;
+  gap: var(--item-actions-gap);
+}
+
+[data-slot='item-header'],
+[data-slot='item-footer'] {
+  --item-header-footer-gap: 0.5rem;
+  gap: var(--item-header-footer-gap);
+}

@@ -1,0 +1,15 @@
+/* ==========================================================================
+   Separator
+   ========================================================================== */
+
+[data-slot='separator'] {
+  --separator-bg: var(--border);
+  --separator-thickness: 1px;
+  background-color: var(--separator-bg);
+}
+[data-slot='separator'][data-orientation='horizontal'] {
+  height: var(--separator-thickness);
+}
+[data-slot='separator'][data-orientation='vertical'] {
+  width: var(--separator-thickness);
+}

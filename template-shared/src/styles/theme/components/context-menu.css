@@ -1,0 +1,132 @@
+/* ==========================================================================
+   Context Menu
+   ========================================================================== */
+
+[data-slot='context-menu-content'] {
+  --context-menu-bg: var(--popover);
+  --context-menu-fg: var(--popover-foreground);
+  --context-menu-ring-color: color-mix(in oklch, var(--foreground), transparent 90%);
+  --context-menu-ring-width: 1px;
+  --context-menu-radius: var(--radius-lg);
+  --context-menu-min-width: 9rem;
+  --context-menu-padding: 0.25rem;
+  --context-menu-shadow: var(--shadow-md);
+  --context-menu-duration: 100ms;
+  background-color: var(--context-menu-bg);
+  color: var(--context-menu-fg);
+  box-shadow:
+    0 0 0 var(--context-menu-ring-width) var(--context-menu-ring-color),
+    var(--context-menu-shadow);
+  border-radius: var(--context-menu-radius);
+  min-width: var(--context-menu-min-width);
+  padding: var(--context-menu-padding);
+  transition-duration: var(--context-menu-duration);
+}
+
+[data-slot='context-menu-sub-content'] {
+  --context-menu-sub-bg: var(--popover);
+  --context-menu-sub-fg: var(--popover-foreground);
+  --context-menu-sub-border-color: var(--border);
+  --context-menu-sub-border-width: 1px;
+  --context-menu-sub-radius: var(--radius-lg);
+  --context-menu-sub-min-width: 8rem;
+  --context-menu-sub-padding: 0.25rem;
+  --context-menu-sub-shadow: var(--shadow-lg);
+  --context-menu-sub-duration: 100ms;
+  background-color: var(--context-menu-sub-bg);
+  color: var(--context-menu-sub-fg);
+  border: var(--context-menu-sub-border-width) solid var(--context-menu-sub-border-color);
+  border-radius: var(--context-menu-sub-radius);
+  min-width: var(--context-menu-sub-min-width);
+  padding: var(--context-menu-sub-padding);
+  box-shadow: var(--context-menu-sub-shadow);
+  transition-duration: var(--context-menu-sub-duration);
+}
+
+[data-slot='context-menu-item'],
+[data-slot='context-menu-checkbox-item'],
+[data-slot='context-menu-radio-item'],
+[data-slot='context-menu-sub-trigger'] {
+  --context-menu-item-radius: var(--radius-md);
+  --context-menu-item-gap: 0.375rem;
+  --context-menu-item-padding-x: 0.375rem;
+  --context-menu-item-padding-y: 0.25rem;
+  --context-menu-item-font-size: var(--typography-small-font-size);
+  --context-menu-item-focus-bg: var(--accent);
+  --context-menu-item-focus-fg: var(--accent-foreground);
+  --context-menu-item-disabled-opacity: 0.5;
+  border-radius: var(--context-menu-item-radius);
+  gap: var(--context-menu-item-gap);
+  padding-inline: var(--context-menu-item-padding-x);
+  padding-block: var(--context-menu-item-padding-y);
+  font-size: var(--context-menu-item-font-size);
+}
+[data-slot='context-menu-item']:focus,
+[data-slot='context-menu-checkbox-item']:focus,
+[data-slot='context-menu-radio-item']:focus,
+[data-slot='context-menu-sub-trigger']:focus {
+  background-color: var(--context-menu-item-focus-bg);
+  color: var(--context-menu-item-focus-fg);
+}
+[data-slot='context-menu-sub-trigger'][data-state='open'] {
+  background-color: var(--context-menu-item-focus-bg);
+  color: var(--context-menu-item-focus-fg);
+}
+[data-slot='context-menu-item'][data-disabled],
+[data-slot='context-menu-checkbox-item'][data-disabled],
+[data-slot='context-menu-radio-item'][data-disabled] {
+  opacity: var(--context-menu-item-disabled-opacity);
+}
+[data-slot='context-menu-item'][data-variant='destructive'] {
+  --context-menu-item-destructive-fg: var(--destructive);
+  --context-menu-item-destructive-focus-bg: color-mix(
+    in oklch,
+    var(--destructive),
+    transparent 90%
+  );
+  color: var(--context-menu-item-destructive-fg);
+}
+[data-slot='context-menu-item'][data-variant='destructive']:focus {
+  background-color: var(--context-menu-item-destructive-focus-bg);
+  color: var(--context-menu-item-destructive-fg);
+}
+[data-slot='context-menu-item'][data-inset='true'],
+[data-slot='context-menu-checkbox-item'][data-inset='true'],
+[data-slot='context-menu-radio-item'][data-inset='true'],
+[data-slot='context-menu-sub-trigger'][data-inset='true'],
+[data-slot='context-menu-label'][data-inset='true'] {
+  --context-menu-inset-padding-left: 1.75rem;
+  padding-inline-start: var(--context-menu-inset-padding-left);
+}
+
+[data-slot='context-menu-label'] {
+  --context-menu-label-fg: var(--muted-foreground);
+  --context-menu-label-padding-x: 0.375rem;
+  --context-menu-label-padding-y: 0.25rem;
+  --context-menu-label-font-size: var(--typography-caption-font-size);
+  --context-menu-label-font-weight: var(--typography-caption-font-weight);
+  color: var(--context-menu-label-fg);
+  padding-inline: var(--context-menu-label-padding-x);
+  padding-block: var(--context-menu-label-padding-y);
+  font-size: var(--context-menu-label-font-size);
+  font-weight: var(--context-menu-label-font-weight);
+}
+
+[data-slot='context-menu-separator'] {
+  --context-menu-separator-bg: var(--border);
+  --context-menu-separator-margin: -0.25rem;
+  --context-menu-separator-thickness: 1px;
+  background-color: var(--context-menu-separator-bg);
+  margin-inline: var(--context-menu-separator-margin);
+  margin-block: 0.25rem;
+  height: var(--context-menu-separator-thickness);
+}
+
+[data-slot='context-menu-shortcut'] {
+  --context-menu-shortcut-fg: var(--muted-foreground);
+  --context-menu-shortcut-font-size: var(--typography-overline-font-size);
+  --context-menu-shortcut-tracking: 0.05em;
+  color: var(--context-menu-shortcut-fg);
+  font-size: var(--context-menu-shortcut-font-size);
+  letter-spacing: var(--context-menu-shortcut-tracking);
+}

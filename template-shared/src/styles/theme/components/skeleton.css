@@ -1,0 +1,12 @@
+/* ==========================================================================
+   Skeleton
+   ========================================================================== */
+
+[data-slot='skeleton'] {
+  --skeleton-bg: var(--muted);
+  --skeleton-radius: var(--radius-md);
+  --skeleton-animation-duration: 2s;
+  background-color: var(--skeleton-bg);
+  border-radius: var(--skeleton-radius);
+  animation-duration: var(--skeleton-animation-duration);
+}

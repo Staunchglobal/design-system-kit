@@ -1,0 +1,34 @@
+/* ==========================================================================
+   Carousel
+   ========================================================================== */
+
+/* orientation ('horizontal' | 'vertical') is only used to branch Tailwind
+   classes in carousel.tsx — it is never reflected as a data-orientation (or
+   any other) DOM attribute, so it cannot be targeted from this file. The
+   overrides below apply unconditionally, which matches the library's
+   horizontal default. */
+
+[data-slot='carousel-content'] > div {
+  --carousel-item-spacing: 1rem;
+  margin-inline-start: calc(var(--carousel-item-spacing) * -1);
+}
+
+[data-slot='carousel-item'] {
+  --carousel-item-spacing: 1rem;
+  padding-inline-start: var(--carousel-item-spacing);
+}
+
+/* Carousel prev/next are outline/icon-sm Buttons — colors from Button section.
+   Only layout (position/roundness) lives here. */
+[data-ui='carousel-previous'],
+[data-ui='carousel-next'] {
+  --carousel-control-offset: 3rem;
+  --carousel-control-radius: 9999px;
+  border-radius: var(--carousel-control-radius);
+}
+[data-ui='carousel-previous'] {
+  left: calc(var(--carousel-control-offset) * -1);
+}
+[data-ui='carousel-next'] {
+  right: calc(var(--carousel-control-offset) * -1);
+}

@@ -1,0 +1,14 @@
+/* ==========================================================================
+   Spinner
+   ========================================================================== */
+
+[data-slot='spinner'] {
+  --spinner-size: 1rem;
+  --spinner-color: currentColor;
+  --spinner-duration: 1s;
+
+  width: var(--spinner-size);
+  height: var(--spinner-size);
+  color: var(--spinner-color);
+  animation-duration: var(--spinner-duration);
+}

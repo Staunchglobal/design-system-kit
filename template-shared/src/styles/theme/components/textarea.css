@@ -1,0 +1,54 @@
+/* ==========================================================================
+   Textarea
+   ========================================================================== */
+
+[data-slot='textarea'] {
+  --textarea-radius: var(--radius-lg);
+  --textarea-border-width: 1px;
+  --textarea-border-color: var(--border);
+  --textarea-bg: transparent;
+  --textarea-fg: var(--foreground);
+  --textarea-placeholder-color: var(--muted-foreground);
+  --textarea-min-height: 4rem;
+  --textarea-padding-x: 0.625rem;
+  --textarea-padding-y: 0.5rem;
+  --textarea-font-size: var(--typography-p-font-size);
+  --textarea-focus-border-color: var(--ring);
+  --textarea-focus-ring-width: 3px;
+  --textarea-focus-ring-color: color-mix(in oklch, var(--ring), transparent 50%);
+  --textarea-disabled-bg: color-mix(in oklch, var(--input), transparent 50%);
+  --textarea-disabled-opacity: 0.5;
+  --textarea-invalid-border-color: var(--destructive);
+  --textarea-invalid-ring-color: color-mix(in oklch, var(--destructive), transparent 80%);
+
+  min-height: var(--textarea-min-height);
+  border-radius: var(--textarea-radius);
+  border-width: var(--textarea-border-width);
+  border-color: var(--textarea-border-color);
+  background-color: var(--textarea-bg);
+  color: var(--textarea-fg);
+  padding-inline: var(--textarea-padding-x);
+  padding-block: var(--textarea-padding-y);
+  font-size: var(--textarea-font-size);
+}
+[data-slot='textarea']::placeholder {
+  color: var(--textarea-placeholder-color);
+}
+[data-slot='textarea']:focus-visible {
+  border-color: var(--textarea-focus-border-color);
+  box-shadow: 0 0 0 var(--textarea-focus-ring-width) var(--textarea-focus-ring-color);
+}
+[data-slot='textarea']:disabled {
+  background-color: var(--textarea-disabled-bg);
+  opacity: var(--textarea-disabled-opacity);
+  cursor: not-allowed;
+}
+[data-slot='textarea'][aria-invalid='true'] {
+  border-color: var(--textarea-invalid-border-color);
+  box-shadow: 0 0 0 var(--textarea-focus-ring-width) var(--textarea-invalid-ring-color);
+}
+@media (min-width: 48rem) {
+  [data-slot='textarea'] {
+    font-size: var(--typography-small-font-size);
+  }
+}

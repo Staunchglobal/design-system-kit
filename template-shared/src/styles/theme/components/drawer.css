@@ -1,0 +1,96 @@
+/* ==========================================================================
+   Drawer
+   ========================================================================== */
+
+[data-slot='drawer-overlay'] {
+  --drawer-overlay-bg: var(--overlay-bg);
+  --drawer-overlay-blur: 4px;
+  background-color: var(--drawer-overlay-bg);
+}
+
+[data-slot='drawer-content'] {
+  --drawer-content-bg: var(--popover);
+  --drawer-content-fg: var(--popover-foreground);
+  --drawer-content-font-size: var(--typography-small-font-size);
+  --drawer-content-border-color: var(--border);
+  --drawer-content-border-width: 1px;
+  background-color: var(--drawer-content-bg);
+  color: var(--drawer-content-fg);
+  font-size: var(--drawer-content-font-size);
+}
+[data-slot='drawer-content'][data-vaul-drawer-direction='top'],
+[data-slot='drawer-content'][data-vaul-drawer-direction='bottom'] {
+  --drawer-content-radius: var(--radius-xl);
+  --drawer-content-max-height: 80vh;
+  max-height: var(--drawer-content-max-height);
+}
+[data-slot='drawer-content'][data-vaul-drawer-direction='bottom'] {
+  border-top-left-radius: var(--drawer-content-radius);
+  border-top-right-radius: var(--drawer-content-radius);
+  border-top: var(--drawer-content-border-width) solid var(--drawer-content-border-color);
+}
+[data-slot='drawer-content'][data-vaul-drawer-direction='top'] {
+  border-bottom-left-radius: var(--drawer-content-radius);
+  border-bottom-right-radius: var(--drawer-content-radius);
+  border-bottom: var(--drawer-content-border-width) solid var(--drawer-content-border-color);
+}
+[data-slot='drawer-content'][data-vaul-drawer-direction='left'],
+[data-slot='drawer-content'][data-vaul-drawer-direction='right'] {
+  --drawer-content-width: 75%;
+  --drawer-content-max-width: 24rem;
+  --drawer-content-radius: var(--radius-xl);
+  width: var(--drawer-content-width);
+}
+[data-slot='drawer-content'][data-vaul-drawer-direction='left'] {
+  border-top-right-radius: var(--drawer-content-radius);
+  border-bottom-right-radius: var(--drawer-content-radius);
+  border-right: var(--drawer-content-border-width) solid var(--drawer-content-border-color);
+}
+[data-slot='drawer-content'][data-vaul-drawer-direction='right'] {
+  border-top-left-radius: var(--drawer-content-radius);
+  border-bottom-left-radius: var(--drawer-content-radius);
+  border-left: var(--drawer-content-border-width) solid var(--drawer-content-border-color);
+}
+/* The drag-handle bar rendered inside drawer-content is a bare <div> with no
+   data-slot attribute in drawer.tsx, so it cannot be targeted without
+   editing the component; only a structural fallback is available: */
+[data-slot='drawer-content'] > div:first-child {
+  --drawer-handle-bg: var(--muted);
+  --drawer-handle-width: 100px;
+  --drawer-handle-height: 0.25rem;
+  background-color: var(--drawer-handle-bg);
+  width: var(--drawer-handle-width);
+  height: var(--drawer-handle-height);
+}
+
+[data-slot='drawer-header'] {
+  --drawer-header-gap: 0.125rem;
+  --drawer-header-padding: 1rem;
+  gap: var(--drawer-header-gap);
+  padding: var(--drawer-header-padding);
+}
+
+[data-slot='drawer-footer'] {
+  --drawer-footer-gap: 0.5rem;
+  --drawer-footer-padding: 1rem;
+  gap: var(--drawer-footer-gap);
+  padding: var(--drawer-footer-padding);
+}
+
+[data-slot='drawer-title'] {
+  --drawer-title-fg: var(--foreground);
+  --drawer-title-font-family: var(--font-heading);
+  --drawer-title-font-size: var(--typography-h6-font-size);
+  --drawer-title-font-weight: var(--typography-h6-font-weight);
+  color: var(--drawer-title-fg);
+  font-family: var(--drawer-title-font-family);
+  font-size: var(--drawer-title-font-size);
+  font-weight: var(--drawer-title-font-weight);
+}
+
+[data-slot='drawer-description'] {
+  --drawer-description-fg: var(--muted-foreground);
+  --drawer-description-font-size: var(--typography-muted-font-size);
+  color: var(--drawer-description-fg);
+  font-size: var(--drawer-description-font-size);
+}

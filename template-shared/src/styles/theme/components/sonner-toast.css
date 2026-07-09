@@ -1,0 +1,51 @@
+/* ==========================================================================
+   Sonner (Toast)
+   ========================================================================== */
+
+/* Sonner is a headless toast library; sonner.tsx wires it up with
+   className="toaster group" and sets --normal-bg/--normal-text/
+   --normal-border/--border-radius inline via the style prop (pointing at
+   --popover/--popover-foreground/--border/--radius). There is no data-slot
+   here, so `.toaster` (the library root's own class) is the real DOM hook —
+   we re-point the same CSS variable names Sonner already reads. */
+.toaster {
+  --sonner-bg: var(--popover);
+  --sonner-text: var(--popover-foreground);
+  --sonner-border: var(--border);
+  --sonner-radius: var(--radius);
+
+  --normal-bg: var(--sonner-bg);
+  --normal-text: var(--sonner-text);
+  --normal-border: var(--sonner-border);
+  --border-radius: var(--sonner-radius);
+}
+
+/* toastOptions.classNames.toast = 'cn-toast' gives each individual toast a
+   real, stable class name to hook. */
+.toaster .cn-toast {
+  --sonner-toast-gap: 0.75rem;
+  --sonner-toast-padding: 1rem;
+  --sonner-toast-font-size: var(--typography-muted-font-size);
+  gap: var(--sonner-toast-gap);
+  padding: var(--sonner-toast-padding);
+  font-size: var(--sonner-toast-font-size);
+}
+.toaster .cn-toast svg {
+  --sonner-icon-size: 1rem;
+  width: var(--sonner-icon-size);
+  height: var(--sonner-icon-size);
+}
+
+/* Sonner also supports per-type CSS-variable overrides (--success-bg/
+   -text/-border, --error-bg/-text/-border, --warning-*, --info-*) on the
+   toast element itself. This design system has no dedicated semantic
+   success/warning/info tokens (only --destructive), so only the error case
+   is mapped meaningfully; the rest default to the normal/popover palette. */
+.toaster .cn-toast[data-type='error'] {
+  --sonner-error-bg: color-mix(in oklch, var(--destructive), var(--popover) 85%);
+  --sonner-error-text: var(--destructive);
+  --sonner-error-border: color-mix(in oklch, var(--destructive), transparent 70%);
+  --error-bg: var(--sonner-error-bg);
+  --error-text: var(--sonner-error-text);
+  --error-border: var(--sonner-error-border);
+}

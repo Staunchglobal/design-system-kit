@@ -1,0 +1,26 @@
+/* ==========================================================================
+   Hover Card
+   ========================================================================== */
+
+[data-slot='hover-card-content'] {
+  --hover-card-content-bg: var(--popover);
+  --hover-card-content-fg: var(--popover-foreground);
+  --hover-card-content-ring-color: color-mix(in oklch, var(--foreground), transparent 90%);
+  --hover-card-content-ring-width: 1px;
+  --hover-card-content-radius: var(--radius-lg);
+  --hover-card-content-width: 16rem;
+  --hover-card-content-padding: 0.625rem;
+  --hover-card-content-font-size: var(--typography-small-font-size);
+  --hover-card-content-shadow: var(--shadow-md);
+  --hover-card-content-duration: 100ms;
+  background-color: var(--hover-card-content-bg);
+  color: var(--hover-card-content-fg);
+  box-shadow:
+    0 0 0 var(--hover-card-content-ring-width) var(--hover-card-content-ring-color),
+    var(--hover-card-content-shadow);
+  border-radius: var(--hover-card-content-radius);
+  width: var(--hover-card-content-width);
+  padding: var(--hover-card-content-padding);
+  font-size: var(--hover-card-content-font-size);
+  transition-duration: var(--hover-card-content-duration);
+}

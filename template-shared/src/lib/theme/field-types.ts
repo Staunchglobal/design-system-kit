@@ -1,0 +1,286 @@
+import type { ThemeFieldType, ThemeManifest, ThemeVariable } from './types'
+
+const COLOR_SEMANTIC = new Set([
+  'background',
+  'foreground',
+  'card',
+  'card-foreground',
+  'popover',
+  'popover-foreground',
+  'primary',
+  'primary-foreground',
+  'secondary',
+  'secondary-foreground',
+  'muted',
+  'muted-foreground',
+  'accent',
+  'accent-foreground',
+  'destructive',
+  'border',
+  'input',
+  'ring',
+  'chart-1',
+  'chart-2',
+  'chart-3',
+  'chart-4',
+  'chart-5',
+  'sidebar',
+  'sidebar-foreground',
+  'sidebar-primary',
+  'sidebar-primary-foreground',
+  'sidebar-accent',
+  'sidebar-accent-foreground',
+  'sidebar-border',
+  'sidebar-ring',
+  'overlay-bg',
+])
+
+const SHADE_PREFIXES = ['neutral-', 'primary-', 'secondary-', 'accent-', 'muted-', 'destructive-']
+
+export function inferFieldType(_name: string, value: string): ThemeFieldType {
+  const v = value.trim()
+  if (/^#[0-9a-fA-F]{3,8}$/.test(v)) return 'hex'
+  const m = v.match(/^var\((--[a-zA-Z0-9_-]+)\)$/)
+  if (m) {
+    const ref = m[1].replace(/^--/, '')
+    if (ref.startsWith('radius') || ref.startsWith('theme-radius')) return 'radius-ref'
+    if (ref.startsWith('font-')) return 'font-ref'
+    if (ref.startsWith('typography-')) return 'typography-ref'
+    if (SHADE_PREFIXES.some((p) => ref.startsWith(p)) || COLOR_SEMANTIC.has(ref)) {
+      return 'color-ref'
+    }
+    return 'raw'
+  }
+  return 'raw'
+}
+
+export function extractVarRef(value: string): string | null {
+  const m = value.trim().match(/^var\((--[a-zA-Z0-9_-]+)\)$/)
+  return m ? m[1] : null
+}
+
+export function toVarRef(tokenName: string): string {
+  const n = tokenName.startsWith('--') ? tokenName : `--${tokenName}`
+  return `var(${n})`
+}
+
+export function listColorTokenNames(manifest: ThemeManifest, extra: string[] = []): string[] {
+  const names = new Set<string>()
+  for (const g of manifest.groups) {
+    for (const v of g.variables) {
+      const bare = v.name.replace(/^--/, '')
+      if (
+        SHADE_PREFIXES.some((p) => bare.startsWith(p)) ||
+        COLOR_SEMANTIC.has(bare) ||
+        v.fieldType === 'hex'
+      ) {
+        names.add(v.name)
+      }
+    }
+  }
+  for (const e of extra) {
+    names.add(e.startsWith('--') ? e : `--${e}`)
+  }
+  return [...names].sort()
+}
+
+export function listRadiusTokenNames(manifest: ThemeManifest): string[] {
+  const names = new Set<string>()
+  for (const g of manifest.groups) {
+    for (const v of g.variables) {
+      const bare = v.name.replace(/^--/, '')
+      if (bare === 'radius' || bare.startsWith('radius-') || bare.startsWith('theme-radius')) {
+        names.add(v.name)
+      }
+    }
+  }
+  return [...names].sort()
+}
+
+export function listFontTokenNames(manifest: ThemeManifest, extra: string[] = []): string[] {
+  const names = new Set<string>(['--font-sans', '--font-mono', '--font-heading'])
+  for (const g of manifest.groups) {
+    for (const v of g.variables) {
+      if (v.name.startsWith('--font-')) names.add(v.name)
+    }
+  }
+  for (const e of extra) {
+    names.add(e.startsWith('--') ? e : `--${e}`)
+  }
+  return [...names].sort()
+}
+
+export function listTypographyTokenNames(manifest: ThemeManifest, extra: string[] = []): string[] {
+  const names = new Set<string>()
+  for (const g of manifest.groups) {
+    for (const v of g.variables) {
+      if (v.name.startsWith('--typography-')) names.add(v.name)
+    }
+  }
+  for (const e of extra) {
+    names.add(e.startsWith('--') ? e : `--${e}`)
+  }
+  return [...names].sort()
+}
+
+/** Flatten defaults from manifest into an id→value map (unique React / store keys). */
+export function defaultsFromManifest(manifest: ThemeManifest): Record<string, string> {
+  const values: Record<string, string> = {}
+  for (const g of manifest.groups) {
+    for (const v of g.variables) {
+      values[v.id] = v.value
+    }
+  }
+  return values
+}
+
+/** Map variable id → CSS custom property name. */
+export function idToNameMap(manifest: ThemeManifest): Record<string, string> {
+  const map: Record<string, string> = {}
+  for (const g of manifest.groups) {
+    for (const v of g.variables) {
+      map[v.id] = v.name
+    }
+  }
+  return map
+}
+
+/** True for `.dark { … }` token entries (live editor chrome always uses light). */
+export function isDarkScopeVar(id: string, scope?: string): boolean {
+  if (scope) return scope === 'dark' || scope.startsWith('dark/')
+  // ids look like `colors:--background:1` — occurrence ≥ 1 for colors = non-root blocks
+  const parts = id.split(':')
+  const occurrence = Number(parts[parts.length - 1])
+  return parts[0] === 'colors' && Number.isFinite(occurrence) && occurrence >= 1
+}
+
+export function scopePriority(scope?: string): number {
+  if (!scope || scope === 'root' || scope.startsWith('root/')) return 3
+  if (scope === 'editor' || scope.startsWith('editor/')) return 2
+  if (scope === 'dark' || scope.startsWith('dark/')) return 0
+  return 1
+}
+
+/**
+ * Apply editor values onto an element. Values are keyed by unique variable id.
+ * When several ids share a CSS name, prefer root (light), then editor, never dark.
+ */
+export function applyCssVars(
+  values: Record<string, string>,
+  nameById: Record<string, string>,
+  root: HTMLElement = document.documentElement,
+  scopeById?: Record<string, string | undefined>
+) {
+  const resolved = new Map<string, { value: string; priority: number }>()
+
+  for (const [id, value] of Object.entries(values)) {
+    const scope = scopeById?.[id]
+    if (isDarkScopeVar(id, scope)) continue
+    const name = nameById[id] ?? id
+    if (!name.startsWith('--')) continue
+    const priority = scopePriority(scope)
+    const prev = resolved.get(name)
+    if (!prev || priority >= prev.priority) {
+      resolved.set(name, { value, priority })
+    }
+  }
+
+  for (const [name, { value }] of resolved) {
+    root.style.setProperty(name, value)
+  }
+}
+
+export function clearAppliedCssVars(names: string[], root: HTMLElement = document.documentElement) {
+  for (const name of names) {
+    root.style.removeProperty(name)
+  }
+}
+
+const UNIT_RE = /^(-?\d+(?:\.\d+)?)(px|rem|em|%|deg|ms|s|vh|vw|vmin|vmax)$/
+
+/** Splits e.g. "0.375rem" into { num: 0.375, unit: 'rem' }; null if not a plain number+unit value. */
+export function parseUnitValue(value: string): { num: number; unit: string } | null {
+  const m = value.trim().match(UNIT_RE)
+  if (!m) return null
+  return { num: Number(m[1]), unit: m[2] }
+}
+
+export function isPlainNumber(value: string): boolean {
+  return /^-?\d+(\.\d+)?$/.test(value.trim())
+}
+
+/** Strips trailing float noise, e.g. 0.375 * 16 = 6.000000000000001 → "6". */
+export function formatNumber(n: number): string {
+  return String(Math.round(n * 10000) / 10000)
+}
+
+export function remToPx(rem: number): number {
+  return Math.round(rem * 16 * 1000) / 1000
+}
+
+export function pxToRem(px: number): number {
+  return Math.round((px / 16) * 10000) / 10000
+}
+
+/**
+ * Flattens the manifest + live edits into name → value, preferring root scope over
+ * editor/dark duplicates (same precedence as applyCssVars). Used to resolve a color
+ * token reference (e.g. `--primary-500`) down to its actual hex for display.
+ */
+export function buildRootValueMap(
+  manifest: ThemeManifest,
+  values: Record<string, string>
+): Record<string, string> {
+  const resolved = new Map<string, { value: string; priority: number }>()
+  for (const g of manifest.groups) {
+    for (const v of g.variables) {
+      if (isDarkScopeVar(v.id, v.scope)) continue
+      const value = values[v.id] ?? v.value
+      const priority = scopePriority(v.scope)
+      const prev = resolved.get(v.name)
+      if (!prev || priority >= prev.priority) {
+        resolved.set(v.name, { value, priority })
+      }
+    }
+  }
+  const out: Record<string, string> = {}
+  for (const [name, { value }] of resolved) out[name] = value
+  return out
+}
+
+/** Resolves a token name (with or without `--`) through `var(...)` chains down to a hex value. */
+export function resolveTokenHex(
+  token: string,
+  nameValueMap: Record<string, string>,
+  depth = 0
+): string | null {
+  if (depth > 8) return null
+  const name = token.startsWith('--') ? token : `--${token}`
+  const raw = nameValueMap[name]
+  if (!raw) return null
+  const v = raw.trim()
+  if (/^#[0-9a-fA-F]{3,8}$/.test(v)) return v
+  const ref = v.match(/^var\((--[a-zA-Z0-9_-]+)\)$/)
+  if (ref) return resolveTokenHex(ref[1], nameValueMap, depth + 1)
+  return null
+}
+
+export function groupVariablesForEditor(
+  groupId: string,
+  variables: ThemeVariable[]
+): ThemeVariable[] {
+  // Radius: only show editable theme-radius-* sources
+  if (groupId === 'radius') {
+    return variables.filter((v) => v.name.startsWith('--theme-radius'))
+  }
+  // Colors: editor UI is light-only — hide .dark / [data-theme-editor] duplicates
+  if (groupId === 'colors') {
+    return variables.filter((v) => {
+      const s = v.scope ?? ''
+      if (s === 'dark' || s.startsWith('dark/')) return false
+      if (s === 'editor' || s.startsWith('editor/')) return false
+      return true
+    })
+  }
+  return variables
+}

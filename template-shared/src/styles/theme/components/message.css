@@ -1,0 +1,41 @@
+/* ==========================================================================
+   Message
+   ========================================================================== */
+
+[data-slot='message-group'] {
+  --message-group-gap: 0.5rem;
+  gap: var(--message-group-gap);
+}
+
+[data-slot='message'] {
+  --message-gap: 0.5rem;
+  --message-font-size: var(--typography-p-font-size);
+  gap: var(--message-gap);
+  font-size: var(--message-font-size);
+}
+
+[data-slot='message-avatar'] {
+  --message-avatar-size: 2rem;
+  --message-avatar-bg: var(--muted);
+  --message-avatar-radius: 9999px;
+  min-width: var(--message-avatar-size);
+  background-color: var(--message-avatar-bg);
+  border-radius: var(--message-avatar-radius);
+}
+
+[data-slot='message-content'] {
+  --message-content-gap: 0.625rem;
+  gap: var(--message-content-gap);
+}
+
+[data-slot='message-header'],
+[data-slot='message-footer'] {
+  --message-meta-padding-x: 0.75rem;
+  --message-meta-font-size: var(--typography-small-font-size);
+  --message-meta-font-weight: var(--typography-small-font-weight);
+  --message-meta-fg: var(--muted-foreground);
+  padding-inline: var(--message-meta-padding-x);
+  font-size: var(--message-meta-font-size);
+  font-weight: var(--message-meta-font-weight);
+  color: var(--message-meta-fg);
+}

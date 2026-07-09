@@ -1,0 +1,68 @@
+/* ==========================================================================
+   Input
+   ========================================================================== */
+
+/* Input tokens live on :root so Input-family components (Select, Input
+   Group, Native Select, OTP …) can alias them. Edit once here. */
+:root {
+  --input-radius: var(--radius-lg);
+  --input-border-width: 1px;
+  --input-border-color: var(--border);
+  --input-bg: transparent;
+  --input-fg: var(--foreground);
+  --input-placeholder-color: var(--muted-foreground);
+  --input-height: 2rem;
+  --input-padding-x: 0.625rem;
+  --input-padding-y: 0.25rem;
+  --input-font-size: var(--typography-p-font-size);
+  --input-file-font-size: var(--typography-small-font-size);
+  --input-file-font-weight: var(--typography-small-font-weight);
+  --input-file-height: 1.5rem;
+  --input-focus-border-color: var(--ring);
+  --input-focus-ring-width: 3px;
+  --input-focus-ring-color: color-mix(in oklch, var(--ring), transparent 50%);
+  --input-disabled-bg: color-mix(in oklch, var(--input), transparent 50%);
+  --input-disabled-opacity: 0.5;
+  --input-invalid-border-color: var(--destructive);
+  --input-invalid-ring-color: color-mix(in oklch, var(--destructive), transparent 80%);
+}
+
+[data-slot='input'] {
+  height: var(--input-height);
+  border-radius: var(--input-radius);
+  border-width: var(--input-border-width);
+  border-color: var(--input-border-color);
+  background-color: var(--input-bg);
+  color: var(--input-fg);
+  padding-inline: var(--input-padding-x);
+  padding-block: var(--input-padding-y);
+  font-size: var(--input-font-size);
+}
+[data-slot='input']::placeholder {
+  color: var(--input-placeholder-color);
+}
+[data-slot='input']::file-selector-button {
+  height: var(--input-file-height);
+  font-size: var(--input-file-font-size);
+  font-weight: var(--input-file-font-weight);
+  border-width: 0;
+  background-color: transparent;
+}
+[data-slot='input']:focus-visible {
+  border-color: var(--input-focus-border-color);
+  box-shadow: 0 0 0 var(--input-focus-ring-width) var(--input-focus-ring-color);
+}
+[data-slot='input']:disabled {
+  background-color: var(--input-disabled-bg);
+  opacity: var(--input-disabled-opacity);
+  cursor: not-allowed;
+}
+[data-slot='input'][aria-invalid='true'] {
+  border-color: var(--input-invalid-border-color);
+  box-shadow: 0 0 0 var(--input-focus-ring-width) var(--input-invalid-ring-color);
+}
+@media (min-width: 48rem) {
+  [data-slot='input'] {
+    font-size: var(--input-file-font-size);
+  }
+}

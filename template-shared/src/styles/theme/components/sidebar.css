@@ -1,0 +1,308 @@
+/* ==========================================================================
+   Sidebar
+   ========================================================================== */
+
+[data-slot='sidebar-wrapper'] {
+  /* Public sizing knobs. SidebarProvider sets --sidebar-width /
+     --sidebar-width-icon inline via the style attribute on this very
+     element — an unlayered rule cannot out-prioritize an inline style for
+     the same property on the same element, so redeclaring them here would
+     be silently ignored. Instead each consumer below redeclares --sidebar-*
+     directly on itself (an element that has no competing inline style),
+     which correctly shadows the inherited inline-set value for its own
+     subtree. */
+  --sidebar-width: 16rem;
+  --sidebar-width-icon: 3rem;
+  --sidebar-width-mobile: 18rem;
+}
+[data-slot='sidebar-wrapper']:has([data-variant='inset']) {
+  --sidebar-wrapper-bg: var(--sidebar);
+  background-color: var(--sidebar-wrapper-bg);
+}
+
+[data-slot='sidebar'] {
+  --sidebar-bg: var(--sidebar);
+  --sidebar-fg: var(--sidebar-foreground);
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-fg);
+}
+/* Mobile sidebar (rendered inside a Sheet) reads --sidebar-width for its own
+   width on the very element carrying data-mobile="true"; redeclare it there. */
+[data-slot='sidebar'][data-mobile='true'] {
+  --sidebar-width: 18rem;
+  width: var(--sidebar-width);
+}
+
+[data-slot='sidebar-gap'] {
+  --sidebar-width: 16rem;
+  --sidebar-transition-duration: 200ms;
+  width: var(--sidebar-width);
+  transition-duration: var(--sidebar-transition-duration);
+}
+[data-slot='sidebar-container'] {
+  --sidebar-width: 16rem;
+  --sidebar-border-color: var(--sidebar-border);
+  width: var(--sidebar-width);
+}
+[data-slot='sidebar'][data-collapsible='icon'] [data-slot='sidebar-gap'],
+[data-slot='sidebar'][data-collapsible='icon'] [data-slot='sidebar-container'] {
+  width: var(--sidebar-width-icon);
+}
+[data-slot='sidebar'][data-collapsible='offcanvas'] [data-slot='sidebar-gap'] {
+  width: 0px;
+}
+[data-slot='sidebar'][data-side='left'] [data-slot='sidebar-container'] {
+  border-inline-end-color: var(--sidebar-border-color);
+}
+[data-slot='sidebar'][data-side='right'] [data-slot='sidebar-container'] {
+  border-inline-start-color: var(--sidebar-border-color);
+}
+
+[data-slot='sidebar-inner'] {
+  --sidebar-inner-bg: var(--sidebar);
+  background-color: var(--sidebar-inner-bg);
+}
+[data-slot='sidebar'][data-variant='floating'] [data-slot='sidebar-inner'] {
+  --sidebar-floating-radius: var(--radius-lg);
+  --sidebar-floating-ring-color: var(--sidebar-border);
+  --sidebar-floating-shadow: var(--shadow-sm);
+  border-radius: var(--sidebar-floating-radius);
+  box-shadow:
+    var(--sidebar-floating-shadow),
+    0 0 0 1px var(--sidebar-floating-ring-color);
+}
+
+/* sidebar-trigger is a plain <Button variant="ghost" size="icon-sm"> with no
+   sidebar-specific styling of its own, so it has no dedicated block here. */
+
+[data-slot='sidebar-rail'] {
+  --sidebar-rail-width: 1rem;
+  --sidebar-rail-hover-bg: var(--sidebar-border);
+  width: var(--sidebar-rail-width);
+}
+[data-slot='sidebar-rail']:hover::after {
+  background-color: var(--sidebar-rail-hover-bg);
+}
+
+[data-slot='sidebar-inset'] {
+  --sidebar-inset-bg: var(--background);
+  --sidebar-inset-radius: var(--radius-xl);
+  --sidebar-inset-margin: 0.5rem;
+  --sidebar-inset-shadow: var(--shadow-sm);
+  background-color: var(--sidebar-inset-bg);
+}
+
+/* SidebarInput is a real Input (data-slot="input"). Height/chrome from Input
+   section; only surface color differs here. */
+[data-ui='sidebar-input'] {
+  --sidebar-input-bg: var(--background);
+  background-color: var(--sidebar-input-bg);
+}
+
+[data-slot='sidebar-header'],
+[data-slot='sidebar-footer'] {
+  --sidebar-header-footer-gap: 0.5rem;
+  --sidebar-header-footer-padding: 0.5rem;
+  gap: var(--sidebar-header-footer-gap);
+  padding: var(--sidebar-header-footer-padding);
+}
+
+[data-slot='sidebar-separator'] {
+  --sidebar-separator-bg: var(--sidebar-border);
+  --sidebar-separator-margin-x: 0.5rem;
+  background-color: var(--sidebar-separator-bg);
+  margin-inline: var(--sidebar-separator-margin-x);
+}
+
+[data-slot='sidebar-content'] {
+  --sidebar-content-gap: 0px;
+  gap: var(--sidebar-content-gap);
+}
+
+[data-slot='sidebar-group'] {
+  --sidebar-group-padding: 0.5rem;
+  padding: var(--sidebar-group-padding);
+}
+
+[data-slot='sidebar-group-label'] {
+  --sidebar-group-label-height: 2rem;
+  --sidebar-group-label-padding-x: 0.5rem;
+  --sidebar-group-label-font-size: var(--typography-overline-font-size);
+  --sidebar-group-label-font-weight: var(--typography-overline-font-weight);
+  --sidebar-group-label-fg: color-mix(in oklch, var(--sidebar-foreground), transparent 30%);
+  --sidebar-group-label-focus-ring: var(--sidebar-ring);
+  height: var(--sidebar-group-label-height);
+  padding-inline: var(--sidebar-group-label-padding-x);
+  font-size: var(--sidebar-group-label-font-size);
+  font-weight: var(--sidebar-group-label-font-weight);
+  color: var(--sidebar-group-label-fg);
+}
+
+[data-slot='sidebar-group-action'] {
+  --sidebar-group-action-size: 1.25rem;
+  --sidebar-group-action-radius: var(--radius-md);
+  --sidebar-group-action-fg: var(--sidebar-foreground);
+  --sidebar-group-action-hover-bg: var(--sidebar-accent);
+  --sidebar-group-action-hover-fg: var(--sidebar-accent-foreground);
+  width: var(--sidebar-group-action-size);
+  border-radius: var(--sidebar-group-action-radius);
+  color: var(--sidebar-group-action-fg);
+}
+[data-slot='sidebar-group-action']:hover {
+  background-color: var(--sidebar-group-action-hover-bg);
+  color: var(--sidebar-group-action-hover-fg);
+}
+
+[data-slot='sidebar-group-content'] {
+  --sidebar-group-content-font-size: var(--typography-small-font-size);
+  font-size: var(--sidebar-group-content-font-size);
+}
+
+[data-slot='sidebar-menu'] {
+  --sidebar-menu-gap: 0px;
+  gap: var(--sidebar-menu-gap);
+}
+
+[data-slot='sidebar-menu-button'] {
+  --sidebar-menu-button-radius: var(--radius-md);
+  --sidebar-menu-button-padding: 0.5rem;
+  --sidebar-menu-button-fg: var(--sidebar-foreground);
+  --sidebar-menu-button-hover-bg: var(--sidebar-accent);
+  --sidebar-menu-button-hover-fg: var(--sidebar-accent-foreground);
+  --sidebar-menu-button-active-bg: var(--sidebar-accent);
+  --sidebar-menu-button-active-fg: var(--sidebar-accent-foreground);
+  --sidebar-menu-button-active-font-weight: var(--typography-small-font-weight);
+  --sidebar-menu-button-disabled-opacity: 0.5;
+  --sidebar-menu-button-focus-ring: var(--sidebar-ring);
+  border-radius: var(--sidebar-menu-button-radius);
+  padding: var(--sidebar-menu-button-padding);
+  color: var(--sidebar-menu-button-fg);
+}
+[data-slot='sidebar-menu-button']:hover,
+[data-slot='sidebar-menu-button']:active,
+[data-slot='sidebar-menu-button'][data-open] {
+  background-color: var(--sidebar-menu-button-hover-bg);
+  color: var(--sidebar-menu-button-hover-fg);
+}
+[data-slot='sidebar-menu-button'][data-active='true'] {
+  background-color: var(--sidebar-menu-button-active-bg);
+  color: var(--sidebar-menu-button-active-fg);
+  font-weight: var(--sidebar-menu-button-active-font-weight);
+}
+[data-slot='sidebar-menu-button']:disabled {
+  opacity: var(--sidebar-menu-button-disabled-opacity);
+}
+[data-slot='sidebar-menu-button'][data-variant='outline'] {
+  --sidebar-menu-button-outline-bg: var(--background);
+  --sidebar-menu-button-outline-ring: var(--sidebar-border);
+  background-color: var(--sidebar-menu-button-outline-bg);
+  box-shadow: 0 0 0 1px var(--sidebar-menu-button-outline-ring);
+}
+[data-slot='sidebar-menu-button'][data-size='default'] {
+  --sidebar-menu-button-height: 2rem;
+  --sidebar-menu-button-font-size: var(--typography-small-font-size);
+  height: var(--sidebar-menu-button-height);
+  font-size: var(--sidebar-menu-button-font-size);
+}
+[data-slot='sidebar-menu-button'][data-size='sm'] {
+  --sidebar-menu-button-height: 1.75rem;
+  --sidebar-menu-button-font-size: var(--typography-caption-font-size);
+  height: var(--sidebar-menu-button-height);
+  font-size: var(--sidebar-menu-button-font-size);
+}
+[data-slot='sidebar-menu-button'][data-size='lg'] {
+  --sidebar-menu-button-height: 3rem;
+  --sidebar-menu-button-font-size: var(--typography-small-font-size);
+  height: var(--sidebar-menu-button-height);
+  font-size: var(--sidebar-menu-button-font-size);
+}
+
+[data-slot='sidebar-menu-action'] {
+  --sidebar-menu-action-size: 1.25rem;
+  --sidebar-menu-action-radius: var(--radius-md);
+  --sidebar-menu-action-fg: var(--sidebar-foreground);
+  --sidebar-menu-action-hover-bg: var(--sidebar-accent);
+  --sidebar-menu-action-hover-fg: var(--sidebar-accent-foreground);
+  width: var(--sidebar-menu-action-size);
+  border-radius: var(--sidebar-menu-action-radius);
+  color: var(--sidebar-menu-action-fg);
+}
+[data-slot='sidebar-menu-action']:hover {
+  background-color: var(--sidebar-menu-action-hover-bg);
+  color: var(--sidebar-menu-action-hover-fg);
+}
+
+[data-slot='sidebar-menu-badge'] {
+  --sidebar-menu-badge-height: 1.25rem;
+  --sidebar-menu-badge-min-width: 1.25rem;
+  --sidebar-menu-badge-padding-x: 0.25rem;
+  --sidebar-menu-badge-radius: var(--radius-md);
+  --sidebar-menu-badge-font-size: var(--typography-caption-font-size);
+  --sidebar-menu-badge-font-weight: var(--typography-caption-font-weight);
+  --sidebar-menu-badge-fg: var(--sidebar-foreground);
+  height: var(--sidebar-menu-badge-height);
+  min-width: var(--sidebar-menu-badge-min-width);
+  padding-inline: var(--sidebar-menu-badge-padding-x);
+  border-radius: var(--sidebar-menu-badge-radius);
+  font-size: var(--sidebar-menu-badge-font-size);
+  font-weight: var(--sidebar-menu-badge-font-weight);
+  color: var(--sidebar-menu-badge-fg);
+}
+
+[data-slot='sidebar-menu-skeleton'] {
+  --sidebar-menu-skeleton-height: 2rem;
+  --sidebar-menu-skeleton-gap: 0.5rem;
+  --sidebar-menu-skeleton-padding-x: 0.5rem;
+  --sidebar-menu-skeleton-radius: var(--radius-md);
+  height: var(--sidebar-menu-skeleton-height);
+  gap: var(--sidebar-menu-skeleton-gap);
+  padding-inline: var(--sidebar-menu-skeleton-padding-x);
+  border-radius: var(--sidebar-menu-skeleton-radius);
+}
+
+[data-slot='sidebar-menu-sub'] {
+  --sidebar-menu-sub-margin-x: 0.875rem;
+  --sidebar-menu-sub-gap: 0.25rem;
+  --sidebar-menu-sub-padding-x: 0.625rem;
+  --sidebar-menu-sub-padding-y: 0.125rem;
+  --sidebar-menu-sub-border-color: var(--sidebar-border);
+  margin-inline: var(--sidebar-menu-sub-margin-x);
+  gap: var(--sidebar-menu-sub-gap);
+  padding-inline: var(--sidebar-menu-sub-padding-x);
+  padding-block: var(--sidebar-menu-sub-padding-y);
+  border-inline-start-color: var(--sidebar-menu-sub-border-color);
+}
+
+[data-slot='sidebar-menu-sub-button'] {
+  --sidebar-menu-sub-button-height: 1.75rem;
+  --sidebar-menu-sub-button-gap: 0.5rem;
+  --sidebar-menu-sub-button-padding-x: 0.5rem;
+  --sidebar-menu-sub-button-radius: var(--radius-md);
+  --sidebar-menu-sub-button-fg: var(--sidebar-foreground);
+  --sidebar-menu-sub-button-hover-bg: var(--sidebar-accent);
+  --sidebar-menu-sub-button-hover-fg: var(--sidebar-accent-foreground);
+  --sidebar-menu-sub-button-active-bg: var(--sidebar-accent);
+  --sidebar-menu-sub-button-active-fg: var(--sidebar-accent-foreground);
+  height: var(--sidebar-menu-sub-button-height);
+  gap: var(--sidebar-menu-sub-button-gap);
+  padding-inline: var(--sidebar-menu-sub-button-padding-x);
+  border-radius: var(--sidebar-menu-sub-button-radius);
+  color: var(--sidebar-menu-sub-button-fg);
+}
+[data-slot='sidebar-menu-sub-button']:hover,
+[data-slot='sidebar-menu-sub-button']:active {
+  background-color: var(--sidebar-menu-sub-button-hover-bg);
+  color: var(--sidebar-menu-sub-button-hover-fg);
+}
+[data-slot='sidebar-menu-sub-button'][data-active='true'] {
+  background-color: var(--sidebar-menu-sub-button-active-bg);
+  color: var(--sidebar-menu-sub-button-active-fg);
+}
+[data-slot='sidebar-menu-sub-button'][data-size='md'] {
+  --sidebar-menu-sub-button-font-size: var(--typography-small-font-size);
+  font-size: var(--sidebar-menu-sub-button-font-size);
+}
+[data-slot='sidebar-menu-sub-button'][data-size='sm'] {
+  --sidebar-menu-sub-button-font-size: var(--typography-caption-font-size);
+  font-size: var(--sidebar-menu-sub-button-font-size);
+}

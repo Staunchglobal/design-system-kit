@@ -1,0 +1,36 @@
+/* ==========================================================================
+   Resizable
+   ========================================================================== */
+
+[data-slot='resizable-panel-group'] {
+  --resizable-group-gap: 0px;
+  gap: var(--resizable-group-gap);
+}
+
+/* react-resizable-panels reflects orientation via a real aria-orientation
+   attribute on both the group and the handle — used here instead of a
+   data-orientation attribute, which this component doesn't render. */
+[data-slot='resizable-handle'] {
+  --resizable-handle-size: 1px;
+  --resizable-handle-bg: var(--border);
+  --resizable-handle-focus-ring: var(--ring);
+  width: var(--resizable-handle-size);
+  background-color: var(--resizable-handle-bg);
+}
+[data-slot='resizable-handle']:focus-visible {
+  box-shadow: 0 0 0 1px var(--resizable-handle-focus-ring);
+}
+[data-slot='resizable-handle'][aria-orientation='horizontal'] {
+  height: var(--resizable-handle-size);
+  width: 100%;
+}
+[data-slot='resizable-handle'] > div {
+  --resizable-handle-grip-width: 0.25rem;
+  --resizable-handle-grip-height: 1.5rem;
+  --resizable-handle-grip-bg: var(--border);
+  --resizable-handle-grip-radius: var(--radius-lg);
+  width: var(--resizable-handle-grip-width);
+  height: var(--resizable-handle-grip-height);
+  background-color: var(--resizable-handle-grip-bg);
+  border-radius: var(--resizable-handle-grip-radius);
+}

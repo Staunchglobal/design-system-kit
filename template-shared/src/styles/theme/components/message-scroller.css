@@ -1,0 +1,30 @@
+/* ==========================================================================
+   Message Scroller
+   ========================================================================== */
+
+[data-slot='message-scroller-content'] {
+  --message-scroller-content-gap: 1.5rem;
+  gap: var(--message-scroller-content-gap);
+}
+
+[data-slot='message-scroller-item'] {
+  --message-scroller-item-contain-size: 10rem;
+  contain-intrinsic-size: auto var(--message-scroller-item-contain-size);
+}
+
+[data-slot='message-scroller-viewport'] {
+  --message-scroller-scrollbar-width: thin;
+  scrollbar-width: var(--message-scroller-scrollbar-width);
+}
+
+/* MessageScrollerButton renders a real Button — colors from Button section.
+   Only absolute placement lives here. */
+[data-ui='message-scroller-button'] {
+  --message-scroller-button-offset: 1rem;
+}
+[data-ui='message-scroller-button'][data-direction='end'] {
+  bottom: var(--message-scroller-button-offset);
+}
+[data-ui='message-scroller-button'][data-direction='start'] {
+  top: var(--message-scroller-button-offset);
+}

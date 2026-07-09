@@ -1,0 +1,86 @@
+/* ==========================================================================
+   Calendar
+   ========================================================================== */
+
+[data-slot='calendar'] {
+  --calendar-cell-size: 2rem;
+  --calendar-cell-radius: var(--radius-md);
+  --calendar-padding: 0.5rem;
+  --calendar-bg: var(--background);
+  --calendar-months-gap: 1rem;
+  --cell-size: var(--calendar-cell-size);
+  --cell-radius: var(--calendar-cell-radius);
+  padding: var(--calendar-padding);
+  background-color: var(--calendar-bg);
+}
+
+[data-slot='calendar'] .rdp-months {
+  gap: var(--calendar-months-gap);
+}
+
+[data-slot='calendar'] .rdp-nav {
+  --calendar-nav-gap: 0.25rem;
+  gap: var(--calendar-nav-gap);
+}
+
+[data-slot='calendar'] .rdp-weekday {
+  --calendar-weekday-font-size: var(--typography-caption-font-size);
+  --calendar-weekday-fg: var(--muted-foreground);
+  font-size: var(--calendar-weekday-font-size);
+  color: var(--calendar-weekday-fg);
+}
+
+[data-slot='calendar'] .rdp-caption_label {
+  --calendar-caption-font-size: var(--typography-small-font-size);
+  --calendar-caption-font-weight: var(--typography-small-font-weight);
+  font-size: var(--calendar-caption-font-size);
+  font-weight: var(--calendar-caption-font-weight);
+}
+
+[data-slot='calendar'] .rdp-dropdown_root {
+  --calendar-dropdown-bg: var(--popover);
+}
+
+[data-slot='calendar'] .rdp-dropdown {
+  background-color: var(--calendar-dropdown-bg);
+}
+
+[data-slot='calendar'] .rdp-today {
+  --calendar-today-bg: var(--muted);
+  --calendar-today-fg: var(--foreground);
+  background-color: var(--calendar-today-bg);
+  color: var(--calendar-today-fg);
+}
+
+[data-slot='calendar'] .rdp-outside {
+  --calendar-outside-fg: var(--muted-foreground);
+  color: var(--calendar-outside-fg);
+}
+
+[data-slot='calendar'] .rdp-disabled {
+  --calendar-disabled-opacity: 0.5;
+  opacity: var(--calendar-disabled-opacity);
+}
+
+[data-slot='calendar'] [data-slot='button'][data-selected-single='true'],
+[data-slot='calendar'] [data-slot='button'][data-range-start='true'],
+[data-slot='calendar'] [data-slot='button'][data-range-end='true'] {
+  --calendar-selected-bg: var(--primary);
+  --calendar-selected-fg: var(--primary-foreground);
+  background-color: var(--calendar-selected-bg);
+  color: var(--calendar-selected-fg);
+}
+
+[data-slot='calendar'] [data-slot='button'][data-range-middle='true'] {
+  --calendar-range-middle-bg: var(--muted);
+  --calendar-range-middle-fg: var(--foreground);
+  background-color: var(--calendar-range-middle-bg);
+  color: var(--calendar-range-middle-fg);
+}
+
+[data-slot='calendar'] [data-slot='button'][data-focused='true'] {
+  --calendar-focus-border-color: var(--ring);
+  --calendar-focus-ring-color: color-mix(in oklch, var(--ring), transparent 50%);
+  border-color: var(--calendar-focus-border-color);
+  box-shadow: 0 0 0 3px var(--calendar-focus-ring-color);
+}

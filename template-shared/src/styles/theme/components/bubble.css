@@ -1,0 +1,131 @@
+/* ==========================================================================
+   Bubble
+   ========================================================================== */
+
+[data-slot='bubble-group'] {
+  --bubble-group-gap: 0.5rem;
+  gap: var(--bubble-group-gap);
+}
+
+[data-slot='bubble'] {
+  --bubble-max-width: 80%;
+  max-width: var(--bubble-max-width);
+}
+
+[data-slot='bubble-content'] {
+  --bubble-content-radius: var(--radius-xl);
+  --bubble-content-padding-x: 0.75rem;
+  --bubble-content-padding-y: 0.5rem;
+  --bubble-content-font-size: var(--typography-p-font-size);
+  --bubble-content-line-height: var(--typography-p-line-height);
+  --bubble-content-border-color: transparent;
+  border-radius: var(--bubble-content-radius);
+  padding-inline: var(--bubble-content-padding-x);
+  padding-block: var(--bubble-content-padding-y);
+  font-size: var(--bubble-content-font-size);
+  line-height: var(--bubble-content-line-height);
+  border-color: var(--bubble-content-border-color);
+}
+
+[data-slot='bubble'][data-variant='default'] [data-slot='bubble-content'] {
+  --bubble-default-bg: var(--primary);
+  --bubble-default-fg: var(--primary-foreground);
+  --bubble-default-hover-bg: color-mix(in oklch, var(--bubble-default-bg), transparent 20%);
+  background-color: var(--bubble-default-bg);
+  color: var(--bubble-default-fg);
+}
+[data-slot='bubble'][data-variant='default'] [data-slot='bubble-content']:is(button, a):hover {
+  background-color: var(--bubble-default-hover-bg);
+}
+
+[data-slot='bubble'][data-variant='secondary'] [data-slot='bubble-content'] {
+  --bubble-secondary-bg: var(--secondary);
+  --bubble-secondary-fg: var(--secondary-foreground);
+  --bubble-secondary-hover-bg: color-mix(in oklch, var(--secondary), var(--foreground) 5%);
+  background-color: var(--bubble-secondary-bg);
+  color: var(--bubble-secondary-fg);
+}
+[data-slot='bubble'][data-variant='secondary'] [data-slot='bubble-content']:is(button, a):hover {
+  background-color: var(--bubble-secondary-hover-bg);
+}
+
+[data-slot='bubble'][data-variant='muted'] [data-slot='bubble-content'] {
+  --bubble-muted-bg: var(--muted);
+  --bubble-muted-hover-bg: color-mix(in oklch, var(--muted), var(--foreground) 5%);
+  background-color: var(--bubble-muted-bg);
+}
+[data-slot='bubble'][data-variant='muted'] [data-slot='bubble-content']:is(button, a):hover {
+  background-color: var(--bubble-muted-hover-bg);
+}
+
+[data-slot='bubble'][data-variant='tinted'] [data-slot='bubble-content'] {
+  --bubble-tinted-bg: var(--primary-50);
+  --bubble-tinted-fg: var(--foreground);
+  --bubble-tinted-hover-bg: var(--primary-100);
+  background-color: var(--bubble-tinted-bg);
+  color: var(--bubble-tinted-fg);
+}
+.dark [data-slot='bubble'][data-variant='tinted'] [data-slot='bubble-content'] {
+  --bubble-tinted-bg: var(--primary-800);
+  --bubble-tinted-hover-bg: var(--primary-700);
+}
+[data-slot='bubble'][data-variant='tinted'] [data-slot='bubble-content']:is(button, a):hover {
+  background-color: var(--bubble-tinted-hover-bg);
+}
+
+[data-slot='bubble'][data-variant='outline'] [data-slot='bubble-content'] {
+  --bubble-outline-border-color: var(--border);
+  --bubble-outline-bg: var(--background);
+  --bubble-outline-hover-bg: var(--muted);
+  --bubble-outline-hover-fg: var(--foreground);
+  border-color: var(--bubble-outline-border-color);
+  background-color: var(--bubble-outline-bg);
+}
+[data-slot='bubble'][data-variant='outline'] [data-slot='bubble-content']:is(button, a):hover {
+  background-color: var(--bubble-outline-hover-bg);
+  color: var(--bubble-outline-hover-fg);
+}
+
+[data-slot='bubble'][data-variant='ghost'] [data-slot='bubble-content'] {
+  --bubble-ghost-radius: 0px;
+  --bubble-ghost-padding: 0px;
+  --bubble-ghost-bg: transparent;
+  --bubble-ghost-hover-bg: var(--muted);
+  --bubble-ghost-hover-fg: var(--foreground);
+  border-radius: var(--bubble-ghost-radius);
+  padding: var(--bubble-ghost-padding);
+  background-color: var(--bubble-ghost-bg);
+}
+[data-slot='bubble'][data-variant='ghost'] [data-slot='bubble-content']:is(button, a):hover {
+  background-color: var(--bubble-ghost-hover-bg);
+  color: var(--bubble-ghost-hover-fg);
+}
+
+[data-slot='bubble'][data-variant='destructive'] [data-slot='bubble-content'] {
+  --bubble-destructive-bg: color-mix(in oklch, var(--destructive), transparent 90%);
+  --bubble-destructive-fg: var(--destructive);
+  --bubble-destructive-hover-bg: color-mix(in oklch, var(--destructive), transparent 80%);
+  background-color: var(--bubble-destructive-bg);
+  color: var(--bubble-destructive-fg);
+}
+[data-slot='bubble'][data-variant='destructive'] [data-slot='bubble-content']:is(button, a):hover {
+  background-color: var(--bubble-destructive-hover-bg);
+}
+
+[data-slot='bubble-reactions'] {
+  --bubble-reactions-gap: 0.25rem;
+  --bubble-reactions-padding-x: 0.375rem;
+  --bubble-reactions-padding-y: 0.125rem;
+  --bubble-reactions-font-size: var(--typography-small-font-size);
+  --bubble-reactions-radius: 9999px;
+  --bubble-reactions-bg: var(--muted);
+  --bubble-reactions-ring-color: var(--card);
+  --bubble-reactions-ring-width: 3px;
+  gap: var(--bubble-reactions-gap);
+  padding-inline: var(--bubble-reactions-padding-x);
+  padding-block: var(--bubble-reactions-padding-y);
+  font-size: var(--bubble-reactions-font-size);
+  border-radius: var(--bubble-reactions-radius);
+  background-color: var(--bubble-reactions-bg);
+  box-shadow: 0 0 0 var(--bubble-reactions-ring-width) var(--bubble-reactions-ring-color);
+}

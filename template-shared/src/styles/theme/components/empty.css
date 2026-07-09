@@ -1,0 +1,66 @@
+/* ==========================================================================
+   Empty
+   ========================================================================== */
+
+[data-slot='empty'] {
+  --empty-radius: var(--radius-xl);
+  --empty-padding: 1.5rem;
+  --empty-gap: 1rem;
+  --empty-border-color: var(--border);
+  border-radius: var(--empty-radius);
+  padding: var(--empty-padding);
+  gap: var(--empty-gap);
+  border-color: var(--empty-border-color);
+}
+
+[data-slot='empty-header'] {
+  --empty-header-gap: 0.5rem;
+  --empty-header-max-width: 24rem;
+  gap: var(--empty-header-gap);
+  max-width: var(--empty-header-max-width);
+}
+
+/* Rendered with data-slot="empty-icon" in empty.tsx even though the
+   component/export is named EmptyMedia — using the real attribute value. */
+[data-slot='empty-icon'] {
+  --empty-media-margin-bottom: 0.5rem;
+  margin-bottom: var(--empty-media-margin-bottom);
+}
+[data-slot='empty-icon'][data-variant='icon'] {
+  --empty-media-icon-size: 2rem;
+  --empty-media-icon-radius: var(--radius-lg);
+  --empty-media-icon-bg: var(--muted);
+  --empty-media-icon-fg: var(--foreground);
+  width: var(--empty-media-icon-size);
+  height: var(--empty-media-icon-size);
+  border-radius: var(--empty-media-icon-radius);
+  background-color: var(--empty-media-icon-bg);
+  color: var(--empty-media-icon-fg);
+}
+
+[data-slot='empty-title'] {
+  --empty-title-font-family: var(--font-heading);
+  --empty-title-font-size: var(--typography-h6-font-size);
+  --empty-title-font-weight: var(--typography-h6-font-weight);
+  font-family: var(--empty-title-font-family);
+  font-size: var(--empty-title-font-size);
+  font-weight: var(--empty-title-font-weight);
+}
+
+[data-slot='empty-description'] {
+  --empty-description-font-size: var(--typography-muted-font-size);
+  --empty-description-fg: var(--muted-foreground);
+  --empty-description-link-hover-fg: var(--primary);
+  font-size: var(--empty-description-font-size);
+  color: var(--empty-description-fg);
+}
+[data-slot='empty-description'] a:hover {
+  color: var(--empty-description-link-hover-fg);
+}
+
+[data-slot='empty-content'] {
+  --empty-content-gap: 0.625rem;
+  --empty-content-max-width: 24rem;
+  gap: var(--empty-content-gap);
+  max-width: var(--empty-content-max-width);
+}

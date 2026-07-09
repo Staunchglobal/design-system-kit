@@ -1,0 +1,106 @@
+/* ==========================================================================
+   Field
+   ========================================================================== */
+
+[data-slot='field-set'] {
+  --field-set-gap: 1rem;
+  gap: var(--field-set-gap);
+}
+
+[data-slot='field-legend'] {
+  --field-legend-margin-bottom: 0.375rem;
+  --field-legend-font-weight: var(--typography-small-font-weight);
+  margin-bottom: var(--field-legend-margin-bottom);
+  font-weight: var(--field-legend-font-weight);
+}
+[data-slot='field-legend'][data-variant='legend'] {
+  --field-legend-font-size: var(--typography-h6-font-size);
+  font-size: var(--field-legend-font-size);
+}
+[data-slot='field-legend'][data-variant='label'] {
+  --field-legend-font-size: var(--typography-small-font-size);
+  font-size: var(--field-legend-font-size);
+}
+
+[data-slot='field-group'] {
+  --field-group-gap: 1.25rem;
+  gap: var(--field-group-gap);
+}
+
+[data-slot='field'] {
+  --field-gap: 0.5rem;
+  --field-invalid-fg: var(--destructive);
+  gap: var(--field-gap);
+}
+[data-slot='field'][data-invalid='true'] {
+  color: var(--field-invalid-fg);
+}
+
+[data-slot='field-content'] {
+  --field-content-gap: 0.125rem;
+  --field-content-line-height: var(--typography-muted-line-height);
+  gap: var(--field-content-gap);
+  line-height: var(--field-content-line-height);
+}
+
+/* Shared by FieldLabel and FieldTitle (both render data-slot="field-label") */
+[data-slot='field-label'] {
+  --field-label-gap: 0.5rem;
+  --field-label-line-height: var(--typography-small-line-height);
+  --field-label-font-size: var(--typography-small-font-size);
+  --field-label-font-weight: var(--typography-small-font-weight);
+  --field-label-disabled-opacity: 0.5;
+  --field-label-checked-border-color: color-mix(in oklch, var(--primary), transparent 70%);
+  --field-label-checked-bg: color-mix(in oklch, var(--primary), transparent 95%);
+
+  gap: var(--field-label-gap);
+  line-height: var(--field-label-line-height);
+  font-size: var(--field-label-font-size);
+  font-weight: var(--field-label-font-weight);
+}
+[data-slot='field-label']:has([data-slot='field']) {
+  --field-label-radius: var(--radius-lg);
+  --field-label-padding: 0.625rem;
+  border-radius: var(--field-label-radius);
+  border-width: 1px;
+}
+[data-slot='field-label']:has([data-state='checked']) {
+  border-color: var(--field-label-checked-border-color);
+  background-color: var(--field-label-checked-bg);
+}
+
+[data-slot='field-description'] {
+  --field-description-fg: var(--muted-foreground);
+  --field-description-font-size: var(--typography-muted-font-size);
+  --field-description-font-weight: var(--typography-muted-font-weight);
+  --field-description-line-height: var(--typography-muted-line-height);
+  color: var(--field-description-fg);
+  font-size: var(--field-description-font-size);
+  font-weight: var(--field-description-font-weight);
+  line-height: var(--field-description-line-height);
+}
+
+[data-slot='field-separator'] {
+  --field-separator-height: 1.25rem;
+  --field-separator-margin-y: -0.5rem;
+  height: var(--field-separator-height);
+  margin-block: var(--field-separator-margin-y);
+}
+
+[data-slot='field-separator-content'] {
+  --field-separator-content-bg: var(--background);
+  --field-separator-content-fg: var(--muted-foreground);
+  --field-separator-content-padding-x: 0.5rem;
+  background-color: var(--field-separator-content-bg);
+  color: var(--field-separator-content-fg);
+  padding-inline: var(--field-separator-content-padding-x);
+}
+
+[data-slot='field-error'] {
+  --field-error-fg: var(--destructive);
+  --field-error-font-size: var(--typography-muted-font-size);
+  --field-error-font-weight: var(--typography-muted-font-weight);
+  color: var(--field-error-fg);
+  font-size: var(--field-error-font-size);
+  font-weight: var(--field-error-font-weight);
+}

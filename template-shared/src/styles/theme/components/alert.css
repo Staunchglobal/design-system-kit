@@ -1,0 +1,60 @@
+/* ==========================================================================
+   Alert
+   ========================================================================== */
+
+[data-slot='alert'] {
+  --alert-radius: var(--radius-lg);
+  --alert-padding-x: 0.625rem;
+  --alert-padding-y: 0.5rem;
+  --alert-gap: 0.125rem;
+  --alert-font-size: var(--typography-small-font-size);
+  --alert-action-offset: 0.5rem;
+  border-radius: var(--alert-radius);
+  padding-inline: var(--alert-padding-x);
+  padding-block: var(--alert-padding-y);
+  gap: var(--alert-gap);
+  font-size: var(--alert-font-size);
+}
+[data-slot='alert'][data-variant='default'] {
+  --alert-bg: var(--card);
+  --alert-fg: var(--card-foreground);
+  background-color: var(--alert-bg);
+  color: var(--alert-fg);
+}
+[data-slot='alert'][data-variant='destructive'] {
+  --alert-destructive-bg: var(--card);
+  --alert-destructive-fg: var(--destructive);
+  --alert-destructive-description-fg: color-mix(in oklch, var(--destructive), transparent 10%);
+  background-color: var(--alert-destructive-bg);
+  color: var(--alert-destructive-fg);
+}
+[data-slot='alert'][data-variant='destructive'] [data-slot='alert-description'] {
+  color: var(--alert-destructive-description-fg);
+}
+
+[data-slot='alert-title'] {
+  --alert-title-font-family: var(--font-heading);
+  --alert-title-font-weight: var(--typography-h6-font-weight);
+  --alert-title-link-hover-fg: var(--foreground);
+  font-family: var(--alert-title-font-family);
+  font-weight: var(--alert-title-font-weight);
+}
+[data-slot='alert-title'] a:hover {
+  color: var(--alert-title-link-hover-fg);
+}
+
+[data-slot='alert-description'] {
+  --alert-description-font-size: var(--typography-muted-font-size);
+  --alert-description-fg: var(--muted-foreground);
+  --alert-description-link-hover-fg: var(--foreground);
+  font-size: var(--alert-description-font-size);
+  color: var(--alert-description-fg);
+}
+[data-slot='alert-description'] a:hover {
+  color: var(--alert-description-link-hover-fg);
+}
+
+[data-slot='alert-action'] {
+  top: var(--alert-action-offset);
+  right: var(--alert-action-offset);
+}

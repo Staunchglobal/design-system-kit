@@ -1,0 +1,100 @@
+/* ==========================================================================
+   Alert Dialog
+   ========================================================================== */
+
+[data-slot='alert-dialog-overlay'] {
+  --alert-dialog-overlay-bg: var(--overlay-bg);
+  --alert-dialog-overlay-duration: 100ms;
+  background-color: var(--alert-dialog-overlay-bg);
+  transition-duration: var(--alert-dialog-overlay-duration);
+}
+
+[data-slot='alert-dialog-content'] {
+  --alert-dialog-content-bg: var(--popover);
+  --alert-dialog-content-fg: var(--popover-foreground);
+  --alert-dialog-content-ring-color: color-mix(in oklch, var(--foreground), transparent 90%);
+  --alert-dialog-content-ring-width: 1px;
+  --alert-dialog-content-radius: var(--radius-xl);
+  --alert-dialog-content-padding: 1rem;
+  --alert-dialog-content-gap: 1rem;
+  --alert-dialog-content-duration: 100ms;
+  background-color: var(--alert-dialog-content-bg);
+  color: var(--alert-dialog-content-fg);
+  box-shadow: 0 0 0 var(--alert-dialog-content-ring-width) var(--alert-dialog-content-ring-color);
+  border-radius: var(--alert-dialog-content-radius);
+  padding: var(--alert-dialog-content-padding);
+  gap: var(--alert-dialog-content-gap);
+  transition-duration: var(--alert-dialog-content-duration);
+}
+[data-slot='alert-dialog-content'][data-size='default'] {
+  --alert-dialog-content-max-width: 20rem;
+  max-width: var(--alert-dialog-content-max-width);
+}
+[data-slot='alert-dialog-content'][data-size='sm'] {
+  --alert-dialog-content-max-width: 20rem;
+  max-width: var(--alert-dialog-content-max-width);
+}
+
+[data-slot='alert-dialog-header'] {
+  --alert-dialog-header-gap: 0.375rem;
+  gap: var(--alert-dialog-header-gap);
+}
+
+[data-slot='alert-dialog-content'][data-size='sm'] [data-slot='alert-dialog-footer'] {
+  --alert-dialog-footer-gap-cols: 0.5rem;
+  column-gap: var(--alert-dialog-footer-gap-cols);
+}
+
+[data-slot='alert-dialog-footer'] {
+  --alert-dialog-footer-bg: color-mix(in oklch, var(--muted), transparent 50%);
+  --alert-dialog-footer-margin-inline: -1rem;
+  --alert-dialog-footer-margin-block-end: -1rem;
+  --alert-dialog-footer-gap: 0.5rem;
+  --alert-dialog-footer-radius: var(--radius-xl);
+  --alert-dialog-footer-border-color: var(--border);
+  --alert-dialog-footer-border-width: 1px;
+  --alert-dialog-footer-padding: 1rem;
+  background-color: var(--alert-dialog-footer-bg);
+  margin-inline: var(--alert-dialog-footer-margin-inline);
+  margin-block-end: var(--alert-dialog-footer-margin-block-end);
+  gap: var(--alert-dialog-footer-gap);
+  border-end-start-radius: var(--alert-dialog-footer-radius);
+  border-end-end-radius: var(--alert-dialog-footer-radius);
+  border-top: var(--alert-dialog-footer-border-width) solid var(--alert-dialog-footer-border-color);
+  padding: var(--alert-dialog-footer-padding);
+}
+
+[data-slot='alert-dialog-media'] {
+  --alert-dialog-media-bg: var(--muted);
+  --alert-dialog-media-size: 2.5rem;
+  --alert-dialog-media-radius: var(--radius-md);
+  --alert-dialog-media-margin-bottom: 0.5rem;
+  background-color: var(--alert-dialog-media-bg);
+  inline-size: var(--alert-dialog-media-size);
+  block-size: var(--alert-dialog-media-size);
+  border-radius: var(--alert-dialog-media-radius);
+  margin-block-end: var(--alert-dialog-media-margin-bottom);
+}
+
+[data-slot='alert-dialog-title'] {
+  --alert-dialog-title-font-family: var(--font-heading);
+  --alert-dialog-title-font-size: var(--typography-h6-font-size);
+  --alert-dialog-title-font-weight: var(--typography-h6-font-weight);
+  font-family: var(--alert-dialog-title-font-family);
+  font-size: var(--alert-dialog-title-font-size);
+  font-weight: var(--alert-dialog-title-font-weight);
+}
+
+[data-slot='alert-dialog-description'] {
+  --alert-dialog-description-fg: var(--muted-foreground);
+  --alert-dialog-description-font-size: var(--typography-muted-font-size);
+  --alert-dialog-description-link-hover-fg: var(--foreground);
+  color: var(--alert-dialog-description-fg);
+  font-size: var(--alert-dialog-description-font-size);
+}
+[data-slot='alert-dialog-description'] a:hover {
+  color: var(--alert-dialog-description-link-hover-fg);
+}
+
+/* AlertDialogAction / Cancel render real <Button>s (data-slot="button").
+   Their colors/sizes come from the Button section above — do not restyle here. */

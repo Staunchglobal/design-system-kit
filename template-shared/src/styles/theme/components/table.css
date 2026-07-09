@@ -1,0 +1,68 @@
+/* ==========================================================================
+   Table
+   ========================================================================== */
+
+[data-slot='table'] {
+  --table-font-size: var(--typography-small-font-size);
+  font-size: var(--table-font-size);
+}
+
+[data-slot='table-header'] tr {
+  --table-header-border-color: var(--border);
+  --table-header-border-width: 1px;
+  border-bottom: var(--table-header-border-width) solid var(--table-header-border-color);
+}
+
+[data-slot='table-footer'] {
+  --table-footer-bg: color-mix(in oklch, var(--muted), transparent 50%);
+  --table-footer-border-color: var(--border);
+  --table-footer-border-width: 1px;
+  --table-footer-font-weight: var(--typography-small-font-weight);
+  background-color: var(--table-footer-bg);
+  border-top: var(--table-footer-border-width) solid var(--table-footer-border-color);
+  font-weight: var(--table-footer-font-weight);
+}
+
+[data-slot='table-row'] {
+  --table-row-border-color: var(--border);
+  --table-row-border-width: 1px;
+  --table-row-hover-bg: color-mix(in oklch, var(--muted), transparent 50%);
+  --table-row-selected-bg: var(--muted);
+  --table-row-transition: color 0.15s, background-color 0.15s;
+  border-bottom: var(--table-row-border-width) solid var(--table-row-border-color);
+  transition: var(--table-row-transition);
+}
+[data-slot='table-row']:hover {
+  background-color: var(--table-row-hover-bg);
+}
+[data-slot='table-row'][data-state='selected'] {
+  background-color: var(--table-row-selected-bg);
+}
+[data-slot='table-row']:has([aria-expanded='true']) {
+  background-color: var(--table-row-hover-bg);
+}
+
+[data-slot='table-head'] {
+  --table-head-fg: var(--foreground);
+  --table-head-height: 2.5rem;
+  --table-head-padding-x: 0.5rem;
+  --table-head-font-weight: var(--typography-small-font-weight);
+  color: var(--table-head-fg);
+  height: var(--table-head-height);
+  padding-inline: var(--table-head-padding-x);
+  font-weight: var(--table-head-font-weight);
+}
+
+[data-slot='table-cell'] {
+  --table-cell-padding: 0.5rem;
+  padding: var(--table-cell-padding);
+}
+
+[data-slot='table-caption'] {
+  --table-caption-fg: var(--muted-foreground);
+  --table-caption-margin-top: 1rem;
+  --table-caption-font-size: var(--typography-muted-font-size);
+  color: var(--table-caption-fg);
+  margin-block-start: var(--table-caption-margin-top);
+  font-size: var(--table-caption-font-size);
+}

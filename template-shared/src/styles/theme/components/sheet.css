@@ -1,0 +1,89 @@
+/* ==========================================================================
+   Sheet
+   ========================================================================== */
+
+[data-slot='sheet-overlay'] {
+  --sheet-overlay-bg: var(--overlay-bg);
+  --sheet-overlay-blur: 4px;
+  --sheet-overlay-duration: 100ms;
+  background-color: var(--sheet-overlay-bg);
+  transition-duration: var(--sheet-overlay-duration);
+}
+
+[data-slot='sheet-content'] {
+  --sheet-content-bg: var(--popover);
+  --sheet-content-fg: var(--popover-foreground);
+  --sheet-content-gap: 1rem;
+  --sheet-content-font-size: var(--typography-small-font-size);
+  --sheet-content-shadow: var(--shadow-lg);
+  --sheet-content-border-color: var(--border);
+  --sheet-content-border-width: 1px;
+  --sheet-content-duration: 200ms;
+  --sheet-content-easing: ease-in-out;
+  background-color: var(--sheet-content-bg);
+  color: var(--sheet-content-fg);
+  gap: var(--sheet-content-gap);
+  font-size: var(--sheet-content-font-size);
+  box-shadow: var(--sheet-content-shadow);
+  transition-duration: var(--sheet-content-duration);
+  transition-timing-function: var(--sheet-content-easing);
+}
+[data-slot='sheet-content'][data-side='left'],
+[data-slot='sheet-content'][data-side='right'] {
+  --sheet-content-width: 75%;
+  --sheet-content-max-width: 24rem;
+  width: var(--sheet-content-width);
+}
+[data-slot='sheet-content'][data-side='left'] {
+  border-right: var(--sheet-content-border-width) solid var(--sheet-content-border-color);
+}
+[data-slot='sheet-content'][data-side='right'] {
+  border-left: var(--sheet-content-border-width) solid var(--sheet-content-border-color);
+}
+[data-slot='sheet-content'][data-side='top'] {
+  border-bottom: var(--sheet-content-border-width) solid var(--sheet-content-border-color);
+}
+[data-slot='sheet-content'][data-side='bottom'] {
+  border-top: var(--sheet-content-border-width) solid var(--sheet-content-border-color);
+}
+
+/* Built-in sheet close is a ghost/icon-sm Button (data-slot="button").
+   Only position it — look comes from the Button section. */
+[data-ui='sheet-close'] {
+  --sheet-close-top: 0.75rem;
+  --sheet-close-right: 0.75rem;
+  top: var(--sheet-close-top);
+  right: var(--sheet-close-right);
+}
+
+[data-slot='sheet-header'] {
+  --sheet-header-gap: 0.125rem;
+  --sheet-header-padding: 1rem;
+  gap: var(--sheet-header-gap);
+  padding: var(--sheet-header-padding);
+}
+
+[data-slot='sheet-footer'] {
+  --sheet-footer-gap: 0.5rem;
+  --sheet-footer-padding: 1rem;
+  gap: var(--sheet-footer-gap);
+  padding: var(--sheet-footer-padding);
+}
+
+[data-slot='sheet-title'] {
+  --sheet-title-fg: var(--foreground);
+  --sheet-title-font-family: var(--font-heading);
+  --sheet-title-font-size: var(--typography-h6-font-size);
+  --sheet-title-font-weight: var(--typography-h6-font-weight);
+  color: var(--sheet-title-fg);
+  font-family: var(--sheet-title-font-family);
+  font-size: var(--sheet-title-font-size);
+  font-weight: var(--sheet-title-font-weight);
+}
+
+[data-slot='sheet-description'] {
+  --sheet-description-fg: var(--muted-foreground);
+  --sheet-description-font-size: var(--typography-muted-font-size);
+  color: var(--sheet-description-fg);
+  font-size: var(--sheet-description-font-size);
+}

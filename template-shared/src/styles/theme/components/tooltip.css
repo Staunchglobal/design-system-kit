@@ -1,0 +1,34 @@
+/* ==========================================================================
+   Tooltip
+   ========================================================================== */
+
+[data-slot='tooltip-content'] {
+  --tooltip-content-bg: var(--foreground);
+  --tooltip-content-fg: var(--background);
+  --tooltip-content-radius: var(--radius-md);
+  --tooltip-content-max-width: 20rem;
+  --tooltip-content-gap: 0.375rem;
+  --tooltip-content-padding-x: 0.75rem;
+  --tooltip-content-padding-y: 0.375rem;
+  --tooltip-content-font-size: var(--typography-caption-font-size);
+  background-color: var(--tooltip-content-bg);
+  color: var(--tooltip-content-fg);
+  border-radius: var(--tooltip-content-radius);
+  max-width: var(--tooltip-content-max-width);
+  gap: var(--tooltip-content-gap);
+  padding-inline: var(--tooltip-content-padding-x);
+  padding-block: var(--tooltip-content-padding-y);
+  font-size: var(--tooltip-content-font-size);
+}
+/* The arrow is rendered via TooltipPrimitive.Arrow with a hardcoded
+   className and no data-slot attribute; targeted structurally as the sole
+   svg child of tooltip-content. */
+[data-slot='tooltip-content'] > svg {
+  --tooltip-arrow-size: 0.625rem;
+  --tooltip-arrow-radius: 2px;
+  fill: var(--tooltip-content-bg);
+  color: var(--tooltip-content-bg);
+  width: var(--tooltip-arrow-size);
+  height: var(--tooltip-arrow-size);
+  border-radius: var(--tooltip-arrow-radius);
+}

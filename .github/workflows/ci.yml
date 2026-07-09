@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Typecheck, build, unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Registry is up to date with the templates
+        run: |
+          npm run build:registry
+          git diff --exit-code -- src/generated/registry.ts || {
+            echo "::error::src/generated/registry.ts is out of date — a template changed without 'npm run build:registry' being re-run and committed."
+            exit 1
+          }
+
+      - name: Unit tests
+        run: npm test
+
+  smoke:
+    name: End-to-end smoke test (scaffold + init + build)
+    runs-on: ubuntu-latest
+    # Slow (scaffolds real Next.js + Vite apps and builds both) — every push/PR still runs it
+    # since the templates and patchers are exactly the kind of change a typecheck/unit-test pass
+    # can miss, but it's kept as its own job so `verify`'s fast feedback isn't blocked on it.
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Smoke test
+        run: npm run smoke

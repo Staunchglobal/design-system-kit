@@ -1,0 +1,22 @@
+/* ==========================================================================
+   Label
+   ========================================================================== */
+
+[data-slot='label'] {
+  --label-font-size: var(--typography-small-font-size);
+  --label-font-weight: var(--typography-small-font-weight);
+  --label-line-height: var(--typography-small-line-height);
+  --label-gap: 0.5rem;
+  --label-disabled-opacity: 0.5;
+
+  font-size: var(--label-font-size);
+  font-weight: var(--label-font-weight);
+  line-height: var(--label-line-height);
+  gap: var(--label-gap);
+}
+/* peer-disabled: Label follows a disabled peer control (Checkbox / RadioGroupItem) */
+[data-slot='checkbox']:disabled ~ [data-slot='label'],
+[data-slot='radio-group-item']:disabled ~ [data-slot='label'] {
+  opacity: var(--label-disabled-opacity);
+  cursor: not-allowed;
+}

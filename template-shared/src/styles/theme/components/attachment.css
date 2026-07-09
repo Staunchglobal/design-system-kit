@@ -1,0 +1,101 @@
+/* ==========================================================================
+   Attachment
+   ========================================================================== */
+
+[data-slot='attachment'] {
+  --attachment-radius: var(--radius-xl);
+  --attachment-bg: var(--card);
+  --attachment-fg: var(--card-foreground);
+  --attachment-border-color: var(--border);
+  --attachment-hover-bg: color-mix(in oklch, var(--muted), transparent 50%);
+  border-radius: var(--attachment-radius);
+  background-color: var(--attachment-bg);
+  color: var(--attachment-fg);
+  border-color: var(--attachment-border-color);
+}
+[data-slot='attachment']:has(> a, > button):hover {
+  background-color: var(--attachment-hover-bg);
+}
+[data-slot='attachment'][data-state='error'] {
+  --attachment-error-border-color: color-mix(in oklch, var(--destructive), transparent 70%);
+  border-color: var(--attachment-error-border-color);
+}
+[data-slot='attachment'][data-state='idle'] {
+  --attachment-idle-border-style: dashed;
+  border-style: var(--attachment-idle-border-style);
+}
+[data-slot='attachment'][data-size='default'] {
+  --attachment-gap: 0.5rem;
+  --attachment-font-size: var(--typography-small-font-size);
+  gap: var(--attachment-gap);
+  font-size: var(--attachment-font-size);
+}
+[data-slot='attachment'][data-size='sm'] {
+  --attachment-gap: 0.625rem;
+  --attachment-font-size: var(--typography-caption-font-size);
+  gap: var(--attachment-gap);
+  font-size: var(--attachment-font-size);
+}
+[data-slot='attachment'][data-size='xs'] {
+  --attachment-gap: 0.375rem;
+  --attachment-font-size: var(--typography-caption-font-size);
+  --attachment-radius: var(--radius-lg);
+  gap: var(--attachment-gap);
+  font-size: var(--attachment-font-size);
+  border-radius: var(--attachment-radius);
+}
+[data-slot='attachment'][data-orientation='vertical'] {
+  --attachment-vertical-width: 6rem;
+  width: var(--attachment-vertical-width);
+}
+
+[data-slot='attachment-media'] {
+  --attachment-media-size: 2.5rem;
+  --attachment-media-radius: var(--radius-lg);
+  --attachment-media-bg: var(--muted);
+  --attachment-media-fg: var(--foreground);
+  width: var(--attachment-media-size);
+  border-radius: var(--attachment-media-radius);
+  background-color: var(--attachment-media-bg);
+  color: var(--attachment-media-fg);
+}
+[data-slot='attachment'][data-state='error'] [data-slot='attachment-media'] {
+  --attachment-media-error-bg: color-mix(in oklch, var(--destructive), transparent 90%);
+  --attachment-media-error-fg: var(--destructive);
+  background-color: var(--attachment-media-error-bg);
+  color: var(--attachment-media-error-fg);
+}
+[data-slot='attachment'][data-size='sm'] [data-slot='attachment-media'] {
+  --attachment-media-size: 2rem;
+}
+[data-slot='attachment'][data-size='xs'] [data-slot='attachment-media'] {
+  --attachment-media-size: 1.75rem;
+  --attachment-media-radius: var(--radius-md);
+}
+
+[data-slot='attachment-title'] {
+  --attachment-title-font-family: var(--font-heading);
+  --attachment-title-font-weight: var(--typography-h6-font-weight);
+  font-family: var(--attachment-title-font-family);
+  font-weight: var(--attachment-title-font-weight);
+}
+
+[data-slot='attachment-description'] {
+  --attachment-description-fg: var(--muted-foreground);
+  --attachment-description-font-size: var(--typography-caption-font-size);
+  --attachment-description-margin-top: 0.125rem;
+  color: var(--attachment-description-fg);
+  font-size: var(--attachment-description-font-size);
+  margin-top: var(--attachment-description-margin-top);
+}
+[data-slot='attachment'][data-state='error'] [data-slot='attachment-description'] {
+  --attachment-description-error-fg: color-mix(in oklch, var(--destructive), transparent 20%);
+  color: var(--attachment-description-error-fg);
+}
+
+[data-slot='attachment-group'] {
+  --attachment-group-gap: 0.75rem;
+  --attachment-group-padding-y: 0.25rem;
+  gap: var(--attachment-group-gap);
+  padding-block: var(--attachment-group-padding-y);
+}

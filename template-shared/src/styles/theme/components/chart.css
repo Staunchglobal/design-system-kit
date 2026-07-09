@@ -1,0 +1,46 @@
+/* ==========================================================================
+   Chart
+   ========================================================================== */
+
+[data-slot='chart'] {
+  --chart-font-size: var(--typography-small-font-size);
+  --chart-aspect-ratio: 16 / 9;
+  --chart-tooltip-gap: 0.375rem;
+  --chart-tooltip-padding-x: 0.625rem;
+  --chart-tooltip-padding-y: 0.375rem;
+  --chart-tooltip-radius: var(--radius-lg);
+  --chart-tooltip-bg: var(--background);
+  --chart-tooltip-border-color: color-mix(in oklch, var(--border), transparent 50%);
+  --chart-tooltip-shadow: var(--shadow-xl);
+  --chart-tooltip-min-width: 8rem;
+  --chart-tooltip-label-font-weight: var(--typography-small-font-weight);
+  --chart-tooltip-value-fg: var(--foreground);
+  --chart-tooltip-muted-fg: var(--muted-foreground);
+  --chart-legend-gap: 1rem;
+  --chart-legend-padding: 0.75rem;
+
+  font-size: var(--chart-font-size);
+  aspect-ratio: var(--chart-aspect-ratio);
+}
+
+/* ChartTooltipContent and ChartLegendContent render as plain <div>s with no
+   data-slot (or any other identifying attribute) of their own. Recharts
+   wraps custom tooltip/legend content in its own `.recharts-tooltip-wrapper`
+   / `.recharts-legend-wrapper` elements though, so those (real DOM classes,
+   just not shadcn's data-slot convention) are used to reach the content
+   root as a direct child — this is the only reliable hook available without
+   editing chart.tsx. */
+[data-slot='chart'] .recharts-tooltip-wrapper > div {
+  gap: var(--chart-tooltip-gap);
+  padding-inline: var(--chart-tooltip-padding-x);
+  padding-block: var(--chart-tooltip-padding-y);
+  border-radius: var(--chart-tooltip-radius);
+  background-color: var(--chart-tooltip-bg);
+  border-color: var(--chart-tooltip-border-color);
+  box-shadow: var(--chart-tooltip-shadow);
+  min-width: var(--chart-tooltip-min-width);
+}
+[data-slot='chart'] .recharts-legend-wrapper > div {
+  gap: var(--chart-legend-gap);
+  padding-block: var(--chart-legend-padding);
+}
