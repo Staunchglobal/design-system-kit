@@ -36,6 +36,21 @@ export function humanizeVarName(name: string): string {
   return bare.split('-').filter(Boolean).map(humanizeWord).join(' ')
 }
 
+/** `ancestor-slot` → "Ancestor Slot"; `variant` → "Variant" */
+export function humanizeKey(key: string): string {
+  return key.split('-').filter(Boolean).map(humanizeWord).join(' ')
+}
+
+/**
+ * A scope value can carry more than one option when the source CSS rule was a
+ * comma-separated list of alternatives (see generate-theme-manifest.mjs's
+ * `inferScope`) — e.g. `top|bottom`. `humanizeVarName` alone would render the
+ * raw pipe verbatim ("Top|bottom"); split it into a human "or" list first.
+ */
+export function humanizeScopeValue(value: string): string {
+  return value.split('|').map(humanizeVarName).join(' or ')
+}
+
 /** `--button-hover-bg` → "Button Hover Background (--button-hover-bg)" */
 export function formatFieldLabel(name: string): string {
   return `${humanizeVarName(name)} (${name})`
@@ -59,6 +74,6 @@ export function humanizeScope(scope?: string): string | null {
   const conditions = scopeConditions(scope)
   if (!conditions.length) return null
   return conditions
-    .map(({ key, value }) => `${humanizeWord(key)} = ${humanizeVarName(value)}`)
+    .map(({ key, value }) => `${humanizeKey(key)} = ${humanizeScopeValue(value)}`)
     .join(', ')
 }

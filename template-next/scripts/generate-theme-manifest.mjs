@@ -50,7 +50,7 @@ const COLOR_SEMANTIC = new Set([
 
 const SHADE_PREFIXES = ['neutral-', 'primary-', 'secondary-', 'accent-', 'muted-', 'destructive-']
 
-function inferType(name, value) {
+export function inferType(name, value) {
   const v = value.trim()
   if (/^#[0-9a-fA-F]{3,8}$/.test(v)) return 'hex'
   const m = v.match(/^var\((--[a-zA-Z0-9_-]+)\)$/)
@@ -73,8 +73,15 @@ function inferType(name, value) {
  * unrelated earlier rules — e.g. button.css's un-variant-scoped `[data-size='icon']`
  * block would inherit `variant=link` merely because `[data-variant='link']` was
  * the last variant rule textually before it, mislabeling every size-only variable.
+ *
+ * Captures any `[data-xxx='yyy']` attribute generically (not just variant/size), an
+ * ancestor `data-slot` when the selector is a descendant combinator (e.g. kbd inside
+ * a tooltip), and — when the rule's selector is a comma-separated list of alternatives
+ * that all declare the same variable (e.g. drawer's top/bottom vs left/right rules) —
+ * every branch, so a value that varies between them survives as `key=value1|value2`
+ * instead of being silently collapsed to just the last branch.
  */
-function inferScope(css, index) {
+export function inferScope(css, index) {
   const before = css.slice(0, index)
   const selectorStart = before.lastIndexOf('}') + 1
   const openBrace = before.lastIndexOf('{')
@@ -83,9 +90,23 @@ function inferScope(css, index) {
   const lastEditor = selector.lastIndexOf('[data-theme-editor]')
   const lastDark = selector.lastIndexOf('.dark')
   const lastRoot = selector.lastIndexOf(':root')
-  const slotMatch = [...selector.matchAll(/\[data-slot=['"]([^'"]+)['"]\]/g)].pop()
-  const variantMatch = [...selector.matchAll(/\[data-variant=['"]([^'"]+)['"]\]/g)].pop()
-  const sizeMatch = [...selector.matchAll(/\[data-size=['"]([^'"]+)['"]\]/g)].pop()
+
+  const branches = selector
+    .split(',')
+    .map((b) => b.trim())
+    .filter(Boolean)
+  const branchInfo = branches.map((branch) => {
+    const slots = [...branch.matchAll(/\[data-slot=['"]([^'"]+)['"]\]/g)].map((m) => m[1])
+    const attrs = [...branch.matchAll(/\[(data-[a-z-]+)=['"]([^'"]+)['"]\]/g)]
+      .filter((m) => m[1] !== 'data-slot')
+      .map((m) => ({ key: m[1].slice('data-'.length), value: m[2] }))
+    return {
+      slot: slots[slots.length - 1],
+      ancestorSlot: slots.length > 1 ? slots[slots.length - 2] : null,
+      attrs,
+    }
+  })
+
   const parts = []
   // Nearest marker wins — editor light lock must not be tagged as dark
   // just because `.dark` appears earlier in the same selector text.
@@ -93,13 +114,21 @@ function inferScope(css, index) {
   if (nearest === lastEditor && lastEditor !== -1) parts.push('editor')
   else if (nearest === lastDark && lastDark !== -1) parts.push('dark')
   else if (lastRoot !== -1) parts.push('root')
-  if (slotMatch) parts.push(slotMatch[1])
-  if (variantMatch) parts.push(`variant=${variantMatch[1]}`)
-  if (sizeMatch) parts.push(`size=${sizeMatch[1]}`)
+
+  const first = branchInfo[0]
+  if (first?.slot) {
+    parts.push(first.slot)
+    if (first.ancestorSlot) parts.push(`ancestor-slot=${first.ancestorSlot}`)
+    const keys = [...new Set(first.attrs.map((a) => a.key))]
+    for (const key of keys) {
+      const values = branchInfo.map((b) => b.attrs.find((a) => a.key === key)?.value).filter(Boolean)
+      parts.push(`${key}=${[...new Set(values)].join('|')}`)
+    }
+  }
   return parts.length ? parts.join('/') : 'default'
 }
 
-function parseVars(css, groupId) {
+export function parseVars(css, groupId) {
   const out = []
   const occurrenceByName = new Map()
   const re = /(--[a-zA-Z0-9_-]+)\s*:\s*([^;]+);/g
@@ -123,53 +152,58 @@ function parseVars(css, groupId) {
   return out
 }
 
-function sectionTitle(css, fallback) {
+export function sectionTitle(css, fallback) {
   const m = css.match(/\/\* =+\n\s+([^\n]+)/)
   return m ? m[1].trim() : fallback
 }
 
-const groups = []
+// Guarded so importing this module (e.g. from a test) doesn't try to read a
+// theme dir that may not exist relative to the importer's cwd.
+const isMain = import.meta.url === `file://${process.argv[1]}`
+if (isMain) {
+  const groups = []
 
-const tokenFiles = [
-  ['colors', 'Colors', 'tokens/colors.css'],
-  ['radius', 'Radius', 'tokens/radius.css'],
-  ['fonts', 'Fonts', 'tokens/fonts.css'],
-  ['typography', 'Typography', 'tokens/typography.css'],
-  ['typography-patterns', 'Typography Patterns', 'tokens/typography-patterns.css'],
-]
+  const tokenFiles = [
+    ['colors', 'Colors', 'tokens/colors.css'],
+    ['radius', 'Radius', 'tokens/radius.css'],
+    ['fonts', 'Fonts', 'tokens/fonts.css'],
+    ['typography', 'Typography', 'tokens/typography.css'],
+    ['typography-patterns', 'Typography Patterns', 'tokens/typography-patterns.css'],
+  ]
 
-for (const [id, title, rel] of tokenFiles) {
-  const css = fs.readFileSync(path.join(themeRoot, rel), 'utf8')
-  groups.push({
-    id,
-    title,
-    kind: 'token',
-    file: `theme/${rel}`,
-    variables: parseVars(css, id),
-  })
+  for (const [id, title, rel] of tokenFiles) {
+    const css = fs.readFileSync(path.join(themeRoot, rel), 'utf8')
+    groups.push({
+      id,
+      title,
+      kind: 'token',
+      file: `theme/${rel}`,
+      variables: parseVars(css, id),
+    })
+  }
+
+  const compDir = path.join(themeRoot, 'components')
+  for (const name of fs
+    .readdirSync(compDir)
+    .filter((f) => f.endsWith('.css'))
+    .sort()) {
+    const css = fs.readFileSync(path.join(compDir, name), 'utf8')
+    const id = name.replace(/\.css$/, '')
+    groups.push({
+      id,
+      title: sectionTitle(css, id),
+      kind: 'component',
+      file: `theme/components/${name}`,
+      variables: parseVars(css, id),
+    })
+  }
+
+  const manifest = { version: 1, groups }
+  fs.writeFileSync(
+    path.join(themeRoot, 'theme.manifest.json'),
+    JSON.stringify(manifest, null, 2) + '\n'
+  )
+  console.log(
+    `Wrote theme.manifest.json (${groups.length} groups, ${groups.reduce((n, g) => n + g.variables.length, 0)} vars)`
+  )
 }
-
-const compDir = path.join(themeRoot, 'components')
-for (const name of fs
-  .readdirSync(compDir)
-  .filter((f) => f.endsWith('.css'))
-  .sort()) {
-  const css = fs.readFileSync(path.join(compDir, name), 'utf8')
-  const id = name.replace(/\.css$/, '')
-  groups.push({
-    id,
-    title: sectionTitle(css, id),
-    kind: 'component',
-    file: `theme/components/${name}`,
-    variables: parseVars(css, id),
-  })
-}
-
-const manifest = { version: 1, groups }
-fs.writeFileSync(
-  path.join(themeRoot, 'theme.manifest.json'),
-  JSON.stringify(manifest, null, 2) + '\n'
-)
-console.log(
-  `Wrote theme.manifest.json (${groups.length} groups, ${groups.reduce((n, g) => n + g.variables.length, 0)} vars)`
-)

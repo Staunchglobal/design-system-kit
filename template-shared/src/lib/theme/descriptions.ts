@@ -1,5 +1,5 @@
 import type { ThemeGroup, ThemeVariable } from './types'
-import { humanizeVarName, humanizeWord, scopeConditions } from './humanize'
+import { humanizeKey, humanizeScopeValue, humanizeVarName, scopeConditions } from './humanize'
 
 const SEMANTIC_DESCRIPTIONS: Record<string, string> = {
   background: 'The default page background color.',
@@ -252,7 +252,7 @@ export function describeVariable(variable: ThemeVariable, group: ThemeGroup): st
   const conditions = scopeConditions(variable.scope)
   if (conditions.length) {
     const text = conditions
-      .map(({ key, value }) => `${humanizeWord(key)} = "${humanizeVarName(value)}"`)
+      .map(({ key, value }) => `${humanizeKey(key)} = "${humanizeScopeValue(value)}"`)
       .join(', ')
     sentence += ` Applies when ${text}.`
   }

@@ -206,6 +206,14 @@ export function clearAppliedCssVars(names: string[], root: HTMLElement = documen
  * Reconstruct the selector from `scope` (as produced by generate-theme-manifest.mjs's
  * `inferScope`) so these can be applied as real, higher-specificity CSS rules instead.
  * Returns null for global/token scopes (root, dark, editor, default) with no slot.
+ *
+ * Handles three shapes beyond a plain `slot/variant=x/size=y`:
+ * - `ancestor-slot=x` — a descendant combinator (e.g. kbd inside a tooltip renders as
+ *   `[data-slot="tooltip-content"] [data-slot="kbd"]`).
+ * - any other `key=value` — a generic attribute qualifier (e.g. `orientation=horizontal`).
+ * - `key=value1|value2` — the source rule was a comma-separated list of alternatives
+ *   that all declare this variable (e.g. drawer's top/bottom vs left/right rules);
+ *   fans out into a real comma-separated selector so every alternative is covered.
  */
 export function scopeToSelector(scope?: string): string | null {
   if (!scope) return null
@@ -213,13 +221,26 @@ export function scopeToSelector(scope?: string): string | null {
   if (parts[0] === 'root' || parts[0] === 'dark' || parts[0] === 'editor') parts.shift()
   if (!parts.length || parts[0] === 'default') return null
   const slot = parts[0]
-  if (/^(variant|size)=/.test(slot)) return null
-  let selector = `[data-slot="${slot}"]`
+  if (/^[a-z-]+=/.test(slot)) return null
+
+  let ancestorSlot: string | null = null
+  const attrs: { key: string; values: string[] }[] = []
   for (const part of parts.slice(1)) {
-    const m = part.match(/^(variant|size)=(.+)$/)
-    if (m) selector += `[data-${m[1]}="${m[2]}"]`
+    const m = part.match(/^([a-z-]+)=(.+)$/)
+    if (!m) continue
+    if (m[1] === 'ancestor-slot') ancestorSlot = m[2]
+    else attrs.push({ key: m[1], values: m[2].split('|') })
   }
-  return selector
+
+  const prefix = ancestorSlot ? `[data-slot="${ancestorSlot}"] ` : ''
+  const fixed = attrs.filter((a) => a.values.length === 1)
+  const varying = attrs.find((a) => a.values.length > 1)
+
+  let base = `${prefix}[data-slot="${slot}"]`
+  for (const { key, values } of fixed) base += `[data-${key}="${values[0]}"]`
+
+  if (!varying) return base
+  return varying.values.map((value) => `${base}[data-${varying.key}="${value}"]`).join(', ')
 }
 
 /**
@@ -227,13 +248,12 @@ export function scopeToSelector(scope?: string): string | null {
  * (see `scopeToSelector`), scoped under `hostSelector` so they only affect the live
  * preview. Dark-scoped entries are skipped — the editor chrome always previews light.
  *
- * `scopeToSelector` only recovers `data-variant`/`data-size` qualifiers. A few
- * components distinguish occurrences of the same variable name by some other DOM
- * attribute instead (e.g. drawer's `data-vaul-drawer-direction`, scroll-area's
- * `data-orientation`, sheet's `data-side`) — those collapse onto the same
- * reconstructed selector. When that happens we can no longer tell which occurrence
- * a live edit belongs to, so skip emitting a rule for that name+selector entirely
- * rather than have one occurrence silently overwrite another's preview.
+ * A handful of variables can't be disambiguated from scope alone (e.g. two
+ * occurrences whose only distinguishing DOM attribute isn't captured, or a
+ * genuinely duplicate declaration) and would collapse onto the identical
+ * selector+name pair. When that happens we can no longer tell which occurrence a
+ * live edit belongs to, so skip emitting a rule for that pair entirely rather than
+ * have one occurrence silently overwrite another's preview.
  */
 export function buildScopedVarsCss(
   values: Record<string, string>,
@@ -257,7 +277,14 @@ export function buildScopedVarsCss(
   for (const entries of bySelectorName.values()) {
     if (entries.length > 1) continue
     const { selector, name, value } = entries[0]
-    lines.push(`${hostSelector} ${selector} { ${name}: ${value}; }`)
+    // A selector may itself be a comma-separated list (see scopeToSelector's
+    // `varying` branch) — hostSelector must prefix every branch, not just the first,
+    // or later branches would apply unscoped, outside the live preview.
+    const qualified = selector
+      .split(',')
+      .map((branch) => `${hostSelector} ${branch.trim()}`)
+      .join(', ')
+    lines.push(`${qualified} { ${name}: ${value}; }`)
   }
   return lines.join('\n')
 }
