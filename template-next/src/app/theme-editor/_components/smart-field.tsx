@@ -270,12 +270,14 @@ function DurationField({
   onChange: (v: string) => void;
 }) {
   const seconds = parseDurationSeconds(value) ?? 0.15;
+  const [prevValue, setPrevValue] = React.useState(value);
   const [text, setText] = React.useState(formatNumber(seconds));
 
-  React.useEffect(() => {
+  if (prevValue !== value) {
+    setPrevValue(value);
     const s = parseDurationSeconds(value);
     if (s !== null) setText(formatNumber(s));
-  }, [value]);
+  }
 
   return (
     <InputGroup>
@@ -315,7 +317,6 @@ function ColorMixField({
     return <RawField value={value} onChange={onChange} />;
   }
 
-  const baseRef = extractVarRef(parsed.base) ?? parsed.base;
   const mixRef =
     parsed.mix === "transparent"
       ? "transparent"

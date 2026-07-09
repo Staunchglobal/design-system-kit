@@ -157,7 +157,7 @@ function inferFieldTypeFromName(name, value) {
   ) {
     return "color-keyword";
   }
-  if (bare.includes("opacity") && /^-?\d+(\.\d+)?$/.test(v)) return "opacity";
+  if (bare.includes("opacity") && OPACITY_OPTIONS.has(v)) return "opacity";
   if (bare.endsWith("-overflow") && OVERFLOW_OPTIONS.has(v)) return "overflow";
   if (bare.includes("border-style") && BORDER_STYLE_OPTIONS.has(v))
     return "border-style";
