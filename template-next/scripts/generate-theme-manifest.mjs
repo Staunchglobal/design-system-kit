@@ -103,6 +103,34 @@ const BORDER_STYLE_OPTIONS = new Set([
   "inset",
   "outset",
 ]);
+const FONT_WEIGHT_OPTIONS = new Set([
+  "100",
+  "200",
+  "300",
+  "400",
+  "500",
+  "600",
+  "700",
+  "800",
+  "900",
+]);
+const TEXT_TRANSFORM_OPTIONS = new Set([
+  "none",
+  "uppercase",
+  "lowercase",
+  "capitalize",
+]);
+const FONT_STYLE_OPTIONS = new Set(["normal", "italic", "oblique"]);
+const SCROLLBAR_WIDTH_OPTIONS = new Set(["auto", "thin", "none"]);
+const TRANSITION_EASING_OPTIONS = new Set([
+  "ease",
+  "ease-in",
+  "ease-out",
+  "ease-in-out",
+  "linear",
+  "step-start",
+  "step-end",
+]);
 
 function isLikelyColorVarName(name) {
   const bare = name.replace(/^--/, "");
@@ -151,6 +179,16 @@ function inferFieldTypeFromName(name, value) {
   if (bare.endsWith("-overflow") && OVERFLOW_OPTIONS.has(v)) return "overflow";
   if (bare.includes("border-style") && BORDER_STYLE_OPTIONS.has(v))
     return "border-style";
+  if (bare.endsWith("-font-weight") && FONT_WEIGHT_OPTIONS.has(v))
+    return "font-weight";
+  if (bare.endsWith("-text-transform") && TEXT_TRANSFORM_OPTIONS.has(v))
+    return "text-transform";
+  if (bare.endsWith("-font-style") && FONT_STYLE_OPTIONS.has(v))
+    return "font-style";
+  if (bare.endsWith("-scrollbar-width") && SCROLLBAR_WIDTH_OPTIONS.has(v))
+    return "scrollbar-width";
+  if (bare.endsWith("-easing") && TRANSITION_EASING_OPTIONS.has(v))
+    return "easing";
   if (bare.includes("transition") && parseTransition(v)) return "transition";
   return null;
 }

@@ -802,8 +802,8 @@
         {
           "id": "colors:--overlay-bg:0",
           "name": "--overlay-bg",
-          "value": "color-mix(in oklch, var(--neutral-950), transparent 90%)",
-          "fieldType": "raw",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
         },
@@ -930,16 +930,16 @@
         {
           "id": "colors:--border:1",
           "name": "--border",
-          "value": "color-mix(in oklch, var(--neutral-0), transparent 90%)",
-          "fieldType": "raw",
+          "value": "var(--neutral-0)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
         },
         {
           "id": "colors:--input:1",
           "name": "--input",
-          "value": "color-mix(in oklch, var(--neutral-0), transparent 85%)",
-          "fieldType": "raw",
+          "value": "var(--neutral-0)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
         },
@@ -1042,8 +1042,8 @@
         {
           "id": "colors:--sidebar-border:1",
           "name": "--sidebar-border",
-          "value": "color-mix(in oklch, var(--neutral-0), transparent 90%)",
-          "fieldType": "raw",
+          "value": "var(--neutral-0)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
         },
@@ -1314,7 +1314,7 @@
         {
           "id": "shadows:--shadow-sm:0",
           "name": "--shadow-sm",
-          "value": "0 1px 2px 0 color-mix(in oklch, var(--neutral-950), transparent 95%)",
+          "value": "0 1px 2px 0 var(--neutral-950)",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "root"
@@ -1322,7 +1322,7 @@
         {
           "id": "shadows:--shadow-md:0",
           "name": "--shadow-md",
-          "value": "0 4px 6px -1px color-mix(in oklch, var(--neutral-950), transparent 90%), 0 2px 4px -2px color-mix(in oklch, var(--neutral-950), transparent 90%)",
+          "value": "0 4px 6px -1px var(--neutral-950), 0 2px 4px -2px var(--neutral-950)",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "root"
@@ -1330,7 +1330,7 @@
         {
           "id": "shadows:--shadow-lg:0",
           "name": "--shadow-lg",
-          "value": "0 10px 15px -3px color-mix(in oklch, var(--neutral-950), transparent 90%), 0 4px 6px -4px color-mix(in oklch, var(--neutral-950), transparent 90%)",
+          "value": "0 10px 15px -3px var(--neutral-950), 0 4px 6px -4px var(--neutral-950)",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "root"
@@ -1338,7 +1338,7 @@
         {
           "id": "shadows:--shadow-xl:0",
           "name": "--shadow-xl",
-          "value": "0 20px 25px -5px color-mix(in oklch, var(--neutral-950), transparent 90%), 0 8px 10px -6px color-mix(in oklch, var(--neutral-950), transparent 90%)",
+          "value": "0 20px 25px -5px var(--neutral-950), 0 8px 10px -6px var(--neutral-950)",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "root"
@@ -1523,7 +1523,7 @@
           "id": "typography:--typography-display-font-weight:0",
           "name": "--typography-display-font-weight",
           "value": "800",
-          "fieldType": "raw",
+          "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "default"
         },
@@ -1563,7 +1563,7 @@
           "id": "typography:--typography-h1-font-weight:0",
           "name": "--typography-h1-font-weight",
           "value": "800",
-          "fieldType": "raw",
+          "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "default"
         },
@@ -1603,7 +1603,7 @@
           "id": "typography:--typography-h2-font-weight:0",
           "name": "--typography-h2-font-weight",
           "value": "600",
-          "fieldType": "raw",
+          "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "default"
         },
@@ -1643,7 +1643,7 @@
           "id": "typography:--typography-h3-font-weight:0",
           "name": "--typography-h3-font-weight",
           "value": "600",
-          "fieldType": "raw",
+          "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "default"
         },
@@ -1683,7 +1683,7 @@
           "id": "typography:--typography-h4-font-weight:0",
           "name": "--typography-h4-font-weight",
           "value": "600",
-          "fieldType": "raw",
+          "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "default"
         },
@@ -1723,7 +1723,7 @@
           "id": "typography:--typography-h5-font-weight:0",
           "name": "--typography-h5-font-weight",
           "value": "600",
-          "fieldType": "raw",
+          "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "default"
         },
@@ -1755,7 +1755,7 @@
           "id": "typography:--typography-h6-font-weight:0",
           "name": "--typography-h6-font-weight",
           "value": "600",
-          "fieldType": "raw",
+          "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "default"
         },
@@ -1787,7 +1787,7 @@
           "id": "typography:--typography-lead-font-weight:0",
           "name": "--typography-lead-font-weight",
           "value": "400",
-          "fieldType": "raw",
+          "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "default"
         },
@@ -1819,7 +1819,7 @@
           "id": "typography:--typography-large-font-weight:0",
           "name": "--typography-large-font-weight",
           "value": "600",
-          "fieldType": "raw",
+          "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "default"
         },
@@ -1851,7 +1851,7 @@
           "id": "typography:--typography-p-font-weight:0",
           "name": "--typography-p-font-weight",
           "value": "400",
-          "fieldType": "raw",
+          "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "default"
         },
@@ -1883,7 +1883,7 @@
           "id": "typography:--typography-small-font-weight:0",
           "name": "--typography-small-font-weight",
           "value": "500",
-          "fieldType": "raw",
+          "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "default"
         },
@@ -1915,7 +1915,7 @@
           "id": "typography:--typography-muted-font-weight:0",
           "name": "--typography-muted-font-weight",
           "value": "400",
-          "fieldType": "raw",
+          "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "default"
         },
@@ -1947,7 +1947,7 @@
           "id": "typography:--typography-blockquote-font-style:0",
           "name": "--typography-blockquote-font-style",
           "value": "italic",
-          "fieldType": "raw",
+          "fieldType": "font-style",
           "occurrence": 0,
           "scope": "default"
         },
@@ -1979,7 +1979,7 @@
           "id": "typography:--typography-code-font-weight:0",
           "name": "--typography-code-font-weight",
           "value": "600",
-          "fieldType": "raw",
+          "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "default"
         },
@@ -2035,7 +2035,7 @@
           "id": "typography:--typography-caption-font-weight:0",
           "name": "--typography-caption-font-weight",
           "value": "400",
-          "fieldType": "raw",
+          "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "default"
         },
@@ -2067,7 +2067,7 @@
           "id": "typography:--typography-overline-font-weight:0",
           "name": "--typography-overline-font-weight",
           "value": "600",
-          "fieldType": "raw",
+          "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "default"
         },
@@ -2091,7 +2091,7 @@
           "id": "typography:--typography-overline-text-transform:0",
           "name": "--typography-overline-text-transform",
           "value": "uppercase",
-          "fieldType": "raw",
+          "fieldType": "text-transform",
           "occurrence": 0,
           "scope": "default"
         }
@@ -6233,8 +6233,8 @@
         {
           "id": "context-menu:--context-menu-item-destructive-focus-bg:0",
           "name": "--context-menu-item-destructive-focus-bg",
-          "value": "color-mix( in oklch, var(--destructive), transparent 90% )",
-          "fieldType": "raw",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "context-menu-item/variant=destructive"
         },
@@ -6341,6 +6341,14 @@
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/context-menu-content"
+        },
+        {
+          "id": "context-menu:--context-menu-item-destructive-focus-bg:1",
+          "name": "--context-menu-item-destructive-focus-bg",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/context-menu-item/variant=destructive"
         }
       ]
     },
@@ -6993,8 +7001,8 @@
         {
           "id": "dropdown-menu:--dropdown-menu-item-destructive-focus-bg:0",
           "name": "--dropdown-menu-item-destructive-focus-bg",
-          "value": "color-mix( in oklch, var(--destructive), transparent 90% )",
-          "fieldType": "raw",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "dropdown-menu-item/variant=destructive"
         },
@@ -7109,6 +7117,14 @@
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/dropdown-menu-content"
+        },
+        {
+          "id": "dropdown-menu:--dropdown-menu-item-destructive-focus-bg:1",
+          "name": "--dropdown-menu-item-destructive-focus-bg",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/dropdown-menu-item/variant=destructive"
         }
       ]
     },
@@ -9170,7 +9186,7 @@
           "id": "message-scroller:--message-scroller-scrollbar-width:0",
           "name": "--message-scroller-scrollbar-width",
           "value": "thin",
-          "fieldType": "raw",
+          "fieldType": "scrollbar-width",
           "occurrence": 0,
           "scope": "message-scroller-viewport"
         },
@@ -10786,7 +10802,7 @@
           "id": "sheet:--sheet-content-easing:0",
           "name": "--sheet-content-easing",
           "value": "ease-in-out",
-          "fieldType": "raw",
+          "fieldType": "easing",
           "occurrence": 0,
           "scope": "sheet-content"
         },

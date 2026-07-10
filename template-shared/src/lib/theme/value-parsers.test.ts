@@ -82,6 +82,42 @@ describe("inferFieldType", () => {
     );
   });
 
+  it("detects font-weight fields", () => {
+    expect(inferFieldType("--typography-h1-font-weight", "800")).toBe(
+      "font-weight"
+    );
+  });
+
+  it("does not misclassify a component's typography-ref font-weight as a literal font-weight field", () => {
+    expect(
+      inferFieldType("--button-font-weight", "var(--typography-small-font-weight)")
+    ).toBe("typography-ref");
+  });
+
+  it("detects text-transform fields", () => {
+    expect(
+      inferFieldType("--typography-overline-text-transform", "uppercase")
+    ).toBe("text-transform");
+  });
+
+  it("detects font-style fields", () => {
+    expect(inferFieldType("--typography-blockquote-font-style", "italic")).toBe(
+      "font-style"
+    );
+  });
+
+  it("detects scrollbar-width fields", () => {
+    expect(
+      inferFieldType("--message-scroller-scrollbar-width", "thin")
+    ).toBe("scrollbar-width");
+  });
+
+  it("detects standalone easing fields", () => {
+    expect(inferFieldType("--sheet-content-easing", "ease-in-out")).toBe(
+      "easing"
+    );
+  });
+
   it("detects shadow-ref", () => {
     expect(inferFieldType("--chart-tooltip-shadow", "var(--shadow-xl)")).toBe(
       "shadow-ref"

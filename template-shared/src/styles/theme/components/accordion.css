@@ -29,8 +29,7 @@
   font-weight: var(--accordion-trigger-font-weight);
 }
 [data-slot='accordion-trigger']:focus-visible {
-  box-shadow: 0 0 0 var(--accordion-trigger-focus-ring-width)
-    color-mix(in oklch, var(--accordion-trigger-focus-ring-color), transparent 50%);
+  box-shadow: 0 0 0 var(--accordion-trigger-focus-ring-width) var(--accordion-trigger-focus-ring-color);
 }
 [data-slot='accordion-trigger']:disabled {
   opacity: var(--accordion-trigger-disabled-opacity);

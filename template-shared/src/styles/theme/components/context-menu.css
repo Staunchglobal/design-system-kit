@@ -79,11 +79,7 @@
 }
 [data-slot='context-menu-item'][data-variant='destructive'] {
   --context-menu-item-destructive-fg: var(--destructive);
-  --context-menu-item-destructive-focus-bg: color-mix(
-    in oklch,
-    var(--destructive),
-    transparent 90%
-  );
+  --context-menu-item-destructive-focus-bg: var(--destructive-600);
   color: var(--context-menu-item-destructive-fg);
 }
 [data-slot='context-menu-item'][data-variant='destructive']:focus {
@@ -133,4 +129,8 @@
 
 .dark [data-slot='context-menu-content'] {
   --context-menu-ring-color: var(--neutral-50);
+}
+
+.dark [data-slot='context-menu-item'][data-variant='destructive'] {
+  --context-menu-item-destructive-focus-bg: var(--destructive-400);
 }

@@ -56,8 +56,7 @@
   color: var(--tabs-trigger-hover-fg);
 }
 [data-slot='tabs-trigger']:focus-visible {
-  box-shadow: 0 0 0 var(--tabs-trigger-focus-ring-width)
-    color-mix(in oklch, var(--tabs-trigger-focus-ring-color), transparent 50%);
+  box-shadow: 0 0 0 var(--tabs-trigger-focus-ring-width) var(--tabs-trigger-focus-ring-color);
 }
 [data-slot='tabs-trigger']:disabled {
   opacity: var(--tabs-trigger-disabled-opacity);

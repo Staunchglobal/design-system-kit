@@ -42,7 +42,7 @@
   --sidebar-ring: var(--neutral-400);
 
   /* Shared effect — composed only from shade scales in color-scales.css (never raw hex/rgb). */
-  --overlay-bg: color-mix(in oklch, var(--neutral-950), transparent 90%);
+  --overlay-bg: var(--neutral-950);
 }
 
 .dark {
@@ -61,8 +61,8 @@
   --accent: var(--accent-800);
   --accent-foreground: var(--accent-50);
   --destructive: var(--destructive-400);
-  --border: color-mix(in oklch, var(--neutral-0), transparent 90%);
-  --input: color-mix(in oklch, var(--neutral-0), transparent 85%);
+  --border: var(--neutral-0);
+  --input: var(--neutral-0);
   --ring: var(--neutral-500);
   --chart-1: var(--neutral-300);
   --chart-2: var(--neutral-500);
@@ -75,7 +75,7 @@
   --sidebar-primary-foreground: var(--primary-900);
   --sidebar-accent: var(--accent-800);
   --sidebar-accent-foreground: var(--accent-50);
-  --sidebar-border: color-mix(in oklch, var(--neutral-0), transparent 90%);
+  --sidebar-border: var(--neutral-0);
   --sidebar-ring: var(--neutral-500);
 }
 

@@ -31,8 +31,7 @@
 }
 [data-slot='toggle']:focus-visible {
   border-color: var(--toggle-focus-ring-color);
-  box-shadow: 0 0 0 var(--toggle-focus-ring-width)
-    color-mix(in oklch, var(--toggle-focus-ring-color), transparent 50%);
+  box-shadow: 0 0 0 var(--toggle-focus-ring-width) var(--toggle-focus-ring-color);
 }
 [data-slot='toggle'][data-state='on'],
 [data-slot='toggle'][aria-pressed='true'] {

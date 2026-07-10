@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { buildScopedVarsCss, listSemanticColorTokenNames, scopeToSelector } from './field-types.js'
+import {
+  buildScopedVarsCss,
+  listColorTokenNames,
+  listSemanticColorTokenNames,
+  scopeToSelector,
+} from './field-types.js'
 import type { ThemeManifest, ThemeVariable } from './types.js'
 
 function v(overrides: Partial<ThemeVariable> & Pick<ThemeVariable, 'id' | 'name'>): ThemeVariable {
@@ -9,6 +14,26 @@ function v(overrides: Partial<ThemeVariable> & Pick<ThemeVariable, 'id' | 'name'
 function manifestOf(groupId: string, variables: ThemeVariable[]): ThemeManifest {
   return { version: 1, groups: [{ id: groupId, title: groupId, kind: 'component', file: '', variables }] }
 }
+
+describe('listColorTokenNames', () => {
+  it('includes shade steps but excludes semantic tokens that share the family prefix', () => {
+    // Regression: --primary-foreground used to match a naive `startsWith('primary-')`
+    // check and leak into the scale-only select alongside real steps like --primary-500.
+    const manifest = manifestOf('colors', [
+      v({ id: 'colors:--primary-foreground:0', name: '--primary-foreground', value: 'var(--primary-50)' }),
+      v({ id: 'colors:--secondary-foreground:0', name: '--secondary-foreground', value: 'var(--secondary-900)' }),
+      v({ id: 'colors:--muted-foreground:0', name: '--muted-foreground', value: 'var(--muted-500)' }),
+      v({ id: 'colors:--accent-foreground:0', name: '--accent-foreground', value: 'var(--accent-900)' }),
+      v({ id: 'colors:--primary-500:0', name: '--primary-500', value: '#737373', fieldType: 'hex' }),
+    ])
+    const names = listColorTokenNames(manifest)
+    expect(names).toContain('--primary-500')
+    expect(names).not.toContain('--primary-foreground')
+    expect(names).not.toContain('--secondary-foreground')
+    expect(names).not.toContain('--muted-foreground')
+    expect(names).not.toContain('--accent-foreground')
+  })
+})
 
 describe('listSemanticColorTokenNames', () => {
   it('lists names from the colors group, not scale steps', () => {

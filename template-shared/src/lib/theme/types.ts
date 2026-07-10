@@ -10,6 +10,11 @@ export type ThemeFieldType =
   | "opacity"
   | "overflow"
   | "border-style"
+  | "font-weight"
+  | "text-transform"
+  | "font-style"
+  | "scrollbar-width"
+  | "easing"
   | "transition"
   | "raw";
 

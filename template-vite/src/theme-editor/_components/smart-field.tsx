@@ -32,8 +32,12 @@ import {
 import {
   BORDER_STYLE_OPTIONS,
   COLOR_KEYWORD_OPTIONS,
+  FONT_STYLE_OPTIONS,
+  FONT_WEIGHT_OPTIONS,
   OPACITY_OPTIONS,
   OVERFLOW_OPTIONS,
+  SCROLLBAR_WIDTH_OPTIONS,
+  TEXT_TRANSFORM_OPTIONS,
   TRANSITION_EASING_OPTIONS,
   TRANSITION_PROPERTY_OPTIONS,
   formatDurationSeconds,
@@ -644,6 +648,41 @@ export function SmartField({ variable }: { variable: ThemeVariable }) {
         <EnumSelect
           value={value}
           options={BORDER_STYLE_OPTIONS}
+          onChange={onChange}
+        />
+      )}
+      {type === "font-weight" && (
+        <EnumSelect
+          value={value}
+          options={FONT_WEIGHT_OPTIONS}
+          onChange={onChange}
+        />
+      )}
+      {type === "text-transform" && (
+        <EnumSelect
+          value={value}
+          options={TEXT_TRANSFORM_OPTIONS}
+          onChange={onChange}
+        />
+      )}
+      {type === "font-style" && (
+        <EnumSelect
+          value={value}
+          options={FONT_STYLE_OPTIONS}
+          onChange={onChange}
+        />
+      )}
+      {type === "scrollbar-width" && (
+        <EnumSelect
+          value={value}
+          options={SCROLLBAR_WIDTH_OPTIONS}
+          onChange={onChange}
+        />
+      )}
+      {type === "easing" && (
+        <EnumSelect
+          value={value}
+          options={TRANSITION_EASING_OPTIONS}
           onChange={onChange}
         />
       )}

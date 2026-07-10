@@ -35,6 +35,29 @@ export const BORDER_STYLE_OPTIONS = [
   "outset",
 ] as const;
 
+export const FONT_WEIGHT_OPTIONS = [
+  "100",
+  "200",
+  "300",
+  "400",
+  "500",
+  "600",
+  "700",
+  "800",
+  "900",
+] as const;
+
+export const TEXT_TRANSFORM_OPTIONS = [
+  "none",
+  "uppercase",
+  "lowercase",
+  "capitalize",
+] as const;
+
+export const FONT_STYLE_OPTIONS = ["normal", "italic", "oblique"] as const;
+
+export const SCROLLBAR_WIDTH_OPTIONS = ["auto", "thin", "none"] as const;
+
 export const TRANSITION_PROPERTY_OPTIONS = [
   "all",
   "none",
@@ -217,6 +240,36 @@ export function inferFieldTypeFromName(
     BORDER_STYLE_OPTIONS.includes(v as (typeof BORDER_STYLE_OPTIONS)[number])
   ) {
     return "border-style";
+  }
+  if (
+    bare.endsWith("-font-weight") &&
+    FONT_WEIGHT_OPTIONS.includes(v as (typeof FONT_WEIGHT_OPTIONS)[number])
+  ) {
+    return "font-weight";
+  }
+  if (
+    bare.endsWith("-text-transform") &&
+    TEXT_TRANSFORM_OPTIONS.includes(v as (typeof TEXT_TRANSFORM_OPTIONS)[number])
+  ) {
+    return "text-transform";
+  }
+  if (
+    bare.endsWith("-font-style") &&
+    FONT_STYLE_OPTIONS.includes(v as (typeof FONT_STYLE_OPTIONS)[number])
+  ) {
+    return "font-style";
+  }
+  if (
+    bare.endsWith("-scrollbar-width") &&
+    SCROLLBAR_WIDTH_OPTIONS.includes(v as (typeof SCROLLBAR_WIDTH_OPTIONS)[number])
+  ) {
+    return "scrollbar-width";
+  }
+  if (
+    bare.endsWith("-easing") &&
+    TRANSITION_EASING_OPTIONS.includes(v as (typeof TRANSITION_EASING_OPTIONS)[number])
+  ) {
+    return "easing";
   }
   if (bare.includes("transition") && parseTransition(v)) return "transition";
 

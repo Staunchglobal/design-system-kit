@@ -32,6 +32,11 @@ export function toVarRef(tokenName: string): string {
   return `var(${n})`;
 }
 
+// A shade STEP only — e.g. "primary-500" — not a semantic token that merely shares the
+// family prefix, like "primary-foreground" (that belongs in listSemanticColorTokenNames).
+const SHADE_STEP_RE =
+  /^(neutral|primary|secondary|accent|muted|destructive)-\d+$/;
+
 export function listColorTokenNames(
   manifest: ThemeManifest,
   extra: string[] = []
@@ -40,14 +45,7 @@ export function listColorTokenNames(
   for (const g of manifest.groups) {
     for (const v of g.variables) {
       const bare = v.name.replace(/^--/, "");
-      if (
-        bare.startsWith("neutral-") ||
-        bare.startsWith("primary-") ||
-        bare.startsWith("secondary-") ||
-        bare.startsWith("accent-") ||
-        bare.startsWith("muted-") ||
-        bare.startsWith("destructive-")
-      ) {
+      if (SHADE_STEP_RE.test(bare)) {
         names.add(v.name);
       }
     }
