@@ -26,7 +26,9 @@ type Managed = { relPath: string; templateSrc: string }
 type Pending = Managed & { newContent: string }
 
 const TOKEN_FILES = [
+  'styles/theme/tokens/color-scales.css',
   'styles/theme/tokens/colors.css',
+  'styles/theme/tokens/shadows.css',
   'styles/theme/tokens/radius.css',
   'styles/theme/tokens/fonts.css',
   'styles/theme/tokens/typography.css',
@@ -75,7 +77,7 @@ export async function update(options: UpdateOptions) {
 
   const srcDir = project.framework === 'next' ? (project.appDirRelative === 'src/app' ? 'src' : '') : 'src'
   const destRoot = path.join(root, srcDir)
-  const rel = (p: string) => (srcDir ? `${srcDir}/${p}` : p)
+  const rel = (p: string) => path.normalize(srcDir ? `${srcDir}/${p}` : p)
   const sectionsRel = project.framework === 'next' ? 'app/design-system/_sections' : 'design-system/_sections'
 
   const navGroups = navGroupsFor(userClosure)
@@ -89,6 +91,11 @@ export async function update(options: UpdateOptions) {
   const sharedSrc = remoteUrl(templateSharedDir, 'src')
   const frameworkSrc = remoteUrl(frameworkTemplateDir, 'src')
 
+  // Lives outside destRoot (at the project root, not under src/) — expressed as a relPath
+  // relative to destRoot so it flows through the same managed/hash/confirm machinery as
+  // everything else instead of needing its own bespoke sync path.
+  const manifestScriptRelPath = path.relative(destRoot, path.join(root, 'scripts/generate-theme-manifest.mjs'))
+
   const managed: Managed[] = [
     ...ALWAYS_SHARED_FILES.map((f) => ({ relPath: f, templateSrc: remoteUrl(sharedSrc, f) })),
     ...uiFiles.map((f) => ({ relPath: f, templateSrc: remoteUrl(sharedSrc, f) })),
@@ -96,6 +103,10 @@ export async function update(options: UpdateOptions) {
     ...extraFilesList.map((f) => ({ relPath: f, templateSrc: remoteUrl(sharedSrc, f) })),
     ...TOKEN_FILES.map((f) => ({ relPath: f, templateSrc: remoteUrl(sharedSrc, f) })),
     ...alwaysFixed.map((f) => ({ relPath: f, templateSrc: remoteUrl(frameworkSrc, f) })),
+    {
+      relPath: manifestScriptRelPath,
+      templateSrc: remoteUrl(frameworkTemplateDir, 'scripts/generate-theme-manifest.mjs'),
+    },
     ...sectionFiles.map((f) => ({ relPath: f, templateSrc: remoteUrl(frameworkSrc, f) })),
   ]
 

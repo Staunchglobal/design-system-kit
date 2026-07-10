@@ -6,7 +6,7 @@
 [data-slot='dropdown-menu-sub-content'] {
   --dropdown-menu-bg: var(--popover);
   --dropdown-menu-fg: var(--popover-foreground);
-  --dropdown-menu-ring-color: color-mix(in oklch, var(--foreground), transparent 90%);
+  --dropdown-menu-ring-color: #0a0a0a1a;
   --dropdown-menu-ring-width: 1px;
   --dropdown-menu-radius: var(--radius-lg);
   --dropdown-menu-padding: 0.25rem;
@@ -122,4 +122,9 @@
   color: var(--dropdown-menu-shortcut-fg);
   font-size: var(--dropdown-menu-shortcut-font-size);
   letter-spacing: var(--dropdown-menu-shortcut-tracking);
+}
+
+.dark [data-slot='dropdown-menu-content'],
+[data-slot='dropdown-menu-sub-content'] {
+  --dropdown-menu-ring-color: #fafafa1a;
 }

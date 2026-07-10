@@ -3,7 +3,7 @@ import path from 'node:path'
 import { execFileSync } from 'node:child_process'
 import type { Plugin } from 'vite'
 
-type CustomColor = { name: string; hex: string }
+type CustomColor = { name: string; hex: string; scope?: 'colors' | 'color-scales' }
 type CustomTypography = {
   id: string
   fontFamily: string
@@ -45,8 +45,8 @@ function ensureColorVar(css: string, name: string, hex: string): string {
       `$1${hex}$3`
     )
   }
-  const marker = '  /* Semantic tokens'
-  if (css.includes(marker)) return css.replace(marker, `  ${varName}: ${hex};\n\n${marker}`)
+  // Append inside the file's first :root { — both color-scales.css and colors.css are
+  // single-:root files, so there's no further section boundary to insert before.
   return css.replace(/:root\s*\{/, `:root {\n  ${varName}: ${hex};`)
 }
 
@@ -221,6 +221,20 @@ export const SAFE_ICON_NAME_RE = /^[A-Za-z][A-Za-z0-9]*$/
 export const SAFE_FONT_FAMILY_RE = /^[A-Za-z0-9 ]+$/
 export const SAFE_WEIGHTS_RE = /^[0-9,; ]+$/
 export const SAFE_HEX_RE = /^#[0-9a-fA-F]{3,8}$/
+const SAFE_VAR_REF_RE = /^var\((--[a-zA-Z0-9_-]+)\)$/
+
+/**
+ * A custom color's value is a literal hex (added from the Color Scales page), a
+ * `var(--token)` reference to an existing scale step, or the literal `transparent` keyword
+ * (both added from the Colors page, which lets a new semantic token point at either) — all
+ * get written verbatim into a real .css file (see ensureColorVar), so all need the same
+ * break-out-of-the-declaration protection as SAFE_HEX_RE, just for their own shape.
+ */
+export function isSafeCustomColorValue(value: string): boolean {
+  if (SAFE_HEX_RE.test(value) || value === 'transparent') return true
+  const m = value.match(SAFE_VAR_REF_RE)
+  return m !== null && SAFE_TOKEN_RE.test(m[1].replace(/^--/, ''))
+}
 
 export function isSafeCustomFont(f: CustomFont): boolean {
   if (!SAFE_TOKEN_RE.test(f.id)) return false
@@ -270,7 +284,7 @@ export function designKit(): Plugin {
         // isn't) guarding.
         payload.customFonts = payload.customFonts.filter(isSafeCustomFont)
         payload.customColors = payload.customColors.filter(
-          (c) => SAFE_TOKEN_RE.test(c.name.replace(/^--/, '')) && SAFE_HEX_RE.test(c.hex)
+          (c) => SAFE_TOKEN_RE.test(c.name.replace(/^--/, '')) && isSafeCustomColorValue(c.hex)
         )
         payload.customTypography = payload.customTypography.filter((t) =>
           SAFE_TOKEN_RE.test(t.id.replace(/^typography-/, ''))
@@ -320,8 +334,11 @@ export function designKit(): Plugin {
             }
           }
 
-          if (group.id === 'colors') {
-            for (const c of payload.customColors) css = ensureColorVar(css, c.name, c.hex)
+          if (group.id === 'colors' || group.id === 'color-scales') {
+            for (const c of payload.customColors) {
+              if ((c.scope ?? 'colors') !== group.id) continue
+              css = ensureColorVar(css, c.name, c.hex)
+            }
           }
           if (group.id === 'typography') {
             for (const t of payload.customTypography) css = appendTypographyRole(css, t.id, t)

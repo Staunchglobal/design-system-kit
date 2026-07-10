@@ -25,7 +25,7 @@
 [data-slot='badge'][data-variant='default'] {
   --badge-bg: var(--primary);
   --badge-fg: var(--primary-foreground);
-  --badge-link-hover-bg: color-mix(in oklch, var(--badge-bg), transparent 20%);
+  --badge-link-hover-bg: #171717cc;
   background-color: var(--badge-bg);
   color: var(--badge-fg);
 }
@@ -35,7 +35,7 @@
 [data-slot='badge'][data-variant='secondary'] {
   --badge-bg: var(--secondary);
   --badge-fg: var(--secondary-foreground);
-  --badge-link-hover-bg: color-mix(in oklch, var(--badge-bg), transparent 20%);
+  --badge-link-hover-bg: #f5f5f5cc;
   background-color: var(--badge-bg);
   color: var(--badge-fg);
 }
@@ -43,9 +43,9 @@
   background-color: var(--badge-link-hover-bg);
 }
 [data-slot='badge'][data-variant='destructive'] {
-  --badge-bg: color-mix(in oklch, var(--destructive), transparent 90%);
+  --badge-bg: #dc26261a;
   --badge-fg: var(--destructive);
-  --badge-link-hover-bg: color-mix(in oklch, var(--destructive), transparent 80%);
+  --badge-link-hover-bg: #dc262633;
   background-color: var(--badge-bg);
   color: var(--badge-fg);
 }
@@ -80,4 +80,17 @@
 }
 [data-slot='badge'][data-variant='link']:hover {
   text-decoration-line: underline;
+}
+
+.dark [data-slot='badge'][data-variant='default'] {
+  --badge-link-hover-bg: #e5e5e5cc;
+}
+
+.dark [data-slot='badge'][data-variant='secondary'] {
+  --badge-link-hover-bg: #262626cc;
+}
+
+.dark [data-slot='badge'][data-variant='destructive'] {
+  --badge-bg: #f871711a;
+  --badge-link-hover-bg: #f8717133;
 }

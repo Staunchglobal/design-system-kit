@@ -30,7 +30,7 @@
 [data-slot='bubble'][data-variant='default'] [data-slot='bubble-content'] {
   --bubble-default-bg: var(--primary);
   --bubble-default-fg: var(--primary-foreground);
-  --bubble-default-hover-bg: color-mix(in oklch, var(--bubble-default-bg), transparent 20%);
+  --bubble-default-hover-bg: #171717cc;
   background-color: var(--bubble-default-bg);
   color: var(--bubble-default-fg);
 }
@@ -41,7 +41,7 @@
 [data-slot='bubble'][data-variant='secondary'] [data-slot='bubble-content'] {
   --bubble-secondary-bg: var(--secondary);
   --bubble-secondary-fg: var(--secondary-foreground);
-  --bubble-secondary-hover-bg: color-mix(in oklch, var(--secondary), var(--foreground) 5%);
+  --bubble-secondary-hover-bg: #e7e7e7;
   background-color: var(--bubble-secondary-bg);
   color: var(--bubble-secondary-fg);
 }
@@ -51,7 +51,7 @@
 
 [data-slot='bubble'][data-variant='muted'] [data-slot='bubble-content'] {
   --bubble-muted-bg: var(--muted);
-  --bubble-muted-hover-bg: color-mix(in oklch, var(--muted), var(--foreground) 5%);
+  --bubble-muted-hover-bg: #e7e7e7;
   background-color: var(--bubble-muted-bg);
 }
 [data-slot='bubble'][data-variant='muted'] [data-slot='bubble-content']:is(button, a):hover {
@@ -102,9 +102,9 @@
 }
 
 [data-slot='bubble'][data-variant='destructive'] [data-slot='bubble-content'] {
-  --bubble-destructive-bg: color-mix(in oklch, var(--destructive), transparent 90%);
+  --bubble-destructive-bg: #dc26261a;
   --bubble-destructive-fg: var(--destructive);
-  --bubble-destructive-hover-bg: color-mix(in oklch, var(--destructive), transparent 80%);
+  --bubble-destructive-hover-bg: #dc262633;
   background-color: var(--bubble-destructive-bg);
   color: var(--bubble-destructive-fg);
 }
@@ -128,4 +128,21 @@
   border-radius: var(--bubble-reactions-radius);
   background-color: var(--bubble-reactions-bg);
   box-shadow: 0 0 0 var(--bubble-reactions-ring-width) var(--bubble-reactions-ring-color);
+}
+
+.dark [data-slot='bubble'][data-variant='default'] [data-slot='bubble-content'] {
+  --bubble-default-hover-bg: #e5e5e5cc;
+}
+
+.dark [data-slot='bubble'][data-variant='secondary'] [data-slot='bubble-content'] {
+  --bubble-secondary-hover-bg: #2f2f2f;
+}
+
+.dark [data-slot='bubble'][data-variant='muted'] [data-slot='bubble-content'] {
+  --bubble-muted-hover-bg: #2f2f2f;
+}
+
+.dark [data-slot='bubble'][data-variant='destructive'] [data-slot='bubble-content'] {
+  --bubble-destructive-bg: #f871711a;
+  --bubble-destructive-hover-bg: #f8717133;
 }

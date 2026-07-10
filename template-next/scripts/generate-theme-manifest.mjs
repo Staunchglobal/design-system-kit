@@ -111,15 +111,6 @@ function isLikelyColorVarName(name) {
   return COLOR_NAME_RE.test(bare);
 }
 
-function parseColorMix(value) {
-  const m = value
-    .trim()
-    .match(
-      /^color-mix\(in oklch,\s*(var\(--[a-zA-Z0-9_-]+\)|#[0-9a-fA-F]{3,8}),\s*(transparent|var\(--[a-zA-Z0-9_-]+\))\s+(\d+)%\)$/
-    );
-  return m ? { base: m[1], mix: m[2], percent: Number(m[3]) } : null;
-}
-
 function parseTransition(value) {
   const v = value.trim();
   if (v.includes(",")) return null;
@@ -150,7 +141,6 @@ function refBareToFieldType(ref) {
 function inferFieldTypeFromName(name, value) {
   const bare = name.replace(/^--/, "");
   const v = value.trim();
-  if (parseColorMix(v)) return "color-mix";
   if (
     (v === "transparent" || v === "inherit" || v === "currentColor") &&
     isLikelyColorVarName(name)
@@ -378,7 +368,9 @@ if (isMain) {
   let customFonts = [];
 
   const tokenFiles = [
+    ["color-scales", "Color Scales", "tokens/color-scales.css"],
     ["colors", "Colors", "tokens/colors.css"],
+    ["shadows", "Shadows", "tokens/shadows.css"],
     ["radius", "Radius", "tokens/radius.css"],
     ["fonts", "Fonts", "tokens/fonts.css"],
     ["typography", "Typography", "tokens/typography.css"],

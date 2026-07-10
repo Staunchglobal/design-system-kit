@@ -13,10 +13,8 @@ export {
   isLikelyColorVarName,
   listShadowTokenNames,
   listTokenRefNames,
-  parseColorMix,
   parseDurationSeconds,
   parseTransition,
-  serializeColorMix,
   serializeTransition,
 } from "./value-parsers";
 
@@ -43,10 +41,6 @@ export function listColorTokenNames(
     for (const v of g.variables) {
       const bare = v.name.replace(/^--/, "");
       if (
-        v.fieldType === "hex" ||
-        v.fieldType === "color-ref" ||
-        v.fieldType === "color-mix" ||
-        v.fieldType === "color-keyword" ||
         bare.startsWith("neutral-") ||
         bare.startsWith("primary-") ||
         bare.startsWith("secondary-") ||

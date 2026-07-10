@@ -14,7 +14,9 @@ function toPascalCase(slug: string): string {
 }
 
 const TOKEN_IMPORTS = [
+  "@import './tokens/color-scales.css';",
   "@import './tokens/colors.css';",
+  "@import './tokens/shadows.css';",
   "@import './tokens/radius.css';",
   "@import './tokens/fonts.css';",
   "@import './tokens/typography.css';",

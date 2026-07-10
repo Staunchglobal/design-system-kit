@@ -24,7 +24,7 @@
 [data-slot='alert'][data-variant='destructive'] {
   --alert-destructive-bg: var(--card);
   --alert-destructive-fg: var(--destructive);
-  --alert-destructive-description-fg: color-mix(in oklch, var(--destructive), transparent 10%);
+  --alert-destructive-description-fg: #dc2626e6;
   background-color: var(--alert-destructive-bg);
   color: var(--alert-destructive-fg);
 }
@@ -57,4 +57,8 @@
 [data-slot='alert-action'] {
   top: var(--alert-action-offset);
   right: var(--alert-action-offset);
+}
+
+.dark [data-slot='alert'][data-variant='destructive'] {
+  --alert-destructive-description-fg: #f87171e6;
 }

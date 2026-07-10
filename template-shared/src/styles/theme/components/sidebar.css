@@ -129,7 +129,7 @@
   --sidebar-group-label-padding-x: 0.5rem;
   --sidebar-group-label-font-size: var(--typography-overline-font-size);
   --sidebar-group-label-font-weight: var(--typography-overline-font-weight);
-  --sidebar-group-label-fg: color-mix(in oklch, var(--sidebar-foreground), transparent 30%);
+  --sidebar-group-label-fg: #0a0a0ab3;
   --sidebar-group-label-focus-ring: var(--sidebar-ring);
   height: var(--sidebar-group-label-height);
   padding-inline: var(--sidebar-group-label-padding-x);
@@ -305,4 +305,8 @@
 [data-slot='sidebar-menu-sub-button'][data-size='sm'] {
   --sidebar-menu-sub-button-font-size: var(--typography-caption-font-size);
   font-size: var(--sidebar-menu-sub-button-font-size);
+}
+
+.dark [data-slot='sidebar-group-label'] {
+  --sidebar-group-label-fg: #fafafab3;
 }

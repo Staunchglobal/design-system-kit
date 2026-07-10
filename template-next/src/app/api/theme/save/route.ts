@@ -3,7 +3,13 @@ import path from 'node:path'
 import { execFileSync } from 'node:child_process'
 import { NextResponse } from 'next/server'
 import type { ThemeSavePayload } from '@/lib/theme/types'
-import { SAFE_HEX_RE, SAFE_ICON_KEY_RE, SAFE_ICON_NAME_RE, SAFE_TOKEN_RE, isSafeCustomFont } from '@/lib/theme/validation'
+import {
+  SAFE_ICON_KEY_RE,
+  SAFE_ICON_NAME_RE,
+  SAFE_TOKEN_RE,
+  isSafeCustomColorValue,
+  isSafeCustomFont,
+} from '@/lib/theme/validation'
 
 export const runtime = 'nodejs'
 
@@ -46,12 +52,8 @@ function ensureColorVar(css: string, name: string, hex: string): string {
   if (css.includes(`${varName}:`)) {
     return replaceCssVar(css, varName, hex)
   }
-  // Insert after shade scales block — before semantic tokens comment if present
-  const marker = '  /* Semantic tokens'
-  if (css.includes(marker)) {
-    return css.replace(marker, `  ${varName}: ${hex};\n\n${marker}`)
-  }
-  // Fallback: append inside first :root {
+  // Append inside the file's first :root { — both color-scales.css and colors.css are
+  // single-:root files, so there's no further section boundary to insert before.
   return css.replace(/:root\s*\{/, `:root {\n  ${varName}: ${hex};`)
 }
 
@@ -257,7 +259,7 @@ export async function POST(request: Request) {
   // see the comment above isSafeCustomFont for what this is (and isn't) guarding.
   payload.customFonts = payload.customFonts.filter(isSafeCustomFont)
   payload.customColors = payload.customColors.filter(
-    (c) => SAFE_TOKEN_RE.test(c.name.replace(/^--/, '')) && SAFE_HEX_RE.test(c.hex)
+    (c) => SAFE_TOKEN_RE.test(c.name.replace(/^--/, '')) && isSafeCustomColorValue(c.hex)
   )
   payload.customTypography = payload.customTypography.filter((t) =>
     SAFE_TOKEN_RE.test(t.id.replace(/^typography-/, ''))
@@ -310,8 +312,9 @@ export async function POST(request: Request) {
       }
     }
 
-    if (group.id === 'colors') {
+    if (group.id === 'colors' || group.id === 'color-scales') {
       for (const c of payload.customColors) {
+        if ((c.scope ?? 'colors') !== group.id) continue
         css = ensureColorVar(css, c.name, c.hex)
       }
     }

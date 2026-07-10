@@ -10,7 +10,7 @@
   --chart-tooltip-padding-y: 0.375rem;
   --chart-tooltip-radius: var(--radius-lg);
   --chart-tooltip-bg: var(--background);
-  --chart-tooltip-border-color: color-mix(in oklch, var(--border), transparent 50%);
+  --chart-tooltip-border-color: #e5e5e580;
   --chart-tooltip-shadow: var(--shadow-xl);
   --chart-tooltip-min-width: 8rem;
   --chart-tooltip-label-font-weight: var(--typography-small-font-weight);
@@ -43,4 +43,8 @@
 [data-slot='chart'] .recharts-legend-wrapper > div {
   gap: var(--chart-legend-gap);
   padding-block: var(--chart-legend-padding);
+}
+
+.dark [data-slot='chart'] {
+  --chart-tooltip-border-color: #ffffff0d;
 }

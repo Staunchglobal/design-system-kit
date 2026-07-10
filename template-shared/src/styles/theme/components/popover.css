@@ -5,7 +5,7 @@
 [data-slot='popover-content'] {
   --popover-content-bg: var(--popover);
   --popover-content-fg: var(--popover-foreground);
-  --popover-content-ring-color: color-mix(in oklch, var(--foreground), transparent 90%);
+  --popover-content-ring-color: #0a0a0a1a;
   --popover-content-ring-width: 1px;
   --popover-content-radius: var(--radius-lg);
   --popover-content-width: 18rem;
@@ -44,4 +44,8 @@
 [data-slot='popover-description'] {
   --popover-description-fg: var(--muted-foreground);
   color: var(--popover-description-fg);
+}
+
+.dark [data-slot='popover-content'] {
+  --popover-content-ring-color: #fafafa1a;
 }

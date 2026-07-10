@@ -6,6 +6,7 @@ import {
   SAFE_ICON_NAME_RE,
   SAFE_TOKEN_RE,
   SAFE_WEIGHTS_RE,
+  isSafeCustomColorValue,
   isSafeCustomFont,
 } from './validation.js'
 
@@ -70,6 +71,31 @@ describe('SAFE_HEX_RE', () => {
 
   it('rejects a hex value crafted to break out of a CSS declaration', () => {
     expect(SAFE_HEX_RE.test('red; } body{display:none} /*')).toBe(false)
+  })
+})
+
+describe('isSafeCustomColorValue', () => {
+  it('accepts a literal hex value (Color Scales page addition)', () => {
+    expect(isSafeCustomColorValue('#ff5733')).toBe(true)
+  })
+
+  it('accepts a var() reference to an existing token (Colors page addition)', () => {
+    expect(isSafeCustomColorValue('var(--primary-500)')).toBe(true)
+    expect(isSafeCustomColorValue('var(--brand-500)')).toBe(true)
+  })
+
+  it('accepts the literal transparent keyword', () => {
+    expect(isSafeCustomColorValue('transparent')).toBe(true)
+  })
+
+  it('rejects a var() reference crafted to break out of the CSS declaration', () => {
+    expect(isSafeCustomColorValue('var(--x); } body{display:none} /*')).toBe(false)
+    expect(isSafeCustomColorValue('var(--x)) /*')).toBe(false)
+  })
+
+  it('rejects a value that is neither a valid hex nor a valid var() reference', () => {
+    expect(isSafeCustomColorValue('red')).toBe(false)
+    expect(isSafeCustomColorValue('calc(1 + 1)')).toBe(false)
   })
 })
 

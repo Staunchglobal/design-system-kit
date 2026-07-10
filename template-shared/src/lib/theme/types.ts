@@ -1,7 +1,6 @@
 export type ThemeFieldType =
   | "hex"
   | "color-ref"
-  | "color-mix"
   | "color-keyword"
   | "typography-ref"
   | "font-ref"
@@ -42,7 +41,14 @@ export type ThemeManifest = {
   customFonts?: CustomFont[];
 };
 
-export type CustomColor = { name: string; hex: string };
+/**
+ * A user-registered color token. `hex` is a literal hex value for a color-scales-page
+ * addition (a brand-new base swatch), or a `var(--some-scale-token)` reference for a
+ * colors-page addition (a new semantic token built from an existing scale step) — `scope`
+ * says which. Absent `scope` (themes saved before this field existed) means 'colors', the
+ * only kind that used to exist.
+ */
+export type CustomColor = { name: string; hex: string; scope?: 'colors' | 'color-scales' };
 
 export type CustomTypography = {
   id: string;

@@ -13,7 +13,7 @@
   --button-focus-ring-color: var(--ring);
   --button-focus-border-color: var(--ring);
   --button-invalid-border-color: var(--destructive);
-  --button-invalid-ring-color: color-mix(in oklch, var(--destructive), transparent 80%);
+  --button-invalid-ring-color: #dc262633;
 
   border-radius: var(--button-radius);
   border-width: var(--button-border-width);
@@ -36,7 +36,7 @@
 [data-slot='button'][data-variant='default'] {
   --button-bg: var(--primary);
   --button-fg: var(--primary-foreground);
-  --button-hover-bg: color-mix(in oklch, var(--button-bg), transparent 20%);
+  --button-hover-bg: #171717cc;
   background-color: var(--button-bg);
   color: var(--button-fg);
 }
@@ -63,7 +63,7 @@
 [data-slot='button'][data-variant='secondary'] {
   --button-bg: var(--secondary);
   --button-fg: var(--secondary-foreground);
-  --button-hover-bg: color-mix(in oklch, var(--secondary), var(--foreground) 5%);
+  --button-hover-bg: #e7e7e7;
   background-color: var(--button-bg);
   color: var(--button-fg);
 }
@@ -85,11 +85,11 @@
 }
 
 [data-slot='button'][data-variant='destructive'] {
-  --button-bg: color-mix(in oklch, var(--destructive), transparent 90%);
+  --button-bg: #dc26261a;
   --button-fg: var(--destructive);
-  --button-hover-bg: color-mix(in oklch, var(--destructive), transparent 80%);
-  --button-focus-border-color: color-mix(in oklch, var(--destructive), transparent 60%);
-  --button-focus-ring-color: color-mix(in oklch, var(--destructive), transparent 80%);
+  --button-hover-bg: #dc262633;
+  --button-focus-border-color: #dc262666;
+  --button-focus-ring-color: #dc262633;
   background-color: var(--button-bg);
   color: var(--button-fg);
 }
@@ -172,4 +172,23 @@
   --button-size: 2.25rem;
   width: var(--button-size);
   height: var(--button-size);
+}
+
+.dark [data-slot='button'] {
+  --button-invalid-ring-color: #f8717133;
+}
+
+.dark [data-slot='button'][data-variant='default'] {
+  --button-hover-bg: #e5e5e5cc;
+}
+
+.dark [data-slot='button'][data-variant='secondary'] {
+  --button-hover-bg: #2f2f2f;
+}
+
+.dark [data-slot='button'][data-variant='destructive'] {
+  --button-bg: #f871711a;
+  --button-hover-bg: #f8717133;
+  --button-focus-border-color: #f8717166;
+  --button-focus-ring-color: #f8717133;
 }

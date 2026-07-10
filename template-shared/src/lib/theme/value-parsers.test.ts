@@ -1,27 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
   inferFieldType,
-  parseColorMix,
   parseTransition,
-  serializeColorMix,
   serializeTransition,
 } from "./value-parsers.js";
-
-describe("parseColorMix", () => {
-  it("parses a transparent mix expression", () => {
-    expect(
-      parseColorMix("color-mix(in oklch, var(--neutral-950), transparent 90%)")
-    ).toEqual({ base: "var(--neutral-950)", mix: "transparent", percent: 90 });
-  });
-
-  it("round-trips through serialize", () => {
-    const parsed = { base: "var(--ring)", mix: "transparent", percent: 50 };
-    expect(serializeColorMix(parsed)).toBe(
-      "color-mix(in oklch, var(--ring), transparent 50%)"
-    );
-    expect(parseColorMix(serializeColorMix(parsed))).toEqual(parsed);
-  });
-});
 
 describe("parseTransition", () => {
   it("parses all 0.15s ease", () => {
@@ -70,15 +52,6 @@ describe("serializeTransition", () => {
 });
 
 describe("inferFieldType", () => {
-  it("detects color-mix", () => {
-    expect(
-      inferFieldType(
-        "--overlay-bg",
-        "color-mix(in oklch, var(--neutral-950), transparent 90%)"
-      )
-    ).toBe("color-mix");
-  });
-
   it("detects transparent on color vars", () => {
     expect(inferFieldType("--button-bg", "transparent")).toBe("color-keyword");
   });

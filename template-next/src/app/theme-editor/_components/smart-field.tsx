@@ -40,10 +40,8 @@ import {
   formatDurationSeconds,
   listShadowTokenNames,
   listTokenRefNames,
-  parseColorMix,
   parseDurationSeconds,
   parseTransition,
-  serializeColorMix,
   serializeTransition,
 } from "@/lib/theme/value-parsers";
 import { describeVariable } from "@/lib/theme/descriptions";
@@ -303,89 +301,6 @@ function DurationField({
   );
 }
 
-function ColorMixField({
-  value,
-  colorOptions,
-  onChange,
-}: {
-  value: string;
-  colorOptions: Array<{ name: string; label: string }>;
-  onChange: (v: string) => void;
-}) {
-  const parsed = parseColorMix(value);
-  if (!parsed) {
-    return <RawField value={value} onChange={onChange} />;
-  }
-
-  const mixRef =
-    parsed.mix === "transparent"
-      ? "transparent"
-      : extractVarRef(parsed.mix) ?? parsed.mix;
-  const mixPercentOptions = Array.from({ length: 11 }, (_, i) =>
-    String(i * 10)
-  );
-
-  const mixOptions = [
-    { name: "transparent", label: "transparent" },
-    ...colorOptions.filter((o) => o.name !== "transparent"),
-  ];
-
-  return (
-    <div className="grid gap-2">
-      <div className="grid gap-1">
-        <span className="text-muted-foreground text-xs">Base color</span>
-        <TokenSelect
-          value={parsed.base}
-          options={colorOptions.filter((o) => o.name !== "transparent")}
-          onChange={(base) =>
-            onChange(
-              serializeColorMix({
-                base,
-                mix: parsed.mix,
-                percent: parsed.percent,
-              })
-            )
-          }
-        />
-      </div>
-      <div className="grid gap-1">
-        <span className="text-muted-foreground text-xs">Mix with</span>
-        <TokenSelect
-          value={mixRef === "transparent" ? "transparent" : toVarRef(mixRef)}
-          options={mixOptions}
-          onChange={(mix) => {
-            const mixVal =
-              mix === "transparent" ? "transparent" : toVarRef(mix);
-            onChange(
-              serializeColorMix({
-                base: parsed.base,
-                mix: mixVal,
-                percent: parsed.percent,
-              })
-            );
-          }}
-        />
-      </div>
-      <div className="grid gap-1">
-        <span className="text-muted-foreground text-xs">Mix amount (%)</span>
-        <EnumSelect
-          value={String(parsed.percent)}
-          options={mixPercentOptions}
-          onChange={(pct) =>
-            onChange(
-              serializeColorMix({
-                base: parsed.base,
-                mix: parsed.mix,
-                percent: Number(pct),
-              })
-            )
-          }
-        />
-      </div>
-    </div>
-  );
-}
-
 function ColorKeywordField({
   value,
   colorOptions,
@@ -635,13 +550,6 @@ export function SmartField({ variable }: { variable: ThemeVariable }) {
       {type === "hex" && <HexField value={value} onChange={onChange} />}
       {type === "color-ref" && (
         <TokenSelect value={value} options={colorOptions} onChange={onChange} />
-      )}
-      {type === "color-mix" && (
-        <ColorMixField
-          value={value}
-          colorOptions={colorOptions}
-          onChange={onChange}
-        />
       )}
       {type === "color-keyword" && (
         <ColorKeywordField

@@ -7,7 +7,7 @@
   --attachment-bg: var(--card);
   --attachment-fg: var(--card-foreground);
   --attachment-border-color: var(--border);
-  --attachment-hover-bg: color-mix(in oklch, var(--muted), transparent 50%);
+  --attachment-hover-bg: #f5f5f580;
   border-radius: var(--attachment-radius);
   background-color: var(--attachment-bg);
   color: var(--attachment-fg);
@@ -17,7 +17,7 @@
   background-color: var(--attachment-hover-bg);
 }
 [data-slot='attachment'][data-state='error'] {
-  --attachment-error-border-color: color-mix(in oklch, var(--destructive), transparent 70%);
+  --attachment-error-border-color: #dc26264d;
   border-color: var(--attachment-error-border-color);
 }
 [data-slot='attachment'][data-state='idle'] {
@@ -60,7 +60,7 @@
   color: var(--attachment-media-fg);
 }
 [data-slot='attachment'][data-state='error'] [data-slot='attachment-media'] {
-  --attachment-media-error-bg: color-mix(in oklch, var(--destructive), transparent 90%);
+  --attachment-media-error-bg: #dc26261a;
   --attachment-media-error-fg: var(--destructive);
   background-color: var(--attachment-media-error-bg);
   color: var(--attachment-media-error-fg);
@@ -89,7 +89,7 @@
   margin-top: var(--attachment-description-margin-top);
 }
 [data-slot='attachment'][data-state='error'] [data-slot='attachment-description'] {
-  --attachment-description-error-fg: color-mix(in oklch, var(--destructive), transparent 20%);
+  --attachment-description-error-fg: #dc2626cc;
   color: var(--attachment-description-error-fg);
 }
 
@@ -98,4 +98,20 @@
   --attachment-group-padding-y: 0.25rem;
   gap: var(--attachment-group-gap);
   padding-block: var(--attachment-group-padding-y);
+}
+
+.dark [data-slot='attachment'] {
+  --attachment-hover-bg: #26262680;
+}
+
+.dark [data-slot='attachment'][data-state='error'] {
+  --attachment-error-border-color: #f871714d;
+}
+
+.dark [data-slot='attachment'][data-state='error'] [data-slot='attachment-media'] {
+  --attachment-media-error-bg: #f871711a;
+}
+
+.dark [data-slot='attachment'][data-state='error'] [data-slot='attachment-description'] {
+  --attachment-description-error-fg: #f87171cc;
 }

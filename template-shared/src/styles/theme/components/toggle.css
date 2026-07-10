@@ -16,7 +16,7 @@
   --toggle-focus-ring-width: 3px;
   --toggle-focus-ring-color: var(--ring);
   --toggle-invalid-border-color: var(--destructive);
-  --toggle-invalid-ring-color: color-mix(in oklch, var(--destructive), transparent 80%);
+  --toggle-invalid-ring-color: #dc262633;
 
   border-radius: var(--toggle-radius);
   font-size: var(--toggle-font-size);
@@ -85,4 +85,8 @@
   height: var(--toggle-height);
   min-width: var(--toggle-min-width);
   padding-inline: var(--toggle-padding-x);
+}
+
+.dark [data-slot='toggle'] {
+  --toggle-invalid-ring-color: #f8717133;
 }

@@ -171,7 +171,9 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
     sharedSrc,
     destRoot,
     [
+      'styles/theme/tokens/color-scales.css',
       'styles/theme/tokens/colors.css',
+      'styles/theme/tokens/shadows.css',
       'styles/theme/tokens/radius.css',
       'styles/theme/tokens/fonts.css',
       'styles/theme/tokens/typography.css',

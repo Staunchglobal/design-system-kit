@@ -9,9 +9,9 @@
   --switch-unchecked-bg: var(--input);
   --switch-focus-ring-width: 3px;
   --switch-focus-border-color: var(--ring);
-  --switch-focus-ring-color: color-mix(in oklch, var(--ring), transparent 50%);
+  --switch-focus-ring-color: #a3a3a380;
   --switch-invalid-border-color: var(--destructive);
-  --switch-invalid-ring-color: color-mix(in oklch, var(--destructive), transparent 80%);
+  --switch-invalid-ring-color: #dc262633;
   --switch-disabled-opacity: 0.5;
 
   border-radius: 9999px;
@@ -71,4 +71,9 @@
   --switch-thumb-size: 0.75rem;
   width: var(--switch-thumb-size);
   height: var(--switch-thumb-size);
+}
+
+.dark [data-slot='switch'] {
+  --switch-focus-ring-color: #73737380;
+  --switch-invalid-ring-color: #f8717133;
 }

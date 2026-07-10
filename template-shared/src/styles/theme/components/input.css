@@ -20,11 +20,11 @@
   --input-file-height: 1.5rem;
   --input-focus-border-color: var(--ring);
   --input-focus-ring-width: 3px;
-  --input-focus-ring-color: color-mix(in oklch, var(--ring), transparent 50%);
-  --input-disabled-bg: color-mix(in oklch, var(--input), transparent 50%);
+  --input-focus-ring-color: #a3a3a380;
+  --input-disabled-bg: #e5e5e580;
   --input-disabled-opacity: 0.5;
   --input-invalid-border-color: var(--destructive);
-  --input-invalid-ring-color: color-mix(in oklch, var(--destructive), transparent 80%);
+  --input-invalid-ring-color: #dc262633;
 }
 
 [data-slot='input'] {
@@ -65,4 +65,10 @@
   [data-slot='input'] {
     font-size: var(--input-file-font-size);
   }
+}
+
+.dark :root {
+  --input-focus-ring-color: #73737380;
+  --input-disabled-bg: #ffffff13;
+  --input-invalid-ring-color: #f8717133;
 }

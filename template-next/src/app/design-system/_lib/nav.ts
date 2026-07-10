@@ -15,7 +15,10 @@ export type NavGroup = {
 export const NAV_GROUPS: NavGroup[] = [
   {
     title: 'Colors',
-    items: [{ id: 'colors', label: 'Colors' }],
+    items: [
+      { id: 'color-scales', label: 'Color Scales' },
+      { id: 'colors', label: 'Colors' },
+    ],
   },
   {
     title: 'Buttons & Actions',

@@ -44,6 +44,20 @@ export const SAFE_ICON_NAME_RE = /^[A-Za-z][A-Za-z0-9]*$/
 export const SAFE_FONT_FAMILY_RE = /^[A-Za-z0-9 ]+$/
 export const SAFE_WEIGHTS_RE = /^[0-9,; ]+$/
 export const SAFE_HEX_RE = /^#[0-9a-fA-F]{3,8}$/
+const SAFE_VAR_REF_RE = /^var\((--[a-zA-Z0-9_-]+)\)$/
+
+/**
+ * A custom color's value is a literal hex (added from the Color Scales page), a
+ * `var(--token)` reference to an existing scale step, or the literal `transparent` keyword
+ * (both added from the Colors page, which lets a new semantic token point at either) — all
+ * get written verbatim into a real .css file (see ensureColorVar), so all need the same
+ * break-out-of-the-declaration protection as SAFE_HEX_RE, just for their own shape.
+ */
+export function isSafeCustomColorValue(value: string): boolean {
+  if (SAFE_HEX_RE.test(value) || value === 'transparent') return true
+  const m = value.match(SAFE_VAR_REF_RE)
+  return m !== null && SAFE_TOKEN_RE.test(m[1].replace(/^--/, ''))
+}
 
 type SanitizableCustomFont =
   | { id: string; source: 'google'; googleFamily: string; weights: string }

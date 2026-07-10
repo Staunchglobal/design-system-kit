@@ -11,12 +11,12 @@ import {
   InputGroupInput,
   InputGroupText,
 } from '@/components/ui/input-group'
+import { NativeSelect } from '@/components/ui/native-select'
 import { SmartField } from '@/app/theme-editor/_components/smart-field'
 import { useThemeEditor } from '@/app/theme-editor/_lib/theme-editor-context'
-import { groupVariablesForEditor } from '@/lib/theme/field-types'
+import { groupVariablesForEditor, listColorTokenNames, toVarRef } from '@/lib/theme/field-types'
 import { lucideIconNames, resolveLucideIcon } from '@/components/icons/icon'
 import { defaultIconMap } from '@/components/icons/icon-map'
-import { NativeSelect } from '@/components/ui/native-select'
 import { validateHex } from '@/lib/theme/validation'
 
 export function VariableForm() {
@@ -53,8 +53,19 @@ export function VariableForm() {
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto">
         <div className="flex flex-col gap-4 p-4">
+          {group.id === 'color-scales' && (
+            <AddColorForm
+              onAdd={(c) => addColor({ ...c, scope: 'color-scales' })}
+              existing={customColors.map((c) => c.name)}
+            />
+          )}
           {group.id === 'colors' && (
-            <AddColorForm onAdd={addColor} existing={customColors.map((c) => c.name)} />
+            <AddColorRefForm
+              manifest={manifest}
+              customColors={customColors}
+              onAdd={(c) => addColor({ ...c, scope: 'colors' })}
+              existing={customColors.map((c) => c.name)}
+            />
           )}
           {group.id === 'typography' && (
             <AddTypographyForm onAdd={addTypography} existing={customTypography.map((t) => t.id)} />
@@ -133,6 +144,73 @@ function AddColorForm({
             if (!n || existing.includes(n) || existing.includes(`--${n}`)) return
             if (validateHex(hexDigits)) return
             onAdd({ name: n, hex })
+            setName('')
+          }}
+        >
+          Add
+        </Button>
+      </div>
+    </div>
+  )
+}
+
+function AddColorRefForm({
+  manifest,
+  customColors,
+  onAdd,
+  existing,
+}: {
+  manifest: import('@/lib/theme/types').ThemeManifest
+  customColors: { name: string; hex: string; scope?: 'colors' | 'color-scales' }[]
+  onAdd: (c: { name: string; hex: string }) => void
+  existing: string[]
+}) {
+  const scaleTokens = React.useMemo(() => {
+    const extra = customColors
+      .filter((c) => c.scope === 'color-scales')
+      .map((c) => (c.name.startsWith('--') ? c.name : `--${c.name}`))
+    return listColorTokenNames(manifest, extra)
+  }, [manifest, customColors])
+  const [name, setName] = React.useState('')
+  const [scaleToken, setScaleToken] = React.useState(scaleTokens[0] ?? 'transparent')
+
+  return (
+    <div className="bg-muted/40 rounded-lg border p-3">
+      <div className="typography-small mb-2 font-medium">Add color</div>
+      <p className="text-muted-foreground mb-2 text-xs">
+        Registers a new semantic color token that points at an existing color scale step.
+      </p>
+      <div className="flex flex-wrap items-end gap-2">
+        <div className="grid gap-1">
+          <Label className="text-xs">Name</Label>
+          <Input
+            placeholder="brand"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="h-8 w-36 font-mono text-xs"
+          />
+        </div>
+        <div className="grid gap-1">
+          <Label className="text-xs">Color scale</Label>
+          <NativeSelect
+            className="h-8 w-44 font-mono text-xs"
+            value={scaleToken}
+            onChange={(e) => setScaleToken(e.target.value)}
+          >
+            {scaleTokens.map((t) => (
+              <option key={t} value={t}>
+                {t}
+              </option>
+            ))}
+          </NativeSelect>
+        </div>
+        <Button
+          size="sm"
+          onClick={() => {
+            const n = name.trim().replace(/^--/, '')
+            if (!n || existing.includes(n) || existing.includes(`--${n}`)) return
+            const value = scaleToken === 'transparent' ? 'transparent' : toVarRef(scaleToken)
+            onAdd({ name: n, hex: value })
             setName('')
           }}
         >

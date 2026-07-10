@@ -16,7 +16,7 @@
   --navigation-menu-trigger-font-weight: var(--typography-small-font-weight);
   --navigation-menu-trigger-hover-bg: var(--muted);
   --navigation-menu-trigger-focus-bg: var(--muted);
-  --navigation-menu-trigger-open-bg: color-mix(in oklch, var(--muted), transparent 50%);
+  --navigation-menu-trigger-open-bg: #f5f5f580;
   --navigation-menu-trigger-disabled-opacity: 0.5;
 
   border-radius: var(--navigation-menu-trigger-radius);
@@ -47,7 +47,7 @@
   --navigation-menu-link-font-size: var(--typography-small-font-size);
   --navigation-menu-link-hover-bg: var(--muted);
   --navigation-menu-link-focus-bg: var(--muted);
-  --navigation-menu-link-active-bg: color-mix(in oklch, var(--muted), transparent 50%);
+  --navigation-menu-link-active-bg: #f5f5f580;
 
   border-radius: var(--navigation-menu-link-radius);
   padding: var(--navigation-menu-link-padding);
@@ -76,7 +76,7 @@
   --navigation-menu-content-radius: var(--radius-lg);
   --navigation-menu-content-bg: var(--popover);
   --navigation-menu-content-fg: var(--popover-foreground);
-  --navigation-menu-content-ring: color-mix(in oklch, var(--foreground), transparent 90%);
+  --navigation-menu-content-ring: #0a0a0a1a;
   border-radius: var(--navigation-menu-content-radius);
   background-color: var(--navigation-menu-content-bg);
   color: var(--navigation-menu-content-fg);
@@ -86,7 +86,7 @@
 [data-slot='navigation-menu-viewport'] {
   --navigation-menu-viewport-bg: var(--popover);
   --navigation-menu-viewport-fg: var(--popover-foreground);
-  --navigation-menu-viewport-ring: color-mix(in oklch, var(--foreground), transparent 90%);
+  --navigation-menu-viewport-ring: #0a0a0a1a;
   --navigation-menu-viewport-radius: var(--radius-lg);
   --navigation-menu-viewport-margin-top: 0.375rem;
   background-color: var(--navigation-menu-viewport-bg);
@@ -108,4 +108,20 @@
   height: var(--navigation-menu-indicator-arrow-size);
   background-color: var(--navigation-menu-indicator-arrow-bg);
   border-top-left-radius: var(--navigation-menu-indicator-arrow-radius);
+}
+
+.dark [data-slot='navigation-menu-trigger'] {
+  --navigation-menu-trigger-open-bg: #26262680;
+}
+
+.dark [data-slot='navigation-menu-link'] {
+  --navigation-menu-link-active-bg: #26262680;
+}
+
+.dark [data-slot='navigation-menu'][data-viewport='false'] [data-slot='navigation-menu-content'] {
+  --navigation-menu-content-ring: #fafafa1a;
+}
+
+.dark [data-slot='navigation-menu-viewport'] {
+  --navigation-menu-viewport-ring: #fafafa1a;
 }

@@ -68,12 +68,6 @@ export const COLOR_KEYWORD_OPTIONS = [
   "currentColor",
 ] as const;
 
-export type ParsedColorMix = {
-  base: string;
-  mix: string;
-  percent: number;
-};
-
 export type ParsedTransition = {
   property: string;
   duration: string;
@@ -133,19 +127,6 @@ export function isLikelyColorVarName(name: string): boolean {
   if (SHADE_PREFIXES.some((p) => bare.startsWith(p))) return true;
   if (COLOR_SEMANTIC.has(bare)) return true;
   return COLOR_NAME_RE.test(bare);
-}
-
-export function parseColorMix(value: string): ParsedColorMix | null {
-  const v = value.trim();
-  const m = v.match(
-    /^color-mix\(in oklch,\s*(var\(--[a-zA-Z0-9_-]+\)|#[0-9a-fA-F]{3,8}),\s*(transparent|var\(--[a-zA-Z0-9_-]+\))\s+(\d+)%\)$/
-  );
-  if (!m) return null;
-  return { base: m[1], mix: m[2], percent: Number(m[3]) };
-}
-
-export function serializeColorMix(parsed: ParsedColorMix): string {
-  return `color-mix(in oklch, ${parsed.base}, ${parsed.mix} ${parsed.percent}%)`;
 }
 
 export function parseTransition(value: string): ParsedTransition | null {
@@ -221,7 +202,6 @@ export function inferFieldTypeFromName(
   const bare = name.replace(/^--/, "");
   const v = value.trim();
 
-  if (parseColorMix(v)) return "color-mix";
   if (v === "transparent" || v === "inherit" || v === "currentColor") {
     if (isLikelyColorVarName(name)) return "color-keyword";
   }

@@ -50,8 +50,8 @@
   --field-label-font-size: var(--typography-small-font-size);
   --field-label-font-weight: var(--typography-small-font-weight);
   --field-label-disabled-opacity: 0.5;
-  --field-label-checked-border-color: color-mix(in oklch, var(--primary), transparent 70%);
-  --field-label-checked-bg: color-mix(in oklch, var(--primary), transparent 95%);
+  --field-label-checked-border-color: #1717174d;
+  --field-label-checked-bg: #1717170d;
 
   gap: var(--field-label-gap);
   line-height: var(--field-label-line-height);
@@ -103,4 +103,9 @@
   color: var(--field-error-fg);
   font-size: var(--field-error-font-size);
   font-weight: var(--field-error-font-weight);
+}
+
+.dark [data-slot='field-label'] {
+  --field-label-checked-border-color: #e5e5e54d;
+  --field-label-checked-bg: #e5e5e50d;
 }

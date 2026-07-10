@@ -42,10 +42,15 @@
    success/warning/info tokens (only --destructive), so only the error case
    is mapped meaningfully; the rest default to the normal/popover palette. */
 .toaster .cn-toast[data-type='error'] {
-  --sonner-error-bg: color-mix(in oklch, var(--destructive), var(--popover) 85%);
+  --sonner-error-bg: #ffe2de;
   --sonner-error-text: var(--destructive);
-  --sonner-error-border: color-mix(in oklch, var(--destructive), transparent 70%);
+  --sonner-error-border: #dc26264d;
   --error-bg: var(--sonner-error-bg);
   --error-text: var(--sonner-error-text);
   --error-border: var(--sonner-error-border);
+}
+
+.dark .toaster .cn-toast[data-type='error'] {
+  --sonner-error-bg: #342423;
+  --sonner-error-border: #f871714d;
 }

@@ -215,6 +215,8 @@ export function describeVariable(variable: ThemeVariable, group: ThemeGroup): st
   if (group.id === 'colors' && SEMANTIC_DESCRIPTIONS[bare]) {
     sentence = SEMANTIC_DESCRIPTIONS[bare]
   } else if (group.id === 'colors') {
+    sentence = `A ${humanizeVarName(bare)} color value.`
+  } else if (group.id === 'color-scales') {
     const shade = bare.match(/^(neutral|primary|secondary|accent|muted|destructive)-(\d+)$/)
     if (shade) {
       const [, family, level] = shade
@@ -223,6 +225,10 @@ export function describeVariable(variable: ThemeVariable, group: ThemeGroup): st
     } else {
       sentence = `A ${humanizeVarName(bare)} color value.`
     }
+  } else if (group.id === 'shadows' && SEMANTIC_DESCRIPTIONS[bare]) {
+    sentence = SEMANTIC_DESCRIPTIONS[bare]
+  } else if (group.id === 'shadows') {
+    sentence = `Box shadow value ("${humanizeVarName(bare)}").`
   } else if (group.id === 'radius' && RADIUS_DESCRIPTIONS[bare]) {
     sentence = RADIUS_DESCRIPTIONS[bare]
   } else if (group.id === 'fonts') {

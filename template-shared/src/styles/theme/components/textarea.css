@@ -15,11 +15,11 @@
   --textarea-font-size: var(--typography-p-font-size);
   --textarea-focus-border-color: var(--ring);
   --textarea-focus-ring-width: 3px;
-  --textarea-focus-ring-color: color-mix(in oklch, var(--ring), transparent 50%);
-  --textarea-disabled-bg: color-mix(in oklch, var(--input), transparent 50%);
+  --textarea-focus-ring-color: #a3a3a380;
+  --textarea-disabled-bg: #e5e5e580;
   --textarea-disabled-opacity: 0.5;
   --textarea-invalid-border-color: var(--destructive);
-  --textarea-invalid-ring-color: color-mix(in oklch, var(--destructive), transparent 80%);
+  --textarea-invalid-ring-color: #dc262633;
 
   min-height: var(--textarea-min-height);
   border-radius: var(--textarea-radius);
@@ -51,4 +51,10 @@
   [data-slot='textarea'] {
     font-size: var(--typography-small-font-size);
   }
+}
+
+.dark [data-slot='textarea'] {
+  --textarea-focus-ring-color: #73737380;
+  --textarea-disabled-bg: #ffffff13;
+  --textarea-invalid-ring-color: #f8717133;
 }

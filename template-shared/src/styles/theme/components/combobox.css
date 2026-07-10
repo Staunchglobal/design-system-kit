@@ -10,7 +10,7 @@
 [data-slot='combobox-content'] {
   --combobox-content-bg: var(--popover);
   --combobox-content-fg: var(--popover-foreground);
-  --combobox-content-ring-color: color-mix(in oklch, var(--foreground), transparent 90%);
+  --combobox-content-ring-color: #0a0a0a1a;
   --combobox-content-radius: var(--radius-lg);
   --combobox-content-shadow: var(--shadow-md);
 
@@ -94,9 +94,9 @@
   --combobox-chips-font-size: var(--typography-small-font-size);
   --combobox-chips-focus-border-color: var(--ring);
   --combobox-chips-focus-ring-width: 3px;
-  --combobox-chips-focus-ring-color: color-mix(in oklch, var(--ring), transparent 50%);
+  --combobox-chips-focus-ring-color: #a3a3a380;
   --combobox-chips-invalid-border-color: var(--destructive);
-  --combobox-chips-invalid-ring-color: color-mix(in oklch, var(--destructive), transparent 80%);
+  --combobox-chips-invalid-ring-color: #dc262633;
 
   border-radius: var(--combobox-chips-radius);
   border-width: var(--combobox-chips-border-width);
@@ -158,3 +158,12 @@
 /* ComboboxValue, ComboboxGroup and ComboboxCollection render no styling of
    their own beyond structural layout inherited from their parent — nothing
    independently visual to expose here. */
+
+.dark [data-slot='combobox-content'] {
+  --combobox-content-ring-color: #fafafa1a;
+}
+
+.dark [data-slot='combobox-chips'] {
+  --combobox-chips-focus-ring-color: #73737380;
+  --combobox-chips-invalid-ring-color: #f8717133;
+}

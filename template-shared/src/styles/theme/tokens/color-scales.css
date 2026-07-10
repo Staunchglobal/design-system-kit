@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Color Scales
+   ==========================================================================
+   The base palette every semantic token (in colors.css) and every component
+   draws from. Theme-invariant — same value in light and dark — and also
+   registered as Tailwind utilities, e.g. `bg-primary-500`, `text-destructive-600`.
+   This is the ONLY place a raw hex value should ever appear; everything else
+   should reference one of these steps, never a custom/one-off hex.
+   ========================================================================== */
+
+:root {
+  --neutral-0: #ffffff;
+  --neutral-50: #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #e5e5e5;
+  --neutral-300: #d4d4d4;
+  --neutral-400: #a3a3a3;
+  --neutral-500: #737373;
+  --neutral-600: #525252;
+  --neutral-700: #404040;
+  --neutral-800: #262626;
+  --neutral-900: #171717;
+  --neutral-950: #0a0a0a;
+  --primary-50: #fafafa;
+  --primary-100: #f5f5f5;
+  --primary-200: #e5e5e5;
+  --primary-300: #d4d4d4;
+  --primary-400: #a3a3a3;
+  --primary-500: #737373;
+  --primary-600: #525252;
+  --primary-700: #404040;
+  --primary-800: #262626;
+  --primary-900: #171717;
+  --primary-950: #0a0a0a;
+  --secondary-50: #fafafa;
+  --secondary-100: #f5f5f5;
+  --secondary-200: #e5e5e5;
+  --secondary-300: #d4d4d4;
+  --secondary-400: #a3a3a3;
+  --secondary-500: #737373;
+  --secondary-600: #525252;
+  --secondary-700: #404040;
+  --secondary-800: #262626;
+  --secondary-900: #171717;
+  --secondary-950: #0a0a0a;
+  --accent-50: #fafafa;
+  --accent-100: #f5f5f5;
+  --accent-200: #e5e5e5;
+  --accent-300: #d4d4d4;
+  --accent-400: #a3a3a3;
+  --accent-500: #737373;
+  --accent-600: #525252;
+  --accent-700: #404040;
+  --accent-800: #262626;
+  --accent-900: #171717;
+  --accent-950: #0a0a0a;
+  --muted-50: #fafafa;
+  --muted-100: #f5f5f5;
+  --muted-200: #e5e5e5;
+  --muted-300: #d4d4d4;
+  --muted-400: #a3a3a3;
+  --muted-500: #737373;
+  --muted-600: #525252;
+  --muted-700: #404040;
+  --muted-800: #262626;
+  --muted-900: #171717;
+  --muted-950: #0a0a0a;
+  --destructive-50: #fef2f2;
+  --destructive-100: #fee2e2;
+  --destructive-200: #fecaca;
+  --destructive-300: #fca5a5;
+  --destructive-400: #f87171;
+  --destructive-500: #ef4444;
+  --destructive-600: #dc2626;
+  --destructive-700: #b91c1c;
+  --destructive-800: #991b1b;
+  --destructive-900: #7f1d1d;
+  --destructive-950: #450a0a;
+}

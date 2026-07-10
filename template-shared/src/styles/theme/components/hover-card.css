@@ -5,7 +5,7 @@
 [data-slot='hover-card-content'] {
   --hover-card-content-bg: var(--popover);
   --hover-card-content-fg: var(--popover-foreground);
-  --hover-card-content-ring-color: color-mix(in oklch, var(--foreground), transparent 90%);
+  --hover-card-content-ring-color: #0a0a0a1a;
   --hover-card-content-ring-width: 1px;
   --hover-card-content-radius: var(--radius-lg);
   --hover-card-content-width: 16rem;
@@ -23,4 +23,8 @@
   padding: var(--hover-card-content-padding);
   font-size: var(--hover-card-content-font-size);
   transition-duration: var(--hover-card-content-duration);
+}
+
+.dark [data-slot='hover-card-content'] {
+  --hover-card-content-ring-color: #fafafa1a;
 }

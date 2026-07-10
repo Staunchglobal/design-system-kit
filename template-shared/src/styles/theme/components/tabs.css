@@ -38,7 +38,7 @@
   --tabs-trigger-gap: 0.375rem;
   --tabs-trigger-font-size: var(--typography-small-font-size);
   --tabs-trigger-font-weight: var(--typography-small-font-weight);
-  --tabs-trigger-fg: color-mix(in oklch, var(--foreground), transparent 40%);
+  --tabs-trigger-fg: #0a0a0a99;
   --tabs-trigger-hover-fg: var(--foreground);
   --tabs-trigger-focus-ring-color: var(--ring);
   --tabs-trigger-focus-ring-width: 3px;
@@ -81,4 +81,8 @@
 [data-slot='tabs-content'] {
   --tabs-content-font-size: var(--typography-small-font-size);
   font-size: var(--tabs-content-font-size);
+}
+
+.dark [data-slot='tabs-trigger'] {
+  --tabs-trigger-fg: #fafafa99;
 }

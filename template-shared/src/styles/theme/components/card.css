@@ -5,7 +5,7 @@
 [data-slot='card'] {
   --card-bg: var(--card);
   --card-fg: var(--card-foreground);
-  --card-ring-color: color-mix(in oklch, var(--foreground), transparent 90%);
+  --card-ring-color: #0a0a0a1a;
   --card-ring-width: 1px;
   --card-radius: var(--radius-xl);
   --card-spacing: 1rem;
@@ -57,7 +57,7 @@
 }
 
 [data-slot='card-footer'] {
-  --card-footer-bg: color-mix(in oklch, var(--muted), transparent 50%);
+  --card-footer-bg: #f5f5f580;
   --card-footer-border-color: var(--border);
   --card-footer-border-width: 1px;
   --card-footer-radius: var(--radius-xl);
@@ -67,4 +67,12 @@
   border-end-start-radius: var(--card-footer-radius);
   border-end-end-radius: var(--card-footer-radius);
   padding: var(--card-footer-padding);
+}
+
+.dark [data-slot='card'] {
+  --card-ring-color: #fafafa1a;
+}
+
+.dark [data-slot='card-footer'] {
+  --card-footer-bg: #26262680;
 }

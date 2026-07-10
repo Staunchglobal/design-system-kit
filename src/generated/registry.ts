@@ -633,6 +633,12 @@ export const GROUPS: NavGroup[] = [
     "alwaysIncluded": true,
     "items": [
       {
+        "slug": "color-scales",
+        "label": "Color Scales",
+        "demoFile": "color-scales.tsx",
+        "extraDemoFiles": []
+      },
+      {
         "slug": "colors",
         "label": "Colors",
         "demoFile": "colors.tsx",

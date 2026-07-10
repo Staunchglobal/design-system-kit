@@ -155,7 +155,9 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
     sharedSrc,
     path.join(root, 'src'),
     [
+      'styles/theme/tokens/color-scales.css',
       'styles/theme/tokens/colors.css',
+      'styles/theme/tokens/shadows.css',
       'styles/theme/tokens/radius.css',
       'styles/theme/tokens/fonts.css',
       'styles/theme/tokens/typography.css',

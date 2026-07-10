@@ -60,7 +60,7 @@
 [data-slot='select-content'] {
   --select-content-bg: var(--popover);
   --select-content-fg: var(--popover-foreground);
-  --select-content-ring-color: color-mix(in oklch, var(--foreground), transparent 90%);
+  --select-content-ring-color: #0a0a0a1a;
   --select-content-radius: var(--radius-lg);
   --select-content-shadow: var(--shadow-md);
   --select-content-min-width: 9rem;
@@ -135,3 +135,7 @@
 
 /* SelectValue carries no independent visual styling of its own (line-clamp
    and layout are applied to it via the trigger's descendant selector). */
+
+.dark [data-slot='select-content'] {
+  --select-content-ring-color: #fafafa1a;
+}
