@@ -60,7 +60,7 @@
 [data-slot='select-content'] {
   --select-content-bg: var(--popover);
   --select-content-fg: var(--popover-foreground);
-  --select-content-ring-color: #0a0a0a1a;
+  --select-content-ring-color: var(--neutral-950);
   --select-content-radius: var(--radius-lg);
   --select-content-shadow: var(--shadow-md);
   --select-content-min-width: 9rem;
@@ -137,5 +137,5 @@
    and layout are applied to it via the trigger's descendant selector). */
 
 .dark [data-slot='select-content'] {
-  --select-content-ring-color: #fafafa1a;
+  --select-content-ring-color: var(--neutral-50);
 }

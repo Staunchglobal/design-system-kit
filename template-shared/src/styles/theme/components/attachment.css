@@ -7,7 +7,7 @@
   --attachment-bg: var(--card);
   --attachment-fg: var(--card-foreground);
   --attachment-border-color: var(--border);
-  --attachment-hover-bg: #f5f5f580;
+  --attachment-hover-bg: var(--neutral-100);
   border-radius: var(--attachment-radius);
   background-color: var(--attachment-bg);
   color: var(--attachment-fg);
@@ -17,7 +17,7 @@
   background-color: var(--attachment-hover-bg);
 }
 [data-slot='attachment'][data-state='error'] {
-  --attachment-error-border-color: #dc26264d;
+  --attachment-error-border-color: var(--destructive-600);
   border-color: var(--attachment-error-border-color);
 }
 [data-slot='attachment'][data-state='idle'] {
@@ -60,7 +60,7 @@
   color: var(--attachment-media-fg);
 }
 [data-slot='attachment'][data-state='error'] [data-slot='attachment-media'] {
-  --attachment-media-error-bg: #dc26261a;
+  --attachment-media-error-bg: var(--destructive-600);
   --attachment-media-error-fg: var(--destructive);
   background-color: var(--attachment-media-error-bg);
   color: var(--attachment-media-error-fg);
@@ -89,7 +89,7 @@
   margin-top: var(--attachment-description-margin-top);
 }
 [data-slot='attachment'][data-state='error'] [data-slot='attachment-description'] {
-  --attachment-description-error-fg: #dc2626cc;
+  --attachment-description-error-fg: var(--destructive-600);
   color: var(--attachment-description-error-fg);
 }
 
@@ -101,17 +101,17 @@
 }
 
 .dark [data-slot='attachment'] {
-  --attachment-hover-bg: #26262680;
+  --attachment-hover-bg: var(--neutral-800);
 }
 
 .dark [data-slot='attachment'][data-state='error'] {
-  --attachment-error-border-color: #f871714d;
+  --attachment-error-border-color: var(--destructive-400);
 }
 
 .dark [data-slot='attachment'][data-state='error'] [data-slot='attachment-media'] {
-  --attachment-media-error-bg: #f871711a;
+  --attachment-media-error-bg: var(--destructive-400);
 }
 
 .dark [data-slot='attachment'][data-state='error'] [data-slot='attachment-description'] {
-  --attachment-description-error-fg: #f87171cc;
+  --attachment-description-error-fg: var(--destructive-400);
 }

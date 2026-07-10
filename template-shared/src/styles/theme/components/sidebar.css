@@ -129,7 +129,7 @@
   --sidebar-group-label-padding-x: 0.5rem;
   --sidebar-group-label-font-size: var(--typography-overline-font-size);
   --sidebar-group-label-font-weight: var(--typography-overline-font-weight);
-  --sidebar-group-label-fg: #0a0a0ab3;
+  --sidebar-group-label-fg: var(--neutral-950);
   --sidebar-group-label-focus-ring: var(--sidebar-ring);
   height: var(--sidebar-group-label-height);
   padding-inline: var(--sidebar-group-label-padding-x);
@@ -308,5 +308,5 @@
 }
 
 .dark [data-slot='sidebar-group-label'] {
-  --sidebar-group-label-fg: #fafafab3;
+  --sidebar-group-label-fg: var(--neutral-50);
 }

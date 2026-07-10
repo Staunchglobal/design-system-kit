@@ -24,7 +24,7 @@
 [data-slot='alert'][data-variant='destructive'] {
   --alert-destructive-bg: var(--card);
   --alert-destructive-fg: var(--destructive);
-  --alert-destructive-description-fg: #dc2626e6;
+  --alert-destructive-description-fg: var(--destructive-600);
   background-color: var(--alert-destructive-bg);
   color: var(--alert-destructive-fg);
 }
@@ -60,5 +60,5 @@
 }
 
 .dark [data-slot='alert'][data-variant='destructive'] {
-  --alert-destructive-description-fg: #f87171e6;
+  --alert-destructive-description-fg: var(--destructive-400);
 }

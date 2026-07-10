@@ -5,7 +5,7 @@
 [data-slot='popover-content'] {
   --popover-content-bg: var(--popover);
   --popover-content-fg: var(--popover-foreground);
-  --popover-content-ring-color: #0a0a0a1a;
+  --popover-content-ring-color: var(--neutral-950);
   --popover-content-ring-width: 1px;
   --popover-content-radius: var(--radius-lg);
   --popover-content-width: 18rem;
@@ -47,5 +47,5 @@
 }
 
 .dark [data-slot='popover-content'] {
-  --popover-content-ring-color: #fafafa1a;
+  --popover-content-ring-color: var(--neutral-50);
 }

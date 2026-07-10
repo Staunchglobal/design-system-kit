@@ -6,7 +6,7 @@
 [data-slot='dropdown-menu-sub-content'] {
   --dropdown-menu-bg: var(--popover);
   --dropdown-menu-fg: var(--popover-foreground);
-  --dropdown-menu-ring-color: #0a0a0a1a;
+  --dropdown-menu-ring-color: var(--neutral-950);
   --dropdown-menu-ring-width: 1px;
   --dropdown-menu-radius: var(--radius-lg);
   --dropdown-menu-padding: 0.25rem;
@@ -126,5 +126,5 @@
 
 .dark [data-slot='dropdown-menu-content'],
 [data-slot='dropdown-menu-sub-content'] {
-  --dropdown-menu-ring-color: #fafafa1a;
+  --dropdown-menu-ring-color: var(--neutral-50);
 }

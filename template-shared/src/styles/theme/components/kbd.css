@@ -27,7 +27,7 @@
 }
 /* Kbd rendered inside a TooltipContent gets a translucent inverted palette */
 [data-slot='tooltip-content'] [data-slot='kbd'] {
-  --kbd-bg: #ffffff33;
+  --kbd-bg: var(--neutral-0);
   --kbd-fg: var(--background);
 }
 
@@ -37,5 +37,5 @@
 }
 
 .dark [data-slot='tooltip-content'] [data-slot='kbd'] {
-  --kbd-bg: #0a0a0a33;
+  --kbd-bg: var(--neutral-950);
 }

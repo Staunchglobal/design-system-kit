@@ -13,7 +13,7 @@
   --button-focus-ring-color: var(--ring);
   --button-focus-border-color: var(--ring);
   --button-invalid-border-color: var(--destructive);
-  --button-invalid-ring-color: #dc262633;
+  --button-invalid-ring-color: var(--destructive-600);
 
   border-radius: var(--button-radius);
   border-width: var(--button-border-width);
@@ -36,7 +36,7 @@
 [data-slot='button'][data-variant='default'] {
   --button-bg: var(--primary);
   --button-fg: var(--primary-foreground);
-  --button-hover-bg: #171717cc;
+  --button-hover-bg: var(--neutral-900);
   background-color: var(--button-bg);
   color: var(--button-fg);
 }
@@ -63,7 +63,7 @@
 [data-slot='button'][data-variant='secondary'] {
   --button-bg: var(--secondary);
   --button-fg: var(--secondary-foreground);
-  --button-hover-bg: #e7e7e7;
+  --button-hover-bg: var(--neutral-200);
   background-color: var(--button-bg);
   color: var(--button-fg);
 }
@@ -85,11 +85,11 @@
 }
 
 [data-slot='button'][data-variant='destructive'] {
-  --button-bg: #dc26261a;
+  --button-bg: var(--destructive-600);
   --button-fg: var(--destructive);
-  --button-hover-bg: #dc262633;
-  --button-focus-border-color: #dc262666;
-  --button-focus-ring-color: #dc262633;
+  --button-hover-bg: var(--destructive-600);
+  --button-focus-border-color: var(--destructive-600);
+  --button-focus-ring-color: var(--destructive-600);
   background-color: var(--button-bg);
   color: var(--button-fg);
 }
@@ -175,20 +175,20 @@
 }
 
 .dark [data-slot='button'] {
-  --button-invalid-ring-color: #f8717133;
+  --button-invalid-ring-color: var(--destructive-400);
 }
 
 .dark [data-slot='button'][data-variant='default'] {
-  --button-hover-bg: #e5e5e5cc;
+  --button-hover-bg: var(--neutral-200);
 }
 
 .dark [data-slot='button'][data-variant='secondary'] {
-  --button-hover-bg: #2f2f2f;
+  --button-hover-bg: var(--neutral-800);
 }
 
 .dark [data-slot='button'][data-variant='destructive'] {
-  --button-bg: #f871711a;
-  --button-hover-bg: #f8717133;
-  --button-focus-border-color: #f8717166;
-  --button-focus-ring-color: #f8717133;
+  --button-bg: var(--destructive-400);
+  --button-hover-bg: var(--destructive-400);
+  --button-focus-border-color: var(--destructive-400);
+  --button-focus-ring-color: var(--destructive-400);
 }

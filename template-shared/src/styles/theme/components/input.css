@@ -20,11 +20,11 @@
   --input-file-height: 1.5rem;
   --input-focus-border-color: var(--ring);
   --input-focus-ring-width: 3px;
-  --input-focus-ring-color: #a3a3a380;
-  --input-disabled-bg: #e5e5e580;
+  --input-focus-ring-color: var(--neutral-400);
+  --input-disabled-bg: var(--neutral-200);
   --input-disabled-opacity: 0.5;
   --input-invalid-border-color: var(--destructive);
-  --input-invalid-ring-color: #dc262633;
+  --input-invalid-ring-color: var(--destructive-600);
 }
 
 [data-slot='input'] {
@@ -68,7 +68,7 @@
 }
 
 .dark :root {
-  --input-focus-ring-color: #73737380;
-  --input-disabled-bg: #ffffff13;
-  --input-invalid-ring-color: #f8717133;
+  --input-focus-ring-color: var(--neutral-500);
+  --input-disabled-bg: var(--neutral-0);
+  --input-invalid-ring-color: var(--destructive-400);
 }

@@ -10,7 +10,7 @@
 [data-slot='combobox-content'] {
   --combobox-content-bg: var(--popover);
   --combobox-content-fg: var(--popover-foreground);
-  --combobox-content-ring-color: #0a0a0a1a;
+  --combobox-content-ring-color: var(--neutral-950);
   --combobox-content-radius: var(--radius-lg);
   --combobox-content-shadow: var(--shadow-md);
 
@@ -94,9 +94,9 @@
   --combobox-chips-font-size: var(--typography-small-font-size);
   --combobox-chips-focus-border-color: var(--ring);
   --combobox-chips-focus-ring-width: 3px;
-  --combobox-chips-focus-ring-color: #a3a3a380;
+  --combobox-chips-focus-ring-color: var(--neutral-400);
   --combobox-chips-invalid-border-color: var(--destructive);
-  --combobox-chips-invalid-ring-color: #dc262633;
+  --combobox-chips-invalid-ring-color: var(--destructive-600);
 
   border-radius: var(--combobox-chips-radius);
   border-width: var(--combobox-chips-border-width);
@@ -160,10 +160,10 @@
    independently visual to expose here. */
 
 .dark [data-slot='combobox-content'] {
-  --combobox-content-ring-color: #fafafa1a;
+  --combobox-content-ring-color: var(--neutral-50);
 }
 
 .dark [data-slot='combobox-chips'] {
-  --combobox-chips-focus-ring-color: #73737380;
-  --combobox-chips-invalid-ring-color: #f8717133;
+  --combobox-chips-focus-ring-color: var(--neutral-500);
+  --combobox-chips-invalid-ring-color: var(--destructive-400);
 }

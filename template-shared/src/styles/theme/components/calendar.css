@@ -80,11 +80,11 @@
 
 [data-slot='calendar'] [data-slot='button'][data-focused='true'] {
   --calendar-focus-border-color: var(--ring);
-  --calendar-focus-ring-color: #a3a3a380;
+  --calendar-focus-ring-color: var(--neutral-400);
   border-color: var(--calendar-focus-border-color);
   box-shadow: 0 0 0 3px var(--calendar-focus-ring-color);
 }
 
 .dark [data-slot='calendar'] [data-slot='button'][data-focused='true'] {
-  --calendar-focus-ring-color: #73737380;
+  --calendar-focus-ring-color: var(--neutral-500);
 }

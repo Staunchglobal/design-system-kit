@@ -34,7 +34,7 @@
   --slider-thumb-border-width: 1px;
   --slider-thumb-border-color: var(--ring);
   --slider-thumb-ring-width: 3px;
-  --slider-thumb-ring-color: #a3a3a380;
+  --slider-thumb-ring-color: var(--neutral-400);
   --slider-thumb-disabled-opacity: 0.5;
 
   width: var(--slider-thumb-size);
@@ -54,5 +54,5 @@
 }
 
 .dark [data-slot='slider-thumb'] {
-  --slider-thumb-ring-color: #73737380;
+  --slider-thumb-ring-color: var(--neutral-500);
 }

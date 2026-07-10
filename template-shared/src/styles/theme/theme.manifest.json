@@ -2362,8 +2362,8 @@
         {
           "id": "alert-dialog:--alert-dialog-content-ring-color:0",
           "name": "--alert-dialog-content-ring-color",
-          "value": "#0a0a0a1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "alert-dialog-content"
         },
@@ -2442,8 +2442,8 @@
         {
           "id": "alert-dialog:--alert-dialog-footer-bg:0",
           "name": "--alert-dialog-footer-bg",
-          "value": "#f5f5f580",
-          "fieldType": "hex",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "alert-dialog-footer"
         },
@@ -2586,16 +2586,16 @@
         {
           "id": "alert-dialog:--alert-dialog-content-ring-color:1",
           "name": "--alert-dialog-content-ring-color",
-          "value": "#fafafa1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/alert-dialog-content"
         },
         {
           "id": "alert-dialog:--alert-dialog-footer-bg:1",
           "name": "--alert-dialog-footer-bg",
-          "value": "#26262680",
-          "fieldType": "hex",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/alert-dialog-footer"
         }
@@ -2690,8 +2690,8 @@
         {
           "id": "alert:--alert-destructive-description-fg:0",
           "name": "--alert-destructive-description-fg",
-          "value": "#dc2626e6",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "alert/variant=destructive"
         },
@@ -2746,8 +2746,8 @@
         {
           "id": "alert:--alert-destructive-description-fg:1",
           "name": "--alert-destructive-description-fg",
-          "value": "#f87171e6",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/alert/variant=destructive"
         }
@@ -2818,16 +2818,16 @@
         {
           "id": "attachment:--attachment-hover-bg:0",
           "name": "--attachment-hover-bg",
-          "value": "#f5f5f580",
-          "fieldType": "hex",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "attachment"
         },
         {
           "id": "attachment:--attachment-error-border-color:0",
           "name": "--attachment-error-border-color",
-          "value": "#dc26264d",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "attachment/state=error"
         },
@@ -2938,8 +2938,8 @@
         {
           "id": "attachment:--attachment-media-error-bg:0",
           "name": "--attachment-media-error-bg",
-          "value": "#dc26261a",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "attachment-media/ancestor-slot=attachment/state=error"
         },
@@ -3018,8 +3018,8 @@
         {
           "id": "attachment:--attachment-description-error-fg:0",
           "name": "--attachment-description-error-fg",
-          "value": "#dc2626cc",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "attachment-description/ancestor-slot=attachment/state=error"
         },
@@ -3042,32 +3042,32 @@
         {
           "id": "attachment:--attachment-hover-bg:1",
           "name": "--attachment-hover-bg",
-          "value": "#26262680",
-          "fieldType": "hex",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/attachment"
         },
         {
           "id": "attachment:--attachment-error-border-color:1",
           "name": "--attachment-error-border-color",
-          "value": "#f871714d",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/attachment/state=error"
         },
         {
           "id": "attachment:--attachment-media-error-bg:1",
           "name": "--attachment-media-error-bg",
-          "value": "#f871711a",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/attachment-media/ancestor-slot=attachment/state=error"
         },
         {
           "id": "attachment:--attachment-description-error-fg:1",
           "name": "--attachment-description-error-fg",
-          "value": "#f87171cc",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/attachment-description/ancestor-slot=attachment/state=error"
         }
@@ -3370,8 +3370,8 @@
         {
           "id": "badge:--badge-link-hover-bg:0",
           "name": "--badge-link-hover-bg",
-          "value": "#171717cc",
-          "fieldType": "hex",
+          "value": "var(--neutral-900)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "badge/variant=default"
         },
@@ -3394,16 +3394,16 @@
         {
           "id": "badge:--badge-link-hover-bg:1",
           "name": "--badge-link-hover-bg",
-          "value": "#f5f5f5cc",
-          "fieldType": "hex",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "badge/variant=secondary"
         },
         {
           "id": "badge:--badge-bg:2",
           "name": "--badge-bg",
-          "value": "#dc26261a",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "badge/variant=destructive"
         },
@@ -3418,8 +3418,8 @@
         {
           "id": "badge:--badge-link-hover-bg:2",
           "name": "--badge-link-hover-bg",
-          "value": "#dc262633",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "badge/variant=destructive"
         },
@@ -3490,32 +3490,32 @@
         {
           "id": "badge:--badge-link-hover-bg:4",
           "name": "--badge-link-hover-bg",
-          "value": "#e5e5e5cc",
-          "fieldType": "hex",
+          "value": "var(--neutral-200)",
+          "fieldType": "color-ref",
           "occurrence": 4,
           "scope": "dark/badge/variant=default"
         },
         {
           "id": "badge:--badge-link-hover-bg:5",
           "name": "--badge-link-hover-bg",
-          "value": "#262626cc",
-          "fieldType": "hex",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
           "occurrence": 5,
           "scope": "dark/badge/variant=secondary"
         },
         {
           "id": "badge:--badge-bg:3",
           "name": "--badge-bg",
-          "value": "#f871711a",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 3,
           "scope": "dark/badge/variant=destructive"
         },
         {
           "id": "badge:--badge-link-hover-bg:6",
           "name": "--badge-link-hover-bg",
-          "value": "#f8717133",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 6,
           "scope": "dark/badge/variant=destructive"
         }
@@ -3706,8 +3706,8 @@
         {
           "id": "bubble:--bubble-default-hover-bg:0",
           "name": "--bubble-default-hover-bg",
-          "value": "#171717cc",
-          "fieldType": "hex",
+          "value": "var(--neutral-900)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "bubble-content/ancestor-slot=bubble/variant=default"
         },
@@ -3730,8 +3730,8 @@
         {
           "id": "bubble:--bubble-secondary-hover-bg:0",
           "name": "--bubble-secondary-hover-bg",
-          "value": "#e7e7e7",
-          "fieldType": "hex",
+          "value": "var(--secondary-200)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "bubble-content/ancestor-slot=bubble/variant=secondary"
         },
@@ -3746,8 +3746,8 @@
         {
           "id": "bubble:--bubble-muted-hover-bg:0",
           "name": "--bubble-muted-hover-bg",
-          "value": "#e7e7e7",
-          "fieldType": "hex",
+          "value": "var(--muted-200)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "bubble-content/ancestor-slot=bubble/variant=muted"
         },
@@ -3866,8 +3866,8 @@
         {
           "id": "bubble:--bubble-destructive-bg:0",
           "name": "--bubble-destructive-bg",
-          "value": "#dc26261a",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "bubble-content/ancestor-slot=bubble/variant=destructive"
         },
@@ -3882,8 +3882,8 @@
         {
           "id": "bubble:--bubble-destructive-hover-bg:0",
           "name": "--bubble-destructive-hover-bg",
-          "value": "#dc262633",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "bubble-content/ancestor-slot=bubble/variant=destructive"
         },
@@ -3954,40 +3954,40 @@
         {
           "id": "bubble:--bubble-default-hover-bg:1",
           "name": "--bubble-default-hover-bg",
-          "value": "#e5e5e5cc",
-          "fieldType": "hex",
+          "value": "var(--neutral-200)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/bubble-content/ancestor-slot=bubble/variant=default"
         },
         {
           "id": "bubble:--bubble-secondary-hover-bg:1",
           "name": "--bubble-secondary-hover-bg",
-          "value": "#2f2f2f",
-          "fieldType": "hex",
+          "value": "var(--secondary-800)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/bubble-content/ancestor-slot=bubble/variant=secondary"
         },
         {
           "id": "bubble:--bubble-muted-hover-bg:1",
           "name": "--bubble-muted-hover-bg",
-          "value": "#2f2f2f",
-          "fieldType": "hex",
+          "value": "var(--muted-800)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/bubble-content/ancestor-slot=bubble/variant=muted"
         },
         {
           "id": "bubble:--bubble-destructive-bg:1",
           "name": "--bubble-destructive-bg",
-          "value": "#f871711a",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/bubble-content/ancestor-slot=bubble/variant=destructive"
         },
         {
           "id": "bubble:--bubble-destructive-hover-bg:1",
           "name": "--bubble-destructive-hover-bg",
-          "value": "#f8717133",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/bubble-content/ancestor-slot=bubble/variant=destructive"
         }
@@ -4122,8 +4122,8 @@
         {
           "id": "button:--button-invalid-ring-color:0",
           "name": "--button-invalid-ring-color",
-          "value": "#dc262633",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "button"
         },
@@ -4146,8 +4146,8 @@
         {
           "id": "button:--button-hover-bg:0",
           "name": "--button-hover-bg",
-          "value": "#171717cc",
-          "fieldType": "hex",
+          "value": "var(--neutral-900)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "button/variant=default"
         },
@@ -4210,8 +4210,8 @@
         {
           "id": "button:--button-hover-bg:2",
           "name": "--button-hover-bg",
-          "value": "#e7e7e7",
-          "fieldType": "hex",
+          "value": "var(--neutral-200)",
+          "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "button/variant=secondary"
         },
@@ -4250,8 +4250,8 @@
         {
           "id": "button:--button-bg:4",
           "name": "--button-bg",
-          "value": "#dc26261a",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 4,
           "scope": "button/variant=destructive"
         },
@@ -4266,24 +4266,24 @@
         {
           "id": "button:--button-hover-bg:4",
           "name": "--button-hover-bg",
-          "value": "#dc262633",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 4,
           "scope": "button/variant=destructive"
         },
         {
           "id": "button:--button-focus-border-color:1",
           "name": "--button-focus-border-color",
-          "value": "#dc262666",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "button/variant=destructive"
         },
         {
           "id": "button:--button-focus-ring-color:1",
           "name": "--button-focus-ring-color",
-          "value": "#dc262633",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "button/variant=destructive"
         },
@@ -4490,56 +4490,56 @@
         {
           "id": "button:--button-invalid-ring-color:1",
           "name": "--button-invalid-ring-color",
-          "value": "#f8717133",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/button"
         },
         {
           "id": "button:--button-hover-bg:5",
           "name": "--button-hover-bg",
-          "value": "#e5e5e5cc",
-          "fieldType": "hex",
+          "value": "var(--neutral-200)",
+          "fieldType": "color-ref",
           "occurrence": 5,
           "scope": "dark/button/variant=default"
         },
         {
           "id": "button:--button-hover-bg:6",
           "name": "--button-hover-bg",
-          "value": "#2f2f2f",
-          "fieldType": "hex",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
           "occurrence": 6,
           "scope": "dark/button/variant=secondary"
         },
         {
           "id": "button:--button-bg:6",
           "name": "--button-bg",
-          "value": "#f871711a",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 6,
           "scope": "dark/button/variant=destructive"
         },
         {
           "id": "button:--button-hover-bg:7",
           "name": "--button-hover-bg",
-          "value": "#f8717133",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 7,
           "scope": "dark/button/variant=destructive"
         },
         {
           "id": "button:--button-focus-border-color:2",
           "name": "--button-focus-border-color",
-          "value": "#f8717166",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "dark/button/variant=destructive"
         },
         {
           "id": "button:--button-focus-ring-color:2",
           "name": "--button-focus-ring-color",
-          "value": "#f8717133",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "dark/button/variant=destructive"
         }
@@ -4730,16 +4730,16 @@
         {
           "id": "calendar:--calendar-focus-ring-color:0",
           "name": "--calendar-focus-ring-color",
-          "value": "#a3a3a380",
-          "fieldType": "hex",
+          "value": "var(--neutral-400)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "button/ancestor-slot=calendar/focused=true"
         },
         {
           "id": "calendar:--calendar-focus-ring-color:1",
           "name": "--calendar-focus-ring-color",
-          "value": "#73737380",
-          "fieldType": "hex",
+          "value": "var(--neutral-500)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/button/ancestor-slot=calendar/focused=true"
         }
@@ -4770,8 +4770,8 @@
         {
           "id": "card:--card-ring-color:0",
           "name": "--card-ring-color",
-          "value": "#0a0a0a1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "card"
         },
@@ -4906,8 +4906,8 @@
         {
           "id": "card:--card-footer-bg:0",
           "name": "--card-footer-bg",
-          "value": "#f5f5f580",
-          "fieldType": "hex",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "card-footer"
         },
@@ -4946,16 +4946,16 @@
         {
           "id": "card:--card-ring-color:1",
           "name": "--card-ring-color",
-          "value": "#fafafa1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/card"
         },
         {
           "id": "card:--card-footer-bg:1",
           "name": "--card-footer-bg",
-          "value": "#26262680",
-          "fieldType": "hex",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/card-footer"
         }
@@ -5066,8 +5066,8 @@
         {
           "id": "chart:--chart-tooltip-border-color:0",
           "name": "--chart-tooltip-border-color",
-          "value": "#e5e5e580",
-          "fieldType": "hex",
+          "value": "var(--neutral-200)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "chart"
         },
@@ -5130,8 +5130,8 @@
         {
           "id": "chart:--chart-tooltip-border-color:1",
           "name": "--chart-tooltip-border-color",
-          "value": "#ffffff0d",
-          "fieldType": "hex",
+          "value": "var(--neutral-0)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/chart"
         }
@@ -5226,8 +5226,8 @@
         {
           "id": "checkbox:--checkbox-focus-ring-color:0",
           "name": "--checkbox-focus-ring-color",
-          "value": "#a3a3a380",
-          "fieldType": "hex",
+          "value": "var(--neutral-400)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "checkbox"
         },
@@ -5242,8 +5242,8 @@
         {
           "id": "checkbox:--checkbox-invalid-ring-color:0",
           "name": "--checkbox-invalid-ring-color",
-          "value": "#dc262633",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "checkbox"
         },
@@ -5266,16 +5266,16 @@
         {
           "id": "checkbox:--checkbox-focus-ring-color:1",
           "name": "--checkbox-focus-ring-color",
-          "value": "#73737380",
-          "fieldType": "hex",
+          "value": "var(--neutral-500)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/checkbox"
         },
         {
           "id": "checkbox:--checkbox-invalid-ring-color:1",
           "name": "--checkbox-invalid-ring-color",
-          "value": "#f8717133",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/checkbox"
         }
@@ -5329,8 +5329,8 @@
         {
           "id": "combobox:--combobox-content-ring-color:0",
           "name": "--combobox-content-ring-color",
-          "value": "#0a0a0a1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "combobox-content"
         },
@@ -5601,8 +5601,8 @@
         {
           "id": "combobox:--combobox-chips-focus-ring-color:0",
           "name": "--combobox-chips-focus-ring-color",
-          "value": "#a3a3a380",
-          "fieldType": "hex",
+          "value": "var(--neutral-400)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "combobox-chips"
         },
@@ -5617,8 +5617,8 @@
         {
           "id": "combobox:--combobox-chips-invalid-ring-color:0",
           "name": "--combobox-chips-invalid-ring-color",
-          "value": "#dc262633",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "combobox-chips"
         },
@@ -5721,24 +5721,24 @@
         {
           "id": "combobox:--combobox-content-ring-color:1",
           "name": "--combobox-content-ring-color",
-          "value": "#fafafa1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
         },
         {
           "id": "combobox:--combobox-chips-focus-ring-color:1",
           "name": "--combobox-chips-focus-ring-color",
-          "value": "#73737380",
-          "fieldType": "hex",
+          "value": "var(--neutral-500)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/combobox-chips"
         },
         {
           "id": "combobox:--combobox-chips-invalid-ring-color:1",
           "name": "--combobox-chips-invalid-ring-color",
-          "value": "#f8717133",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/combobox-chips"
         }
@@ -6033,8 +6033,8 @@
         {
           "id": "context-menu:--context-menu-ring-color:0",
           "name": "--context-menu-ring-color",
-          "value": "#0a0a0a1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "context-menu-content"
         },
@@ -6337,8 +6337,8 @@
         {
           "id": "context-menu:--context-menu-ring-color:1",
           "name": "--context-menu-ring-color",
-          "value": "#fafafa1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/context-menu-content"
         }
@@ -6393,8 +6393,8 @@
         {
           "id": "dialog:--dialog-content-ring-color:0",
           "name": "--dialog-content-ring-color",
-          "value": "#0a0a0a1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "dialog-content"
         },
@@ -6481,8 +6481,8 @@
         {
           "id": "dialog:--dialog-footer-bg:0",
           "name": "--dialog-footer-bg",
-          "value": "#f5f5f580",
-          "fieldType": "hex",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "dialog-footer"
         },
@@ -6609,16 +6609,16 @@
         {
           "id": "dialog:--dialog-content-ring-color:1",
           "name": "--dialog-content-ring-color",
-          "value": "#fafafa1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/dialog-content"
         },
         {
           "id": "dialog:--dialog-footer-bg:1",
           "name": "--dialog-footer-bg",
-          "value": "#26262680",
-          "fieldType": "hex",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/dialog-footer"
         }
@@ -6857,8 +6857,8 @@
         {
           "id": "dropdown-menu:--dropdown-menu-ring-color:0",
           "name": "--dropdown-menu-ring-color",
-          "value": "#0a0a0a1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "dropdown-menu-content"
         },
@@ -7105,8 +7105,8 @@
         {
           "id": "dropdown-menu:--dropdown-menu-ring-color:1",
           "name": "--dropdown-menu-ring-color",
-          "value": "#fafafa1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/dropdown-menu-content"
         }
@@ -7401,16 +7401,16 @@
         {
           "id": "field:--field-label-checked-border-color:0",
           "name": "--field-label-checked-border-color",
-          "value": "#1717174d",
-          "fieldType": "hex",
+          "value": "var(--neutral-900)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "field-label"
         },
         {
           "id": "field:--field-label-checked-bg:0",
           "name": "--field-label-checked-bg",
-          "value": "#1717170d",
-          "fieldType": "hex",
+          "value": "var(--neutral-900)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "field-label"
         },
@@ -7529,16 +7529,16 @@
         {
           "id": "field:--field-label-checked-border-color:1",
           "name": "--field-label-checked-border-color",
-          "value": "#e5e5e54d",
-          "fieldType": "hex",
+          "value": "var(--neutral-200)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/field-label"
         },
         {
           "id": "field:--field-label-checked-bg:1",
           "name": "--field-label-checked-bg",
-          "value": "#e5e5e50d",
-          "fieldType": "hex",
+          "value": "var(--neutral-200)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/field-label"
         }
@@ -7569,8 +7569,8 @@
         {
           "id": "hover-card:--hover-card-content-ring-color:0",
           "name": "--hover-card-content-ring-color",
-          "value": "#0a0a0a1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "hover-card-content"
         },
@@ -7633,8 +7633,8 @@
         {
           "id": "hover-card:--hover-card-content-ring-color:1",
           "name": "--hover-card-content-ring-color",
-          "value": "#fafafa1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/hover-card-content"
         }
@@ -8129,16 +8129,16 @@
         {
           "id": "input:--input-focus-ring-color:0",
           "name": "--input-focus-ring-color",
-          "value": "#a3a3a380",
-          "fieldType": "hex",
+          "value": "var(--neutral-400)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
         },
         {
           "id": "input:--input-disabled-bg:0",
           "name": "--input-disabled-bg",
-          "value": "#e5e5e580",
-          "fieldType": "hex",
+          "value": "var(--neutral-200)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
         },
@@ -8161,32 +8161,32 @@
         {
           "id": "input:--input-invalid-ring-color:0",
           "name": "--input-invalid-ring-color",
-          "value": "#dc262633",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
         },
         {
           "id": "input:--input-focus-ring-color:1",
           "name": "--input-focus-ring-color",
-          "value": "#73737380",
-          "fieldType": "hex",
+          "value": "var(--neutral-500)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "root"
         },
         {
           "id": "input:--input-disabled-bg:1",
           "name": "--input-disabled-bg",
-          "value": "#ffffff13",
-          "fieldType": "hex",
+          "value": "var(--neutral-0)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "root"
         },
         {
           "id": "input:--input-invalid-ring-color:1",
           "name": "--input-invalid-ring-color",
-          "value": "#f8717133",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "root"
         }
@@ -8257,8 +8257,8 @@
         {
           "id": "item:--item-focus-ring-color:0",
           "name": "--item-focus-ring-color",
-          "value": "#a3a3a380",
-          "fieldType": "hex",
+          "value": "var(--neutral-400)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "item"
         },
@@ -8289,8 +8289,8 @@
         {
           "id": "item:--item-bg:0",
           "name": "--item-bg",
-          "value": "#f5f5f580",
-          "fieldType": "hex",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "item/variant=muted"
         },
@@ -8489,16 +8489,16 @@
         {
           "id": "item:--item-focus-ring-color:1",
           "name": "--item-focus-ring-color",
-          "value": "#73737380",
-          "fieldType": "hex",
+          "value": "var(--neutral-500)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/item"
         },
         {
           "id": "item:--item-bg:1",
           "name": "--item-bg",
-          "value": "#26262680",
-          "fieldType": "hex",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/item/variant=muted"
         }
@@ -8593,8 +8593,8 @@
         {
           "id": "kbd:--kbd-bg:1",
           "name": "--kbd-bg",
-          "value": "#ffffff33",
-          "fieldType": "hex",
+          "value": "var(--neutral-0)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "kbd/ancestor-slot=tooltip-content"
         },
@@ -8617,8 +8617,8 @@
         {
           "id": "kbd:--kbd-bg:2",
           "name": "--kbd-bg",
-          "value": "#0a0a0a33",
-          "fieldType": "hex",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "dark/kbd/ancestor-slot=tooltip-content"
         }
@@ -8889,8 +8889,8 @@
         {
           "id": "menubar:--menubar-content-ring-color:0",
           "name": "--menubar-content-ring-color",
-          "value": "#0a0a0a1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "menubar-content"
         },
@@ -9033,8 +9033,8 @@
         {
           "id": "menubar:--menubar-item-destructive-focus-bg:0",
           "name": "--menubar-item-destructive-focus-bg",
-          "value": "#dc26261a",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "menubar-item/variant=destructive"
         },
@@ -9129,16 +9129,16 @@
         {
           "id": "menubar:--menubar-content-ring-color:1",
           "name": "--menubar-content-ring-color",
-          "value": "#fafafa1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/menubar-content"
         },
         {
           "id": "menubar:--menubar-item-destructive-focus-bg:1",
           "name": "--menubar-item-destructive-focus-bg",
-          "value": "#f871711a",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/menubar-item/variant=destructive"
         }
@@ -9577,8 +9577,8 @@
         {
           "id": "navigation-menu:--navigation-menu-trigger-open-bg:0",
           "name": "--navigation-menu-trigger-open-bg",
-          "value": "#f5f5f580",
-          "fieldType": "hex",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "navigation-menu-trigger"
         },
@@ -9641,8 +9641,8 @@
         {
           "id": "navigation-menu:--navigation-menu-link-active-bg:0",
           "name": "--navigation-menu-link-active-bg",
-          "value": "#f5f5f580",
-          "fieldType": "hex",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "navigation-menu-link"
         },
@@ -9681,8 +9681,8 @@
         {
           "id": "navigation-menu:--navigation-menu-content-ring:0",
           "name": "--navigation-menu-content-ring",
-          "value": "#0a0a0a1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
         },
@@ -9705,8 +9705,8 @@
         {
           "id": "navigation-menu:--navigation-menu-viewport-ring:0",
           "name": "--navigation-menu-viewport-ring",
-          "value": "#0a0a0a1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "navigation-menu-viewport"
         },
@@ -9761,32 +9761,32 @@
         {
           "id": "navigation-menu:--navigation-menu-trigger-open-bg:1",
           "name": "--navigation-menu-trigger-open-bg",
-          "value": "#26262680",
-          "fieldType": "hex",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/navigation-menu-trigger"
         },
         {
           "id": "navigation-menu:--navigation-menu-link-active-bg:1",
           "name": "--navigation-menu-link-active-bg",
-          "value": "#26262680",
-          "fieldType": "hex",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/navigation-menu-link"
         },
         {
           "id": "navigation-menu:--navigation-menu-content-ring:1",
           "name": "--navigation-menu-content-ring",
-          "value": "#fafafa1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/navigation-menu-content/ancestor-slot=navigation-menu/viewport=false"
         },
         {
           "id": "navigation-menu:--navigation-menu-viewport-ring:1",
           "name": "--navigation-menu-viewport-ring",
-          "value": "#fafafa1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/navigation-menu-viewport"
         }
@@ -9849,8 +9849,8 @@
         {
           "id": "popover:--popover-content-ring-color:0",
           "name": "--popover-content-ring-color",
-          "value": "#0a0a0a1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "popover-content"
         },
@@ -9961,8 +9961,8 @@
         {
           "id": "popover:--popover-content-ring-color:1",
           "name": "--popover-content-ring-color",
-          "value": "#fafafa1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/popover-content"
         }
@@ -10105,8 +10105,8 @@
         {
           "id": "radio-group:--radio-group-item-focus-ring-color:0",
           "name": "--radio-group-item-focus-ring-color",
-          "value": "#a3a3a380",
-          "fieldType": "hex",
+          "value": "var(--neutral-400)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "radio-group-item"
         },
@@ -10121,8 +10121,8 @@
         {
           "id": "radio-group:--radio-group-item-invalid-ring-color:0",
           "name": "--radio-group-item-invalid-ring-color",
-          "value": "#dc262633",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "radio-group-item"
         },
@@ -10153,16 +10153,16 @@
         {
           "id": "radio-group:--radio-group-item-focus-ring-color:1",
           "name": "--radio-group-item-focus-ring-color",
-          "value": "#73737380",
-          "fieldType": "hex",
+          "value": "var(--neutral-500)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/radio-group-item"
         },
         {
           "id": "radio-group:--radio-group-item-invalid-ring-color:1",
           "name": "--radio-group-item-invalid-ring-color",
-          "value": "#f8717133",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/radio-group-item"
         }
@@ -10473,8 +10473,8 @@
         {
           "id": "select:--select-content-ring-color:0",
           "name": "--select-content-ring-color",
-          "value": "#0a0a0a1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "select-content"
         },
@@ -10657,8 +10657,8 @@
         {
           "id": "select:--select-content-ring-color:1",
           "name": "--select-content-ring-color",
-          "value": "#fafafa1a",
-          "fieldType": "hex",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/select-content"
         }
@@ -11169,8 +11169,8 @@
         {
           "id": "sidebar:--sidebar-group-label-fg:0",
           "name": "--sidebar-group-label-fg",
-          "value": "#0a0a0ab3",
-          "fieldType": "hex",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sidebar-group-label"
         },
@@ -11641,8 +11641,8 @@
         {
           "id": "sidebar:--sidebar-group-label-fg:1",
           "name": "--sidebar-group-label-fg",
-          "value": "#fafafab3",
-          "fieldType": "hex",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/sidebar-group-label"
         }
@@ -11769,8 +11769,8 @@
         {
           "id": "slider:--slider-thumb-ring-color:0",
           "name": "--slider-thumb-ring-color",
-          "value": "#a3a3a380",
-          "fieldType": "hex",
+          "value": "var(--neutral-400)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "slider-thumb"
         },
@@ -11785,8 +11785,8 @@
         {
           "id": "slider:--slider-thumb-ring-color:1",
           "name": "--slider-thumb-ring-color",
-          "value": "#73737380",
-          "fieldType": "hex",
+          "value": "var(--neutral-500)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/slider-thumb"
         }
@@ -11897,8 +11897,8 @@
         {
           "id": "sonner-toast:--sonner-error-bg:0",
           "name": "--sonner-error-bg",
-          "value": "#ffe2de",
-          "fieldType": "hex",
+          "value": "var(--destructive-100)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
         },
@@ -11913,8 +11913,8 @@
         {
           "id": "sonner-toast:--sonner-error-border:0",
           "name": "--sonner-error-border",
-          "value": "#dc26264d",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
         },
@@ -11945,16 +11945,16 @@
         {
           "id": "sonner-toast:--sonner-error-bg:1",
           "name": "--sonner-error-bg",
-          "value": "#342423",
-          "fieldType": "hex",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
         },
         {
           "id": "sonner-toast:--sonner-error-border:1",
           "name": "--sonner-error-border",
-          "value": "#f871714d",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
         }
@@ -12049,8 +12049,8 @@
         {
           "id": "switch:--switch-focus-ring-color:0",
           "name": "--switch-focus-ring-color",
-          "value": "#a3a3a380",
-          "fieldType": "hex",
+          "value": "var(--neutral-400)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "switch"
         },
@@ -12065,8 +12065,8 @@
         {
           "id": "switch:--switch-invalid-ring-color:0",
           "name": "--switch-invalid-ring-color",
-          "value": "#dc262633",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "switch"
         },
@@ -12153,16 +12153,16 @@
         {
           "id": "switch:--switch-focus-ring-color:1",
           "name": "--switch-focus-ring-color",
-          "value": "#73737380",
-          "fieldType": "hex",
+          "value": "var(--neutral-500)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/switch"
         },
         {
           "id": "switch:--switch-invalid-ring-color:1",
           "name": "--switch-invalid-ring-color",
-          "value": "#f8717133",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/switch"
         }
@@ -12201,8 +12201,8 @@
         {
           "id": "table:--table-footer-bg:0",
           "name": "--table-footer-bg",
-          "value": "#f5f5f580",
-          "fieldType": "hex",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "table-footer"
         },
@@ -12249,8 +12249,8 @@
         {
           "id": "table:--table-row-hover-bg:0",
           "name": "--table-row-hover-bg",
-          "value": "#f5f5f580",
-          "fieldType": "hex",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "table-row"
         },
@@ -12337,16 +12337,16 @@
         {
           "id": "table:--table-footer-bg:1",
           "name": "--table-footer-bg",
-          "value": "#26262680",
-          "fieldType": "hex",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/table-footer"
         },
         {
           "id": "table:--table-row-hover-bg:1",
           "name": "--table-row-hover-bg",
-          "value": "#26262680",
-          "fieldType": "hex",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/table-row"
         }
@@ -12481,8 +12481,8 @@
         {
           "id": "tabs:--tabs-trigger-fg:0",
           "name": "--tabs-trigger-fg",
-          "value": "#0a0a0a99",
-          "fieldType": "hex",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "tabs-trigger"
         },
@@ -12561,8 +12561,8 @@
         {
           "id": "tabs:--tabs-trigger-fg:1",
           "name": "--tabs-trigger-fg",
-          "value": "#fafafa99",
-          "fieldType": "hex",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/tabs-trigger"
         }
@@ -12673,16 +12673,16 @@
         {
           "id": "textarea:--textarea-focus-ring-color:0",
           "name": "--textarea-focus-ring-color",
-          "value": "#a3a3a380",
-          "fieldType": "hex",
+          "value": "var(--neutral-400)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "textarea"
         },
         {
           "id": "textarea:--textarea-disabled-bg:0",
           "name": "--textarea-disabled-bg",
-          "value": "#e5e5e580",
-          "fieldType": "hex",
+          "value": "var(--neutral-200)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "textarea"
         },
@@ -12705,32 +12705,32 @@
         {
           "id": "textarea:--textarea-invalid-ring-color:0",
           "name": "--textarea-invalid-ring-color",
-          "value": "#dc262633",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "textarea"
         },
         {
           "id": "textarea:--textarea-focus-ring-color:1",
           "name": "--textarea-focus-ring-color",
-          "value": "#73737380",
-          "fieldType": "hex",
+          "value": "var(--neutral-500)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/textarea"
         },
         {
           "id": "textarea:--textarea-disabled-bg:1",
           "name": "--textarea-disabled-bg",
-          "value": "#ffffff13",
-          "fieldType": "hex",
+          "value": "var(--neutral-0)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/textarea"
         },
         {
           "id": "textarea:--textarea-invalid-ring-color:1",
           "name": "--textarea-invalid-ring-color",
-          "value": "#f8717133",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/textarea"
         }
@@ -12881,8 +12881,8 @@
         {
           "id": "toggle:--toggle-invalid-ring-color:0",
           "name": "--toggle-invalid-ring-color",
-          "value": "#dc262633",
-          "fieldType": "hex",
+          "value": "var(--destructive-600)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "toggle"
         },
@@ -13001,8 +13001,8 @@
         {
           "id": "toggle:--toggle-invalid-ring-color:1",
           "name": "--toggle-invalid-ring-color",
-          "value": "#f8717133",
-          "fieldType": "hex",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/toggle"
         }

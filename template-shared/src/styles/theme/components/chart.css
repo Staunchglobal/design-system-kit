@@ -10,7 +10,7 @@
   --chart-tooltip-padding-y: 0.375rem;
   --chart-tooltip-radius: var(--radius-lg);
   --chart-tooltip-bg: var(--background);
-  --chart-tooltip-border-color: #e5e5e580;
+  --chart-tooltip-border-color: var(--neutral-200);
   --chart-tooltip-shadow: var(--shadow-xl);
   --chart-tooltip-min-width: 8rem;
   --chart-tooltip-label-font-weight: var(--typography-small-font-weight);
@@ -46,5 +46,5 @@
 }
 
 .dark [data-slot='chart'] {
-  --chart-tooltip-border-color: #ffffff0d;
+  --chart-tooltip-border-color: var(--neutral-0);
 }

@@ -5,7 +5,7 @@
 [data-slot='card'] {
   --card-bg: var(--card);
   --card-fg: var(--card-foreground);
-  --card-ring-color: #0a0a0a1a;
+  --card-ring-color: var(--neutral-950);
   --card-ring-width: 1px;
   --card-radius: var(--radius-xl);
   --card-spacing: 1rem;
@@ -57,7 +57,7 @@
 }
 
 [data-slot='card-footer'] {
-  --card-footer-bg: #f5f5f580;
+  --card-footer-bg: var(--neutral-100);
   --card-footer-border-color: var(--border);
   --card-footer-border-width: 1px;
   --card-footer-radius: var(--radius-xl);
@@ -70,9 +70,9 @@
 }
 
 .dark [data-slot='card'] {
-  --card-ring-color: #fafafa1a;
+  --card-ring-color: var(--neutral-50);
 }
 
 .dark [data-slot='card-footer'] {
-  --card-footer-bg: #26262680;
+  --card-footer-bg: var(--neutral-800);
 }

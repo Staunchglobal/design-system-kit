@@ -5,7 +5,7 @@
 [data-slot='hover-card-content'] {
   --hover-card-content-bg: var(--popover);
   --hover-card-content-fg: var(--popover-foreground);
-  --hover-card-content-ring-color: #0a0a0a1a;
+  --hover-card-content-ring-color: var(--neutral-950);
   --hover-card-content-ring-width: 1px;
   --hover-card-content-radius: var(--radius-lg);
   --hover-card-content-width: 16rem;
@@ -26,5 +26,5 @@
 }
 
 .dark [data-slot='hover-card-content'] {
-  --hover-card-content-ring-color: #fafafa1a;
+  --hover-card-content-ring-color: var(--neutral-50);
 }

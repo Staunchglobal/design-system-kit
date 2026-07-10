@@ -18,7 +18,7 @@
 [data-slot='dialog-content'] {
   --dialog-content-bg: var(--popover);
   --dialog-content-fg: var(--popover-foreground);
-  --dialog-content-ring-color: #0a0a0a1a;
+  --dialog-content-ring-color: var(--neutral-950);
   --dialog-content-ring-width: 1px;
   --dialog-content-radius: var(--radius-xl);
   --dialog-content-max-width: 24rem;
@@ -52,7 +52,7 @@
 }
 
 [data-slot='dialog-footer'] {
-  --dialog-footer-bg: #f5f5f580;
+  --dialog-footer-bg: var(--neutral-100);
   --dialog-footer-margin-inline: -1rem;
   --dialog-footer-margin-block-end: -1rem;
   --dialog-footer-gap: 0.5rem;
@@ -97,9 +97,9 @@
 }
 
 .dark [data-slot='dialog-content'] {
-  --dialog-content-ring-color: #fafafa1a;
+  --dialog-content-ring-color: var(--neutral-50);
 }
 
 .dark [data-slot='dialog-footer'] {
-  --dialog-footer-bg: #26262680;
+  --dialog-footer-bg: var(--neutral-800);
 }

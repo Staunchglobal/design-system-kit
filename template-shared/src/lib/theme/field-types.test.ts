@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildScopedVarsCss, scopeToSelector } from './field-types.js'
+import { buildScopedVarsCss, listSemanticColorTokenNames, scopeToSelector } from './field-types.js'
 import type { ThemeManifest, ThemeVariable } from './types.js'
 
 function v(overrides: Partial<ThemeVariable> & Pick<ThemeVariable, 'id' | 'name'>): ThemeVariable {
@@ -9,6 +9,29 @@ function v(overrides: Partial<ThemeVariable> & Pick<ThemeVariable, 'id' | 'name'
 function manifestOf(groupId: string, variables: ThemeVariable[]): ThemeManifest {
   return { version: 1, groups: [{ id: groupId, title: groupId, kind: 'component', file: '', variables }] }
 }
+
+describe('listSemanticColorTokenNames', () => {
+  it('lists names from the colors group, not scale steps', () => {
+    const manifest = manifestOf('colors', [
+      v({ id: 'colors:--primary:0', name: '--primary', value: 'var(--primary-900)', fieldType: 'color-ref' }),
+      v({ id: 'colors:--border:0', name: '--border', value: 'var(--neutral-200)', fieldType: 'color-ref' }),
+    ])
+    expect(listSemanticColorTokenNames(manifest)).toEqual(['--border', '--primary'])
+  })
+
+  it('dedupes repeated occurrences (light/dark/editor scopes) of the same name', () => {
+    const manifest = manifestOf('colors', [
+      v({ id: 'colors:--primary:0', name: '--primary', value: 'var(--primary-900)', fieldType: 'color-ref' }),
+      v({ id: 'colors:--primary:1', name: '--primary', value: 'var(--primary-200)', fieldType: 'color-ref', scope: 'dark' }),
+    ])
+    expect(listSemanticColorTokenNames(manifest)).toEqual(['--primary'])
+  })
+
+  it('includes extra (custom semantic color) names', () => {
+    const manifest = manifestOf('colors', [])
+    expect(listSemanticColorTokenNames(manifest, ['brand'])).toEqual(['--brand'])
+  })
+})
 
 describe('scopeToSelector', () => {
   it('reconstructs a plain slot selector', () => {

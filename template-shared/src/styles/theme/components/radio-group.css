@@ -17,9 +17,9 @@
   --radio-group-item-checked-fg: var(--primary-foreground);
   --radio-group-item-focus-ring-width: 3px;
   --radio-group-item-focus-border-color: var(--ring);
-  --radio-group-item-focus-ring-color: #a3a3a380;
+  --radio-group-item-focus-ring-color: var(--neutral-400);
   --radio-group-item-invalid-border-color: var(--destructive);
-  --radio-group-item-invalid-ring-color: #dc262633;
+  --radio-group-item-invalid-ring-color: var(--destructive-600);
   --radio-group-item-disabled-opacity: 0.5;
 
   width: var(--radio-group-item-size);
@@ -59,6 +59,6 @@
 }
 
 .dark [data-slot='radio-group-item'] {
-  --radio-group-item-focus-ring-color: #73737380;
-  --radio-group-item-invalid-ring-color: #f8717133;
+  --radio-group-item-focus-ring-color: var(--neutral-500);
+  --radio-group-item-invalid-ring-color: var(--destructive-400);
 }

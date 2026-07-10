@@ -21,6 +21,7 @@ import {
   listColorTokenNames,
   listFontTokenNames,
   listRadiusTokenNames,
+  listSemanticColorTokenNames,
   listTypographyTokenNames,
   parseUnitValue,
   pxToRem,
@@ -89,8 +90,17 @@ function TokenSelect({
   onChange: (v: string) => void;
   allowEmpty?: boolean;
 }) {
+  // Checked against this select's own options (not just "is there a ref at all") so that
+  // two TokenSelects covering disjoint option sets for the same value (e.g. a color-ref
+  // field's "Color Scale" and "Colors" selects) each independently show blank when the
+  // current value belongs to the other one, instead of both claiming a mismatched value.
+  const ref = extractVarRef(value);
   const current =
-    extractVarRef(value) ?? (value === "transparent" ? "transparent" : "");
+    value === "transparent" && options.some((o) => o.name === "transparent")
+      ? "transparent"
+      : ref && options.some((o) => o.name === ref)
+      ? ref
+      : "";
   return (
     <NativeSelect
       className="w-full font-mono text-xs"
@@ -482,11 +492,21 @@ export function SmartField({ variable }: { variable: ThemeVariable }) {
   );
 
   const colorOptions = React.useMemo(() => {
-    const extra = customColors.map((c) =>
-      c.name.startsWith("--") ? c.name : `--${c.name}`
-    );
+    const extra = customColors
+      .filter((c) => (c.scope ?? "colors") === "color-scales")
+      .map((c) => (c.name.startsWith("--") ? c.name : `--${c.name}`));
     return listColorTokenNames(manifest, extra).map((name) => {
       if (name === "transparent") return { name, label: "transparent" };
+      const hex = resolveTokenHex(name, rootValueMap);
+      return { name, label: hex ? `${hex} (${name})` : name };
+    });
+  }, [manifest, customColors, rootValueMap]);
+
+  const semanticColorOptions = React.useMemo(() => {
+    const extra = customColors
+      .filter((c) => (c.scope ?? "colors") === "colors")
+      .map((c) => (c.name.startsWith("--") ? c.name : `--${c.name}`));
+    return listSemanticColorTokenNames(manifest, extra).map((name) => {
       const hex = resolveTokenHex(name, rootValueMap);
       return { name, label: hex ? `${hex} (${name})` : name };
     });
@@ -547,7 +567,26 @@ export function SmartField({ variable }: { variable: ThemeVariable }) {
 
       {type === "hex" && <HexField value={value} onChange={onChange} />}
       {type === "color-ref" && (
-        <TokenSelect value={value} options={colorOptions} onChange={onChange} />
+        <div className="grid grid-cols-2 gap-2">
+          <div className="grid gap-1">
+            <span className="text-muted-foreground text-xs">Color scale</span>
+            <TokenSelect
+              value={value}
+              options={colorOptions}
+              onChange={onChange}
+              allowEmpty
+            />
+          </div>
+          <div className="grid gap-1">
+            <span className="text-muted-foreground text-xs">Color</span>
+            <TokenSelect
+              value={value}
+              options={semanticColorOptions}
+              onChange={onChange}
+              allowEmpty
+            />
+          </div>
+        </div>
       )}
       {type === "color-keyword" && (
         <ColorKeywordField

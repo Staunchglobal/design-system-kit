@@ -30,7 +30,7 @@
 [data-slot='bubble'][data-variant='default'] [data-slot='bubble-content'] {
   --bubble-default-bg: var(--primary);
   --bubble-default-fg: var(--primary-foreground);
-  --bubble-default-hover-bg: #171717cc;
+  --bubble-default-hover-bg: var(--neutral-900);
   background-color: var(--bubble-default-bg);
   color: var(--bubble-default-fg);
 }
@@ -41,7 +41,7 @@
 [data-slot='bubble'][data-variant='secondary'] [data-slot='bubble-content'] {
   --bubble-secondary-bg: var(--secondary);
   --bubble-secondary-fg: var(--secondary-foreground);
-  --bubble-secondary-hover-bg: #e7e7e7;
+  --bubble-secondary-hover-bg: var(--secondary-200);
   background-color: var(--bubble-secondary-bg);
   color: var(--bubble-secondary-fg);
 }
@@ -51,7 +51,7 @@
 
 [data-slot='bubble'][data-variant='muted'] [data-slot='bubble-content'] {
   --bubble-muted-bg: var(--muted);
-  --bubble-muted-hover-bg: #e7e7e7;
+  --bubble-muted-hover-bg: var(--muted-200);
   background-color: var(--bubble-muted-bg);
 }
 [data-slot='bubble'][data-variant='muted'] [data-slot='bubble-content']:is(button, a):hover {
@@ -102,9 +102,9 @@
 }
 
 [data-slot='bubble'][data-variant='destructive'] [data-slot='bubble-content'] {
-  --bubble-destructive-bg: #dc26261a;
+  --bubble-destructive-bg: var(--destructive-600);
   --bubble-destructive-fg: var(--destructive);
-  --bubble-destructive-hover-bg: #dc262633;
+  --bubble-destructive-hover-bg: var(--destructive-600);
   background-color: var(--bubble-destructive-bg);
   color: var(--bubble-destructive-fg);
 }
@@ -131,18 +131,18 @@
 }
 
 .dark [data-slot='bubble'][data-variant='default'] [data-slot='bubble-content'] {
-  --bubble-default-hover-bg: #e5e5e5cc;
+  --bubble-default-hover-bg: var(--neutral-200);
 }
 
 .dark [data-slot='bubble'][data-variant='secondary'] [data-slot='bubble-content'] {
-  --bubble-secondary-hover-bg: #2f2f2f;
+  --bubble-secondary-hover-bg: var(--secondary-800);
 }
 
 .dark [data-slot='bubble'][data-variant='muted'] [data-slot='bubble-content'] {
-  --bubble-muted-hover-bg: #2f2f2f;
+  --bubble-muted-hover-bg: var(--muted-800);
 }
 
 .dark [data-slot='bubble'][data-variant='destructive'] [data-slot='bubble-content'] {
-  --bubble-destructive-bg: #f871711a;
-  --bubble-destructive-hover-bg: #f8717133;
+  --bubble-destructive-bg: var(--destructive-400);
+  --bubble-destructive-hover-bg: var(--destructive-400);
 }

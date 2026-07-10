@@ -26,7 +26,7 @@
 }
 [data-slot='item']:focus-visible {
   --item-focus-border-color: var(--ring);
-  --item-focus-ring-color: #a3a3a380;
+  --item-focus-ring-color: var(--neutral-400);
   border-color: var(--item-focus-border-color);
   box-shadow: 0 0 0 3px var(--item-focus-ring-color);
 }
@@ -40,7 +40,7 @@
 }
 [data-slot='item'][data-variant='muted'] {
   --item-border-color: transparent;
-  --item-bg: #f5f5f580;
+  --item-bg: var(--neutral-100);
   border-color: var(--item-border-color);
   background-color: var(--item-bg);
 }
@@ -127,9 +127,9 @@
 }
 
 .dark [data-slot='item']:focus-visible {
-  --item-focus-ring-color: #73737380;
+  --item-focus-ring-color: var(--neutral-500);
 }
 
 .dark [data-slot='item'][data-variant='muted'] {
-  --item-bg: #26262680;
+  --item-bg: var(--neutral-800);
 }

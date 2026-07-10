@@ -58,6 +58,23 @@ export function listColorTokenNames(
   return [...names].sort();
 }
 
+/** Semantic color tokens (--primary, --border, --sidebar-accent, ...) — the "Colors" group,
+ *  as opposed to listColorTokenNames' raw shade-scale steps ("Color Scales" group). */
+export function listSemanticColorTokenNames(
+  manifest: ThemeManifest,
+  extra: string[] = []
+): string[] {
+  const names = new Set<string>();
+  const colorsGroup = manifest.groups.find((g) => g.id === "colors");
+  if (colorsGroup) {
+    for (const v of colorsGroup.variables) names.add(v.name);
+  }
+  for (const e of extra) {
+    names.add(e.startsWith("--") ? e : `--${e}`);
+  }
+  return [...names].sort();
+}
+
 export function listRadiusTokenNames(manifest: ThemeManifest): string[] {
   const names = new Set<string>();
   for (const g of manifest.groups) {

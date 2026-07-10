@@ -5,7 +5,7 @@
 [data-slot='context-menu-content'] {
   --context-menu-bg: var(--popover);
   --context-menu-fg: var(--popover-foreground);
-  --context-menu-ring-color: #0a0a0a1a;
+  --context-menu-ring-color: var(--neutral-950);
   --context-menu-ring-width: 1px;
   --context-menu-radius: var(--radius-lg);
   --context-menu-min-width: 9rem;
@@ -132,5 +132,5 @@
 }
 
 .dark [data-slot='context-menu-content'] {
-  --context-menu-ring-color: #fafafa1a;
+  --context-menu-ring-color: var(--neutral-50);
 }
