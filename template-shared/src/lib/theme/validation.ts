@@ -31,12 +31,14 @@ export function validateRaw(value: string): string | null {
  * Server-side allowlists for `POST /api/theme/save` (Next) and the Vite plugin's
  * equivalent middleware — both take an arbitrary JSON payload from the client and
  * write it into files on disk, including generated .ts/.tsx source that gets
- * imported and executed, and font ids that become filesystem paths. Editing an
- * existing CSS variable's *value* is the theme editor's actual feature and is
- * already scoped inside a `property: <value>;` slot, so it's intentionally left
- * free-form (see validateRaw above); these guard the identifiers that instead
- * become selectors, property names, filenames, or literal source code, where an
+ * imported and executed, and font ids that become filesystem paths. These guard
+ * the identifiers that become selectors, property names, or filenames, where an
  * unescaped value would let a request break out of its intended syntactic slot.
+ * Editing an existing CSS variable's *value* is the theme editor's actual feature,
+ * so it's intentionally left free-form rather than charset-allowlisted (see
+ * validateRaw above) — but it still lands verbatim at `property: <value>;` inside
+ * a real .css file, so isSafeCssValue below blocks just the handful of characters
+ * that could end that declaration early, not the rest of the value space.
  */
 export const SAFE_TOKEN_RE = /^[a-zA-Z0-9_-]+$/
 export const SAFE_ICON_KEY_RE = /^[a-zA-Z][a-zA-Z0-9.-]*$/
@@ -45,6 +47,16 @@ export const SAFE_FONT_FAMILY_RE = /^[A-Za-z0-9 ]+$/
 export const SAFE_WEIGHTS_RE = /^[0-9,; ]+$/
 export const SAFE_HEX_RE = /^#[0-9a-fA-F]{3,8}$/
 const SAFE_VAR_REF_RE = /^var\((--[a-zA-Z0-9_-]+)\)$/
+const CSS_VALUE_BREAKOUT_RE = /[;{}]|\/\*/
+
+/**
+ * A theme variable's value is written verbatim into `property: <value>;` in a real
+ * .css file (see replaceCssVarAtOccurrence) — a value containing `;`, `{`, `}`, or a
+ * `/*` comment-opener could close that declaration early and splice in new CSS rules.
+ */
+export function isSafeCssValue(value: string): boolean {
+  return !CSS_VALUE_BREAKOUT_RE.test(value)
+}
 
 /**
  * A custom color's value is a literal hex (added from the Color Scales page), a

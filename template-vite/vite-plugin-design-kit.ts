@@ -222,6 +222,7 @@ export const SAFE_FONT_FAMILY_RE = /^[A-Za-z0-9 ]+$/
 export const SAFE_WEIGHTS_RE = /^[0-9,; ]+$/
 export const SAFE_HEX_RE = /^#[0-9a-fA-F]{3,8}$/
 const SAFE_VAR_REF_RE = /^var\((--[a-zA-Z0-9_-]+)\)$/
+const CSS_VALUE_BREAKOUT_RE = /[;{}]|\/\*/
 
 /**
  * A custom color's value is a literal hex (added from the Color Scales page), a
@@ -234,6 +235,15 @@ export function isSafeCustomColorValue(value: string): boolean {
   if (SAFE_HEX_RE.test(value) || value === 'transparent') return true
   const m = value.match(SAFE_VAR_REF_RE)
   return m !== null && SAFE_TOKEN_RE.test(m[1].replace(/^--/, ''))
+}
+
+/**
+ * A theme variable's value is written verbatim into `property: <value>;` in a real
+ * .css file (see replaceCssVarAtOccurrence) — a value containing `;`, `{`, `}`, or a
+ * `/*` comment-opener could close that declaration early and splice in new CSS rules.
+ */
+export function isSafeCssValue(value: string): boolean {
+  return !CSS_VALUE_BREAKOUT_RE.test(value)
 }
 
 export function isSafeCustomFont(f: CustomFont): boolean {
@@ -293,6 +303,15 @@ export function designKit(): Plugin {
           Object.entries(payload.iconMap).filter(
             ([k, v]) => SAFE_ICON_KEY_RE.test(k) && SAFE_ICON_NAME_RE.test(v)
           )
+        )
+        // Values are intentionally free-form (that's the theme editor's actual feature —
+        // any CSS value, not just an allowlisted charset), but every one still lands
+        // verbatim at `property: <value>;` inside a real .css file
+        // (replaceCssVarAtOccurrence below), so a value containing `;`, `{`, `}`, or `/*`
+        // could end that declaration early and splice in new CSS rules. Reject those
+        // specifically instead of allowlisting the rest away.
+        payload.values = Object.fromEntries(
+          Object.entries(payload.values).filter(([, v]) => isSafeCssValue(v))
         )
 
         const themeRoot = path.join(root, 'src/styles/theme')

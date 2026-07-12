@@ -7,6 +7,7 @@ import {
   SAFE_ICON_KEY_RE,
   SAFE_ICON_NAME_RE,
   SAFE_TOKEN_RE,
+  isSafeCssValue,
   isSafeCustomColorValue,
   isSafeCustomFont,
 } from '@/lib/theme/validation'
@@ -268,6 +269,14 @@ export async function POST(request: Request) {
     Object.entries(payload.iconMap).filter(
       ([k, v]) => SAFE_ICON_KEY_RE.test(k) && SAFE_ICON_NAME_RE.test(v)
     )
+  )
+  // Values are intentionally free-form (that's the theme editor's actual feature — any
+  // CSS value, not just an allowlisted charset), but every one still lands verbatim at
+  // `property: <value>;` inside a real .css file (replaceCssVarAtOccurrence below), so a
+  // value containing `;`, `{`, `}`, or `/*` could end that declaration early and splice
+  // in new CSS rules. Reject those specifically instead of allowlisting the rest away.
+  payload.values = Object.fromEntries(
+    Object.entries(payload.values).filter(([, v]) => isSafeCssValue(v))
   )
 
   const root = themeRoot()

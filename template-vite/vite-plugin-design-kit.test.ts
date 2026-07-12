@@ -6,6 +6,7 @@ import {
   SAFE_ICON_NAME_RE,
   SAFE_TOKEN_RE,
   SAFE_WEIGHTS_RE,
+  isSafeCssValue,
   isSafeCustomColorValue,
   isSafeCustomFont,
 } from './vite-plugin-design-kit.js'
@@ -55,6 +56,27 @@ describe('SAFE_HEX_RE', () => {
   it('accepts hex colors and rejects a CSS-breakout attempt', () => {
     expect(SAFE_HEX_RE.test('#ff5733')).toBe(true)
     expect(SAFE_HEX_RE.test('red; } body{display:none} /*')).toBe(false)
+  })
+})
+
+describe('isSafeCssValue', () => {
+  it('accepts real theme variable values', () => {
+    expect(isSafeCssValue('12px')).toBe(true)
+    expect(isSafeCssValue('0 1px 2px 0 var(--neutral-950)')).toBe(true)
+    expect(isSafeCssValue('italic')).toBe(true)
+    expect(isSafeCssValue('all 0.15s ease')).toBe(true)
+    expect(isSafeCssValue('color 0.15s, background-color 0.15s')).toBe(true)
+  })
+
+  it('rejects a value crafted to close the declaration early and inject a new CSS rule', () => {
+    expect(isSafeCssValue('0} body{background:url(https://evil.example/x)} /*')).toBe(false)
+  })
+
+  it('rejects bare breakout characters', () => {
+    expect(isSafeCssValue('red;')).toBe(false)
+    expect(isSafeCssValue('red}')).toBe(false)
+    expect(isSafeCssValue('red{')).toBe(false)
+    expect(isSafeCssValue('red /* comment */')).toBe(false)
   })
 })
 
