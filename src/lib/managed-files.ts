@@ -11,6 +11,7 @@ export const ALWAYS_SHARED_FILES = [
   'lib/theme/humanize.ts',
   'lib/theme/descriptions.ts',
   'lib/theme/validation.ts',
+  'lib/theme/google-fonts.ts',
   'components/icons/icon.tsx',
   'components/icons/icon-context.tsx',
   'components/icons/icon-map.ts',

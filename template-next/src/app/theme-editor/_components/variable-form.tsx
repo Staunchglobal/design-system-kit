@@ -17,6 +17,7 @@ import { useThemeEditor } from '@/app/theme-editor/_lib/theme-editor-context'
 import { groupVariablesForEditor, listColorTokenNames, toVarRef } from '@/lib/theme/field-types'
 import { AppIcon, lucideIconNames } from '@/components/icons/icon'
 import { defaultIconMap } from '@/components/icons/icon-map'
+import { googleFonts } from '@/lib/theme/google-fonts'
 import { humanizeKey } from '@/lib/theme/humanize'
 import { validateHex } from '@/lib/theme/validation'
 
@@ -375,7 +376,19 @@ function AddFontForm({
   const [id, setId] = React.useState('')
   const [mode, setMode] = React.useState<'google' | 'file'>('google')
   const [googleFamily, setGoogleFamily] = React.useState('Inter')
-  const [weights, setWeights] = React.useState('400;700')
+  const availableWeights = React.useMemo(
+    () => googleFonts.find((f) => f.family === googleFamily)?.weights ?? [400],
+    [googleFamily]
+  )
+  const [selectedWeights, setSelectedWeights] = React.useState<number[]>([400])
+  // Reset the weight selection whenever the chosen font changes underneath it, since a
+  // previously-picked weight may not exist for the new font (same render-time-adjustment
+  // pattern as HexField/NumberField elsewhere in this file, not a useEffect).
+  const [prevGoogleFamily, setPrevGoogleFamily] = React.useState(googleFamily)
+  if (googleFamily !== prevGoogleFamily) {
+    setPrevGoogleFamily(googleFamily)
+    setSelectedWeights(availableWeights.includes(400) ? [400] : availableWeights.slice(0, 1))
+  }
   const fileRef = React.useRef<HTMLInputElement>(null)
 
   return (
@@ -411,27 +424,50 @@ function AddFontForm({
           <>
             <div className="grid gap-1">
               <Label className="text-xs">Google family</Label>
-              <Input
+              <NativeSelect
                 value={googleFamily}
                 onChange={(e) => setGoogleFamily(e.target.value)}
                 className="h-8 text-xs"
-              />
+              >
+                {googleFonts.map((f) => (
+                  <option key={f.family} value={f.family}>
+                    {f.family}
+                  </option>
+                ))}
+              </NativeSelect>
             </div>
             <div className="grid gap-1">
               <Label className="text-xs">Weights</Label>
-              <Input
-                value={weights}
-                onChange={(e) => setWeights(e.target.value)}
-                className="h-8 font-mono text-xs"
-                placeholder="400;700"
-              />
+              <div className="flex flex-wrap gap-1.5">
+                {availableWeights.map((w) => (
+                  <label
+                    key={w}
+                    className="border-input has-[:checked]:bg-accent has-[:checked]:border-ring flex items-center gap-1.5 rounded-md border px-2 py-1 font-mono text-xs"
+                  >
+                    <input
+                      type="checkbox"
+                      className="size-3.5"
+                      checked={selectedWeights.includes(w)}
+                      onChange={(e) => {
+                        setSelectedWeights((prev) =>
+                          e.target.checked
+                            ? [...prev, w].sort((a, b) => a - b)
+                            : prev.filter((x) => x !== w)
+                        )
+                      }}
+                    />
+                    {w}
+                  </label>
+                ))}
+              </div>
             </div>
             <Button
               size="sm"
+              disabled={!selectedWeights.length}
               onClick={() => {
                 const n = id.trim()
-                if (!n || existing.includes(n)) return
-                onAdd({ id: n, source: 'google', googleFamily, weights })
+                if (!n || existing.includes(n) || !selectedWeights.length) return
+                onAdd({ id: n, source: 'google', googleFamily, weights: selectedWeights.join(';') })
                 setId('')
               }}
             >
