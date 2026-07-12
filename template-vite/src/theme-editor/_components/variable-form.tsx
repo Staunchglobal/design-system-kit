@@ -9,8 +9,7 @@ import {
   InputGroupInput,
   InputGroupText,
 } from '@/components/ui/input-group'
-import { NativeSelect } from '@/components/ui/native-select'
-import { SmartField } from '@/theme-editor/_components/smart-field'
+import { SearchSelect, SmartField } from '@/theme-editor/_components/smart-field'
 import { useThemeEditor } from '@/theme-editor/_lib/theme-editor-context'
 import { groupVariablesForEditor, listColorTokenNames, toVarRef } from '@/lib/theme/field-types'
 import { AppIcon, lucideIconNames } from '@/components/icons/icon'
@@ -108,17 +107,13 @@ function IconField({
         <div className="bg-muted flex size-9 shrink-0 items-center justify-center rounded-md border">
           <AppIcon name={lucideName} className="size-4" />
         </div>
-        <NativeSelect
-          className="w-full font-mono text-xs"
-          value={lucideName}
-          onChange={(e) => setIcon(iconKey, e.target.value)}
-        >
-          {lucideIconNames.map((n) => (
-            <option key={n} value={n}>
-              {n}
-            </option>
-          ))}
-        </NativeSelect>
+        <SearchSelect
+          items={lucideIconNames}
+          value={lucideName || null}
+          onValueChange={(n) => n && setIcon(iconKey, n)}
+          itemToValue={(n) => n}
+          itemToLabel={(n) => n}
+        />
       </div>
     </Field>
   )
@@ -234,17 +229,14 @@ function AddColorRefForm({
         </div>
         <div className="grid gap-1">
           <Label className="text-xs">Color scale</Label>
-          <NativeSelect
+          <SearchSelect
+            items={scaleTokens}
+            value={scaleToken || null}
+            onValueChange={(t) => t && setScaleToken(t)}
+            itemToValue={(t) => t}
+            itemToLabel={(t) => t}
             className="h-8 w-44 font-mono text-xs"
-            value={scaleToken}
-            onChange={(e) => setScaleToken(e.target.value)}
-          >
-            {scaleTokens.map((t) => (
-              <option key={t} value={t}>
-                {t}
-              </option>
-            ))}
-          </NativeSelect>
+          />
         </div>
         <Button
           size="sm"
@@ -422,17 +414,14 @@ function AddFontForm({
           <>
             <div className="grid gap-1">
               <Label className="text-xs">Google family</Label>
-              <NativeSelect
-                value={googleFamily}
-                onChange={(e) => setGoogleFamily(e.target.value)}
+              <SearchSelect
+                items={googleFonts}
+                value={googleFonts.find((f) => f.family === googleFamily) ?? null}
+                onValueChange={(f) => f && setGoogleFamily(f.family)}
+                itemToValue={(f) => f.family}
+                itemToLabel={(f) => f.family}
                 className="h-8 text-xs"
-              >
-                {googleFonts.map((f) => (
-                  <option key={f.family} value={f.family}>
-                    {f.family}
-                  </option>
-                ))}
-              </NativeSelect>
+              />
             </div>
             <div className="grid gap-1">
               <Label className="text-xs">Weights</Label>

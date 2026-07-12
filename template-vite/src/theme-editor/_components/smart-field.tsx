@@ -11,7 +11,14 @@ import {
   InputGroupInput,
   InputGroupText,
 } from "@/components/ui/input-group";
-import { NativeSelect } from "@/components/ui/native-select";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "@/components/ui/combobox";
 import { useThemeEditor } from "@/theme-editor/_lib/theme-editor-context";
 import {
   buildRootValueMap,
@@ -56,6 +63,59 @@ import {
 } from "@/lib/theme/validation";
 import type { ThemeFieldType, ThemeVariable } from "@/lib/theme/types";
 
+/**
+ * Every select field in the theme editor is a searchable combobox, not a plain <select> —
+ * this is the one shared primitive they all render through. Generic over the item shape so
+ * plain string options (EnumSelect) and {name,label} token options (TokenSelect) share the
+ * same combobox wiring instead of each reimplementing it.
+ */
+export function SearchSelect<T>({
+  items,
+  value,
+  onValueChange,
+  itemToValue,
+  itemToLabel,
+  placeholder,
+  className,
+  limit = 200,
+}: {
+  items: T[];
+  value: T | null;
+  onValueChange: (item: T | null) => void;
+  itemToValue: (item: T) => string;
+  itemToLabel: (item: T) => string;
+  placeholder?: string;
+  className?: string;
+  limit?: number;
+}) {
+  return (
+    <Combobox
+      items={items}
+      value={value}
+      onValueChange={(v) => onValueChange((v as T | null) ?? null)}
+      itemToStringValue={itemToValue}
+      itemToStringLabel={itemToLabel}
+      isItemEqualToValue={(a, b) => itemToValue(a as T) === itemToValue(b as T)}
+      limit={limit}
+    >
+      <ComboboxInput
+        placeholder={placeholder}
+        className={className ?? "w-full font-mono text-xs"}
+      />
+      <ComboboxContent>
+        <ComboboxEmpty>No matches.</ComboboxEmpty>
+        <ComboboxList>
+          {(item: T) => (
+            <ComboboxItem key={itemToValue(item)} value={item}>
+              {itemToLabel(item)}
+            </ComboboxItem>
+          )}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
+  );
+}
+
 function EnumSelect({
   value,
   options,
@@ -68,18 +128,14 @@ function EnumSelect({
   placeholder?: string;
 }) {
   return (
-    <NativeSelect
-      className="w-full font-mono text-xs"
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-    >
-      {!value && <option value="">{placeholder}</option>}
-      {options.map((opt) => (
-        <option key={opt} value={opt}>
-          {opt}
-        </option>
-      ))}
-    </NativeSelect>
+    <SearchSelect
+      items={options as string[]}
+      value={value || null}
+      onValueChange={(v) => v && onChange(v)}
+      itemToValue={(v) => v}
+      itemToLabel={(v) => v}
+      placeholder={placeholder}
+    />
   );
 }
 
@@ -105,23 +161,20 @@ function TokenSelect({
       : ref && options.some((o) => o.name === ref)
       ? ref
       : "";
+  const selected = options.find((o) => o.name === current) ?? null;
   return (
-    <NativeSelect
-      className="w-full font-mono text-xs"
-      value={current}
-      onChange={(e) => {
-        const next = e.target.value;
-        if (next === "transparent") onChange("transparent");
-        else if (next) onChange(toVarRef(next));
+    <SearchSelect
+      items={options}
+      value={selected}
+      onValueChange={(opt) => {
+        if (!opt) return;
+        if (opt.name === "transparent") onChange("transparent");
+        else onChange(toVarRef(opt.name));
       }}
-    >
-      {allowEmpty && !current && <option value="">Select token…</option>}
-      {options.map((opt) => (
-        <option key={opt.name} value={opt.name}>
-          {opt.label}
-        </option>
-      ))}
-    </NativeSelect>
+      itemToValue={(o) => o.name}
+      itemToLabel={(o) => o.label}
+      placeholder={allowEmpty ? "Select token…" : undefined}
+    />
   );
 }
 
@@ -337,13 +390,15 @@ function ColorKeywordField({
       .filter((o) => o.name !== "transparent")
       .map((o) => ({ value: o.name, label: o.label })),
   ];
+  const selected = options.find((o) => o.value === current) ?? null;
 
   return (
-    <NativeSelect
-      className="w-full font-mono text-xs"
-      value={current}
-      onChange={(e) => {
-        const next = e.target.value;
+    <SearchSelect
+      items={options}
+      value={selected}
+      onValueChange={(opt) => {
+        if (!opt) return;
+        const next = opt.value;
         if (
           COLOR_KEYWORD_OPTIONS.includes(
             next as (typeof COLOR_KEYWORD_OPTIONS)[number]
@@ -355,14 +410,10 @@ function ColorKeywordField({
           onChange(toVarRef(next));
         }
       }}
-    >
-      {!current && <option value="">Select color…</option>}
-      {options.map((opt) => (
-        <option key={opt.value} value={opt.value}>
-          {opt.label}
-        </option>
-      ))}
-    </NativeSelect>
+      itemToValue={(o) => o.value}
+      itemToLabel={(o) => o.label}
+      placeholder="Select color…"
+    />
   );
 }
 

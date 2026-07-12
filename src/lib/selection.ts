@@ -3,13 +3,15 @@ import type { NavGroup } from '../generated/registry.js'
 
 /**
  * The theme editor's own chrome (Save/Reset buttons, filter Input, the Add-color/font/
- * typography mini-forms, its Select dropdowns) — needed no matter which components the user
- * picks for their app. Resolved with plain resolveUiClosure, so it never drags an unrelated
- * demo section into the design-system showcase just because the editor itself needs a
- * Field/Input/Button — each component now has its own demo file (scripts/split-sections.mjs),
- * so pulling in a ui-dep no longer means pulling in its whole category's demos too.
+ * typography mini-forms, its searchable Select dropdowns) — needed no matter which
+ * components the user picks for their app. Resolved with plain resolveUiClosure, so it
+ * never drags an unrelated demo section into the design-system showcase just because the
+ * editor itself needs a Field/Input/Button — each component now has its own demo file
+ * (scripts/split-sections.mjs), so pulling in a ui-dep no longer means pulling in its whole
+ * category's demos too. `combobox` (not `native-select`) backs every select field now —
+ * it's self-contained on @base-ui/react, no popover/command chain.
  */
-export const THEME_EDITOR_REQUIRED_COMPONENTS = ['field', 'input-group', 'native-select']
+export const THEME_EDITOR_REQUIRED_COMPONENTS = ['field', 'input-group', 'combobox']
 
 /** All real, selectable component slugs (excludes the "patterns" pseudo-component). */
 export function allComponentSlugs(): string[] {
