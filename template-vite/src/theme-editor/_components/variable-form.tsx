@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { FieldError } from '@/components/ui/field'
+import { Field, FieldError, FieldLabel } from '@/components/ui/field'
 import {
   InputGroup,
   InputGroupAddon,
@@ -13,27 +13,30 @@ import { NativeSelect } from '@/components/ui/native-select'
 import { SmartField } from '@/theme-editor/_components/smart-field'
 import { useThemeEditor } from '@/theme-editor/_lib/theme-editor-context'
 import { groupVariablesForEditor, listColorTokenNames, toVarRef } from '@/lib/theme/field-types'
-import { lucideIconNames, resolveLucideIcon } from '@/components/icons/icon'
+import { AppIcon, lucideIconNames } from '@/components/icons/icon'
 import { defaultIconMap } from '@/components/icons/icon-map'
+import { humanizeKey } from '@/lib/theme/humanize'
 import { validateHex } from '@/lib/theme/validation'
 
-export function VariableForm() {
-  const {
-    manifest,
-    activeGroupId,
-    addColor,
-    addTypography,
-    addFont,
-    setIcon,
-    iconMap,
-    customColors,
-    customTypography,
-    customFonts,
-  } = useThemeEditor()
+// A handful of icon-map key prefixes ("context.check") don't match their component's
+// manifest group id ("context-menu") one-for-one — listed here so their icon field still
+// lands on the right page instead of orphaning them back onto a standalone Icons page.
+const ICON_GROUP_ALIAS: Record<string, string> = {
+  context: 'context-menu',
+  dropdown: 'dropdown-menu',
+  sonner: 'sonner-toast',
+}
 
-  if (activeGroupId === 'icons') {
-    return <IconsPanel iconMap={iconMap} setIcon={setIcon} />
-  }
+function iconKeysForGroup(groupId: string): string[] {
+  return Object.keys(defaultIconMap).filter((key) => {
+    const prefix = key.split('.')[0]
+    return (ICON_GROUP_ALIAS[prefix] ?? prefix) === groupId
+  })
+}
+
+export function VariableForm() {
+  const { manifest, activeGroupId, addColor, addTypography, addFont, setIcon, iconMap, customColors, customTypography, customFonts } =
+    useThemeEditor()
 
   const group = manifest.groups.find((g) => g.id === activeGroupId)
   if (!group) {
@@ -41,6 +44,7 @@ export function VariableForm() {
   }
 
   const variables = groupVariablesForEditor(group.id, group.variables)
+  const iconKeys = iconKeysForGroup(group.id)
 
   return (
     <div className="bg-background text-foreground flex h-full min-h-0 flex-col">
@@ -71,12 +75,51 @@ export function VariableForm() {
           {group.id === 'fonts' && (
             <AddFontForm onAdd={addFont} existing={customFonts.map((f) => f.id)} />
           )}
+          {iconKeys.map((key) => (
+            <IconField key={key} iconKey={key} iconMap={iconMap} setIcon={setIcon} />
+          ))}
           {variables.map((v) => (
             <SmartField key={v.id} variable={v} />
           ))}
         </div>
       </div>
     </div>
+  )
+}
+
+function IconField({
+  iconKey,
+  iconMap,
+  setIcon,
+}: {
+  iconKey: string
+  iconMap: Record<string, string>
+  setIcon: (key: string, lucideName: string) => void
+}) {
+  const lucideName = iconMap[iconKey] ?? defaultIconMap[iconKey as keyof typeof defaultIconMap]
+  return (
+    <Field>
+      <FieldLabel className="flex flex-wrap items-baseline gap-1.5">
+        <span>{humanizeKey(iconKey.split('.')[1] ?? iconKey)} icon</span>
+        <code className="text-muted-foreground font-mono text-[11px] font-normal">({iconKey})</code>
+      </FieldLabel>
+      <div className="flex items-center gap-3">
+        <div className="bg-muted flex size-9 shrink-0 items-center justify-center rounded-md border">
+          <AppIcon name={lucideName} className="size-4" />
+        </div>
+        <NativeSelect
+          className="w-full font-mono text-xs"
+          value={lucideName}
+          onChange={(e) => setIcon(iconKey, e.target.value)}
+        >
+          {lucideIconNames.map((n) => (
+            <option key={n} value={n}>
+              {n}
+            </option>
+          ))}
+        </NativeSelect>
+      </div>
+    </Field>
   )
 }
 
@@ -426,65 +469,3 @@ function AddFontForm({
   )
 }
 
-function IconsPanel({
-  iconMap,
-  setIcon,
-}: {
-  iconMap: Record<string, string>
-  setIcon: (key: string, lucideName: string) => void
-}) {
-  const keys = Object.keys(defaultIconMap)
-  const [filter, setFilter] = React.useState('')
-
-  return (
-    <div className="bg-background text-foreground flex h-full min-h-0 flex-col">
-      <div className="shrink-0 border-b p-4">
-        <h2 className="typography-h5">Icons (Lucide)</h2>
-        <p className="text-muted-foreground mt-1 text-xs">
-          Semantic keys used by UI chrome. Changes apply after save to icon-map.ts.
-        </p>
-        <Input
-          className="mt-2 h-8"
-          placeholder="Filter icons…"
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-        />
-      </div>
-      <div className="min-h-0 flex-1 overflow-y-auto">
-        <div className="flex flex-col gap-3 p-4">
-          {keys
-            .filter((k) => {
-              const q = filter.trim().toLowerCase()
-              if (!q) return true
-              return k.includes(q) || (iconMap[k] ?? '').toLowerCase().includes(q)
-            })
-            .map((key) => {
-              const lucideName = iconMap[key] ?? defaultIconMap[key as keyof typeof defaultIconMap]
-              const Preview = resolveLucideIcon(lucideName)
-              return (
-                <div key={key} className="flex items-center gap-3">
-                  <div className="bg-muted flex size-9 items-center justify-center rounded-md border">
-                    {Preview ? <Preview className="size-4" /> : '?'}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="truncate font-mono text-xs">{key}</div>
-                    <NativeSelect
-                      className="mt-1 w-full font-mono text-xs"
-                      value={lucideName}
-                      onChange={(e) => setIcon(key, e.target.value)}
-                    >
-                      {lucideIconNames.map((n) => (
-                        <option key={n} value={n}>
-                          {n}
-                        </option>
-                      ))}
-                    </NativeSelect>
-                  </div>
-                </div>
-              )
-            })}
-        </div>
-      </div>
-    </div>
-  )
-}

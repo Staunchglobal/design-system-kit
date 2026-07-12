@@ -90,16 +90,6 @@ export function ThemeNav() {
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-1">
             <div className="typography-overline text-muted-foreground px-2">Tokens</div>
-            <button
-              type="button"
-              className={cn(
-                'hover:bg-sidebar-accent rounded-md px-2 py-1.5 text-left text-sm',
-                activeGroupId === 'icons' && 'bg-sidebar-accent font-medium'
-              )}
-              onClick={() => setActiveGroupId('icons')}
-            >
-              Icons
-            </button>
             {tokens
               .filter((g) => filter(g.title, g.id))
               .map((g) => (
