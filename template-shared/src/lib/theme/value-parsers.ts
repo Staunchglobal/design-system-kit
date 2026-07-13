@@ -1,4 +1,5 @@
 import type { ThemeFieldType, ThemeManifest } from "./types";
+import tokenFamilies from "./token-families.json";
 
 export const OPACITY_OPTIONS = [
   "0",
@@ -98,49 +99,11 @@ export type ParsedTransition = {
   compound: boolean;
 };
 
-const COLOR_SEMANTIC = new Set([
-  "background",
-  "foreground",
-  "card",
-  "card-foreground",
-  "popover",
-  "popover-foreground",
-  "primary",
-  "primary-foreground",
-  "secondary",
-  "secondary-foreground",
-  "muted",
-  "muted-foreground",
-  "accent",
-  "accent-foreground",
-  "destructive",
-  "border",
-  "input",
-  "ring",
-  "chart-1",
-  "chart-2",
-  "chart-3",
-  "chart-4",
-  "chart-5",
-  "sidebar",
-  "sidebar-foreground",
-  "sidebar-primary",
-  "sidebar-primary-foreground",
-  "sidebar-accent",
-  "sidebar-accent-foreground",
-  "sidebar-border",
-  "sidebar-ring",
-  "overlay-bg",
-]);
+// Sourced from token-families.json — the single canonical registry of token-family
+// names, shared with generate-theme-manifest.mjs (Node) so the two never drift.
+const COLOR_SEMANTIC = new Set<string>(tokenFamilies.colorSemantic);
 
-const SHADE_PREFIXES = [
-  "neutral-",
-  "primary-",
-  "secondary-",
-  "accent-",
-  "muted-",
-  "destructive-",
-];
+const SHADE_PREFIXES = tokenFamilies.shadeFamilies.map((f) => `${f}-`);
 
 const COLOR_NAME_RE =
   /(?:^|[-_])(?:bg|fg|color|fill|stroke|ring-color|border-color|shadow-color|from|to|via)(?:$|[-_])|(?:background|foreground|border(?!-style|-width|-radius)|ring|fill|stroke)/;
@@ -333,7 +296,7 @@ export function resolveVarFieldType(
 }
 
 export function listShadowTokenNames(): string[] {
-  return ["--shadow-sm", "--shadow-md", "--shadow-lg", "--shadow-xl"];
+  return tokenFamilies.shadowSteps.map((step) => `--shadow-${step}`);
 }
 
 export function listTokenRefNames(manifest: ThemeManifest): string[] {

@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fetchRequiredTemplateText, fetchTemplateText, mapWithConcurrency, remoteUrl } from './remote.js'
+import { applyRenameHistory, type RenameHistoryEntry } from './rename-history.js'
 
 export type CopyResult = {
   copied: string[]
@@ -10,9 +11,15 @@ export type CopyResult = {
   contents: Map<string, string>
 }
 
-export async function copyTemplateFile(srcUrl: string, destFile: string, dryRun = false): Promise<'copied' | 'skipped'> {
+export async function copyTemplateFile(
+  srcUrl: string,
+  destFile: string,
+  dryRun = false,
+  renameHistory: RenameHistoryEntry[] = []
+): Promise<'copied' | 'skipped'> {
   if (fs.existsSync(destFile)) return 'skipped'
-  const content = await fetchRequiredTemplateText(srcUrl)
+  let content = await fetchRequiredTemplateText(srcUrl)
+  if (renameHistory.length) content = applyRenameHistory(destFile, content, renameHistory)
   if (!dryRun) {
     fs.mkdirSync(path.dirname(destFile), { recursive: true })
     fs.writeFileSync(destFile, content)
@@ -33,15 +40,21 @@ export async function copySelectedFiles(
   srcBase: string,
   destDir: string,
   relativePaths: Iterable<string>,
-  dryRun = false
+  dryRun = false,
+  renameHistory: RenameHistoryEntry[] = []
 ): Promise<CopyResult> {
   const copied: string[] = []
   const skipped: string[] = []
   const contents = new Map<string, string>()
 
   await mapWithConcurrency([...relativePaths], 8, async (rel) => {
-    const content = await fetchTemplateText(remoteUrl(srcBase, rel))
+    let content = await fetchTemplateText(remoteUrl(srcBase, rel))
     if (content === null) return
+    // Applied before recording into `contents` either way — a skipped file's
+    // recorded baseline hash (see recordFileHashes) represents "what the CLI would
+    // currently write here," which must include this project's own rename history,
+    // or a later `update` would see the historical correction as user drift.
+    if (renameHistory.length) content = applyRenameHistory(rel, content, renameHistory)
     contents.set(rel, content)
     const dest = path.join(destDir, rel)
     if (fs.existsSync(dest)) {

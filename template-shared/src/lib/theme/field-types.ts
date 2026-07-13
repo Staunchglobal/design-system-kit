@@ -1,5 +1,6 @@
 import type { ThemeFieldType, ThemeManifest, ThemeVariable } from "./types";
 import { inferFieldType as inferFieldTypeFromValue } from "./value-parsers";
+import tokenFamilies from "./token-families.json";
 
 export { inferFieldType as inferFieldTypeFromValue } from "./value-parsers";
 export {
@@ -34,8 +35,10 @@ export function toVarRef(tokenName: string): string {
 
 // A shade STEP only — e.g. "primary-500" — not a semantic token that merely shares the
 // family prefix, like "primary-foreground" (that belongs in listSemanticColorTokenNames).
-const SHADE_STEP_RE =
-  /^(neutral|primary|secondary|accent|muted|destructive)-\d+$/;
+// Family list sourced from token-families.json — the canonical registry.
+const SHADE_STEP_RE = new RegExp(
+  `^(${tokenFamilies.shadeFamilies.join("|")})-\\d+$`
+);
 
 export function listColorTokenNames(
   manifest: ThemeManifest,
@@ -122,6 +125,22 @@ export function listTypographyTokenNames(
   }
   for (const e of extra) {
     names.add(e.startsWith("--") ? e : `--${e}`);
+  }
+  return [...names].sort();
+}
+
+const TYPOGRAPHY_VARIANT_RE =
+  /^--typography-([a-z0-9-]+)-(?:font-family|font-size|font-weight|line-height|letter-spacing|font-style|bg|radius|padding-x|padding-y|text-transform)$/;
+
+/** Bare variant names only (e.g. "h3", "display", "lead") — for a rename target
+ *  picker, as opposed to listTypographyTokenNames' full per-property var names. */
+export function listTypographyVariantNames(manifest: ThemeManifest): string[] {
+  const names = new Set<string>();
+  for (const g of manifest.groups) {
+    for (const v of g.variables) {
+      const m = v.name.match(TYPOGRAPHY_VARIANT_RE);
+      if (m) names.add(m[1]);
+    }
   }
   return [...names].sort();
 }

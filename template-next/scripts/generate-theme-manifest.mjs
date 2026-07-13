@@ -24,49 +24,21 @@ if (!fs.existsSync(path.join(themeRoot, "tokens/colors.css"))) {
   if (fs.existsSync(path.join(shared, "tokens/colors.css"))) themeRoot = shared;
 }
 
-const COLOR_SEMANTIC = new Set([
-  "background",
-  "foreground",
-  "card",
-  "card-foreground",
-  "popover",
-  "popover-foreground",
-  "primary",
-  "primary-foreground",
-  "secondary",
-  "secondary-foreground",
-  "muted",
-  "muted-foreground",
-  "accent",
-  "accent-foreground",
-  "destructive",
-  "border",
-  "input",
-  "ring",
-  "chart-1",
-  "chart-2",
-  "chart-3",
-  "chart-4",
-  "chart-5",
-  "sidebar",
-  "sidebar-foreground",
-  "sidebar-primary",
-  "sidebar-primary-foreground",
-  "sidebar-accent",
-  "sidebar-accent-foreground",
-  "sidebar-border",
-  "sidebar-ring",
-  "overlay-bg",
-]);
+// Canonical registry (single source of truth, shared with value-parsers.ts/field-types.ts/
+// descriptions.ts on the runtime side) — resolved relative to themeRoot's sibling `lib/theme/`
+// dir so this works both in a scaffolded project (src/styles/theme + src/lib/theme) and in
+// the CLI monorepo dev fallback (template-shared/src/styles/theme + .../src/lib/theme).
+const tokenFamiliesPath = path.join(
+  themeRoot,
+  "..",
+  "..",
+  "lib/theme/token-families.json"
+);
+const tokenFamilies = JSON.parse(fs.readFileSync(tokenFamiliesPath, "utf8"));
 
-const SHADE_PREFIXES = [
-  "neutral-",
-  "primary-",
-  "secondary-",
-  "accent-",
-  "muted-",
-  "destructive-",
-];
+const COLOR_SEMANTIC = new Set(tokenFamilies.colorSemantic);
+
+const SHADE_PREFIXES = tokenFamilies.shadeFamilies.map((f) => `${f}-`);
 
 const COLOR_NAME_RE =
   /(?:^|[-_])(?:bg|fg|color|fill|stroke|ring-color|border-color|shadow-color|from|to|via)(?:$|[-_])|(?:background|foreground|border(?!-style|-width|-radius)|ring|fill|stroke)/;

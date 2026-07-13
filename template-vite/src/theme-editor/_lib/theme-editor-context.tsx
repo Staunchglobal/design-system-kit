@@ -3,6 +3,8 @@ import type {
   CustomColor,
   CustomFont,
   CustomTypography,
+  RenameTokenFamily,
+  RenameTokenResponse,
   ThemeManifest,
   ThemeSavePayload,
 } from '@/lib/theme/types'
@@ -29,13 +31,18 @@ type ThemeEditorContextValue = {
   setActiveGroupId: (id: string) => void
   setValue: (variableId: string, value: string) => void
   addColor: (color: CustomColor) => void
+  removeColor: (name: string) => void
   addTypography: (typo: CustomTypography) => void
+  removeTypography: (id: string) => void
   addFont: (font: CustomFont) => void
+  removeFont: (id: string) => void
   setIcon: (key: string, lucideName: string) => void
   reset: () => void
   save: () => Promise<{ ok: boolean; message: string }>
   exportTheme: () => void
   importTheme: (file: File) => Promise<{ ok: boolean; message: string }>
+  previewRename: (req: { family: RenameTokenFamily; from: string; to: string }) => Promise<RenameTokenResponse>
+  applyRename: (req: { family: RenameTokenFamily; from: string; to: string }) => Promise<RenameTokenResponse>
 }
 
 function mergeByKey<T>(prev: T[], incoming: T[], keyOf: (item: T) => string): T[] {
@@ -204,13 +211,36 @@ ${typoRules}`
     setDirty(true)
   }, [])
 
+  // Only removes a color added earlier *this session* and not yet saved — once saved,
+  // a custom color is folded into the regular manifest-parsed variable set (see the
+  // state-init comment above) and this can no longer target it.
+  const removeColor = React.useCallback((name: string) => {
+    setCustomColors((prev) => prev.filter((c) => c.name !== name))
+    setDirty(true)
+  }, [])
+
   const addTypography = React.useCallback((typo: CustomTypography) => {
     setCustomTypography((prev) => [...prev.filter((t) => t.id !== typo.id), typo])
     setDirty(true)
   }, [])
 
+  // Same pending-only caveat as removeColor — typography has no persistent "custom"
+  // marker either, so this only ever targets this session's not-yet-saved additions.
+  const removeTypography = React.useCallback((id: string) => {
+    setCustomTypography((prev) => prev.filter((t) => t.id !== id))
+    setDirty(true)
+  }, [])
+
   const addFont = React.useCallback((font: CustomFont) => {
     setCustomFonts((prev) => [...prev.filter((f) => f.id !== font.id), font])
+    setDirty(true)
+  }, [])
+
+  // Fonts round-trip persistently (manifest.customFonts, seeded above), so unlike
+  // removeColor/removeTypography this also removes an already-saved custom font —
+  // Save wholesale-rewrites tokens/fonts.css from customFonts, so the next save drops it.
+  const removeFont = React.useCallback((id: string) => {
+    setCustomFonts((prev) => prev.filter((f) => f.id !== id))
     setDirty(true)
   }, [])
 
@@ -337,6 +367,34 @@ ${typoRules}`
     [nameById]
   )
 
+  const previewRename = React.useCallback(
+    async (req: { family: RenameTokenFamily; from: string; to: string }): Promise<RenameTokenResponse> => {
+      const res = await fetch('/api/theme/rename-token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...req, mode: 'preview' }),
+      })
+      return (await res.json()) as RenameTokenResponse
+    },
+    []
+  )
+
+  const applyRename = React.useCallback(
+    async (req: { family: RenameTokenFamily; from: string; to: string }): Promise<RenameTokenResponse> => {
+      const res = await fetch('/api/theme/rename-token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...req, mode: 'apply' }),
+      })
+      const data = (await res.json()) as RenameTokenResponse
+      // Renamed vars get new manifest ids — reload so the app re-fetches the fresh
+      // manifest rather than trying to patch a live id->name map in place.
+      if (data.ok) window.location.reload()
+      return data
+    },
+    []
+  )
+
   const value: ThemeEditorContextValue = {
     manifest,
     values,
@@ -350,13 +408,18 @@ ${typoRules}`
     setActiveGroupId,
     setValue,
     addColor,
+    removeColor,
     addTypography,
+    removeTypography,
     addFont,
+    removeFont,
     setIcon,
     reset,
     save,
     exportTheme,
     importTheme,
+    previewRename,
+    applyRename,
   }
 
   return <ThemeEditorContext.Provider value={value}>{children}</ThemeEditorContext.Provider>

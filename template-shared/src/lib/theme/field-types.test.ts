@@ -3,6 +3,7 @@ import {
   buildScopedVarsCss,
   listColorTokenNames,
   listSemanticColorTokenNames,
+  listTypographyVariantNames,
   scopeToSelector,
 } from './field-types.js'
 import type { ThemeManifest, ThemeVariable } from './types.js'
@@ -55,6 +56,17 @@ describe('listSemanticColorTokenNames', () => {
   it('includes extra (custom semantic color) names', () => {
     const manifest = manifestOf('colors', [])
     expect(listSemanticColorTokenNames(manifest, ['brand'])).toEqual(['--brand'])
+  })
+})
+
+describe('listTypographyVariantNames', () => {
+  it('extracts bare variant names, deduped across their per-property vars', () => {
+    const manifest = manifestOf('typography', [
+      v({ id: '1', name: '--typography-h3-font-size' }),
+      v({ id: '2', name: '--typography-h3-font-weight' }),
+      v({ id: '3', name: '--typography-display-font-family' }),
+    ])
+    expect(listTypographyVariantNames(manifest)).toEqual(['display', 'h3'])
   })
 })
 

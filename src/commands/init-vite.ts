@@ -12,6 +12,7 @@ import {
   runInstall,
 } from '../lib/deps.js'
 import { copySelectedFiles, copyTemplateFile, hashEntriesFor, writeGeneratedFile } from '../lib/copy.js'
+import { loadRenameHistory } from '../lib/rename-history.js'
 import { patchGlobalsCss } from '../lib/patch-globals-css.js'
 import { patchTsconfig } from '../lib/patch-tsconfig.js'
 import { logTypeScriptCompat } from '../lib/check-typescript-compat.js'
@@ -147,10 +148,14 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   }
 
   const dryRun = !!options.dryRun
-  const sharedFixed = await copySelectedFiles(sharedSrc, path.join(root, 'src'), ALWAYS_SHARED_FILES, dryRun)
-  const sharedUi = await copySelectedFiles(sharedSrc, path.join(root, 'src'), uiFiles, dryRun)
-  const sharedCss = await copySelectedFiles(sharedSrc, path.join(root, 'src'), cssFiles, dryRun)
-  const sharedExtra = await copySelectedFiles(sharedSrc, path.join(root, 'src'), extraFiles, dryRun)
+  // A previously-renamed token (via /theme-editor) only touched files that existed at
+  // the time — reapply that history to anything newly copied now, so a component added
+  // after the rename doesn't arrive still using the original name.
+  const renameHistory = loadRenameHistory(path.join(root, 'src'))
+  const sharedFixed = await copySelectedFiles(sharedSrc, path.join(root, 'src'), ALWAYS_SHARED_FILES, dryRun, renameHistory)
+  const sharedUi = await copySelectedFiles(sharedSrc, path.join(root, 'src'), uiFiles, dryRun, renameHistory)
+  const sharedCss = await copySelectedFiles(sharedSrc, path.join(root, 'src'), cssFiles, dryRun, renameHistory)
+  const sharedExtra = await copySelectedFiles(sharedSrc, path.join(root, 'src'), extraFiles, dryRun, renameHistory)
   const sharedTokens = await copySelectedFiles(
     sharedSrc,
     path.join(root, 'src'),
@@ -163,10 +168,11 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
       'styles/theme/tokens/typography.css',
       'styles/theme/tokens/typography-patterns.css',
     ],
-    dryRun
+    dryRun,
+    renameHistory
   )
-  const viteFixed = await copySelectedFiles(viteSrc, path.join(root, 'src'), ALWAYS_VITE_FILES, dryRun)
-  const viteSections = await copySelectedFiles(viteSrc, path.join(root, 'src'), sectionFiles, dryRun)
+  const viteFixed = await copySelectedFiles(viteSrc, path.join(root, 'src'), ALWAYS_VITE_FILES, dryRun, renameHistory)
+  const viteSections = await copySelectedFiles(viteSrc, path.join(root, 'src'), sectionFiles, dryRun, renameHistory)
 
   const copied = [sharedFixed, sharedUi, sharedCss, sharedExtra, sharedTokens, viteFixed, viteSections].flatMap(
     (r) => r.copied

@@ -1,5 +1,10 @@
 import type { ThemeGroup, ThemeVariable } from './types'
 import { humanizeKey, humanizeScopeValue, humanizeVarName, scopeConditions } from './humanize'
+import tokenFamilies from './token-families.json'
+
+// Sourced from token-families.json — the canonical registry, shared with
+// generate-theme-manifest.mjs and value-parsers.ts so the family list never drifts.
+const SHADE_FAMILY_RE = new RegExp(`^(${tokenFamilies.shadeFamilies.join('|')})-(\\d+)$`)
 
 const SEMANTIC_DESCRIPTIONS: Record<string, string> = {
   background: 'The default page background color.',
@@ -217,7 +222,7 @@ export function describeVariable(variable: ThemeVariable, group: ThemeGroup): st
   } else if (group.id === 'colors') {
     sentence = `A ${humanizeVarName(bare)} color value.`
   } else if (group.id === 'color-scales') {
-    const shade = bare.match(/^(neutral|primary|secondary|accent|muted|destructive)-(\d+)$/)
+    const shade = bare.match(SHADE_FAMILY_RE)
     if (shade) {
       const [, family, level] = shade
       const hint = SHADE_LEVEL_HINT[level] ?? `step ${level}`

@@ -261,6 +261,250 @@ function readBody(req: import('node:http').IncomingMessage): Promise<string> {
   })
 }
 
+// ============================================================================
+// Token rename — mirrors template-shared/src/lib/theme/rename-engine.ts and
+// git-guard.ts logic inline, same duplication convention as the save-endpoint
+// helpers above (this file is loaded by vite.config.ts outside the app's own
+// module graph, so it can't import across that boundary). Reads
+// token-families.json via fs (rather than duplicating its data) so the
+// reserved-word list can't drift from the canonical registry.
+// ============================================================================
+
+export type RenameFamily = 'color' | 'radius' | 'typography' | 'shadow'
+type RenameFileChangeKind = 'css' | 'tw-class' | 'data-literal' | 'description'
+type RenameFileChange = { path: string; matches: number; kind: RenameFileChangeKind }
+type RenamePlan = { changes: RenameFileChange[]; totalMatches: number }
+type RenameRequest = { family: RenameFamily; from: string; to: string; mode: 'preview' | 'apply' }
+
+function escapeRegExpRename(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+const CLASS_BOUNDARY = `(?=[/"'\`\\s:]|$)`
+
+type Rule = { regex: RegExp; replacement: string | ((...args: string[]) => string) }
+type TsxRule = Rule & { kind: RenameFileChangeKind }
+
+function cssRulesFor(family: RenameFamily, escFrom: string, to: string): Rule[] {
+  switch (family) {
+    case 'color':
+      return [
+        {
+          regex: new RegExp(`--${escFrom}(-foreground|-\\d+)?(?![\\w-])`, 'g'),
+          replacement: (_m: string, suffix: string) => `--${to}${suffix ?? ''}`,
+        },
+      ]
+    case 'radius':
+      return [
+        { regex: new RegExp(`--theme-radius-${escFrom}(?![\\w-])`, 'g'), replacement: `--theme-radius-${to}` },
+        { regex: new RegExp(`--radius-${escFrom}(?![\\w-])`, 'g'), replacement: `--radius-${to}` },
+      ]
+    case 'typography':
+      return [
+        {
+          regex: new RegExp(`(\\.)?typography-${escFrom}(?![a-zA-Z0-9])`, 'g'),
+          replacement: (_m: string, dot: string) => `${dot ?? ''}typography-${to}`,
+        },
+      ]
+    case 'shadow':
+      return [{ regex: new RegExp(`--shadow-${escFrom}(?![\\w-])`, 'g'), replacement: `--shadow-${to}` }]
+  }
+}
+
+function tsxRulesFor(family: RenameFamily, escFrom: string, to: string): TsxRule[] {
+  switch (family) {
+    case 'color':
+      return [
+        {
+          kind: 'tw-class',
+          regex: new RegExp(
+            `\\b(bg|text|border|ring|from|to|via|divide|outline|decoration|caret)-${escFrom}(-foreground)?${CLASS_BOUNDARY}`,
+            'g'
+          ),
+          replacement: (_m: string, prefix: string, fg: string) => `${prefix}-${to}${fg ?? ''}`,
+        },
+        {
+          kind: 'data-literal',
+          regex: new RegExp(`(cssVar:\\s*['"\`])--${escFrom}(['"\`])`, 'g'),
+          replacement: (_m: string, pre: string, post: string) => `${pre}--${to}${post}`,
+        },
+        {
+          kind: 'data-literal',
+          regex: new RegExp(`(prefix:\\s*['"\`])${escFrom}(['"\`])`, 'g'),
+          replacement: (_m: string, pre: string, post: string) => `${pre}${to}${post}`,
+        },
+      ]
+    case 'radius':
+      return [
+        {
+          kind: 'tw-class',
+          regex: new RegExp(`\\brounded(-[a-z]{1,2})?-${escFrom}${CLASS_BOUNDARY}`, 'g'),
+          replacement: (_m: string, dir: string) => `rounded${dir ?? ''}-${to}`,
+        },
+      ]
+    case 'typography':
+      return [
+        {
+          kind: 'tw-class',
+          regex: new RegExp(`\\btypography-${escFrom}${CLASS_BOUNDARY}`, 'g'),
+          replacement: `typography-${to}`,
+        },
+      ]
+    case 'shadow':
+      return [{ kind: 'tw-class', regex: new RegExp(`\\bshadow-${escFrom}${CLASS_BOUNDARY}`, 'g'), replacement: `shadow-${to}` }]
+  }
+}
+
+function descriptionRulesFor(family: RenameFamily, escFrom: string, to: string): Rule[] {
+  switch (family) {
+    case 'color':
+      return [
+        {
+          regex: new RegExp(`^(\\s*)(['"\`]?)${escFrom}(-foreground)?\\2:`, 'gm'),
+          replacement: (_m: string, indent: string, _q: string, suffix: string) => `${indent}'${to}${suffix ?? ''}':`,
+        },
+      ]
+    case 'radius':
+      return [
+        {
+          regex: new RegExp(`^(\\s*)(['"\`]?)theme-radius-${escFrom}\\2:`, 'gm'),
+          replacement: (_m: string, indent: string) => `${indent}'theme-radius-${to}':`,
+        },
+      ]
+    case 'shadow':
+      return [
+        {
+          regex: new RegExp(`^(\\s*)(['"\`]?)shadow-${escFrom}\\2:`, 'gm'),
+          replacement: (_m: string, indent: string) => `${indent}'shadow-${to}':`,
+        },
+      ]
+    case 'typography':
+      return []
+  }
+}
+
+function applyRulesRename(content: string, rules: Rule[]): { newContent: string; matches: number } {
+  let matches = 0
+  let newContent = content
+  for (const rule of rules) {
+    const found = [...content.matchAll(rule.regex)]
+    matches += found.length
+    if (found.length) newContent = newContent.replace(rule.regex, rule.replacement as never)
+  }
+  return { newContent, matches }
+}
+
+function cssFilesInRename(dir: string): string[] {
+  if (!fs.existsSync(dir)) return []
+  return fs.readdirSync(dir).filter((f) => f.endsWith('.css')).map((f) => path.join(dir, f))
+}
+function tsxFilesInRename(dir: string): string[] {
+  if (!fs.existsSync(dir)) return []
+  return fs.readdirSync(dir).filter((f) => f.endsWith('.tsx')).map((f) => path.join(dir, f))
+}
+
+function runRename(req: { family: RenameFamily; from: string; to: string }, root: string, write: boolean): RenamePlan {
+  const escFrom = escapeRegExpRename(req.from)
+  const changes: RenameFileChange[] = []
+  let totalMatches = 0
+
+  const tokensDir = path.join(root, 'src/styles/theme/tokens')
+  const componentsDir = path.join(root, 'src/styles/theme/components')
+  const bridgeFile = path.join(root, 'src/index.css')
+  const uiDir = path.join(root, 'src/components/ui')
+  const sectionsDir = path.join(root, 'src/design-system/_sections')
+  const descriptionsPath = path.join(root, 'src/lib/theme/descriptions.ts')
+
+  const cssFiles = [...cssFilesInRename(tokensDir), ...cssFilesInRename(componentsDir), ...(fs.existsSync(bridgeFile) ? [bridgeFile] : [])]
+  const tsxFiles = [...tsxFilesInRename(uiDir), ...tsxFilesInRename(sectionsDir)]
+
+  for (const filePath of cssFiles) {
+    const content = fs.readFileSync(filePath, 'utf8')
+    const { newContent, matches } = applyRulesRename(content, cssRulesFor(req.family, escFrom, req.to))
+    if (matches > 0) {
+      changes.push({ path: filePath, matches, kind: 'css' })
+      totalMatches += matches
+      if (write) fs.writeFileSync(filePath, newContent)
+    }
+  }
+
+  for (const filePath of tsxFiles) {
+    const content = fs.readFileSync(filePath, 'utf8')
+    const rules = tsxRulesFor(req.family, escFrom, req.to)
+    const byKind = new Map<RenameFileChangeKind, number>()
+    let newContent = content
+    for (const rule of rules) {
+      const found = [...content.matchAll(rule.regex)]
+      if (found.length) {
+        newContent = newContent.replace(rule.regex, rule.replacement as never)
+        byKind.set(rule.kind, (byKind.get(rule.kind) ?? 0) + found.length)
+      }
+    }
+    for (const [kind, matches] of byKind) {
+      changes.push({ path: filePath, matches, kind })
+      totalMatches += matches
+    }
+    if (write && newContent !== content) fs.writeFileSync(filePath, newContent)
+  }
+
+  if (fs.existsSync(descriptionsPath)) {
+    const content = fs.readFileSync(descriptionsPath, 'utf8')
+    const { newContent, matches } = applyRulesRename(content, descriptionRulesFor(req.family, escFrom, req.to))
+    if (matches > 0) {
+      changes.push({ path: descriptionsPath, matches, kind: 'description' })
+      totalMatches += matches
+      if (write) fs.writeFileSync(descriptionsPath, newContent)
+    }
+  }
+
+  return { changes, totalMatches }
+}
+
+export function isValidRenameTargetInline(family: RenameFamily, from: string, to: string, existingNames: string[], root: string): string | null {
+  if (!SAFE_TOKEN_RE.test(to)) return 'Enter a valid identifier — letters, numbers, hyphens, and underscores only.'
+  if (to === from) return 'The new name must be different from the current name.'
+  const registryPath = path.join(root, 'src/lib/theme/token-families.json')
+  const reservedWords = fs.existsSync(registryPath)
+    ? (JSON.parse(fs.readFileSync(registryPath, 'utf8')) as { reservedWords: Record<string, string[]> }).reservedWords
+    : { color: [], radius: [], typography: [], shadow: [] }
+  const reserved = reservedWords[family] ?? []
+  if (reserved.includes(to)) return `"${to}" is reserved by Tailwind's own utilities and can't be used here.`
+  if (existingNames.includes(to)) return `"${to}" is already used by another token.`
+  return null
+}
+
+function existingTokenNamesRename(root: string): string[] {
+  const manifestPath = path.join(root, 'src/styles/theme/theme.manifest.json')
+  if (!fs.existsSync(manifestPath)) return []
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8')) as {
+    groups: { variables: { name: string }[] }[]
+  }
+  const names = new Set<string>()
+  for (const g of manifest.groups) for (const v of g.variables) names.add(v.name.replace(/^--/, ''))
+  return [...names]
+}
+
+/**
+ * Records a successful rename so a component added *later* (via `design-kit init`/
+ * `update`) can be corrected on the way in instead of arriving with the original name —
+ * see the CLI's `src/lib/rename-history.ts`, which reads this same file/shape.
+ */
+function appendRenameHistoryRename(root: string, entry: { family: RenameFamily; from: string; to: string }): void {
+  const historyPath = path.join(root, 'src/lib/theme/token-renames.json')
+  let history: { family: RenameFamily; from: string; to: string }[] = []
+  if (fs.existsSync(historyPath)) {
+    try {
+      const data = JSON.parse(fs.readFileSync(historyPath, 'utf8')) as { renames?: typeof history }
+      if (Array.isArray(data.renames)) history = data.renames
+    } catch {
+      history = []
+    }
+  }
+  history.push(entry)
+  fs.mkdirSync(path.dirname(historyPath), { recursive: true })
+  fs.writeFileSync(historyPath, JSON.stringify({ renames: history }, null, 2) + '\n')
+}
+
 /**
  * Vite dev-server plugin that gives the /theme-editor's Save button somewhere to write to
  * (the equivalent of the Next.js kit's `/api/theme/save` route handler). Only wired up by
@@ -388,6 +632,101 @@ export function designKit(): Plugin {
           JSON.stringify({
             ok: true,
             message: `Saved ${Object.keys(payload.values).length} values to src/styles/theme/.`,
+          })
+        )
+      })
+
+      server.middlewares.use('/api/theme/rename-token', async (req, res) => {
+        if (req.method !== 'POST') {
+          res.statusCode = 405
+          res.end('Method Not Allowed')
+          return
+        }
+
+        const root = process.cwd()
+        let payload: RenameRequest
+        try {
+          payload = JSON.parse(await readBody(req))
+        } catch {
+          res.statusCode = 400
+          res.setHeader('Content-Type', 'application/json')
+          res.end(JSON.stringify({ ok: false, message: 'Invalid JSON' }))
+          return
+        }
+
+        res.setHeader('Content-Type', 'application/json')
+
+        const { family, from, to, mode } = payload
+        const validFamilies: RenameFamily[] = ['color', 'radius', 'typography', 'shadow']
+        if (
+          !validFamilies.includes(family) ||
+          typeof from !== 'string' ||
+          typeof to !== 'string' ||
+          !from ||
+          (mode !== 'preview' && mode !== 'apply')
+        ) {
+          res.statusCode = 400
+          res.end(JSON.stringify({ ok: false, message: 'Invalid rename request.', reason: 'invalid' }))
+          return
+        }
+
+        const validationError = isValidRenameTargetInline(family, from, to, existingTokenNamesRename(root), root)
+        if (validationError) {
+          res.statusCode = 400
+          res.end(JSON.stringify({ ok: false, message: validationError, reason: 'invalid' }))
+          return
+        }
+
+        if (mode === 'preview') {
+          const plan = runRename({ family, from, to }, root, false)
+          if (plan.totalMatches === 0) {
+            res.statusCode = 422
+            res.end(JSON.stringify({ ok: false, message: `No occurrences of "${from}" found.`, reason: 'no-op' }))
+            return
+          }
+          res.end(
+            JSON.stringify({
+              ok: true,
+              plan,
+              message: `Found ${plan.totalMatches} occurrence(s) across ${plan.changes.length} file(s).`,
+            })
+          )
+          return
+        }
+
+        // mode === 'apply'
+        const plan = runRename({ family, from, to }, root, false)
+        if (plan.totalMatches === 0) {
+          res.statusCode = 422
+          res.end(JSON.stringify({ ok: false, message: `No occurrences of "${from}" found.`, reason: 'no-op' }))
+          return
+        }
+
+        runRename({ family, from, to }, root, true)
+        appendRenameHistoryRename(root, { family, from, to })
+
+        try {
+          execFileSync('node', ['scripts/generate-theme-manifest.mjs'], { cwd: root, stdio: 'pipe' })
+        } catch (e) {
+          res.end(
+            JSON.stringify({
+              ok: true,
+              plan,
+              message: `Renamed "${from}" to "${to}", but manifest regenerate failed: ${e instanceof Error ? e.message : e}`,
+            })
+          )
+          return
+        }
+
+        const manifestPath = path.join(root, 'src/styles/theme/theme.manifest.json')
+        const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'))
+
+        res.end(
+          JSON.stringify({
+            ok: true,
+            plan,
+            manifest,
+            message: `Renamed "${from}" to "${to}" across ${plan.changes.length} file(s).`,
           })
         )
       })

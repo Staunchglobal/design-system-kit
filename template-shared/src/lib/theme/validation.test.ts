@@ -9,6 +9,7 @@ import {
   isSafeCssValue,
   isSafeCustomColorValue,
   isSafeCustomFont,
+  isValidRenameTarget,
 } from './validation.js'
 
 describe('SAFE_TOKEN_RE (font ids, custom color names, typography ids)', () => {
@@ -155,5 +156,31 @@ describe('isSafeCustomFont', () => {
     expect(
       isSafeCustomFont({ id: 'display', source: 'google', googleFamily: 'Inter', weights: '400&evil=1' })
     ).toBe(false)
+  })
+})
+
+describe('isValidRenameTarget', () => {
+  it('rejects an unsafe identifier', () => {
+    expect(isValidRenameTarget('color', 'accent', 'in fo', [])).toMatch(/valid identifier/)
+  })
+
+  it('rejects renaming to the same name', () => {
+    expect(isValidRenameTarget('color', 'accent', 'accent', [])).toMatch(/different/)
+  })
+
+  it('rejects a name reserved by a Tailwind builtin, scoped per family', () => {
+    expect(isValidRenameTarget('radius', 'xl', 'full', [])).toMatch(/reserved/)
+    expect(isValidRenameTarget('shadow', 'xl', 'none', [])).toMatch(/reserved/)
+    expect(isValidRenameTarget('color', 'accent', 'transparent', [])).toMatch(/reserved/)
+    // "full" is only reserved for radius, not color — a color family could validly be named "full".
+    expect(isValidRenameTarget('color', 'accent', 'full', [])).toBeNull()
+  })
+
+  it('rejects a name already used by another existing token', () => {
+    expect(isValidRenameTarget('color', 'accent', 'info', ['info'])).toMatch(/already used/)
+  })
+
+  it('accepts a valid, unused, non-reserved name', () => {
+    expect(isValidRenameTarget('color', 'accent', 'info', [])).toBeNull()
   })
 })

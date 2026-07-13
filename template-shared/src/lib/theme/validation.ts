@@ -1,3 +1,5 @@
+import tokenFamilies from './token-families.json'
+
 const HEX_RE = /^[0-9a-fA-F]{3}$|^[0-9a-fA-F]{6}$|^[0-9a-fA-F]{8}$/
 const NUMBER_RE = /^-?\d+(\.\d+)?$/
 
@@ -79,4 +81,40 @@ export function isSafeCustomFont(f: SanitizableCustomFont): boolean {
   if (!SAFE_TOKEN_RE.test(f.id)) return false
   if (f.source === 'google') return SAFE_FONT_FAMILY_RE.test(f.googleFamily) && SAFE_WEIGHTS_RE.test(f.weights || '')
   return true
+}
+
+export type RenameFamily = 'color' | 'radius' | 'typography' | 'shadow'
+
+/**
+ * Guards a token-rename's `to` name against the same identifier charset as any
+ * other new token id, plus per-family reserved words that collide with a
+ * Tailwind built-in (e.g. renaming a radius step to "full" would produce a
+ * `rounded-full` that's indistinguishable from Tailwind's own fully-rounded
+ * utility). Returns a user-facing message, or null if valid.
+ */
+export function isValidRenameTarget(
+  family: RenameFamily,
+  from: string,
+  to: string,
+  existingNames: string[]
+): string | null {
+  if (!SAFE_TOKEN_RE.test(to)) {
+    return 'Enter a valid identifier — letters, numbers, hyphens, and underscores only.'
+  }
+  if (to === from) return 'The new name must be different from the current name.'
+  const reserved =
+    family === 'color'
+      ? tokenFamilies.reservedWords.color
+      : family === 'radius'
+        ? tokenFamilies.reservedWords.radius
+        : family === 'shadow'
+          ? tokenFamilies.reservedWords.shadow
+          : []
+  if ((reserved as string[]).includes(to)) {
+    return `"${to}" is reserved by Tailwind's own utilities and can't be used here.`
+  }
+  if (existingNames.includes(to)) {
+    return `"${to}" is already used by another token.`
+  }
+  return null
 }

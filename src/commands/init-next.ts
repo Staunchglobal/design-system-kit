@@ -12,6 +12,7 @@ import {
   runInstall,
 } from '../lib/deps.js'
 import { copySelectedFiles, copyTemplateFile, hashEntriesFor, writeGeneratedFile } from '../lib/copy.js'
+import { loadRenameHistory } from '../lib/rename-history.js'
 import { fetchRequiredTemplateText, remoteUrl } from '../lib/remote.js'
 import { patchGlobalsCss } from '../lib/patch-globals-css.js'
 import { patchPostcssConfig } from '../lib/patch-postcss-config.js'
@@ -163,10 +164,14 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
   }
 
   const dryRun = !!options.dryRun
-  const sharedFixed = await copySelectedFiles(sharedSrc, destRoot, ALWAYS_SHARED_FILES, dryRun)
-  const sharedUi = await copySelectedFiles(sharedSrc, destRoot, uiFiles, dryRun)
-  const sharedCss = await copySelectedFiles(sharedSrc, destRoot, cssFiles, dryRun)
-  const sharedExtra = await copySelectedFiles(sharedSrc, destRoot, extraFiles, dryRun)
+  // A previously-renamed token (via /theme-editor) only touched files that existed at
+  // the time — reapply that history to anything newly copied now, so a component added
+  // after the rename doesn't arrive still using the original name.
+  const renameHistory = loadRenameHistory(destRoot)
+  const sharedFixed = await copySelectedFiles(sharedSrc, destRoot, ALWAYS_SHARED_FILES, dryRun, renameHistory)
+  const sharedUi = await copySelectedFiles(sharedSrc, destRoot, uiFiles, dryRun, renameHistory)
+  const sharedCss = await copySelectedFiles(sharedSrc, destRoot, cssFiles, dryRun, renameHistory)
+  const sharedExtra = await copySelectedFiles(sharedSrc, destRoot, extraFiles, dryRun, renameHistory)
   const sharedTokens = await copySelectedFiles(
     sharedSrc,
     destRoot,
@@ -179,10 +184,11 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
       'styles/theme/tokens/typography.css',
       'styles/theme/tokens/typography-patterns.css',
     ],
-    dryRun
+    dryRun,
+    renameHistory
   )
-  const nextFixed = await copySelectedFiles(nextSrc, destRoot, ALWAYS_NEXT_FILES, dryRun)
-  const nextSections = await copySelectedFiles(nextSrc, destRoot, sectionFiles, dryRun)
+  const nextFixed = await copySelectedFiles(nextSrc, destRoot, ALWAYS_NEXT_FILES, dryRun, renameHistory)
+  const nextSections = await copySelectedFiles(nextSrc, destRoot, sectionFiles, dryRun, renameHistory)
 
   const copied = [sharedFixed, sharedUi, sharedCss, sharedExtra, sharedTokens, nextFixed, nextSections].flatMap(
     (r) => r.copied

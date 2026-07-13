@@ -6,6 +6,7 @@
 export const ALWAYS_SHARED_FILES = [
   'lib/utils.ts',
   'lib/theme/types.ts',
+  'lib/theme/token-families.json',
   'lib/theme/field-types.ts',
   'lib/theme/value-parsers.ts',
   'lib/theme/humanize.ts',
@@ -36,6 +37,11 @@ export const ALWAYS_NEXT_FILES = [
   'app/theme-editor/_components/variable-form.tsx',
   'app/theme-editor/_lib/theme-editor-context.tsx',
   'app/api/theme/save/route.ts',
+  'app/api/theme/rename-token/route.ts',
+  // Node-only (fs) — Vite's client tsconfig has no Node types and would fail to
+  // type-check this via its blanket `include: ["src"]`; the Vite plugin instead
+  // duplicates this logic inline (see vite-plugin-design-kit.ts).
+  'lib/theme/rename-engine.ts',
 ]
 
 export const ALWAYS_VITE_FILES = [

@@ -13,12 +13,19 @@ import {
 } from '@/components/ui/input-group'
 import { SearchSelect, SmartField } from '@/app/theme-editor/_components/smart-field'
 import { useThemeEditor } from '@/app/theme-editor/_lib/theme-editor-context'
-import { groupVariablesForEditor, listColorTokenNames, toVarRef } from '@/lib/theme/field-types'
+import {
+  groupVariablesForEditor,
+  listColorTokenNames,
+  listTypographyVariantNames,
+  toVarRef,
+} from '@/lib/theme/field-types'
 import { AppIcon, lucideIconNames } from '@/components/icons/icon'
 import { defaultIconMap } from '@/components/icons/icon-map'
 import { googleFonts } from '@/lib/theme/google-fonts'
 import { humanizeKey } from '@/lib/theme/humanize'
-import { validateHex } from '@/lib/theme/validation'
+import { isValidRenameTarget, validateHex } from '@/lib/theme/validation'
+import tokenFamilies from '@/lib/theme/token-families.json'
+import type { RenameTokenFamily, RenameTokenPlan, RenameTokenResponse, ThemeManifest } from '@/lib/theme/types'
 
 // A handful of icon-map key prefixes ("context.check") don't match their component's
 // manifest group id ("context-menu") one-for-one — listed here so their icon field still
@@ -36,9 +43,33 @@ function iconKeysForGroup(groupId: string): string[] {
   })
 }
 
+// Which token families a "Rename" affordance applies to, and their manifest group id.
+const RENAME_FAMILY_BY_GROUP: Record<string, RenameTokenFamily> = {
+  colors: 'color',
+  'color-scales': 'color',
+  radius: 'radius',
+  typography: 'typography',
+  shadows: 'shadow',
+}
+
 export function VariableForm() {
-  const { manifest, activeGroupId, addColor, addTypography, addFont, setIcon, iconMap, customColors, customTypography, customFonts } =
-    useThemeEditor()
+  const {
+    manifest,
+    activeGroupId,
+    addColor,
+    removeColor,
+    addTypography,
+    removeTypography,
+    addFont,
+    removeFont,
+    setIcon,
+    iconMap,
+    customColors,
+    customTypography,
+    customFonts,
+    previewRename,
+    applyRename,
+  } = useThemeEditor()
 
   const group = manifest.groups.find((g) => g.id === activeGroupId)
   if (!group) {
@@ -57,25 +88,68 @@ export function VariableForm() {
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto">
         <div className="flex flex-col gap-4 p-4">
-          {group.id === 'color-scales' && (
-            <AddColorForm
-              onAdd={(c) => addColor({ ...c, scope: 'color-scales' })}
-              existing={customColors.map((c) => c.name)}
+          {RENAME_FAMILY_BY_GROUP[group.id] && (
+            <RenameTokenForm
+              // Remount on group change instead of an effect that resets state —
+              // avoids a setState-in-effect (each group gets fresh initial state for free).
+              key={group.id}
+              family={RENAME_FAMILY_BY_GROUP[group.id]}
+              manifest={manifest}
+              onPreview={previewRename}
+              onApply={applyRename}
             />
+          )}
+          {group.id === 'color-scales' && (
+            <>
+              <AddColorForm
+                onAdd={(c) => addColor({ ...c, scope: 'color-scales' })}
+                existing={customColors.map((c) => c.name)}
+              />
+              <PendingItemsList
+                items={customColors.filter((c) => (c.scope ?? 'colors') === 'color-scales')}
+                keyOf={(c) => c.name}
+                labelOf={(c) => `${c.name} — ${c.hex}`}
+                onRemove={removeColor}
+              />
+            </>
           )}
           {group.id === 'colors' && (
-            <AddColorRefForm
-              manifest={manifest}
-              customColors={customColors}
-              onAdd={(c) => addColor({ ...c, scope: 'colors' })}
-              existing={customColors.map((c) => c.name)}
-            />
+            <>
+              <AddColorRefForm
+                manifest={manifest}
+                customColors={customColors}
+                onAdd={(c) => addColor({ ...c, scope: 'colors' })}
+                existing={customColors.map((c) => c.name)}
+              />
+              <PendingItemsList
+                items={customColors.filter((c) => (c.scope ?? 'colors') === 'colors')}
+                keyOf={(c) => c.name}
+                labelOf={(c) => `${c.name} — ${c.hex}`}
+                onRemove={removeColor}
+              />
+            </>
           )}
           {group.id === 'typography' && (
-            <AddTypographyForm onAdd={addTypography} existing={customTypography.map((t) => t.id)} />
+            <>
+              <AddTypographyForm onAdd={addTypography} existing={customTypography.map((t) => t.id)} />
+              <PendingItemsList
+                items={customTypography}
+                keyOf={(t) => t.id}
+                labelOf={(t) => t.id.replace(/^typography-/, '')}
+                onRemove={removeTypography}
+              />
+            </>
           )}
           {group.id === 'fonts' && (
-            <AddFontForm onAdd={addFont} existing={customFonts.map((f) => f.id)} />
+            <>
+              <AddFontForm onAdd={addFont} existing={customFonts.map((f) => f.id)} />
+              <PendingItemsList
+                items={customFonts}
+                keyOf={(f) => f.id}
+                labelOf={(f) => `${f.id} (${f.source === 'google' ? f.googleFamily : f.fileName})`}
+                onRemove={removeFont}
+              />
+            </>
           )}
           {iconKeys.map((key) => (
             <IconField key={key} iconKey={key} iconMap={iconMap} setIcon={setIcon} />
@@ -118,6 +192,220 @@ function IconField({
         />
       </div>
     </Field>
+  )
+}
+
+function fromOptionsFor(family: RenameTokenFamily, manifest: ThemeManifest): string[] {
+  switch (family) {
+    case 'color': {
+      const names = new Set<string>([
+        ...tokenFamilies.shadeFamilies,
+        ...tokenFamilies.colorSemantic.filter((n) => !n.endsWith('-foreground')),
+      ])
+      return [...names].sort()
+    }
+    case 'radius':
+      return [...tokenFamilies.radiusSteps]
+    case 'shadow':
+      return [...tokenFamilies.shadowSteps]
+    case 'typography':
+      return listTypographyVariantNames(manifest)
+  }
+}
+
+/** Cosmetic only — shortens an absolute path to its project-relative tail for display. */
+function relDisplay(absPath: string): string {
+  const marker = absPath.lastIndexOf('/src/')
+  return marker === -1 ? absPath : `src/${absPath.slice(marker + '/src/'.length)}`
+}
+
+function reservedWordsFor(family: RenameTokenFamily): string[] {
+  switch (family) {
+    case 'color':
+      return tokenFamilies.reservedWords.color
+    case 'radius':
+      return tokenFamilies.reservedWords.radius
+    case 'shadow':
+      return tokenFamilies.reservedWords.shadow
+    case 'typography':
+      return []
+  }
+}
+
+/** Every bare token name currently in the manifest — used for the client-side
+ *  "already used by another token" pre-check (mirrors the server's own check). */
+function allTokenNames(manifest: ThemeManifest): string[] {
+  const names = new Set<string>()
+  for (const g of manifest.groups) for (const v of g.variables) names.add(v.name.replace(/^--/, ''))
+  return [...names]
+}
+
+function RenameTokenForm({
+  family,
+  manifest,
+  onPreview,
+  onApply,
+}: {
+  family: RenameTokenFamily
+  manifest: ThemeManifest
+  onPreview: (req: { family: RenameTokenFamily; from: string; to: string }) => Promise<RenameTokenResponse>
+  onApply: (req: { family: RenameTokenFamily; from: string; to: string }) => Promise<RenameTokenResponse>
+}) {
+  // Parent remounts this component (key={group.id}) on family change, so this only
+  // ever needs to initialize once per mount — no reset effect required.
+  const fromOptions = React.useMemo(() => fromOptionsFor(family, manifest), [family, manifest])
+  const existingNames = React.useMemo(() => allTokenNames(manifest), [manifest])
+  const reserved = React.useMemo(() => reservedWordsFor(family), [family])
+  const [from, setFrom] = React.useState(fromOptions[0] ?? '')
+  const [to, setTo] = React.useState('')
+  const [plan, setPlan] = React.useState<RenameTokenPlan | null>(null)
+  const [status, setStatus] = React.useState<string | null>(null)
+  const [busy, setBusy] = React.useState(false)
+
+  const toTrimmed = to.trim()
+  // Same rule the server enforces (isValidRenameTarget) — checked here too so the
+  // user sees the error immediately, before round-tripping to Preview.
+  const toError = toTrimmed ? isValidRenameTarget(family, from, toTrimmed, existingNames) : null
+
+  return (
+    <div className="bg-muted/40 rounded-lg border p-3">
+      <div className="typography-small mb-2 font-medium">Rename token</div>
+      <p className="text-muted-foreground mb-2 text-xs">
+        Renames this identifier everywhere it&apos;s used — CSS variables, the Tailwind
+        bridge, and every component that references it.
+      </p>
+      <div className="flex flex-wrap items-end gap-2">
+        <div className="grid gap-1">
+          <Label className="text-xs">From</Label>
+          <SearchSelect
+            items={fromOptions}
+            value={from || null}
+            onValueChange={(v) => {
+              if (v) setFrom(v)
+              setPlan(null)
+              setStatus(null)
+            }}
+            itemToValue={(v) => v}
+            itemToLabel={(v) => v}
+            className="h-8 w-36 font-mono text-xs"
+          />
+        </div>
+        <div className="grid gap-1">
+          <div className="flex items-center gap-1">
+            <Label className="text-xs">To</Label>
+            {reserved.length > 0 && (
+              // Native title, not the Tooltip component — the theme editor is always
+              // installed, but Tooltip is an optional selectable component and can't
+              // be assumed present here.
+              <span
+                title={`Reserved — can't be used: ${reserved.join(', ')}`}
+                className="text-muted-foreground inline-flex"
+                aria-label="Reserved names"
+              >
+                <AppIcon name="Info" className="size-3.5" />
+              </span>
+            )}
+          </div>
+          <Input
+            placeholder="new-name"
+            value={to}
+            aria-invalid={!!toError || undefined}
+            onChange={(e) => {
+              setTo(e.target.value)
+              setPlan(null)
+              setStatus(null)
+            }}
+            className="h-8 w-36 font-mono text-xs"
+          />
+        </div>
+        <Button
+          size="sm"
+          variant="outline"
+          disabled={busy || !from || !toTrimmed || !!toError}
+          onClick={async () => {
+            setBusy(true)
+            setStatus(null)
+            const res = await onPreview({ family, from, to: toTrimmed })
+            setStatus(res.message)
+            setPlan(res.ok ? res.plan : null)
+            setBusy(false)
+          }}
+        >
+          Preview
+        </Button>
+        {plan && (
+          <Button
+            size="sm"
+            disabled={busy}
+            onClick={async () => {
+              setBusy(true)
+              const res = await onApply({ family, from, to: toTrimmed })
+              setStatus(res.message)
+              setBusy(false)
+              if (res.ok) setPlan(null)
+            }}
+          >
+            Confirm rename
+          </Button>
+        )}
+      </div>
+      {toError && <FieldError className="mt-1">{toError}</FieldError>}
+      {plan && (
+        <div className="bg-background mt-2 max-h-40 overflow-y-auto rounded border p-2 text-xs">
+          <div className="mb-1 font-medium">
+            {plan.totalMatches} occurrence{plan.totalMatches === 1 ? '' : 's'} across{' '}
+            {plan.changes.length} file{plan.changes.length === 1 ? '' : 's'}
+          </div>
+          {plan.changes.map((c, i) => (
+            <div key={`${c.path}-${c.kind}-${i}`} className="text-muted-foreground truncate font-mono">
+              {relDisplay(c.path)} <span className="text-foreground">({c.matches})</span>
+            </div>
+          ))}
+        </div>
+      )}
+      {status && <p className="text-muted-foreground mt-2 text-xs">{status}</p>}
+    </div>
+  )
+}
+
+/** Lists whatever's currently staged via an Add* form (this session's pending
+ *  additions), each removable before Save. For fonts specifically this also covers
+ *  already-saved custom fonts — see removeFont's comment for why colors/typography
+ *  can't do the same yet. */
+function PendingItemsList<T>({
+  items,
+  keyOf,
+  labelOf,
+  onRemove,
+}: {
+  items: T[]
+  keyOf: (item: T) => string
+  labelOf: (item: T) => string
+  onRemove: (key: string) => void
+}) {
+  if (!items.length) return null
+  return (
+    <div className="flex flex-col gap-1">
+      {items.map((item) => {
+        const key = keyOf(item)
+        return (
+          <div
+            key={key}
+            className="bg-background flex items-center justify-between gap-2 rounded border px-2 py-1 text-xs"
+          >
+            <span className="truncate font-mono">{labelOf(item)}</span>
+            <button
+              type="button"
+              onClick={() => onRemove(key)}
+              className="text-muted-foreground hover:text-foreground shrink-0"
+              aria-label={`Remove ${key}`}
+            >
+              <AppIcon name="X" className="size-3.5" />
+            </button>
+          </div>
+        )
+      })}
+    </div>
   )
 }
 

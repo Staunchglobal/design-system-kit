@@ -96,3 +96,31 @@ export type ThemeSavePayload = {
   customFonts: CustomFont[];
   iconMap: Record<string, string>;
 };
+
+export type RenameTokenFamily = "color" | "radius" | "typography" | "shadow";
+
+export type RenameTokenRequest = {
+  family: RenameTokenFamily;
+  from: string;
+  to: string;
+  mode: "preview" | "apply";
+};
+
+export type RenameFileChange = {
+  path: string;
+  matches: number;
+  kind: "css" | "tw-class" | "data-literal" | "description";
+};
+
+export type RenameTokenPlan = {
+  changes: RenameFileChange[];
+  totalMatches: number;
+};
+
+export type RenameTokenResponse =
+  | { ok: true; plan: RenameTokenPlan; manifest?: ThemeManifest; message: string }
+  | {
+      ok: false;
+      message: string;
+      reason?: "no-op" | "invalid";
+    };

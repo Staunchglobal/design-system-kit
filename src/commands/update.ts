@@ -19,6 +19,7 @@ import {
 } from '../lib/selection.js'
 import { generateDesignSystemPage, generateLivePreview, generateNavTs, generateThemeIndexCss } from '../lib/codegen.js'
 import { writeGeneratedFile } from '../lib/copy.js'
+import { applyRenameHistory, loadRenameHistory } from '../lib/rename-history.js'
 
 export type UpdateOptions = { cwd: string; yes: boolean; force: boolean; dryRun?: boolean }
 
@@ -110,13 +111,21 @@ export async function update(options: UpdateOptions) {
     ...sectionFiles.map((f) => ({ relPath: f, templateSrc: remoteUrl(frameworkSrc, f) })),
   ]
 
+  // A previously-renamed token (via /theme-editor) only touched files that existed at
+  // the time — reapply it to every freshly-fetched template file below, before any
+  // comparison, so an already-renamed local file is never mistaken for drift against
+  // the (otherwise still-original-named) template, and a component added after the
+  // rename doesn't land back on the original name.
+  const renameHistory = loadRenameHistory(destRoot)
+
   const toWrite: Pending[] = []
   const skippedCustomized: string[] = []
   let upToDateCount = 0
 
   await mapWithConcurrency(managed, 8, async ({ relPath, templateSrc }) => {
-    const newContent = await fetchTemplateText(templateSrc)
+    let newContent = await fetchTemplateText(templateSrc)
     if (newContent === null) return // renamed/removed in a newer template — nothing to sync to
+    if (renameHistory.length) newContent = applyRenameHistory(relPath, newContent, renameHistory)
     const destPath = path.join(destRoot, relPath)
 
     if (!fs.existsSync(destPath)) {

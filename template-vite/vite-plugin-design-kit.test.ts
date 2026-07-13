@@ -1,4 +1,7 @@
-import { describe, expect, it } from 'vitest'
+import fs from 'node:fs'
+import os from 'node:os'
+import path from 'node:path'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import {
   SAFE_FONT_FAMILY_RE,
   SAFE_HEX_RE,
@@ -9,6 +12,7 @@ import {
   isSafeCssValue,
   isSafeCustomColorValue,
   isSafeCustomFont,
+  isValidRenameTargetInline,
 } from './vite-plugin-design-kit.js'
 
 // Mirrors template-shared/src/lib/theme/validation.test.ts — the Vite plugin can't
@@ -115,5 +119,41 @@ describe('isSafeCustomFont', () => {
     expect(
       isSafeCustomFont({ id: 'display', source: 'google', googleFamily: 'Inter', weights: '400;700' })
     ).toBe(true)
+  })
+})
+
+describe('isValidRenameTargetInline', () => {
+  let tmpDir: string
+  beforeEach(() => {
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'rename-validate-test-'))
+  })
+  afterEach(() => {
+    fs.rmSync(tmpDir, { recursive: true, force: true })
+  })
+
+  it('rejects an unsafe identifier', () => {
+    expect(isValidRenameTargetInline('color', 'accent', 'in fo', [], tmpDir)).toMatch(/valid identifier/)
+  })
+
+  it('rejects renaming to the same name', () => {
+    expect(isValidRenameTargetInline('color', 'accent', 'accent', [], tmpDir)).toMatch(/different/)
+  })
+
+  it('rejects a name reserved by a Tailwind builtin, per family, via the registry file', () => {
+    fs.mkdirSync(path.join(tmpDir, 'src/lib/theme'), { recursive: true })
+    fs.writeFileSync(
+      path.join(tmpDir, 'src/lib/theme/token-families.json'),
+      JSON.stringify({ reservedWords: { color: ['transparent'], radius: ['full'], typography: [], shadow: ['none'] } })
+    )
+    expect(isValidRenameTargetInline('radius', 'xl', 'full', [], tmpDir)).toMatch(/reserved/)
+    expect(isValidRenameTargetInline('shadow', 'xl', 'none', [], tmpDir)).toMatch(/reserved/)
+  })
+
+  it('rejects a name already used by another existing token', () => {
+    expect(isValidRenameTargetInline('color', 'accent', 'info', ['info'], tmpDir)).toMatch(/already used/)
+  })
+
+  it('accepts a valid, unused, non-reserved name', () => {
+    expect(isValidRenameTargetInline('color', 'accent', 'info', [], tmpDir)).toBeNull()
   })
 })
