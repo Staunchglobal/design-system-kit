@@ -65,6 +65,48 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "attachment.css",
     "extraFiles": []
   },
+  "auth": {
+    "uiDeps": [
+      "sonner",
+      "field",
+      "input",
+      "card",
+      "separator",
+      "alert",
+      "button",
+      "checkbox",
+      "input-otp"
+    ],
+    "npmDeps": [
+      "sonner",
+      "lucide-react",
+      "input-otp"
+    ],
+    "cssFile": null,
+    "extraFiles": [
+      "components/auth/types.ts",
+      "components/auth/auth-operations.ts",
+      "components/auth/auth-mock-client.ts",
+      "components/auth/auth-session.ts",
+      "components/auth/password-policy.ts",
+      "components/auth/password-requirement-errors.tsx",
+      "components/auth/otp-timer-storage.ts",
+      "components/auth/use-otp-timer.ts",
+      "components/auth/use-auth-store.ts",
+      "components/auth/graphql-client.ts",
+      "components/auth/auth-fetch.ts",
+      "components/auth/notify.ts",
+      "components/auth/password-input.tsx",
+      "components/auth/auth-shell.tsx",
+      "components/auth/login-form.tsx",
+      "components/auth/signup-form.tsx",
+      "components/auth/forgot-password-form.tsx",
+      "components/auth/verify-otp-form.tsx",
+      "components/auth/set-password-form.tsx",
+      "components/auth/change-password-form.tsx",
+      "components/auth/index.ts"
+    ]
+  },
   "avatar": {
     "uiDeps": [],
     "npmDeps": [

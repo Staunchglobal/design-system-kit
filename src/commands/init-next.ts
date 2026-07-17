@@ -33,7 +33,7 @@ import {
   resolveUiClosure,
 } from '../lib/selection.js'
 import { writeSelectionConfig, recordFileHashes } from '../lib/selection-state.js'
-import { ALWAYS_SHARED_FILES, ALWAYS_NEXT_FILES } from '../lib/managed-files.js'
+import { ALWAYS_SHARED_FILES, ALWAYS_NEXT_FILES, frameworkExtraFilesFor } from '../lib/managed-files.js'
 import { printBundleReport } from '../lib/report.js'
 import {
   generateDesignSystemPage,
@@ -144,6 +144,7 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
   // theme editor's tool-chrome deps (toolOnly) must never drag in an unrelated demo section.
   const navGroups = navGroupsFor(userClosure)
   const sectionFiles = demoFilesFor(navGroups).map((f) => `app/design-system/_sections/${f}`)
+  const frameworkExtraFiles = frameworkExtraFilesFor(userClosure, 'next')
 
   const sharedSrc = remoteUrl(templateSharedDir, 'src')
   const nextSrc = remoteUrl(templateNextDir, 'src')
@@ -157,6 +158,7 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
         { label: 'Extra files', baseDir: sharedSrc, relPaths: extraFiles },
         { label: 'Next.js fixed files', baseDir: nextSrc, relPaths: ALWAYS_NEXT_FILES },
         { label: 'Design-system demo files', baseDir: nextSrc, relPaths: sectionFiles },
+        { label: 'Framework feature routes', baseDir: nextSrc, relPaths: frameworkExtraFiles },
       ],
       runtimeDeps: Object.keys(neededRuntime),
       devDeps: Object.keys(NEXT_DEV_DEPENDENCIES),
@@ -189,13 +191,34 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
   )
   const nextFixed = await copySelectedFiles(nextSrc, destRoot, ALWAYS_NEXT_FILES, dryRun, renameHistory)
   const nextSections = await copySelectedFiles(nextSrc, destRoot, sectionFiles, dryRun, renameHistory)
+  const nextFrameworkExtra = await copySelectedFiles(
+    nextSrc,
+    destRoot,
+    frameworkExtraFiles,
+    dryRun,
+    renameHistory
+  )
 
-  const copied = [sharedFixed, sharedUi, sharedCss, sharedExtra, sharedTokens, nextFixed, nextSections].flatMap(
-    (r) => r.copied
-  )
-  const skipped = [sharedFixed, sharedUi, sharedCss, sharedExtra, sharedTokens, nextFixed, nextSections].flatMap(
-    (r) => r.skipped
-  )
+  const copied = [
+    sharedFixed,
+    sharedUi,
+    sharedCss,
+    sharedExtra,
+    sharedTokens,
+    nextFixed,
+    nextSections,
+    nextFrameworkExtra,
+  ].flatMap((r) => r.copied)
+  const skipped = [
+    sharedFixed,
+    sharedUi,
+    sharedCss,
+    sharedExtra,
+    sharedTokens,
+    nextFixed,
+    nextSections,
+    nextFrameworkExtra,
+  ].flatMap((r) => r.skipped)
   for (const f of copied) log[dryRun ? 'info' : 'success'](dryRun ? `Would copy ${rel(f)}` : rel(f))
   for (const f of skipped) log.skip(`${rel(f)} (already exists — left untouched)`)
 
@@ -208,6 +231,7 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
       ...hashEntriesFor(sharedTokens),
       ...hashEntriesFor(nextFixed),
       ...hashEntriesFor(nextSections),
+      ...hashEntriesFor(nextFrameworkExtra),
     ])
   }
 
@@ -378,6 +402,12 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
   log.title('Done')
   log.success('Design system kit installed.')
   log.info(`Run your dev server, then visit ${pc.bold('/design-system')} and ${pc.bold('/theme-editor')}.`)
+  if (userClosure.has('auth')) {
+    log.info(
+      `Auth pages: ${pc.bold('/auth/login')}, /auth/signup, /auth/forgot-password, /auth/verify-otp, /auth/reset-password, /auth/accept-invitation, /auth/change-password, /auth/home`
+    )
+    log.info('Demo mock: demo@example.com / Password1! — OTP always 123456')
+  }
   log.info(`Run \`${pc.bold('design-kit init')}\` again any time to add more components.`)
   if (skipped.length) {
     log.warn(`${skipped.length} file(s) already existed and were left untouched — see the list above.`)

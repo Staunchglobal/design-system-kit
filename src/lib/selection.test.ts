@@ -10,6 +10,7 @@ import {
   npmDepsFor,
   resolveUiClosure,
 } from './selection.js'
+import { FRAMEWORK_EXTRA_FILES, frameworkExtraFilesFor } from './managed-files.js'
 
 describe('resolveUiClosure', () => {
   it('includes the selected slug itself plus its declared uiDeps', () => {
@@ -138,6 +139,22 @@ describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
     expect(COMPONENTS['crud-table'].cssFile).toBeNull()
   })
 
+  it('extraFilesFor surfaces auth companions', () => {
+    const files = extraFilesFor(resolveUiClosure(['auth']))
+    expect(files.has('components/auth/auth-operations.ts')).toBe(true)
+    expect(files.has('components/auth/auth-mock-client.ts')).toBe(true)
+    expect(files.has('components/auth/login-form.tsx')).toBe(true)
+    expect(files.has('components/auth/auth-fetch.ts')).toBe(true)
+  })
+
+  it('auth uiDeps include card/field/input-otp/sonner from EXTRA_FILES scan', () => {
+    expect(COMPONENTS.auth.uiDeps).toEqual(
+      expect.arrayContaining(['card', 'field', 'input', 'input-otp', 'button', 'checkbox', 'alert', 'sonner'])
+    )
+    expect(COMPONENTS.auth.cssFile).toBeNull()
+    expect(COMPONENTS.auth.npmDeps).toEqual(expect.arrayContaining(['sonner', 'lucide-react']))
+  })
+
   it('npmDepsFor unions deps across the whole closure without duplicates', () => {
     const deps = npmDepsFor(resolveUiClosure(['combobox', 'chart']))
     expect(deps.size).toBe(new Set(deps).size)
@@ -150,5 +167,20 @@ describe('THEME_EDITOR_REQUIRED_COMPONENTS', () => {
     const closure = resolveUiClosure(THEME_EDITOR_REQUIRED_COMPONENTS)
     expect(closure.size).toBeGreaterThan(0)
     expect(closure.has('patterns')).toBe(false)
+  })
+})
+
+describe('FRAMEWORK_EXTRA_FILES', () => {
+  it('auth maps Next and Vite product routes', () => {
+    expect(FRAMEWORK_EXTRA_FILES.auth.next).toEqual(
+      expect.arrayContaining(['app/auth/login/page.tsx', 'app/auth/home/page.tsx'])
+    )
+    expect(FRAMEWORK_EXTRA_FILES.auth.vite).toEqual(
+      expect.arrayContaining(['auth/LoginPage.tsx', 'auth/AuthHomePage.tsx'])
+    )
+    expect(frameworkExtraFilesFor(resolveUiClosure(['auth']), 'next')).toEqual(
+      expect.arrayContaining(['app/auth/layout.tsx', 'app/auth/verify-otp/page.tsx'])
+    )
+    expect(frameworkExtraFilesFor(resolveUiClosure(['button']), 'next')).toEqual([])
   })
 })

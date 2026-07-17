@@ -1,7 +1,5 @@
 'use client'
 
-import * as React from 'react'
-
 import type { CrudFieldDef } from '@/components/crud/types'
 import { Field, FieldError, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'

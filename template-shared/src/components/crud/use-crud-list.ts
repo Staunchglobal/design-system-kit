@@ -37,15 +37,40 @@ export function useCrudList<T>({
   )
 
   const fetchPageRef = React.useRef(fetchPage)
-  fetchPageRef.current = fetchPage
-
   const getItemIdRef = React.useRef(getItemId)
-  getItemIdRef.current = getItemId
-
   const pageRef = React.useRef(page)
-  pageRef.current = page
 
-  const queryRef = React.useRef({ debouncedSearch, sort, activeTab, pageSize })
+  React.useEffect(() => {
+    fetchPageRef.current = fetchPage
+  }, [fetchPage])
+
+  React.useEffect(() => {
+    getItemIdRef.current = getItemId
+  }, [getItemId])
+
+  React.useEffect(() => {
+    pageRef.current = page
+  }, [page])
+
+  // Reset to page 1 when the query changes (React "adjusting state during render" pattern —
+  // avoids setState-in-effect when filters/search settle).
+  const [prevQuery, setPrevQuery] = React.useState({
+    debouncedSearch,
+    sort,
+    activeTab,
+    pageSize,
+  })
+  if (
+    prevQuery.debouncedSearch !== debouncedSearch ||
+    prevQuery.sort !== sort ||
+    prevQuery.activeTab !== activeTab ||
+    prevQuery.pageSize !== pageSize
+  ) {
+    setPrevQuery({ debouncedSearch, sort, activeTab, pageSize })
+    if (page !== 1) {
+      setPage(1)
+    }
+  }
 
   const setPageSize = React.useCallback((next: number) => {
     setPageSizeState(next)
@@ -57,27 +82,23 @@ export function useCrudList<T>({
     setPage(1)
   }, [])
 
+  // When the fetch key changes, flip loading during render (avoids setState-in-effect).
+  const fetchKey = isSearchPending
+    ? null
+    : `${page}|${pageSize}|${debouncedSearch}|${sort?.field ?? ''}|${sort?.order ?? ''}|${activeTab ?? ''}|${reloadToken}`
+  const [prevFetchKey, setPrevFetchKey] = React.useState(fetchKey)
+  if (fetchKey !== prevFetchKey) {
+    setPrevFetchKey(fetchKey)
+    if (fetchKey !== null) {
+      setLoading(true)
+      setError(null)
+    }
+  }
+
   React.useEffect(() => {
     if (isSearchPending) return
 
-    const prev = queryRef.current
-    const queryChanged =
-      prev.debouncedSearch !== debouncedSearch ||
-      prev.sort !== sort ||
-      prev.activeTab !== activeTab ||
-      prev.pageSize !== pageSize
-
-    if (queryChanged) {
-      queryRef.current = { debouncedSearch, sort, activeTab, pageSize }
-      if (page !== 1) {
-        setPage(1)
-        return
-      }
-    }
-
     let cancelled = false
-    setLoading(true)
-    setError(null)
 
     fetchPageRef
       .current({

@@ -78,6 +78,22 @@ that already exists on disk is ever overwritten — files you've hand-edited are
 npx staunch-shadcn-design-system-kit init --components calendar,chart
 ```
 
+### Auth pages (opt-in)
+
+Install the `auth` slug to get Login, Signup, Forgot Password, Verify OTP, Reset Password,
+Accept Invitation, Change Password, and a post-login home stub — as product routes under
+`/auth/*` (not design-system demos). Includes GraphQL mutation documents and an in-memory mock
+(`demo@example.com` / `Password1!`, OTP always `123456`). Point `createAuthFetch({ endpoint })`
+at your API (or replace documents in `auth-operations.ts`) when you go live.
+
+```bash
+npx staunch-shadcn-design-system-kit init --components auth
+```
+
+Next.js App Router routes work immediately. Vite: mount the pages from `src/auth/*Page.tsx` with
+your router (the CLI prints example `<Route>` lines). `auth` is not in the interactive picker’s
+nav groups — pass `--components auth` (or `--all`) to install it.
+
 ### Removing components later
 
 ```bash

@@ -43,15 +43,17 @@ export function CrudEntityFormDialog({
   const [formError, setFormError] = React.useState<string | null>(null)
   const [submitting, setSubmitting] = React.useState(false)
 
-  React.useEffect(() => {
-    if (!open) return
-    setValues({ ...emptyValuesFromFields(fields), ...initialValues })
-    setFieldErrors({})
-    setFormError(null)
-    setSubmitting(false)
-    // Reset form state only when the dialog opens — not on every parent re-render.
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentional
-  }, [open])
+  // Reset form when the dialog opens (React "adjusting state during render" pattern).
+  const [prevOpen, setPrevOpen] = React.useState(open)
+  if (open !== prevOpen) {
+    setPrevOpen(open)
+    if (open) {
+      setValues({ ...emptyValuesFromFields(fields), ...initialValues })
+      setFieldErrors({})
+      setFormError(null)
+      setSubmitting(false)
+    }
+  }
 
   return (
     <CrudFormDialog

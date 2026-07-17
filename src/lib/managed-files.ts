@@ -54,3 +54,49 @@ export const ALWAYS_VITE_FILES = [
   'theme-editor/_components/variable-form.tsx',
   'theme-editor/_lib/theme-editor-context.tsx',
 ]
+
+/**
+ * Framework route/page files copied only when the matching opt-in slug is in the
+ * install closure (e.g. `auth` product pages under /auth/*). Paths are relative to
+ * template-next/src or template-vite/src.
+ */
+export const FRAMEWORK_EXTRA_FILES: Record<
+  string,
+  { next: string[]; vite: string[] }
+> = {
+  auth: {
+    next: [
+      'app/auth/layout.tsx',
+      'app/auth/login/page.tsx',
+      'app/auth/signup/page.tsx',
+      'app/auth/forgot-password/page.tsx',
+      'app/auth/verify-otp/page.tsx',
+      'app/auth/reset-password/page.tsx',
+      'app/auth/accept-invitation/page.tsx',
+      'app/auth/change-password/page.tsx',
+      'app/auth/home/page.tsx',
+    ],
+    vite: [
+      'auth/LoginPage.tsx',
+      'auth/SignupPage.tsx',
+      'auth/ForgotPasswordPage.tsx',
+      'auth/VerifyOtpPage.tsx',
+      'auth/ResetPasswordPage.tsx',
+      'auth/AcceptInvitationPage.tsx',
+      'auth/ChangePasswordPage.tsx',
+      'auth/AuthHomePage.tsx',
+    ],
+  },
+}
+
+export function frameworkExtraFilesFor(
+  closure: Iterable<string>,
+  framework: 'next' | 'vite'
+): string[] {
+  const out: string[] = []
+  for (const slug of closure) {
+    const entry = FRAMEWORK_EXTRA_FILES[slug]
+    if (entry) out.push(...entry[framework])
+  }
+  return out
+}

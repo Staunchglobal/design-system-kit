@@ -8,7 +8,7 @@ import { confirm } from '../lib/confirm.js'
 import { readSelectionConfig, recordFileHashes, hashContent } from '../lib/selection-state.js'
 import { templateSharedDir, templateNextDir, templateViteDir } from '../lib/paths.js'
 import { fetchTemplateText, mapWithConcurrency, remoteUrl } from '../lib/remote.js'
-import { ALWAYS_SHARED_FILES, ALWAYS_NEXT_FILES, ALWAYS_VITE_FILES } from '../lib/managed-files.js'
+import { ALWAYS_SHARED_FILES, ALWAYS_NEXT_FILES, ALWAYS_VITE_FILES, frameworkExtraFilesFor } from '../lib/managed-files.js'
 import {
   THEME_EDITOR_REQUIRED_COMPONENTS,
   cssFilesFor,
@@ -86,6 +86,10 @@ export async function update(options: UpdateOptions) {
   const cssFiles = [...cssFilesFor(closure)].map((f) => `styles/theme/components/${f}`)
   const extraFilesList = [...extraFilesFor(closure)]
   const sectionFiles = demoFilesFor(navGroups).map((f) => `${sectionsRel}/${f}`)
+  const frameworkExtraFiles = frameworkExtraFilesFor(
+    userClosure,
+    project.framework === 'next' ? 'next' : 'vite'
+  )
 
   const alwaysFixed = project.framework === 'next' ? ALWAYS_NEXT_FILES : ALWAYS_VITE_FILES
   const frameworkTemplateDir = project.framework === 'next' ? templateNextDir : templateViteDir
@@ -109,6 +113,7 @@ export async function update(options: UpdateOptions) {
       templateSrc: remoteUrl(frameworkTemplateDir, 'scripts/generate-theme-manifest.mjs'),
     },
     ...sectionFiles.map((f) => ({ relPath: f, templateSrc: remoteUrl(frameworkSrc, f) })),
+    ...frameworkExtraFiles.map((f) => ({ relPath: f, templateSrc: remoteUrl(frameworkSrc, f) })),
   ]
 
   // A previously-renamed token (via /theme-editor) only touched files that existed at

@@ -9,6 +9,8 @@
  * Usage: node scripts/smoke-test.mjs [--keep] [--only next|vite]
  *   --keep         Don't delete the scaffolded scratch projects afterward (for debugging).
  *   --only <fw>    Only run that framework's scenarios.
+ *
+ * Always passes `--templates <repo-root>` so init exercises the local checkout (not the CDN pin).
  */
 import { spawnSync } from 'node:child_process'
 import fs from 'node:fs'
@@ -93,14 +95,14 @@ function mountVitePages(dir) {
 
 function initAndBuildNext(dir, initArgs) {
   scaffoldNext(dir)
-  assert(run('node', [cli, 'init', '--yes', ...initArgs], dir), 'design-kit init failed')
+  assert(run('node', [cli, '--templates', root, 'init', '--yes', ...initArgs], dir), 'design-kit init failed')
   assert(run('npm', ['run', 'build'], dir), 'next build failed')
   assert(run('npm', ['run', 'lint'], dir), 'next lint failed')
 }
 
 function initAndBuildVite(dir, initArgs) {
   scaffoldVite(dir)
-  assert(run('node', [cli, 'init', '--yes', ...initArgs], dir), 'design-kit init failed')
+  assert(run('node', [cli, '--templates', root, 'init', '--yes', ...initArgs], dir), 'design-kit init failed')
   mountVitePages(dir)
   assert(run('npm', ['run', 'build'], dir), 'vite build failed')
 }

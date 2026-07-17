@@ -3,17 +3,12 @@ import * as React from 'react'
 /** Debounces a value with a plain timeout — no external library. */
 export function useDebouncedValue<T>(value: T, delayMs: number): T {
   const [debouncedValue, setDebouncedValue] = React.useState(value)
-  const latestValueRef = React.useRef(value)
-  latestValueRef.current = value
 
   React.useEffect(() => {
-    if (delayMs <= 0) {
-      setDebouncedValue(value)
-      return
-    }
+    if (delayMs <= 0) return
 
     const handler = setTimeout(() => {
-      setDebouncedValue(latestValueRef.current)
+      setDebouncedValue(value)
     }, delayMs)
 
     return () => {
@@ -21,6 +16,8 @@ export function useDebouncedValue<T>(value: T, delayMs: number): T {
     }
   }, [value, delayMs])
 
+  // No debounce window — return the live value (avoids setState-in-effect sync).
+  if (delayMs <= 0) return value
   return debouncedValue
 }
 

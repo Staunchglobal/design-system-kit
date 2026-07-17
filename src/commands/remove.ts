@@ -18,6 +18,7 @@ import {
 import { generateDesignSystemPage, generateLivePreview, generateNavTs, generateThemeIndexCss } from '../lib/codegen.js'
 import { writeGeneratedFile } from '../lib/copy.js'
 import { COMPONENTS } from '../generated/registry.js'
+import { frameworkExtraFilesFor } from '../lib/managed-files.js'
 
 export type RemoveOptions = {
   cwd: string
@@ -126,6 +127,11 @@ export async function remove(options: RemoveOptions) {
   const newExtraFiles = extraFilesFor(newClosure)
   const orphanedExtraFiles = [...oldExtraFiles].filter((f) => !newExtraFiles.has(f))
 
+  const frameworkKey = project.framework === 'next' ? 'next' : 'vite'
+  const oldFrameworkExtra = new Set(frameworkExtraFilesFor(oldUserClosure, frameworkKey))
+  const newFrameworkExtra = new Set(frameworkExtraFilesFor(newUserClosure, frameworkKey))
+  const orphanedFrameworkExtra = [...oldFrameworkExtra].filter((f) => !newFrameworkExtra.has(f))
+
   const filesToDelete: string[] = [
     ...orphaned.filter((s) => s !== 'patterns').map((s) => rel(`components/ui/${s}.tsx`)),
     ...orphaned
@@ -134,6 +140,7 @@ export async function remove(options: RemoveOptions) {
       .map((f) => rel(`styles/theme/components/${f}`)),
     ...orphanedExtraFiles.map((f) => rel(f)),
     ...orphanedDemoFiles.map((f) => rel(`${sectionsRel}/${f}`)),
+    ...orphanedFrameworkExtra.map((f) => rel(f)),
   ]
 
   log.title('Files to delete')

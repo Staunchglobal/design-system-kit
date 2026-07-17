@@ -44,7 +44,7 @@ const NPM_PACKAGES = [
 // Files not named after their own component (component slug -> css filename).
 const CSS_FILE_OVERRIDES = { sonner: 'sonner-toast.css' }
 // Components with no dedicated theme CSS file (pure logic/utility, nothing to theme).
-const NO_CSS = new Set(['direction', 'crud-table'])
+const NO_CSS = new Set(['direction', 'crud-table', 'auth'])
 // Extra non-ui files a component's runtime needs (paths relative to template-shared/src/).
 const EXTRA_FILES = {
   sidebar: ['hooks/use-mobile.ts'],
@@ -61,6 +61,29 @@ const EXTRA_FILES = {
     'components/crud/crud-toolbar.tsx',
     'components/crud/crud-screen.tsx',
     'components/crud/graphql-client.ts',
+  ],
+  auth: [
+    'components/auth/types.ts',
+    'components/auth/auth-operations.ts',
+    'components/auth/auth-mock-client.ts',
+    'components/auth/auth-session.ts',
+    'components/auth/password-policy.ts',
+    'components/auth/password-requirement-errors.tsx',
+    'components/auth/otp-timer-storage.ts',
+    'components/auth/use-otp-timer.ts',
+    'components/auth/use-auth-store.ts',
+    'components/auth/graphql-client.ts',
+    'components/auth/auth-fetch.ts',
+    'components/auth/notify.ts',
+    'components/auth/password-input.tsx',
+    'components/auth/auth-shell.tsx',
+    'components/auth/login-form.tsx',
+    'components/auth/signup-form.tsx',
+    'components/auth/forgot-password-form.tsx',
+    'components/auth/verify-otp-form.tsx',
+    'components/auth/set-password-form.tsx',
+    'components/auth/change-password-form.tsx',
+    'components/auth/index.ts',
   ],
 }
 

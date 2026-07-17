@@ -33,7 +33,7 @@ import {
   resolveUiClosure,
 } from '../lib/selection.js'
 import { writeSelectionConfig, recordFileHashes } from '../lib/selection-state.js'
-import { ALWAYS_SHARED_FILES, ALWAYS_VITE_FILES } from '../lib/managed-files.js'
+import { ALWAYS_SHARED_FILES, ALWAYS_VITE_FILES, frameworkExtraFilesFor } from '../lib/managed-files.js'
 import { printBundleReport } from '../lib/report.js'
 import {
   generateDesignSystemPage,
@@ -128,6 +128,7 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   // theme editor's tool-chrome deps (toolOnly) must never drag in an unrelated demo section.
   const navGroups = navGroupsFor(userClosure)
   const sectionFiles = demoFilesFor(navGroups).map((f) => `design-system/_sections/${f}`)
+  const frameworkExtraFiles = frameworkExtraFilesFor(userClosure, 'vite')
 
   const sharedSrc = remoteUrl(templateSharedDir, 'src')
   const viteSrc = remoteUrl(templateViteDir, 'src')
@@ -141,6 +142,7 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
         { label: 'Extra files', baseDir: sharedSrc, relPaths: extraFiles },
         { label: 'Vite fixed files', baseDir: viteSrc, relPaths: ALWAYS_VITE_FILES },
         { label: 'Design-system demo files', baseDir: viteSrc, relPaths: sectionFiles },
+        { label: 'Framework feature routes', baseDir: viteSrc, relPaths: frameworkExtraFiles },
       ],
       runtimeDeps: Object.keys(neededRuntime),
       devDeps: Object.keys(VITE_DEV_DEPENDENCIES),
@@ -173,13 +175,34 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   )
   const viteFixed = await copySelectedFiles(viteSrc, path.join(root, 'src'), ALWAYS_VITE_FILES, dryRun, renameHistory)
   const viteSections = await copySelectedFiles(viteSrc, path.join(root, 'src'), sectionFiles, dryRun, renameHistory)
+  const viteFrameworkExtra = await copySelectedFiles(
+    viteSrc,
+    path.join(root, 'src'),
+    frameworkExtraFiles,
+    dryRun,
+    renameHistory
+  )
 
-  const copied = [sharedFixed, sharedUi, sharedCss, sharedExtra, sharedTokens, viteFixed, viteSections].flatMap(
-    (r) => r.copied
-  )
-  const skipped = [sharedFixed, sharedUi, sharedCss, sharedExtra, sharedTokens, viteFixed, viteSections].flatMap(
-    (r) => r.skipped
-  )
+  const copied = [
+    sharedFixed,
+    sharedUi,
+    sharedCss,
+    sharedExtra,
+    sharedTokens,
+    viteFixed,
+    viteSections,
+    viteFrameworkExtra,
+  ].flatMap((r) => r.copied)
+  const skipped = [
+    sharedFixed,
+    sharedUi,
+    sharedCss,
+    sharedExtra,
+    sharedTokens,
+    viteFixed,
+    viteSections,
+    viteFrameworkExtra,
+  ].flatMap((r) => r.skipped)
   for (const f of copied) log[dryRun ? 'info' : 'success'](dryRun ? `Would copy src/${f}` : `src/${f}`)
   for (const f of skipped) log.skip(`src/${f} (already exists — left untouched)`)
 
@@ -192,6 +215,7 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
       ...hashEntriesFor(sharedTokens),
       ...hashEntriesFor(viteFixed),
       ...hashEntriesFor(viteSections),
+      ...hashEntriesFor(viteFrameworkExtra),
     ])
   }
 
@@ -366,9 +390,29 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
     'Vite has no built-in router, so wire these up yourself — e.g. with react-router-dom:\n' +
       `  import DesignSystemPage from '@/design-system/DesignSystemPage'\n` +
       `  import ThemeEditorPage from '@/theme-editor/ThemeEditorPage'\n` +
+      (userClosure.has('auth')
+        ? `  import LoginPage from '@/auth/LoginPage'\n` +
+          `  import SignupPage from '@/auth/SignupPage'\n` +
+          `  import ForgotPasswordPage from '@/auth/ForgotPasswordPage'\n` +
+          `  import VerifyOtpPage from '@/auth/VerifyOtpPage'\n` +
+          `  import ResetPasswordPage from '@/auth/ResetPasswordPage'\n` +
+          `  import AcceptInvitationPage from '@/auth/AcceptInvitationPage'\n` +
+          `  import ChangePasswordPage from '@/auth/ChangePasswordPage'\n` +
+          `  import AuthHomePage from '@/auth/AuthHomePage'\n`
+        : '') +
       '  …\n' +
       '  <Route path="/design-system" element={<DesignSystemPage />} />\n' +
       '  <Route path="/theme-editor" element={<ThemeEditorPage />} />' +
+      (userClosure.has('auth')
+        ? '\n  <Route path="/auth/login" element={<LoginPage />} />\n' +
+          '  <Route path="/auth/signup" element={<SignupPage />} />\n' +
+          '  <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />\n' +
+          '  <Route path="/auth/verify-otp" element={<VerifyOtpPage />} />\n' +
+          '  <Route path="/auth/reset-password" element={<ResetPasswordPage />} />\n' +
+          '  <Route path="/auth/accept-invitation" element={<AcceptInvitationPage />} />\n' +
+          '  <Route path="/auth/change-password" element={<ChangePasswordPage />} />\n' +
+          '  <Route path="/auth/home" element={<AuthHomePage />} />'
+        : '') +
       (providerLines.length
         ? '\n\nAlso wrap your app root once with the tooltip/toast providers:\n' + providerLines.join('\n')
         : '')
