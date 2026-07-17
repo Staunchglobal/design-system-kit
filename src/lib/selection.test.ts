@@ -121,6 +121,23 @@ describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
     expect(files.has('hooks/use-mobile.ts')).toBe(true)
   })
 
+  it('extraFilesFor surfaces crud-table companions', () => {
+    const files = extraFilesFor(resolveUiClosure(['crud-table']))
+    expect(files.has('hooks/use-mobile.ts')).toBe(true)
+    expect(files.has('components/crud/use-crud-list.ts')).toBe(true)
+    expect(files.has('components/crud/graphql-client.ts')).toBe(true)
+    expect(files.has('components/crud/crud-screen.tsx')).toBe(true)
+    expect(files.has('components/crud/crud-toolbar.tsx')).toBe(true)
+    expect(files.has('components/crud/crud-pagination.tsx')).toBe(true)
+  })
+
+  it('crud-table uiDeps include dialog/alert-dialog from EXTRA_FILES scan', () => {
+    expect(COMPONENTS['crud-table'].uiDeps).toEqual(
+      expect.arrayContaining(['dialog', 'alert-dialog', 'field', 'table', 'button', 'pagination'])
+    )
+    expect(COMPONENTS['crud-table'].cssFile).toBeNull()
+  })
+
   it('npmDepsFor unions deps across the whole closure without duplicates', () => {
     const deps = npmDepsFor(resolveUiClosure(['combobox', 'chart']))
     expect(deps.size).toBe(new Set(deps).size)

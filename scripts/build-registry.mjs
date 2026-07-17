@@ -44,9 +44,25 @@ const NPM_PACKAGES = [
 // Files not named after their own component (component slug -> css filename).
 const CSS_FILE_OVERRIDES = { sonner: 'sonner-toast.css' }
 // Components with no dedicated theme CSS file (pure logic/utility, nothing to theme).
-const NO_CSS = new Set(['direction'])
-// Extra non-ui files a component's runtime needs.
-const EXTRA_FILES = { sidebar: ['hooks/use-mobile.ts'] }
+const NO_CSS = new Set(['direction', 'crud-table'])
+// Extra non-ui files a component's runtime needs (paths relative to template-shared/src/).
+const EXTRA_FILES = {
+  sidebar: ['hooks/use-mobile.ts'],
+  'crud-table': [
+    'hooks/use-mobile.ts',
+    'components/crud/types.ts',
+    'components/crud/use-debounced-value.ts',
+    'components/crud/use-crud-list.ts',
+    'components/crud/crud-form-dialog.tsx',
+    'components/crud/crud-form-fields.tsx',
+    'components/crud/crud-entity-form-dialog.tsx',
+    'components/crud/crud-delete-dialog.tsx',
+    'components/crud/crud-pagination.tsx',
+    'components/crud/crud-toolbar.tsx',
+    'components/crud/crud-screen.tsx',
+    'components/crud/graphql-client.ts',
+  ],
+}
 
 function parseNavGroups(src) {
   const groups = []
@@ -123,6 +139,19 @@ for (const f of uiFiles) {
   // "table" ships a demo that imports a Badge component that was never copied.
   const demoUiDeps = new Set(uiDeps)
   const demoNpmDeps = new Set(npmDeps)
+
+  // EXTRA_FILES (e.g. components/crud/* for crud-table) often hold the real ui/npm imports —
+  // scan them too, or dialog/alert-dialog/field never land in uiDeps.
+  for (const extra of EXTRA_FILES[slug] ?? []) {
+    const extraPath = path.join(root, 'template-shared/src', extra)
+    if (!fs.existsSync(extraPath)) {
+      throw new Error(`EXTRA_FILES['${slug}'] references missing file: ${extra}`)
+    }
+    const deps = fileDeps(extraPath)
+    for (const d of deps.uiDeps) if (d !== slug) demoUiDeps.add(d)
+    for (const d of deps.npmDeps) demoNpmDeps.add(d)
+  }
+
   if (fs.existsSync(path.join(sectionsDir, `${slug}.tsx`))) {
     const demoFiles = [`${slug}.tsx`, ...extraDemoFilesFor(slug)]
     for (const demoFile of demoFiles) {

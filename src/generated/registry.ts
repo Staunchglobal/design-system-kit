@@ -220,6 +220,39 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "context-menu.css",
     "extraFiles": []
   },
+  "crud-table": {
+    "uiDeps": [
+      "button",
+      "table",
+      "dialog",
+      "field",
+      "input",
+      "textarea",
+      "alert-dialog",
+      "pagination",
+      "sonner"
+    ],
+    "npmDeps": [
+      "@tanstack/react-table",
+      "lucide-react",
+      "sonner"
+    ],
+    "cssFile": null,
+    "extraFiles": [
+      "hooks/use-mobile.ts",
+      "components/crud/types.ts",
+      "components/crud/use-debounced-value.ts",
+      "components/crud/use-crud-list.ts",
+      "components/crud/crud-form-dialog.tsx",
+      "components/crud/crud-form-fields.tsx",
+      "components/crud/crud-entity-form-dialog.tsx",
+      "components/crud/crud-delete-dialog.tsx",
+      "components/crud/crud-pagination.tsx",
+      "components/crud/crud-toolbar.tsx",
+      "components/crud/crud-screen.tsx",
+      "components/crud/graphql-client.ts"
+    ]
+  },
   "dialog": {
     "uiDeps": [
       "button",
@@ -912,6 +945,12 @@ export const GROUPS: NavGroup[] = [
         "slug": "breadcrumb",
         "label": "Breadcrumb",
         "demoFile": "breadcrumb.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "crud-table",
+        "label": "CRUD Screen",
+        "demoFile": "crud-table.tsx",
         "extraDemoFiles": []
       }
     ]

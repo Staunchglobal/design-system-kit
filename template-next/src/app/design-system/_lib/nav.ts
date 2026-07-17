@@ -79,6 +79,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { id: 'tabs', label: 'Tabs' },
       { id: 'pagination', label: 'Pagination' },
       { id: 'breadcrumb', label: 'Breadcrumb' },
+      { id: 'crud-table', label: 'CRUD Screen' },
     ],
   },
   {

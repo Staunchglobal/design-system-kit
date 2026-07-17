@@ -3,6 +3,7 @@ import { init } from './commands/init.js'
 import { remove } from './commands/remove.js'
 import { update } from './commands/update.js'
 import type { PackageManager } from './lib/detect.js'
+import { applyLocalTemplatesOption } from './lib/local-templates.js'
 
 const program = new Command()
 
@@ -12,6 +13,16 @@ program
     'Scaffolds a full shadcn/ui component set, a token-driven theme system, a /design-system showcase, and a live /theme-editor into a Next.js (App Router) + TypeScript + Tailwind v4 project.'
   )
   .version('0.1.0')
+  .option(
+    '--templates <path>',
+    'use a local design-system-kit checkout for templates instead of the CDN (maintainer/dev; same as DESIGN_KIT_LOCAL_TEMPLATES)'
+  )
+  .hook('preAction', (thisCommand) => {
+    // Global opts live on the root program; subcommands inherit via parent.
+    const root = thisCommand.parent ?? thisCommand
+    const templates = (root.opts() as { templates?: string }).templates
+    applyLocalTemplatesOption(templates)
+  })
 
 program
   .command('init')

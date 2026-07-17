@@ -21,14 +21,19 @@ export const TEMPLATES_REF = typeof __TEMPLATES_REF__ !== 'undefined' ? __TEMPLA
 const CDN_PREFIX = `https://cdn.jsdelivr.net/gh/${TEMPLATES_REPO}@${TEMPLATES_REF}/`
 
 /**
- * Set by CLI maintainers to a local checkout root (the repo dir containing
- * template-shared/, template-next/, etc.) to develop against local disk instead of
- * the network — avoids a push-and-wait-for-the-CDN loop while iterating. Never set
- * by end users; not part of the public interface. A local file always wins when
- * present (see localShadowPath below); the CDN is only used when it's absent, so a
- * partial local checkout (only the files you're actively editing) works fine.
+ * Set by CLI maintainers (env `DESIGN_KIT_LOCAL_TEMPLATES`, or `design-kit --templates <dir>`)
+ * to a local checkout root (the repo dir containing template-shared/, template-next/, etc.)
+ * to develop against local disk instead of the network — avoids a push-and-wait-for-the-CDN
+ * loop while iterating. Never needed by end users. A local file always wins when present
+ * (see localShadowPath below); the CDN is only used when it's absent, so a partial local
+ * checkout (only the files you're actively editing) works fine.
+ *
+ * Read at call time (not module load) so `--templates` can set the env after the CLI starts.
  */
-const LOCAL_TEMPLATES_ROOT = process.env.DESIGN_KIT_LOCAL_TEMPLATES
+function localTemplatesRoot(): string | undefined {
+  const root = process.env.DESIGN_KIT_LOCAL_TEMPLATES
+  return root && root.length > 0 ? root : undefined
+}
 
 export function isRemoteUrl(base: string): boolean {
   return base.startsWith('http://') || base.startsWith('https://')
@@ -43,11 +48,12 @@ export function remoteUrl(base: string, ...segments: string[]): string {
   return [base, ...segments].join('/').replace(/([^:])\/{2,}/g, '$1/')
 }
 
-/** If DESIGN_KIT_LOCAL_TEMPLATES is set and this CDN url's repo-relative path exists
+/** If a local templates root is set and this CDN url's repo-relative path exists
  *  under it, returns that local path — local always takes priority over the CDN. */
 function localShadowPath(url: string): string | null {
-  if (!LOCAL_TEMPLATES_ROOT || !url.startsWith(CDN_PREFIX)) return null
-  const localPath = `${LOCAL_TEMPLATES_ROOT}/${url.slice(CDN_PREFIX.length)}`
+  const root = localTemplatesRoot()
+  if (!root || !url.startsWith(CDN_PREFIX)) return null
+  const localPath = `${root}/${url.slice(CDN_PREFIX.length)}`
   return fs.existsSync(localPath) ? localPath : null
 }
 
