@@ -158,6 +158,40 @@ a different `@fontsource/*` package and update those two `@import`/`--font-*` li
 - `theme.manifest.json` (what drives the theme editor's sidebar) is regenerated from whatever CSS
   files are actually on disk, so it's always in sync with your current selection.
 
+## Renaming design tokens
+
+`/theme-editor` lets you rename a token's **identifier** — not just its value — for color
+families/semantic slots, radius steps, typography variants, and shadow steps. A rename
+propagates everywhere the old name was used: every CSS declaration and `var()` reference,
+the Tailwind `@theme` bridge (so `bg-accent` becomes `bg-info`, not just the color it
+resolves to), literal Tailwind classNames in every vendored component and demo section,
+and hand-authored description prose.
+
+Open the group you want to rename something in (Colors, Color Scales, Radius, Typography,
+or Shadows) — each has a **Rename token** panel above its fields:
+
+1. Pick the token (**From**) and type its new name (**To**). A name that collides with a
+   Tailwind builtin (`transparent`, `full`, `none`, …) is rejected inline, with an info
+   icon listing what's reserved for that family.
+2. **Preview** — lists every file that will change and how many occurrences, before
+   anything is written.
+3. **Confirm rename** — writes it for real and reloads the editor with the new name in
+   place.
+
+This is a real, repo-wide rewrite (potentially 50+ files for a widely-used color family) —
+dev-only, same as Save.
+
+**Adding components after a rename:** rename `accent` → `info`, then later run
+`init`/`update` to add a component that wasn't installed yet — it's corrected on the way
+in, arriving already saying `info` instead of the original template's `accent`. This is
+tracked in a small `src/lib/theme/token-renames.json` the CLI reads automatically; you
+don't need to do anything for it to work.
+
+**Deleting a custom token:** a color/typography/font you added via the "Add" forms in
+`/theme-editor` gets a remove (×) button in the same panel. Colors and typography can only
+be removed before you Save (once saved, they become an ordinary token like any built-in
+one); a custom font can be removed even after it's been saved.
+
 ## TypeScript 5 / 6 / 7 compatibility
 
 Every `init` run checks your tsconfig against TypeScript 7's breaking changes (removed
