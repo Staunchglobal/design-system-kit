@@ -1,0 +1,38 @@
+/* ==========================================================================
+   Notification Row
+   ========================================================================== */
+
+/* Root renders as an Item with its data-slot overridden to 'notification-row',
+   so it no longer inherits item.css's rules — restate the relevant subset here. */
+[data-slot='notification-row'] {
+  --notification-row-radius: var(--radius-lg);
+  --notification-row-gap: 0.625rem;
+  --notification-row-padding-x: 0.75rem;
+  --notification-row-padding-y: 0.625rem;
+  border-radius: var(--notification-row-radius);
+  gap: var(--notification-row-gap);
+  padding-inline: var(--notification-row-padding-x);
+  padding-block: var(--notification-row-padding-y);
+}
+[data-slot='notification-row'][data-variant='muted'] {
+  --notification-row-bg: var(--neutral-100);
+  background-color: var(--notification-row-bg);
+}
+[data-slot='notification-row']:focus-visible {
+  --notification-row-focus-ring-color: var(--neutral-400);
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px var(--notification-row-focus-ring-color);
+}
+
+[data-slot='notification-unread-dot'] {
+  --notification-unread-dot-bg: var(--primary);
+  background-color: var(--notification-unread-dot-bg);
+}
+
+.dark [data-slot='notification-row'][data-variant='muted'] {
+  --notification-row-bg: var(--neutral-800);
+}
+.dark [data-slot='notification-row']:focus-visible {
+  --notification-row-focus-ring-color: var(--neutral-500);
+}
+</content>

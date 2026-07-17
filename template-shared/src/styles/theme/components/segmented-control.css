@@ -1,0 +1,30 @@
+/* ==========================================================================
+   Segmented Control
+   ========================================================================== */
+
+/* Desktop: root renders as a ToggleGroup with its data-slot overridden to
+   'segmented-control' — its ToggleGroupItem children keep their own data-slot
+   and are still styled by toggle-group.css; only the outer radius is lost. */
+[data-slot='segmented-control'] {
+  --segmented-control-radius: var(--radius-lg);
+  border-radius: var(--segmented-control-radius);
+}
+
+/* Mobile: root renders as a SelectTrigger with its data-slot overridden to
+   'segmented-control' — aliased straight to the shared Input tokens, same
+   source select-trigger.css itself resolves from. */
+button[data-slot='segmented-control'] {
+  --segmented-control-select-radius: var(--input-radius);
+  --segmented-control-select-border-color: var(--input-border-color);
+  --segmented-control-select-bg: var(--input-bg);
+  border-radius: var(--segmented-control-select-radius);
+  border-color: var(--segmented-control-select-border-color);
+  background-color: var(--segmented-control-select-bg);
+}
+button[data-slot='segmented-control']:focus-visible {
+  --segmented-control-select-focus-border-color: var(--input-focus-border-color);
+  --segmented-control-select-focus-ring-color: var(--input-focus-ring-color);
+  border-color: var(--segmented-control-select-focus-border-color);
+  box-shadow: 0 0 0 var(--input-focus-ring-width) var(--segmented-control-select-focus-ring-color);
+}
+</content>

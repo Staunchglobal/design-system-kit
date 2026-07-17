@@ -1,0 +1,45 @@
+/* ==========================================================================
+   Stat Card
+   ========================================================================== */
+
+/* Root renders as a Card with its data-slot overridden to 'stat-card', so it
+   no longer inherits card.css's rules — restate the same override surface here. */
+[data-slot='stat-card'] {
+  --stat-card-bg: var(--card);
+  --stat-card-fg: var(--card-foreground);
+  --stat-card-radius: var(--radius-xl);
+  --stat-card-ring-color: var(--neutral-950);
+  --stat-card-ring-width: 1px;
+  background-color: var(--stat-card-bg);
+  color: var(--stat-card-fg);
+  border-radius: var(--stat-card-radius);
+  box-shadow: 0 0 0 var(--stat-card-ring-width) var(--stat-card-ring-color);
+}
+
+[data-slot='stat-card-icon'] {
+  --stat-card-icon-bg: var(--muted);
+  --stat-card-icon-fg: var(--foreground);
+  --stat-card-icon-radius: var(--radius-lg);
+  background-color: var(--stat-card-icon-bg);
+  color: var(--stat-card-icon-fg);
+  border-radius: var(--stat-card-icon-radius);
+}
+
+[data-slot='stat-card-label'] {
+  --stat-card-label-fg: var(--muted-foreground);
+  --stat-card-label-font-size: var(--typography-caption-font-size);
+  color: var(--stat-card-label-fg);
+  font-size: var(--stat-card-label-font-size);
+}
+
+[data-slot='stat-card-value'] {
+  --stat-card-value-font-family: var(--font-heading);
+  --stat-card-value-font-size: var(--typography-h4-font-size);
+  font-family: var(--stat-card-value-font-family);
+  font-size: var(--stat-card-value-font-size);
+}
+
+.dark [data-slot='stat-card'] {
+  --stat-card-ring-color: var(--neutral-50);
+}
+</content>

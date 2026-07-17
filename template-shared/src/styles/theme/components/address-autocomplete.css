@@ -1,0 +1,29 @@
+/* ==========================================================================
+   Address Autocomplete
+   ========================================================================== */
+
+[data-slot='address-autocomplete'] {
+  --address-autocomplete-gap: 0.375rem;
+  gap: var(--address-autocomplete-gap);
+}
+
+/* Prediction dropdown — same surface tokens as popover-content.css so it
+   matches every other floating panel in the kit. */
+[data-slot='address-autocomplete-list'] {
+  --address-autocomplete-list-bg: var(--popover);
+  --address-autocomplete-list-fg: var(--popover-foreground);
+  --address-autocomplete-list-ring-color: var(--neutral-950);
+  --address-autocomplete-list-radius: var(--radius-lg);
+  --address-autocomplete-list-shadow: var(--shadow-md);
+  background-color: var(--address-autocomplete-list-bg);
+  color: var(--address-autocomplete-list-fg);
+  border-radius: var(--address-autocomplete-list-radius);
+  box-shadow:
+    0 0 0 1px var(--address-autocomplete-list-ring-color),
+    var(--address-autocomplete-list-shadow);
+}
+
+.dark [data-slot='address-autocomplete-list'] {
+  --address-autocomplete-list-ring-color: var(--neutral-50);
+}
+</content>

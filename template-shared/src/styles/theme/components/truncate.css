@@ -1,0 +1,14 @@
+/* ==========================================================================
+   Truncate
+   ========================================================================== */
+
+[data-slot='truncate'] {
+  --truncate-font-size: var(--typography-small-font-size);
+  font-size: var(--truncate-font-size);
+}
+
+[data-slot='truncate'][data-mode='expand'] {
+  --truncate-expand-gap: 0.25rem;
+  gap: var(--truncate-expand-gap);
+}
+</content>

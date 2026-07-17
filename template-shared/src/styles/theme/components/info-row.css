@@ -1,0 +1,53 @@
+/* ==========================================================================
+   Info Row / Info List / Info Card
+   ========================================================================== */
+
+[data-slot='info-row'] {
+  --info-row-font-size: var(--typography-small-font-size);
+  font-size: var(--info-row-font-size);
+}
+
+[data-slot='info-row-label'] {
+  --info-row-label-fg: var(--muted-foreground);
+  color: var(--info-row-label-fg);
+}
+
+[data-slot='info-row-value'] {
+  --info-row-value-fg: var(--foreground);
+  color: var(--info-row-value-fg);
+}
+
+[data-slot='info-list'] {
+  --info-list-gap-x: 1.5rem;
+  --info-list-gap-y: 0.75rem;
+  column-gap: var(--info-list-gap-x);
+  row-gap: var(--info-list-gap-y);
+}
+
+/* Root renders as a Card with its data-slot overridden to 'info-card', so it
+   no longer inherits card.css's rules — restate the same override surface here. */
+[data-slot='info-card'] {
+  --info-card-bg: var(--card);
+  --info-card-fg: var(--card-foreground);
+  --info-card-radius: var(--radius-xl);
+  --info-card-ring-color: var(--neutral-950);
+  --info-card-ring-width: 1px;
+  background-color: var(--info-card-bg);
+  color: var(--info-card-fg);
+  border-radius: var(--info-card-radius);
+  box-shadow: 0 0 0 var(--info-card-ring-width) var(--info-card-ring-color);
+}
+
+[data-slot='info-card-icon'] {
+  --info-card-icon-bg: var(--muted);
+  --info-card-icon-fg: var(--foreground);
+  --info-card-icon-radius: var(--radius-lg);
+  background-color: var(--info-card-icon-bg);
+  color: var(--info-card-icon-fg);
+  border-radius: var(--info-card-icon-radius);
+}
+
+.dark [data-slot='info-card'] {
+  --info-card-ring-color: var(--neutral-50);
+}
+</content>

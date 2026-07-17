@@ -1,0 +1,16 @@
+/* ==========================================================================
+   Time Range Picker
+   ========================================================================== */
+
+[data-slot='time-range-picker'] {
+  --time-range-picker-gap: 1rem;
+  gap: var(--time-range-picker-gap);
+}
+
+[data-slot='time-range-day'] {
+  --time-range-day-border-color: var(--border);
+  --time-range-day-padding-bottom: 1rem;
+  border-color: var(--time-range-day-border-color);
+  padding-bottom: var(--time-range-day-padding-bottom);
+}
+</content>

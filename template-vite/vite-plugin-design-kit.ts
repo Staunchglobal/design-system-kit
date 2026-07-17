@@ -730,6 +730,65 @@ export function designKit(): Plugin {
           })
         )
       })
+
+      // Proxies Google's legacy Places REST endpoints — same CORS rationale as the
+      // Next.js kit's equivalent /api/places/* route handlers. Dev-only, same as
+      // the theme-save/rename-token middleware above.
+      server.middlewares.use('/api/places/autocomplete', async (req, res) => {
+        const url = new URL(req.url ?? '', 'http://localhost')
+        const input = url.searchParams.get('input') ?? ''
+        const key = url.searchParams.get('key')
+        res.setHeader('Content-Type', 'application/json')
+
+        if (!key) {
+          res.statusCode = 400
+          res.end(JSON.stringify({ status: 'REQUEST_DENIED', error_message: 'Missing API key' }))
+          return
+        }
+        if (!input.trim()) {
+          res.end(JSON.stringify({ status: 'ZERO_RESULTS', predictions: [] }))
+          return
+        }
+
+        const upstream = new URLSearchParams({ input, key, types: 'address' })
+        const components = url.searchParams.get('components')
+        if (components) upstream.set('components', components)
+
+        const upstreamRes = await fetch(
+          `https://maps.googleapis.com/maps/api/place/autocomplete/json?${upstream.toString()}`
+        )
+        res.statusCode = upstreamRes.status
+        res.end(await upstreamRes.text())
+      })
+
+      server.middlewares.use('/api/places/details', async (req, res) => {
+        const url = new URL(req.url ?? '', 'http://localhost')
+        const placeId = url.searchParams.get('place_id') ?? ''
+        const key = url.searchParams.get('key')
+        res.setHeader('Content-Type', 'application/json')
+
+        if (!key) {
+          res.statusCode = 400
+          res.end(JSON.stringify({ status: 'REQUEST_DENIED', error_message: 'Missing API key' }))
+          return
+        }
+        if (!placeId) {
+          res.statusCode = 400
+          res.end(JSON.stringify({ status: 'INVALID_REQUEST', error_message: 'Missing place_id' }))
+          return
+        }
+
+        const upstream = new URLSearchParams({
+          place_id: placeId,
+          key,
+          fields: 'formatted_address,geometry,address_component',
+        })
+        const upstreamRes = await fetch(
+          `https://maps.googleapis.com/maps/api/place/details/json?${upstream.toString()}`
+        )
+        res.statusCode = upstreamRes.status
+        res.end(await upstreamRes.text())
+      })
     },
   }
 }

@@ -119,14 +119,39 @@ function ComboboxContent({
   )
 }
 
-function ComboboxList({ className, ...props }: ComboboxPrimitive.List.Props) {
+function ComboboxList({
+  className,
+  onLoadMore,
+  isLoadingMore = false,
+  onScroll,
+  ...props
+}: ComboboxPrimitive.List.Props & {
+  onLoadMore?: () => void
+  isLoadingMore?: boolean
+}) {
+  const loadMoreLock = React.useRef(false)
+
   return (
     <ComboboxPrimitive.List
       data-slot="combobox-list"
+      data-loading-more={isLoadingMore ? '' : undefined}
+      aria-busy={isLoadingMore || undefined}
       className={cn(
         'no-scrollbar max-h-[min(calc(--spacing(72)---spacing(9)),calc(var(--available-height)---spacing(9)))] scroll-py-1 overflow-y-auto overscroll-contain p-1 data-empty:p-0',
         className
       )}
+      onScroll={(e) => {
+        onScroll?.(e)
+        if (!onLoadMore || isLoadingMore || loadMoreLock.current) return
+        const el = e.currentTarget
+        if (el.scrollHeight - el.scrollTop - el.clientHeight < 50) {
+          loadMoreLock.current = true
+          onLoadMore()
+          queueMicrotask(() => {
+            loadMoreLock.current = false
+          })
+        }
+      }}
       {...props}
     />
   )
@@ -197,8 +222,31 @@ function ComboboxSeparator({ className, ...props }: ComboboxPrimitive.Separator.
 
 function ComboboxChips({
   className,
+  maxVisibleChips,
+  children,
   ...props
-}: React.ComponentPropsWithRef<typeof ComboboxPrimitive.Chips> & ComboboxPrimitive.Chips.Props) {
+}: React.ComponentPropsWithRef<typeof ComboboxPrimitive.Chips> &
+  ComboboxPrimitive.Chips.Props & {
+    /** Collapse chips past this count to a "+N more" affordance. */
+    maxVisibleChips?: number
+  }) {
+  const [expanded, setExpanded] = React.useState(false)
+  const childArray = React.Children.toArray(children)
+
+  const isChip = (child: React.ReactNode): child is React.ReactElement => {
+    if (!React.isValidElement(child)) return false
+    if (child.type === ComboboxChip) return true
+    const slot = (child.props as { 'data-slot'?: string })['data-slot']
+    return slot === 'combobox-chip'
+  }
+
+  const chips = childArray.filter(isChip)
+  const rest = childArray.filter((c) => !isChip(c))
+  const shouldCollapse =
+    maxVisibleChips != null && !expanded && chips.length > maxVisibleChips
+  const visibleChips = shouldCollapse ? chips.slice(0, maxVisibleChips) : chips
+  const hiddenCount = shouldCollapse ? chips.length - maxVisibleChips : 0
+
   return (
     <ComboboxPrimitive.Chips
       data-slot="combobox-chips"
@@ -207,7 +255,20 @@ function ComboboxChips({
         className
       )}
       {...props}
-    />
+    >
+      {visibleChips}
+      {hiddenCount > 0 ? (
+        <button
+          type="button"
+          data-slot="combobox-chip-overflow"
+          className="bg-muted text-foreground flex h-[calc(--spacing(5.25))] items-center rounded-sm px-1.5 text-xs font-medium"
+          onClick={() => setExpanded(true)}
+        >
+          +{hiddenCount} more
+        </button>
+      ) : null}
+      {rest}
+    </ComboboxPrimitive.Chips>
   )
 }
 

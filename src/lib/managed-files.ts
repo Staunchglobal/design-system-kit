@@ -87,6 +87,16 @@ export const FRAMEWORK_EXTRA_FILES: Record<
       'auth/AuthHomePage.tsx',
     ],
   },
+  'address-autocomplete': {
+    next: [
+      // Proxies Google's Places REST endpoints (browser calls are CORS-blocked
+      // otherwise). Vite has no equivalent file — its proxy is inline in
+      // vite-plugin-design-kit.ts, already always present.
+      'app/api/places/autocomplete/route.ts',
+      'app/api/places/details/route.ts',
+    ],
+    vite: [],
+  },
 }
 
 export function frameworkExtraFilesFor(

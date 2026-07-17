@@ -1,0 +1,16 @@
+/* ==========================================================================
+   Phone Input
+   ========================================================================== */
+
+[data-slot='phone-input'] {
+  --phone-input-gap: 0.375rem;
+  gap: var(--phone-input-gap);
+}
+
+[data-slot='phone-input'] label {
+  --phone-input-label-font-size: var(--typography-small-font-size);
+  --phone-input-label-font-weight: var(--typography-small-font-weight);
+  font-size: var(--phone-input-label-font-size);
+  font-weight: var(--phone-input-label-font-weight);
+}
+</content>

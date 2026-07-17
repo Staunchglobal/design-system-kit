@@ -1,0 +1,27 @@
+/* ==========================================================================
+   Copy Input
+   ========================================================================== */
+
+/* Root renders as an InputGroup with its data-slot overridden to 'copy-input',
+   so it no longer inherits input-group.css's root rule — restate it here.
+   Its InputGroupInput/Addon/Button children keep their own data-slot and are
+   still styled normally by input-group.css. */
+[data-slot='copy-input'] {
+  --copy-input-radius: var(--input-radius);
+  --copy-input-border-width: var(--input-border-width);
+  --copy-input-border-color: var(--input-border-color);
+  --copy-input-bg: var(--input-bg);
+  --copy-input-height: var(--input-height);
+  border-radius: var(--copy-input-radius);
+  border-width: var(--copy-input-border-width);
+  border-color: var(--copy-input-border-color);
+  background-color: var(--copy-input-bg);
+  height: var(--copy-input-height);
+}
+[data-slot='copy-input']:has([data-slot='input']:focus-visible) {
+  --copy-input-focus-border-color: var(--input-focus-border-color);
+  --copy-input-focus-ring-color: var(--input-focus-ring-color);
+  border-color: var(--copy-input-focus-border-color);
+  box-shadow: 0 0 0 var(--input-focus-ring-width) var(--copy-input-focus-ring-color);
+}
+</content>

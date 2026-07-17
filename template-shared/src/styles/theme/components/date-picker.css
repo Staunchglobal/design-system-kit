@@ -1,0 +1,35 @@
+/* ==========================================================================
+   Date Picker
+   ========================================================================== */
+
+/* Root renders as a Button (variant="outline") with its data-slot overridden
+   to 'date-picker', so it no longer inherits button.css's rules — restate the
+   outline-variant subset here. */
+[data-slot='date-picker'] {
+  --date-picker-radius: var(--radius-lg);
+  --date-picker-border-width: 1px;
+  --date-picker-font-size: var(--typography-small-font-size);
+  --date-picker-bg: var(--background);
+  --date-picker-fg: var(--foreground);
+  --date-picker-border-color: var(--border);
+  --date-picker-hover-bg: var(--muted);
+  border-radius: var(--date-picker-radius);
+  border-width: var(--date-picker-border-width);
+  font-size: var(--date-picker-font-size);
+  background-color: var(--date-picker-bg);
+  color: var(--date-picker-fg);
+  border-color: var(--date-picker-border-color);
+}
+[data-slot='date-picker']:hover {
+  background-color: var(--date-picker-hover-bg);
+}
+[data-slot='date-picker']:focus-visible {
+  --date-picker-focus-ring-color: var(--ring);
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px var(--date-picker-focus-ring-color);
+}
+[data-slot='date-picker'][data-empty='true'] {
+  --date-picker-placeholder-fg: var(--muted-foreground);
+  color: var(--date-picker-placeholder-fg);
+}
+</content>

@@ -1,0 +1,54 @@
+/* ==========================================================================
+   Stepper
+   ========================================================================== */
+
+[data-slot='stepper-indicator'] {
+  --stepper-indicator-size: 2rem;
+  --stepper-indicator-font-size: var(--typography-caption-font-size);
+  width: var(--stepper-indicator-size);
+  height: var(--stepper-indicator-size);
+  font-size: var(--stepper-indicator-font-size);
+}
+
+[data-slot='stepper-connector'] {
+  --stepper-connector-bg: var(--border);
+  --stepper-connector-bg-active: var(--primary);
+  background-color: var(--stepper-connector-bg);
+}
+[data-slot='stepper-item'][data-state='complete'] [data-slot='stepper-connector'],
+[data-slot='stepper-item'][data-state='active'] [data-slot='stepper-connector'] {
+  background-color: var(--stepper-connector-bg-active);
+}
+
+[data-slot='stepper-label'] {
+  --stepper-label-font-size: var(--typography-small-font-size);
+  --stepper-label-font-weight: var(--typography-small-font-weight);
+  font-size: var(--stepper-label-font-size);
+  font-weight: var(--stepper-label-font-weight);
+}
+
+[data-slot='stepper-description'] {
+  --stepper-description-font-size: var(--typography-caption-font-size);
+  --stepper-description-fg: var(--muted-foreground);
+  font-size: var(--stepper-description-font-size);
+  color: var(--stepper-description-fg);
+}
+
+[data-slot='stepper'][data-variant='segments'] {
+  --stepper-segment-gap: 0.375rem;
+  gap: var(--stepper-segment-gap);
+}
+
+[data-slot='stepper-segment'] {
+  --stepper-segment-height: 0.375rem;
+  --stepper-segment-radius: 9999px;
+  --stepper-segment-bg: var(--muted);
+  --stepper-segment-bg-active: var(--primary);
+  height: var(--stepper-segment-height);
+  border-radius: var(--stepper-segment-radius);
+  background-color: var(--stepper-segment-bg);
+}
+[data-slot='stepper-segment'][data-active] {
+  background-color: var(--stepper-segment-bg-active);
+}
+</content>

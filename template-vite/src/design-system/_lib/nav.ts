@@ -1,3 +1,7 @@
+// This file is the canonical component/group data scripts/build-registry.mjs parses into
+// src/generated/registry.ts — it is NOT copied into consumer projects. The CLI generates a
+// filtered nav.ts (via src/lib/codegen.ts) scoped to whatever components were chosen instead.
+
 export type NavItem = {
   id: string
   label: string
@@ -23,6 +27,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { id: 'button-group', label: 'Button Group' },
       { id: 'toggle', label: 'Toggle' },
       { id: 'toggle-group', label: 'Toggle Group' },
+      { id: 'segmented-control', label: 'Segmented Control' },
       { id: 'kbd', label: 'Kbd' },
       { id: 'spinner', label: 'Spinner' },
     ],
@@ -43,6 +48,16 @@ export const NAV_GROUPS: NavGroup[] = [
       { id: 'input-group', label: 'Input Group' },
       { id: 'field', label: 'Field' },
       { id: 'combobox', label: 'Combobox' },
+      { id: 'date-picker', label: 'Date Picker' },
+      { id: 'phone-input', label: 'Phone Input' },
+      { id: 'copy-input', label: 'Copy Input' },
+      { id: 'stepper-input', label: 'Stepper Input' },
+      { id: 'filter-chips', label: 'Filter Chips' },
+      { id: 'password-strength-meter', label: 'Password Strength Meter' },
+      { id: 'dropzone', label: 'Dropzone' },
+      { id: 'address-autocomplete', label: 'Address Autocomplete' },
+      { id: 'time-range-picker', label: 'Time Range Picker' },
+      { id: 'payment-method-list', label: 'Payment Method List' },
     ],
   },
   {
@@ -66,6 +81,8 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       { id: 'table', label: 'Table' },
       { id: 'card', label: 'Card' },
+      { id: 'stat-card', label: 'Stat Card' },
+      { id: 'info-row', label: 'Info Row' },
       { id: 'avatar', label: 'Avatar' },
       { id: 'badge', label: 'Badge' },
       { id: 'separator', label: 'Separator' },
@@ -75,6 +92,8 @@ export const NAV_GROUPS: NavGroup[] = [
       { id: 'tabs', label: 'Tabs' },
       { id: 'pagination', label: 'Pagination' },
       { id: 'breadcrumb', label: 'Breadcrumb' },
+      { id: 'truncate', label: 'Truncate' },
+      { id: 'notification-row', label: 'Notification Row' },
       { id: 'crud-table', label: 'CRUD Screen' },
     ],
   },
@@ -86,6 +105,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { id: 'chart', label: 'Chart' },
       { id: 'calendar', label: 'Calendar' },
       { id: 'empty', label: 'Empty' },
+      { id: 'error-state', label: 'Error State' },
       { id: 'item', label: 'Item' },
     ],
   },
@@ -94,6 +114,7 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       { id: 'alert', label: 'Alert' },
       { id: 'progress', label: 'Progress' },
+      { id: 'stepper', label: 'Stepper' },
       { id: 'skeleton', label: 'Skeleton' },
       { id: 'sonner', label: 'Sonner (Toast)' },
     ],

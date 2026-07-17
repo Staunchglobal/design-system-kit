@@ -48,6 +48,7 @@ const NO_CSS = new Set(['direction', 'crud-table', 'auth'])
 // Extra non-ui files a component's runtime needs (paths relative to template-shared/src/).
 const EXTRA_FILES = {
   sidebar: ['hooks/use-mobile.ts'],
+  'segmented-control': ['hooks/use-mobile.ts'],
   'crud-table': [
     'hooks/use-mobile.ts',
     'components/crud/types.ts',
@@ -84,6 +85,30 @@ const EXTRA_FILES = {
     'components/auth/set-password-form.tsx',
     'components/auth/change-password-form.tsx',
     'components/auth/index.ts',
+  ],
+  'password-strength-meter': [
+    'components/auth/password-policy.ts',
+    'components/auth/password-input.tsx',
+  ],
+  dropzone: [
+    'components/upload/use-file-drop.ts',
+    'components/upload/file-preview-card.tsx',
+    'components/upload/dropzone.tsx',
+  ],
+  'payment-method-list': [
+    'components/payment-methods/card-brand-icon.tsx',
+    'components/payment-methods/payment-method-card.tsx',
+    'components/payment-methods/payment-method-list.tsx',
+  ],
+  'time-range-picker': [
+    'components/time-range-picker/generate-time-options.ts',
+    'components/time-range-picker/validate-ranges.ts',
+    'components/time-range-picker/time-range-picker.tsx',
+  ],
+  'address-autocomplete': [
+    'components/crud/use-debounced-value.ts',
+    'components/address-autocomplete/google-places-client.ts',
+    'components/address-autocomplete/address-autocomplete.tsx',
   ],
 }
 

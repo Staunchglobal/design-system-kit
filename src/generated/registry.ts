@@ -23,6 +23,19 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "accordion.css",
     "extraFiles": []
   },
+  "address-autocomplete": {
+    "uiDeps": [
+      "input",
+      "item"
+    ],
+    "npmDeps": [],
+    "cssFile": "address-autocomplete.css",
+    "extraFiles": [
+      "components/crud/use-debounced-value.ts",
+      "components/address-autocomplete/google-places-client.ts",
+      "components/address-autocomplete/address-autocomplete.tsx"
+    ]
+  },
   "alert-dialog": {
     "uiDeps": [
       "button"
@@ -262,6 +275,16 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "context-menu.css",
     "extraFiles": []
   },
+  "copy-input": {
+    "uiDeps": [
+      "input-group"
+    ],
+    "npmDeps": [
+      "lucide-react"
+    ],
+    "cssFile": "copy-input.css",
+    "extraFiles": []
+  },
   "crud-table": {
     "uiDeps": [
       "button",
@@ -294,6 +317,19 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "components/crud/crud-screen.tsx",
       "components/crud/graphql-client.ts"
     ]
+  },
+  "date-picker": {
+    "uiDeps": [
+      "button",
+      "calendar",
+      "popover"
+    ],
+    "npmDeps": [
+      "date-fns",
+      "lucide-react"
+    ],
+    "cssFile": "date-picker.css",
+    "extraFiles": []
   },
   "dialog": {
     "uiDeps": [
@@ -339,6 +375,22 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "dropdown-menu.css",
     "extraFiles": []
   },
+  "dropzone": {
+    "uiDeps": [
+      "button",
+      "item",
+      "card"
+    ],
+    "npmDeps": [
+      "lucide-react"
+    ],
+    "cssFile": "dropzone.css",
+    "extraFiles": [
+      "components/upload/use-file-drop.ts",
+      "components/upload/file-preview-card.tsx",
+      "components/upload/dropzone.tsx"
+    ]
+  },
   "empty": {
     "uiDeps": [
       "button"
@@ -348,6 +400,17 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "lucide-react"
     ],
     "cssFile": "empty.css",
+    "extraFiles": []
+  },
+  "error-state": {
+    "uiDeps": [
+      "button",
+      "empty"
+    ],
+    "npmDeps": [
+      "lucide-react"
+    ],
+    "cssFile": "error-state.css",
     "extraFiles": []
   },
   "field": {
@@ -363,6 +426,17 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "field.css",
     "extraFiles": []
   },
+  "filter-chips": {
+    "uiDeps": [
+      "badge",
+      "button"
+    ],
+    "npmDeps": [
+      "lucide-react"
+    ],
+    "cssFile": "filter-chips.css",
+    "extraFiles": []
+  },
   "hover-card": {
     "uiDeps": [
       "avatar",
@@ -373,6 +447,15 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "lucide-react"
     ],
     "cssFile": "hover-card.css",
+    "extraFiles": []
+  },
+  "info-row": {
+    "uiDeps": [
+      "card",
+      "button"
+    ],
+    "npmDeps": [],
+    "cssFile": "info-row.css",
     "extraFiles": []
   },
   "input-group": {
@@ -486,12 +569,60 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "navigation-menu.css",
     "extraFiles": []
   },
+  "notification-row": {
+    "uiDeps": [
+      "item"
+    ],
+    "npmDeps": [
+      "date-fns",
+      "lucide-react"
+    ],
+    "cssFile": "notification-row.css",
+    "extraFiles": []
+  },
   "pagination": {
     "uiDeps": [
       "button"
     ],
     "npmDeps": [],
     "cssFile": "pagination.css",
+    "extraFiles": []
+  },
+  "password-strength-meter": {
+    "uiDeps": [
+      "input"
+    ],
+    "npmDeps": [
+      "lucide-react"
+    ],
+    "cssFile": "password-strength-meter.css",
+    "extraFiles": [
+      "components/auth/password-policy.ts",
+      "components/auth/password-input.tsx"
+    ]
+  },
+  "payment-method-list": {
+    "uiDeps": [
+      "button",
+      "item",
+      "skeleton"
+    ],
+    "npmDeps": [
+      "lucide-react"
+    ],
+    "cssFile": "payment-method-list.css",
+    "extraFiles": [
+      "components/payment-methods/card-brand-icon.tsx",
+      "components/payment-methods/payment-method-card.tsx",
+      "components/payment-methods/payment-method-list.tsx"
+    ]
+  },
+  "phone-input": {
+    "uiDeps": [
+      "input"
+    ],
+    "npmDeps": [],
+    "cssFile": "phone-input.css",
     "extraFiles": []
   },
   "popover": {
@@ -539,6 +670,17 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     ],
     "cssFile": "scroll-area.css",
     "extraFiles": []
+  },
+  "segmented-control": {
+    "uiDeps": [
+      "select",
+      "toggle-group"
+    ],
+    "npmDeps": [],
+    "cssFile": "segmented-control.css",
+    "extraFiles": [
+      "hooks/use-mobile.ts"
+    ]
   },
   "select": {
     "uiDeps": [],
@@ -617,6 +759,35 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "spinner.css",
     "extraFiles": []
   },
+  "stat-card": {
+    "uiDeps": [
+      "card",
+      "skeleton"
+    ],
+    "npmDeps": [
+      "lucide-react"
+    ],
+    "cssFile": "stat-card.css",
+    "extraFiles": []
+  },
+  "stepper-input": {
+    "uiDeps": [
+      "input-group"
+    ],
+    "npmDeps": [
+      "lucide-react"
+    ],
+    "cssFile": "stepper-input.css",
+    "extraFiles": []
+  },
+  "stepper": {
+    "uiDeps": [],
+    "npmDeps": [
+      "lucide-react"
+    ],
+    "cssFile": "stepper.css",
+    "extraFiles": []
+  },
   "switch": {
     "uiDeps": [
       "label"
@@ -649,6 +820,22 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [],
     "cssFile": "textarea.css",
     "extraFiles": []
+  },
+  "time-range-picker": {
+    "uiDeps": [
+      "button",
+      "select",
+      "switch"
+    ],
+    "npmDeps": [
+      "lucide-react"
+    ],
+    "cssFile": "time-range-picker.css",
+    "extraFiles": [
+      "components/time-range-picker/generate-time-options.ts",
+      "components/time-range-picker/validate-ranges.ts",
+      "components/time-range-picker/time-range-picker.tsx"
+    ]
   },
   "toggle-group": {
     "uiDeps": [
@@ -683,18 +870,24 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "tooltip.css",
     "extraFiles": []
   },
+  "truncate": {
+    "uiDeps": [
+      "button",
+      "tooltip"
+    ],
+    "npmDeps": [],
+    "cssFile": "truncate.css",
+    "extraFiles": []
+  },
   "patterns": {
     "uiDeps": [
       "button",
-      "calendar",
-      "popover",
+      "date-picker",
       "table",
       "badge"
     ],
     "npmDeps": [
-      "@tanstack/react-table",
-      "date-fns",
-      "lucide-react"
+      "@tanstack/react-table"
     ],
     "cssFile": null,
     "extraFiles": [],
@@ -747,6 +940,12 @@ export const GROUPS: NavGroup[] = [
         "slug": "toggle-group",
         "label": "Toggle Group",
         "demoFile": "toggle-group.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "segmented-control",
+        "label": "Segmented Control",
+        "demoFile": "segmented-control.tsx",
         "extraDemoFiles": []
       },
       {
@@ -844,6 +1043,66 @@ export const GROUPS: NavGroup[] = [
         "label": "Combobox",
         "demoFile": "combobox.tsx",
         "extraDemoFiles": []
+      },
+      {
+        "slug": "date-picker",
+        "label": "Date Picker",
+        "demoFile": "date-picker.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "phone-input",
+        "label": "Phone Input",
+        "demoFile": "phone-input.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "copy-input",
+        "label": "Copy Input",
+        "demoFile": "copy-input.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "stepper-input",
+        "label": "Stepper Input",
+        "demoFile": "stepper-input.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "filter-chips",
+        "label": "Filter Chips",
+        "demoFile": "filter-chips.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "password-strength-meter",
+        "label": "Password Strength Meter",
+        "demoFile": "password-strength-meter.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "dropzone",
+        "label": "Dropzone",
+        "demoFile": "dropzone.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "address-autocomplete",
+        "label": "Address Autocomplete",
+        "demoFile": "address-autocomplete.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "time-range-picker",
+        "label": "Time Range Picker",
+        "demoFile": "time-range-picker.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "payment-method-list",
+        "label": "Payment Method List",
+        "demoFile": "payment-method-list.tsx",
+        "extraDemoFiles": []
       }
     ]
   },
@@ -936,6 +1195,18 @@ export const GROUPS: NavGroup[] = [
         "extraDemoFiles": []
       },
       {
+        "slug": "stat-card",
+        "label": "Stat Card",
+        "demoFile": "stat-card.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "info-row",
+        "label": "Info Row",
+        "demoFile": "info-row.tsx",
+        "extraDemoFiles": []
+      },
+      {
         "slug": "avatar",
         "label": "Avatar",
         "demoFile": "avatar.tsx",
@@ -990,6 +1261,18 @@ export const GROUPS: NavGroup[] = [
         "extraDemoFiles": []
       },
       {
+        "slug": "truncate",
+        "label": "Truncate",
+        "demoFile": "truncate.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "notification-row",
+        "label": "Notification Row",
+        "demoFile": "notification-row.tsx",
+        "extraDemoFiles": []
+      },
+      {
         "slug": "crud-table",
         "label": "CRUD Screen",
         "demoFile": "crud-table.tsx",
@@ -1032,6 +1315,12 @@ export const GROUPS: NavGroup[] = [
         "extraDemoFiles": []
       },
       {
+        "slug": "error-state",
+        "label": "Error State",
+        "demoFile": "error-state.tsx",
+        "extraDemoFiles": []
+      },
+      {
         "slug": "item",
         "label": "Item",
         "demoFile": "item.tsx",
@@ -1053,6 +1342,12 @@ export const GROUPS: NavGroup[] = [
         "slug": "progress",
         "label": "Progress",
         "demoFile": "progress.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "stepper",
+        "label": "Stepper",
+        "demoFile": "stepper.tsx",
         "extraDemoFiles": []
       },
       {

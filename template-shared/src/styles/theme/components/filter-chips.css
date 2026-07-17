@@ -1,0 +1,28 @@
+/* ==========================================================================
+   Filter Chips
+   ========================================================================== */
+
+[data-slot='filter-chips'] {
+  --filter-chips-gap: 0.5rem;
+  gap: var(--filter-chips-gap);
+}
+
+/* Each chip renders as a Badge with its data-slot overridden to 'filter-chip',
+   so it no longer inherits badge.css's 'secondary' variant rule — restate it. */
+[data-slot='filter-chip'] {
+  --filter-chip-bg: var(--muted);
+  --filter-chip-fg: var(--foreground);
+  --filter-chip-radius: 0.25rem;
+  --filter-chip-font-size: var(--typography-caption-font-size);
+  --filter-chip-font-weight: var(--typography-caption-font-weight);
+  background-color: var(--filter-chip-bg);
+  color: var(--filter-chip-fg);
+  border-radius: var(--filter-chip-radius);
+  font-size: var(--filter-chip-font-size);
+  font-weight: var(--filter-chip-font-weight);
+}
+
+.dark [data-slot='filter-chip'] {
+  --filter-chip-bg: var(--neutral-800);
+}
+</content>

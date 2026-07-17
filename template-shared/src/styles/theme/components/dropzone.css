@@ -1,0 +1,38 @@
+/* ==========================================================================
+   Dropzone
+   ========================================================================== */
+
+[data-slot='dropzone'] {
+  --dropzone-gap: 0.75rem;
+  gap: var(--dropzone-gap);
+}
+
+/* The Card used for the drop surface keeps its own data-slot ('card'), so it
+   still inherits card.css normally — only the dashed-border color is specific
+   to this component. */
+[data-slot='dropzone'] [data-slot='card'] {
+  --dropzone-border-color: var(--border);
+  --dropzone-drag-border-color: var(--primary);
+  --dropzone-drag-bg: var(--muted);
+  border-color: var(--dropzone-border-color);
+}
+
+/* Each picked-file preview renders as an Item with its data-slot overridden
+   to 'file-preview-card', so it no longer inherits item.css's rules —
+   restate the relevant subset here. */
+[data-slot='file-preview-card'] {
+  --file-preview-card-radius: var(--radius-lg);
+  --file-preview-card-border-color: var(--border);
+  --file-preview-card-gap: 0.625rem;
+  --file-preview-card-padding-x: 0.75rem;
+  --file-preview-card-padding-y: 0.625rem;
+  border-radius: var(--file-preview-card-radius);
+  border-color: var(--file-preview-card-border-color);
+  gap: var(--file-preview-card-gap);
+  padding-inline: var(--file-preview-card-padding-x);
+  padding-block: var(--file-preview-card-padding-y);
+}
+/* The error-state border tint uses the Tailwind `border-destructive/50`
+   utility directly (bridged to --destructive via @theme inline), so it
+   already reflects theme edits with no extra rule needed here. */
+</content>

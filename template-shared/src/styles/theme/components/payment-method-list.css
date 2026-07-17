@@ -1,0 +1,43 @@
+/* ==========================================================================
+   Payment Method List
+   ========================================================================== */
+
+/* Root renders as an ItemGroup with its data-slot overridden to
+   'payment-method-list', so it no longer inherits item.css's group-gap rule. */
+[data-slot='payment-method-list'] {
+  --payment-method-list-gap: 0.5rem;
+  gap: var(--payment-method-list-gap);
+}
+
+/* Each row renders as an Item with its data-slot overridden to
+   'payment-method-card', so it no longer inherits item.css's rules —
+   restate the relevant subset here. */
+[data-slot='payment-method-card'] {
+  --payment-method-card-radius: var(--radius-lg);
+  --payment-method-card-gap: 0.625rem;
+  --payment-method-card-padding-x: 0.75rem;
+  --payment-method-card-padding-y: 0.625rem;
+  border-radius: var(--payment-method-card-radius);
+  gap: var(--payment-method-card-gap);
+  padding-inline: var(--payment-method-card-padding-x);
+  padding-block: var(--payment-method-card-padding-y);
+}
+[data-slot='payment-method-card'][data-variant='outline'] {
+  --payment-method-card-border-color: var(--border);
+  border-color: var(--payment-method-card-border-color);
+}
+[data-slot='payment-method-card'][data-variant='muted'] {
+  --payment-method-card-bg: var(--neutral-100);
+  --payment-method-card-border-color: transparent;
+  background-color: var(--payment-method-card-bg);
+  border-color: var(--payment-method-card-border-color);
+}
+[data-slot='payment-method-card'][aria-checked='true'] {
+  --payment-method-card-ring-color: var(--ring);
+  box-shadow: 0 0 0 2px var(--payment-method-card-ring-color);
+}
+
+.dark [data-slot='payment-method-card'][data-variant='muted'] {
+  --payment-method-card-bg: var(--neutral-800);
+}
+</content>
