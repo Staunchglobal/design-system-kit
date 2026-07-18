@@ -1,6 +1,5 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { spawnSync } from 'node:child_process'
 import pc from 'picocolors'
 import { log } from '../lib/log.js'
 import { detectProject } from '../lib/detect.js'
@@ -15,10 +14,9 @@ import {
   npmDepsFor,
   resolveUiClosure,
 } from '../lib/selection.js'
-import { generateDesignSystemPage, generateLivePreview, generateNavTs, generateThemeIndexCss } from '../lib/codegen.js'
-import { writeGeneratedFile } from '../lib/copy.js'
 import { COMPONENTS } from '../generated/registry.js'
 import { frameworkExtraFilesFor } from '../lib/managed-files.js'
+import { regenerateGeneratedFiles } from '../lib/regenerate-generated-files.js'
 
 export type RemoveOptions = {
   cwd: string
@@ -166,58 +164,15 @@ export async function remove(options: RemoveOptions) {
   }
   log.success(`Deleted ${deletedCount} file(s).`)
 
-  writeGeneratedFile(path.join(destRoot, `${project.framework === 'next' ? 'app/design-system' : 'design-system'}/_lib/nav.ts`), generateNavTs(newNavGroups))
-
-  if (project.framework === 'next') {
-    writeGeneratedFile(
-      path.join(destRoot, 'app/design-system/page.tsx'),
-      generateDesignSystemPage({
-        navGroups: newNavGroups,
-        importBase: '@/app/design-system',
-        sidebarImport: '@/app/design-system/_components/sidebar-nav',
-        withMetadata: true,
-      })
-    )
-    writeGeneratedFile(
-      path.join(destRoot, 'app/theme-editor/_components/live-preview.tsx'),
-      generateLivePreview({
-        navGroups: newNavGroups,
-        designSystemImportBase: '@/app/design-system',
-        themeEditorImportBase: '@/app/theme-editor',
-      })
-    )
-  } else {
-    writeGeneratedFile(
-      path.join(root, 'src/design-system/DesignSystemPage.tsx'),
-      generateDesignSystemPage({
-        navGroups: newNavGroups,
-        importBase: '@/design-system',
-        sidebarImport: '@/design-system/_components/sidebar-nav',
-        withMetadata: false,
-      })
-    )
-    writeGeneratedFile(
-      path.join(root, 'src/theme-editor/_components/live-preview.tsx'),
-      generateLivePreview({
-        navGroups: newNavGroups,
-        designSystemImportBase: '@/design-system',
-        themeEditorImportBase: '@/theme-editor',
-      })
-    )
-  }
-  log.success('Regenerated nav.ts, the design-system page, and the theme editor live preview.')
-
-  writeGeneratedFile(path.join(destRoot, 'styles/theme/index.css'), generateThemeIndexCss([...cssFilesFor(newClosure)]))
-  log.success(`Regenerated ${rel('styles/theme/index.css')}.`)
+  regenerateGeneratedFiles({
+    root,
+    destRoot,
+    framework: project.framework,
+    navGroups: newNavGroups,
+    cssFiles: [...cssFilesFor(newClosure)],
+  })
 
   writeSelectionConfig(root, [...remaining])
-
-  const manifestRun = spawnSync('node', ['scripts/generate-theme-manifest.mjs'], { cwd: root, stdio: 'pipe', encoding: 'utf8' })
-  if (manifestRun.status === 0) {
-    log.success(manifestRun.stdout.trim() || 'Regenerated theme.manifest.json')
-  } else {
-    log.warn(`Could not regenerate theme.manifest.json: ${manifestRun.stderr || manifestRun.error}`)
-  }
 
   const removedTooltip = orphaned.includes('tooltip')
   const removedToaster = orphaned.includes('sonner')

@@ -1,9 +1,11 @@
 import { Command } from 'commander'
+import packageJson from '../package.json'
 import { init } from './commands/init.js'
 import { remove } from './commands/remove.js'
 import { update } from './commands/update.js'
 import type { PackageManager } from './lib/detect.js'
 import { applyLocalTemplatesOption } from './lib/local-templates.js'
+import { log } from './lib/log.js'
 
 const program = new Command()
 
@@ -12,7 +14,7 @@ program
   .description(
     'Scaffolds a full shadcn/ui component set, a token-driven theme system, a /design-system showcase, and a live /theme-editor into a Next.js (App Router) + TypeScript + Tailwind v4 project.'
   )
-  .version('0.1.0')
+  .version(packageJson.version)
   .option(
     '--templates <path>',
     'use a local design-system-kit checkout for templates instead of the CDN (maintainer/dev; same as DESIGN_KIT_LOCAL_TEMPLATES)'
@@ -83,4 +85,11 @@ program
     })
   })
 
-program.parseAsync(process.argv)
+try {
+  await program.parseAsync(process.argv)
+} catch (error) {
+  const detail = error instanceof Error ? error.message : String(error)
+  log.error(`Something went wrong: ${detail}`)
+  log.warn('Your project may be partially modified. Check `git status` before retrying.')
+  process.exitCode = 1
+}

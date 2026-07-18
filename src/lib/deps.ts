@@ -1,6 +1,7 @@
 import { spawnSync } from 'node:child_process'
 import type { PackageManager } from './detect.js'
 import { installCommand } from './detect.js'
+import optionalRuntimeDependencies from './optional-runtime-dependencies.json'
 
 /**
  * Always installed regardless of which components are chosen: `cn()`'s clsx/tailwind-merge,
@@ -22,34 +23,7 @@ export const CORE_RUNTIME_DEPENDENCIES: Record<string, string> = {
  * the subset a given selection actually needs gets installed. Version pins mirror the app
  * this kit was extracted from.
  */
-export const OPTIONAL_RUNTIME_DEPENDENCIES: Record<string, string> = {
-  '@base-ui/react': '^1.6.0',
-  '@dnd-kit/core': '^6.3.1',
-  '@dnd-kit/sortable': '^10.0.0',
-  '@dnd-kit/utilities': '^3.2.2',
-  '@react-oauth/google': '^0.13.5',
-  '@react-pdf/renderer': '^4.3.1',
-  '@shadcn/react': '^0.2.1',
-  '@stripe/react-stripe-js': '^6.2.0',
-  '@stripe/stripe-js': '^9.2.0',
-  '@tanstack/react-table': '^8.21.3',
-  '@tiptap/extension-link': '^3.10.7',
-  '@tiptap/extension-underline': '^3.10.7',
-  '@tiptap/react': '^3.10.7',
-  '@tiptap/starter-kit': '^3.10.7',
-  'class-variance-authority': '^0.7.1',
-  cmdk: '^1.1.1',
-  'date-fns': '^4.4.0',
-  'embla-carousel-react': '^8.6.0',
-  'input-otp': '^1.4.2',
-  'radix-ui': '^1.6.2',
-  'react-day-picker': '^10.0.1',
-  'react-image-crop': '^11.0.10',
-  'react-resizable-panels': '^4.12.1',
-  recharts: '^3.9.2',
-  sonner: '^2.0.7',
-  vaul: '^1.1.2',
-}
+export const OPTIONAL_RUNTIME_DEPENDENCIES: Record<string, string> = optionalRuntimeDependencies
 
 /** All runtime deps this kit could ever need — used to resolve version pins for a chosen subset. */
 export const ALL_RUNTIME_DEPENDENCIES: Record<string, string> = {

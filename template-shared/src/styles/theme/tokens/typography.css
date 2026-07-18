@@ -17,12 +17,84 @@
    Type scale cascaded from paramount-mobile-app typographyData.ts.
    ========================================================================== */
 
-.typography-display {
+:root {
   --typography-display-font-family: var(--font-heading);
   --typography-display-font-size: 4rem; /* 64px */
   --typography-display-font-weight: 800;
   --typography-display-line-height: 4.5rem; /* 72px */
   --typography-display-letter-spacing: -0.025em;
+  --typography-h1-font-family: var(--font-heading);
+  --typography-h1-font-size: 4rem; /* 64px */
+  --typography-h1-font-weight: 700;
+  --typography-h1-line-height: 4.5rem; /* 72px */
+  --typography-h1-letter-spacing: -0.025em;
+  --typography-h2-font-family: var(--font-heading);
+  --typography-h2-font-size: 3.5rem; /* 56px */
+  --typography-h2-font-weight: 700;
+  --typography-h2-line-height: 4.5rem; /* 72px */
+  --typography-h2-letter-spacing: -0.025em;
+  --typography-h3-font-family: var(--font-heading);
+  --typography-h3-font-size: 3rem; /* 48px */
+  --typography-h3-font-weight: 700;
+  --typography-h3-line-height: 3.5rem; /* 56px */
+  --typography-h3-letter-spacing: -0.0125em;
+  --typography-h4-font-family: var(--font-heading);
+  --typography-h4-font-size: 2.5rem; /* 40px */
+  --typography-h4-font-weight: 700;
+  --typography-h4-line-height: 3rem; /* 48px */
+  --typography-h4-letter-spacing: -0.0125em;
+  --typography-h5-font-family: var(--font-heading);
+  --typography-h5-font-size: 2rem; /* 32px */
+  --typography-h5-font-weight: 600;
+  --typography-h5-line-height: 2.5rem; /* 40px */
+  --typography-h6-font-family: var(--font-heading);
+  --typography-h6-font-size: 1.5rem; /* 24px */
+  --typography-h6-font-weight: 600;
+  --typography-h6-line-height: 2rem; /* 32px */
+  --typography-lead-font-family: var(--font-sans);
+  --typography-lead-font-size: 1.25rem; /* 20px — body1 */
+  --typography-lead-font-weight: 400;
+  --typography-lead-line-height: 1.5rem; /* 24px */
+  --typography-large-font-family: var(--font-sans);
+  --typography-large-font-size: 1.25rem; /* 20px — body1 */
+  --typography-large-font-weight: 600;
+  --typography-large-line-height: 1.5rem; /* 24px */
+  --typography-p-font-family: var(--font-sans);
+  --typography-p-font-size: 1rem; /* 16px — body2 */
+  --typography-p-font-weight: 400;
+  --typography-p-line-height: 1.5rem; /* 24px */
+  --typography-small-font-family: var(--font-sans);
+  --typography-small-font-size: 0.875rem; /* 14px — body3 */
+  --typography-small-font-weight: 500;
+  --typography-small-line-height: 1.25rem; /* 20px */
+  --typography-muted-font-family: var(--font-sans);
+  --typography-muted-font-size: 0.875rem; /* 14px — helper text */
+  --typography-muted-font-weight: 400;
+  --typography-muted-line-height: 1.25rem; /* 20px */
+  --typography-blockquote-font-family: var(--font-sans);
+  --typography-blockquote-font-size: 1rem;
+  --typography-blockquote-font-style: italic;
+  --typography-blockquote-line-height: 1.5rem;
+  --typography-code-font-family: var(--font-mono);
+  --typography-code-font-size: 0.875rem;
+  --typography-code-font-weight: 600;
+  --typography-code-bg: var(--muted);
+  --typography-code-radius: var(--radius-sm);
+  --typography-code-padding-x: 0.3rem;
+  --typography-code-padding-y: 0.2rem;
+  --typography-caption-font-family: var(--font-sans);
+  --typography-caption-font-size: 0.75rem; /* 12px */
+  --typography-caption-font-weight: 400;
+  --typography-caption-line-height: 1rem; /* 16px */
+  --typography-overline-font-family: var(--font-sans);
+  --typography-overline-font-size: 0.625rem; /* 10px */
+  --typography-overline-font-weight: 600;
+  --typography-overline-line-height: 0.75rem; /* 12px */
+  --typography-overline-letter-spacing: 0.05em;
+  --typography-overline-text-transform: uppercase;
+}
+
+.typography-display {
   font-family: var(--typography-display-font-family);
   font-size: var(--typography-display-font-size);
   font-weight: var(--typography-display-font-weight);
@@ -31,11 +103,6 @@
 }
 
 .typography-h1 {
-  --typography-h1-font-family: var(--font-heading);
-  --typography-h1-font-size: 4rem; /* 64px */
-  --typography-h1-font-weight: 700;
-  --typography-h1-line-height: 4.5rem; /* 72px */
-  --typography-h1-letter-spacing: -0.025em;
   font-family: var(--typography-h1-font-family);
   font-size: var(--typography-h1-font-size);
   font-weight: var(--typography-h1-font-weight);
@@ -44,11 +111,6 @@
 }
 
 .typography-h2 {
-  --typography-h2-font-family: var(--font-heading);
-  --typography-h2-font-size: 3.5rem; /* 56px */
-  --typography-h2-font-weight: 700;
-  --typography-h2-line-height: 4.5rem; /* 72px */
-  --typography-h2-letter-spacing: -0.025em;
   font-family: var(--typography-h2-font-family);
   font-size: var(--typography-h2-font-size);
   font-weight: var(--typography-h2-font-weight);
@@ -57,11 +119,6 @@
 }
 
 .typography-h3 {
-  --typography-h3-font-family: var(--font-heading);
-  --typography-h3-font-size: 3rem; /* 48px */
-  --typography-h3-font-weight: 700;
-  --typography-h3-line-height: 3.5rem; /* 56px */
-  --typography-h3-letter-spacing: -0.0125em;
   font-family: var(--typography-h3-font-family);
   font-size: var(--typography-h3-font-size);
   font-weight: var(--typography-h3-font-weight);
@@ -70,11 +127,6 @@
 }
 
 .typography-h4 {
-  --typography-h4-font-family: var(--font-heading);
-  --typography-h4-font-size: 2.5rem; /* 40px */
-  --typography-h4-font-weight: 700;
-  --typography-h4-line-height: 3rem; /* 48px */
-  --typography-h4-letter-spacing: -0.0125em;
   font-family: var(--typography-h4-font-family);
   font-size: var(--typography-h4-font-size);
   font-weight: var(--typography-h4-font-weight);
@@ -83,10 +135,6 @@
 }
 
 .typography-h5 {
-  --typography-h5-font-family: var(--font-heading);
-  --typography-h5-font-size: 2rem; /* 32px */
-  --typography-h5-font-weight: 600;
-  --typography-h5-line-height: 2.5rem; /* 40px */
   font-family: var(--typography-h5-font-family);
   font-size: var(--typography-h5-font-size);
   font-weight: var(--typography-h5-font-weight);
@@ -94,10 +142,6 @@
 }
 
 .typography-h6 {
-  --typography-h6-font-family: var(--font-heading);
-  --typography-h6-font-size: 1.5rem; /* 24px */
-  --typography-h6-font-weight: 600;
-  --typography-h6-line-height: 2rem; /* 32px */
   font-family: var(--typography-h6-font-family);
   font-size: var(--typography-h6-font-size);
   font-weight: var(--typography-h6-font-weight);
@@ -105,10 +149,6 @@
 }
 
 .typography-lead {
-  --typography-lead-font-family: var(--font-sans);
-  --typography-lead-font-size: 1.25rem; /* 20px — body1 */
-  --typography-lead-font-weight: 400;
-  --typography-lead-line-height: 1.5rem; /* 24px */
   font-family: var(--typography-lead-font-family);
   font-size: var(--typography-lead-font-size);
   font-weight: var(--typography-lead-font-weight);
@@ -116,10 +156,6 @@
 }
 
 .typography-large {
-  --typography-large-font-family: var(--font-sans);
-  --typography-large-font-size: 1.25rem; /* 20px — body1 */
-  --typography-large-font-weight: 600;
-  --typography-large-line-height: 1.5rem; /* 24px */
   font-family: var(--typography-large-font-family);
   font-size: var(--typography-large-font-size);
   font-weight: var(--typography-large-font-weight);
@@ -127,10 +163,6 @@
 }
 
 .typography-p {
-  --typography-p-font-family: var(--font-sans);
-  --typography-p-font-size: 1rem; /* 16px — body2 */
-  --typography-p-font-weight: 400;
-  --typography-p-line-height: 1.5rem; /* 24px */
   font-family: var(--typography-p-font-family);
   font-size: var(--typography-p-font-size);
   font-weight: var(--typography-p-font-weight);
@@ -138,10 +170,6 @@
 }
 
 .typography-small {
-  --typography-small-font-family: var(--font-sans);
-  --typography-small-font-size: 0.875rem; /* 14px — body3 */
-  --typography-small-font-weight: 500;
-  --typography-small-line-height: 1.25rem; /* 20px */
   font-family: var(--typography-small-font-family);
   font-size: var(--typography-small-font-size);
   font-weight: var(--typography-small-font-weight);
@@ -149,10 +177,6 @@
 }
 
 .typography-muted {
-  --typography-muted-font-family: var(--font-sans);
-  --typography-muted-font-size: 0.875rem; /* 14px — helper text; footer 10px lives on overline */
-  --typography-muted-font-weight: 400;
-  --typography-muted-line-height: 1.25rem; /* 20px */
   font-family: var(--typography-muted-font-family);
   font-size: var(--typography-muted-font-size);
   font-weight: var(--typography-muted-font-weight);
@@ -160,10 +184,6 @@
 }
 
 .typography-blockquote {
-  --typography-blockquote-font-family: var(--font-sans);
-  --typography-blockquote-font-size: 1rem;
-  --typography-blockquote-font-style: italic;
-  --typography-blockquote-line-height: 1.5rem;
   font-family: var(--typography-blockquote-font-family);
   font-size: var(--typography-blockquote-font-size);
   font-style: var(--typography-blockquote-font-style);
@@ -171,13 +191,6 @@
 }
 
 .typography-code {
-  --typography-code-font-family: var(--font-mono);
-  --typography-code-font-size: 0.875rem;
-  --typography-code-font-weight: 600;
-  --typography-code-bg: var(--muted);
-  --typography-code-radius: var(--radius-sm);
-  --typography-code-padding-x: 0.3rem;
-  --typography-code-padding-y: 0.2rem;
   font-family: var(--typography-code-font-family);
   font-size: var(--typography-code-font-size);
   font-weight: var(--typography-code-font-weight);
@@ -188,10 +201,6 @@
 }
 
 .typography-caption {
-  --typography-caption-font-family: var(--font-sans);
-  --typography-caption-font-size: 0.75rem; /* 12px */
-  --typography-caption-font-weight: 400;
-  --typography-caption-line-height: 1rem; /* 16px */
   font-family: var(--typography-caption-font-family);
   font-size: var(--typography-caption-font-size);
   font-weight: var(--typography-caption-font-weight);
@@ -199,12 +208,6 @@
 }
 
 .typography-overline {
-  --typography-overline-font-family: var(--font-sans);
-  --typography-overline-font-size: 0.625rem; /* 10px */
-  --typography-overline-font-weight: 600;
-  --typography-overline-line-height: 0.75rem; /* 12px */
-  --typography-overline-letter-spacing: 0.05em;
-  --typography-overline-text-transform: uppercase;
   font-family: var(--typography-overline-font-family);
   font-size: var(--typography-overline-font-size);
   font-weight: var(--typography-overline-font-weight);

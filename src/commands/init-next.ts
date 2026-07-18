@@ -1,6 +1,5 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { spawnSync } from 'node:child_process'
 import pc from 'picocolors'
 import { log } from '../lib/log.js'
 import type { ProjectInfo, PackageManager } from '../lib/detect.js'
@@ -11,7 +10,7 @@ import {
   missingDeps,
   runInstall,
 } from '../lib/deps.js'
-import { copySelectedFiles, copyTemplateFile, hashEntriesFor, writeGeneratedFile } from '../lib/copy.js'
+import { copySelectedFiles, copyTemplateFile, hashEntriesFor } from '../lib/copy.js'
 import { loadRenameHistory } from '../lib/rename-history.js'
 import { fetchRequiredTemplateText, remoteUrl } from '../lib/remote.js'
 import { patchGlobalsCss } from '../lib/patch-globals-css.js'
@@ -36,12 +35,7 @@ import {
 import { writeSelectionConfig, recordFileHashes } from '../lib/selection-state.js'
 import { ALWAYS_SHARED_FILES, ALWAYS_NEXT_FILES, frameworkExtraFilesFor } from '../lib/managed-files.js'
 import { printBundleReport } from '../lib/report.js'
-import {
-  generateDesignSystemPage,
-  generateLivePreview,
-  generateNavTs,
-  generateThemeIndexCss,
-} from '../lib/codegen.js'
+import { regenerateGeneratedFiles } from '../lib/regenerate-generated-files.js'
 
 export type InitOptions = {
   cwd: string
@@ -76,7 +70,7 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
   // ---- Which components? ------------------------------------------------------
   log.title('Components')
   const toolOnly = resolveUiClosure(THEME_EDITOR_REQUIRED_COMPONENTS)
-  const prior = priorSelectionFor(root, toolOnly)
+  const prior = priorSelectionFor(root, toolOnly, srcDir)
   const picked = await pickComponents(prior, options)
   const userChosen = new Set([...picked, ...prior])
   const userClosure = resolveUiClosure(userChosen)
@@ -236,39 +230,6 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
     ])
   }
 
-  writeGeneratedFile(path.join(destRoot, 'app/design-system/_lib/nav.ts'), generateNavTs(navGroups), dryRun)
-  log.success(`${dryRun ? 'Would generate' : 'Generated'} ${rel('app/design-system/_lib/nav.ts')}`)
-
-  writeGeneratedFile(
-    path.join(destRoot, 'app/design-system/page.tsx'),
-    generateDesignSystemPage({
-      navGroups,
-      importBase: '@/app/design-system',
-      sidebarImport: '@/app/design-system/_components/sidebar-nav',
-      withMetadata: true,
-    }),
-    dryRun
-  )
-  log.success(`${dryRun ? 'Would generate' : 'Generated'} ${rel('app/design-system/page.tsx')}`)
-
-  writeGeneratedFile(
-    path.join(destRoot, 'app/theme-editor/_components/live-preview.tsx'),
-    generateLivePreview({
-      navGroups,
-      designSystemImportBase: '@/app/design-system',
-      themeEditorImportBase: '@/app/theme-editor',
-    }),
-    dryRun
-  )
-  log.success(`${dryRun ? 'Would generate' : 'Generated'} ${rel('app/theme-editor/_components/live-preview.tsx')}`)
-
-  writeGeneratedFile(
-    path.join(destRoot, 'styles/theme/index.css'),
-    generateThemeIndexCss([...cssFilesFor(closure)]),
-    dryRun
-  )
-  log.success(`${dryRun ? 'Would generate' : 'Generated'} ${rel('styles/theme/index.css')}`)
-
   const componentsJsonDest = path.join(root, 'components.json')
   if (fs.existsSync(componentsJsonDest)) {
     log.skip('components.json (already exists — left untouched)')
@@ -291,6 +252,15 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
       ? `${dryRun ? 'Would copy' : ''} scripts/generate-theme-manifest.mjs`.trim()
       : 'scripts/generate-theme-manifest.mjs (already exists — left untouched)'
   )
+
+  regenerateGeneratedFiles({
+    root,
+    destRoot,
+    framework: 'next',
+    navGroups,
+    cssFiles: [...cssFilesFor(closure)],
+    dryRun,
+  })
 
   if (dryRun) {
     log.title('Wiring it up')
@@ -392,19 +362,6 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
     )
     if (includeToaster) lines.push('  <Toaster />')
     log.info(`Add this yourself:\n${lines.join('\n')}`)
-  }
-
-  // ---- Regenerate manifest --------------------------------------------------------
-  log.title('Theme manifest')
-  const manifestRun = spawnSync('node', ['scripts/generate-theme-manifest.mjs'], {
-    cwd: root,
-    stdio: 'pipe',
-    encoding: 'utf8',
-  })
-  if (manifestRun.status === 0) {
-    log.success(manifestRun.stdout.trim() || 'Generated theme.manifest.json')
-  } else {
-    log.warn(`Could not regenerate theme.manifest.json: ${manifestRun.stderr || manifestRun.error}`)
   }
 
   writeSelectionConfig(root, [...userChosen])

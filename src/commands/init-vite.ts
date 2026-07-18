@@ -1,5 +1,4 @@
 import path from 'node:path'
-import { spawnSync } from 'node:child_process'
 import pc from 'picocolors'
 import { log } from '../lib/log.js'
 import type { ProjectInfo, PackageManager } from '../lib/detect.js'
@@ -11,7 +10,7 @@ import {
   missingDeps,
   runInstall,
 } from '../lib/deps.js'
-import { copySelectedFiles, copyTemplateFile, hashEntriesFor, writeGeneratedFile } from '../lib/copy.js'
+import { copySelectedFiles, copyTemplateFile, hashEntriesFor } from '../lib/copy.js'
 import { loadRenameHistory } from '../lib/rename-history.js'
 import { patchGlobalsCss } from '../lib/patch-globals-css.js'
 import { patchTsconfig } from '../lib/patch-tsconfig.js'
@@ -35,12 +34,7 @@ import {
 import { writeSelectionConfig, recordFileHashes } from '../lib/selection-state.js'
 import { ALWAYS_SHARED_FILES, ALWAYS_VITE_FILES, frameworkExtraFilesFor } from '../lib/managed-files.js'
 import { printBundleReport } from '../lib/report.js'
-import {
-  generateDesignSystemPage,
-  generateLivePreview,
-  generateNavTs,
-  generateThemeIndexCss,
-} from '../lib/codegen.js'
+import { regenerateGeneratedFiles } from '../lib/regenerate-generated-files.js'
 import type { InitOptions } from './init-next.js'
 
 export async function runViteInit(project: ProjectInfo, pm: PackageManager, options: InitOptions) {
@@ -219,39 +213,6 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
     ])
   }
 
-  writeGeneratedFile(path.join(root, 'src/design-system/_lib/nav.ts'), generateNavTs(navGroups), dryRun)
-  log.success(`${dryRun ? 'Would generate' : 'Generated'} src/design-system/_lib/nav.ts`)
-
-  writeGeneratedFile(
-    path.join(root, 'src/design-system/DesignSystemPage.tsx'),
-    generateDesignSystemPage({
-      navGroups,
-      importBase: '@/design-system',
-      sidebarImport: '@/design-system/_components/sidebar-nav',
-      withMetadata: false,
-    }),
-    dryRun
-  )
-  log.success(`${dryRun ? 'Would generate' : 'Generated'} src/design-system/DesignSystemPage.tsx`)
-
-  writeGeneratedFile(
-    path.join(root, 'src/theme-editor/_components/live-preview.tsx'),
-    generateLivePreview({
-      navGroups,
-      designSystemImportBase: '@/design-system',
-      themeEditorImportBase: '@/theme-editor',
-    }),
-    dryRun
-  )
-  log.success(`${dryRun ? 'Would generate' : 'Generated'} src/theme-editor/_components/live-preview.tsx`)
-
-  writeGeneratedFile(
-    path.join(root, 'src/styles/theme/index.css'),
-    generateThemeIndexCss([...cssFilesFor(closure)]),
-    dryRun
-  )
-  log.success(`${dryRun ? 'Would generate' : 'Generated'} src/styles/theme/index.css`)
-
   const componentsJsonResult = await copyTemplateFile(
     remoteUrl(templateViteDir, 'components.json'),
     path.join(root, 'components.json'),
@@ -273,6 +234,15 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
       ? `${dryRun ? 'Would copy' : ''} scripts/generate-theme-manifest.mjs`.trim()
       : 'scripts/generate-theme-manifest.mjs (already exists — left untouched)'
   )
+
+  regenerateGeneratedFiles({
+    root,
+    destRoot: path.join(root, 'src'),
+    framework: 'vite',
+    navGroups,
+    cssFiles: [...cssFilesFor(closure)],
+    dryRun,
+  })
 
   const pluginResult = await copyTemplateFile(
     remoteUrl(templateViteDir, 'vite-plugin-design-kit.ts'),
@@ -358,19 +328,6 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
       ? 'Added "theme:manifest" script to package.json'
       : 'package.json already has a "theme:manifest" script'
   )
-
-  // ---- Regenerate manifest --------------------------------------------------------
-  log.title('Theme manifest')
-  const manifestRun = spawnSync('node', ['scripts/generate-theme-manifest.mjs'], {
-    cwd: root,
-    stdio: 'pipe',
-    encoding: 'utf8',
-  })
-  if (manifestRun.status === 0) {
-    log.success(manifestRun.stdout.trim() || 'Generated theme.manifest.json')
-  } else {
-    log.warn(`Could not regenerate theme.manifest.json: ${manifestRun.stderr || manifestRun.error}`)
-  }
 
   // ---- Done ------------------------------------------------------------------------
   const includeTooltip = closure.has('tooltip')

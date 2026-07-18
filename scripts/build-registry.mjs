@@ -18,39 +18,17 @@ const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
 const uiDir = path.join(root, 'template-shared/src/components/ui')
 const navPath = path.join(root, 'template-next/src/app/design-system/_lib/nav.ts')
 const sectionsDir = path.join(root, 'template-next/src/app/design-system/_sections')
+const optionalRuntimeDependencies = JSON.parse(
+  fs.readFileSync(path.join(root, 'src/lib/optional-runtime-dependencies.json'), 'utf8')
+)
 
 const NPM_PACKAGES = [
-  '@base-ui/react',
-  '@dnd-kit/core',
-  '@dnd-kit/sortable',
-  '@dnd-kit/utilities',
-  '@react-oauth/google',
-  '@react-pdf/renderer',
-  '@shadcn/react',
-  '@stripe/react-stripe-js',
-  '@stripe/stripe-js',
-  '@tanstack/react-table',
-  '@tiptap/extension-link',
-  '@tiptap/extension-underline',
-  '@tiptap/react',
-  '@tiptap/starter-kit',
-  'class-variance-authority',
+  ...Object.keys(optionalRuntimeDependencies),
   'clsx',
-  'cmdk',
-  'date-fns',
-  'embla-carousel-react',
-  'input-otp',
   'lucide-react',
-  'radix-ui',
-  'react-day-picker',
-  'react-image-crop',
-  'react-resizable-panels',
-  'recharts',
   'shadcn',
-  'sonner',
   'tailwind-merge',
   'tw-animate-css',
-  'vaul',
 ]
 
 // Files not named after their own component (component slug -> css filename).
@@ -207,7 +185,9 @@ function extraDemoFilesFor(slug) {
 const ALWAYS_INCLUDED_GROUPS = new Set(['Colors', 'Typography'])
 
 const components = {}
-const uiFiles = fs.readdirSync(uiDir).filter((f) => f.endsWith('.tsx'))
+const uiFiles = fs
+  .readdirSync(uiDir)
+  .filter((f) => f.endsWith('.tsx') && !f.endsWith('.test.tsx') && !f.endsWith('.spec.tsx'))
 for (const f of uiFiles) {
   const slug = f.replace(/\.tsx$/, '')
   const { uiDeps, npmDeps } = fileDeps(path.join(uiDir, f))

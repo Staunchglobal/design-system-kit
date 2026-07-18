@@ -14,11 +14,15 @@ required for the theme editor's "Save" button, which rewrites your own CSS/TS fi
 
 ## What you get
 
-- **60 shadcn/ui components** (`src/components/ui/*.tsx`) — Radix-based, already wired to the theme
+- **95 shadcn/ui-based components** (`src/components/ui/*.tsx`) — Radix-based, already wired to the theme
   system (every component reads its colors/spacing/typography from CSS custom properties, not
-  hardcoded Tailwind values).
+  hardcoded Tailwind values). The catalog includes advanced building blocks such as sortable
+  lists, rich-text editing, address autocomplete, uploads/image cropping, payment methods,
+  Stripe Elements, OAuth sign-in, notifications, and PDF documents.
 - **A token-driven theme system** (`src/styles/theme/`) — global tokens (colors, radius, fonts,
-  typography) plus one CSS file per component, all editable by hand or from the theme editor.
+  typography, shadows, and semantic Success/Warning/Info families) plus one CSS file per
+  component, all editable by hand or from the theme editor. Manrope is the default sans/heading
+  family and Geist Mono is used for code.
 - **`/design-system`** — every installed component rendered in every variant/size/state, for visual
   QA.
 - **`/theme-editor`** — a live editor: human-readable labels + descriptions per CSS variable, hex/
@@ -67,6 +71,11 @@ also pass `--components`).
 | `--cwd <path>`            | Run against a project directory other than the current one.            |
 | `--dry-run`               | Print exactly what would be installed/copied/changed and stop — writes nothing. `remove` and `update` support it too. |
 | `--report`                | Print a source file-size and npm dependency breakdown for the selection (combine with `--dry-run` for a fully non-destructive preview). |
+| `--templates <path>`      | Use templates from a local kit checkout instead of the CDN (maintainer/development use). |
+
+`--all` is intended for evaluation, demos, and smoke testing. Production projects should prefer
+`--components` (or the interactive picker) so unused components and their dependencies do not
+inflate the application bundle; a full Vite install can legitimately trigger a large-chunk warning.
 
 ### Adding more components later
 
@@ -93,6 +102,17 @@ npx staunch-shadcn-design-system-kit init --components auth
 Next.js App Router routes work immediately. Vite: mount the pages from `src/auth/*Page.tsx` with
 your router (the CLI prints example `<Route>` lines). `auth` is not in the interactive picker’s
 nav groups — pass `--components auth` (or `--all`) to install it.
+
+### CRUD system (opt-in)
+
+Install `crud-table` for a complete typed CRUD screen: data table, sorting/filtering, debounced
+search, pagination, create/edit forms, delete confirmation, GraphQL client helpers, and a local
+mock-backed showcase. The generated pieces are composable, so projects can keep the UI and replace
+the transport layer with their own API.
+
+```bash
+npx staunch-shadcn-design-system-kit init --components crud-table
+```
 
 ### Removing components later
 
@@ -135,7 +155,7 @@ since those are meant to be entirely CLI-owned.
 
 ## Next.js vs Vite
 
-The 60 UI components, the theme system, and the theme editor's own chrome are 100% shared code —
+The 95 UI components, the theme system, and the theme editor's own chrome are 100% shared code —
 none of it imports anything Next- or Vite-specific. Only three things differ:
 
 |                          | Next.js                                      | Vite                                                             |
@@ -144,16 +164,16 @@ none of it imports anything Next- or Vite-specific. Only three things differ:
 | Theme editor route       | `src/app/theme-editor/page.tsx`               | `src/theme-editor/ThemeEditorPage.tsx` — same                     |
 | Theme "Save" persistence | `src/app/api/theme/save/route.ts`             | `vite-plugin-design-kit.ts`, registered in `vite.config.ts` (dev-server middleware) |
 | CSS entry                | `src/app/globals.css`                         | `src/index.css`, using Tailwind v4's `@tailwindcss/vite` plugin instead of PostCSS |
-| Default font             | Geist Sans/Mono via `next/font/google`        | The same Geist Sans/Mono, self-hosted via `@fontsource/geist-sans`/`@fontsource/geist-mono` |
+| Default font             | Manrope + Geist Mono via `next/font/google`   | The same families, self-hosted via `@fontsource/manrope`/`@fontsource/geist-mono` |
 
 Vite has no built-in router, so after `init` you'll need to mount `DesignSystemPage`/
 `ThemeEditorPage` yourself (the CLI prints an example using `react-router-dom`) and wrap your app
 root in `<TooltipProvider>`/`<Toaster />` if you installed Tooltip/Sonner.
 
-Vite also has no `next/font` equivalent, so `init` always installs `@fontsource/geist-sans` and
+Vite also has no `next/font` equivalent, so `init` always installs `@fontsource/manrope` and
 `@fontsource/geist-mono` (regardless of which components you pick — same as Next always getting
-Geist through `layout.tsx`) and imports them in `src/index.css`, so `--font-sans`/`--font-mono`
-resolve to the same family Next uses, self-hosted with no external Google Fonts request. Swap in
+both through `layout.tsx`) and imports them in `src/index.css`, so `--font-sans`/`--font-mono`
+resolve to the same families Next uses, self-hosted with no external Google Fonts request. Swap in
 a different `@fontsource/*` package and update those two `@import`/`--font-*` lines in
 `src/index.css` if you want a different default font.
 
@@ -237,13 +257,16 @@ Every `init` run checks your tsconfig against TypeScript 7's breaking changes (r
 npm install
 npm run build            # tsup → dist/cli.js
 npm run build:registry   # regenerate src/generated/registry.ts if you change the templates
-npm test                 # vitest — selection/codegen/ts-compat unit tests (co-located *.test.ts)
-npm run smoke            # scaffolds real Next.js + Vite apps in a tmp dir, runs init + build + lint
+npm run lint             # ESLint — CLI source and maintainer scripts
+npm test                 # vitest — CLI utilities plus focused component interaction tests
+npm run smoke            # scaffold/build/lint scenarios plus a Playwright runtime pass
 ```
 
 `npm run smoke` is the slow-but-real check: it builds the CLI, scaffolds a fresh `create-next-app`
 and `create-vite` project for both a full (`--all`) and a partial component selection, runs
-`design-kit init` against each, then runs that project's own `build`/`lint`. Takes a few minutes
+`design-kit init` against each, then runs that project's own `build`/`lint`. A fifth scenario
+starts Next.js and checks `/design-system`, `/theme-editor`, typography tokens, and a Rating
+interaction in Chromium. Takes a few minutes
 (network + framework builds) — run it before anything that touches the templates, the splitter,
 the registry, or the config patchers. `--keep` leaves the scaffolded projects on disk for
 inspection instead of deleting them; `--only next`/`--only vite` runs just one framework's
@@ -254,8 +277,16 @@ them directly (they're literally what gets copied into a consumer's project), th
 `npm run build:registry` if you added/removed/renamed a component so the picker and dependency
 resolution stay accurate.
 
-This package isn't published to npm — it's not `npx`-able from the registry. To try it, run the
-built `dist/cli.js` directly against a target project with `--cwd`, or `cd` into the project first.
+### Component API convention
+
+New controlled components should expose `value` and `onValueChange`. Avoid introducing
+`onChange` or `onSelectedChange` for the same value-only callback shape; reserve `onChange` for
+native-event-compatible APIs. Existing public props are kept for compatibility and can be migrated
+only through an explicitly documented breaking release.
+
+Until the first npm release is available, run the built `dist/cli.js` directly against a target
+project with `--cwd`, or `cd` into the project first. Releases are managed by Changesets and the
+release workflow.
 
 ### Versioning
 
@@ -268,8 +299,8 @@ npm run changeset   # record what you changed and its bump type (patch/minor/maj
 npm run version     # on release: consumes pending changesets, bumps the version, writes the changelog
 ```
 
-`npm run changeset` needs a git history to diff against (it compares your branch to `main`), so it
-won't do anything useful until this package has its own git repo with at least one commit on `main`.
+`npm run changeset` compares the current branch with `main`; run it from a feature branch that
+contains the user-facing change you want to describe.
 
 ### Test against a fresh Next.js app
 

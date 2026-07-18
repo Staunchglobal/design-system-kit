@@ -1,6 +1,6 @@
 {
   "name": "staunch-shadcn-design-system-kit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "CLI that scaffolds a full shadcn/ui component set, a token-driven Tailwind v4 theme system, a /design-system showcase page, and a live /theme-editor into a Next.js (App Router) or Vite + React + TypeScript project.",
   "keywords": [
     "shadcn",
@@ -25,7 +25,11 @@
   "bugs": {
     "url": "https://github.com/Staunchglobal/design-system-kit/issues"
   },
-  "private": true,
+  "private": false,
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "type": "module",
   "bin": {
     "design-kit": "./dist/cli.js"
@@ -40,12 +44,15 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
+    "lint": "eslint src scripts tsup.config.ts",
     "build:registry": "node scripts/build-registry.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "smoke": "node scripts/smoke-test.mjs",
     "changeset": "changeset",
-    "version": "changeset version"
+    "version": "changeset version",
+    "prepublishOnly": "npm run build",
+    "release": "npm publish"
   },
   "dependencies": {
     "commander": "^15.0.0",
@@ -56,9 +63,26 @@
     "ts-morph": "^28.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^8.0.1",
+    "@babel/eslint-parser": "^8.0.1",
+    "@babel/preset-typescript": "^8.0.1",
     "@changesets/cli": "^2.31.0",
+    "@eslint/js": "^9.39.5",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^26.1.1",
     "@types/prompts": "^2.4.9",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "clsx": "^2.1.1",
+    "eslint": "^9.39.5",
+    "globals": "^17.7.0",
+    "jsdom": "^29.1.1",
+    "playwright": "^1.61.1",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "tailwind-merge": "^3.6.0",
     "tsup": "^8.5.1",
     "typescript": "^7.0.2",
     "vitest": "^4.1.10"

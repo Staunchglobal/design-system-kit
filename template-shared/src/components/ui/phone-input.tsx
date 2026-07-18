@@ -26,11 +26,6 @@ export function formatPhoneMask(raw: string, pattern: string): string {
   return result
 }
 
-/** Count of `#` placeholders in a mask pattern. */
-export function phoneMaskDigitCapacity(pattern: string): number {
-  return [...pattern].filter((c) => c === '#').length
-}
-
 type PhoneInputProps = {
   value: string
   onChange: (value: string) => void

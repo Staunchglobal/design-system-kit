@@ -1,6 +1,5 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { spawnSync } from 'node:child_process'
 import pc from 'picocolors'
 import { log } from '../lib/log.js'
 import { detectProject } from '../lib/detect.js'
@@ -17,9 +16,8 @@ import {
   navGroupsFor,
   resolveUiClosure,
 } from '../lib/selection.js'
-import { generateDesignSystemPage, generateLivePreview, generateNavTs, generateThemeIndexCss } from '../lib/codegen.js'
-import { writeGeneratedFile } from '../lib/copy.js'
 import { applyRenameHistory, loadRenameHistory } from '../lib/rename-history.js'
+import { regenerateGeneratedFiles } from '../lib/regenerate-generated-files.js'
 
 export type UpdateOptions = { cwd: string; yes: boolean; force: boolean; dryRun?: boolean }
 
@@ -193,55 +191,13 @@ export async function update(options: UpdateOptions) {
     toWrite.map(({ relPath, newContent }) => ({ destRel: relPath, templateContent: newContent, written: true }))
   )
 
-  // CLI-generated files are always fully regenerated (they're never meant to be hand-edited).
-  if (project.framework === 'next') {
-    writeGeneratedFile(path.join(destRoot, 'app/design-system/_lib/nav.ts'), generateNavTs(navGroups))
-    writeGeneratedFile(
-      path.join(destRoot, 'app/design-system/page.tsx'),
-      generateDesignSystemPage({
-        navGroups,
-        importBase: '@/app/design-system',
-        sidebarImport: '@/app/design-system/_components/sidebar-nav',
-        withMetadata: true,
-      })
-    )
-    writeGeneratedFile(
-      path.join(destRoot, 'app/theme-editor/_components/live-preview.tsx'),
-      generateLivePreview({
-        navGroups,
-        designSystemImportBase: '@/app/design-system',
-        themeEditorImportBase: '@/app/theme-editor',
-      })
-    )
-  } else {
-    writeGeneratedFile(path.join(root, 'src/design-system/_lib/nav.ts'), generateNavTs(navGroups))
-    writeGeneratedFile(
-      path.join(root, 'src/design-system/DesignSystemPage.tsx'),
-      generateDesignSystemPage({
-        navGroups,
-        importBase: '@/design-system',
-        sidebarImport: '@/design-system/_components/sidebar-nav',
-        withMetadata: false,
-      })
-    )
-    writeGeneratedFile(
-      path.join(root, 'src/theme-editor/_components/live-preview.tsx'),
-      generateLivePreview({
-        navGroups,
-        designSystemImportBase: '@/design-system',
-        themeEditorImportBase: '@/theme-editor',
-      })
-    )
-  }
-  writeGeneratedFile(path.join(destRoot, 'styles/theme/index.css'), generateThemeIndexCss([...cssFilesFor(closure)]))
-  log.success('Regenerated nav.ts, the design-system page, the theme editor live preview, and theme/index.css.')
-
-  const manifestRun = spawnSync('node', ['scripts/generate-theme-manifest.mjs'], { cwd: root, stdio: 'pipe', encoding: 'utf8' })
-  if (manifestRun.status === 0) {
-    log.success(manifestRun.stdout.trim() || 'Regenerated theme.manifest.json')
-  } else {
-    log.warn(`Could not regenerate theme.manifest.json: ${manifestRun.stderr || manifestRun.error}`)
-  }
+  regenerateGeneratedFiles({
+    root,
+    destRoot,
+    framework: project.framework,
+    navGroups,
+    cssFiles: [...cssFilesFor(closure)],
+  })
 
   log.title('Done')
   log.success(`Updated ${toWrite.length} file(s).`)

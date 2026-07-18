@@ -5,12 +5,16 @@
 }
 
 [data-slot='rating-segment'] {
-  --rating-segment-bg: var(--muted);
+  --rating-segment-bg: color-mix(in oklab, var(--muted) 30%, transparent);
   --rating-segment-fg: var(--muted-foreground);
   --rating-segment-radius: var(--radius-sm);
   background: var(--rating-segment-bg);
   color: var(--rating-segment-fg);
   border-radius: var(--rating-segment-radius);
+}
+
+[data-slot='rating-segment']:not([data-filled]):hover {
+  --rating-segment-bg: var(--muted);
 }
 
 [data-slot='rating-segment'][data-filled] {

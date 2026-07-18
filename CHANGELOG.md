@@ -10,6 +10,21 @@ change" here means: a CLI flag is removed/renamed, a generated file's shape chan
 breaks a previous `init`'s output, or a component's public props/exports change incompatibly —
 not every change to `template-*/`, most of which are template-only fixes/additions (patch/minor).
 
+## 0.2.0
+
+### Minor Changes
+
+- Expand the kit from its initial baseline into a 95-component design system with:
+
+  - Complete Auth and CRUD systems, including generated routes, forms, GraphQL helpers, and mocks.
+  - New advanced component families for uploads, sortable lists, rich text, address autocomplete,
+    payments and Stripe, OAuth, notifications, PDF documents, and additional data-entry patterns.
+  - A redesigned Manrope-based default theme with expanded color scales, semantic
+    Success/Warning/Info tokens, radius and shadow scales, and component-level theme coverage.
+  - More robust selective installation, update/remove behavior, framework detection, generated-file
+    management, local-template development, and TypeScript compatibility checks.
+  - Expanded theme-editor token creation, deletion, and repo-wide rename support.
+
 ## 0.1.0
 
 Initial baseline:

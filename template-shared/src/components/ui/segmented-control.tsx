@@ -24,6 +24,7 @@ type SegmentedControlProps = {
   value: string
   onValueChange: (value: string) => void
   ariaLabel: string
+  disabled?: boolean
   className?: string
 }
 
@@ -32,13 +33,14 @@ function SegmentedControl({
   value,
   onValueChange,
   ariaLabel,
+  disabled = false,
   className,
 }: SegmentedControlProps) {
   const isMobile = useIsMobile()
 
   if (isMobile) {
     return (
-      <Select value={value} onValueChange={onValueChange}>
+      <Select value={value} onValueChange={onValueChange} disabled={disabled}>
         <SelectTrigger
           data-slot="segmented-control"
           aria-label={ariaLabel}
@@ -69,6 +71,7 @@ function SegmentedControl({
       variant="outline"
       spacing={0}
       value={value}
+      disabled={disabled}
       onValueChange={(next) => {
         if (next) onValueChange(next)
       }}

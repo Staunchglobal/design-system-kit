@@ -5,10 +5,10 @@ import { GROUPS, COMPONENTS } from '../generated/registry.js'
 import { log } from './log.js'
 import { readSelectionConfig } from './selection-state.js'
 
-/** Which component slugs already have a src/components/ui/<slug>.tsx on disk. */
-export function detectInstalledComponents(root: string): Set<string> {
+/** Which component slugs already have a <srcDir>/components/ui/<slug>.tsx on disk. */
+export function detectInstalledComponents(root: string, srcDir = 'src'): Set<string> {
   const installed = new Set<string>()
-  const uiDir = path.join(root, 'src/components/ui')
+  const uiDir = path.join(root, srcDir, 'components/ui')
   for (const slug of Object.keys(COMPONENTS)) {
     if (COMPONENTS[slug].isPattern) continue
     if (fs.existsSync(path.join(uiDir, `${slug}.tsx`))) installed.add(slug)
@@ -22,10 +22,10 @@ export function detectInstalledComponents(root: string): Set<string> {
  * on-disk detection — minus whatever the theme editor's own chrome always needs — for a
  * project that ran an older version of this CLI before design-kit.json existed.
  */
-export function priorSelectionFor(root: string, toolOnly: Set<string>): Set<string> {
+export function priorSelectionFor(root: string, toolOnly: Set<string>, srcDir = 'src'): Set<string> {
   const config = readSelectionConfig(root)
   if (config.components.length) return new Set(config.components)
-  const detected = detectInstalledComponents(root)
+  const detected = detectInstalledComponents(root, srcDir)
   return new Set([...detected].filter((s) => !toolOnly.has(s)))
 }
 
