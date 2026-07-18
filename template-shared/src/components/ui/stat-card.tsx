@@ -40,7 +40,7 @@ function StatCard({ label, value, icon, loading = false, trend, className }: Sta
         {icon ? (
           <div
             data-slot="stat-card-icon"
-            className="bg-muted text-foreground flex size-9 shrink-0 items-center justify-center rounded-lg [&_svg]:size-4"
+            className="bg-primary text-primary-foreground flex size-9 shrink-0 items-center justify-center rounded-lg [&_svg]:size-4"
           >
             {icon}
           </div>

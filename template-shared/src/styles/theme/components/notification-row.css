@@ -35,4 +35,3 @@
 .dark [data-slot='notification-row']:focus-visible {
   --notification-row-focus-ring-color: var(--neutral-500);
 }
-</content>

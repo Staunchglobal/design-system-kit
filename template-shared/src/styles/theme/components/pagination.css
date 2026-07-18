@@ -7,8 +7,21 @@
   gap: var(--pagination-content-gap);
 }
 
-/* PaginationLink is a real Button (outline when active, ghost otherwise).
-   Colors/sizes come from the Button section — no visual overrides here. */
+/* PaginationLink is a real Button. Active page uses write-now's lighter-touch
+   primary-50 / primary-500 pattern rather than inverse solid primary. */
+[data-ui='pagination-link'][data-active='true'] {
+  --button-bg: var(--primary-50);
+  --button-fg: var(--primary-500);
+  --button-border-color: var(--primary-200);
+  --button-hover-bg: var(--primary-100);
+  background-color: var(--button-bg);
+  color: var(--button-fg);
+  border-color: var(--button-border-color);
+}
+[data-ui='pagination-link'][data-active='true']:hover {
+  background-color: var(--button-hover-bg);
+  color: var(--button-fg);
+}
 
 [data-slot='pagination-ellipsis'] {
   --pagination-ellipsis-size: 2rem;

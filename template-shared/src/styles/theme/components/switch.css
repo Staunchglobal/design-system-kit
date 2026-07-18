@@ -5,8 +5,8 @@
 [data-slot='switch'] {
   --switch-border-width: 1px;
   --switch-border-color: transparent;
-  --switch-checked-bg: var(--primary);
-  --switch-unchecked-bg: var(--input);
+  --switch-checked-bg: var(--primary-500);
+  --switch-unchecked-bg: var(--neutral-200);
   --switch-focus-ring-width: 3px;
   --switch-focus-border-color: var(--ring);
   --switch-focus-ring-color: var(--neutral-400);
@@ -32,6 +32,10 @@
 [data-slot='switch'][data-state='unchecked'] {
   background-color: var(--switch-unchecked-bg);
 }
+[data-slot='switch'][data-state='unchecked']:active {
+  --switch-unchecked-active-bg: var(--neutral-300);
+  background-color: var(--switch-unchecked-active-bg);
+}
 [data-slot='switch'][data-disabled] {
   opacity: var(--switch-disabled-opacity);
   cursor: not-allowed;
@@ -50,11 +54,13 @@
 }
 
 [data-slot='switch-thumb'] {
-  --switch-thumb-bg: var(--background);
+  --switch-thumb-bg: var(--neutral-0);
+  --switch-thumb-shadow: var(--shadow-xs);
   --switch-thumb-translate-checked: calc(100% - 2px);
   --switch-thumb-translate-unchecked: 0px;
   background-color: var(--switch-thumb-bg);
   border-radius: 9999px;
+  box-shadow: var(--switch-thumb-shadow);
 }
 [data-slot='switch-thumb'][data-state='checked'] {
   transform: translateX(var(--switch-thumb-translate-checked));

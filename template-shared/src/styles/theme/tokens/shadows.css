@@ -1,19 +1,20 @@
 /* ==========================================================================
    Shadows
    ==========================================================================
-   Elevation shadows, composed only from shade scales in color-scales.css
-   (never a raw hex/rgb value).
+   Elevation shadows cascaded from paramount-mobile-app / function-rx
+   (byte-identical across those two apps). Values use rgba deliberately —
+   these multi-layer soft shadows cannot be expressed as opaque shade-token
+   composites without losing the intended translucency.
    ========================================================================== */
 
 :root {
-  --shadow-sm: 0 1px 2px 0 var(--neutral-950);
+  --shadow-xs: 0px 4px 4px 0px rgba(0, 0, 0, 0.04);
+  --shadow-sm:
+    0px 13.642px 33px -3.411px rgba(0, 0, 0, 0.1), 0px 1.705px 3.411px 0px rgba(0, 0, 0, 0.04);
   --shadow-md:
-    0 4px 6px -1px var(--neutral-950),
-    0 2px 4px -2px var(--neutral-950);
+    0px 20.464px 40.927px -6.821px rgba(0, 0, 0, 0.12), 0px 1.705px 3.411px 0px rgba(0, 0, 0, 0.04);
   --shadow-lg:
-    0 10px 15px -3px var(--neutral-950),
-    0 4px 6px -4px var(--neutral-950);
+    0px 34.106px 68.212px -13.642px rgba(0, 0, 0, 0.16), 0px 1.705px 3.411px 0px rgba(0, 0, 0, 0.04);
   --shadow-xl:
-    0 20px 25px -5px var(--neutral-950),
-    0 8px 10px -6px var(--neutral-950);
+    0px 47.749px 95.497px -17.053px rgba(0, 0, 0, 0.18), 0px 1.705px 3.411px 0px rgba(0, 0, 0, 0.04);
 }

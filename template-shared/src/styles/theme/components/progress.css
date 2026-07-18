@@ -5,14 +5,14 @@
 [data-slot='progress'] {
   --progress-height: 0.25rem;
   --progress-radius: 9999px;
-  --progress-track-bg: var(--muted);
+  --progress-track-bg: var(--neutral-200);
   height: var(--progress-height);
   border-radius: var(--progress-radius);
   background-color: var(--progress-track-bg);
 }
 
 [data-slot='progress-indicator'] {
-  --progress-indicator-bg: var(--primary);
+  --progress-indicator-bg: var(--primary-500);
   --progress-indicator-transition: all 0.2s ease;
   background-color: var(--progress-indicator-bg);
   transition: var(--progress-indicator-transition);

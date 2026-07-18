@@ -1,18 +1,17 @@
 /* ==========================================================================
    Sonner (Toast)
+   ==========================================================================
+   Shell + icon colors cascaded from paramount ToastStrip (neutral-900 shell,
+   radius-sm, shadow-sm; icon badges use success-500 / danger-500 / info-500 /
+   warning-500).
    ========================================================================== */
 
-/* Sonner is a headless toast library; sonner.tsx wires it up with
-   className="toaster group" and sets --normal-bg/--normal-text/
-   --normal-border/--border-radius inline via the style prop (pointing at
-   --popover/--popover-foreground/--border/--radius). There is no data-slot
-   here, so `.toaster` (the library root's own class) is the real DOM hook —
-   we re-point the same CSS variable names Sonner already reads. */
 .toaster {
-  --sonner-bg: var(--popover);
-  --sonner-text: var(--popover-foreground);
-  --sonner-border: var(--border);
-  --sonner-radius: var(--radius);
+  --sonner-bg: var(--neutral-900);
+  --sonner-text: var(--neutral-0);
+  --sonner-border: transparent;
+  --sonner-radius: var(--radius-md);
+  --sonner-shadow: var(--shadow-sm);
 
   --normal-bg: var(--sonner-bg);
   --normal-text: var(--sonner-text);
@@ -20,15 +19,14 @@
   --border-radius: var(--sonner-radius);
 }
 
-/* toastOptions.classNames.toast = 'cn-toast' gives each individual toast a
-   real, stable class name to hook. */
 .toaster .cn-toast {
   --sonner-toast-gap: 0.75rem;
-  --sonner-toast-padding: 1rem;
-  --sonner-toast-font-size: var(--typography-muted-font-size);
+  --sonner-toast-padding: 0.75rem 1rem;
+  --sonner-toast-font-size: var(--typography-small-font-size);
   gap: var(--sonner-toast-gap);
   padding: var(--sonner-toast-padding);
   font-size: var(--sonner-toast-font-size);
+  box-shadow: var(--sonner-shadow);
 }
 .toaster .cn-toast svg {
   --sonner-icon-size: 1rem;
@@ -36,21 +34,50 @@
   height: var(--sonner-icon-size);
 }
 
-/* Sonner also supports per-type CSS-variable overrides (--success-bg/
-   -text/-border, --error-bg/-text/-border, --warning-*, --info-*) on the
-   toast element itself. This design system has no dedicated semantic
-   success/warning/info tokens (only --destructive), so only the error case
-   is mapped meaningfully; the rest default to the normal/popover palette. */
-.toaster .cn-toast[data-type='error'] {
-  --sonner-error-bg: var(--destructive-100);
-  --sonner-error-text: var(--destructive);
-  --sonner-error-border: var(--destructive-600);
-  --error-bg: var(--sonner-error-bg);
-  --error-text: var(--sonner-error-text);
-  --error-border: var(--sonner-error-border);
+.toaster .cn-toast[data-type='success'] {
+  --success-bg: var(--neutral-900);
+  --success-text: var(--neutral-0);
+  --success-border: transparent;
+}
+.toaster .cn-toast[data-type='success'] [data-icon] {
+  color: var(--neutral-0);
+  background-color: var(--success-500);
+  border-radius: 9999px;
+  padding: 0.25rem;
 }
 
-.dark .toaster .cn-toast[data-type='error'] {
-  --sonner-error-bg: var(--neutral-800);
-  --sonner-error-border: var(--destructive-400);
+.toaster .cn-toast[data-type='error'] {
+  --error-bg: var(--neutral-900);
+  --error-text: var(--neutral-0);
+  --error-border: transparent;
+}
+.toaster .cn-toast[data-type='error'] [data-icon] {
+  color: var(--neutral-0);
+  background-color: var(--destructive-500);
+  border-radius: 9999px;
+  padding: 0.25rem;
+}
+
+.toaster .cn-toast[data-type='info'] {
+  --info-bg: var(--neutral-900);
+  --info-text: var(--neutral-0);
+  --info-border: transparent;
+}
+.toaster .cn-toast[data-type='info'] [data-icon] {
+  color: var(--neutral-0);
+  background-color: var(--info-500);
+  border-radius: 9999px;
+  padding: 0.25rem;
+}
+
+.toaster .cn-toast[data-type='warning'] {
+  --warning-bg: var(--neutral-900);
+  --warning-text: var(--neutral-0);
+  --warning-border: transparent;
+}
+.toaster .cn-toast[data-type='warning'] [data-icon] {
+  color: var(--neutral-0);
+  background-color: var(--warning-500);
+  border-radius: 9999px;
+  padding: 0.25rem;
 }

@@ -40,4 +40,3 @@
 .dark [data-slot='payment-method-card'][data-variant='muted'] {
   --payment-method-card-bg: var(--neutral-800);
 }
-</content>

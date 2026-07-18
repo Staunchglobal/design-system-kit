@@ -1,9 +1,13 @@
 /* ==========================================================================
    Button
+   ==========================================================================
+   Hover/pressed colors cascaded from paramount-mobile-app Button state matrix.
+   Variant map: default→primary, outline→tertiary, secondary→secondary,
+   destructive→danger, ghost→ghost, link→link.
    ========================================================================== */
 
 [data-slot='button'] {
-  --button-radius: var(--radius-lg);
+  --button-radius: var(--radius);
   --button-border-width: 1px;
   --button-font-size: var(--typography-small-font-size);
   --button-font-weight: var(--typography-small-font-weight);
@@ -33,23 +37,32 @@
   box-shadow: 0 0 0 var(--button-focus-ring-width) var(--button-invalid-ring-color);
 }
 
+/* default → paramount primary (solid) */
 [data-slot='button'][data-variant='default'] {
-  --button-bg: var(--primary);
-  --button-fg: var(--primary-foreground);
-  --button-hover-bg: var(--neutral-900);
+  --button-bg: var(--primary-500);
+  --button-fg: var(--neutral-0);
+  --button-hover-bg: var(--primary-600);
+  --button-active-bg: var(--primary-700);
+  --button-border-color: transparent;
   background-color: var(--button-bg);
   color: var(--button-fg);
+  border-color: var(--button-border-color);
 }
 [data-slot='button'][data-variant='default']:hover {
   background-color: var(--button-hover-bg);
 }
+[data-slot='button'][data-variant='default']:active {
+  background-color: var(--button-active-bg);
+}
 
+/* outline → paramount tertiary */
 [data-slot='button'][data-variant='outline'] {
-  --button-bg: var(--background);
-  --button-fg: var(--foreground);
-  --button-border-color: var(--border);
-  --button-hover-bg: var(--muted);
-  --button-hover-fg: var(--foreground);
+  --button-bg: var(--neutral-0);
+  --button-fg: var(--primary-950);
+  --button-border-color: var(--neutral-300);
+  --button-hover-bg: var(--neutral-50);
+  --button-hover-fg: var(--primary-950);
+  --button-active-bg: var(--neutral-100);
   background-color: var(--button-bg);
   color: var(--button-fg);
   border-color: var(--button-border-color);
@@ -59,54 +72,84 @@
   background-color: var(--button-hover-bg);
   color: var(--button-hover-fg);
 }
+[data-slot='button'][data-variant='outline']:active {
+  background-color: var(--button-active-bg);
+}
 
+/* secondary → paramount secondary (amber solid) */
 [data-slot='button'][data-variant='secondary'] {
-  --button-bg: var(--secondary);
-  --button-fg: var(--secondary-foreground);
-  --button-hover-bg: var(--neutral-200);
+  --button-bg: var(--secondary-500);
+  --button-fg: var(--primary-950);
+  --button-hover-bg: var(--secondary-600);
+  --button-active-bg: var(--secondary-700);
+  --button-border-color: transparent;
   background-color: var(--button-bg);
   color: var(--button-fg);
+  border-color: var(--button-border-color);
 }
 [data-slot='button'][data-variant='secondary']:hover {
   background-color: var(--button-hover-bg);
 }
+[data-slot='button'][data-variant='secondary']:active {
+  background-color: var(--button-active-bg);
+}
 
+/* ghost → paramount ghost */
 [data-slot='button'][data-variant='ghost'] {
   --button-bg: transparent;
-  --button-fg: var(--foreground);
-  --button-hover-bg: var(--muted);
-  --button-hover-fg: var(--foreground);
+  --button-fg: var(--primary-950);
+  --button-hover-bg: var(--neutral-50);
+  --button-hover-fg: var(--primary-950);
+  --button-active-bg: var(--neutral-100);
   background-color: var(--button-bg);
+  color: var(--button-fg);
 }
 [data-slot='button'][data-variant='ghost']:hover,
 [data-slot='button'][data-variant='ghost'][aria-expanded='true'] {
   background-color: var(--button-hover-bg);
   color: var(--button-hover-fg);
 }
+[data-slot='button'][data-variant='ghost']:active {
+  background-color: var(--button-active-bg);
+}
 
+/* destructive → paramount danger (tinted shell) */
 [data-slot='button'][data-variant='destructive'] {
-  --button-bg: var(--destructive-600);
-  --button-fg: var(--destructive);
-  --button-hover-bg: var(--destructive-600);
+  --button-bg: var(--destructive-50);
+  --button-fg: var(--destructive-500);
+  --button-border-color: var(--destructive-300);
+  --button-hover-bg: var(--destructive-100);
+  --button-active-bg: var(--destructive-200);
   --button-focus-border-color: var(--destructive-600);
   --button-focus-ring-color: var(--destructive-600);
   background-color: var(--button-bg);
   color: var(--button-fg);
+  border-color: var(--button-border-color);
 }
 [data-slot='button'][data-variant='destructive']:hover {
   background-color: var(--button-hover-bg);
 }
+[data-slot='button'][data-variant='destructive']:active {
+  background-color: var(--button-active-bg);
+}
 
+/* link → paramount link */
 [data-slot='button'][data-variant='link'] {
   --button-bg: transparent;
-  --button-fg: var(--primary);
+  --button-fg: var(--primary-500);
+  --button-hover-fg: var(--primary-400);
+  --button-active-fg: var(--primary-700);
   --button-underline-offset: 4px;
   background-color: var(--button-bg);
   color: var(--button-fg);
   text-underline-offset: var(--button-underline-offset);
 }
 [data-slot='button'][data-variant='link']:hover {
+  color: var(--button-hover-fg);
   text-decoration-line: underline;
+}
+[data-slot='button'][data-variant='link']:active {
+  color: var(--button-active-fg);
 }
 
 [data-slot='button'][data-size='default'] {
@@ -121,7 +164,7 @@
   --button-height: 1.5rem;
   --button-padding-x: 0.5rem;
   --button-gap: 0.25rem;
-  --button-radius: min(var(--radius-md), 10px);
+  --button-radius: var(--radius-md);
   --button-font-size: var(--typography-caption-font-size);
   height: var(--button-height);
   padding-inline: var(--button-padding-x);
@@ -133,7 +176,7 @@
   --button-height: 1.75rem;
   --button-padding-x: 0.625rem;
   --button-gap: 0.25rem;
-  --button-radius: min(var(--radius-md), 12px);
+  --button-radius: var(--radius-md);
   --button-font-size: var(--typography-caption-font-size);
   height: var(--button-height);
   padding-inline: var(--button-padding-x);
@@ -156,14 +199,14 @@
 }
 [data-slot='button'][data-size='icon-xs'] {
   --button-size: 1.5rem;
-  --button-radius: min(var(--radius-md), 10px);
+  --button-radius: var(--radius-md);
   width: var(--button-size);
   height: var(--button-size);
   border-radius: var(--button-radius);
 }
 [data-slot='button'][data-size='icon-sm'] {
   --button-size: 1.75rem;
-  --button-radius: min(var(--radius-md), 12px);
+  --button-radius: var(--radius-md);
   width: var(--button-size);
   height: var(--button-size);
   border-radius: var(--button-radius);
@@ -179,16 +222,46 @@
 }
 
 .dark [data-slot='button'][data-variant='default'] {
-  --button-hover-bg: var(--neutral-200);
+  --button-bg: var(--primary-400);
+  --button-fg: var(--primary-950);
+  --button-hover-bg: var(--primary-300);
+  --button-active-bg: var(--primary-500);
+}
+
+.dark [data-slot='button'][data-variant='outline'] {
+  --button-bg: var(--neutral-900);
+  --button-fg: var(--neutral-50);
+  --button-border-color: var(--neutral-700);
+  --button-hover-bg: var(--neutral-800);
+  --button-active-bg: var(--neutral-700);
 }
 
 .dark [data-slot='button'][data-variant='secondary'] {
+  --button-bg: var(--secondary-400);
+  --button-fg: var(--primary-950);
+  --button-hover-bg: var(--secondary-300);
+  --button-active-bg: var(--secondary-500);
+}
+
+.dark [data-slot='button'][data-variant='ghost'] {
+  --button-fg: var(--neutral-50);
   --button-hover-bg: var(--neutral-800);
+  --button-hover-fg: var(--neutral-50);
+  --button-active-bg: var(--neutral-700);
 }
 
 .dark [data-slot='button'][data-variant='destructive'] {
-  --button-bg: var(--destructive-400);
-  --button-hover-bg: var(--destructive-400);
+  --button-bg: var(--destructive-950);
+  --button-fg: var(--destructive-400);
+  --button-border-color: var(--destructive-700);
+  --button-hover-bg: var(--destructive-900);
+  --button-active-bg: var(--destructive-800);
   --button-focus-border-color: var(--destructive-400);
   --button-focus-ring-color: var(--destructive-400);
+}
+
+.dark [data-slot='button'][data-variant='link'] {
+  --button-fg: var(--primary-400);
+  --button-hover-fg: var(--primary-300);
+  --button-active-fg: var(--primary-500);
 }

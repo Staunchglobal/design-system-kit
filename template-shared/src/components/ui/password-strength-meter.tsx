@@ -29,8 +29,8 @@ function filledBars(level: StrengthLevel): number {
 const BAR_COLORS: Record<StrengthLevel, string> = {
   empty: 'bg-muted',
   weak: 'bg-destructive',
-  fair: 'bg-amber-500',
-  strong: 'bg-emerald-500',
+  fair: 'bg-warning-500',
+  strong: 'bg-success-500',
 }
 
 type PasswordStrengthMeterProps = {
@@ -63,8 +63,8 @@ function PasswordStrengthMeter({ password, className }: PasswordStrengthMeterPro
           className={cn(
             'text-xs font-medium',
             level === 'weak' && 'text-destructive',
-            level === 'fair' && 'text-amber-600 dark:text-amber-400',
-            level === 'strong' && 'text-emerald-600 dark:text-emerald-400'
+            level === 'fair' && 'text-warning-600 dark:text-warning-400',
+            level === 'strong' && 'text-success-600 dark:text-success-400'
           )}
         >
           {label}

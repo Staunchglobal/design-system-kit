@@ -18,7 +18,7 @@
         {
           "id": "color-scales:--neutral-50:0",
           "name": "--neutral-50",
-          "value": "#fafafa",
+          "value": "#f6f6f6",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -26,7 +26,7 @@
         {
           "id": "color-scales:--neutral-100:0",
           "name": "--neutral-100",
-          "value": "#f5f5f5",
+          "value": "#f0f0f1",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -34,7 +34,7 @@
         {
           "id": "color-scales:--neutral-200:0",
           "name": "--neutral-200",
-          "value": "#e5e5e5",
+          "value": "#e8e8e9",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -42,7 +42,7 @@
         {
           "id": "color-scales:--neutral-300:0",
           "name": "--neutral-300",
-          "value": "#d4d4d4",
+          "value": "#d9d9db",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -50,7 +50,7 @@
         {
           "id": "color-scales:--neutral-400:0",
           "name": "--neutral-400",
-          "value": "#a3a3a3",
+          "value": "#b4b5b7",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -58,7 +58,7 @@
         {
           "id": "color-scales:--neutral-500:0",
           "name": "--neutral-500",
-          "value": "#737373",
+          "value": "#8e8f93",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -66,7 +66,7 @@
         {
           "id": "color-scales:--neutral-600:0",
           "name": "--neutral-600",
-          "value": "#525252",
+          "value": "#77787e",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -74,7 +74,7 @@
         {
           "id": "color-scales:--neutral-700:0",
           "name": "--neutral-700",
-          "value": "#404040",
+          "value": "#666873",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -82,7 +82,7 @@
         {
           "id": "color-scales:--neutral-800:0",
           "name": "--neutral-800",
-          "value": "#262626",
+          "value": "#44454c",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -90,7 +90,7 @@
         {
           "id": "color-scales:--neutral-900:0",
           "name": "--neutral-900",
-          "value": "#171717",
+          "value": "#1e2028",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -98,7 +98,7 @@
         {
           "id": "color-scales:--neutral-950:0",
           "name": "--neutral-950",
-          "value": "#0a0a0a",
+          "value": "#101723",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -106,7 +106,7 @@
         {
           "id": "color-scales:--primary-50:0",
           "name": "--primary-50",
-          "value": "#fafafa",
+          "value": "#f2fbff",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -114,7 +114,7 @@
         {
           "id": "color-scales:--primary-100:0",
           "name": "--primary-100",
-          "value": "#f5f5f5",
+          "value": "#dbf5ff",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -122,7 +122,7 @@
         {
           "id": "color-scales:--primary-200:0",
           "name": "--primary-200",
-          "value": "#e5e5e5",
+          "value": "#ade9ff",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -130,7 +130,7 @@
         {
           "id": "color-scales:--primary-300:0",
           "name": "--primary-300",
-          "value": "#d4d4d4",
+          "value": "#7adaff",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -138,7 +138,7 @@
         {
           "id": "color-scales:--primary-400:0",
           "name": "--primary-400",
-          "value": "#a3a3a3",
+          "value": "#3dcaff",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -146,7 +146,7 @@
         {
           "id": "color-scales:--primary-500:0",
           "name": "--primary-500",
-          "value": "#737373",
+          "value": "#3ab5fe",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -154,7 +154,7 @@
         {
           "id": "color-scales:--primary-600:0",
           "name": "--primary-600",
-          "value": "#525252",
+          "value": "#0098d1",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -162,7 +162,7 @@
         {
           "id": "color-scales:--primary-700:0",
           "name": "--primary-700",
-          "value": "#404040",
+          "value": "#0076a3",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -170,7 +170,7 @@
         {
           "id": "color-scales:--primary-800:0",
           "name": "--primary-800",
-          "value": "#262626",
+          "value": "#005170",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -178,7 +178,7 @@
         {
           "id": "color-scales:--primary-900:0",
           "name": "--primary-900",
-          "value": "#171717",
+          "value": "#003042",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -186,7 +186,7 @@
         {
           "id": "color-scales:--primary-950:0",
           "name": "--primary-950",
-          "value": "#0a0a0a",
+          "value": "#001c26",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -194,7 +194,7 @@
         {
           "id": "color-scales:--secondary-50:0",
           "name": "--secondary-50",
-          "value": "#fafafa",
+          "value": "#feefd9",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -202,7 +202,7 @@
         {
           "id": "color-scales:--secondary-100:0",
           "name": "--secondary-100",
-          "value": "#f5f5f5",
+          "value": "#fee5bf",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -210,7 +210,7 @@
         {
           "id": "color-scales:--secondary-200:0",
           "name": "--secondary-200",
-          "value": "#e5e5e5",
+          "value": "#fdd79f",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -218,7 +218,7 @@
         {
           "id": "color-scales:--secondary-300:0",
           "name": "--secondary-300",
-          "value": "#d4d4d4",
+          "value": "#fcca80",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -226,7 +226,7 @@
         {
           "id": "color-scales:--secondary-400:0",
           "name": "--secondary-400",
-          "value": "#a3a3a3",
+          "value": "#fcbd60",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -234,7 +234,7 @@
         {
           "id": "color-scales:--secondary-500:0",
           "name": "--secondary-500",
-          "value": "#737373",
+          "value": "#fbb040",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -242,7 +242,7 @@
         {
           "id": "color-scales:--secondary-600:0",
           "name": "--secondary-600",
-          "value": "#525252",
+          "value": "#d19335",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -250,7 +250,7 @@
         {
           "id": "color-scales:--secondary-700:0",
           "name": "--secondary-700",
-          "value": "#404040",
+          "value": "#a7752b",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -258,7 +258,7 @@
         {
           "id": "color-scales:--secondary-800:0",
           "name": "--secondary-800",
-          "value": "#262626",
+          "value": "#7e5820",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -266,7 +266,7 @@
         {
           "id": "color-scales:--secondary-900:0",
           "name": "--secondary-900",
-          "value": "#171717",
+          "value": "#543b15",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -274,7 +274,7 @@
         {
           "id": "color-scales:--secondary-950:0",
           "name": "--secondary-950",
-          "value": "#0a0a0a",
+          "value": "#32230d",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -282,7 +282,7 @@
         {
           "id": "color-scales:--accent-50:0",
           "name": "--accent-50",
-          "value": "#fafafa",
+          "value": "#dbddfb",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -290,7 +290,7 @@
         {
           "id": "color-scales:--accent-100:0",
           "name": "--accent-100",
-          "value": "#f5f5f5",
+          "value": "#c2c6f8",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -298,7 +298,7 @@
         {
           "id": "color-scales:--accent-200:0",
           "name": "--accent-200",
-          "value": "#e5e5e5",
+          "value": "#a4a9f5",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -306,7 +306,7 @@
         {
           "id": "color-scales:--accent-300:0",
           "name": "--accent-300",
-          "value": "#d4d4d4",
+          "value": "#868df2",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -314,7 +314,7 @@
         {
           "id": "color-scales:--accent-400:0",
           "name": "--accent-400",
-          "value": "#a3a3a3",
+          "value": "#6771ee",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -322,7 +322,7 @@
         {
           "id": "color-scales:--accent-500:0",
           "name": "--accent-500",
-          "value": "#737373",
+          "value": "#4954eb",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -330,7 +330,7 @@
         {
           "id": "color-scales:--accent-600:0",
           "name": "--accent-600",
-          "value": "#525252",
+          "value": "#3d46c4",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -338,7 +338,7 @@
         {
           "id": "color-scales:--accent-700:0",
           "name": "--accent-700",
-          "value": "#404040",
+          "value": "#31389d",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -346,7 +346,7 @@
         {
           "id": "color-scales:--accent-800:0",
           "name": "--accent-800",
-          "value": "#262626",
+          "value": "#252a76",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -354,7 +354,7 @@
         {
           "id": "color-scales:--accent-900:0",
           "name": "--accent-900",
-          "value": "#171717",
+          "value": "#181c4e",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -362,7 +362,7 @@
         {
           "id": "color-scales:--accent-950:0",
           "name": "--accent-950",
-          "value": "#0a0a0a",
+          "value": "#0f112f",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -370,7 +370,7 @@
         {
           "id": "color-scales:--muted-50:0",
           "name": "--muted-50",
-          "value": "#fafafa",
+          "value": "#f6f6f6",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -378,7 +378,7 @@
         {
           "id": "color-scales:--muted-100:0",
           "name": "--muted-100",
-          "value": "#f5f5f5",
+          "value": "#f0f0f1",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -386,7 +386,7 @@
         {
           "id": "color-scales:--muted-200:0",
           "name": "--muted-200",
-          "value": "#e5e5e5",
+          "value": "#e8e8e9",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -394,7 +394,7 @@
         {
           "id": "color-scales:--muted-300:0",
           "name": "--muted-300",
-          "value": "#d4d4d4",
+          "value": "#d9d9db",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -402,7 +402,7 @@
         {
           "id": "color-scales:--muted-400:0",
           "name": "--muted-400",
-          "value": "#a3a3a3",
+          "value": "#b4b5b7",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -410,7 +410,7 @@
         {
           "id": "color-scales:--muted-500:0",
           "name": "--muted-500",
-          "value": "#737373",
+          "value": "#8e8f93",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -418,7 +418,7 @@
         {
           "id": "color-scales:--muted-600:0",
           "name": "--muted-600",
-          "value": "#525252",
+          "value": "#77787e",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -426,7 +426,7 @@
         {
           "id": "color-scales:--muted-700:0",
           "name": "--muted-700",
-          "value": "#404040",
+          "value": "#666873",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -434,7 +434,7 @@
         {
           "id": "color-scales:--muted-800:0",
           "name": "--muted-800",
-          "value": "#262626",
+          "value": "#44454c",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -442,7 +442,7 @@
         {
           "id": "color-scales:--muted-900:0",
           "name": "--muted-900",
-          "value": "#171717",
+          "value": "#1e2028",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -450,7 +450,7 @@
         {
           "id": "color-scales:--muted-950:0",
           "name": "--muted-950",
-          "value": "#0a0a0a",
+          "value": "#101723",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -458,7 +458,7 @@
         {
           "id": "color-scales:--destructive-50:0",
           "name": "--destructive-50",
-          "value": "#fef2f2",
+          "value": "#fdf1f1",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -466,7 +466,7 @@
         {
           "id": "color-scales:--destructive-100:0",
           "name": "--destructive-100",
-          "value": "#fee2e2",
+          "value": "#fcdadc",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -474,7 +474,7 @@
         {
           "id": "color-scales:--destructive-200:0",
           "name": "--destructive-200",
-          "value": "#fecaca",
+          "value": "#f1a2a5",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -482,7 +482,7 @@
         {
           "id": "color-scales:--destructive-300:0",
           "name": "--destructive-300",
-          "value": "#fca5a5",
+          "value": "#e5878b",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -490,7 +490,7 @@
         {
           "id": "color-scales:--destructive-400:0",
           "name": "--destructive-400",
-          "value": "#f87171",
+          "value": "#de6a6f",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -498,7 +498,7 @@
         {
           "id": "color-scales:--destructive-500:0",
           "name": "--destructive-500",
-          "value": "#ef4444",
+          "value": "#d94c51",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -506,7 +506,7 @@
         {
           "id": "color-scales:--destructive-600:0",
           "name": "--destructive-600",
-          "value": "#dc2626",
+          "value": "#a3191e",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -514,7 +514,7 @@
         {
           "id": "color-scales:--destructive-700:0",
           "name": "--destructive-700",
-          "value": "#b91c1c",
+          "value": "#7c1317",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -522,7 +522,7 @@
         {
           "id": "color-scales:--destructive-800:0",
           "name": "--destructive-800",
-          "value": "#991b1b",
+          "value": "#540d0f",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -530,7 +530,7 @@
         {
           "id": "color-scales:--destructive-900:0",
           "name": "--destructive-900",
-          "value": "#7f1d1d",
+          "value": "#280607",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -538,7 +538,271 @@
         {
           "id": "color-scales:--destructive-950:0",
           "name": "--destructive-950",
-          "value": "#450a0a",
+          "value": "#140303",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--success-50:0",
+          "name": "--success-50",
+          "value": "#e8f7eb",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--success-100:0",
+          "name": "--success-100",
+          "value": "#ceeed4",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--success-200:0",
+          "name": "--success-200",
+          "value": "#9cdda9",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--success-300:0",
+          "name": "--success-300",
+          "value": "#6bcc7f",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--success-400:0",
+          "name": "--success-400",
+          "value": "#3fb657",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--success-500:0",
+          "name": "--success-500",
+          "value": "#2e8540",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--success-600:0",
+          "name": "--success-600",
+          "value": "#256a33",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--success-700:0",
+          "name": "--success-700",
+          "value": "#1c5026",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--success-800:0",
+          "name": "--success-800",
+          "value": "#123519",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--success-900:0",
+          "name": "--success-900",
+          "value": "#091b0d",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--success-950:0",
+          "name": "--success-950",
+          "value": "#040e06",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--warning-50:0",
+          "name": "--warning-50",
+          "value": "#ffefd9",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--warning-100:0",
+          "name": "--warning-100",
+          "value": "#ffe4c0",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--warning-200:0",
+          "name": "--warning-200",
+          "value": "#ffd6a0",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--warning-300:0",
+          "name": "--warning-300",
+          "value": "#ffc981",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--warning-400:0",
+          "name": "--warning-400",
+          "value": "#ffbb62",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--warning-500:0",
+          "name": "--warning-500",
+          "value": "#ffae42",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--warning-600:0",
+          "name": "--warning-600",
+          "value": "#d49137",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--warning-700:0",
+          "name": "--warning-700",
+          "value": "#aa742c",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--warning-800:0",
+          "name": "--warning-800",
+          "value": "#805721",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--warning-900:0",
+          "name": "--warning-900",
+          "value": "#33230d",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--warning-950:0",
+          "name": "--warning-950",
+          "value": "#1a1207",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--info-50:0",
+          "name": "--info-50",
+          "value": "#ecf1fb",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--info-100:0",
+          "name": "--info-100",
+          "value": "#dae4f7",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--info-200:0",
+          "name": "--info-200",
+          "value": "#a2baec",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--info-300:0",
+          "name": "--info-300",
+          "value": "#84a4e6",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--info-400:0",
+          "name": "--info-400",
+          "value": "#658ddf",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--info-500:0",
+          "name": "--info-500",
+          "value": "#4676d9",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--info-600:0",
+          "name": "--info-600",
+          "value": "#3a62b5",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--info-700:0",
+          "name": "--info-700",
+          "value": "#2f4f91",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--info-800:0",
+          "name": "--info-800",
+          "value": "#233b6d",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--info-900:0",
+          "name": "--info-900",
+          "value": "#172748",
+          "fieldType": "hex",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "color-scales:--info-950:0",
+          "name": "--info-950",
+          "value": "#0c1426",
           "fieldType": "hex",
           "occurrence": 0,
           "scope": "root"
@@ -602,7 +866,7 @@
         {
           "id": "colors:--primary:0",
           "name": "--primary",
-          "value": "var(--primary-900)",
+          "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
@@ -610,7 +874,7 @@
         {
           "id": "colors:--primary-foreground:0",
           "name": "--primary-foreground",
-          "value": "var(--primary-50)",
+          "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
@@ -618,7 +882,7 @@
         {
           "id": "colors:--secondary:0",
           "name": "--secondary",
-          "value": "var(--secondary-100)",
+          "value": "var(--secondary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
@@ -626,7 +890,7 @@
         {
           "id": "colors:--secondary-foreground:0",
           "name": "--secondary-foreground",
-          "value": "var(--secondary-900)",
+          "value": "var(--primary-950)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
@@ -672,6 +936,54 @@
           "scope": "root"
         },
         {
+          "id": "colors:--success:0",
+          "name": "--success",
+          "value": "var(--success-600)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "colors:--success-foreground:0",
+          "name": "--success-foreground",
+          "value": "var(--neutral-0)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "colors:--warning:0",
+          "name": "--warning",
+          "value": "var(--warning-500)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "colors:--warning-foreground:0",
+          "name": "--warning-foreground",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "colors:--info:0",
+          "name": "--info",
+          "value": "var(--info-500)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
+          "id": "colors:--info-foreground:0",
+          "name": "--info-foreground",
+          "value": "var(--neutral-0)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
           "id": "colors:--border:0",
           "name": "--border",
           "value": "var(--neutral-200)",
@@ -698,7 +1010,7 @@
         {
           "id": "colors:--chart-1:0",
           "name": "--chart-1",
-          "value": "var(--neutral-300)",
+          "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
@@ -706,7 +1018,7 @@
         {
           "id": "colors:--chart-2:0",
           "name": "--chart-2",
-          "value": "var(--neutral-500)",
+          "value": "var(--secondary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
@@ -714,7 +1026,7 @@
         {
           "id": "colors:--chart-3:0",
           "name": "--chart-3",
-          "value": "var(--neutral-600)",
+          "value": "var(--info-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
@@ -722,7 +1034,7 @@
         {
           "id": "colors:--chart-4:0",
           "name": "--chart-4",
-          "value": "var(--neutral-700)",
+          "value": "var(--success-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
@@ -730,7 +1042,7 @@
         {
           "id": "colors:--chart-5:0",
           "name": "--chart-5",
-          "value": "var(--neutral-800)",
+          "value": "var(--accent-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
@@ -754,7 +1066,7 @@
         {
           "id": "colors:--sidebar-primary:0",
           "name": "--sidebar-primary",
-          "value": "var(--primary-900)",
+          "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
@@ -762,7 +1074,7 @@
         {
           "id": "colors:--sidebar-primary-foreground:0",
           "name": "--sidebar-primary-foreground",
-          "value": "var(--primary-50)",
+          "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
@@ -858,7 +1170,7 @@
         {
           "id": "colors:--primary:1",
           "name": "--primary",
-          "value": "var(--primary-200)",
+          "value": "var(--primary-400)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -866,7 +1178,7 @@
         {
           "id": "colors:--primary-foreground:1",
           "name": "--primary-foreground",
-          "value": "var(--primary-900)",
+          "value": "var(--primary-950)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -874,7 +1186,7 @@
         {
           "id": "colors:--secondary:1",
           "name": "--secondary",
-          "value": "var(--secondary-800)",
+          "value": "var(--secondary-400)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -882,7 +1194,7 @@
         {
           "id": "colors:--secondary-foreground:1",
           "name": "--secondary-foreground",
-          "value": "var(--secondary-50)",
+          "value": "var(--primary-950)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -928,9 +1240,57 @@
           "scope": "dark"
         },
         {
+          "id": "colors:--success:1",
+          "name": "--success",
+          "value": "var(--success-400)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark"
+        },
+        {
+          "id": "colors:--success-foreground:1",
+          "name": "--success-foreground",
+          "value": "var(--success-950)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark"
+        },
+        {
+          "id": "colors:--warning:1",
+          "name": "--warning",
+          "value": "var(--warning-400)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark"
+        },
+        {
+          "id": "colors:--warning-foreground:1",
+          "name": "--warning-foreground",
+          "value": "var(--warning-950)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark"
+        },
+        {
+          "id": "colors:--info:1",
+          "name": "--info",
+          "value": "var(--info-400)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark"
+        },
+        {
+          "id": "colors:--info-foreground:1",
+          "name": "--info-foreground",
+          "value": "var(--info-950)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark"
+        },
+        {
           "id": "colors:--border:1",
           "name": "--border",
-          "value": "var(--neutral-0)",
+          "value": "var(--neutral-800)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -938,7 +1298,7 @@
         {
           "id": "colors:--input:1",
           "name": "--input",
-          "value": "var(--neutral-0)",
+          "value": "var(--neutral-800)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -954,7 +1314,7 @@
         {
           "id": "colors:--chart-1:1",
           "name": "--chart-1",
-          "value": "var(--neutral-300)",
+          "value": "var(--primary-400)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -962,7 +1322,7 @@
         {
           "id": "colors:--chart-2:1",
           "name": "--chart-2",
-          "value": "var(--neutral-500)",
+          "value": "var(--secondary-400)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -970,7 +1330,7 @@
         {
           "id": "colors:--chart-3:1",
           "name": "--chart-3",
-          "value": "var(--neutral-600)",
+          "value": "var(--info-400)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -978,7 +1338,7 @@
         {
           "id": "colors:--chart-4:1",
           "name": "--chart-4",
-          "value": "var(--neutral-700)",
+          "value": "var(--success-400)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -986,7 +1346,7 @@
         {
           "id": "colors:--chart-5:1",
           "name": "--chart-5",
-          "value": "var(--neutral-800)",
+          "value": "var(--accent-400)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -1010,7 +1370,7 @@
         {
           "id": "colors:--sidebar-primary:1",
           "name": "--sidebar-primary",
-          "value": "var(--primary-200)",
+          "value": "var(--primary-400)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -1018,7 +1378,7 @@
         {
           "id": "colors:--sidebar-primary-foreground:1",
           "name": "--sidebar-primary-foreground",
-          "value": "var(--primary-900)",
+          "value": "var(--primary-950)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -1042,7 +1402,7 @@
         {
           "id": "colors:--sidebar-border:1",
           "name": "--sidebar-border",
-          "value": "var(--neutral-0)",
+          "value": "var(--neutral-800)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -1106,7 +1466,7 @@
         {
           "id": "colors:--primary:2",
           "name": "--primary",
-          "value": "var(--primary-900)",
+          "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "editor"
@@ -1114,7 +1474,7 @@
         {
           "id": "colors:--primary-foreground:2",
           "name": "--primary-foreground",
-          "value": "var(--primary-50)",
+          "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "editor"
@@ -1122,7 +1482,7 @@
         {
           "id": "colors:--secondary:2",
           "name": "--secondary",
-          "value": "var(--secondary-100)",
+          "value": "var(--secondary-500)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "editor"
@@ -1130,7 +1490,7 @@
         {
           "id": "colors:--secondary-foreground:2",
           "name": "--secondary-foreground",
-          "value": "var(--secondary-900)",
+          "value": "var(--primary-950)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "editor"
@@ -1176,6 +1536,54 @@
           "scope": "editor"
         },
         {
+          "id": "colors:--success:2",
+          "name": "--success",
+          "value": "var(--success-600)",
+          "fieldType": "color-ref",
+          "occurrence": 2,
+          "scope": "editor"
+        },
+        {
+          "id": "colors:--success-foreground:2",
+          "name": "--success-foreground",
+          "value": "var(--neutral-0)",
+          "fieldType": "color-ref",
+          "occurrence": 2,
+          "scope": "editor"
+        },
+        {
+          "id": "colors:--warning:2",
+          "name": "--warning",
+          "value": "var(--warning-500)",
+          "fieldType": "color-ref",
+          "occurrence": 2,
+          "scope": "editor"
+        },
+        {
+          "id": "colors:--warning-foreground:2",
+          "name": "--warning-foreground",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
+          "occurrence": 2,
+          "scope": "editor"
+        },
+        {
+          "id": "colors:--info:2",
+          "name": "--info",
+          "value": "var(--info-500)",
+          "fieldType": "color-ref",
+          "occurrence": 2,
+          "scope": "editor"
+        },
+        {
+          "id": "colors:--info-foreground:2",
+          "name": "--info-foreground",
+          "value": "var(--neutral-0)",
+          "fieldType": "color-ref",
+          "occurrence": 2,
+          "scope": "editor"
+        },
+        {
           "id": "colors:--border:2",
           "name": "--border",
           "value": "var(--neutral-200)",
@@ -1202,7 +1610,7 @@
         {
           "id": "colors:--chart-1:2",
           "name": "--chart-1",
-          "value": "var(--neutral-300)",
+          "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "editor"
@@ -1210,7 +1618,7 @@
         {
           "id": "colors:--chart-2:2",
           "name": "--chart-2",
-          "value": "var(--neutral-500)",
+          "value": "var(--secondary-500)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "editor"
@@ -1218,7 +1626,7 @@
         {
           "id": "colors:--chart-3:2",
           "name": "--chart-3",
-          "value": "var(--neutral-600)",
+          "value": "var(--info-500)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "editor"
@@ -1226,7 +1634,7 @@
         {
           "id": "colors:--chart-4:2",
           "name": "--chart-4",
-          "value": "var(--neutral-700)",
+          "value": "var(--success-500)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "editor"
@@ -1234,7 +1642,7 @@
         {
           "id": "colors:--chart-5:2",
           "name": "--chart-5",
-          "value": "var(--neutral-800)",
+          "value": "var(--accent-500)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "editor"
@@ -1258,7 +1666,7 @@
         {
           "id": "colors:--sidebar-primary:2",
           "name": "--sidebar-primary",
-          "value": "var(--primary-900)",
+          "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "editor"
@@ -1266,7 +1674,7 @@
         {
           "id": "colors:--sidebar-primary-foreground:2",
           "name": "--sidebar-primary-foreground",
-          "value": "var(--primary-50)",
+          "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "editor"
@@ -1312,9 +1720,17 @@
       "file": "theme/tokens/shadows.css",
       "variables": [
         {
+          "id": "shadows:--shadow-xs:0",
+          "name": "--shadow-xs",
+          "value": "0px 4px 4px 0px rgba(0, 0, 0, 0.04)",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "root"
+        },
+        {
           "id": "shadows:--shadow-sm:0",
           "name": "--shadow-sm",
-          "value": "0 1px 2px 0 var(--neutral-950)",
+          "value": "0px 13.642px 33px -3.411px rgba(0, 0, 0, 0.1), 0px 1.705px 3.411px 0px rgba(0, 0, 0, 0.04)",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "root"
@@ -1322,7 +1738,7 @@
         {
           "id": "shadows:--shadow-md:0",
           "name": "--shadow-md",
-          "value": "0 4px 6px -1px var(--neutral-950), 0 2px 4px -2px var(--neutral-950)",
+          "value": "0px 20.464px 40.927px -6.821px rgba(0, 0, 0, 0.12), 0px 1.705px 3.411px 0px rgba(0, 0, 0, 0.04)",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "root"
@@ -1330,7 +1746,7 @@
         {
           "id": "shadows:--shadow-lg:0",
           "name": "--shadow-lg",
-          "value": "0 10px 15px -3px var(--neutral-950), 0 4px 6px -4px var(--neutral-950)",
+          "value": "0px 34.106px 68.212px -13.642px rgba(0, 0, 0, 0.16), 0px 1.705px 3.411px 0px rgba(0, 0, 0, 0.04)",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "root"
@@ -1338,7 +1754,7 @@
         {
           "id": "shadows:--shadow-xl:0",
           "name": "--shadow-xl",
-          "value": "0 20px 25px -5px var(--neutral-950), 0 8px 10px -6px var(--neutral-950)",
+          "value": "0px 47.749px 95.497px -17.053px rgba(0, 0, 0, 0.18), 0px 1.705px 3.411px 0px rgba(0, 0, 0, 0.04)",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "root"
@@ -1354,7 +1770,7 @@
         {
           "id": "radius:--theme-radius:0",
           "name": "--theme-radius",
-          "value": "0.625rem",
+          "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "root"
@@ -1362,7 +1778,7 @@
         {
           "id": "radius:--theme-radius-sm:0",
           "name": "--theme-radius-sm",
-          "value": "0.375rem",
+          "value": "0.25rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "root"
@@ -1378,7 +1794,7 @@
         {
           "id": "radius:--theme-radius-lg:0",
           "name": "--theme-radius-lg",
-          "value": "0.625rem",
+          "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "root"
@@ -1386,7 +1802,7 @@
         {
           "id": "radius:--theme-radius-xl:0",
           "name": "--theme-radius-xl",
-          "value": "0.875rem",
+          "value": "1rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "root"
@@ -1394,7 +1810,7 @@
         {
           "id": "radius:--theme-radius-2xl:0",
           "name": "--theme-radius-2xl",
-          "value": "1.125rem",
+          "value": "1.25rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "root"
@@ -1402,7 +1818,7 @@
         {
           "id": "radius:--theme-radius-3xl:0",
           "name": "--theme-radius-3xl",
-          "value": "1.375rem",
+          "value": "1.5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "root"
@@ -1410,7 +1826,7 @@
         {
           "id": "radius:--theme-radius-4xl:0",
           "name": "--theme-radius-4xl",
-          "value": "1.625rem",
+          "value": "1.75rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "root"
@@ -1514,7 +1930,7 @@
         {
           "id": "typography:--typography-display-font-size:0",
           "name": "--typography-display-font-size",
-          "value": "3.75rem",
+          "value": "4rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -1530,7 +1946,7 @@
         {
           "id": "typography:--typography-display-line-height:0",
           "name": "--typography-display-line-height",
-          "value": "1",
+          "value": "4.5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -1554,7 +1970,7 @@
         {
           "id": "typography:--typography-h1-font-size:0",
           "name": "--typography-h1-font-size",
-          "value": "2.25rem",
+          "value": "4rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -1562,7 +1978,7 @@
         {
           "id": "typography:--typography-h1-font-weight:0",
           "name": "--typography-h1-font-weight",
-          "value": "800",
+          "value": "700",
           "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "default"
@@ -1570,7 +1986,7 @@
         {
           "id": "typography:--typography-h1-line-height:0",
           "name": "--typography-h1-line-height",
-          "value": "2.5rem",
+          "value": "4.5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -1594,7 +2010,7 @@
         {
           "id": "typography:--typography-h2-font-size:0",
           "name": "--typography-h2-font-size",
-          "value": "1.875rem",
+          "value": "3.5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -1602,7 +2018,7 @@
         {
           "id": "typography:--typography-h2-font-weight:0",
           "name": "--typography-h2-font-weight",
-          "value": "600",
+          "value": "700",
           "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "default"
@@ -1610,7 +2026,7 @@
         {
           "id": "typography:--typography-h2-line-height:0",
           "name": "--typography-h2-line-height",
-          "value": "2.25rem",
+          "value": "4.5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -1634,7 +2050,7 @@
         {
           "id": "typography:--typography-h3-font-size:0",
           "name": "--typography-h3-font-size",
-          "value": "1.5rem",
+          "value": "3rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -1642,7 +2058,7 @@
         {
           "id": "typography:--typography-h3-font-weight:0",
           "name": "--typography-h3-font-weight",
-          "value": "600",
+          "value": "700",
           "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "default"
@@ -1650,7 +2066,7 @@
         {
           "id": "typography:--typography-h3-line-height:0",
           "name": "--typography-h3-line-height",
-          "value": "2rem",
+          "value": "3.5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -1674,7 +2090,7 @@
         {
           "id": "typography:--typography-h4-font-size:0",
           "name": "--typography-h4-font-size",
-          "value": "1.25rem",
+          "value": "2.5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -1682,7 +2098,7 @@
         {
           "id": "typography:--typography-h4-font-weight:0",
           "name": "--typography-h4-font-weight",
-          "value": "600",
+          "value": "700",
           "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "default"
@@ -1690,7 +2106,7 @@
         {
           "id": "typography:--typography-h4-line-height:0",
           "name": "--typography-h4-line-height",
-          "value": "1.75rem",
+          "value": "3rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -1714,7 +2130,7 @@
         {
           "id": "typography:--typography-h5-font-size:0",
           "name": "--typography-h5-font-size",
-          "value": "1.125rem",
+          "value": "2rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -1730,7 +2146,7 @@
         {
           "id": "typography:--typography-h5-line-height:0",
           "name": "--typography-h5-line-height",
-          "value": "1.75rem",
+          "value": "2.5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -1746,7 +2162,7 @@
         {
           "id": "typography:--typography-h6-font-size:0",
           "name": "--typography-h6-font-size",
-          "value": "1rem",
+          "value": "1.5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -1762,7 +2178,7 @@
         {
           "id": "typography:--typography-h6-line-height:0",
           "name": "--typography-h6-line-height",
-          "value": "1.5rem",
+          "value": "2rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -1794,7 +2210,7 @@
         {
           "id": "typography:--typography-lead-line-height:0",
           "name": "--typography-lead-line-height",
-          "value": "1.75rem",
+          "value": "1.5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -1810,7 +2226,7 @@
         {
           "id": "typography:--typography-large-font-size:0",
           "name": "--typography-large-font-size",
-          "value": "1.125rem",
+          "value": "1.25rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -1826,7 +2242,7 @@
         {
           "id": "typography:--typography-large-line-height:0",
           "name": "--typography-large-line-height",
-          "value": "1.75rem",
+          "value": "1.5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -1858,7 +2274,7 @@
         {
           "id": "typography:--typography-p-line-height:0",
           "name": "--typography-p-line-height",
-          "value": "1.75rem",
+          "value": "1.5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -1890,7 +2306,7 @@
         {
           "id": "typography:--typography-small-line-height:0",
           "name": "--typography-small-line-height",
-          "value": "1rem",
+          "value": "1.25rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -1954,7 +2370,7 @@
         {
           "id": "typography:--typography-blockquote-line-height:0",
           "name": "--typography-blockquote-line-height",
-          "value": "1.75rem",
+          "value": "1.5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -2058,7 +2474,7 @@
         {
           "id": "typography:--typography-overline-font-size:0",
           "name": "--typography-overline-font-size",
-          "value": "0.75rem",
+          "value": "0.625rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -2074,7 +2490,7 @@
         {
           "id": "typography:--typography-overline-line-height:0",
           "name": "--typography-overline-line-height",
-          "value": "1rem",
+          "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -2322,6 +2738,70 @@
       ]
     },
     {
+      "id": "address-autocomplete",
+      "title": "Address Autocomplete",
+      "kind": "component",
+      "file": "theme/components/address-autocomplete.css",
+      "variables": [
+        {
+          "id": "address-autocomplete:--address-autocomplete-gap:0",
+          "name": "--address-autocomplete-gap",
+          "value": "0.375rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "address-autocomplete"
+        },
+        {
+          "id": "address-autocomplete:--address-autocomplete-list-bg:0",
+          "name": "--address-autocomplete-list-bg",
+          "value": "var(--popover)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "address-autocomplete-list"
+        },
+        {
+          "id": "address-autocomplete:--address-autocomplete-list-fg:0",
+          "name": "--address-autocomplete-list-fg",
+          "value": "var(--popover-foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "address-autocomplete-list"
+        },
+        {
+          "id": "address-autocomplete:--address-autocomplete-list-ring-color:0",
+          "name": "--address-autocomplete-list-ring-color",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "address-autocomplete-list"
+        },
+        {
+          "id": "address-autocomplete:--address-autocomplete-list-radius:0",
+          "name": "--address-autocomplete-list-radius",
+          "value": "var(--radius-lg)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "address-autocomplete-list"
+        },
+        {
+          "id": "address-autocomplete:--address-autocomplete-list-shadow:0",
+          "name": "--address-autocomplete-list-shadow",
+          "value": "var(--shadow-md)",
+          "fieldType": "shadow-ref",
+          "occurrence": 0,
+          "scope": "address-autocomplete-list"
+        },
+        {
+          "id": "address-autocomplete:--address-autocomplete-list-ring-color:1",
+          "name": "--address-autocomplete-list-ring-color",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/address-autocomplete-list"
+        }
+      ]
+    },
+    {
       "id": "alert-dialog",
       "title": "Alert Dialog",
       "kind": "component",
@@ -2330,8 +2810,8 @@
         {
           "id": "alert-dialog:--alert-dialog-overlay-bg:0",
           "name": "--alert-dialog-overlay-bg",
-          "value": "var(--overlay-bg)",
-          "fieldType": "color-ref",
+          "value": "color-mix(in srgb, var(--overlay-bg) 50%, transparent)",
+          "fieldType": "raw",
           "occurrence": 0,
           "scope": "alert-dialog-overlay"
         },
@@ -2378,7 +2858,7 @@
         {
           "id": "alert-dialog:--alert-dialog-content-radius:0",
           "name": "--alert-dialog-content-radius",
-          "value": "var(--radius-xl)",
+          "value": "var(--radius-3xl)",
           "fieldType": "radius-ref",
           "occurrence": 0,
           "scope": "alert-dialog-content"
@@ -2474,7 +2954,7 @@
         {
           "id": "alert-dialog:--alert-dialog-footer-radius:0",
           "name": "--alert-dialog-footer-radius",
-          "value": "var(--radius-xl)",
+          "value": "var(--radius-3xl)",
           "fieldType": "radius-ref",
           "occurrence": 0,
           "scope": "alert-dialog-footer"
@@ -2570,7 +3050,7 @@
         {
           "id": "alert-dialog:--alert-dialog-description-font-size:0",
           "name": "--alert-dialog-description-font-size",
-          "value": "var(--typography-muted-font-size)",
+          "value": "var(--typography-caption-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
           "scope": "alert-dialog-description"
@@ -2674,7 +3154,7 @@
         {
           "id": "alert:--alert-destructive-bg:0",
           "name": "--alert-destructive-bg",
-          "value": "var(--card)",
+          "value": "var(--destructive-50)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "alert/variant=destructive"
@@ -2682,7 +3162,7 @@
         {
           "id": "alert:--alert-destructive-fg:0",
           "name": "--alert-destructive-fg",
-          "value": "var(--destructive)",
+          "value": "var(--destructive-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "alert/variant=destructive"
@@ -2690,10 +3170,82 @@
         {
           "id": "alert:--alert-destructive-description-fg:0",
           "name": "--alert-destructive-description-fg",
-          "value": "var(--destructive-600)",
+          "value": "var(--destructive-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "alert/variant=destructive"
+        },
+        {
+          "id": "alert:--alert-success-bg:0",
+          "name": "--alert-success-bg",
+          "value": "var(--success-50)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "alert/variant=success"
+        },
+        {
+          "id": "alert:--alert-success-fg:0",
+          "name": "--alert-success-fg",
+          "value": "var(--success-500)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "alert/variant=success"
+        },
+        {
+          "id": "alert:--alert-success-description-fg:0",
+          "name": "--alert-success-description-fg",
+          "value": "var(--success-500)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "alert/variant=success"
+        },
+        {
+          "id": "alert:--alert-warning-bg:0",
+          "name": "--alert-warning-bg",
+          "value": "var(--warning-50)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "alert/variant=warning"
+        },
+        {
+          "id": "alert:--alert-warning-fg:0",
+          "name": "--alert-warning-fg",
+          "value": "var(--warning-600)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "alert/variant=warning"
+        },
+        {
+          "id": "alert:--alert-warning-description-fg:0",
+          "name": "--alert-warning-description-fg",
+          "value": "var(--warning-600)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "alert/variant=warning"
+        },
+        {
+          "id": "alert:--alert-info-bg:0",
+          "name": "--alert-info-bg",
+          "value": "var(--info-50)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "alert/variant=info"
+        },
+        {
+          "id": "alert:--alert-info-fg:0",
+          "name": "--alert-info-fg",
+          "value": "var(--info-500)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "alert/variant=info"
+        },
+        {
+          "id": "alert:--alert-info-description-fg:0",
+          "name": "--alert-info-description-fg",
+          "value": "var(--info-500)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "alert/variant=info"
         },
         {
           "id": "alert:--alert-title-font-family:0",
@@ -2722,7 +3274,7 @@
         {
           "id": "alert:--alert-description-font-size:0",
           "name": "--alert-description-font-size",
-          "value": "var(--typography-muted-font-size)",
+          "value": "var(--typography-caption-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
           "scope": "alert-description"
@@ -2744,12 +3296,100 @@
           "scope": "alert-description"
         },
         {
+          "id": "alert:--alert-destructive-bg:1",
+          "name": "--alert-destructive-bg",
+          "value": "var(--destructive-950)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/alert/variant=destructive"
+        },
+        {
+          "id": "alert:--alert-destructive-fg:1",
+          "name": "--alert-destructive-fg",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/alert/variant=destructive"
+        },
+        {
           "id": "alert:--alert-destructive-description-fg:1",
           "name": "--alert-destructive-description-fg",
           "value": "var(--destructive-400)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/alert/variant=destructive"
+        },
+        {
+          "id": "alert:--alert-success-bg:1",
+          "name": "--alert-success-bg",
+          "value": "var(--success-950)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/alert/variant=success"
+        },
+        {
+          "id": "alert:--alert-success-fg:1",
+          "name": "--alert-success-fg",
+          "value": "var(--success-400)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/alert/variant=success"
+        },
+        {
+          "id": "alert:--alert-success-description-fg:1",
+          "name": "--alert-success-description-fg",
+          "value": "var(--success-400)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/alert/variant=success"
+        },
+        {
+          "id": "alert:--alert-warning-bg:1",
+          "name": "--alert-warning-bg",
+          "value": "var(--warning-950)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/alert/variant=warning"
+        },
+        {
+          "id": "alert:--alert-warning-fg:1",
+          "name": "--alert-warning-fg",
+          "value": "var(--warning-400)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/alert/variant=warning"
+        },
+        {
+          "id": "alert:--alert-warning-description-fg:1",
+          "name": "--alert-warning-description-fg",
+          "value": "var(--warning-400)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/alert/variant=warning"
+        },
+        {
+          "id": "alert:--alert-info-bg:1",
+          "name": "--alert-info-bg",
+          "value": "var(--info-950)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/alert/variant=info"
+        },
+        {
+          "id": "alert:--alert-info-fg:1",
+          "name": "--alert-info-fg",
+          "value": "var(--info-400)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/alert/variant=info"
+        },
+        {
+          "id": "alert:--alert-info-description-fg:1",
+          "name": "--alert-info-description-fg",
+          "value": "var(--info-400)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/alert/variant=info"
         }
       ]
     },
@@ -3330,8 +3970,8 @@
         {
           "id": "badge:--badge-font-weight:0",
           "name": "--badge-font-weight",
-          "value": "var(--typography-caption-font-weight)",
-          "fieldType": "typography-ref",
+          "value": "500",
+          "fieldType": "font-weight",
           "occurrence": 0,
           "scope": "badge"
         },
@@ -3354,7 +3994,7 @@
         {
           "id": "badge:--badge-bg:0",
           "name": "--badge-bg",
-          "value": "var(--primary)",
+          "value": "var(--primary-100)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "badge/variant=default"
@@ -3362,7 +4002,7 @@
         {
           "id": "badge:--badge-fg:0",
           "name": "--badge-fg",
-          "value": "var(--primary-foreground)",
+          "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "badge/variant=default"
@@ -3370,7 +4010,7 @@
         {
           "id": "badge:--badge-link-hover-bg:0",
           "name": "--badge-link-hover-bg",
-          "value": "var(--neutral-900)",
+          "value": "var(--primary-200)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "badge/variant=default"
@@ -3378,7 +4018,7 @@
         {
           "id": "badge:--badge-bg:1",
           "name": "--badge-bg",
-          "value": "var(--secondary)",
+          "value": "var(--neutral-100)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "badge/variant=secondary"
@@ -3386,7 +4026,7 @@
         {
           "id": "badge:--badge-fg:1",
           "name": "--badge-fg",
-          "value": "var(--secondary-foreground)",
+          "value": "var(--neutral-900)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "badge/variant=secondary"
@@ -3394,7 +4034,7 @@
         {
           "id": "badge:--badge-link-hover-bg:1",
           "name": "--badge-link-hover-bg",
-          "value": "var(--neutral-100)",
+          "value": "var(--neutral-200)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "badge/variant=secondary"
@@ -3402,7 +4042,7 @@
         {
           "id": "badge:--badge-bg:2",
           "name": "--badge-bg",
-          "value": "var(--destructive-600)",
+          "value": "var(--destructive-100)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "badge/variant=destructive"
@@ -3410,7 +4050,7 @@
         {
           "id": "badge:--badge-fg:2",
           "name": "--badge-fg",
-          "value": "var(--destructive)",
+          "value": "var(--destructive-500)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "badge/variant=destructive"
@@ -3418,10 +4058,82 @@
         {
           "id": "badge:--badge-link-hover-bg:2",
           "name": "--badge-link-hover-bg",
-          "value": "var(--destructive-600)",
+          "value": "var(--destructive-200)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "badge/variant=destructive"
+        },
+        {
+          "id": "badge:--badge-bg:3",
+          "name": "--badge-bg",
+          "value": "var(--success-50)",
+          "fieldType": "color-ref",
+          "occurrence": 3,
+          "scope": "badge/variant=success"
+        },
+        {
+          "id": "badge:--badge-fg:3",
+          "name": "--badge-fg",
+          "value": "var(--success-500)",
+          "fieldType": "color-ref",
+          "occurrence": 3,
+          "scope": "badge/variant=success"
+        },
+        {
+          "id": "badge:--badge-link-hover-bg:3",
+          "name": "--badge-link-hover-bg",
+          "value": "var(--success-100)",
+          "fieldType": "color-ref",
+          "occurrence": 3,
+          "scope": "badge/variant=success"
+        },
+        {
+          "id": "badge:--badge-bg:4",
+          "name": "--badge-bg",
+          "value": "var(--warning-50)",
+          "fieldType": "color-ref",
+          "occurrence": 4,
+          "scope": "badge/variant=warning"
+        },
+        {
+          "id": "badge:--badge-fg:4",
+          "name": "--badge-fg",
+          "value": "var(--warning-600)",
+          "fieldType": "color-ref",
+          "occurrence": 4,
+          "scope": "badge/variant=warning"
+        },
+        {
+          "id": "badge:--badge-link-hover-bg:4",
+          "name": "--badge-link-hover-bg",
+          "value": "var(--warning-100)",
+          "fieldType": "color-ref",
+          "occurrence": 4,
+          "scope": "badge/variant=warning"
+        },
+        {
+          "id": "badge:--badge-bg:5",
+          "name": "--badge-bg",
+          "value": "var(--info-100)",
+          "fieldType": "color-ref",
+          "occurrence": 5,
+          "scope": "badge/variant=info"
+        },
+        {
+          "id": "badge:--badge-fg:5",
+          "name": "--badge-fg",
+          "value": "var(--info-500)",
+          "fieldType": "color-ref",
+          "occurrence": 5,
+          "scope": "badge/variant=info"
+        },
+        {
+          "id": "badge:--badge-link-hover-bg:5",
+          "name": "--badge-link-hover-bg",
+          "value": "var(--info-200)",
+          "fieldType": "color-ref",
+          "occurrence": 5,
+          "scope": "badge/variant=info"
         },
         {
           "id": "badge:--badge-border-color:1",
@@ -3432,19 +4144,19 @@
           "scope": "badge/variant=outline"
         },
         {
-          "id": "badge:--badge-fg:3",
+          "id": "badge:--badge-fg:6",
           "name": "--badge-fg",
           "value": "var(--foreground)",
           "fieldType": "color-ref",
-          "occurrence": 3,
+          "occurrence": 6,
           "scope": "badge/variant=outline"
         },
         {
-          "id": "badge:--badge-link-hover-bg:3",
+          "id": "badge:--badge-link-hover-bg:6",
           "name": "--badge-link-hover-bg",
           "value": "var(--muted)",
           "fieldType": "color-ref",
-          "occurrence": 3,
+          "occurrence": 6,
           "scope": "badge/variant=outline"
         },
         {
@@ -3472,11 +4184,11 @@
           "scope": "badge/variant=ghost"
         },
         {
-          "id": "badge:--badge-fg:4",
+          "id": "badge:--badge-fg:7",
           "name": "--badge-fg",
-          "value": "var(--primary)",
+          "value": "var(--primary-500)",
           "fieldType": "color-ref",
-          "occurrence": 4,
+          "occurrence": 7,
           "scope": "badge/variant=link"
         },
         {
@@ -3488,36 +4200,180 @@
           "scope": "badge/variant=link"
         },
         {
-          "id": "badge:--badge-link-hover-bg:4",
-          "name": "--badge-link-hover-bg",
-          "value": "var(--neutral-200)",
+          "id": "badge:--badge-bg:6",
+          "name": "--badge-bg",
+          "value": "var(--primary-950)",
           "fieldType": "color-ref",
-          "occurrence": 4,
+          "occurrence": 6,
           "scope": "dark/badge/variant=default"
         },
         {
-          "id": "badge:--badge-link-hover-bg:5",
+          "id": "badge:--badge-fg:8",
+          "name": "--badge-fg",
+          "value": "var(--primary-400)",
+          "fieldType": "color-ref",
+          "occurrence": 8,
+          "scope": "dark/badge/variant=default"
+        },
+        {
+          "id": "badge:--badge-link-hover-bg:7",
           "name": "--badge-link-hover-bg",
+          "value": "var(--primary-900)",
+          "fieldType": "color-ref",
+          "occurrence": 7,
+          "scope": "dark/badge/variant=default"
+        },
+        {
+          "id": "badge:--badge-bg:7",
+          "name": "--badge-bg",
           "value": "var(--neutral-800)",
           "fieldType": "color-ref",
-          "occurrence": 5,
+          "occurrence": 7,
           "scope": "dark/badge/variant=secondary"
         },
         {
-          "id": "badge:--badge-bg:3",
-          "name": "--badge-bg",
-          "value": "var(--destructive-400)",
+          "id": "badge:--badge-fg:9",
+          "name": "--badge-fg",
+          "value": "var(--neutral-100)",
           "fieldType": "color-ref",
-          "occurrence": 3,
+          "occurrence": 9,
+          "scope": "dark/badge/variant=secondary"
+        },
+        {
+          "id": "badge:--badge-link-hover-bg:8",
+          "name": "--badge-link-hover-bg",
+          "value": "var(--neutral-700)",
+          "fieldType": "color-ref",
+          "occurrence": 8,
+          "scope": "dark/badge/variant=secondary"
+        },
+        {
+          "id": "badge:--badge-bg:8",
+          "name": "--badge-bg",
+          "value": "var(--destructive-950)",
+          "fieldType": "color-ref",
+          "occurrence": 8,
           "scope": "dark/badge/variant=destructive"
         },
         {
-          "id": "badge:--badge-link-hover-bg:6",
-          "name": "--badge-link-hover-bg",
+          "id": "badge:--badge-fg:10",
+          "name": "--badge-fg",
           "value": "var(--destructive-400)",
           "fieldType": "color-ref",
-          "occurrence": 6,
+          "occurrence": 10,
           "scope": "dark/badge/variant=destructive"
+        },
+        {
+          "id": "badge:--badge-link-hover-bg:9",
+          "name": "--badge-link-hover-bg",
+          "value": "var(--destructive-900)",
+          "fieldType": "color-ref",
+          "occurrence": 9,
+          "scope": "dark/badge/variant=destructive"
+        },
+        {
+          "id": "badge:--badge-bg:9",
+          "name": "--badge-bg",
+          "value": "var(--success-950)",
+          "fieldType": "color-ref",
+          "occurrence": 9,
+          "scope": "dark/badge/variant=success"
+        },
+        {
+          "id": "badge:--badge-fg:11",
+          "name": "--badge-fg",
+          "value": "var(--success-400)",
+          "fieldType": "color-ref",
+          "occurrence": 11,
+          "scope": "dark/badge/variant=success"
+        },
+        {
+          "id": "badge:--badge-link-hover-bg:10",
+          "name": "--badge-link-hover-bg",
+          "value": "var(--success-900)",
+          "fieldType": "color-ref",
+          "occurrence": 10,
+          "scope": "dark/badge/variant=success"
+        },
+        {
+          "id": "badge:--badge-bg:10",
+          "name": "--badge-bg",
+          "value": "var(--warning-950)",
+          "fieldType": "color-ref",
+          "occurrence": 10,
+          "scope": "dark/badge/variant=warning"
+        },
+        {
+          "id": "badge:--badge-fg:12",
+          "name": "--badge-fg",
+          "value": "var(--warning-400)",
+          "fieldType": "color-ref",
+          "occurrence": 12,
+          "scope": "dark/badge/variant=warning"
+        },
+        {
+          "id": "badge:--badge-link-hover-bg:11",
+          "name": "--badge-link-hover-bg",
+          "value": "var(--warning-900)",
+          "fieldType": "color-ref",
+          "occurrence": 11,
+          "scope": "dark/badge/variant=warning"
+        },
+        {
+          "id": "badge:--badge-bg:11",
+          "name": "--badge-bg",
+          "value": "var(--info-950)",
+          "fieldType": "color-ref",
+          "occurrence": 11,
+          "scope": "dark/badge/variant=info"
+        },
+        {
+          "id": "badge:--badge-fg:13",
+          "name": "--badge-fg",
+          "value": "var(--info-400)",
+          "fieldType": "color-ref",
+          "occurrence": 13,
+          "scope": "dark/badge/variant=info"
+        },
+        {
+          "id": "badge:--badge-link-hover-bg:12",
+          "name": "--badge-link-hover-bg",
+          "value": "var(--info-900)",
+          "fieldType": "color-ref",
+          "occurrence": 12,
+          "scope": "dark/badge/variant=info"
+        }
+      ]
+    },
+    {
+      "id": "brand-color-picker",
+      "title": "brand-color-picker",
+      "kind": "component",
+      "file": "theme/components/brand-color-picker.css",
+      "variables": [
+        {
+          "id": "brand-color-picker:--brand-color-picker-gap:0",
+          "name": "--brand-color-picker-gap",
+          "value": "0.5rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "brand-color-picker"
+        },
+        {
+          "id": "brand-color-picker:--brand-color-swatch-size:0",
+          "name": "--brand-color-swatch-size",
+          "value": "2rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "brand-color-swatch"
+        },
+        {
+          "id": "brand-color-picker:--brand-color-swatch-radius:0",
+          "name": "--brand-color-swatch-radius",
+          "value": "9999px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "brand-color-swatch"
         }
       ]
     },
@@ -4042,10 +4898,10 @@
         {
           "id": "button:--button-radius:0",
           "name": "--button-radius",
-          "value": "var(--radius-lg)",
+          "value": "var(--radius)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "button"
+          "scope": "default"
         },
         {
           "id": "button:--button-border-width:0",
@@ -4053,7 +4909,7 @@
           "value": "1px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "button"
+          "scope": "default"
         },
         {
           "id": "button:--button-font-size:0",
@@ -4061,7 +4917,7 @@
           "value": "var(--typography-small-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "button"
+          "scope": "default"
         },
         {
           "id": "button:--button-font-weight:0",
@@ -4069,7 +4925,7 @@
           "value": "var(--typography-small-font-weight)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "button"
+          "scope": "default"
         },
         {
           "id": "button:--button-transition:0",
@@ -4077,7 +4933,7 @@
           "value": "all 0.15s ease",
           "fieldType": "transition",
           "occurrence": 0,
-          "scope": "button"
+          "scope": "default"
         },
         {
           "id": "button:--button-disabled-opacity:0",
@@ -4085,7 +4941,7 @@
           "value": "0.5",
           "fieldType": "opacity",
           "occurrence": 0,
-          "scope": "button"
+          "scope": "default"
         },
         {
           "id": "button:--button-focus-ring-width:0",
@@ -4093,7 +4949,7 @@
           "value": "3px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "button"
+          "scope": "default"
         },
         {
           "id": "button:--button-focus-ring-color:0",
@@ -4101,7 +4957,7 @@
           "value": "var(--ring)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "button"
+          "scope": "default"
         },
         {
           "id": "button:--button-focus-border-color:0",
@@ -4109,7 +4965,7 @@
           "value": "var(--ring)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "button"
+          "scope": "default"
         },
         {
           "id": "button:--button-invalid-border-color:0",
@@ -4117,7 +4973,7 @@
           "value": "var(--destructive)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "button"
+          "scope": "default"
         },
         {
           "id": "button:--button-invalid-ring-color:0",
@@ -4125,12 +4981,12 @@
           "value": "var(--destructive-600)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "button"
+          "scope": "default"
         },
         {
           "id": "button:--button-bg:0",
           "name": "--button-bg",
-          "value": "var(--primary)",
+          "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "button/variant=default"
@@ -4138,7 +4994,7 @@
         {
           "id": "button:--button-fg:0",
           "name": "--button-fg",
-          "value": "var(--primary-foreground)",
+          "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "button/variant=default"
@@ -4146,15 +5002,31 @@
         {
           "id": "button:--button-hover-bg:0",
           "name": "--button-hover-bg",
-          "value": "var(--neutral-900)",
+          "value": "var(--primary-600)",
           "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "button/variant=default"
+        },
+        {
+          "id": "button:--button-active-bg:0",
+          "name": "--button-active-bg",
+          "value": "var(--primary-700)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "button/variant=default"
+        },
+        {
+          "id": "button:--button-border-color:0",
+          "name": "--button-border-color",
+          "value": "transparent",
+          "fieldType": "color-keyword",
           "occurrence": 0,
           "scope": "button/variant=default"
         },
         {
           "id": "button:--button-bg:1",
           "name": "--button-bg",
-          "value": "var(--background)",
+          "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "button/variant=outline"
@@ -4162,23 +5034,23 @@
         {
           "id": "button:--button-fg:1",
           "name": "--button-fg",
-          "value": "var(--foreground)",
+          "value": "var(--primary-950)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "button/variant=outline"
         },
         {
-          "id": "button:--button-border-color:0",
+          "id": "button:--button-border-color:1",
           "name": "--button-border-color",
-          "value": "var(--border)",
+          "value": "var(--neutral-300)",
           "fieldType": "color-ref",
-          "occurrence": 0,
+          "occurrence": 1,
           "scope": "button/variant=outline"
         },
         {
           "id": "button:--button-hover-bg:1",
           "name": "--button-hover-bg",
-          "value": "var(--muted)",
+          "value": "var(--neutral-50)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "button/variant=outline"
@@ -4186,15 +5058,23 @@
         {
           "id": "button:--button-hover-fg:0",
           "name": "--button-hover-fg",
-          "value": "var(--foreground)",
+          "value": "var(--primary-950)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "button/variant=outline"
         },
         {
+          "id": "button:--button-active-bg:1",
+          "name": "--button-active-bg",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "button/variant=outline"
+        },
+        {
           "id": "button:--button-bg:2",
           "name": "--button-bg",
-          "value": "var(--secondary)",
+          "value": "var(--secondary-500)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "button/variant=secondary"
@@ -4202,7 +5082,7 @@
         {
           "id": "button:--button-fg:2",
           "name": "--button-fg",
-          "value": "var(--secondary-foreground)",
+          "value": "var(--primary-950)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "button/variant=secondary"
@@ -4210,8 +5090,24 @@
         {
           "id": "button:--button-hover-bg:2",
           "name": "--button-hover-bg",
-          "value": "var(--neutral-200)",
+          "value": "var(--secondary-600)",
           "fieldType": "color-ref",
+          "occurrence": 2,
+          "scope": "button/variant=secondary"
+        },
+        {
+          "id": "button:--button-active-bg:2",
+          "name": "--button-active-bg",
+          "value": "var(--secondary-700)",
+          "fieldType": "color-ref",
+          "occurrence": 2,
+          "scope": "button/variant=secondary"
+        },
+        {
+          "id": "button:--button-border-color:2",
+          "name": "--button-border-color",
+          "value": "transparent",
+          "fieldType": "color-keyword",
           "occurrence": 2,
           "scope": "button/variant=secondary"
         },
@@ -4226,7 +5122,7 @@
         {
           "id": "button:--button-fg:3",
           "name": "--button-fg",
-          "value": "var(--foreground)",
+          "value": "var(--primary-950)",
           "fieldType": "color-ref",
           "occurrence": 3,
           "scope": "button/variant=ghost"
@@ -4234,7 +5130,7 @@
         {
           "id": "button:--button-hover-bg:3",
           "name": "--button-hover-bg",
-          "value": "var(--muted)",
+          "value": "var(--neutral-50)",
           "fieldType": "color-ref",
           "occurrence": 3,
           "scope": "button/variant=ghost"
@@ -4242,15 +5138,23 @@
         {
           "id": "button:--button-hover-fg:1",
           "name": "--button-hover-fg",
-          "value": "var(--foreground)",
+          "value": "var(--primary-950)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "button/variant=ghost"
         },
         {
+          "id": "button:--button-active-bg:3",
+          "name": "--button-active-bg",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
+          "occurrence": 3,
+          "scope": "button/variant=ghost"
+        },
+        {
           "id": "button:--button-bg:4",
           "name": "--button-bg",
-          "value": "var(--destructive-600)",
+          "value": "var(--destructive-50)",
           "fieldType": "color-ref",
           "occurrence": 4,
           "scope": "button/variant=destructive"
@@ -4258,15 +5162,31 @@
         {
           "id": "button:--button-fg:4",
           "name": "--button-fg",
-          "value": "var(--destructive)",
+          "value": "var(--destructive-500)",
           "fieldType": "color-ref",
           "occurrence": 4,
           "scope": "button/variant=destructive"
         },
         {
+          "id": "button:--button-border-color:3",
+          "name": "--button-border-color",
+          "value": "var(--destructive-300)",
+          "fieldType": "color-ref",
+          "occurrence": 3,
+          "scope": "button/variant=destructive"
+        },
+        {
           "id": "button:--button-hover-bg:4",
           "name": "--button-hover-bg",
-          "value": "var(--destructive-600)",
+          "value": "var(--destructive-100)",
+          "fieldType": "color-ref",
+          "occurrence": 4,
+          "scope": "button/variant=destructive"
+        },
+        {
+          "id": "button:--button-active-bg:4",
+          "name": "--button-active-bg",
+          "value": "var(--destructive-200)",
           "fieldType": "color-ref",
           "occurrence": 4,
           "scope": "button/variant=destructive"
@@ -4298,9 +5218,25 @@
         {
           "id": "button:--button-fg:5",
           "name": "--button-fg",
-          "value": "var(--primary)",
+          "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 5,
+          "scope": "button/variant=link"
+        },
+        {
+          "id": "button:--button-hover-fg:2",
+          "name": "--button-hover-fg",
+          "value": "var(--primary-400)",
+          "fieldType": "color-ref",
+          "occurrence": 2,
+          "scope": "button/variant=link"
+        },
+        {
+          "id": "button:--button-active-fg:0",
+          "name": "--button-active-fg",
+          "value": "var(--primary-700)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
           "scope": "button/variant=link"
         },
         {
@@ -4362,8 +5298,8 @@
         {
           "id": "button:--button-radius:1",
           "name": "--button-radius",
-          "value": "min(var(--radius-md), 10px)",
-          "fieldType": "raw",
+          "value": "var(--radius-md)",
+          "fieldType": "radius-ref",
           "occurrence": 1,
           "scope": "button/size=xs"
         },
@@ -4402,8 +5338,8 @@
         {
           "id": "button:--button-radius:2",
           "name": "--button-radius",
-          "value": "min(var(--radius-md), 12px)",
-          "fieldType": "raw",
+          "value": "var(--radius-md)",
+          "fieldType": "radius-ref",
           "occurrence": 2,
           "scope": "button/size=sm"
         },
@@ -4458,8 +5394,8 @@
         {
           "id": "button:--button-radius:3",
           "name": "--button-radius",
-          "value": "min(var(--radius-md), 10px)",
-          "fieldType": "raw",
+          "value": "var(--radius-md)",
+          "fieldType": "radius-ref",
           "occurrence": 3,
           "scope": "button/size=icon-xs"
         },
@@ -4474,8 +5410,8 @@
         {
           "id": "button:--button-radius:4",
           "name": "--button-radius",
-          "value": "min(var(--radius-md), 12px)",
-          "fieldType": "raw",
+          "value": "var(--radius-md)",
+          "fieldType": "radius-ref",
           "occurrence": 4,
           "scope": "button/size=icon-sm"
         },
@@ -4496,12 +5432,60 @@
           "scope": "dark/button"
         },
         {
+          "id": "button:--button-bg:6",
+          "name": "--button-bg",
+          "value": "var(--primary-400)",
+          "fieldType": "color-ref",
+          "occurrence": 6,
+          "scope": "dark/button/variant=default"
+        },
+        {
+          "id": "button:--button-fg:6",
+          "name": "--button-fg",
+          "value": "var(--primary-950)",
+          "fieldType": "color-ref",
+          "occurrence": 6,
+          "scope": "dark/button/variant=default"
+        },
+        {
           "id": "button:--button-hover-bg:5",
           "name": "--button-hover-bg",
-          "value": "var(--neutral-200)",
+          "value": "var(--primary-300)",
           "fieldType": "color-ref",
           "occurrence": 5,
           "scope": "dark/button/variant=default"
+        },
+        {
+          "id": "button:--button-active-bg:5",
+          "name": "--button-active-bg",
+          "value": "var(--primary-500)",
+          "fieldType": "color-ref",
+          "occurrence": 5,
+          "scope": "dark/button/variant=default"
+        },
+        {
+          "id": "button:--button-bg:7",
+          "name": "--button-bg",
+          "value": "var(--neutral-900)",
+          "fieldType": "color-ref",
+          "occurrence": 7,
+          "scope": "dark/button/variant=outline"
+        },
+        {
+          "id": "button:--button-fg:7",
+          "name": "--button-fg",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
+          "occurrence": 7,
+          "scope": "dark/button/variant=outline"
+        },
+        {
+          "id": "button:--button-border-color:4",
+          "name": "--button-border-color",
+          "value": "var(--neutral-700)",
+          "fieldType": "color-ref",
+          "occurrence": 4,
+          "scope": "dark/button/variant=outline"
         },
         {
           "id": "button:--button-hover-bg:6",
@@ -4509,22 +5493,118 @@
           "value": "var(--neutral-800)",
           "fieldType": "color-ref",
           "occurrence": 6,
+          "scope": "dark/button/variant=outline"
+        },
+        {
+          "id": "button:--button-active-bg:6",
+          "name": "--button-active-bg",
+          "value": "var(--neutral-700)",
+          "fieldType": "color-ref",
+          "occurrence": 6,
+          "scope": "dark/button/variant=outline"
+        },
+        {
+          "id": "button:--button-bg:8",
+          "name": "--button-bg",
+          "value": "var(--secondary-400)",
+          "fieldType": "color-ref",
+          "occurrence": 8,
           "scope": "dark/button/variant=secondary"
         },
         {
-          "id": "button:--button-bg:6",
-          "name": "--button-bg",
-          "value": "var(--destructive-400)",
+          "id": "button:--button-fg:8",
+          "name": "--button-fg",
+          "value": "var(--primary-950)",
           "fieldType": "color-ref",
-          "occurrence": 6,
-          "scope": "dark/button/variant=destructive"
+          "occurrence": 8,
+          "scope": "dark/button/variant=secondary"
         },
         {
           "id": "button:--button-hover-bg:7",
           "name": "--button-hover-bg",
-          "value": "var(--destructive-400)",
+          "value": "var(--secondary-300)",
           "fieldType": "color-ref",
           "occurrence": 7,
+          "scope": "dark/button/variant=secondary"
+        },
+        {
+          "id": "button:--button-active-bg:7",
+          "name": "--button-active-bg",
+          "value": "var(--secondary-500)",
+          "fieldType": "color-ref",
+          "occurrence": 7,
+          "scope": "dark/button/variant=secondary"
+        },
+        {
+          "id": "button:--button-fg:9",
+          "name": "--button-fg",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
+          "occurrence": 9,
+          "scope": "dark/button/variant=ghost"
+        },
+        {
+          "id": "button:--button-hover-bg:8",
+          "name": "--button-hover-bg",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
+          "occurrence": 8,
+          "scope": "dark/button/variant=ghost"
+        },
+        {
+          "id": "button:--button-hover-fg:3",
+          "name": "--button-hover-fg",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
+          "occurrence": 3,
+          "scope": "dark/button/variant=ghost"
+        },
+        {
+          "id": "button:--button-active-bg:8",
+          "name": "--button-active-bg",
+          "value": "var(--neutral-700)",
+          "fieldType": "color-ref",
+          "occurrence": 8,
+          "scope": "dark/button/variant=ghost"
+        },
+        {
+          "id": "button:--button-bg:9",
+          "name": "--button-bg",
+          "value": "var(--destructive-950)",
+          "fieldType": "color-ref",
+          "occurrence": 9,
+          "scope": "dark/button/variant=destructive"
+        },
+        {
+          "id": "button:--button-fg:10",
+          "name": "--button-fg",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
+          "occurrence": 10,
+          "scope": "dark/button/variant=destructive"
+        },
+        {
+          "id": "button:--button-border-color:5",
+          "name": "--button-border-color",
+          "value": "var(--destructive-700)",
+          "fieldType": "color-ref",
+          "occurrence": 5,
+          "scope": "dark/button/variant=destructive"
+        },
+        {
+          "id": "button:--button-hover-bg:9",
+          "name": "--button-hover-bg",
+          "value": "var(--destructive-900)",
+          "fieldType": "color-ref",
+          "occurrence": 9,
+          "scope": "dark/button/variant=destructive"
+        },
+        {
+          "id": "button:--button-active-bg:9",
+          "name": "--button-active-bg",
+          "value": "var(--destructive-800)",
+          "fieldType": "color-ref",
+          "occurrence": 9,
           "scope": "dark/button/variant=destructive"
         },
         {
@@ -4542,6 +5622,30 @@
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "dark/button/variant=destructive"
+        },
+        {
+          "id": "button:--button-fg:11",
+          "name": "--button-fg",
+          "value": "var(--primary-400)",
+          "fieldType": "color-ref",
+          "occurrence": 11,
+          "scope": "dark/button/variant=link"
+        },
+        {
+          "id": "button:--button-hover-fg:4",
+          "name": "--button-hover-fg",
+          "value": "var(--primary-300)",
+          "fieldType": "color-ref",
+          "occurrence": 4,
+          "scope": "dark/button/variant=link"
+        },
+        {
+          "id": "button:--button-active-fg:1",
+          "name": "--button-active-fg",
+          "value": "var(--primary-500)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/button/variant=link"
         }
       ]
     },
@@ -6353,6 +7457,182 @@
       ]
     },
     {
+      "id": "copy-input",
+      "title": "Copy Input",
+      "kind": "component",
+      "file": "theme/components/copy-input.css",
+      "variables": [
+        {
+          "id": "copy-input:--copy-input-radius:0",
+          "name": "--copy-input-radius",
+          "value": "var(--input-radius)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "copy-input:--copy-input-border-width:0",
+          "name": "--copy-input-border-width",
+          "value": "var(--input-border-width)",
+          "fieldType": "token-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "copy-input:--copy-input-border-color:0",
+          "name": "--copy-input-border-color",
+          "value": "var(--input-border-color)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "copy-input:--copy-input-bg:0",
+          "name": "--copy-input-bg",
+          "value": "var(--input-bg)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "copy-input:--copy-input-height:0",
+          "name": "--copy-input-height",
+          "value": "var(--input-height)",
+          "fieldType": "token-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "copy-input:--copy-input-focus-border-color:0",
+          "name": "--copy-input-focus-border-color",
+          "value": "var(--input-focus-border-color)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "input/ancestor-slot=copy-input"
+        },
+        {
+          "id": "copy-input:--copy-input-focus-ring-color:0",
+          "name": "--copy-input-focus-ring-color",
+          "value": "var(--input-focus-ring-color)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "input/ancestor-slot=copy-input"
+        }
+      ]
+    },
+    {
+      "id": "count-badge",
+      "title": "count-badge",
+      "kind": "component",
+      "file": "theme/components/count-badge.css",
+      "variables": [
+        {
+          "id": "count-badge:--count-badge-bg:0",
+          "name": "--count-badge-bg",
+          "value": "var(--primary)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "count-badge"
+        },
+        {
+          "id": "count-badge:--count-badge-fg:0",
+          "name": "--count-badge-fg",
+          "value": "var(--primary-foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "count-badge"
+        },
+        {
+          "id": "count-badge:--count-badge-size:0",
+          "name": "--count-badge-size",
+          "value": "1.25rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "count-badge"
+        }
+      ]
+    },
+    {
+      "id": "date-picker",
+      "title": "Date Picker",
+      "kind": "component",
+      "file": "theme/components/date-picker.css",
+      "variables": [
+        {
+          "id": "date-picker:--date-picker-radius:0",
+          "name": "--date-picker-radius",
+          "value": "var(--radius-lg)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "date-picker:--date-picker-border-width:0",
+          "name": "--date-picker-border-width",
+          "value": "1px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "date-picker:--date-picker-font-size:0",
+          "name": "--date-picker-font-size",
+          "value": "var(--typography-small-font-size)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "date-picker:--date-picker-bg:0",
+          "name": "--date-picker-bg",
+          "value": "var(--background)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "date-picker:--date-picker-fg:0",
+          "name": "--date-picker-fg",
+          "value": "var(--foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "date-picker:--date-picker-border-color:0",
+          "name": "--date-picker-border-color",
+          "value": "var(--border)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "date-picker:--date-picker-hover-bg:0",
+          "name": "--date-picker-hover-bg",
+          "value": "var(--muted)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "date-picker:--date-picker-focus-ring-color:0",
+          "name": "--date-picker-focus-ring-color",
+          "value": "var(--ring)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "date-picker"
+        },
+        {
+          "id": "date-picker:--date-picker-placeholder-fg:0",
+          "name": "--date-picker-placeholder-fg",
+          "value": "var(--muted-foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "date-picker/empty=true"
+        }
+      ]
+    },
+    {
       "id": "dialog",
       "title": "Dialog",
       "kind": "component",
@@ -6361,8 +7641,8 @@
         {
           "id": "dialog:--dialog-overlay-bg:0",
           "name": "--dialog-overlay-bg",
-          "value": "var(--overlay-bg)",
-          "fieldType": "color-ref",
+          "value": "color-mix(in srgb, var(--overlay-bg) 50%, transparent)",
+          "fieldType": "raw",
           "occurrence": 0,
           "scope": "dialog-overlay"
         },
@@ -6417,7 +7697,7 @@
         {
           "id": "dialog:--dialog-content-radius:0",
           "name": "--dialog-content-radius",
-          "value": "var(--radius-xl)",
+          "value": "var(--radius-lg)",
           "fieldType": "radius-ref",
           "occurrence": 0,
           "scope": "dialog-content"
@@ -6463,6 +7743,14 @@
           "scope": "dialog-content"
         },
         {
+          "id": "dialog:--dialog-content-shadow:0",
+          "name": "--dialog-content-shadow",
+          "value": "var(--shadow-md)",
+          "fieldType": "shadow-ref",
+          "occurrence": 0,
+          "scope": "dialog-content"
+        },
+        {
           "id": "dialog:--dialog-close-top:0",
           "name": "--dialog-close-top",
           "value": "0.5rem",
@@ -6483,6 +7771,46 @@
           "name": "--dialog-header-gap",
           "value": "0.5rem",
           "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "dialog-header"
+        },
+        {
+          "id": "dialog:--dialog-header-bg:0",
+          "name": "--dialog-header-bg",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "dialog-header"
+        },
+        {
+          "id": "dialog:--dialog-header-margin-inline:0",
+          "name": "--dialog-header-margin-inline",
+          "value": "-1rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "dialog-header"
+        },
+        {
+          "id": "dialog:--dialog-header-margin-block-start:0",
+          "name": "--dialog-header-margin-block-start",
+          "value": "-1rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "dialog-header"
+        },
+        {
+          "id": "dialog:--dialog-header-padding:0",
+          "name": "--dialog-header-padding",
+          "value": "1rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "dialog-header"
+        },
+        {
+          "id": "dialog:--dialog-header-radius:0",
+          "name": "--dialog-header-radius",
+          "value": "var(--radius-lg)",
+          "fieldType": "radius-ref",
           "occurrence": 0,
           "scope": "dialog-header"
         },
@@ -6521,7 +7849,7 @@
         {
           "id": "dialog:--dialog-footer-radius:0",
           "name": "--dialog-footer-radius",
-          "value": "var(--radius-xl)",
+          "value": "var(--radius-lg)",
           "fieldType": "radius-ref",
           "occurrence": 0,
           "scope": "dialog-footer"
@@ -6641,8 +7969,8 @@
         {
           "id": "drawer:--drawer-overlay-bg:0",
           "name": "--drawer-overlay-bg",
-          "value": "var(--overlay-bg)",
-          "fieldType": "color-ref",
+          "value": "color-mix(in srgb, var(--overlay-bg) 50%, transparent)",
+          "fieldType": "raw",
           "occurrence": 0,
           "scope": "drawer-overlay"
         },
@@ -7129,6 +8457,94 @@
       ]
     },
     {
+      "id": "dropzone",
+      "title": "Dropzone",
+      "kind": "component",
+      "file": "theme/components/dropzone.css",
+      "variables": [
+        {
+          "id": "dropzone:--dropzone-gap:0",
+          "name": "--dropzone-gap",
+          "value": "0.75rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "dropzone"
+        },
+        {
+          "id": "dropzone:--dropzone-border-color:0",
+          "name": "--dropzone-border-color",
+          "value": "var(--border)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "dropzone:--dropzone-drag-border-color:0",
+          "name": "--dropzone-drag-border-color",
+          "value": "var(--primary)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "dropzone:--dropzone-drag-bg:0",
+          "name": "--dropzone-drag-bg",
+          "value": "var(--muted)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "dropzone:--file-preview-card-radius:0",
+          "name": "--file-preview-card-radius",
+          "value": "var(--radius-lg)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "dropzone:--file-preview-card-border-color:0",
+          "name": "--file-preview-card-border-color",
+          "value": "var(--border)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "dropzone:--file-preview-card-gap:0",
+          "name": "--file-preview-card-gap",
+          "value": "0.625rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "dropzone:--file-preview-card-padding-x:0",
+          "name": "--file-preview-card-padding-x",
+          "value": "0.75rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "dropzone:--file-preview-card-padding-y:0",
+          "name": "--file-preview-card-padding-y",
+          "value": "0.625rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "dropzone:--image-crop-dialog-max-width:0",
+          "name": "--image-crop-dialog-max-width",
+          "value": "32rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        }
+      ]
+    },
+    {
       "id": "empty",
       "title": "Empty",
       "kind": "component",
@@ -7285,6 +8701,110 @@
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "empty-content"
+        }
+      ]
+    },
+    {
+      "id": "error-state",
+      "title": "Error State",
+      "kind": "component",
+      "file": "theme/components/error-state.css",
+      "variables": [
+        {
+          "id": "error-state:--error-state-radius:0",
+          "name": "--error-state-radius",
+          "value": "var(--radius-xl)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "error-state:--error-state-padding:0",
+          "name": "--error-state-padding",
+          "value": "1.5rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "error-state:--error-state-gap:0",
+          "name": "--error-state-gap",
+          "value": "1rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "error-state:--error-state-border-color:0",
+          "name": "--error-state-border-color",
+          "value": "var(--border)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "error-state:--error-state-icon-bg:0",
+          "name": "--error-state-icon-bg",
+          "value": "var(--destructive-100)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "error-state:--error-state-icon-fg:0",
+          "name": "--error-state-icon-fg",
+          "value": "var(--destructive)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        }
+      ]
+    },
+    {
+      "id": "field-row",
+      "title": "field-row",
+      "kind": "component",
+      "file": "theme/components/field-row.css",
+      "variables": [
+        {
+          "id": "field-row:--field-row-group-gap:0",
+          "name": "--field-row-group-gap",
+          "value": "0.5rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "field-row-group"
+        },
+        {
+          "id": "field-row:--field-row-padding-x:0",
+          "name": "--field-row-padding-x",
+          "value": "1rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "field-row"
+        },
+        {
+          "id": "field-row:--field-row-padding-y:0",
+          "name": "--field-row-padding-y",
+          "value": "0.75rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "field-row"
+        },
+        {
+          "id": "field-row:--field-row-label-fg:0",
+          "name": "--field-row-label-fg",
+          "value": "var(--muted-foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "field-row-label"
+        },
+        {
+          "id": "field-row:--field-row-value-fg:0",
+          "name": "--field-row-value-fg",
+          "value": "var(--foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
         }
       ]
     },
@@ -7561,6 +9081,118 @@
       ]
     },
     {
+      "id": "filter-chips",
+      "title": "Filter Chips",
+      "kind": "component",
+      "file": "theme/components/filter-chips.css",
+      "variables": [
+        {
+          "id": "filter-chips:--filter-chips-gap:0",
+          "name": "--filter-chips-gap",
+          "value": "0.5rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "filter-chips"
+        },
+        {
+          "id": "filter-chips:--filter-chip-bg:0",
+          "name": "--filter-chip-bg",
+          "value": "var(--muted)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "filter-chips:--filter-chip-fg:0",
+          "name": "--filter-chip-fg",
+          "value": "var(--foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "filter-chips:--filter-chip-radius:0",
+          "name": "--filter-chip-radius",
+          "value": "0.25rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "filter-chips:--filter-chip-font-size:0",
+          "name": "--filter-chip-font-size",
+          "value": "var(--typography-caption-font-size)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "filter-chips:--filter-chip-font-weight:0",
+          "name": "--filter-chip-font-weight",
+          "value": "var(--typography-caption-font-weight)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "filter-chips:--filter-chip-bg:1",
+          "name": "--filter-chip-bg",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/filter-chip"
+        }
+      ]
+    },
+    {
+      "id": "filter-popover",
+      "title": "filter-popover",
+      "kind": "component",
+      "file": "theme/components/filter-popover.css",
+      "variables": [
+        {
+          "id": "filter-popover:--filter-popover-trigger-radius:0",
+          "name": "--filter-popover-trigger-radius",
+          "value": "var(--radius-lg)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "button/ancestor-slot=filter-popover"
+        },
+        {
+          "id": "filter-popover:--filter-popover-trigger-border:0",
+          "name": "--filter-popover-trigger-border",
+          "value": "var(--border)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "button/ancestor-slot=filter-popover"
+        },
+        {
+          "id": "filter-popover:--filter-popover-width:0",
+          "name": "--filter-popover-width",
+          "value": "18rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        }
+      ]
+    },
+    {
+      "id": "google-sign-in-button",
+      "title": "google-sign-in-button",
+      "kind": "component",
+      "file": "theme/components/google-sign-in-button.css",
+      "variables": [
+        {
+          "id": "google-sign-in-button:--google-sign-in-radius:0",
+          "name": "--google-sign-in-radius",
+          "value": "var(--radius-lg)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "google-sign-in-button"
+        }
+      ]
+    },
+    {
       "id": "hover-card",
       "title": "Hover Card",
       "kind": "component",
@@ -7653,6 +9285,182 @@
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/hover-card-content"
+        }
+      ]
+    },
+    {
+      "id": "impersonation-banner",
+      "title": "impersonation-banner",
+      "kind": "component",
+      "file": "theme/components/impersonation-banner.css",
+      "variables": [
+        {
+          "id": "impersonation-banner:--impersonation-banner-bg:0",
+          "name": "--impersonation-banner-bg",
+          "value": "var(--warning-50)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "impersonation-banner"
+        },
+        {
+          "id": "impersonation-banner:--impersonation-banner-fg:0",
+          "name": "--impersonation-banner-fg",
+          "value": "var(--warning-900)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "impersonation-banner"
+        },
+        {
+          "id": "impersonation-banner:--impersonation-banner-border:0",
+          "name": "--impersonation-banner-border",
+          "value": "var(--warning-700)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "impersonation-banner"
+        },
+        {
+          "id": "impersonation-banner:--impersonation-banner-bg:1",
+          "name": "--impersonation-banner-bg",
+          "value": "var(--warning-950)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/impersonation-banner"
+        },
+        {
+          "id": "impersonation-banner:--impersonation-banner-fg:1",
+          "name": "--impersonation-banner-fg",
+          "value": "var(--warning-200)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/impersonation-banner"
+        },
+        {
+          "id": "impersonation-banner:--impersonation-banner-border:1",
+          "name": "--impersonation-banner-border",
+          "value": "var(--warning-700)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/impersonation-banner"
+        }
+      ]
+    },
+    {
+      "id": "info-row",
+      "title": "Info Row / Info List / Info Card",
+      "kind": "component",
+      "file": "theme/components/info-row.css",
+      "variables": [
+        {
+          "id": "info-row:--info-row-font-size:0",
+          "name": "--info-row-font-size",
+          "value": "var(--typography-small-font-size)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "info-row"
+        },
+        {
+          "id": "info-row:--info-row-label-fg:0",
+          "name": "--info-row-label-fg",
+          "value": "var(--muted-foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "info-row-label"
+        },
+        {
+          "id": "info-row:--info-row-value-fg:0",
+          "name": "--info-row-value-fg",
+          "value": "var(--foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "info-row-value"
+        },
+        {
+          "id": "info-row:--info-list-gap-x:0",
+          "name": "--info-list-gap-x",
+          "value": "1.5rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "info-list"
+        },
+        {
+          "id": "info-row:--info-list-gap-y:0",
+          "name": "--info-list-gap-y",
+          "value": "0.75rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "info-list"
+        },
+        {
+          "id": "info-row:--info-card-bg:0",
+          "name": "--info-card-bg",
+          "value": "var(--card)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "info-row:--info-card-fg:0",
+          "name": "--info-card-fg",
+          "value": "var(--card-foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "info-row:--info-card-radius:0",
+          "name": "--info-card-radius",
+          "value": "var(--radius-xl)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "info-row:--info-card-ring-color:0",
+          "name": "--info-card-ring-color",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "info-row:--info-card-ring-width:0",
+          "name": "--info-card-ring-width",
+          "value": "1px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "info-row:--info-card-icon-bg:0",
+          "name": "--info-card-icon-bg",
+          "value": "var(--muted)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "info-card-icon"
+        },
+        {
+          "id": "info-row:--info-card-icon-fg:0",
+          "name": "--info-card-icon-fg",
+          "value": "var(--foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "info-card-icon"
+        },
+        {
+          "id": "info-row:--info-card-icon-radius:0",
+          "name": "--info-card-icon-radius",
+          "value": "var(--radius-lg)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "info-card-icon"
+        },
+        {
+          "id": "info-row:--info-card-ring-color:1",
+          "name": "--info-card-ring-color",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/info-card"
         }
       ]
     },
@@ -8777,6 +10585,38 @@
       ]
     },
     {
+      "id": "media-gallery",
+      "title": "media-gallery",
+      "kind": "component",
+      "file": "theme/components/media-gallery.css",
+      "variables": [
+        {
+          "id": "media-gallery:--media-gallery-bg:0",
+          "name": "--media-gallery-bg",
+          "value": "var(--muted)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "media-gallery"
+        },
+        {
+          "id": "media-gallery:--media-gallery-radius:0",
+          "name": "--media-gallery-radius",
+          "value": "var(--radius-lg)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "media-gallery"
+        },
+        {
+          "id": "media-gallery:--media-gallery-active-ring:0",
+          "name": "--media-gallery-active-ring",
+          "value": "var(--ring)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "media-gallery-thumbnail"
+        }
+      ]
+    },
+    {
       "id": "menubar",
       "title": "Menubar",
       "kind": "component",
@@ -9809,6 +11649,110 @@
       ]
     },
     {
+      "id": "notification-center",
+      "title": "notification-center",
+      "kind": "component",
+      "file": "theme/components/notification-center.css",
+      "variables": [
+        {
+          "id": "notification-center:--notification-center-max-width:0",
+          "name": "--notification-center-max-width",
+          "value": "24rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "notification-center:--notification-center-max-height:0",
+          "name": "--notification-center-max-height",
+          "value": "32rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        }
+      ]
+    },
+    {
+      "id": "notification-row",
+      "title": "Notification Row",
+      "kind": "component",
+      "file": "theme/components/notification-row.css",
+      "variables": [
+        {
+          "id": "notification-row:--notification-row-radius:0",
+          "name": "--notification-row-radius",
+          "value": "var(--radius-lg)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "notification-row:--notification-row-gap:0",
+          "name": "--notification-row-gap",
+          "value": "0.625rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "notification-row:--notification-row-padding-x:0",
+          "name": "--notification-row-padding-x",
+          "value": "0.75rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "notification-row:--notification-row-padding-y:0",
+          "name": "--notification-row-padding-y",
+          "value": "0.625rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "notification-row:--notification-row-bg:0",
+          "name": "--notification-row-bg",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "notification-row/variant=muted"
+        },
+        {
+          "id": "notification-row:--notification-row-focus-ring-color:0",
+          "name": "--notification-row-focus-ring-color",
+          "value": "var(--neutral-400)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "notification-row"
+        },
+        {
+          "id": "notification-row:--notification-unread-dot-bg:0",
+          "name": "--notification-unread-dot-bg",
+          "value": "var(--primary)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "notification-unread-dot"
+        },
+        {
+          "id": "notification-row:--notification-row-bg:1",
+          "name": "--notification-row-bg",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/notification-row/variant=muted"
+        },
+        {
+          "id": "notification-row:--notification-row-focus-ring-color:1",
+          "name": "--notification-row-focus-ring-color",
+          "value": "var(--neutral-500)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/notification-row"
+        }
+      ]
+    },
+    {
       "id": "pagination",
       "title": "Pagination",
       "kind": "component",
@@ -9823,12 +11767,44 @@
           "scope": "pagination-content"
         },
         {
+          "id": "pagination:--button-bg:0",
+          "name": "--button-bg",
+          "value": "var(--primary-50)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "pagination:--button-fg:0",
+          "name": "--button-fg",
+          "value": "var(--primary-500)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "pagination:--button-border-color:0",
+          "name": "--button-border-color",
+          "value": "var(--primary-200)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "pagination:--button-hover-bg:0",
+          "name": "--button-hover-bg",
+          "value": "var(--primary-100)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
           "id": "pagination:--pagination-ellipsis-size:0",
           "name": "--pagination-ellipsis-size",
           "value": "2rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "pagination-ellipsis"
         },
         {
           "id": "pagination:--pagination-ellipsis-icon-size:0",
@@ -9836,7 +11812,223 @@
           "value": "1rem",
           "fieldType": "raw",
           "occurrence": 0,
+          "scope": "pagination-ellipsis"
+        }
+      ]
+    },
+    {
+      "id": "password-strength-meter",
+      "title": "Password Strength Meter",
+      "kind": "component",
+      "file": "theme/components/password-strength-meter.css",
+      "variables": [
+        {
+          "id": "password-strength-meter:--password-strength-meter-gap:0",
+          "name": "--password-strength-meter-gap",
+          "value": "0.375rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "password-strength-meter"
+        },
+        {
+          "id": "password-strength-meter:--password-strength-bar-height:0",
+          "name": "--password-strength-bar-height",
+          "value": "0.375rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "password-strength-bar"
+        },
+        {
+          "id": "password-strength-meter:--password-strength-bar-radius:0",
+          "name": "--password-strength-bar-radius",
+          "value": "9999px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "password-strength-bar"
+        },
+        {
+          "id": "password-strength-meter:--password-strength-bar-bg:0",
+          "name": "--password-strength-bar-bg",
+          "value": "var(--muted)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "password-strength-bar"
+        },
+        {
+          "id": "password-strength-meter:--password-strength-bar-bg:1",
+          "name": "--password-strength-bar-bg",
+          "value": "var(--destructive)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "password-strength-bar/ancestor-slot=password-strength-meter/level=weak"
+        },
+        {
+          "id": "password-strength-meter:--password-strength-bar-bg:2",
+          "name": "--password-strength-bar-bg",
+          "value": "var(--warning-500)",
+          "fieldType": "color-ref",
+          "occurrence": 2,
+          "scope": "password-strength-bar/ancestor-slot=password-strength-meter/level=fair"
+        },
+        {
+          "id": "password-strength-meter:--password-strength-bar-bg:3",
+          "name": "--password-strength-bar-bg",
+          "value": "var(--success-500)",
+          "fieldType": "color-ref",
+          "occurrence": 3,
+          "scope": "password-strength-bar/ancestor-slot=password-strength-meter/level=strong"
+        },
+        {
+          "id": "password-strength-meter:--password-strength-label-font-size:0",
+          "name": "--password-strength-label-font-size",
+          "value": "var(--typography-caption-font-size)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "password-strength-label"
+        }
+      ]
+    },
+    {
+      "id": "payment-method-list",
+      "title": "Payment Method List",
+      "kind": "component",
+      "file": "theme/components/payment-method-list.css",
+      "variables": [
+        {
+          "id": "payment-method-list:--payment-method-list-gap:0",
+          "name": "--payment-method-list-gap",
+          "value": "0.5rem",
+          "fieldType": "raw",
+          "occurrence": 0,
           "scope": "default"
+        },
+        {
+          "id": "payment-method-list:--payment-method-card-radius:0",
+          "name": "--payment-method-card-radius",
+          "value": "var(--radius-lg)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "payment-method-list:--payment-method-card-gap:0",
+          "name": "--payment-method-card-gap",
+          "value": "0.625rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "payment-method-list:--payment-method-card-padding-x:0",
+          "name": "--payment-method-card-padding-x",
+          "value": "0.75rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "payment-method-list:--payment-method-card-padding-y:0",
+          "name": "--payment-method-card-padding-y",
+          "value": "0.625rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "payment-method-list:--payment-method-card-border-color:0",
+          "name": "--payment-method-card-border-color",
+          "value": "var(--border)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "payment-method-card/variant=outline"
+        },
+        {
+          "id": "payment-method-list:--payment-method-card-bg:0",
+          "name": "--payment-method-card-bg",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "payment-method-card/variant=muted"
+        },
+        {
+          "id": "payment-method-list:--payment-method-card-border-color:1",
+          "name": "--payment-method-card-border-color",
+          "value": "transparent",
+          "fieldType": "color-keyword",
+          "occurrence": 1,
+          "scope": "payment-method-card/variant=muted"
+        },
+        {
+          "id": "payment-method-list:--payment-method-card-ring-color:0",
+          "name": "--payment-method-card-ring-color",
+          "value": "var(--ring)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "payment-method-card"
+        },
+        {
+          "id": "payment-method-list:--payment-method-card-bg:1",
+          "name": "--payment-method-card-bg",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/payment-method-card/variant=muted"
+        }
+      ]
+    },
+    {
+      "id": "pdf-document-kit",
+      "title": "pdf-document-kit",
+      "kind": "component",
+      "file": "theme/components/pdf-document-kit.css",
+      "variables": [
+        {
+          "id": "pdf-document-kit:--pdf-document-preview-bg:0",
+          "name": "--pdf-document-preview-bg",
+          "value": "var(--muted)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "pdf-document-preview"
+        },
+        {
+          "id": "pdf-document-kit:--pdf-document-preview-radius:0",
+          "name": "--pdf-document-preview-radius",
+          "value": "var(--radius-xl)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "pdf-document-preview"
+        }
+      ]
+    },
+    {
+      "id": "phone-input",
+      "title": "Phone Input",
+      "kind": "component",
+      "file": "theme/components/phone-input.css",
+      "variables": [
+        {
+          "id": "phone-input:--phone-input-gap:0",
+          "name": "--phone-input-gap",
+          "value": "0.375rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "phone-input"
+        },
+        {
+          "id": "phone-input:--phone-input-label-font-size:0",
+          "name": "--phone-input-label-font-size",
+          "value": "var(--typography-small-font-size)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "phone-input"
+        },
+        {
+          "id": "phone-input:--phone-input-label-font-weight:0",
+          "name": "--phone-input-label-font-weight",
+          "value": "var(--typography-small-font-weight)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "phone-input"
         }
       ]
     },
@@ -10009,7 +12201,7 @@
         {
           "id": "progress:--progress-track-bg:0",
           "name": "--progress-track-bg",
-          "value": "var(--muted)",
+          "value": "var(--neutral-200)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "progress"
@@ -10017,7 +12209,7 @@
         {
           "id": "progress:--progress-indicator-bg:0",
           "name": "--progress-indicator-bg",
-          "value": "var(--primary)",
+          "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "progress-indicator"
@@ -10185,6 +12377,62 @@
       ]
     },
     {
+      "id": "rating",
+      "title": "rating",
+      "kind": "component",
+      "file": "theme/components/rating.css",
+      "variables": [
+        {
+          "id": "rating:--rating-gap:0",
+          "name": "--rating-gap",
+          "value": "0.25rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "rating"
+        },
+        {
+          "id": "rating:--rating-segment-bg:0",
+          "name": "--rating-segment-bg",
+          "value": "var(--muted)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "rating-segment"
+        },
+        {
+          "id": "rating:--rating-segment-fg:0",
+          "name": "--rating-segment-fg",
+          "value": "var(--muted-foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "rating-segment"
+        },
+        {
+          "id": "rating:--rating-segment-radius:0",
+          "name": "--rating-segment-radius",
+          "value": "var(--radius-sm)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "rating-segment"
+        },
+        {
+          "id": "rating:--rating-segment-bg:1",
+          "name": "--rating-segment-bg",
+          "value": "var(--primary)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "rating-segment"
+        },
+        {
+          "id": "rating:--rating-segment-fg:1",
+          "name": "--rating-segment-fg",
+          "value": "var(--primary-foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "rating-segment"
+        }
+      ]
+    },
+    {
       "id": "resizable",
       "title": "Resizable",
       "kind": "component",
@@ -10257,6 +12505,46 @@
       ]
     },
     {
+      "id": "rich-text-editor",
+      "title": "rich-text-editor",
+      "kind": "component",
+      "file": "theme/components/rich-text-editor.css",
+      "variables": [
+        {
+          "id": "rich-text-editor:--rich-text-editor-bg:0",
+          "name": "--rich-text-editor-bg",
+          "value": "var(--background)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "rich-text-editor"
+        },
+        {
+          "id": "rich-text-editor:--rich-text-editor-border:0",
+          "name": "--rich-text-editor-border",
+          "value": "var(--input)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "rich-text-editor"
+        },
+        {
+          "id": "rich-text-editor:--rich-text-editor-radius:0",
+          "name": "--rich-text-editor-radius",
+          "value": "var(--radius-lg)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "rich-text-editor"
+        },
+        {
+          "id": "rich-text-editor:--rich-text-editor-min-height:0",
+          "name": "--rich-text-editor-min-height",
+          "value": "10rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "rich-text-editor-content"
+        }
+      ]
+    },
+    {
       "id": "scroll-area",
       "title": "Scroll Area",
       "kind": "component",
@@ -10309,6 +12597,110 @@
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "scroll-area-thumb"
+        }
+      ]
+    },
+    {
+      "id": "segmented-control",
+      "title": "Segmented Control",
+      "kind": "component",
+      "file": "theme/components/segmented-control.css",
+      "variables": [
+        {
+          "id": "segmented-control:--segmented-control-radius:0",
+          "name": "--segmented-control-radius",
+          "value": "var(--radius-lg)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "segmented-control"
+        },
+        {
+          "id": "segmented-control:--segmented-control-select-radius:0",
+          "name": "--segmented-control-select-radius",
+          "value": "var(--input-radius)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "segmented-control:--segmented-control-select-border-color:0",
+          "name": "--segmented-control-select-border-color",
+          "value": "var(--input-border-color)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "segmented-control:--segmented-control-select-bg:0",
+          "name": "--segmented-control-select-bg",
+          "value": "var(--input-bg)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "segmented-control:--segmented-control-select-focus-border-color:0",
+          "name": "--segmented-control-select-focus-border-color",
+          "value": "var(--input-focus-border-color)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "segmented-control"
+        },
+        {
+          "id": "segmented-control:--segmented-control-select-focus-ring-color:0",
+          "name": "--segmented-control-select-focus-ring-color",
+          "value": "var(--input-focus-ring-color)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "segmented-control"
+        }
+      ]
+    },
+    {
+      "id": "segmented-radio-group",
+      "title": "segmented-radio-group",
+      "kind": "component",
+      "file": "theme/components/segmented-radio-group.css",
+      "variables": [
+        {
+          "id": "segmented-radio-group:--segmented-radio-border:0",
+          "name": "--segmented-radio-border",
+          "value": "var(--border)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "segmented-radio-item"
+        },
+        {
+          "id": "segmented-radio-group:--segmented-radio-bg:0",
+          "name": "--segmented-radio-bg",
+          "value": "var(--card)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "segmented-radio-item"
+        },
+        {
+          "id": "segmented-radio-group:--segmented-radio-radius:0",
+          "name": "--segmented-radio-radius",
+          "value": "var(--radius-lg)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "segmented-radio-item"
+        },
+        {
+          "id": "segmented-radio-group:--segmented-radio-border:1",
+          "name": "--segmented-radio-border",
+          "value": "var(--primary)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "segmented-radio-item"
+        },
+        {
+          "id": "segmented-radio-group:--segmented-radio-bg:1",
+          "name": "--segmented-radio-bg",
+          "value": "color-mix(in oklab, var(--primary) 7%, var(--card))",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "segmented-radio-item"
         }
       ]
     },
@@ -10713,8 +13105,8 @@
         {
           "id": "sheet:--sheet-overlay-bg:0",
           "name": "--sheet-overlay-bg",
-          "value": "var(--overlay-bg)",
-          "fieldType": "color-ref",
+          "value": "color-mix(in srgb, var(--overlay-bg) 50%, transparent)",
+          "fieldType": "raw",
           "occurrence": 0,
           "scope": "sheet-overlay"
         },
@@ -10769,7 +13161,7 @@
         {
           "id": "sheet:--sheet-content-shadow:0",
           "name": "--sheet-content-shadow",
-          "value": "var(--shadow-lg)",
+          "value": "var(--shadow-md)",
           "fieldType": "shadow-ref",
           "occurrence": 0,
           "scope": "sheet-content"
@@ -10851,6 +13243,14 @@
           "name": "--sheet-header-padding",
           "value": "1rem",
           "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "sheet-header"
+        },
+        {
+          "id": "sheet:--sheet-header-bg:0",
+          "name": "--sheet-header-bg",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sheet-header"
         },
@@ -11281,7 +13681,7 @@
         {
           "id": "sidebar:--sidebar-menu-button-hover-bg:0",
           "name": "--sidebar-menu-button-hover-bg",
-          "value": "var(--sidebar-accent)",
+          "value": "var(--primary-50)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sidebar-menu-button"
@@ -11289,7 +13689,7 @@
         {
           "id": "sidebar:--sidebar-menu-button-hover-fg:0",
           "name": "--sidebar-menu-button-hover-fg",
-          "value": "var(--sidebar-accent-foreground)",
+          "value": "var(--primary-950)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sidebar-menu-button"
@@ -11297,7 +13697,7 @@
         {
           "id": "sidebar:--sidebar-menu-button-active-bg:0",
           "name": "--sidebar-menu-button-active-bg",
-          "value": "var(--sidebar-accent)",
+          "value": "var(--primary-50)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sidebar-menu-button"
@@ -11305,7 +13705,7 @@
         {
           "id": "sidebar:--sidebar-menu-button-active-fg:0",
           "name": "--sidebar-menu-button-active-fg",
-          "value": "var(--sidebar-accent-foreground)",
+          "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sidebar-menu-button"
@@ -11609,7 +14009,7 @@
         {
           "id": "sidebar:--sidebar-menu-sub-button-hover-bg:0",
           "name": "--sidebar-menu-sub-button-hover-bg",
-          "value": "var(--sidebar-accent)",
+          "value": "var(--primary-50)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sidebar-menu-sub-button"
@@ -11617,7 +14017,7 @@
         {
           "id": "sidebar:--sidebar-menu-sub-button-hover-fg:0",
           "name": "--sidebar-menu-sub-button-hover-fg",
-          "value": "var(--sidebar-accent-foreground)",
+          "value": "var(--primary-950)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sidebar-menu-sub-button"
@@ -11625,7 +14025,7 @@
         {
           "id": "sidebar:--sidebar-menu-sub-button-active-bg:0",
           "name": "--sidebar-menu-sub-button-active-bg",
-          "value": "var(--sidebar-accent)",
+          "value": "var(--primary-50)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sidebar-menu-sub-button"
@@ -11633,7 +14033,7 @@
         {
           "id": "sidebar:--sidebar-menu-sub-button-active-fg:0",
           "name": "--sidebar-menu-sub-button-active-fg",
-          "value": "var(--sidebar-accent-foreground)",
+          "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sidebar-menu-sub-button"
@@ -11817,7 +14217,7 @@
         {
           "id": "sonner-toast:--sonner-bg:0",
           "name": "--sonner-bg",
-          "value": "var(--popover)",
+          "value": "var(--neutral-900)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
@@ -11825,7 +14225,7 @@
         {
           "id": "sonner-toast:--sonner-text:0",
           "name": "--sonner-text",
-          "value": "var(--popover-foreground)",
+          "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
@@ -11833,16 +14233,24 @@
         {
           "id": "sonner-toast:--sonner-border:0",
           "name": "--sonner-border",
-          "value": "var(--border)",
-          "fieldType": "color-ref",
+          "value": "transparent",
+          "fieldType": "color-keyword",
           "occurrence": 0,
           "scope": "default"
         },
         {
           "id": "sonner-toast:--sonner-radius:0",
           "name": "--sonner-radius",
-          "value": "var(--radius)",
+          "value": "var(--radius-md)",
           "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "sonner-toast:--sonner-shadow:0",
+          "name": "--sonner-shadow",
+          "value": "var(--shadow-sm)",
+          "fieldType": "shadow-ref",
           "occurrence": 0,
           "scope": "default"
         },
@@ -11889,7 +14297,7 @@
         {
           "id": "sonner-toast:--sonner-toast-padding:0",
           "name": "--sonner-toast-padding",
-          "value": "1rem",
+          "value": "0.75rem 1rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -11897,7 +14305,7 @@
         {
           "id": "sonner-toast:--sonner-toast-font-size:0",
           "name": "--sonner-toast-font-size",
-          "value": "var(--typography-muted-font-size)",
+          "value": "var(--typography-small-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
           "scope": "default"
@@ -11911,33 +14319,33 @@
           "scope": "default"
         },
         {
-          "id": "sonner-toast:--sonner-error-bg:0",
-          "name": "--sonner-error-bg",
-          "value": "var(--destructive-100)",
+          "id": "sonner-toast:--success-bg:0",
+          "name": "--success-bg",
+          "value": "var(--neutral-900)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
         },
         {
-          "id": "sonner-toast:--sonner-error-text:0",
-          "name": "--sonner-error-text",
-          "value": "var(--destructive)",
+          "id": "sonner-toast:--success-text:0",
+          "name": "--success-text",
+          "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
         },
         {
-          "id": "sonner-toast:--sonner-error-border:0",
-          "name": "--sonner-error-border",
-          "value": "var(--destructive-600)",
-          "fieldType": "color-ref",
+          "id": "sonner-toast:--success-border:0",
+          "name": "--success-border",
+          "value": "transparent",
+          "fieldType": "color-keyword",
           "occurrence": 0,
           "scope": "default"
         },
         {
           "id": "sonner-toast:--error-bg:0",
           "name": "--error-bg",
-          "value": "var(--sonner-error-bg)",
+          "value": "var(--neutral-900)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
@@ -11945,34 +14353,114 @@
         {
           "id": "sonner-toast:--error-text:0",
           "name": "--error-text",
-          "value": "var(--sonner-error-text)",
-          "fieldType": "token-ref",
+          "value": "var(--neutral-0)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
         },
         {
           "id": "sonner-toast:--error-border:0",
           "name": "--error-border",
-          "value": "var(--sonner-error-border)",
+          "value": "transparent",
+          "fieldType": "color-keyword",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "sonner-toast:--info-bg:0",
+          "name": "--info-bg",
+          "value": "var(--neutral-900)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
         },
         {
-          "id": "sonner-toast:--sonner-error-bg:1",
-          "name": "--sonner-error-bg",
-          "value": "var(--neutral-800)",
+          "id": "sonner-toast:--info-text:0",
+          "name": "--info-text",
+          "value": "var(--neutral-0)",
           "fieldType": "color-ref",
-          "occurrence": 1,
-          "scope": "dark"
+          "occurrence": 0,
+          "scope": "default"
         },
         {
-          "id": "sonner-toast:--sonner-error-border:1",
-          "name": "--sonner-error-border",
-          "value": "var(--destructive-400)",
+          "id": "sonner-toast:--info-border:0",
+          "name": "--info-border",
+          "value": "transparent",
+          "fieldType": "color-keyword",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "sonner-toast:--warning-bg:0",
+          "name": "--warning-bg",
+          "value": "var(--neutral-900)",
           "fieldType": "color-ref",
-          "occurrence": 1,
-          "scope": "dark"
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "sonner-toast:--warning-text:0",
+          "name": "--warning-text",
+          "value": "var(--neutral-0)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "sonner-toast:--warning-border:0",
+          "name": "--warning-border",
+          "value": "transparent",
+          "fieldType": "color-keyword",
+          "occurrence": 0,
+          "scope": "default"
+        }
+      ]
+    },
+    {
+      "id": "sortable-list",
+      "title": "sortable-list",
+      "kind": "component",
+      "file": "theme/components/sortable-list.css",
+      "variables": [
+        {
+          "id": "sortable-list:--sortable-list-gap:0",
+          "name": "--sortable-list-gap",
+          "value": "0.5rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "sortable-list"
+        },
+        {
+          "id": "sortable-list:--sortable-item-bg:0",
+          "name": "--sortable-item-bg",
+          "value": "var(--card)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "sortable-item"
+        },
+        {
+          "id": "sortable-list:--sortable-item-border:0",
+          "name": "--sortable-item-border",
+          "value": "var(--border)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "sortable-item"
+        },
+        {
+          "id": "sortable-list:--sortable-item-radius:0",
+          "name": "--sortable-item-radius",
+          "value": "var(--radius-lg)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "sortable-item"
+        },
+        {
+          "id": "sortable-list:--sortable-item-shadow:0",
+          "name": "--sortable-item-shadow",
+          "value": "var(--shadow-lg)",
+          "fieldType": "shadow-ref",
+          "occurrence": 0,
+          "scope": "sortable-item"
         }
       ]
     },
@@ -12009,6 +14497,326 @@
       ]
     },
     {
+      "id": "stat-card",
+      "title": "Stat Card",
+      "kind": "component",
+      "file": "theme/components/stat-card.css",
+      "variables": [
+        {
+          "id": "stat-card:--stat-card-bg:0",
+          "name": "--stat-card-bg",
+          "value": "var(--card)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "stat-card:--stat-card-fg:0",
+          "name": "--stat-card-fg",
+          "value": "var(--card-foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "stat-card:--stat-card-radius:0",
+          "name": "--stat-card-radius",
+          "value": "var(--radius-2xl)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "stat-card:--stat-card-ring-color:0",
+          "name": "--stat-card-ring-color",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "stat-card:--stat-card-ring-width:0",
+          "name": "--stat-card-ring-width",
+          "value": "1px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "stat-card:--stat-card-icon-bg:0",
+          "name": "--stat-card-icon-bg",
+          "value": "var(--primary-500)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "stat-card-icon"
+        },
+        {
+          "id": "stat-card:--stat-card-icon-fg:0",
+          "name": "--stat-card-icon-fg",
+          "value": "var(--neutral-0)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "stat-card-icon"
+        },
+        {
+          "id": "stat-card:--stat-card-icon-radius:0",
+          "name": "--stat-card-icon-radius",
+          "value": "var(--radius-lg)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "stat-card-icon"
+        },
+        {
+          "id": "stat-card:--stat-card-label-fg:0",
+          "name": "--stat-card-label-fg",
+          "value": "var(--muted-foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "stat-card-label"
+        },
+        {
+          "id": "stat-card:--stat-card-label-font-size:0",
+          "name": "--stat-card-label-font-size",
+          "value": "var(--typography-caption-font-size)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "stat-card-label"
+        },
+        {
+          "id": "stat-card:--stat-card-value-fg:0",
+          "name": "--stat-card-value-fg",
+          "value": "var(--foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "stat-card-value"
+        },
+        {
+          "id": "stat-card:--stat-card-value-font-family:0",
+          "name": "--stat-card-value-font-family",
+          "value": "var(--font-heading)",
+          "fieldType": "font-ref",
+          "occurrence": 0,
+          "scope": "stat-card-value"
+        },
+        {
+          "id": "stat-card:--stat-card-value-font-size:0",
+          "name": "--stat-card-value-font-size",
+          "value": "var(--typography-h4-font-size)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "stat-card-value"
+        },
+        {
+          "id": "stat-card:--stat-card-ring-color:1",
+          "name": "--stat-card-ring-color",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/stat-card"
+        }
+      ]
+    },
+    {
+      "id": "stepper-input",
+      "title": "Stepper Input",
+      "kind": "component",
+      "file": "theme/components/stepper-input.css",
+      "variables": [
+        {
+          "id": "stepper-input:--stepper-input-radius:0",
+          "name": "--stepper-input-radius",
+          "value": "var(--input-radius)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "stepper-input:--stepper-input-border-width:0",
+          "name": "--stepper-input-border-width",
+          "value": "var(--input-border-width)",
+          "fieldType": "token-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "stepper-input:--stepper-input-border-color:0",
+          "name": "--stepper-input-border-color",
+          "value": "var(--input-border-color)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "stepper-input:--stepper-input-bg:0",
+          "name": "--stepper-input-bg",
+          "value": "var(--input-bg)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "stepper-input:--stepper-input-height:0",
+          "name": "--stepper-input-height",
+          "value": "var(--input-height)",
+          "fieldType": "token-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "stepper-input:--stepper-input-focus-border-color:0",
+          "name": "--stepper-input-focus-border-color",
+          "value": "var(--input-focus-border-color)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "input/ancestor-slot=stepper-input"
+        },
+        {
+          "id": "stepper-input:--stepper-input-focus-ring-color:0",
+          "name": "--stepper-input-focus-ring-color",
+          "value": "var(--input-focus-ring-color)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "input/ancestor-slot=stepper-input"
+        }
+      ]
+    },
+    {
+      "id": "stepper",
+      "title": "Stepper",
+      "kind": "component",
+      "file": "theme/components/stepper.css",
+      "variables": [
+        {
+          "id": "stepper:--stepper-indicator-size:0",
+          "name": "--stepper-indicator-size",
+          "value": "2rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "stepper-indicator"
+        },
+        {
+          "id": "stepper:--stepper-indicator-font-size:0",
+          "name": "--stepper-indicator-font-size",
+          "value": "var(--typography-caption-font-size)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "stepper-indicator"
+        },
+        {
+          "id": "stepper:--stepper-connector-bg:0",
+          "name": "--stepper-connector-bg",
+          "value": "var(--border)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "stepper-connector"
+        },
+        {
+          "id": "stepper:--stepper-connector-bg-active:0",
+          "name": "--stepper-connector-bg-active",
+          "value": "var(--primary)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "stepper-connector"
+        },
+        {
+          "id": "stepper:--stepper-label-font-size:0",
+          "name": "--stepper-label-font-size",
+          "value": "var(--typography-small-font-size)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "stepper-label"
+        },
+        {
+          "id": "stepper:--stepper-label-font-weight:0",
+          "name": "--stepper-label-font-weight",
+          "value": "var(--typography-small-font-weight)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "stepper-label"
+        },
+        {
+          "id": "stepper:--stepper-description-font-size:0",
+          "name": "--stepper-description-font-size",
+          "value": "var(--typography-caption-font-size)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "stepper-description"
+        },
+        {
+          "id": "stepper:--stepper-description-fg:0",
+          "name": "--stepper-description-fg",
+          "value": "var(--muted-foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "stepper-description"
+        },
+        {
+          "id": "stepper:--stepper-segment-gap:0",
+          "name": "--stepper-segment-gap",
+          "value": "0.375rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "stepper/variant=segments"
+        },
+        {
+          "id": "stepper:--stepper-segment-height:0",
+          "name": "--stepper-segment-height",
+          "value": "0.375rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "stepper-segment"
+        },
+        {
+          "id": "stepper:--stepper-segment-radius:0",
+          "name": "--stepper-segment-radius",
+          "value": "9999px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "stepper-segment"
+        },
+        {
+          "id": "stepper:--stepper-segment-bg:0",
+          "name": "--stepper-segment-bg",
+          "value": "var(--muted)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "stepper-segment"
+        },
+        {
+          "id": "stepper:--stepper-segment-bg-active:0",
+          "name": "--stepper-segment-bg-active",
+          "value": "var(--primary)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "stepper-segment"
+        }
+      ]
+    },
+    {
+      "id": "stripe-payment-method",
+      "title": "stripe-payment-method",
+      "kind": "component",
+      "file": "theme/components/stripe-payment-method.css",
+      "variables": [
+        {
+          "id": "stripe-payment-method:--stripe-payment-form-gap:0",
+          "name": "--stripe-payment-form-gap",
+          "value": "1rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "stripe-payment-form"
+        },
+        {
+          "id": "stripe-payment-method:--stripe-payment-error-fg:0",
+          "name": "--stripe-payment-error-fg",
+          "value": "var(--destructive)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        }
+      ]
+    },
+    {
       "id": "switch",
       "title": "Switch",
       "kind": "component",
@@ -12033,7 +14841,7 @@
         {
           "id": "switch:--switch-checked-bg:0",
           "name": "--switch-checked-bg",
-          "value": "var(--primary)",
+          "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "switch"
@@ -12041,7 +14849,7 @@
         {
           "id": "switch:--switch-unchecked-bg:0",
           "name": "--switch-unchecked-bg",
-          "value": "var(--input)",
+          "value": "var(--neutral-200)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "switch"
@@ -12095,6 +14903,14 @@
           "scope": "switch"
         },
         {
+          "id": "switch:--switch-unchecked-active-bg:0",
+          "name": "--switch-unchecked-active-bg",
+          "value": "var(--neutral-300)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "switch/state=unchecked"
+        },
+        {
           "id": "switch:--switch-track-height:0",
           "name": "--switch-track-height",
           "value": "18.4px",
@@ -12129,8 +14945,16 @@
         {
           "id": "switch:--switch-thumb-bg:0",
           "name": "--switch-thumb-bg",
-          "value": "var(--background)",
+          "value": "var(--neutral-0)",
           "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "switch-thumb"
+        },
+        {
+          "id": "switch:--switch-thumb-shadow:0",
+          "name": "--switch-thumb-shadow",
+          "value": "var(--shadow-xs)",
+          "fieldType": "shadow-ref",
           "occurrence": 0,
           "scope": "switch-thumb"
         },
@@ -12201,7 +15025,7 @@
         {
           "id": "table:--table-header-border-color:0",
           "name": "--table-header-border-color",
-          "value": "var(--border)",
+          "value": "var(--neutral-200)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "table-header"
@@ -12249,7 +15073,7 @@
         {
           "id": "table:--table-row-border-color:0",
           "name": "--table-row-border-color",
-          "value": "var(--border)",
+          "value": "var(--neutral-200)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "table-row"
@@ -12289,7 +15113,7 @@
         {
           "id": "table:--table-head-fg:0",
           "name": "--table-head-fg",
-          "value": "var(--foreground)",
+          "value": "var(--muted-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "table-head"
@@ -12313,8 +15137,24 @@
         {
           "id": "table:--table-head-font-weight:0",
           "name": "--table-head-font-weight",
-          "value": "var(--typography-small-font-weight)",
-          "fieldType": "typography-ref",
+          "value": "600",
+          "fieldType": "font-weight",
+          "occurrence": 0,
+          "scope": "table-head"
+        },
+        {
+          "id": "table:--table-head-letter-spacing:0",
+          "name": "--table-head-letter-spacing",
+          "value": "0.05em",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "table-head"
+        },
+        {
+          "id": "table:--table-head-text-transform:0",
+          "name": "--table-head-text-transform",
+          "value": "uppercase",
+          "fieldType": "text-transform",
           "occurrence": 0,
           "scope": "table-head"
         },
@@ -12345,7 +15185,7 @@
         {
           "id": "table:--table-caption-font-size:0",
           "name": "--table-caption-font-size",
-          "value": "var(--typography-muted-font-size)",
+          "value": "var(--typography-caption-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
           "scope": "table-caption"
@@ -12585,6 +15425,54 @@
       ]
     },
     {
+      "id": "tag-input",
+      "title": "tag-input",
+      "kind": "component",
+      "file": "theme/components/tag-input.css",
+      "variables": [
+        {
+          "id": "tag-input:--tag-input-bg:0",
+          "name": "--tag-input-bg",
+          "value": "transparent",
+          "fieldType": "color-keyword",
+          "occurrence": 0,
+          "scope": "tag-input"
+        },
+        {
+          "id": "tag-input:--tag-input-border:0",
+          "name": "--tag-input-border",
+          "value": "var(--input)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "tag-input"
+        },
+        {
+          "id": "tag-input:--tag-input-radius:0",
+          "name": "--tag-input-radius",
+          "value": "var(--radius-lg)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "tag-input"
+        },
+        {
+          "id": "tag-input:--tag-input-min-height:0",
+          "name": "--tag-input-min-height",
+          "value": "2.5rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "tag-input"
+        },
+        {
+          "id": "tag-input:--tag-input-focus:0",
+          "name": "--tag-input-focus",
+          "value": "var(--ring)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "tag-input"
+        }
+      ]
+    },
+    {
       "id": "textarea",
       "title": "Textarea",
       "kind": "component",
@@ -12749,6 +15637,38 @@
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/textarea"
+        }
+      ]
+    },
+    {
+      "id": "time-range-picker",
+      "title": "Time Range Picker",
+      "kind": "component",
+      "file": "theme/components/time-range-picker.css",
+      "variables": [
+        {
+          "id": "time-range-picker:--time-range-picker-gap:0",
+          "name": "--time-range-picker-gap",
+          "value": "1rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "time-range-picker"
+        },
+        {
+          "id": "time-range-picker:--time-range-day-border-color:0",
+          "name": "--time-range-day-border-color",
+          "value": "var(--border)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "time-range-day"
+        },
+        {
+          "id": "time-range-picker:--time-range-day-padding-bottom:0",
+          "name": "--time-range-day-padding-bottom",
+          "value": "1rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "time-range-day"
         }
       ]
     },
@@ -13109,6 +16029,30 @@
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "tooltip-content"
+        }
+      ]
+    },
+    {
+      "id": "truncate",
+      "title": "Truncate",
+      "kind": "component",
+      "file": "theme/components/truncate.css",
+      "variables": [
+        {
+          "id": "truncate:--truncate-font-size:0",
+          "name": "--truncate-font-size",
+          "value": "var(--typography-small-font-size)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "truncate"
+        },
+        {
+          "id": "truncate:--truncate-expand-gap:0",
+          "name": "--truncate-expand-gap",
+          "value": "0.25rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "truncate/mode=expand"
         }
       ]
     }

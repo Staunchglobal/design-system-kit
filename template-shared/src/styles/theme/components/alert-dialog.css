@@ -3,7 +3,7 @@
    ========================================================================== */
 
 [data-slot='alert-dialog-overlay'] {
-  --alert-dialog-overlay-bg: var(--overlay-bg);
+  --alert-dialog-overlay-bg: color-mix(in srgb, var(--overlay-bg) 50%, transparent);
   --alert-dialog-overlay-duration: 100ms;
   background-color: var(--alert-dialog-overlay-bg);
   transition-duration: var(--alert-dialog-overlay-duration);
@@ -14,7 +14,7 @@
   --alert-dialog-content-fg: var(--popover-foreground);
   --alert-dialog-content-ring-color: var(--neutral-950);
   --alert-dialog-content-ring-width: 1px;
-  --alert-dialog-content-radius: var(--radius-xl);
+  --alert-dialog-content-radius: var(--radius-3xl);
   --alert-dialog-content-padding: 1rem;
   --alert-dialog-content-gap: 1rem;
   --alert-dialog-content-duration: 100ms;
@@ -50,7 +50,7 @@
   --alert-dialog-footer-margin-inline: -1rem;
   --alert-dialog-footer-margin-block-end: -1rem;
   --alert-dialog-footer-gap: 0.5rem;
-  --alert-dialog-footer-radius: var(--radius-xl);
+  --alert-dialog-footer-radius: var(--radius-3xl);
   --alert-dialog-footer-border-color: var(--border);
   --alert-dialog-footer-border-width: 1px;
   --alert-dialog-footer-padding: 1rem;
@@ -87,7 +87,7 @@
 
 [data-slot='alert-dialog-description'] {
   --alert-dialog-description-fg: var(--muted-foreground);
-  --alert-dialog-description-font-size: var(--typography-muted-font-size);
+  --alert-dialog-description-font-size: var(--typography-caption-font-size);
   --alert-dialog-description-link-hover-fg: var(--foreground);
   color: var(--alert-dialog-description-fg);
   font-size: var(--alert-dialog-description-font-size);
@@ -97,7 +97,11 @@
 }
 
 /* AlertDialogAction / Cancel render real <Button>s (data-slot="button").
-   Their colors/sizes come from the Button section above — do not restyle here. */
+   Paramount uses fully pill-shaped actions regardless of Button radius. */
+[data-ui='alert-dialog-action'],
+[data-ui='alert-dialog-cancel'] {
+  border-radius: 9999px;
+}
 
 .dark [data-slot='alert-dialog-content'] {
   --alert-dialog-content-ring-color: var(--neutral-50);

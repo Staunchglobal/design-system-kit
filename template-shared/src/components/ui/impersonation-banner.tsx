@@ -30,13 +30,13 @@ function ImpersonationBanner({
       role="alert"
       aria-live="polite"
       className={cn(
-        'sticky top-0 z-50 flex w-full items-center gap-2.5 border-b border-amber-300/40 bg-amber-50 px-4 py-2.5 text-sm text-amber-900 dark:border-amber-700/40 dark:bg-amber-950/60 dark:text-amber-200',
+        'sticky top-0 z-50 flex w-full items-center gap-2.5 border-b border-warning-300/40 bg-warning-50 px-4 py-2.5 text-sm text-warning-900 dark:border-warning-700/40 dark:bg-warning-950/60 dark:text-warning-200',
         className
       )}
     >
       <AlertTriangle
         aria-hidden="true"
-        className="size-4 shrink-0 text-amber-600 dark:text-amber-400"
+        className="size-4 shrink-0 text-warning-600 dark:text-warning-400"
       />
       <span className="flex-1">{message}</span>
       {action ? (
@@ -52,7 +52,7 @@ function ImpersonationBanner({
           size="icon-sm"
           onClick={onDismiss}
           aria-label="Dismiss banner"
-          className="ml-1 shrink-0 text-amber-700 hover:bg-amber-100 hover:text-amber-900 dark:text-amber-400 dark:hover:bg-amber-900/40 dark:hover:text-amber-200"
+          className="ml-1 shrink-0 text-warning-700 hover:bg-warning-100 hover:text-warning-900 dark:text-warning-400 dark:hover:bg-warning-900/40 dark:hover:text-warning-200"
         >
           <X />
         </Button>

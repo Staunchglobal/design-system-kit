@@ -31,6 +31,30 @@ export default function AlertDemo() {
             </Alert>
           </Example>
 
+          <Example title="Success">
+            <Alert variant="success" className="w-full">
+              <InfoIcon />
+              <AlertTitle>Saved</AlertTitle>
+              <AlertDescription>Your changes have been saved successfully.</AlertDescription>
+            </Alert>
+          </Example>
+
+          <Example title="Warning">
+            <Alert variant="warning" className="w-full">
+              <AlertTriangleIcon />
+              <AlertTitle>Check your input</AlertTitle>
+              <AlertDescription>Some fields need attention before you continue.</AlertDescription>
+            </Alert>
+          </Example>
+
+          <Example title="Info">
+            <Alert variant="info" className="w-full">
+              <InfoIcon />
+              <AlertTitle>Did you know?</AlertTitle>
+              <AlertDescription>You can customize this kit from the theme editor.</AlertDescription>
+            </Alert>
+          </Example>
+
           <Example
             title="With action"
             description="AlertAction renders inline controls."

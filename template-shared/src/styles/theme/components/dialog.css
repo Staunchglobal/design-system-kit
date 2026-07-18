@@ -3,7 +3,7 @@
    ========================================================================== */
 
 [data-slot='dialog-overlay'] {
-  --dialog-overlay-bg: var(--overlay-bg);
+  --dialog-overlay-bg: color-mix(in srgb, var(--overlay-bg) 50%, transparent);
   --dialog-overlay-blur: 4px;
   --dialog-overlay-duration: 100ms;
   background-color: var(--dialog-overlay-bg);
@@ -20,15 +20,18 @@
   --dialog-content-fg: var(--popover-foreground);
   --dialog-content-ring-color: var(--neutral-950);
   --dialog-content-ring-width: 1px;
-  --dialog-content-radius: var(--radius-xl);
+  --dialog-content-radius: var(--radius-lg);
   --dialog-content-max-width: 24rem;
   --dialog-content-padding: 1rem;
   --dialog-content-gap: 1rem;
   --dialog-content-font-size: var(--typography-small-font-size);
   --dialog-content-duration: 100ms;
+  --dialog-content-shadow: var(--shadow-md);
   background-color: var(--dialog-content-bg);
   color: var(--dialog-content-fg);
-  box-shadow: 0 0 0 var(--dialog-content-ring-width) var(--dialog-content-ring-color);
+  box-shadow:
+    var(--dialog-content-shadow),
+    0 0 0 var(--dialog-content-ring-width) var(--dialog-content-ring-color);
   border-radius: var(--dialog-content-radius);
   max-width: var(--dialog-content-max-width);
   padding: var(--dialog-content-padding);
@@ -48,7 +51,18 @@
 
 [data-slot='dialog-header'] {
   --dialog-header-gap: 0.5rem;
+  --dialog-header-bg: var(--neutral-50);
+  --dialog-header-margin-inline: -1rem;
+  --dialog-header-margin-block-start: -1rem;
+  --dialog-header-padding: 1rem;
+  --dialog-header-radius: var(--radius-lg);
   gap: var(--dialog-header-gap);
+  background-color: var(--dialog-header-bg);
+  margin-inline: var(--dialog-header-margin-inline);
+  margin-block-start: var(--dialog-header-margin-block-start);
+  padding: var(--dialog-header-padding);
+  border-start-start-radius: var(--dialog-header-radius);
+  border-start-end-radius: var(--dialog-header-radius);
 }
 
 [data-slot='dialog-footer'] {
@@ -56,7 +70,7 @@
   --dialog-footer-margin-inline: -1rem;
   --dialog-footer-margin-block-end: -1rem;
   --dialog-footer-gap: 0.5rem;
-  --dialog-footer-radius: var(--radius-xl);
+  --dialog-footer-radius: var(--radius-lg);
   --dialog-footer-border-color: var(--border);
   --dialog-footer-border-width: 1px;
   --dialog-footer-padding: 1rem;

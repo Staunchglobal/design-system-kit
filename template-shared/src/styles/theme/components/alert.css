@@ -1,5 +1,9 @@
 /* ==========================================================================
    Alert
+   ==========================================================================
+   Variants cascaded from paramount Alert: info/success/warning/danger use
+   *-50 shell + *-500/600 text. Kit `default` stays card-neutral; `destructive`
+   maps to danger.
    ========================================================================== */
 
 [data-slot='alert'] {
@@ -15,21 +19,60 @@
   gap: var(--alert-gap);
   font-size: var(--alert-font-size);
 }
+
 [data-slot='alert'][data-variant='default'] {
   --alert-bg: var(--card);
   --alert-fg: var(--card-foreground);
   background-color: var(--alert-bg);
   color: var(--alert-fg);
 }
+
 [data-slot='alert'][data-variant='destructive'] {
-  --alert-destructive-bg: var(--card);
-  --alert-destructive-fg: var(--destructive);
-  --alert-destructive-description-fg: var(--destructive-600);
+  --alert-destructive-bg: var(--destructive-50);
+  --alert-destructive-fg: var(--destructive-500);
+  --alert-destructive-description-fg: var(--destructive-500);
   background-color: var(--alert-destructive-bg);
   color: var(--alert-destructive-fg);
+  border-color: transparent;
 }
 [data-slot='alert'][data-variant='destructive'] [data-slot='alert-description'] {
   color: var(--alert-destructive-description-fg);
+}
+
+[data-slot='alert'][data-variant='success'] {
+  --alert-success-bg: var(--success-50);
+  --alert-success-fg: var(--success-500);
+  --alert-success-description-fg: var(--success-500);
+  background-color: var(--alert-success-bg);
+  color: var(--alert-success-fg);
+  border-color: transparent;
+}
+[data-slot='alert'][data-variant='success'] [data-slot='alert-description'] {
+  color: var(--alert-success-description-fg);
+}
+
+[data-slot='alert'][data-variant='warning'] {
+  --alert-warning-bg: var(--warning-50);
+  --alert-warning-fg: var(--warning-600);
+  --alert-warning-description-fg: var(--warning-600);
+  background-color: var(--alert-warning-bg);
+  color: var(--alert-warning-fg);
+  border-color: transparent;
+}
+[data-slot='alert'][data-variant='warning'] [data-slot='alert-description'] {
+  color: var(--alert-warning-description-fg);
+}
+
+[data-slot='alert'][data-variant='info'] {
+  --alert-info-bg: var(--info-50);
+  --alert-info-fg: var(--info-500);
+  --alert-info-description-fg: var(--info-500);
+  background-color: var(--alert-info-bg);
+  color: var(--alert-info-fg);
+  border-color: transparent;
+}
+[data-slot='alert'][data-variant='info'] [data-slot='alert-description'] {
+  color: var(--alert-info-description-fg);
 }
 
 [data-slot='alert-title'] {
@@ -44,7 +87,7 @@
 }
 
 [data-slot='alert-description'] {
-  --alert-description-font-size: var(--typography-muted-font-size);
+  --alert-description-font-size: var(--typography-caption-font-size);
   --alert-description-fg: var(--muted-foreground);
   --alert-description-link-hover-fg: var(--foreground);
   font-size: var(--alert-description-font-size);
@@ -60,5 +103,25 @@
 }
 
 .dark [data-slot='alert'][data-variant='destructive'] {
+  --alert-destructive-bg: var(--destructive-950);
+  --alert-destructive-fg: var(--destructive-400);
   --alert-destructive-description-fg: var(--destructive-400);
+}
+
+.dark [data-slot='alert'][data-variant='success'] {
+  --alert-success-bg: var(--success-950);
+  --alert-success-fg: var(--success-400);
+  --alert-success-description-fg: var(--success-400);
+}
+
+.dark [data-slot='alert'][data-variant='warning'] {
+  --alert-warning-bg: var(--warning-950);
+  --alert-warning-fg: var(--warning-400);
+  --alert-warning-description-fg: var(--warning-400);
+}
+
+.dark [data-slot='alert'][data-variant='info'] {
+  --alert-info-bg: var(--info-950);
+  --alert-info-fg: var(--info-400);
+  --alert-info-description-fg: var(--info-400);
 }

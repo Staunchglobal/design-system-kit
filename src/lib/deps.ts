@@ -78,13 +78,14 @@ export const VITE_DEV_DEPENDENCIES: Record<string, string> = {
 }
 
 /**
- * Next.js gets Geist Sans/Mono for free via next/font/google in layout.tsx — Vite has no
- * built-in equivalent, so these self-host the same family via @fontsource instead of falling
+ * Next.js loads Manrope (sans) + Geist Mono via next/font/google in layout.tsx — Vite has no
+ * built-in equivalent, so these self-host the same families via @fontsource instead of falling
  * back to bare system fonts (or requiring a Google Fonts CDN request). Always installed for
- * Vite, mirroring how Next always gets Geist regardless of which components you pick.
+ * Vite, mirroring how Next always gets the kit default fonts regardless of which components
+ * you pick.
  */
 export const VITE_FONT_DEPENDENCIES: Record<string, string> = {
-  '@fontsource/geist-sans': '^5.2.5',
+  '@fontsource/manrope': '^5.2.5',
   '@fontsource/geist-mono': '^5.2.8',
 }
 

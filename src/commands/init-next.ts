@@ -20,6 +20,7 @@ import { patchTsconfig } from '../lib/patch-tsconfig.js'
 import { logTypeScriptCompat } from '../lib/check-typescript-compat.js'
 import { addPackageJsonScript } from '../lib/patch-package-json.js'
 import { patchLayout } from '../lib/patch-layout.js'
+import { patchLayoutFonts } from '../lib/patch-layout-fonts.js'
 import { confirm } from '../lib/confirm.js'
 import { templateSharedDir, templateNextDir, templateRootDir } from '../lib/paths.js'
 import { pickComponents, priorSelectionFor } from '../lib/prompt-components.js'
@@ -362,6 +363,16 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
   const includeTooltip = closure.has('tooltip')
   const includeToaster = closure.has('sonner')
   const layoutPath = path.join(destRoot, 'app/layout.tsx')
+
+  const fontResult = patchLayoutFonts(layoutPath)
+  if (fontResult.action === 'patched') {
+    log.success(`Switched default font to Manrope in ${rel('app/layout.tsx')}`)
+  } else if (fontResult.action === 'already-present') {
+    log.skip(`${rel('app/layout.tsx')} already uses Manrope`)
+  } else if (fontResult.action === 'needs-manual') {
+    log.warn(`Couldn't auto-wire Manrope in ${rel('app/layout.tsx')} (${fontResult.reason})`)
+  }
+
   const layoutResult = patchLayout(layoutPath, { includeTooltip, includeToaster })
   if (layoutResult.action === 'patched') {
     const bits = [includeTooltip && 'TooltipProvider', includeToaster && 'Toaster'].filter(Boolean)

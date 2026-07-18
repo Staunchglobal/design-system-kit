@@ -27,4 +27,3 @@ button[data-slot='segmented-control']:focus-visible {
   border-color: var(--segmented-control-select-focus-border-color);
   box-shadow: 0 0 0 var(--input-focus-ring-width) var(--segmented-control-select-focus-ring-color);
 }
-</content>

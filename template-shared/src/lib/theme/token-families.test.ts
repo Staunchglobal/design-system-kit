@@ -18,7 +18,20 @@ describe("token-families.json", () => {
       "accent",
       "muted",
       "destructive",
+      "success",
+      "warning",
+      "info",
     ]);
+    expect(tokenFamilies.colorSemantic).toEqual(
+      expect.arrayContaining([
+        "success",
+        "success-foreground",
+        "warning",
+        "warning-foreground",
+        "info",
+        "info-foreground",
+      ])
+    );
     expect(tokenFamilies.radiusSteps).toEqual([
       "sm",
       "md",
@@ -28,7 +41,7 @@ describe("token-families.json", () => {
       "3xl",
       "4xl",
     ]);
-    expect(tokenFamilies.shadowSteps).toEqual(["sm", "md", "lg", "xl"]);
+    expect(tokenFamilies.shadowSteps).toEqual(["xs", "sm", "md", "lg", "xl"]);
   });
 
   it("reservedWords covers the Tailwind-builtin collision risks per family", () => {

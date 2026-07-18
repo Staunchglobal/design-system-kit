@@ -3,7 +3,7 @@
    ========================================================================== */
 
 [data-slot='sheet-overlay'] {
-  --sheet-overlay-bg: var(--overlay-bg);
+  --sheet-overlay-bg: color-mix(in srgb, var(--overlay-bg) 50%, transparent);
   --sheet-overlay-blur: 4px;
   --sheet-overlay-duration: 100ms;
   background-color: var(--sheet-overlay-bg);
@@ -15,7 +15,7 @@
   --sheet-content-fg: var(--popover-foreground);
   --sheet-content-gap: 1rem;
   --sheet-content-font-size: var(--typography-small-font-size);
-  --sheet-content-shadow: var(--shadow-lg);
+  --sheet-content-shadow: var(--shadow-md);
   --sheet-content-border-color: var(--border);
   --sheet-content-border-width: 1px;
   --sheet-content-duration: 200ms;
@@ -59,8 +59,10 @@
 [data-slot='sheet-header'] {
   --sheet-header-gap: 0.125rem;
   --sheet-header-padding: 1rem;
+  --sheet-header-bg: var(--neutral-50);
   gap: var(--sheet-header-gap);
   padding: var(--sheet-header-padding);
+  background-color: var(--sheet-header-bg);
 }
 
 [data-slot='sheet-footer'] {

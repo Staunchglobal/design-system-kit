@@ -40,4 +40,3 @@
 /* The error-state border tint uses the Tailwind `border-destructive/50`
    utility directly (bridged to --destructive via @theme inline), so it
    already reflects theme edits with no extra rule needed here. */
-</content>

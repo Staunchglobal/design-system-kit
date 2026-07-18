@@ -1,19 +1,15 @@
-/* Impersonation Banner */
-/* No semantic "warning" token exists in this design system (only --destructive has a full
-   scale) — match the .tsx's own amber-50/900/300 Tailwind classes directly via Tailwind v4's
-   generated --color-amber-* variables, same convention as password-strength-meter.css's
-   fair/strong bar colors, rather than inventing an undefined --warning reference. */
+/* Impersonation Banner — warning semantic tokens (paramount cascade). */
 [data-slot='impersonation-banner'] {
-  --impersonation-banner-bg: var(--color-amber-50, #fffbeb);
-  --impersonation-banner-fg: var(--color-amber-900, #78350f);
-  --impersonation-banner-border: var(--color-amber-300, #fcd34d);
+  --impersonation-banner-bg: var(--warning-50);
+  --impersonation-banner-fg: var(--warning-900);
+  --impersonation-banner-border: var(--warning-700);
   background: var(--impersonation-banner-bg);
   color: var(--impersonation-banner-fg);
   border-color: var(--impersonation-banner-border);
 }
 
 .dark [data-slot='impersonation-banner'] {
-  --impersonation-banner-bg: var(--color-amber-950, #451a03);
-  --impersonation-banner-fg: var(--color-amber-200, #fde68a);
-  --impersonation-banner-border: var(--color-amber-700, #b45309);
+  --impersonation-banner-bg: var(--warning-950);
+  --impersonation-banner-fg: var(--warning-200);
+  --impersonation-banner-border: var(--warning-700);
 }

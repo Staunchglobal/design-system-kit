@@ -7,7 +7,7 @@
 [data-slot='stat-card'] {
   --stat-card-bg: var(--card);
   --stat-card-fg: var(--card-foreground);
-  --stat-card-radius: var(--radius-xl);
+  --stat-card-radius: var(--radius-2xl);
   --stat-card-ring-color: var(--neutral-950);
   --stat-card-ring-width: 1px;
   background-color: var(--stat-card-bg);
@@ -17,8 +17,8 @@
 }
 
 [data-slot='stat-card-icon'] {
-  --stat-card-icon-bg: var(--muted);
-  --stat-card-icon-fg: var(--foreground);
+  --stat-card-icon-bg: var(--primary-500);
+  --stat-card-icon-fg: var(--neutral-0);
   --stat-card-icon-radius: var(--radius-lg);
   background-color: var(--stat-card-icon-bg);
   color: var(--stat-card-icon-fg);
@@ -33,8 +33,10 @@
 }
 
 [data-slot='stat-card-value'] {
+  --stat-card-value-fg: var(--foreground);
   --stat-card-value-font-family: var(--font-heading);
   --stat-card-value-font-size: var(--typography-h4-font-size);
+  color: var(--stat-card-value-fg);
   font-family: var(--stat-card-value-font-family);
   font-size: var(--stat-card-value-font-size);
 }
@@ -42,4 +44,3 @@
 .dark [data-slot='stat-card'] {
   --stat-card-ring-color: var(--neutral-50);
 }
-</content>

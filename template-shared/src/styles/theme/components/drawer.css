@@ -3,7 +3,7 @@
    ========================================================================== */
 
 [data-slot='drawer-overlay'] {
-  --drawer-overlay-bg: var(--overlay-bg);
+  --drawer-overlay-bg: color-mix(in srgb, var(--overlay-bg) 50%, transparent);
   --drawer-overlay-blur: 4px;
   background-color: var(--drawer-overlay-bg);
 }
