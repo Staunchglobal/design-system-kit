@@ -21,8 +21,19 @@ const sectionsDir = path.join(root, 'template-next/src/app/design-system/_sectio
 
 const NPM_PACKAGES = [
   '@base-ui/react',
+  '@dnd-kit/core',
+  '@dnd-kit/sortable',
+  '@dnd-kit/utilities',
+  '@react-oauth/google',
+  '@react-pdf/renderer',
   '@shadcn/react',
+  '@stripe/react-stripe-js',
+  '@stripe/stripe-js',
   '@tanstack/react-table',
+  '@tiptap/extension-link',
+  '@tiptap/extension-underline',
+  '@tiptap/react',
+  '@tiptap/starter-kit',
   'class-variance-authority',
   'clsx',
   'cmdk',
@@ -32,6 +43,7 @@ const NPM_PACKAGES = [
   'lucide-react',
   'radix-ui',
   'react-day-picker',
+  'react-image-crop',
   'react-resizable-panels',
   'recharts',
   'shadcn',
@@ -94,6 +106,7 @@ const EXTRA_FILES = {
     'components/upload/use-file-drop.ts',
     'components/upload/file-preview-card.tsx',
     'components/upload/dropzone.tsx',
+    'components/upload/image-crop-dialog.tsx',
   ],
   'payment-method-list': [
     'components/payment-methods/card-brand-icon.tsx',
@@ -109,6 +122,25 @@ const EXTRA_FILES = {
     'components/crud/use-debounced-value.ts',
     'components/address-autocomplete/google-places-client.ts',
     'components/address-autocomplete/address-autocomplete.tsx',
+  ],
+  'notification-center': [
+    'components/notification-center/notification-list.tsx',
+    'components/notification-center/notification-center.tsx',
+  ],
+  'sortable-list': [
+    'components/sortable/sortable-item.tsx',
+    'components/sortable/sortable-list.tsx',
+  ],
+  'stripe-payment-method': [
+    'components/stripe/stripe-elements-provider.tsx',
+    'components/stripe/payment-method-form.tsx',
+    'components/stripe/payment-method-picker.tsx',
+  ],
+  'pdf-document-kit': [
+    'components/pdf/pdf-document-shell.tsx',
+    'components/pdf/pdf-tag.tsx',
+    'components/pdf/pdf-info-field.tsx',
+    'components/pdf/index.ts',
   ],
 }
 

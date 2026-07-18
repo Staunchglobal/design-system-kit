@@ -139,6 +139,14 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "badge.css",
     "extraFiles": []
   },
+  "brand-color-picker": {
+    "uiDeps": [],
+    "npmDeps": [
+      "lucide-react"
+    ],
+    "cssFile": "brand-color-picker.css",
+    "extraFiles": []
+  },
   "breadcrumb": {
     "uiDeps": [],
     "npmDeps": [
@@ -285,6 +293,16 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "copy-input.css",
     "extraFiles": []
   },
+  "count-badge": {
+    "uiDeps": [
+      "button"
+    ],
+    "npmDeps": [
+      "lucide-react"
+    ],
+    "cssFile": "count-badge.css",
+    "extraFiles": []
+  },
   "crud-table": {
     "uiDeps": [
       "button",
@@ -379,16 +397,19 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "uiDeps": [
       "button",
       "item",
-      "card"
+      "card",
+      "dialog"
     ],
     "npmDeps": [
-      "lucide-react"
+      "lucide-react",
+      "react-image-crop"
     ],
     "cssFile": "dropzone.css",
     "extraFiles": [
       "components/upload/use-file-drop.ts",
       "components/upload/file-preview-card.tsx",
-      "components/upload/dropzone.tsx"
+      "components/upload/dropzone.tsx",
+      "components/upload/image-crop-dialog.tsx"
     ]
   },
   "empty": {
@@ -411,6 +432,18 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "lucide-react"
     ],
     "cssFile": "error-state.css",
+    "extraFiles": []
+  },
+  "field-row": {
+    "uiDeps": [
+      "card",
+      "separator",
+      "switch"
+    ],
+    "npmDeps": [
+      "lucide-react"
+    ],
+    "cssFile": "field-row.css",
     "extraFiles": []
   },
   "field": {
@@ -437,6 +470,28 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "filter-chips.css",
     "extraFiles": []
   },
+  "filter-popover": {
+    "uiDeps": [
+      "badge",
+      "button",
+      "command",
+      "popover",
+      "filter-chips"
+    ],
+    "npmDeps": [
+      "lucide-react"
+    ],
+    "cssFile": "filter-popover.css",
+    "extraFiles": []
+  },
+  "google-sign-in-button": {
+    "uiDeps": [],
+    "npmDeps": [
+      "@react-oauth/google"
+    ],
+    "cssFile": "google-sign-in-button.css",
+    "extraFiles": []
+  },
   "hover-card": {
     "uiDeps": [
       "avatar",
@@ -447,6 +502,16 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "lucide-react"
     ],
     "cssFile": "hover-card.css",
+    "extraFiles": []
+  },
+  "impersonation-banner": {
+    "uiDeps": [
+      "button"
+    ],
+    "npmDeps": [
+      "lucide-react"
+    ],
+    "cssFile": "impersonation-banner.css",
     "extraFiles": []
   },
   "info-row": {
@@ -528,6 +593,16 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "marker.css",
     "extraFiles": []
   },
+  "media-gallery": {
+    "uiDeps": [
+      "button"
+    ],
+    "npmDeps": [
+      "lucide-react"
+    ],
+    "cssFile": "media-gallery.css",
+    "extraFiles": []
+  },
   "menubar": {
     "uiDeps": [],
     "npmDeps": [
@@ -568,6 +643,25 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     ],
     "cssFile": "navigation-menu.css",
     "extraFiles": []
+  },
+  "notification-center": {
+    "uiDeps": [
+      "notification-row",
+      "button",
+      "popover",
+      "scroll-area",
+      "separator",
+      "count-badge"
+    ],
+    "npmDeps": [
+      "date-fns",
+      "lucide-react"
+    ],
+    "cssFile": "notification-center.css",
+    "extraFiles": [
+      "components/notification-center/notification-list.tsx",
+      "components/notification-center/notification-center.tsx"
+    ]
   },
   "notification-row": {
     "uiDeps": [
@@ -617,6 +711,21 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "components/payment-methods/payment-method-list.tsx"
     ]
   },
+  "pdf-document-kit": {
+    "uiDeps": [
+      "button"
+    ],
+    "npmDeps": [
+      "@react-pdf/renderer"
+    ],
+    "cssFile": "pdf-document-kit.css",
+    "extraFiles": [
+      "components/pdf/pdf-document-shell.tsx",
+      "components/pdf/pdf-tag.tsx",
+      "components/pdf/pdf-info-field.tsx",
+      "components/pdf/index.ts"
+    ]
+  },
   "phone-input": {
     "uiDeps": [
       "input"
@@ -655,12 +764,34 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "radio-group.css",
     "extraFiles": []
   },
+  "rating": {
+    "uiDeps": [],
+    "npmDeps": [],
+    "cssFile": "rating.css",
+    "extraFiles": []
+  },
   "resizable": {
     "uiDeps": [],
     "npmDeps": [
       "react-resizable-panels"
     ],
     "cssFile": "resizable.css",
+    "extraFiles": []
+  },
+  "rich-text-editor": {
+    "uiDeps": [
+      "button",
+      "separator",
+      "toggle"
+    ],
+    "npmDeps": [
+      "@tiptap/extension-link",
+      "@tiptap/extension-underline",
+      "@tiptap/react",
+      "@tiptap/starter-kit",
+      "lucide-react"
+    ],
+    "cssFile": "rich-text-editor.css",
     "extraFiles": []
   },
   "scroll-area": {
@@ -681,6 +812,14 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "extraFiles": [
       "hooks/use-mobile.ts"
     ]
+  },
+  "segmented-radio-group": {
+    "uiDeps": [
+      "radio-group"
+    ],
+    "npmDeps": [],
+    "cssFile": "segmented-radio-group.css",
+    "extraFiles": []
   },
   "select": {
     "uiDeps": [],
@@ -753,6 +892,20 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "sonner-toast.css",
     "extraFiles": []
   },
+  "sortable-list": {
+    "uiDeps": [],
+    "npmDeps": [
+      "@dnd-kit/sortable",
+      "@dnd-kit/utilities",
+      "lucide-react",
+      "@dnd-kit/core"
+    ],
+    "cssFile": "sortable-list.css",
+    "extraFiles": [
+      "components/sortable/sortable-item.tsx",
+      "components/sortable/sortable-list.tsx"
+    ]
+  },
   "spinner": {
     "uiDeps": [],
     "npmDeps": [],
@@ -788,6 +941,26 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "stepper.css",
     "extraFiles": []
   },
+  "stripe-payment-method": {
+    "uiDeps": [
+      "alert",
+      "button",
+      "spinner",
+      "dialog",
+      "segmented-control",
+      "payment-method-list"
+    ],
+    "npmDeps": [
+      "@stripe/react-stripe-js",
+      "@stripe/stripe-js"
+    ],
+    "cssFile": "stripe-payment-method.css",
+    "extraFiles": [
+      "components/stripe/stripe-elements-provider.tsx",
+      "components/stripe/payment-method-form.tsx",
+      "components/stripe/payment-method-picker.tsx"
+    ]
+  },
   "switch": {
     "uiDeps": [
       "label"
@@ -813,6 +986,17 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui"
     ],
     "cssFile": "tabs.css",
+    "extraFiles": []
+  },
+  "tag-input": {
+    "uiDeps": [
+      "badge",
+      "button"
+    ],
+    "npmDeps": [
+      "lucide-react"
+    ],
+    "cssFile": "tag-input.css",
     "extraFiles": []
   },
   "textarea": {
@@ -1103,6 +1287,54 @@ export const GROUPS: NavGroup[] = [
         "label": "Payment Method List",
         "demoFile": "payment-method-list.tsx",
         "extraDemoFiles": []
+      },
+      {
+        "slug": "filter-popover",
+        "label": "Filter Popover",
+        "demoFile": "filter-popover.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "tag-input",
+        "label": "Tag Input",
+        "demoFile": "tag-input.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "rating",
+        "label": "Rating",
+        "demoFile": "rating.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "segmented-radio-group",
+        "label": "Segmented Radio Group",
+        "demoFile": "segmented-radio-group.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "brand-color-picker",
+        "label": "Brand Color Picker",
+        "demoFile": "brand-color-picker.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "stripe-payment-method",
+        "label": "Stripe Payment Method",
+        "demoFile": "stripe-payment-method.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "google-sign-in-button",
+        "label": "Google Sign-In Button",
+        "demoFile": "google-sign-in-button.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "rich-text-editor",
+        "label": "Rich Text Editor",
+        "demoFile": "rich-text-editor.tsx",
+        "extraDemoFiles": []
       }
     ]
   },
@@ -1174,6 +1406,12 @@ export const GROUPS: NavGroup[] = [
         "slug": "command",
         "label": "Command",
         "demoFile": "command.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "notification-center",
+        "label": "Notification Center",
+        "demoFile": "notification-center.tsx",
         "extraDemoFiles": []
       }
     ]
@@ -1273,6 +1511,24 @@ export const GROUPS: NavGroup[] = [
         "extraDemoFiles": []
       },
       {
+        "slug": "field-row",
+        "label": "Field Row",
+        "demoFile": "field-row.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "count-badge",
+        "label": "Count Badge",
+        "demoFile": "count-badge.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "sortable-list",
+        "label": "Sortable List",
+        "demoFile": "sortable-list.tsx",
+        "extraDemoFiles": []
+      },
+      {
         "slug": "crud-table",
         "label": "CRUD Screen",
         "demoFile": "crud-table.tsx",
@@ -1325,6 +1581,18 @@ export const GROUPS: NavGroup[] = [
         "label": "Item",
         "demoFile": "item.tsx",
         "extraDemoFiles": []
+      },
+      {
+        "slug": "media-gallery",
+        "label": "Media Gallery",
+        "demoFile": "media-gallery.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "pdf-document-kit",
+        "label": "PDF Document Kit",
+        "demoFile": "pdf-document-kit.tsx",
+        "extraDemoFiles": []
       }
     ]
   },
@@ -1360,6 +1628,12 @@ export const GROUPS: NavGroup[] = [
         "slug": "sonner",
         "label": "Sonner (Toast)",
         "demoFile": "sonner.tsx",
+        "extraDemoFiles": []
+      },
+      {
+        "slug": "impersonation-banner",
+        "label": "Impersonation Banner",
+        "demoFile": "impersonation-banner.tsx",
         "extraDemoFiles": []
       }
     ]

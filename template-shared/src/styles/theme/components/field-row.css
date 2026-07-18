@@ -1,0 +1,24 @@
+/* Field Row */
+[data-slot='field-row-group'] {
+  --field-row-group-gap: 0.5rem;
+  gap: var(--field-row-group-gap);
+}
+
+[data-slot='field-row'] {
+  --field-row-padding-x: 1rem;
+  --field-row-padding-y: 0.75rem;
+  padding: var(--field-row-padding-y) var(--field-row-padding-x);
+}
+
+[data-slot='field-row-label'] {
+  --field-row-label-fg: var(--muted-foreground);
+  color: var(--field-row-label-fg);
+}
+
+/* The end-slot wrapper is text-muted-foreground in the .tsx (so the chevron and any plain
+   trailing icon inherit it); restate the value itself as --foreground so it doesn't flatten
+   into the same muted tone as the label, matching info-row.css's label/value contrast. */
+[data-slot='field-row-value'] {
+  --field-row-value-fg: var(--foreground);
+  color: var(--field-row-value-fg);
+}

@@ -1,0 +1,19 @@
+/* Rating */
+[data-slot='rating'] {
+  --rating-gap: 0.25rem;
+  gap: var(--rating-gap);
+}
+
+[data-slot='rating-segment'] {
+  --rating-segment-bg: var(--muted);
+  --rating-segment-fg: var(--muted-foreground);
+  --rating-segment-radius: var(--radius-sm);
+  background: var(--rating-segment-bg);
+  color: var(--rating-segment-fg);
+  border-radius: var(--rating-segment-radius);
+}
+
+[data-slot='rating-segment'][data-filled] {
+  --rating-segment-bg: var(--primary);
+  --rating-segment-fg: var(--primary-foreground);
+}

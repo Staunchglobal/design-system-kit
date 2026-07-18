@@ -32,6 +32,11 @@
   padding-inline: var(--file-preview-card-padding-x);
   padding-block: var(--file-preview-card-padding-y);
 }
+
+[data-ui='image-crop-dialog'] {
+  --image-crop-dialog-max-width: 32rem;
+  max-width: min(var(--image-crop-dialog-max-width), calc(100vw - 2rem));
+}
 /* The error-state border tint uses the Tailwind `border-destructive/50`
    utility directly (bridged to --destructive via @theme inline), so it
    already reflects theme edits with no extra rule needed here. */

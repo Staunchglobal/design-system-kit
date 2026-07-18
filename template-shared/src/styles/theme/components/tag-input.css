@@ -1,0 +1,16 @@
+/* Tag Input */
+[data-slot='tag-input'] {
+  --tag-input-bg: transparent;
+  --tag-input-border: var(--input);
+  --tag-input-radius: var(--radius-lg);
+  --tag-input-min-height: 2.5rem;
+  min-height: var(--tag-input-min-height);
+  border-color: var(--tag-input-border);
+  border-radius: var(--tag-input-radius);
+  background: var(--tag-input-bg);
+}
+
+[data-slot='tag-input']:focus-within {
+  --tag-input-focus: var(--ring);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--tag-input-focus) 50%, transparent);
+}

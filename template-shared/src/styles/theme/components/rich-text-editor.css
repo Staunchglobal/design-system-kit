@@ -1,0 +1,18 @@
+/* Rich Text Editor */
+[data-slot='rich-text-editor'] {
+  --rich-text-editor-bg: var(--background);
+  --rich-text-editor-border: var(--input);
+  --rich-text-editor-radius: var(--radius-lg);
+  background: var(--rich-text-editor-bg);
+  border-color: var(--rich-text-editor-border);
+  border-radius: var(--rich-text-editor-radius);
+}
+
+[data-slot='rich-text-editor']:focus-within {
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 50%, transparent);
+}
+
+[data-slot='rich-text-editor-content'] {
+  --rich-text-editor-min-height: 10rem;
+  min-height: var(--rich-text-editor-min-height);
+}

@@ -1,0 +1,10 @@
+/* Stripe Payment Method */
+[data-slot='stripe-payment-form'] {
+  --stripe-payment-form-gap: 1rem;
+  gap: var(--stripe-payment-form-gap);
+}
+
+[data-ui='stripe-payment-error'] {
+  --stripe-payment-error-fg: var(--destructive);
+  color: var(--stripe-payment-error-fg);
+}

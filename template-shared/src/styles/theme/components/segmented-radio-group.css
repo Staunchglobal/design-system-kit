@@ -1,0 +1,14 @@
+/* Segmented Radio Group */
+[data-slot='segmented-radio-item'] {
+  --segmented-radio-border: var(--border);
+  --segmented-radio-bg: var(--card);
+  --segmented-radio-radius: var(--radius-lg);
+  border-color: var(--segmented-radio-border);
+  background: var(--segmented-radio-bg);
+  border-radius: var(--segmented-radio-radius);
+}
+
+[data-slot='segmented-radio-item'][data-selected] {
+  --segmented-radio-border: var(--primary);
+  --segmented-radio-bg: color-mix(in oklab, var(--primary) 7%, var(--card));
+}

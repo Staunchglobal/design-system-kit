@@ -1,0 +1,15 @@
+/* Media Gallery */
+[data-slot='media-gallery'] {
+  --media-gallery-bg: var(--muted);
+  --media-gallery-radius: var(--radius-lg);
+}
+
+[data-slot='media-gallery-viewer'] {
+  background: var(--media-gallery-bg);
+  border-radius: var(--media-gallery-radius);
+}
+
+[data-slot='media-gallery-thumbnail'][aria-selected='true'] {
+  --media-gallery-active-ring: var(--ring);
+  box-shadow: 0 0 0 2px var(--media-gallery-active-ring);
+}

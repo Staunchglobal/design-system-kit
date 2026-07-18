@@ -1,0 +1,19 @@
+/* Sortable List */
+[data-slot='sortable-list'] {
+  --sortable-list-gap: 0.5rem;
+  gap: var(--sortable-list-gap);
+}
+
+[data-slot='sortable-item'] {
+  --sortable-item-bg: var(--card);
+  --sortable-item-border: var(--border);
+  --sortable-item-radius: var(--radius-lg);
+  background: var(--sortable-item-bg);
+  border-color: var(--sortable-item-border);
+  border-radius: var(--sortable-item-radius);
+}
+
+[data-slot='sortable-item'][data-dragging] {
+  --sortable-item-shadow: var(--shadow-lg);
+  box-shadow: var(--sortable-item-shadow);
+}

@@ -1,0 +1,12 @@
+/* Filter Popover */
+[data-slot='filter-popover'] [data-slot='button'] {
+  --filter-popover-trigger-radius: var(--radius-lg);
+  --filter-popover-trigger-border: var(--border);
+  border-radius: var(--filter-popover-trigger-radius);
+  border-color: var(--filter-popover-trigger-border);
+}
+
+[data-ui='filter-popover-content'] {
+  --filter-popover-width: 18rem;
+  width: var(--filter-popover-width);
+}
