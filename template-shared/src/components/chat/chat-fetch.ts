@@ -1,7 +1,8 @@
-import { AUTH_MOCK_ENDPOINT, authMockFetch } from '@/components/auth/auth-mock-client'
+import { CHAT_MOCK_ENDPOINT } from '@/components/chat/chat-constants'
+import type { ChatFetch } from '@/components/chat/types'
 import { getAuthSession } from '@/components/auth/auth-session'
 import { graphqlFetch } from '@/components/auth/graphql-client'
-import type { AuthFetch } from '@/components/auth/types'
+import { chatMockFetch } from '@/components/chat/chat-mock-client'
 
 type FetchImpl = <T>(
   endpoint: string,
@@ -10,41 +11,35 @@ type FetchImpl = <T>(
   headers?: HeadersInit
 ) => Promise<T>
 
-export type CreateAuthFetchOptions = {
-  /** Real GraphQL URL, or leave default for in-memory mock. */
+export type CreateChatFetchOptions = {
   endpoint?: string
-  /** Swap to graphqlFetch (or your Apollo wrapper) for production. */
   fetchImpl?: FetchImpl
-  /** Attach Bearer from local session (needed for updatePassword). */
   withAuth?: boolean
 }
 
 /**
- * Thin factory used by auth pages.
+ * Thin factory used by chat pages.
  *
- * Swap for a real API:
  * ```ts
- * createAuthFetch({
+ * createChatFetch({
  *   endpoint: process.env.NEXT_PUBLIC_GRAPHQL_URL!,
  *   fetchImpl: graphqlFetch,
  *   withAuth: true,
  * })
  * ```
- *
- * When `NEXT_PUBLIC_GRAPHQL_URL` is set and no options override, uses real `graphqlFetch`.
  */
-export function createAuthFetch(options: CreateAuthFetchOptions = {}): AuthFetch {
+export function createChatFetch(options: CreateChatFetchOptions = {}): ChatFetch {
   const envEndpoint =
     typeof process !== 'undefined'
       ? process.env.NEXT_PUBLIC_GRAPHQL_URL
       : undefined
-  const endpoint = options.endpoint ?? envEndpoint ?? AUTH_MOCK_ENDPOINT
-  const useMock = endpoint === AUTH_MOCK_ENDPOINT || endpoint.startsWith('mock://')
+  const endpoint = options.endpoint ?? envEndpoint ?? CHAT_MOCK_ENDPOINT
+  const useMock = endpoint === CHAT_MOCK_ENDPOINT || endpoint.startsWith('mock://')
   const fetchImpl =
-    options.fetchImpl ?? ((useMock ? authMockFetch : graphqlFetch) as FetchImpl)
+    options.fetchImpl ?? ((useMock ? chatMockFetch : graphqlFetch) as FetchImpl)
   const withAuth = options.withAuth ?? true
 
-  return async function authFetch<T>(
+  return async function chatFetch<T>(
     query: string,
     variables: Record<string, unknown> = {}
   ): Promise<T> {
@@ -53,7 +48,6 @@ export function createAuthFetch(options: CreateAuthFetchOptions = {}): AuthFetch
       const session = getAuthSession()
       if (session?.token) {
         headers.Authorization = `Bearer ${session.token}`
-        // Mock also reads _token when HeadersInit shape varies
         variables = { ...variables, _token: session.token }
       }
     }
@@ -61,4 +55,4 @@ export function createAuthFetch(options: CreateAuthFetchOptions = {}): AuthFetch
   }
 }
 
-export { AUTH_MOCK_ENDPOINT, graphqlFetch }
+export { CHAT_MOCK_ENDPOINT, graphqlFetch }

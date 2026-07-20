@@ -14,10 +14,7 @@ import * as React from 'react'
 export function useMounted(): boolean {
   const [mounted, setMounted] = React.useState(false)
   React.useEffect(() => {
-    // Intentional one-shot flip with no external state to derive it from during render — the
-    // canonical hasMounted pattern the lint rule's heuristics don't have a render-time equivalent
-    // for.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    // Intentional one-shot flip after hydration (canonical hasMounted pattern).
     setMounted(true)
   }, [])
   return mounted

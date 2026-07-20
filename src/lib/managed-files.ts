@@ -87,6 +87,18 @@ export const FRAMEWORK_EXTRA_FILES: Record<
       'auth/AuthHomePage.tsx',
     ],
   },
+  chat: {
+    next: [
+      'app/chat/layout.tsx',
+      'app/chat/chat-app.tsx',
+      'app/chat/chat-href.ts',
+      'app/chat/page.tsx',
+      'app/chat/[id]/page.tsx',
+      'app/chat/archived/page.tsx',
+      'app/chat/archived/[id]/page.tsx',
+    ],
+    vite: ['chat/ChatPage.tsx'],
+  },
   'address-autocomplete': {
     next: [
       // Proxies Google's Places REST endpoints (browser calls are CORS-blocked

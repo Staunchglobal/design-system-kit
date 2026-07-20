@@ -229,6 +229,62 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "chart.css",
     "extraFiles": []
   },
+  "chat": {
+    "uiDeps": [
+      "sonner",
+      "message",
+      "bubble",
+      "avatar",
+      "badge",
+      "button",
+      "input",
+      "scroll-area",
+      "spinner",
+      "tabs",
+      "empty",
+      "attachment",
+      "message-scroller",
+      "textarea",
+      "dialog",
+      "alert",
+      "error-state",
+      "skeleton"
+    ],
+    "npmDeps": [
+      "graphql-ws",
+      "lucide-react",
+      "sonner"
+    ],
+    "cssFile": null,
+    "extraFiles": [
+      "components/chat/types.ts",
+      "components/chat/chat-constants.ts",
+      "components/chat/chat-operations.ts",
+      "components/chat/chat-mock-client.ts",
+      "components/chat/chat-fetch.ts",
+      "components/chat/chat-upload.ts",
+      "components/chat/chat-subscribe.ts",
+      "components/chat/chat-shell.tsx",
+      "components/chat/contacts-sidebar.tsx",
+      "components/chat/chat-header.tsx",
+      "components/chat/chat-empty-selection.tsx",
+      "components/chat/image-lightbox.tsx",
+      "components/chat/chat-message-row.tsx",
+      "components/chat/chat-messages-pane.tsx",
+      "components/chat/chat-composer.tsx",
+      "components/chat/add-chat-dialog.tsx",
+      "components/chat/archive-chat-dialog.tsx",
+      "components/chat/chat-status.tsx",
+      "components/chat/chat-utils.ts",
+      "components/chat/chat-mappers.ts",
+      "components/chat/use-chat-inbox.ts",
+      "components/chat/chat-inbox.tsx",
+      "components/chat/index.ts",
+      "components/auth/auth-session.ts",
+      "components/auth/graphql-client.ts",
+      "components/auth/notify.ts"
+    ]
+  },
   "checkbox": {
     "uiDeps": [
       "label"

@@ -103,6 +103,28 @@ Next.js App Router routes work immediately. Vite: mount the pages from `src/auth
 your router (the CLI prints example `<Route>` lines). `auth` is not in the interactive picker’s
 nav groups — pass `--components auth` (or `--all`) to install it.
 
+Point auth at the Nest demo API by setting `NEXT_PUBLIC_GRAPHQL_URL=http://localhost:4000/graphql`
+(see sibling repo `design-kit-api`).
+
+### Chat inbox (opt-in)
+
+Install the `chat` slug for a full realtime inbox: conversation list (Chats / Archived), search,
+new chat, mark-as-read, archive, text + image attachments, and GraphQL subscriptions. Product
+route: `/chat` and `/chat/[id]` for active chats, `/chat/archived` and `/chat/archived/[id]` for archived (requires an auth session). Defaults to an in-memory mock; wire a real API via:
+
+```bash
+npx staunch-shadcn-design-system-kit init --components chat,auth
+```
+
+```env
+NEXT_PUBLIC_GRAPHQL_URL=http://localhost:4000/graphql
+NEXT_PUBLIC_GRAPHQL_WS_URL=ws://localhost:4000/graphql
+NEXT_PUBLIC_UPLOAD_URL=http://localhost:4000/upload
+```
+
+Vite uses `VITE_GRAPHQL_URL`, `VITE_GRAPHQL_WS_URL`, `VITE_UPLOAD_URL`. Run `design-kit-api`
+(Postgres + Nest) for the full stack.
+
 ### CRUD system (opt-in)
 
 Install `crud-table` for a complete typed CRUD screen: data table, sorting/filtering, debounced

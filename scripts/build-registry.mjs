@@ -34,7 +34,7 @@ const NPM_PACKAGES = [
 // Files not named after their own component (component slug -> css filename).
 const CSS_FILE_OVERRIDES = { sonner: 'sonner-toast.css' }
 // Components with no dedicated theme CSS file (pure logic/utility, nothing to theme).
-const NO_CSS = new Set(['direction', 'crud-table', 'auth'])
+const NO_CSS = new Set(['direction', 'crud-table', 'auth', 'chat'])
 // Extra non-ui files a component's runtime needs (paths relative to template-shared/src/).
 const EXTRA_FILES = {
   sidebar: ['hooks/use-mobile.ts'],
@@ -75,6 +75,34 @@ const EXTRA_FILES = {
     'components/auth/set-password-form.tsx',
     'components/auth/change-password-form.tsx',
     'components/auth/index.ts',
+  ],
+  chat: [
+    'components/chat/types.ts',
+    'components/chat/chat-constants.ts',
+    'components/chat/chat-operations.ts',
+    'components/chat/chat-mock-client.ts',
+    'components/chat/chat-fetch.ts',
+    'components/chat/chat-upload.ts',
+    'components/chat/chat-subscribe.ts',
+    'components/chat/chat-shell.tsx',
+    'components/chat/contacts-sidebar.tsx',
+    'components/chat/chat-header.tsx',
+    'components/chat/chat-empty-selection.tsx',
+    'components/chat/image-lightbox.tsx',
+    'components/chat/chat-message-row.tsx',
+    'components/chat/chat-messages-pane.tsx',
+    'components/chat/chat-composer.tsx',
+    'components/chat/add-chat-dialog.tsx',
+    'components/chat/archive-chat-dialog.tsx',
+    'components/chat/chat-status.tsx',
+    'components/chat/chat-utils.ts',
+    'components/chat/chat-mappers.ts',
+    'components/chat/use-chat-inbox.ts',
+    'components/chat/chat-inbox.tsx',
+    'components/chat/index.ts',
+    'components/auth/auth-session.ts',
+    'components/auth/graphql-client.ts',
+    'components/auth/notify.ts',
   ],
   'password-strength-meter': [
     'components/auth/password-policy.ts',

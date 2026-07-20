@@ -147,12 +147,36 @@ describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
     expect(files.has('components/auth/auth-fetch.ts')).toBe(true)
   })
 
+  it('extraFilesFor surfaces chat companions', () => {
+    const files = extraFilesFor(resolveUiClosure(['chat']))
+    expect(files.has('components/chat/chat-inbox.tsx')).toBe(true)
+    expect(files.has('components/chat/chat-mock-client.ts')).toBe(true)
+    expect(files.has('components/chat/chat-operations.ts')).toBe(true)
+    expect(files.has('components/chat/chat-subscribe.ts')).toBe(true)
+  })
+
   it('auth uiDeps include card/field/input-otp/sonner from EXTRA_FILES scan', () => {
     expect(COMPONENTS.auth.uiDeps).toEqual(
       expect.arrayContaining(['card', 'field', 'input', 'input-otp', 'button', 'checkbox', 'alert', 'sonner'])
     )
     expect(COMPONENTS.auth.cssFile).toBeNull()
     expect(COMPONENTS.auth.npmDeps).toEqual(expect.arrayContaining(['sonner', 'lucide-react']))
+  })
+
+  it('chat uiDeps include message/bubble/sonner from EXTRA_FILES scan', () => {
+    expect(COMPONENTS.chat.cssFile).toBeNull()
+    expect(COMPONENTS.chat.uiDeps).toEqual(
+      expect.arrayContaining([
+        'sonner',
+        'message',
+        'bubble',
+        'alert',
+        'error-state',
+        'spinner',
+        'skeleton',
+      ])
+    )
+    expect(COMPONENTS.chat.npmDeps).toEqual(expect.arrayContaining(['graphql-ws', 'lucide-react']))
   })
 
   it('npmDepsFor unions deps across the whole closure without duplicates', () => {
@@ -182,5 +206,29 @@ describe('FRAMEWORK_EXTRA_FILES', () => {
       expect.arrayContaining(['app/auth/layout.tsx', 'app/auth/verify-otp/page.tsx'])
     )
     expect(frameworkExtraFilesFor(resolveUiClosure(['button']), 'next')).toEqual([])
+  })
+
+  it('chat maps Next and Vite product routes', () => {
+    expect(FRAMEWORK_EXTRA_FILES.chat.next).toEqual(
+      expect.arrayContaining([
+        'app/chat/page.tsx',
+        'app/chat/layout.tsx',
+        'app/chat/chat-app.tsx',
+        'app/chat/chat-href.ts',
+        'app/chat/[id]/page.tsx',
+        'app/chat/archived/page.tsx',
+        'app/chat/archived/[id]/page.tsx',
+      ])
+    )
+    expect(FRAMEWORK_EXTRA_FILES.chat.vite).toEqual(
+      expect.arrayContaining(['chat/ChatPage.tsx'])
+    )
+    expect(frameworkExtraFilesFor(resolveUiClosure(['chat']), 'next')).toEqual(
+      expect.arrayContaining([
+        'app/chat/page.tsx',
+        'app/chat/[id]/page.tsx',
+        'app/chat/archived/page.tsx',
+      ])
+    )
   })
 })
