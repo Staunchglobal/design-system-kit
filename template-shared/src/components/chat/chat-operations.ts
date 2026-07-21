@@ -116,6 +116,7 @@ export const SEND_MESSAGE = `
     $content: String!
     $messageType: MessageTypeEnum!
     $attachmentUrls: [String!]
+    $files: [Upload!]
   ) {
     sendMessage(
       input: {
@@ -123,6 +124,7 @@ export const SEND_MESSAGE = `
         content: $content
         messageType: $messageType
         attachmentUrls: $attachmentUrls
+        files: $files
       }
     ) {
       success

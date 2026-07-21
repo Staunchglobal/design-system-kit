@@ -386,7 +386,7 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   log.success('Design system kit installed.')
   log.info(`Run your dev server, then visit whatever route you mounted ${pc.bold('DesignSystemPage')}/${pc.bold('ThemeEditorPage')} at.`)
   if (userClosure.has('chat')) {
-    log.info(`Chat inbox: mount ${pc.bold('/chat')}, ${pc.bold('/chat/:id')}, ${pc.bold('/chat/archived')} — set VITE_GRAPHQL_URL / VITE_GRAPHQL_WS_URL / VITE_UPLOAD_URL for Nest API`)
+    log.info(`Chat inbox: mount ${pc.bold('/chat')}, ${pc.bold('/chat/:id')}, ${pc.bold('/chat/archived')} — set VITE_GRAPHQL_URL / VITE_GRAPHQL_WS_URL for Nest API`)
   }
   log.info(`Run \`${pc.bold('design-kit init')}\` again any time to add more components.`)
   if (skipped.length) {

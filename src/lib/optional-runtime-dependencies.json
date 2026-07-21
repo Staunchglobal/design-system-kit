@@ -13,6 +13,7 @@
   "@tiptap/extension-underline": "^3.10.7",
   "@tiptap/react": "^3.10.7",
   "@tiptap/starter-kit": "^3.10.7",
+  "browser-image-compression": "^2.0.2",
   "class-variance-authority": "^0.7.1",
   "cmdk": "^1.1.1",
   "date-fns": "^4.4.0",

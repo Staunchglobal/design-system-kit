@@ -35,6 +35,18 @@ function delay(ms = 280) {
   return new Promise((r) => setTimeout(r, ms))
 }
 
+// Mock mode has no backend to persist an upload, and `blob:` URLs are filtered out by
+// `mapApiMessage` (they don't survive a refresh) — a self-contained `data:` URL keeps the
+// real dragged-in image visible for the rest of the offline demo session instead.
+function fileToDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(String(reader.result))
+    reader.onerror = () => reject(reader.error)
+    reader.readAsDataURL(file)
+  })
+}
+
 function opName(query: string): string {
   const m = query.match(/\b(?:mutation|query|subscription)\s+(\w+)/)
   return m?.[1] ?? ''
@@ -391,16 +403,20 @@ export async function chatMockFetch<T>(
         content: string
         messageType: 'TEXT' | 'IMAGE' | 'FILE'
         attachmentUrls?: string[]
+        files?: File[]
       }) ?? {
         chatId: String(v.chatId),
         content: String(v.content ?? ''),
         messageType: (v.messageType as 'TEXT' | 'IMAGE' | 'FILE') ?? 'TEXT',
         attachmentUrls: v.attachmentUrls as string[] | undefined,
+        files: v.files as File[] | undefined,
       }
       const chat = chats.get(input.chatId)
       if (!chat) throw new Error('Chat not found')
       const sender = users.get(userId)!
-      const urls = input.attachmentUrls ?? []
+      const urls = input.files?.length
+        ? await Promise.all(input.files.map(fileToDataUrl))
+        : (input.attachmentUrls ?? [])
       const messageType = urls.length && input.messageType === 'TEXT' ? 'IMAGE' : input.messageType
       const msg: StoredMessage = {
         id: uid('msg'),

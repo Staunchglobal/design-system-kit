@@ -10,7 +10,6 @@ import { Toaster } from '@/components/ui/sonner'
 
 const GRAPHQL_URL = import.meta.env.VITE_GRAPHQL_URL as string | undefined
 const GRAPHQL_WS_URL = import.meta.env.VITE_GRAPHQL_WS_URL as string | undefined
-const UPLOAD_URL = import.meta.env.VITE_UPLOAD_URL as string | undefined
 
 function chatHref(chatId: string | null, tab: ChatTab) {
   if (tab === 'archived') {
@@ -63,7 +62,6 @@ export default function ChatPage() {
       <ChatInbox
         graphqlUrl={GRAPHQL_URL}
         graphqlWsUrl={GRAPHQL_WS_URL}
-        uploadUrl={UPLOAD_URL}
         chatId={chatId}
         tab={tab}
         onTabChange={(next) => {

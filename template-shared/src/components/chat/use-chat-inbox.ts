@@ -29,7 +29,8 @@ import {
 } from '@/components/chat/chat-operations'
 import { errorMessage } from '@/components/chat/chat-status'
 import { createChatSubscriptions } from '@/components/chat/chat-subscribe'
-import { createChatUpload } from '@/components/chat/chat-upload'
+import { graphqlUploadFetch } from '@/components/chat/chat-graphql-upload'
+import { compressImages } from '@/components/chat/image-compression'
 import type {
   ChatMessage,
   ChatTab,
@@ -40,7 +41,6 @@ import type {
 export type UseChatInboxOptions = {
   graphqlUrl?: string
   graphqlWsUrl?: string
-  uploadUrl?: string
   currentUserId?: string
   chatId?: string | null
   onChatIdChange?: (chatId: string | null, options?: { tab?: ChatTab }) => void
@@ -101,7 +101,6 @@ export type UseChatInboxResult = {
 export function useChatInbox({
   graphqlUrl,
   graphqlWsUrl,
-  uploadUrl,
   currentUserId: currentUserIdProp,
   chatId: chatIdProp,
   onChatIdChange,
@@ -166,7 +165,6 @@ export function useChatInbox({
     })
   }, [graphqlUrl, chatFetch])
 
-  const upload = React.useMemo(() => createChatUpload({ uploadUrl }), [uploadUrl])
   const subs = React.useMemo(
     () => createChatSubscriptions({ url: graphqlWsUrl }),
     [graphqlWsUrl]
@@ -395,18 +393,30 @@ export function useChatInbox({
     setSending(true)
     setSendError(null)
     try {
-      const urls = files.length ? await upload(files) : []
-      const data = await realFetch<{
-        sendMessage: {
-          success: boolean
-          message?: ApiMessageRow | null
-        }
-      }>(SEND_MESSAGE, {
-        chatId: selectedId,
-        content,
-        messageType: urls.length ? 'IMAGE' : 'TEXT',
-        attachmentUrls: urls.length ? urls : undefined,
-      })
+      const compressed = files.length ? await compressImages(files) : []
+      const messageType = compressed.length ? 'IMAGE' : 'TEXT'
+      type SendMessageResult = {
+        sendMessage: { success: boolean; message?: ApiMessageRow | null }
+      }
+      // Attachments travel inline with the message as a GraphQL multipart upload (matches
+      // function-rx's sendMessage(files: [Upload!])) — only the real backend can parse
+      // that wire format, so mock mode keeps sending raw `File`s through the in-process
+      // mock client instead (no network serialization happens there).
+      const data =
+        graphqlUrl && compressed.length
+          ? await graphqlUploadFetch<SendMessageResult>(
+              graphqlUrl,
+              SEND_MESSAGE,
+              { chatId: selectedId, content, messageType },
+              compressed,
+              session?.token ? { Authorization: `Bearer ${session.token}` } : undefined
+            )
+          : await realFetch<SendMessageResult>(SEND_MESSAGE, {
+              chatId: selectedId,
+              content,
+              messageType,
+              files: compressed.length ? compressed : undefined,
+            })
       const sent = data.sendMessage.message
       if (sent) {
         const mapped = mapApiMessage(sent)

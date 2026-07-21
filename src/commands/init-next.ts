@@ -379,7 +379,7 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
   if (userClosure.has('chat')) {
     log.info(`Chat inbox: ${pc.bold('/chat')}, ${pc.bold('/chat/[id]')}, ${pc.bold('/chat/archived')} (requires auth session)`)
     log.info(
-      'Optional Nest API: set NEXT_PUBLIC_GRAPHQL_URL, NEXT_PUBLIC_GRAPHQL_WS_URL, NEXT_PUBLIC_UPLOAD_URL'
+      'Optional Nest API: set NEXT_PUBLIC_GRAPHQL_URL, NEXT_PUBLIC_GRAPHQL_WS_URL'
     )
   }
   log.info(`Run \`${pc.bold('design-kit init')}\` again any time to add more components.`)

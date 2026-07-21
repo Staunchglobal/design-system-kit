@@ -119,11 +119,11 @@ npx staunch-shadcn-design-system-kit init --components chat,auth
 ```env
 NEXT_PUBLIC_GRAPHQL_URL=http://localhost:4000/graphql
 NEXT_PUBLIC_GRAPHQL_WS_URL=ws://localhost:4000/graphql
-NEXT_PUBLIC_UPLOAD_URL=http://localhost:4000/upload
 ```
 
-Vite uses `VITE_GRAPHQL_URL`, `VITE_GRAPHQL_WS_URL`, `VITE_UPLOAD_URL`. Run `design-kit-api`
-(Postgres + Nest) for the full stack.
+Vite uses `VITE_GRAPHQL_URL`, `VITE_GRAPHQL_WS_URL`. Image attachments travel inline with
+`sendMessage` as a GraphQL multipart upload — no separate upload URL needed. Run
+`design-kit-api` (Postgres + Nest) for the full stack.
 
 ### CRUD system (opt-in)
 

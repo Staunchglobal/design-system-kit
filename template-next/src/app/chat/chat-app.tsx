@@ -12,7 +12,6 @@ import { Button } from '@/components/ui/button'
 // Static property access so Next.js can inline NEXT_PUBLIC_* at build time.
 const GRAPHQL_URL = process.env.NEXT_PUBLIC_GRAPHQL_URL
 const GRAPHQL_WS_URL = process.env.NEXT_PUBLIC_GRAPHQL_WS_URL
-const UPLOAD_URL = process.env.NEXT_PUBLIC_UPLOAD_URL
 
 
 export function ChatApp({
@@ -58,7 +57,6 @@ export function ChatApp({
       <ChatInbox
         graphqlUrl={GRAPHQL_URL}
         graphqlWsUrl={GRAPHQL_WS_URL}
-        uploadUrl={UPLOAD_URL}
         chatId={chatId}
         tab={tab}
         onTabChange={(next) => {

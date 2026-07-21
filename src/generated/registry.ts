@@ -251,6 +251,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "skeleton"
     ],
     "npmDeps": [
+      "browser-image-compression",
       "graphql-ws",
       "lucide-react",
       "sonner"
@@ -262,7 +263,8 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "components/chat/chat-operations.ts",
       "components/chat/chat-mock-client.ts",
       "components/chat/chat-fetch.ts",
-      "components/chat/chat-upload.ts",
+      "components/chat/chat-graphql-upload.ts",
+      "components/chat/image-compression.ts",
       "components/chat/chat-subscribe.ts",
       "components/chat/chat-shell.tsx",
       "components/chat/contacts-sidebar.tsx",
