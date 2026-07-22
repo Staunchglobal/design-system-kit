@@ -11,7 +11,7 @@
   --date-picker-font-size: var(--typography-small-font-size);
   --date-picker-bg: var(--background);
   --date-picker-fg: var(--foreground);
-  --date-picker-border-color: var(--border);
+  --date-picker-border-color: var(--chart-3);
   --date-picker-hover-bg: var(--muted);
   border-radius: var(--date-picker-radius);
   border-width: var(--date-picker-border-width);

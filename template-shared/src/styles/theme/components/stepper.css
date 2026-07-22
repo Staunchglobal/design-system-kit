@@ -41,7 +41,7 @@
 
 [data-slot='stepper-segment'] {
   --stepper-segment-height: 0.375rem;
-  --stepper-segment-radius: 9999px;
+  --stepper-segment-radius: var(--radius-full);
   --stepper-segment-bg: var(--muted);
   --stepper-segment-bg-active: var(--primary);
   height: var(--stepper-segment-height);

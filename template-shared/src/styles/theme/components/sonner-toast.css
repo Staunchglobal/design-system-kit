@@ -1,17 +1,17 @@
 /* ==========================================================================
    Sonner (Toast)
    ==========================================================================
-   Shell + icon colors cascaded from paramount ToastStrip (neutral-900 shell,
-   radius-sm, shadow-sm; icon badges use success-500 / danger-500 / info-500 /
-   warning-500).
+   Paramount Design System — Toast (Figma 58:1104)
+   Light shell: white, border/light, shadow-xs, radius 8.
+   Success icon badge uses success-500.
    ========================================================================== */
 
 .toaster {
-  --sonner-bg: var(--neutral-900);
-  --sonner-text: var(--neutral-0);
-  --sonner-border: transparent;
-  --sonner-radius: var(--radius-md);
-  --sonner-shadow: var(--shadow-sm);
+  --sonner-bg: var(--neutral-0);
+  --sonner-text: var(--foreground);
+  --sonner-border: var(--border);
+  --sonner-radius: 0.5rem; /* 8px — padding-and-corner-radius/2 */
+  --sonner-shadow: var(--shadow-xs);
 
   --normal-bg: var(--sonner-bg);
   --normal-text: var(--sonner-text);
@@ -20,64 +20,67 @@
 }
 
 .toaster .cn-toast {
-  --sonner-toast-gap: 0.75rem;
-  --sonner-toast-padding: 0.75rem 1rem;
+  --sonner-toast-gap: 0.5rem;
+  --sonner-toast-padding: 0.75rem;
   --sonner-toast-font-size: var(--typography-small-font-size);
   gap: var(--sonner-toast-gap);
   padding: var(--sonner-toast-padding);
   font-size: var(--sonner-toast-font-size);
   box-shadow: var(--sonner-shadow);
+  border-color: var(--sonner-border);
+  background-color: var(--sonner-bg);
+  color: var(--sonner-text);
 }
 .toaster .cn-toast svg {
-  --sonner-icon-size: 1rem;
+  --sonner-icon-size: 1.25rem;
   width: var(--sonner-icon-size);
   height: var(--sonner-icon-size);
 }
 
 .toaster .cn-toast[data-type='success'] {
-  --success-bg: var(--neutral-900);
-  --success-text: var(--neutral-0);
-  --success-border: transparent;
+  --success-bg: var(--neutral-0);
+  --success-text: var(--foreground);
+  --success-border: var(--border);
 }
 .toaster .cn-toast[data-type='success'] [data-icon] {
   color: var(--neutral-0);
   background-color: var(--success-500);
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   padding: 0.25rem;
 }
 
 .toaster .cn-toast[data-type='error'] {
-  --error-bg: var(--neutral-900);
-  --error-text: var(--neutral-0);
-  --error-border: transparent;
+  --error-bg: var(--neutral-0);
+  --error-text: var(--foreground);
+  --error-border: var(--border);
 }
 .toaster .cn-toast[data-type='error'] [data-icon] {
   color: var(--neutral-0);
   background-color: var(--destructive-500);
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   padding: 0.25rem;
 }
 
 .toaster .cn-toast[data-type='info'] {
-  --info-bg: var(--neutral-900);
-  --info-text: var(--neutral-0);
-  --info-border: transparent;
+  --info-bg: var(--neutral-0);
+  --info-text: var(--foreground);
+  --info-border: var(--border);
 }
 .toaster .cn-toast[data-type='info'] [data-icon] {
   color: var(--neutral-0);
   background-color: var(--info-500);
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   padding: 0.25rem;
 }
 
 .toaster .cn-toast[data-type='warning'] {
-  --warning-bg: var(--neutral-900);
-  --warning-text: var(--neutral-0);
-  --warning-border: transparent;
+  --warning-bg: var(--neutral-0);
+  --warning-text: var(--foreground);
+  --warning-border: var(--border);
 }
 .toaster .cn-toast[data-type='warning'] [data-icon] {
   color: var(--neutral-0);
   background-color: var(--warning-500);
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   padding: 0.25rem;
 }

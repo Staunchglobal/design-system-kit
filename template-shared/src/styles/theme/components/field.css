@@ -28,8 +28,8 @@
 }
 
 [data-slot='field'] {
-  --field-gap: 0.5rem;
-  --field-invalid-fg: var(--destructive);
+  --field-gap: 0.5rem; /* spacing/xxs — 8px (Paramount Input Field) */
+  --field-invalid-fg: var(--destructive); /* text/danger */
   gap: var(--field-gap);
 }
 [data-slot='field'][data-invalid='true'] {
@@ -44,10 +44,11 @@
 }
 
 /* Shared by FieldLabel and FieldTitle (both render data-slot="field-label") */
+/* Paramount Input Field Medium label: Body B2 Medium 16/24 */
 [data-slot='field-label'] {
-  --field-label-gap: 0.5rem;
-  --field-label-line-height: var(--typography-small-line-height);
-  --field-label-font-size: var(--typography-small-font-size);
+  --field-label-gap: 0.25rem;
+  --field-label-line-height: var(--typography-p-line-height);
+  --field-label-font-size: var(--typography-p-font-size);
   --field-label-font-weight: var(--typography-small-font-weight);
   --field-label-disabled-opacity: 0.5;
   --field-label-checked-border-color: var(--neutral-900);
@@ -57,6 +58,7 @@
   line-height: var(--field-label-line-height);
   font-size: var(--field-label-font-size);
   font-weight: var(--field-label-font-weight);
+  color: var(--foreground);
 }
 [data-slot='field-label']:has([data-slot='field']) {
   --field-label-radius: var(--radius-lg);
@@ -69,11 +71,12 @@
   background-color: var(--field-label-checked-bg);
 }
 
+/* Paramount helper: Body B2 Regular 16/24, text/medium */
 [data-slot='field-description'] {
   --field-description-fg: var(--muted-foreground);
-  --field-description-font-size: var(--typography-muted-font-size);
-  --field-description-font-weight: var(--typography-muted-font-weight);
-  --field-description-line-height: var(--typography-muted-line-height);
+  --field-description-font-size: var(--typography-p-font-size);
+  --field-description-font-weight: var(--typography-p-font-weight);
+  --field-description-line-height: var(--typography-p-line-height);
   color: var(--field-description-fg);
   font-size: var(--field-description-font-size);
   font-weight: var(--field-description-font-weight);

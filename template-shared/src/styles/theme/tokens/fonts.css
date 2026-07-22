@@ -1,11 +1,14 @@
 /* ==========================================================================
    Font Families
    ==========================================================================
-   `--font-sans` / `--font-mono` come from next/font (layout.tsx) or
-   @fontsource (Vite). Default sans is Manrope (paramount cascade).
-   Custom fonts below are managed by /theme-editor.
+   `--font-sans` / `--font-mono` come from next/font (layout.tsx).
+   Custom fonts below are managed by /theme-editor. Google fonts load via a
+   <link> in layout.tsx (see THEME_GOOGLE_FONTS markers there), not @import
+   here — see the comment above for why.
    ========================================================================== */
+
 
 :root {
   --font-heading: var(--font-sans);
+
 }

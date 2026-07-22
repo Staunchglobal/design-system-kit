@@ -2,19 +2,7 @@
    Typography
    ==========================================================================
    Drop any class below onto ANY element, anywhere in the app, to apply a
-   complete text style — font family, size, weight, line height, letter
-   spacing — in one go. For example:
-
-     <DialogTitle className="typography-h3">Delete project?</DialogTitle>
-     <CardDescription className="typography-muted">Last updated 2 days ago</CardDescription>
-
-   These classes never set `color` (except typography-code's background,
-   which is a container decoration, not text color) or `margin`, so they
-   never fight with a text-color utility or the spacing of whatever
-   component they're used inside. Change color separately, e.g.
-   className="typography-h3 text-muted-foreground".
-
-   Type scale cascaded from paramount-mobile-app typographyData.ts.
+   complete text style. Token values aligned with Paramount (letter-spacing 0).
    ========================================================================== */
 
 :root {
@@ -22,27 +10,27 @@
   --typography-display-font-size: 4rem; /* 64px */
   --typography-display-font-weight: 800;
   --typography-display-line-height: 4.5rem; /* 72px */
-  --typography-display-letter-spacing: -0.025em;
+  --typography-display-letter-spacing: 0;
   --typography-h1-font-family: var(--font-heading);
   --typography-h1-font-size: 4rem; /* 64px */
   --typography-h1-font-weight: 700;
   --typography-h1-line-height: 4.5rem; /* 72px */
-  --typography-h1-letter-spacing: -0.025em;
+  --typography-h1-letter-spacing: 0;
   --typography-h2-font-family: var(--font-heading);
   --typography-h2-font-size: 3.5rem; /* 56px */
   --typography-h2-font-weight: 700;
   --typography-h2-line-height: 4.5rem; /* 72px */
-  --typography-h2-letter-spacing: -0.025em;
+  --typography-h2-letter-spacing: 0;
   --typography-h3-font-family: var(--font-heading);
   --typography-h3-font-size: 3rem; /* 48px */
   --typography-h3-font-weight: 700;
   --typography-h3-line-height: 3.5rem; /* 56px */
-  --typography-h3-letter-spacing: -0.0125em;
+  --typography-h3-letter-spacing: 0;
   --typography-h4-font-family: var(--font-heading);
   --typography-h4-font-size: 2.5rem; /* 40px */
   --typography-h4-font-weight: 700;
   --typography-h4-line-height: 3rem; /* 48px */
-  --typography-h4-letter-spacing: -0.0125em;
+  --typography-h4-letter-spacing: 0;
   --typography-h5-font-family: var(--font-heading);
   --typography-h5-font-size: 2rem; /* 32px */
   --typography-h5-font-weight: 600;

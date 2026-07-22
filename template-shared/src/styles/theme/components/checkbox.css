@@ -1,21 +1,27 @@
 /* ==========================================================================
    Checkbox
+   ==========================================================================
+   Paramount Design System — Checkboxes (Figma 67:874)
+   Box: 20×20, radius 4
+   Default: white + border/dark (rgba(0,0,0,0.4))
+   Selected / Mixed: Primary/500 fill + border, white indicator
+   CSS-only gap: Mixed uses a dash in Figma; kit always renders check icon.
    ========================================================================== */
 
 [data-slot='checkbox'] {
-  --checkbox-size: 1rem;
-  --checkbox-radius: 4px;
+  --checkbox-size: 1.25rem; /* 20px */
+  --checkbox-radius: var(--radius-sm); /* radius/xs — 4px */
   --checkbox-border-width: 1px;
-  --checkbox-border-color: var(--border);
-  --checkbox-bg: transparent;
-  --checkbox-checked-border-color: var(--primary);
-  --checkbox-checked-bg: var(--primary);
-  --checkbox-checked-fg: var(--primary-foreground);
+  --checkbox-border-color: color-mix(in oklab, var(--neutral-950) 40%, transparent); /* border/dark */
+  --checkbox-bg: var(--neutral-0);
+  --checkbox-checked-border-color: var(--primary-500);
+  --checkbox-checked-bg: var(--primary-500);
+  --checkbox-checked-fg: var(--neutral-0); /* icon/white */
   --checkbox-focus-ring-width: 3px;
-  --checkbox-focus-border-color: var(--ring);
-  --checkbox-focus-ring-color: var(--neutral-400);
+  --checkbox-focus-border-color: var(--primary-500);
+  --checkbox-focus-ring-color: color-mix(in oklab, var(--primary-500) 35%, transparent);
   --checkbox-invalid-border-color: var(--destructive);
-  --checkbox-invalid-ring-color: var(--destructive-600);
+  --checkbox-invalid-ring-color: color-mix(in oklab, var(--destructive) 35%, transparent);
   --checkbox-disabled-opacity: 0.5;
 
   width: var(--checkbox-size);
@@ -24,38 +30,54 @@
   border-width: var(--checkbox-border-width);
   border-color: var(--checkbox-border-color);
   background-color: var(--checkbox-bg);
+  color: var(--checkbox-checked-fg);
 }
+
 [data-slot='checkbox']:focus-visible {
   border-color: var(--checkbox-focus-border-color);
   box-shadow: 0 0 0 var(--checkbox-focus-ring-width) var(--checkbox-focus-ring-color);
 }
-[data-slot='checkbox'][data-state='checked'] {
+
+[data-slot='checkbox'][data-state='checked'],
+[data-slot='checkbox'][data-state='indeterminate'] {
   border-color: var(--checkbox-checked-border-color);
   background-color: var(--checkbox-checked-bg);
   color: var(--checkbox-checked-fg);
 }
+
 [data-slot='checkbox'][aria-invalid='true'] {
   border-color: var(--checkbox-invalid-border-color);
   box-shadow: 0 0 0 var(--checkbox-focus-ring-width) var(--checkbox-invalid-ring-color);
 }
-[data-slot='checkbox'][aria-invalid='true'][data-state='checked'] {
+
+[data-slot='checkbox'][aria-invalid='true'][data-state='checked'],
+[data-slot='checkbox'][aria-invalid='true'][data-state='indeterminate'] {
   border-color: var(--checkbox-checked-border-color);
+  background-color: var(--checkbox-checked-bg);
 }
+
 [data-slot='checkbox']:disabled {
   opacity: var(--checkbox-disabled-opacity);
   cursor: not-allowed;
 }
 
+/* Indicator — Figma check is 12px inside 20px box */
 [data-slot='checkbox-indicator'] {
-  --checkbox-indicator-icon-size: 0.875rem;
+  --checkbox-indicator-icon-size: 0.75rem; /* 12px */
   color: currentColor;
 }
+
 [data-slot='checkbox-indicator'] svg {
   width: var(--checkbox-indicator-icon-size);
   height: var(--checkbox-indicator-icon-size);
 }
 
 .dark [data-slot='checkbox'] {
-  --checkbox-focus-ring-color: var(--neutral-500);
-  --checkbox-invalid-ring-color: var(--destructive-400);
+  --checkbox-border-color: color-mix(in oklab, var(--neutral-0) 40%, transparent);
+  --checkbox-bg: var(--neutral-900);
+  --checkbox-focus-ring-color: color-mix(in oklab, var(--primary-400) 35%, transparent);
+  --checkbox-invalid-ring-color: color-mix(in oklab, var(--destructive-400) 35%, transparent);
+  --checkbox-checked-border-color: var(--primary-400);
+  --checkbox-checked-bg: var(--primary-400);
+  --checkbox-checked-fg: var(--primary-950);
 }

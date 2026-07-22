@@ -13,6 +13,9 @@
    ========================================================================== */
 
 :root {
+  /* Paramount Black/black — pure black (tooltips, overlays that need #000) */
+  --black: #000000;
+
   --neutral-0: #ffffff;
   --neutral-50: #f6f6f6;
   --neutral-100: #f0f0f1;

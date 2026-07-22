@@ -1,5 +1,9 @@
 /* ==========================================================================
    Tabs
+   ==========================================================================
+   Paramount Design System — Tabs (Figma 6848:6685)
+   line  → underline tabs (active: primary text + 2px primary underline)
+   default → pill / chip tabs (inactive: neutral-100; active: white + shadow-xs)
    ========================================================================== */
 
 [data-slot='tabs'] {
@@ -8,10 +12,10 @@
 }
 
 [data-slot='tabs-list'] {
-  --tabs-list-radius: var(--radius-lg);
-  --tabs-list-padding: 3px;
-  --tabs-list-fg: var(--muted-foreground);
-  --tabs-list-height: 2rem;
+  --tabs-list-radius: var(--radius-full);
+  --tabs-list-padding: 0;
+  --tabs-list-fg: var(--foreground);
+  --tabs-list-height: auto;
   border-radius: var(--tabs-list-radius);
   padding: var(--tabs-list-padding);
   color: var(--tabs-list-fg);
@@ -19,38 +23,57 @@
 [data-slot='tabs'][data-orientation='horizontal'] [data-slot='tabs-list'] {
   height: var(--tabs-list-height);
 }
+
+/* Pill strip track */
 [data-slot='tabs-list'][data-variant='default'] {
-  --tabs-list-bg: var(--muted);
-  background-color: var(--tabs-list-bg);
-}
-[data-slot='tabs-list'][data-variant='line'] {
   --tabs-list-bg: transparent;
-  --tabs-list-gap: 0.25rem;
-  --tabs-list-radius: 0;
+  --tabs-list-gap: 1rem; /* Button/gap/large — 16px */
   background-color: var(--tabs-list-bg);
   gap: var(--tabs-list-gap);
 }
 
+/* Underline strip */
+[data-slot='tabs-list'][data-variant='line'] {
+  --tabs-list-bg: transparent;
+  --tabs-list-gap: 0;
+  --tabs-list-radius: 0;
+  --tabs-list-border-color: color-mix(in oklab, var(--neutral-950) 8%, transparent);
+  background-color: var(--tabs-list-bg);
+  gap: var(--tabs-list-gap);
+  border-radius: var(--tabs-list-radius);
+  border-bottom-width: 1px;
+  border-bottom-color: var(--tabs-list-border-color);
+}
+
 [data-slot='tabs-trigger'] {
-  --tabs-trigger-radius: var(--radius-md);
-  --tabs-trigger-padding-x: 0.375rem;
-  --tabs-trigger-padding-y: 0.125rem;
-  --tabs-trigger-gap: 0.375rem;
-  --tabs-trigger-font-size: var(--typography-small-font-size);
+  --tabs-trigger-radius: var(--radius-full);
+  --tabs-trigger-padding-x: 1rem; /* spacing/s — 16px (pills) */
+  --tabs-trigger-padding-y: 0.5rem; /* spacing/xxs — 8px */
+  --tabs-trigger-gap: 0.5rem;
+  --tabs-trigger-min-height: 2.5rem; /* 40px pills */
+  --tabs-trigger-font-size: var(--typography-small-font-size); /* Body B3 — 14px */
   --tabs-trigger-font-weight: var(--typography-small-font-weight);
-  --tabs-trigger-fg: var(--neutral-950);
+  --tabs-trigger-line-height: var(--typography-small-line-height);
+  --tabs-trigger-fg: var(--foreground); /* text/dark */
   --tabs-trigger-hover-fg: var(--foreground);
   --tabs-trigger-focus-ring-color: var(--ring);
   --tabs-trigger-focus-ring-width: 3px;
   --tabs-trigger-disabled-opacity: 0.5;
-  --tabs-trigger-indicator-color: var(--foreground);
+  --tabs-trigger-indicator-color: var(--primary); /* border/primary #3ab5fe */
+  --tabs-trigger-border-width: 1px;
+  --tabs-trigger-border-color: transparent;
+
   border-radius: var(--tabs-trigger-radius);
   padding-inline: var(--tabs-trigger-padding-x);
   padding-block: var(--tabs-trigger-padding-y);
+  min-height: var(--tabs-trigger-min-height);
   gap: var(--tabs-trigger-gap);
   font-size: var(--tabs-trigger-font-size);
   font-weight: var(--tabs-trigger-font-weight);
+  line-height: var(--tabs-trigger-line-height);
   color: var(--tabs-trigger-fg);
+  border-width: var(--tabs-trigger-border-width);
+  border-color: var(--tabs-trigger-border-color);
 }
 [data-slot='tabs-trigger']:hover {
   color: var(--tabs-trigger-hover-fg);
@@ -61,20 +84,53 @@
 [data-slot='tabs-trigger']:disabled {
   opacity: var(--tabs-trigger-disabled-opacity);
 }
+
+/* —— Pills (default list) —— */
+[data-slot='tabs-list'][data-variant='default'] [data-slot='tabs-trigger'] {
+  --tabs-trigger-bg: var(--neutral-100);
+  --tabs-trigger-border-color: var(--neutral-200);
+  background-color: var(--tabs-trigger-bg);
+  border-color: var(--tabs-trigger-border-color);
+}
 [data-slot='tabs-list'][data-variant='default'] [data-slot='tabs-trigger'][data-state='active'] {
-  --tabs-trigger-active-bg: var(--background);
+  --tabs-trigger-active-bg: var(--neutral-0);
   --tabs-trigger-active-fg: var(--foreground);
+  --tabs-trigger-active-font-weight: var(--typography-large-font-weight);
+  --tabs-trigger-active-shadow: var(--shadow-xs);
+  --tabs-trigger-border-color: transparent;
   background-color: var(--tabs-trigger-active-bg);
   color: var(--tabs-trigger-active-fg);
+  font-weight: var(--tabs-trigger-active-font-weight);
+  box-shadow: var(--tabs-trigger-active-shadow);
+  border-color: var(--tabs-trigger-border-color);
+}
+
+/* —— Underline (line list) —— */
+[data-slot='tabs-list'][data-variant='line'] [data-slot='tabs-trigger'] {
+  --tabs-trigger-radius: var(--radius-md); /* 8px text chip */
+  --tabs-trigger-padding-x: 0.5rem;
+  --tabs-trigger-padding-y: 0.25rem;
+  --tabs-trigger-min-height: auto;
+  --tabs-trigger-bg: transparent;
+  --tabs-trigger-border-width: 0;
+  background-color: var(--tabs-trigger-bg);
+  border-radius: var(--tabs-trigger-radius);
+  padding-inline: var(--tabs-trigger-padding-x);
+  padding-block: var(--tabs-trigger-padding-y);
+  min-height: var(--tabs-trigger-min-height);
+  border-width: var(--tabs-trigger-border-width);
 }
 [data-slot='tabs-list'][data-variant='line'] [data-slot='tabs-trigger'][data-state='active'] {
   --tabs-trigger-active-bg: transparent;
+  --tabs-trigger-active-fg: var(--primary); /* text/primary #3ab5fe */
   background-color: var(--tabs-trigger-active-bg);
+  color: var(--tabs-trigger-active-fg);
 }
 [data-slot='tabs-list'][data-variant='line']
   [data-slot='tabs-trigger'][data-state='active']::after {
   opacity: 1;
   background-color: var(--tabs-trigger-indicator-color);
+  height: 2px;
 }
 
 [data-slot='tabs-content'] {
@@ -84,4 +140,19 @@
 
 .dark [data-slot='tabs-trigger'] {
   --tabs-trigger-fg: var(--neutral-50);
+}
+
+.dark [data-slot='tabs-list'][data-variant='default'] [data-slot='tabs-trigger'] {
+  --tabs-trigger-bg: var(--neutral-800);
+  --tabs-trigger-border-color: var(--neutral-700);
+}
+
+.dark [data-slot='tabs-list'][data-variant='default'] [data-slot='tabs-trigger'][data-state='active'] {
+  --tabs-trigger-active-bg: var(--neutral-900);
+  --tabs-trigger-active-fg: var(--neutral-50);
+}
+
+.dark [data-slot='tabs-list'][data-variant='line'] [data-slot='tabs-trigger'][data-state='active'] {
+  --tabs-trigger-active-fg: var(--primary-400);
+  --tabs-trigger-indicator-color: var(--primary-400);
 }

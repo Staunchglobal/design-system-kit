@@ -1,35 +1,50 @@
 /* ==========================================================================
    Alert
    ==========================================================================
-   Variants cascaded from paramount Alert: info/success/warning/danger use
-   *-50 shell + *-500/600 text. Kit `default` stays card-neutral; `destructive`
-   maps to danger.
+   Paramount Design System — Alerts (Figma 58:1104)
+   Inline: Default / Info / Warning / Error / Success
+   Shell: radius 24, px 16, py 12, gap 12. Title always text/dark;
+   description + icon use semantic tint.
    ========================================================================== */
 
 [data-slot='alert'] {
-  --alert-radius: var(--radius-lg);
-  --alert-padding-x: 0.625rem;
-  --alert-padding-y: 0.5rem;
-  --alert-gap: 0.125rem;
-  --alert-font-size: var(--typography-small-font-size);
-  --alert-action-offset: 0.5rem;
+  --alert-radius: var(--radius-3xl); /* 24px — Button/Input large */
+  --alert-padding-x: 1rem; /* 16px */
+  --alert-padding-y: 0.75rem; /* 12px */
+  --alert-gap-x: 0.75rem; /* 12px — icon ↔ content */
+  --alert-gap-y: 0; /* title ↔ description stacked tight */
+  --alert-font-size: var(--typography-small-font-size); /* Body B3 — 14px */
+  --alert-action-offset: 0.75rem;
+  --alert-border-width: 0px;
+  --alert-border-color: transparent;
+  --alert-icon-size: 1.5rem; /* 24px */
+
   border-radius: var(--alert-radius);
   padding-inline: var(--alert-padding-x);
   padding-block: var(--alert-padding-y);
-  gap: var(--alert-gap);
+  column-gap: var(--alert-gap-x);
+  row-gap: var(--alert-gap-y);
   font-size: var(--alert-font-size);
+  border-width: var(--alert-border-width);
+  border-color: var(--alert-border-color);
+}
+[data-slot='alert'] > svg {
+  width: var(--alert-icon-size);
+  height: var(--alert-icon-size);
 }
 
+/* Default — Neutral/50 */
 [data-slot='alert'][data-variant='default'] {
-  --alert-bg: var(--card);
-  --alert-fg: var(--card-foreground);
+  --alert-bg: var(--neutral-50);
+  --alert-fg: var(--muted-600); /* icon / default body */
   background-color: var(--alert-bg);
   color: var(--alert-fg);
 }
 
+/* Error / destructive — Danger/50 + text/danger */
 [data-slot='alert'][data-variant='destructive'] {
-  --alert-destructive-bg: var(--destructive-50);
-  --alert-destructive-fg: var(--destructive-500);
+  --alert-destructive-bg: var(--destructive-50); /* #fdf1f1 */
+  --alert-destructive-fg: var(--destructive-500); /* #d94c51 */
   --alert-destructive-description-fg: var(--destructive-500);
   background-color: var(--alert-destructive-bg);
   color: var(--alert-destructive-fg);
@@ -39,9 +54,10 @@
   color: var(--alert-destructive-description-fg);
 }
 
+/* Success — Success/50 + text/success */
 [data-slot='alert'][data-variant='success'] {
-  --alert-success-bg: var(--success-50);
-  --alert-success-fg: var(--success-500);
+  --alert-success-bg: var(--success-50); /* #e8f7eb */
+  --alert-success-fg: var(--success-500); /* #2e8540 */
   --alert-success-description-fg: var(--success-500);
   background-color: var(--alert-success-bg);
   color: var(--alert-success-fg);
@@ -51,9 +67,10 @@
   color: var(--alert-success-description-fg);
 }
 
+/* Warning — Warning/50 + text/secondary ~#d19335 */
 [data-slot='alert'][data-variant='warning'] {
-  --alert-warning-bg: var(--warning-50);
-  --alert-warning-fg: var(--warning-600);
+  --alert-warning-bg: var(--warning-50); /* #ffefd9 */
+  --alert-warning-fg: var(--warning-600); /* #d49137 */
   --alert-warning-description-fg: var(--warning-600);
   background-color: var(--alert-warning-bg);
   color: var(--alert-warning-fg);
@@ -63,9 +80,10 @@
   color: var(--alert-warning-description-fg);
 }
 
+/* Info — Info/50 + text/info */
 [data-slot='alert'][data-variant='info'] {
-  --alert-info-bg: var(--info-50);
-  --alert-info-fg: var(--info-500);
+  --alert-info-bg: var(--info-50); /* #ecf1fb */
+  --alert-info-fg: var(--info-500); /* #4676d9 */
   --alert-info-description-fg: var(--info-500);
   background-color: var(--alert-info-bg);
   color: var(--alert-info-fg);
@@ -75,23 +93,38 @@
   color: var(--alert-info-description-fg);
 }
 
+/* Title — always text/dark (Body B2 Medium 16/24) */
 [data-slot='alert-title'] {
-  --alert-title-font-family: var(--font-heading);
-  --alert-title-font-weight: var(--typography-h6-font-weight);
+  --alert-title-font-family: var(--font-sans);
+  --alert-title-font-size: var(--typography-p-font-size);
+  --alert-title-font-weight: var(--typography-small-font-weight);
+  --alert-title-line-height: var(--typography-p-line-height);
+  --alert-title-fg: var(--foreground);
   --alert-title-link-hover-fg: var(--foreground);
   font-family: var(--alert-title-font-family);
+  font-size: var(--alert-title-font-size);
   font-weight: var(--alert-title-font-weight);
+  line-height: var(--alert-title-line-height);
+  color: var(--alert-title-fg);
 }
 [data-slot='alert-title'] a:hover {
   color: var(--alert-title-link-hover-fg);
 }
 
+/* Description — Body B3 Regular 14/20; color from variant */
 [data-slot='alert-description'] {
-  --alert-description-font-size: var(--typography-caption-font-size);
-  --alert-description-fg: var(--muted-foreground);
+  --alert-description-font-size: var(--typography-muted-font-size);
+  --alert-description-font-weight: var(--typography-muted-font-weight);
+  --alert-description-line-height: var(--typography-muted-line-height);
+  --alert-description-fg: var(--muted-600);
   --alert-description-link-hover-fg: var(--foreground);
   font-size: var(--alert-description-font-size);
+  font-weight: var(--alert-description-font-weight);
+  line-height: var(--alert-description-line-height);
   color: var(--alert-description-fg);
+}
+[data-slot='alert'][data-variant='default'] [data-slot='alert-description'] {
+  color: var(--muted-600);
 }
 [data-slot='alert-description'] a:hover {
   color: var(--alert-description-link-hover-fg);
@@ -100,6 +133,11 @@
 [data-slot='alert-action'] {
   top: var(--alert-action-offset);
   right: var(--alert-action-offset);
+}
+
+.dark [data-slot='alert'][data-variant='default'] {
+  --alert-bg: var(--neutral-900);
+  --alert-fg: var(--neutral-400);
 }
 
 .dark [data-slot='alert'][data-variant='destructive'] {
@@ -124,4 +162,8 @@
   --alert-info-bg: var(--info-950);
   --alert-info-fg: var(--info-400);
   --alert-info-description-fg: var(--info-400);
+}
+
+.dark [data-slot='alert-title'] {
+  --alert-title-fg: var(--neutral-50);
 }

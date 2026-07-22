@@ -1,17 +1,29 @@
 /* ==========================================================================
    Calendar
+   ==========================================================================
+   Paramount Design System — Date & Time Pickers (Figma 29336:2739)
+   Compact shell 370× cells 44. Caption B2 Medium; weekdays Caption Semibold.
+   Today = text/primary. Selected = Primary/200 + Primary/500 Semibold.
    ========================================================================== */
 
 [data-slot='calendar'] {
-  --calendar-cell-size: 2rem;
-  --calendar-cell-radius: var(--radius-md);
-  --calendar-padding: 0.5rem;
-  --calendar-bg: var(--background);
+  --calendar-cell-size: 2.75rem; /* 44px */
+  --calendar-cell-radius: var(--radius-full);
+  --calendar-padding: 1rem; /* 16px */
+  --calendar-bg: var(--neutral-0);
+  --calendar-radius: 0.8125rem; /* 13px */
+  --calendar-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
   --calendar-months-gap: 1rem;
+  --calendar-width: 23.125rem; /* 370px */
   --cell-size: var(--calendar-cell-size);
   --cell-radius: var(--calendar-cell-radius);
+
+  box-sizing: border-box;
+  width: var(--calendar-width);
   padding: var(--calendar-padding);
   background-color: var(--calendar-bg);
+  border-radius: var(--calendar-radius);
+  box-shadow: var(--calendar-shadow);
 }
 
 [data-slot='calendar'] .rdp-months {
@@ -19,22 +31,41 @@
 }
 
 [data-slot='calendar'] .rdp-nav {
-  --calendar-nav-gap: 0.25rem;
+  --calendar-nav-gap: 1.75rem; /* 28px */
   gap: var(--calendar-nav-gap);
+}
+
+[data-slot='calendar'] [data-ui='calendar-nav-previous'],
+[data-slot='calendar'] [data-ui='calendar-nav-next'] {
+  --calendar-nav-fg: var(--primary);
+  color: var(--calendar-nav-fg);
+}
+[data-slot='calendar'] [data-ui='calendar-nav-previous'] svg,
+[data-slot='calendar'] [data-ui='calendar-nav-next'] svg {
+  color: var(--calendar-nav-fg);
 }
 
 [data-slot='calendar'] .rdp-weekday {
   --calendar-weekday-font-size: var(--typography-caption-font-size);
-  --calendar-weekday-fg: var(--muted-foreground);
+  --calendar-weekday-line-height: var(--typography-caption-line-height);
+  --calendar-weekday-font-weight: var(--typography-large-font-weight);
+  --calendar-weekday-fg: var(--muted-400);
   font-size: var(--calendar-weekday-font-size);
+  line-height: var(--calendar-weekday-line-height);
+  font-weight: var(--calendar-weekday-font-weight);
   color: var(--calendar-weekday-fg);
+  text-transform: uppercase;
 }
 
 [data-slot='calendar'] .rdp-caption_label {
-  --calendar-caption-font-size: var(--typography-small-font-size);
+  --calendar-caption-font-size: var(--typography-p-font-size);
+  --calendar-caption-line-height: var(--typography-p-line-height);
   --calendar-caption-font-weight: var(--typography-small-font-weight);
+  --calendar-caption-fg: var(--foreground);
   font-size: var(--calendar-caption-font-size);
+  line-height: var(--calendar-caption-line-height);
   font-weight: var(--calendar-caption-font-weight);
+  color: var(--calendar-caption-fg);
 }
 
 [data-slot='calendar'] .rdp-dropdown_root {
@@ -45,15 +76,30 @@
   background-color: var(--calendar-dropdown-bg);
 }
 
-[data-slot='calendar'] .rdp-today {
-  --calendar-today-bg: var(--muted);
-  --calendar-today-fg: var(--foreground);
-  background-color: var(--calendar-today-bg);
-  color: var(--calendar-today-fg);
+/* Day — B1 Regular 20/24 */
+[data-slot='calendar'] [data-slot='button'] {
+  --calendar-day-font-size: var(--typography-lead-font-size);
+  --calendar-day-line-height: var(--typography-lead-line-height);
+  --calendar-day-font-weight: var(--typography-p-font-weight);
+  --calendar-day-fg: var(--foreground);
+  font-size: var(--calendar-day-font-size);
+  line-height: var(--calendar-day-line-height);
+  font-weight: var(--calendar-day-font-weight);
+  color: var(--calendar-day-fg);
+  border-radius: var(--calendar-cell-radius);
+}
+
+/* Today — primary text, no fill */
+[data-slot='calendar'] .rdp-today:not([data-selected='true']) [data-slot='button'],
+[data-slot='calendar'] .rdp-today:not([data-selected='true']) {
+  --calendar-today-bg: transparent;
+  --calendar-today-fg: var(--primary);
+  background-color: var(--calendar-today-bg) !important;
+  color: var(--calendar-today-fg) !important;
 }
 
 [data-slot='calendar'] .rdp-outside {
-  --calendar-outside-fg: var(--muted-foreground);
+  --calendar-outside-fg: var(--muted-400);
   color: var(--calendar-outside-fg);
 }
 
@@ -62,29 +108,69 @@
   opacity: var(--calendar-disabled-opacity);
 }
 
+/* Selected / range ends — Primary/200 + Primary/500 */
 [data-slot='calendar'] [data-slot='button'][data-selected-single='true'],
 [data-slot='calendar'] [data-slot='button'][data-range-start='true'],
 [data-slot='calendar'] [data-slot='button'][data-range-end='true'] {
-  --calendar-selected-bg: var(--primary);
-  --calendar-selected-fg: var(--primary-foreground);
-  background-color: var(--calendar-selected-bg);
-  color: var(--calendar-selected-fg);
+  --calendar-selected-bg: var(--primary-200);
+  --calendar-selected-fg: var(--primary-500);
+  --calendar-selected-font-weight: var(--typography-large-font-weight);
+  background-color: var(--calendar-selected-bg) !important;
+  color: var(--calendar-selected-fg) !important;
+  font-weight: var(--calendar-selected-font-weight) !important;
+  border-radius: var(--calendar-cell-radius) !important;
 }
 
 [data-slot='calendar'] [data-slot='button'][data-range-middle='true'] {
-  --calendar-range-middle-bg: var(--muted);
+  --calendar-range-middle-bg: var(--primary-100);
   --calendar-range-middle-fg: var(--foreground);
-  background-color: var(--calendar-range-middle-bg);
-  color: var(--calendar-range-middle-fg);
+  background-color: var(--calendar-range-middle-bg) !important;
+  color: var(--calendar-range-middle-fg) !important;
+  border-radius: 0 !important;
+}
+
+/* Neutralize DayPicker range bridge pseudos (caused bleed between demos) */
+[data-slot='calendar'] .rdp-range_start,
+[data-slot='calendar'] .rdp-range_end {
+  background-color: transparent !important;
+}
+[data-slot='calendar'] .rdp-range_start::after,
+[data-slot='calendar'] .rdp-range_end::after {
+  content: none !important;
+  display: none !important;
 }
 
 [data-slot='calendar'] [data-slot='button'][data-focused='true'] {
-  --calendar-focus-border-color: var(--ring);
-  --calendar-focus-ring-color: var(--neutral-400);
+  --calendar-focus-border-color: var(--primary);
+  --calendar-focus-ring-color: color-mix(in oklab, var(--primary) 35%, transparent);
   border-color: var(--calendar-focus-border-color);
   box-shadow: 0 0 0 3px var(--calendar-focus-ring-color);
 }
 
-.dark [data-slot='calendar'] [data-slot='button'][data-focused='true'] {
-  --calendar-focus-ring-color: var(--neutral-500);
+/* Popover: grow to calendar; no double chrome */
+[data-slot='popover-content']:has([data-slot='calendar']) {
+  --popover-content-width: auto;
+  --popover-content-padding: 0;
+  width: auto !important;
+  max-width: none;
+  overflow: hidden;
+  padding: 0;
+}
+
+[data-slot='popover-content'] [data-slot='calendar'],
+[data-slot='card-content'] [data-slot='calendar'] {
+  --calendar-shadow: none;
+  --calendar-radius: 0;
+  box-shadow: none;
+}
+
+.dark [data-slot='calendar'] {
+  --calendar-bg: var(--neutral-900);
+}
+
+.dark [data-slot='calendar'] [data-slot='button'][data-selected-single='true'],
+.dark [data-slot='calendar'] [data-slot='button'][data-range-start='true'],
+.dark [data-slot='calendar'] [data-slot='button'][data-range-end='true'] {
+  --calendar-selected-bg: var(--primary-800);
+  --calendar-selected-fg: var(--primary-200);
 }

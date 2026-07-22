@@ -1,85 +1,139 @@
 /* ==========================================================================
    Switch
+   ==========================================================================
+   Paramount Design System — Toggles (Figma 6848:6176 / 6848:6287 / 6848:6291)
+   Small:  36×20, p 2, thumb 16, radius 12
+   Large:  36×24, px 4 py 2, thumb 16, radius 12
+   Off: Neutral/200 → hover Neutral/300
+   On:  Primary/500 full track + justify-end → hover Primary/600
+   Thumb: solid white + Shadow/sm (never clipped)
+   !important used only where TSX utilities (size/translate) otherwise win.
    ========================================================================== */
 
 [data-slot='switch'] {
-  --switch-border-width: 1px;
-  --switch-border-color: transparent;
+  --switch-radius: var(--radius-lg); /* 12px */
   --switch-checked-bg: var(--primary-500);
+  --switch-checked-hover-bg: var(--primary-600);
   --switch-unchecked-bg: var(--neutral-200);
+  --switch-unchecked-hover-bg: var(--neutral-300);
   --switch-focus-ring-width: 3px;
-  --switch-focus-border-color: var(--ring);
-  --switch-focus-ring-color: var(--neutral-400);
+  --switch-focus-border-color: var(--primary-500);
+  --switch-focus-ring-color: color-mix(in oklab, var(--primary-500) 35%, transparent);
   --switch-invalid-border-color: var(--destructive);
-  --switch-invalid-ring-color: var(--destructive-600);
+  --switch-invalid-ring-color: color-mix(in oklab, var(--destructive) 35%, transparent);
   --switch-disabled-opacity: 0.5;
+  --switch-thumb-size: 1rem; /* 16px */
+  --switch-track-width: 2.25rem; /* 36px */
+  --switch-track-height: 1.5rem; /* Large default */
+  --switch-padding-inline: 0.25rem;
+  --switch-padding-block: 0.125rem;
 
-  border-radius: 9999px;
-  border-width: var(--switch-border-width);
-  border-color: var(--switch-border-color);
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  box-sizing: border-box !important;
+  width: var(--switch-track-width) !important;
+  height: var(--switch-track-height) !important;
+  min-width: var(--switch-track-width) !important;
+  min-height: var(--switch-track-height) !important;
+  border-radius: var(--switch-radius) !important;
+  border-width: 0 !important;
+  border-style: solid !important;
+  border-color: transparent !important;
+  padding-inline: var(--switch-padding-inline) !important;
+  padding-block: var(--switch-padding-block) !important;
+  overflow: visible !important; /* do not clip thumb / shadow */
+  background-clip: border-box;
+  box-shadow: none;
 }
+
+[data-slot='switch'][data-state='checked'] {
+  justify-content: flex-end !important;
+  background-color: var(--switch-checked-bg) !important;
+}
+
+[data-slot='switch'][data-state='unchecked'] {
+  justify-content: flex-start !important;
+  background-color: var(--switch-unchecked-bg) !important;
+}
+
+[data-slot='switch'][data-state='checked']:hover {
+  background-color: var(--switch-checked-hover-bg) !important;
+}
+
+[data-slot='switch'][data-state='unchecked']:hover {
+  background-color: var(--switch-unchecked-hover-bg) !important;
+}
+
 [data-slot='switch']:focus-visible {
-  border-color: var(--switch-focus-border-color);
   box-shadow: 0 0 0 var(--switch-focus-ring-width) var(--switch-focus-ring-color);
 }
+
 [data-slot='switch'][aria-invalid='true'] {
-  border-color: var(--switch-invalid-border-color);
+  border-width: 1px !important;
+  border-color: var(--switch-invalid-border-color) !important;
   box-shadow: 0 0 0 var(--switch-focus-ring-width) var(--switch-invalid-ring-color);
 }
-[data-slot='switch'][data-state='checked'] {
-  background-color: var(--switch-checked-bg);
-}
-[data-slot='switch'][data-state='unchecked'] {
-  background-color: var(--switch-unchecked-bg);
-}
-[data-slot='switch'][data-state='unchecked']:active {
-  --switch-unchecked-active-bg: var(--neutral-300);
-  background-color: var(--switch-unchecked-active-bg);
-}
+
 [data-slot='switch'][data-disabled] {
   opacity: var(--switch-disabled-opacity);
   cursor: not-allowed;
 }
-[data-slot='switch'][data-size='default'] {
-  --switch-track-height: 18.4px;
-  --switch-track-width: 32px;
-  height: var(--switch-track-height);
-  width: var(--switch-track-width);
-}
-[data-slot='switch'][data-size='sm'] {
-  --switch-track-height: 14px;
-  --switch-track-width: 24px;
-  height: var(--switch-track-height);
-  width: var(--switch-track-width);
+
+[data-slot='switch'][data-disabled]:hover[data-state='checked'] {
+  background-color: var(--switch-checked-bg) !important;
 }
 
+[data-slot='switch'][data-disabled]:hover[data-state='unchecked'] {
+  background-color: var(--switch-unchecked-bg) !important;
+}
+
+/* Large = kit default (Figma Large) */
+[data-slot='switch'][data-size='default'] {
+  --switch-track-height: 1.5rem; /* 24px */
+  --switch-track-width: 2.25rem; /* 36px */
+  --switch-padding-inline: 0.25rem; /* 4px */
+  --switch-padding-block: 0.125rem; /* 2px */
+}
+
+/* Small = kit sm (Figma Small) */
+[data-slot='switch'][data-size='sm'] {
+  --switch-track-height: 1.25rem; /* 20px */
+  --switch-track-width: 2.25rem; /* 36px */
+  --switch-padding-inline: 0.125rem; /* 2px */
+  --switch-padding-block: 0.125rem; /* 2px */
+}
+
+[data-slot='switch'] [data-slot='switch-thumb'],
 [data-slot='switch-thumb'] {
   --switch-thumb-bg: var(--neutral-0);
   --switch-thumb-shadow: var(--shadow-xs);
-  --switch-thumb-translate-checked: calc(100% - 2px);
-  --switch-thumb-translate-unchecked: 0px;
-  background-color: var(--switch-thumb-bg);
-  border-radius: 9999px;
-  box-shadow: var(--switch-thumb-shadow);
-}
-[data-slot='switch-thumb'][data-state='checked'] {
-  transform: translateX(var(--switch-thumb-translate-checked));
-}
-[data-slot='switch-thumb'][data-state='unchecked'] {
-  transform: translateX(var(--switch-thumb-translate-unchecked));
-}
-[data-slot='switch'][data-size='default'] [data-slot='switch-thumb'] {
-  --switch-thumb-size: 1rem;
-  width: var(--switch-thumb-size);
-  height: var(--switch-thumb-size);
-}
-[data-slot='switch'][data-size='sm'] [data-slot='switch-thumb'] {
-  --switch-thumb-size: 0.75rem;
-  width: var(--switch-thumb-size);
-  height: var(--switch-thumb-size);
+
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
+  display: block !important;
+  width: var(--switch-thumb-size) !important;
+  height: var(--switch-thumb-size) !important;
+  min-width: var(--switch-thumb-size) !important;
+  min-height: var(--switch-thumb-size) !important;
+  max-width: var(--switch-thumb-size) !important;
+  max-height: var(--switch-thumb-size) !important;
+  margin: 0 !important;
+  background-color: var(--switch-thumb-bg) !important;
+  border-radius: var(--radius-full) !important;
+  box-shadow: var(--switch-thumb-shadow) !important;
+  /* Cancel TSX translate — Figma uses justify-end, not translateX */
+  transform: none !important;
+  translate: 0 0 !important;
+  --tw-translate-x: 0 !important;
+  --tw-translate-y: 0 !important;
 }
 
 .dark [data-slot='switch'] {
-  --switch-focus-ring-color: var(--neutral-500);
-  --switch-invalid-ring-color: var(--destructive-400);
+  --switch-unchecked-bg: var(--neutral-700);
+  --switch-unchecked-hover-bg: var(--neutral-600);
+  --switch-checked-bg: var(--primary-400);
+  --switch-checked-hover-bg: var(--primary-300);
+  --switch-focus-ring-color: color-mix(in oklab, var(--primary-400) 35%, transparent);
+  --switch-invalid-ring-color: color-mix(in oklab, var(--destructive-400) 35%, transparent);
 }

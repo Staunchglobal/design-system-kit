@@ -1,5 +1,9 @@
 /* ==========================================================================
    Radio Group
+   ==========================================================================
+   Paramount Design System — Radio Buttons (Figma 67:1191)
+   Selected is NOT a solid fill: white shell + primary ring + 14px primary dot.
+   Specificity must beat TSX utilities (data-checked:bg-primary, size-4, size-2).
    ========================================================================== */
 
 [data-slot='radio-group'] {
@@ -7,58 +11,144 @@
   gap: var(--radio-group-gap);
 }
 
+[data-slot='radio-group'] [data-slot='radio-group-item'],
 [data-slot='radio-group-item'] {
-  --radio-group-item-size: 1rem;
+  --radio-group-item-size: 1.5rem; /* 24px — beats size-4 */
   --radio-group-item-border-width: 1px;
-  --radio-group-item-border-color: var(--border);
-  --radio-group-item-bg: transparent;
-  --radio-group-item-checked-border-color: var(--primary);
-  --radio-group-item-checked-bg: var(--primary);
-  --radio-group-item-checked-fg: var(--primary-foreground);
+  --radio-group-item-border-color: var(--border); /* border/light #e8e8e9 */
+  --radio-group-item-bg: var(--neutral-0);
+  --radio-group-item-hover-border-color: var(--primary-500);
+  --radio-group-item-checked-border-color: var(--primary-500);
+  --radio-group-item-checked-bg: var(--neutral-0); /* white shell — not primary fill */
+  --radio-group-item-checked-hover-border-color: var(--primary-600);
   --radio-group-item-focus-ring-width: 3px;
-  --radio-group-item-focus-border-color: var(--ring);
-  --radio-group-item-focus-ring-color: var(--neutral-400);
+  --radio-group-item-focus-border-color: var(--primary-500);
+  --radio-group-item-focus-ring-color: color-mix(in oklab, var(--primary-500) 35%, transparent);
   --radio-group-item-invalid-border-color: var(--destructive);
-  --radio-group-item-invalid-ring-color: var(--destructive-600);
+  --radio-group-item-invalid-ring-color: color-mix(in oklab, var(--destructive) 35%, transparent);
   --radio-group-item-disabled-opacity: 0.5;
 
   width: var(--radio-group-item-size);
   height: var(--radio-group-item-size);
-  border-radius: 9999px;
+  min-width: var(--radio-group-item-size);
+  min-height: var(--radio-group-item-size);
+  border-radius: var(--radius-full);
   border-width: var(--radio-group-item-border-width);
   border-color: var(--radio-group-item-border-color);
   background-color: var(--radio-group-item-bg);
 }
+
+[data-slot='radio-group'] [data-slot='radio-group-item']:hover,
+[data-slot='radio-group-item']:hover {
+  border-color: var(--radio-group-item-hover-border-color);
+}
+
+[data-slot='radio-group'] [data-slot='radio-group-item']:focus-visible,
 [data-slot='radio-group-item']:focus-visible {
   border-color: var(--radio-group-item-focus-border-color);
   box-shadow: 0 0 0 var(--radio-group-item-focus-ring-width)
     var(--radio-group-item-focus-ring-color);
 }
+
+/* Selected — white center + primary border (override data-checked:bg-primary) */
+[data-slot='radio-group'] [data-slot='radio-group-item'][data-state='checked'],
 [data-slot='radio-group-item'][data-state='checked'] {
   border-color: var(--radio-group-item-checked-border-color);
   background-color: var(--radio-group-item-checked-bg);
-  color: var(--radio-group-item-checked-fg);
+  color: var(--primary-500);
 }
+
+[data-slot='radio-group'] [data-slot='radio-group-item'][data-state='checked']:hover,
+[data-slot='radio-group-item'][data-state='checked']:hover {
+  border-color: var(--radio-group-item-checked-hover-border-color);
+  background-color: var(--radio-group-item-checked-bg);
+}
+
+[data-slot='radio-group'] [data-slot='radio-group-item'][aria-invalid='true'],
 [data-slot='radio-group-item'][aria-invalid='true'] {
   border-color: var(--radio-group-item-invalid-border-color);
   box-shadow: 0 0 0 var(--radio-group-item-focus-ring-width)
     var(--radio-group-item-invalid-ring-color);
 }
+
+[data-slot='radio-group'] [data-slot='radio-group-item'][aria-invalid='true'][data-state='checked'],
+[data-slot='radio-group-item'][aria-invalid='true'][data-state='checked'] {
+  border-color: var(--radio-group-item-checked-border-color);
+  background-color: var(--radio-group-item-checked-bg);
+}
+
+[data-slot='radio-group'] [data-slot='radio-group-item']:disabled,
 [data-slot='radio-group-item']:disabled {
   opacity: var(--radio-group-item-disabled-opacity);
   cursor: not-allowed;
 }
 
-[data-slot='radio-group-indicator'] > span {
-  --radio-group-dot-size: 0.5rem;
-  --radio-group-dot-color: var(--primary-foreground);
-  width: var(--radio-group-dot-size);
-  height: var(--radio-group-dot-size);
-  background-color: var(--radio-group-dot-color);
-  border-radius: 9999px;
+[data-slot='radio-group'] [data-slot='radio-group-item']:disabled:hover,
+[data-slot='radio-group-item']:disabled:hover {
+  border-color: var(--radio-group-item-border-color);
 }
 
+/* Inner dot — 14px primary (beats bg-primary-foreground + size-2) */
+[data-slot='radio-group'] [data-slot='radio-group-indicator'],
+[data-slot='radio-group-indicator'] {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+[data-slot='radio-group'] [data-slot='radio-group-indicator'] > span,
+[data-slot='radio-group-item'] [data-slot='radio-group-indicator'] > span {
+  --radio-group-dot-size: 0.875rem; /* 14px inside 24px = visible white ring */
+  --radio-group-dot-color: var(--primary-500);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: var(--radio-group-dot-size);
+  height: var(--radio-group-dot-size);
+  min-width: var(--radio-group-dot-size);
+  min-height: var(--radio-group-dot-size);
+  background-color: var(--radio-group-dot-color);
+  border-radius: var(--radius-full);
+}
+
+[data-slot='radio-group'] [data-slot='radio-group-item'][data-state='checked']:hover
+  [data-slot='radio-group-indicator']
+  > span,
+[data-slot='radio-group-item'][data-state='checked']:hover [data-slot='radio-group-indicator'] > span {
+  --radio-group-dot-color: var(--primary-600);
+  background-color: var(--radio-group-dot-color);
+}
+
+.dark [data-slot='radio-group'] [data-slot='radio-group-item'],
 .dark [data-slot='radio-group-item'] {
-  --radio-group-item-focus-ring-color: var(--neutral-500);
-  --radio-group-item-invalid-ring-color: var(--destructive-400);
+  --radio-group-item-bg: var(--neutral-900);
+  --radio-group-item-checked-bg: var(--neutral-900);
+  --radio-group-item-focus-ring-color: color-mix(in oklab, var(--primary-400) 35%, transparent);
+  --radio-group-item-invalid-ring-color: color-mix(in oklab, var(--destructive-400) 35%, transparent);
+  --radio-group-item-hover-border-color: var(--primary-400);
+  --radio-group-item-checked-border-color: var(--primary-400);
+  --radio-group-item-checked-hover-border-color: var(--primary-300);
+}
+
+.dark [data-slot='radio-group'] [data-slot='radio-group-indicator'] > span,
+.dark [data-slot='radio-group-item'] [data-slot='radio-group-indicator'] > span {
+  --radio-group-dot-color: var(--primary-400);
+  background-color: var(--radio-group-dot-color);
+}
+
+.dark
+  [data-slot='radio-group']
+  [data-slot='radio-group-item'][data-state='checked']:hover
+  [data-slot='radio-group-indicator']
+  > span,
+.dark
+  [data-slot='radio-group-item'][data-state='checked']:hover
+  [data-slot='radio-group-indicator']
+  > span {
+  --radio-group-dot-color: var(--primary-300);
+  background-color: var(--radio-group-dot-color);
 }

@@ -1,14 +1,22 @@
 /* ==========================================================================
    Breadcrumb
+   ==========================================================================
+   Paramount Design System — Breadcrumbs (Figma 6897:7201)
+   Caption Medium 12/16. Parent link = text/primary; Active page = text/light;
+   Divider chevron 16px = icon/grey.
    ========================================================================== */
 
 [data-slot='breadcrumb-list'] {
-  --breadcrumb-list-fg: var(--muted-foreground);
-  --breadcrumb-list-gap: 0.375rem;
-  --breadcrumb-list-font-size: var(--typography-muted-font-size);
+  --breadcrumb-list-fg: var(--muted-600); /* icon/grey — separators */
+  --breadcrumb-list-gap: 0.5rem; /* 8px */
+  --breadcrumb-list-font-size: var(--typography-caption-font-size); /* 12px */
+  --breadcrumb-list-line-height: var(--typography-caption-line-height); /* 16px */
+  --breadcrumb-list-font-weight: var(--typography-small-font-weight); /* Caption Medium — 500 */
   color: var(--breadcrumb-list-fg);
   gap: var(--breadcrumb-list-gap);
   font-size: var(--breadcrumb-list-font-size);
+  line-height: var(--breadcrumb-list-line-height);
+  font-weight: var(--breadcrumb-list-font-weight);
 }
 
 [data-slot='breadcrumb-item'] {
@@ -16,24 +24,33 @@
   gap: var(--breadcrumb-item-gap);
 }
 
+/* Parent — text/primary #3ab5fe */
 [data-slot='breadcrumb-link'] {
-  --breadcrumb-link-hover-fg: var(--foreground);
+  --breadcrumb-link-fg: var(--primary);
+  --breadcrumb-link-hover-fg: var(--primary-600);
+  --breadcrumb-link-font-weight: var(--typography-small-font-weight);
   --breadcrumb-link-transition: color 0.15s;
+  color: var(--breadcrumb-link-fg);
+  font-weight: var(--breadcrumb-link-font-weight);
   transition: var(--breadcrumb-link-transition);
 }
 [data-slot='breadcrumb-link']:hover {
   color: var(--breadcrumb-link-hover-fg);
 }
 
+/* Active — text/light #b4b5b7 */
 [data-slot='breadcrumb-page'] {
-  --breadcrumb-page-fg: var(--foreground);
-  --breadcrumb-page-font-weight: var(--typography-muted-font-weight);
+  --breadcrumb-page-fg: var(--muted-400);
+  --breadcrumb-page-font-weight: var(--typography-small-font-weight);
   color: var(--breadcrumb-page-fg);
   font-weight: var(--breadcrumb-page-font-weight);
 }
 
+/* Divider — arrow-right 16px, icon/grey */
 [data-slot='breadcrumb-separator'] {
-  --breadcrumb-separator-icon-size: 0.875rem;
+  --breadcrumb-separator-icon-size: 1rem; /* 16px */
+  --breadcrumb-separator-fg: var(--muted-600);
+  color: var(--breadcrumb-separator-fg);
 }
 [data-slot='breadcrumb-separator'] svg {
   width: var(--breadcrumb-separator-icon-size);
@@ -43,6 +60,8 @@
 [data-slot='breadcrumb-ellipsis'] {
   --breadcrumb-ellipsis-size: 1.25rem;
   --breadcrumb-ellipsis-icon-size: 1rem;
+  --breadcrumb-ellipsis-fg: var(--muted-600);
+  color: var(--breadcrumb-ellipsis-fg);
   inline-size: var(--breadcrumb-ellipsis-size);
   block-size: var(--breadcrumb-ellipsis-size);
 }

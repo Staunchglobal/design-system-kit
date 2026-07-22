@@ -17,7 +17,7 @@
 [data-slot='message-avatar'] {
   --message-avatar-size: 2rem;
   --message-avatar-bg: var(--muted);
-  --message-avatar-radius: 9999px;
+  --message-avatar-radius: var(--radius-full);
   min-width: var(--message-avatar-size);
   background-color: var(--message-avatar-bg);
   border-radius: var(--message-avatar-radius);

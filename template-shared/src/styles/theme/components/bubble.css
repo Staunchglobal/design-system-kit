@@ -117,7 +117,7 @@
   --bubble-reactions-padding-x: 0.375rem;
   --bubble-reactions-padding-y: 0.125rem;
   --bubble-reactions-font-size: var(--typography-small-font-size);
-  --bubble-reactions-radius: 9999px;
+  --bubble-reactions-radius: var(--radius-full);
   --bubble-reactions-bg: var(--muted);
   --bubble-reactions-ring-color: var(--card);
   --bubble-reactions-ring-width: 3px;

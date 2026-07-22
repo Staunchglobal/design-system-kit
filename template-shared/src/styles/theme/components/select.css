@@ -1,5 +1,9 @@
 /* ==========================================================================
    Select
+   ==========================================================================
+   Paramount Design System — Select (Figma 20863:122744)
+   Default size = Medium (48 / radius 20). States: Default, Filled, Focused
+   (2px primary), Error (2px danger), Disabled (Neutral/100).
    ========================================================================== */
 
 [data-slot='select-trigger'] {
@@ -8,23 +12,28 @@
   --select-trigger-border-width: var(--input-border-width);
   --select-trigger-border-color: var(--input-border-color);
   --select-trigger-bg: var(--input-bg);
-  --select-trigger-gap: 0.375rem;
-  --select-trigger-padding-inline-start: var(--input-padding-x);
-  --select-trigger-padding-inline-end: 0.5rem;
-  --select-trigger-padding-block: 0.5rem;
-  --select-trigger-font-size: var(--input-file-font-size);
-  --select-trigger-placeholder-color: var(--input-placeholder-color);
+  --select-trigger-fg: var(--input-fg);
+  --select-trigger-gap: 0.25rem; /* spacing/xxxs — 4px (tag/input gap) */
+  --select-trigger-padding-inline-start: var(--input-padding-x); /* spacing/s — 16px */
+  --select-trigger-padding-inline-end: var(--input-padding-x); /* spacing/s — 16px */
+  --select-trigger-padding-block: var(--input-padding-y); /* spacing/xs — 12px */
+  --select-trigger-font-size: var(--input-font-size); /* Body B2 — 16px */
+  --select-trigger-placeholder-color: var(--input-placeholder-color); /* text/light */
   --select-trigger-focus-border-color: var(--input-focus-border-color);
   --select-trigger-focus-ring-width: var(--input-focus-ring-width);
   --select-trigger-focus-ring-color: var(--input-focus-ring-color);
   --select-trigger-invalid-border-color: var(--input-invalid-border-color);
   --select-trigger-invalid-ring-color: var(--input-invalid-ring-color);
+  --select-trigger-disabled-bg: var(--input-disabled-bg);
   --select-trigger-disabled-opacity: var(--input-disabled-opacity);
+  --select-trigger-icon-color: var(--muted-600); /* icon/grey #77787e */
+  --select-trigger-icon-size: 1.5rem; /* 24px */
 
   border-radius: var(--select-trigger-radius);
   border-width: var(--select-trigger-border-width);
   border-color: var(--select-trigger-border-color);
   background-color: var(--select-trigger-bg);
+  color: var(--select-trigger-fg);
   gap: var(--select-trigger-gap);
   padding-block: var(--select-trigger-padding-block);
   padding-inline-start: var(--select-trigger-padding-inline-start);
@@ -34,34 +43,49 @@
 [data-slot='select-trigger'][data-placeholder] {
   color: var(--select-trigger-placeholder-color);
 }
-[data-slot='select-trigger']:focus-visible {
+[data-slot='select-trigger']:focus-visible,
+[data-slot='select-trigger'][data-state='open'] {
+  border-width: 2px;
   border-color: var(--select-trigger-focus-border-color);
   box-shadow: 0 0 0 var(--select-trigger-focus-ring-width) var(--select-trigger-focus-ring-color);
 }
 [data-slot='select-trigger'][aria-invalid='true'] {
+  border-width: 2px;
   border-color: var(--select-trigger-invalid-border-color);
   box-shadow: 0 0 0 var(--select-trigger-focus-ring-width) var(--select-trigger-invalid-ring-color);
 }
 [data-slot='select-trigger']:disabled {
+  background-color: var(--select-trigger-disabled-bg);
   opacity: var(--select-trigger-disabled-opacity);
   cursor: not-allowed;
 }
 [data-slot='select-trigger'][data-size='default'] {
-  --select-trigger-height: var(--input-height);
+  --select-trigger-height: var(--input-height); /* Medium — 48px */
   height: var(--select-trigger-height);
 }
+/* Kit sm → Paramount Small (40 / radius 16) */
 [data-slot='select-trigger'][data-size='sm'] {
-  --select-trigger-height: 1.75rem;
-  --select-trigger-radius: min(var(--radius-md), 10px);
+  --select-trigger-height: 2.5rem; /* Input Container Height/small — 40px */
+  --select-trigger-radius: var(--radius-xl); /* Button and Input border-radius/small — 16px */
+  --select-trigger-font-size: var(--typography-small-font-size); /* Body B3 — 14px */
+  --select-trigger-padding-block: 0.5rem; /* spacing/xxs — 8px */
   height: var(--select-trigger-height);
   border-radius: var(--select-trigger-radius);
+  font-size: var(--select-trigger-font-size);
+  padding-block: var(--select-trigger-padding-block);
+}
+
+[data-slot='select-trigger'] svg {
+  width: var(--select-trigger-icon-size);
+  height: var(--select-trigger-icon-size);
+  color: var(--select-trigger-icon-color);
 }
 
 [data-slot='select-content'] {
   --select-content-bg: var(--popover);
   --select-content-fg: var(--popover-foreground);
-  --select-content-ring-color: var(--neutral-950);
-  --select-content-radius: var(--radius-lg);
+  --select-content-ring-color: var(--border); /* border/light */
+  --select-content-radius: var(--radius-2xl); /* match Medium input radius */
   --select-content-shadow: var(--shadow-md);
   --select-content-min-width: 9rem;
 
@@ -92,13 +116,13 @@
 
 [data-slot='select-item'] {
   --select-item-radius: var(--radius-md);
-  --select-item-padding-block: 0.25rem;
+  --select-item-padding-block: 0.5rem;
   --select-item-padding-inline-end: 2rem;
-  --select-item-padding-inline-start: 0.375rem;
-  --select-item-font-size: var(--typography-small-font-size);
+  --select-item-padding-inline-start: 0.75rem;
+  --select-item-font-size: var(--typography-p-font-size); /* Body B2 — 16px */
   --select-item-gap: 0.375rem;
-  --select-item-focus-bg: var(--accent);
-  --select-item-focus-fg: var(--accent-foreground);
+  --select-item-focus-bg: var(--neutral-50); /* Neutral/50 */
+  --select-item-focus-fg: var(--foreground);
   --select-item-disabled-opacity: 0.5;
 
   border-radius: var(--select-item-radius);
@@ -137,5 +161,10 @@
    and layout are applied to it via the trigger's descendant selector). */
 
 .dark [data-slot='select-content'] {
-  --select-content-ring-color: var(--neutral-50);
+  --select-content-ring-color: var(--neutral-700);
+}
+
+.dark [data-slot='select-trigger']:disabled {
+  --select-trigger-disabled-bg: var(--neutral-800);
+  background-color: var(--select-trigger-disabled-bg);
 }

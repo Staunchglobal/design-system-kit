@@ -1,10 +1,39 @@
-/* Count Badge */
+/* ==========================================================================
+   Count Badge
+   ==========================================================================
+   Paramount Design System — Tabs badges (Figma 6848:6685)
+   Primary (default kit usage): primary fill, white caption 12, pill, px 8 py 4
+   ========================================================================== */
+
 [data-slot='count-badge'] {
-  --count-badge-bg: var(--primary);
-  --count-badge-fg: var(--primary-foreground);
-  --count-badge-size: 1.25rem;
-  min-width: var(--count-badge-size);
-  height: var(--count-badge-size);
+  --count-badge-bg: var(--primary-500);
+  --count-badge-fg: var(--neutral-0);
+  --count-badge-border-width: 0;
+  --count-badge-border-color: transparent;
+  --count-badge-radius: var(--radius-full);
+  --count-badge-padding-x: 0.5rem; /* spacing/xxs — 8px */
+  --count-badge-padding-y: 0.25rem; /* spacing/xxxs — 4px */
+  --count-badge-min-width: 1.875rem; /* ~30px */
+  --count-badge-height: auto;
+  --count-badge-font-size: var(--typography-caption-font-size); /* Caption — 12px */
+  --count-badge-font-weight: var(--typography-small-font-weight);
+  --count-badge-line-height: var(--typography-caption-line-height);
+
+  min-width: var(--count-badge-min-width);
+  height: var(--count-badge-height);
+  padding-inline: var(--count-badge-padding-x);
+  padding-block: var(--count-badge-padding-y);
+  border-radius: var(--count-badge-radius);
+  border-width: var(--count-badge-border-width);
+  border-color: var(--count-badge-border-color);
   background: var(--count-badge-bg);
   color: var(--count-badge-fg);
+  font-size: var(--count-badge-font-size);
+  font-weight: var(--count-badge-font-weight);
+  line-height: var(--count-badge-line-height);
+}
+
+.dark [data-slot='count-badge'] {
+  --count-badge-bg: var(--primary-400);
+  --count-badge-fg: var(--primary-950);
 }

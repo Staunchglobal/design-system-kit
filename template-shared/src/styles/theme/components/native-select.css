@@ -3,7 +3,7 @@
    ========================================================================== */
 
 [data-slot='native-select-wrapper']:has(select:disabled) {
-  --native-select-disabled-opacity: 0.5;
+  --native-select-disabled-opacity: 1;
   opacity: var(--native-select-disabled-opacity);
 }
 
@@ -44,25 +44,36 @@
   color: var(--native-select-selection-fg);
 }
 [data-slot='native-select']:focus-visible {
+  border-width: 2px;
   border-color: var(--native-select-focus-border-color);
   box-shadow: 0 0 0 var(--native-select-focus-ring-width) var(--native-select-focus-ring-color);
 }
 [data-slot='native-select'][aria-invalid='true'] {
+  border-width: 2px;
   border-color: var(--native-select-invalid-border-color);
   box-shadow: 0 0 0 var(--native-select-focus-ring-width) var(--native-select-invalid-ring-color);
 }
+[data-slot='native-select']:disabled {
+  --native-select-disabled-bg: var(--input-disabled-bg);
+  background-color: var(--native-select-disabled-bg);
+  opacity: var(--input-disabled-opacity);
+  cursor: not-allowed;
+}
+/* Kit sm → Paramount Small (40 / radius 16) */
 [data-slot='native-select'][data-size='sm'] {
-  --native-select-height: 1.75rem;
-  --native-select-radius: min(var(--radius-md), 10px);
-  --native-select-padding-block: 0.125rem;
+  --native-select-height: 2.5rem;
+  --native-select-radius: var(--radius-xl);
+  --native-select-padding-block: 0.5rem;
+  --native-select-font-size: var(--typography-small-font-size);
   height: var(--native-select-height);
   border-radius: var(--native-select-radius);
   padding-block: var(--native-select-padding-block);
+  font-size: var(--native-select-font-size);
 }
 
 [data-slot='native-select-icon'] {
-  --native-select-icon-color: var(--muted-foreground);
-  --native-select-icon-size: 1rem;
+  --native-select-icon-color: var(--muted-600);
+  --native-select-icon-size: 1.5rem; /* 24px */
   color: var(--native-select-icon-color);
   width: var(--native-select-icon-size);
   height: var(--native-select-icon-size);

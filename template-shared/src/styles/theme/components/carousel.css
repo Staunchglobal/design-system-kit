@@ -23,7 +23,7 @@
 [data-ui='carousel-previous'],
 [data-ui='carousel-next'] {
   --carousel-control-offset: 3rem;
-  --carousel-control-radius: 9999px;
+  --carousel-control-radius: var(--radius-full);
   border-radius: var(--carousel-control-radius);
 }
 [data-ui='carousel-previous'] {
