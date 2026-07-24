@@ -18,6 +18,11 @@ type MediaItem = {
   title?: string
 }
 
+/**
+ * Converts a YouTube or Vimeo watch URL to its embeddable form.
+ * Returns `null` when the URL is unrecognised or malformed.
+ * Already-embedded URLs are returned unchanged.
+ */
 function parseEmbedUrl(url: string): string | null {
   if (!url) return null
 
@@ -26,6 +31,7 @@ function parseEmbedUrl(url: string): string | null {
     parsed = new URL(url)
   } catch {
     return null
+      // scrollIntoView is unavailable in some test environments
   }
 
   const { hostname, pathname, searchParams } = parsed

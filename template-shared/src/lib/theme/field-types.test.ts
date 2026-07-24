@@ -78,6 +78,8 @@ describe('scopeToSelector', () => {
   })
 
   it('reconstructs a slot + size selector — the exact shape button.css relies on', () => {
+    // This is the case that regressed: button.css's [data-size='icon'] block carries no
+    // data-variant at all, so the selector must not require one.
     expect(scopeToSelector('button/size=icon')).toBe('[data-slot="button"][data-size="icon"]')
   })
 
@@ -130,6 +132,8 @@ describe('buildScopedVarsCss', () => {
   })
 
   it('emits a selector-qualified rule for a size-scoped variable with no variant qualifier', () => {
+    // Regression guard for the button icon-size mislabel bug: this must NOT come out
+    // requiring [data-variant="..."], since [data-size='icon'] applies to every variant.
     const manifest = manifestOf('button', [
       v({ id: 'button:--button-size:0', name: '--button-size', value: '2rem', scope: 'button/size=icon' }),
     ])
@@ -165,6 +169,11 @@ describe('buildScopedVarsCss', () => {
   })
 
   it('skips a variable+selector pair when two distinct occurrences would collapse onto it', () => {
+    // e.g. scroll-area's horizontal/vertical scrollbar-size, or drawer's top/bottom vs
+    // left/right radius — scopeToSelector can't recover the distinguishing attribute
+    // (data-orientation, data-vaul-drawer-direction), so both occurrences reconstruct
+    // to the identical selector. Emitting either one would silently misrepresent the
+    // other's live preview, so neither should be emitted.
     const manifest = manifestOf('scroll-area', [
       v({
         id: 'scroll-area:--scroll-area-scrollbar-size:0',

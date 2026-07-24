@@ -105,6 +105,11 @@ export async function remove(options: RemoveOptions) {
   const rel = (p: string) => (srcDir ? `${srcDir}/${p}` : p)
   const sectionsRel = project.framework === 'next' ? 'app/design-system/_sections' : 'design-system/_sections'
 
+  // Nav/demo generation must key off the *user's own* closure, not the tool-chrome-inclusive
+  // one — toolOnly components (field, input-group, native-select) get their ui/*.tsx installed
+  // for the theme editor's own use but never get a demo file copied or a nav entry at all (see
+  // the same distinction in init-next.ts/init-vite.ts). Using oldClosure/newClosure here would
+  // regenerate a page.tsx that imports demo files that were never actually installed.
   const oldNavGroups = navGroupsFor(oldUserClosure)
   const newNavGroups = navGroupsFor(newUserClosure)
   const oldDemoFiles = new Set(demoFilesFor(oldNavGroups))

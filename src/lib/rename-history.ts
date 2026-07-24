@@ -114,6 +114,11 @@ function descriptionRulesFor(family: RenameFamily, escFrom: string, to: string):
   }
 }
 
+/**
+ * Applies the project's full rename history (in order) to freshly-fetched template
+ * content for a file that doesn't exist locally yet. No-ops for file kinds a rename
+ * never touches (anything but .css, .tsx, and lib/theme/descriptions.ts).
+ */
 export function applyRenameHistory(relOrAbsPath: string, content: string, history: RenameHistoryEntry[]): string {
   if (!history.length) return content
   const normalized = relOrAbsPath.replace(/\\/g, '/')

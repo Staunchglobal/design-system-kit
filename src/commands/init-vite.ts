@@ -115,6 +115,8 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   const uiFiles = [...closure].filter((s) => s !== 'patterns').map((s) => `components/ui/${s}.tsx`)
   const cssFiles = [...cssFilesFor(closure)].map((f) => `styles/theme/components/${f}`)
   const extraFiles = [...extraFilesFor(closure)]
+  // Only the user's own picks decide what shows up in the design-system showcase — the
+  // theme editor's tool-chrome deps (toolOnly) must never drag in an unrelated demo section.
   const navGroups = navGroupsFor(userClosure)
   const sectionFiles = demoFilesFor(navGroups).map((f) => `design-system/_sections/${f}`)
   const frameworkExtraFiles = frameworkExtraFilesFor(userClosure, 'vite')
@@ -139,6 +141,9 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   }
 
   const dryRun = !!options.dryRun
+  // A previously-renamed token (via /theme-editor) only touched files that existed at
+  // the time — reapply that history to anything newly copied now, so a component added
+  // after the rename doesn't arrive still using the original name.
   const renameHistory = loadRenameHistory(path.join(root, 'src'))
   const sharedFixed = await copySelectedFiles(sharedSrc, path.join(root, 'src'), ALWAYS_SHARED_FILES, dryRun, renameHistory)
   const sharedUi = await copySelectedFiles(sharedSrc, path.join(root, 'src'), uiFiles, dryRun, renameHistory)

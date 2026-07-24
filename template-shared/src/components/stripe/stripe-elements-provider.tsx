@@ -5,6 +5,11 @@ import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import type { StripeElementsOptions } from '@stripe/stripe-js'
 
+/**
+ * Module-level cache so we never call loadStripe() more than once per key.
+ * loadStripe is a side-effecting async call that fetches stripe.js from CDN;
+ * creating multiple instances causes Stripe to warn in the console.
+ */
 const stripePromiseCache = new Map<string, ReturnType<typeof loadStripe>>()
 
 function getOrLoadStripe(publishableKey: string): ReturnType<typeof loadStripe> {

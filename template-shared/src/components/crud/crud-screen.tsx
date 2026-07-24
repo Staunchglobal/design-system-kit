@@ -135,6 +135,7 @@ export function CrudScreen<T>({
 
       setDeleteTarget(null)
     } catch {
+      // toast.promise already surfaced the error
     } finally {
       setDeleting(false)
     }

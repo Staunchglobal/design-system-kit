@@ -76,6 +76,10 @@ describe("color family rename — accent -> info (real files)", () => {
     expect(colors).toMatch(/--info-foreground:\s*var\(--info-900\);/);
     expect(colors).not.toMatch(/--accent\b/);
 
+    // sidebar-accent is a DIFFERENT token that only shares the substring "accent" —
+    // its own name must never be touched. It derives from --secondary-*, not --accent-*,
+    // in the current palette, so its value is untouched too; the invariant under test
+    // is that the property NAME survives the rename.
     expect(colors).toMatch(/--sidebar-accent:\s*var\(--secondary-50\);/);
     expect(colors).toMatch(/--sidebar-accent-foreground:\s*var\(--primary-950\);/);
 

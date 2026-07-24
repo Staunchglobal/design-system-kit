@@ -12,6 +12,11 @@ const TEMPLATE = `const config = {
 export default config
 `
 
+/**
+ * Next.js only (Vite uses the @tailwindcss/vite plugin instead — see patch-vite-config.ts).
+ * Without this file, `@import 'tailwindcss'` in globals.css is never actually processed by
+ * Tailwind — the CSS build either fails outright or silently emits none of the utility classes.
+ */
 export function patchPostcssConfig(root: string): PostcssConfigResult {
   const existing = ['postcss.config.mjs', 'postcss.config.js', 'postcss.config.ts', 'postcss.config.cjs']
     .map((f) => path.join(root, f))

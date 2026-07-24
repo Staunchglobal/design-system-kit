@@ -33,6 +33,10 @@ function Dropzone({
   className,
   disabled = false,
 }: DropzoneProps) {
+  // Rejected files always live in local state — even in controlled mode — since a
+  // controlled `value` is plain `File[]` and can never carry per-file error info, and
+  // rejected files must never be reported through `onValueChange` (which only ever
+  // carries valid files, per the documented contract).
   const [internalAccepted, setInternalAccepted] = React.useState<File[]>([])
   const [rejected, setRejected] = React.useState<DropzoneFile[]>([])
   const controlled = value != null

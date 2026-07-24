@@ -52,6 +52,8 @@ export function useCrudList<T>({
     pageRef.current = page
   }, [page])
 
+  // Reset to page 1 when the query changes (React "adjusting state during render" pattern —
+  // avoids setState-in-effect when filters/search settle).
   const [prevQuery, setPrevQuery] = React.useState({
     debouncedSearch,
     sort,
@@ -80,6 +82,7 @@ export function useCrudList<T>({
     setPage(1)
   }, [])
 
+  // When the fetch key changes, flip loading during render (avoids setState-in-effect).
   const fetchKey = isSearchPending
     ? null
     : `${page}|${pageSize}|${debouncedSearch}|${sort?.field ?? ''}|${sort?.order ?? ''}|${activeTab ?? ''}|${reloadToken}`

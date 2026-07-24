@@ -138,6 +138,9 @@ function fileDeps(file) {
 const navSrc = fs.readFileSync(navPath, 'utf8')
 const navGroups = parseNavGroups(navSrc)
 
+// Every nav item slug maps 1:1 to its own _sections/<slug>.tsx demo file (split-sections.mjs
+// guarantees this). Verify both directions so drift (a renamed nav id, a stray leftover file)
+// fails the build loudly instead of silently shipping a broken import.
 {
   const allSlugs = new Set(navGroups.flatMap((g) => g.items.map((i) => i.id)))
   const missing = [...allSlugs].filter((slug) => !fs.existsSync(path.join(sectionsDir, `${slug}.tsx`)))
@@ -174,9 +177,16 @@ for (const f of uiFiles) {
   const slug = f.replace(/\.tsx$/, '')
   const { uiDeps, npmDeps } = fileDeps(path.join(uiDir, f))
 
+  // The demo file (and any _shared companions it needs) can reference other ui components
+  // purely for illustration — e.g. the table demo renders a Badge for invoice status, the
+  // button demo shows a Spinner for a loading state — even though the Table/Button component's
+  // own implementation has no such dependency. Those need installing too, or picking just
+  // "table" ships a demo that imports a Badge component that was never copied.
   const demoUiDeps = new Set(uiDeps)
   const demoNpmDeps = new Set(npmDeps)
 
+  // EXTRA_FILES (e.g. components/crud/* for crud-table) often hold the real ui/npm imports —
+  // scan them too, or dialog/alert-dialog/field never land in uiDeps.
   for (const extra of EXTRA_FILES[slug] ?? []) {
     const extraPath = path.join(root, 'template-shared/src', extra)
     if (!fs.existsSync(extraPath)) {

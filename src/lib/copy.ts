@@ -6,6 +6,8 @@ import { applyRenameHistory, type RenameHistoryEntry } from './rename-history.js
 export type CopyResult = {
   copied: string[]
   skipped: string[]
+  /** Content fetched for every path in `copied`/`skipped`, keyed by relPath — populated once
+   *  here so callers that also need it (hashEntriesFor) never issue a second fetch for it. */
   contents: Map<string, string>
 }
 
@@ -25,6 +27,15 @@ export async function copyTemplateFile(
   return 'copied'
 }
 
+/**
+ * Fetches and copies only the given relative paths (used for selective installs).
+ * Never overwrites an existing file — those are reported back as `skipped` so the
+ * caller can tell the user what wasn't touched (their own edits are never at risk).
+ * A path that 404s at `srcBase` (removed/renamed in a newer template version) is
+ * silently omitted from both lists, matching the old `fs.existsSync(src)` guard.
+ * `dryRun: true` computes the exact same copied/skipped classification without
+ * writing anything — used by `init --dry-run` to preview what would happen.
+ */
 export async function copySelectedFiles(
   srcBase: string,
   destDir: string,

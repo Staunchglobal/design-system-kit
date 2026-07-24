@@ -18,6 +18,11 @@ import { PaymentMethodForm } from '@/components/stripe/payment-method-form'
 import type { PaymentMethod } from '@stripe/stripe-js'
 
 type PaymentMethodPickerProps = {
+  /**
+   * Payment methods already on file (fetched from your backend / Stripe Customer).
+   * The component owns selection state but never mutates this list — add the new
+   * PaymentMethod to your backend, then refresh the list yourself.
+   */
   methods: SavedPaymentMethod[]
   selectedId?: string
   onSelectExisting: (id: string) => void
@@ -29,6 +34,17 @@ type PaymentMethodPickerProps = {
 
 type Tab = 'saved' | 'new'
 
+/**
+ * Composes PaymentMethodList + PaymentMethodForm inside a Dialog.
+ * Lets users pick a saved card or add a new one via Stripe's PaymentElement.
+ *
+ * The "Add new card" tab renders PaymentMethodForm, which must live inside an
+ * <Elements> provider — wrap the entire feature in <StripeElementsProvider>.
+ *
+ * Backend boundary: this component never calls Stripe or your API directly.
+ * It hands raw PaymentMethod objects to onAddNew; the caller is responsible
+ * for attaching them to a Stripe Customer via their backend.
+ */
 function PaymentMethodPicker({
   methods,
   selectedId,

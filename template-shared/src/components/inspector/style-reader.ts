@@ -58,6 +58,17 @@ function parseAlpha(raw: string | undefined): number {
   return raw.endsWith('%') ? parseFloat(raw) / 100 : parseFloat(raw)
 }
 
+/**
+ * Normalizes any CSS color string (rgb/hsl/oklch/color()/named/hex/…) to hex + alpha. Modern
+ * Chromium's canvas `fillStyle` *getter* now echoes back whatever color-function string you
+ * assigned (oklch() stays oklch()) instead of always normalizing to rgb() the way older engines
+ * did — so round-tripping through the fillStyle string doesn't work for anything beyond what the
+ * regex below already handles directly. Reading the actually-*rendered pixel bytes* instead is
+ * reliable regardless of what string format the browser echoes back: cleared-to-transparent
+ * canvas + a single fillRect + getImageData always yields that color's own un-premultiplied
+ * RGBA, since compositing a single source-over draw onto a fully transparent destination
+ * reproduces the source unchanged.
+ */
 export function colorToHex(cssColor: string | null | undefined): ColorValue {
   if (!cssColor) return null
   const value = cssColor.trim()
@@ -150,6 +161,18 @@ function readFocusState(el: Element): ElementStyleSnapshot & { supported: boolea
   }
 }
 
+/**
+ * Real `:hover`/`:active` cannot be scripted per-element in any browser. Best-effort technique:
+ * scan every stylesheet rule for a selector containing the pseudo-class, keep the ones whose
+ * de-pseudo'd selector actually matches this element, substitute the pseudo for a disposable
+ * marker attribute, apply that attribute, and read getComputedStyle — then clean up immediately.
+ *
+ * Known gaps (surfaced via the returned `supported: false` rather than a silently wrong value):
+ * `.group:hover .child`-style ancestor-triggered variants (would need matching an ancestor, not
+ * this element), Radix `data-[state=open]:`/`data-[highlighted]:` attribute-driven states (not a
+ * real `:hover`/`:active`, not covered by this scan), and anything driven by inline JS handlers
+ * rather than a real stylesheet rule.
+ */
 function readHoverOrActiveState(el: Element, state: 'hover' | 'active'): ElementStyleSnapshot & { supported: boolean } {
   const marker = `data-inspector-force-${state}`
   const rules: string[] = []

@@ -54,6 +54,10 @@ describe('inferScope', () => {
   })
 
   it('collapses a varying attribute across comma-separated branches into key=value1|value2', () => {
+    // This is the drawer top/bottom-vs-left/right shape: one declaration, two branches,
+    // each with a different data-vaul-drawer-direction — losing either branch (the old
+    // .pop()-last-match behavior) meant a live edit to one direction silently also
+    // targeted the other via an identical, under-qualified reconstructed selector.
     const css = `[data-slot='drawer-content'][data-vaul-drawer-direction='top'],
 [data-slot='drawer-content'][data-vaul-drawer-direction='bottom'] {
   --drawer-content-radius: var(--radius-lg);
@@ -129,6 +133,10 @@ describe('parseVars', () => {
   })
 })
 
+// The two copies of this script (template-next and template-vite) are maintained by
+// hand, not generated from a single source — a fix applied to one and not the other
+// (exactly what almost happened during the live-preview bug fix) would silently ship
+// only half-fixed.
 describe('template-next/vite parity', () => {
   it('keeps generate-theme-manifest.mjs byte-identical between templates', () => {
     const here = path.dirname(fileURLToPath(import.meta.url))

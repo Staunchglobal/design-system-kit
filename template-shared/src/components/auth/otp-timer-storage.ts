@@ -8,6 +8,7 @@ function emit(): void {
   listeners.forEach((listener) => listener())
 }
 
+/** Subscribe to cooldown changes (writes + 250ms tick for countdown UI). */
 export function subscribeOtpTimer(onStoreChange: () => void): () => void {
   listeners.add(onStoreChange)
   const id = window.setInterval(onStoreChange, 250)

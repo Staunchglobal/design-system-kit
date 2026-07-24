@@ -109,6 +109,10 @@ function writeFontsCss(
 }`)
       varLines.push(`  --font-${f.id}: '${f.id}', sans-serif;`)
     } else if (f.source === 'google') {
+      // Loaded via a <link> in layout.tsx (see patchLayoutFonts), not @import here —
+      // this file gets nested-imported into globals.css, and CSS requires @import to
+      // be the first rule in a stylesheet; buried this deep, it never is, and Next's
+      // build fails with "@import rules must precede all rules" for the whole app.
       varLines.push(`  --font-${f.id}: '${f.googleFamily}', sans-serif;`)
     }
   }
@@ -227,6 +231,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, message: 'Invalid JSON' }, { status: 400 })
   }
 
+  // Reject identifiers that would land in a filename, a generated .ts/.tsx source
+  // file, or a CSS selector/property name rather than an already-scoped CSS value —
+  // see the comment above isSafeCustomFont for what this is (and isn't) guarding.
   payload.customFonts = payload.customFonts.filter(isSafeCustomFont)
   payload.customColors = payload.customColors.filter(
     (c) => SAFE_TOKEN_RE.test(c.name.replace(/^--/, '')) && isSafeCustomColorValue(c.hex)
@@ -239,6 +246,11 @@ export async function POST(request: Request) {
       ([k, v]) => SAFE_ICON_KEY_RE.test(k) && SAFE_ICON_NAME_RE.test(v)
     )
   )
+  // Values are intentionally free-form (that's the theme editor's actual feature — any
+  // CSS value, not just an allowlisted charset), but every one still lands verbatim at
+  // `property: <value>;` inside a real .css file (replaceCssVarAtOccurrence below), so a
+  // value containing `;`, `{`, `}`, or `/*` could end that declaration early and splice
+  // in new CSS rules. Reject those specifically instead of allowlisting the rest away.
   payload.values = Object.fromEntries(
     Object.entries(payload.values).filter(([, v]) => isSafeCssValue(v))
   )

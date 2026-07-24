@@ -20,6 +20,10 @@ type RegenerateGeneratedFilesOptions = {
   dryRun?: boolean
 }
 
+/**
+ * Rebuilds every file wholly owned by the CLI after a selection change.
+ * Keep init/update/remove routed through this function so their output cannot drift.
+ */
 export function regenerateGeneratedFiles({
   root,
   destRoot,

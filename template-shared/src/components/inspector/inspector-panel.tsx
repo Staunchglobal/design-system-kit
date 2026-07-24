@@ -162,6 +162,8 @@ export function InspectorPanel() {
   const [activeState, setActiveState] = React.useState<'resting' | InteractiveState>('resting')
   const [, forceTick] = React.useReducer((c: number) => c + 1, 0)
 
+  // Reset to the Resting tab whenever a *different* element gets pinned — adjusted during render
+  // (not in an effect) per React's "you might not need an effect" guidance for state resets.
   const [prevPinned, setPrevPinned] = React.useState(pinned)
   if (pinned !== prevPinned) {
     setPrevPinned(pinned)

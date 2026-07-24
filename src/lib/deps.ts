@@ -3,6 +3,14 @@ import type { PackageManager } from './detect.js'
 import { installCommand } from './detect.js'
 import optionalRuntimeDependencies from './optional-runtime-dependencies.json'
 
+/**
+ * Always installed regardless of which components are chosen: `cn()`'s clsx/tailwind-merge,
+ * the icon system's lucide-react, and tw-animate-css (the animate-in/out utilities several
+ * components' theme CSS relies on unconditionally). `@shadcn/react` (below, per-component) is
+ * a real runtime import (e.g. message-scroller imports from '@shadcn/react/message-scroller'),
+ * but bare `shadcn` is only ever reached via the build-time `@import 'shadcn/tailwind.css'` in
+ * globals.css/index.css — never JS-imported — so it lives in SHARED_DEV_DEPENDENCIES instead.
+ */
 export const CORE_RUNTIME_DEPENDENCIES: Record<string, string> = {
   clsx: '^2.1.1',
   'lucide-react': '^1.23.0',

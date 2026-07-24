@@ -16,6 +16,7 @@ import {
 type ImageCropDialogProps = {
   open: boolean
   onOpenChange: (open: boolean) => void
+  /** The image file to crop. A new object URL is created (and cleaned up) whenever this changes. */
   file: File | null
   aspect?: number
   onCropped: (file: File) => void
@@ -69,6 +70,7 @@ function ImageCropDialog({ open, onOpenChange, file, aspect, onCropped }: ImageC
   const imageRef = React.useRef<HTMLImageElement>(null)
 
   /* eslint-disable react-hooks/set-state-in-effect -- file changes must synchronously reset crop state while managing the object URL lifecycle */
+  // Create/revoke object URL whenever the file changes.
   React.useEffect(() => {
     if (!file) {
       setObjectUrl(null)
@@ -95,6 +97,7 @@ function ImageCropDialog({ open, onOpenChange, file, aspect, onCropped }: ImageC
       if (hasCrop) {
         result = await cropToFile(imageRef.current, completedCrop, file.name)
       } else {
+        // No selection made — pass the original file through unchanged.
         result = file
       }
       onCropped(result)

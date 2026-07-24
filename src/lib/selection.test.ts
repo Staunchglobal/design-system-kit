@@ -39,6 +39,8 @@ describe('resolveUiClosure', () => {
   })
 
   it('never produces a cycle-induced infinite loop for the full component set', () => {
+    // A cyclic uiDeps graph would hang resolveUiClosure's while loop — running it over every
+    // known slug at once is a cheap way to catch that regression without special-casing it.
     const closure = resolveUiClosure(allComponentSlugs())
     expect(closure.size).toBe(allComponentSlugs().length)
   })
@@ -60,12 +62,15 @@ describe('navGroupsFor', () => {
     for (const g of groups) {
       const original = GROUPS.find((og) => og.title === g.title)
       if (!original?.alwaysIncluded) {
+        // Only reachable if some item slipped through unselected — should never happen.
         expect(g.items.length).toBeGreaterThan(0)
       }
     }
   })
 
   it('only includes the specific selected item, not its whole category', () => {
+    // "kbd" has zero uiDeps, so its closure is just itself — a clean way to confirm picking one
+    // item never drags its 5 "Buttons & Actions" category-mates in as a side effect.
     expect(COMPONENTS.kbd.uiDeps).toEqual([])
     const groups = navGroupsFor(new Set(['kbd']))
     const buttonsGroup = groups.find((g) => g.items.some((i) => i.slug === 'kbd'))

@@ -13,6 +13,11 @@ export type TsCompatResult = {
   autoFixed: string[]
 }
 
+/**
+ * `compilerOptions` settings TypeScript 7 turns into hard errors (see the "Updates Since 5.x"
+ * section of the TS 7.0 announcement). Detected via text search rather than a full JSONC
+ * parse — consistent with patch-tsconfig.ts — so comments/formatting are never at risk.
+ */
 const TS7_HARD_ERRORS: Array<{ pattern: RegExp; message: string }> = [
   {
     pattern: /"target"\s*:\s*"es5"/i,
@@ -61,6 +66,13 @@ const TS7_HARD_ERRORS: Array<{ pattern: RegExp; message: string }> = [
   },
 ]
 
+/**
+ * Source-level TS7 breaking changes the announcement calls out (namespaces using the `module`
+ * keyword, `asserts` on import attributes, Closure-style JSDoc in .js files, etc.) aren't
+ * checked here — they'd require scanning every source file, which is slow and these patterns
+ * are vanishingly rare in modern React/Next/Vite codebases. Surfaced as a one-line pointer
+ * instead of silently pretending the check is exhaustive.
+ */
 const UNCHECKED_SOURCE_LEVEL_NOTE =
   "This only checks tsconfig.json. TypeScript 7 also changes source-level behavior (the `module` keyword in namespace declarations, `asserts` on import attributes → use `with`, and several JavaScript/JSDoc-file conventions) — see the TS 7.0 announcement's \"JavaScript Differences\" section if you have legacy namespace or JSDoc-heavy code."
 
@@ -71,6 +83,11 @@ function typesArrayFromDeps(deps: Record<string, string>): string[] {
     .sort()
 }
 
+/**
+ * Only bites when "types" is entirely absent: TS 7 changes its default from `["*"]`
+ * (auto-include every @types/* package) to `[]` (include nothing), which can silently drop
+ * @types/node's `process`/`Buffer`, @types/react's JSX namespace, etc.
+ */
 function checkTypesDefault(
   tsconfigSrc: string,
   tsMajor: number | null,
@@ -93,6 +110,12 @@ function checkTypesDefault(
   }
 }
 
+/**
+ * TypeScript 7 changes `rootDir`'s default from "the nearest common ancestor of your input
+ * files" to the project root (`./`). Only matters when something is actually emitted — with
+ * `noEmit: true` (which every Next.js/Vite tsconfig sets) there's no output tree for rootDir
+ * to shape, so this is a low-severity FYI rather than a real risk.
+ */
 function checkRootDirDefault(tsconfigSrc: string, tsMajor: number | null): TsCompatIssue | null {
   if (/"rootDir"\s*:/.test(tsconfigSrc)) return null
   if (/"noEmit"\s*:\s*true/.test(tsconfigSrc)) return null
@@ -104,6 +127,7 @@ function checkRootDirDefault(tsconfigSrc: string, tsMajor: number | null): TsCom
   }
 }
 
+/** Inserts an explicit "types" array right after the compilerOptions opening brace. */
 function insertTypesArray(tsconfigSrc: string, types: string[]): string | null {
   const m = tsconfigSrc.match(/"compilerOptions"\s*:\s*\{/)
   if (!m) return null
@@ -166,6 +190,11 @@ export function checkTypeScriptCompat(
   return { tsMajor, issues, autoFixed }
 }
 
+/**
+ * Runs the check and prints a "TypeScript compatibility" report section. Shared by both the
+ * Next and Vite init flows since the check itself is framework-agnostic (just tsconfig text
+ * + installed @types/* packages).
+ */
 export function logTypeScriptCompat(
   tsconfigPath: string,
   tsVersion: TypeScriptVersionInfo | null,

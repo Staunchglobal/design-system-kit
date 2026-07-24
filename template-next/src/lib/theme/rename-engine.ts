@@ -1,6 +1,16 @@
 import fs from "node:fs";
 import path from "node:path";
 
+/**
+ * Renames a design token's *identifier* (not just its value) across every CSS
+ * declaration/reference, the Tailwind `@theme` bridge, literal Tailwind utility
+ * classNames in vendored component/demo .tsx files, and hand-authored description
+ * prose — for the four families the theme editor exposes a rename UI for.
+ *
+ * `planRename`/`applyRename` share one traversal (`runRename`) so a preview can
+ * never drift from what actually gets written — the only difference is whether
+ * matched files are written back to disk.
+ */
 export type RenameFamily = "color" | "radius" | "typography" | "shadow";
 
 export interface RenameRequest {
@@ -40,9 +50,20 @@ interface Rule {
   replacement: Replacement;
 }
 
+/**
+ * CSS declaration/reference rules per family. Each pattern requires the literal
+ * token to appear as a whole identifier segment (never a substring of an unrelated
+ * name) — e.g. renaming "accent" matches `--accent`, `--accent-foreground`,
+ * `--accent-500`, and `var(--accent-500)`, but never `--sidebar-accent` (a
+ * different token that only shares the substring "accent").
+ */
 function cssRulesFor(family: RenameFamily, escFrom: string, to: string): Rule[] {
   switch (family) {
     case "color":
+      // Also covers the Tailwind bridge's RHS (`var(--accent)` inside
+      // `--color-accent: var(--accent);`) — the LHS `--color-accent` is a
+      // different, `color-`-prefixed identifier and is intentionally untouched
+      // here (Tailwind utility naming is handled by the tw-class rule instead).
       return [
         {
           regex: new RegExp(`--${escFrom}(-foreground|-\\d+)?(?![\\w-])`, "g"),
@@ -77,6 +98,8 @@ function cssRulesFor(family: RenameFamily, escFrom: string, to: string): Rule[] 
   }
 }
 
+/** A Tailwind utility class boundary: opacity modifier, quote, backtick, whitespace,
+ *  a compound-variant colon, or end of string — never a bare identifier continuation. */
 const CLASS_BOUNDARY = `(?=[/"'\`\\s:]|$)`;
 
 interface TsxRule extends Rule {
@@ -232,6 +255,7 @@ function runRename(req: RenameRequest, ctx: RenameContext, write: boolean): Rena
   return { changes, totalMatches };
 }
 
+/** Dry-run — identical traversal to applyRename, never writes. */
 export function planRename(req: RenameRequest, ctx: RenameContext): RenamePlan {
   return runRename(req, ctx, false);
 }

@@ -99,6 +99,8 @@ export type ParsedTransition = {
   compound: boolean;
 };
 
+// Sourced from token-families.json — the single canonical registry of token-family
+// names, shared with generate-theme-manifest.mjs (Node) so the two never drift.
 const COLOR_SEMANTIC = new Set<string>(tokenFamilies.colorSemantic);
 
 const SHADE_PREFIXES = tokenFamilies.shadeFamilies.map((f) => `${f}-`);

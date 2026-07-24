@@ -83,6 +83,11 @@ export function patchGlobalsCss(filePath: string, templateContent: string): Glob
     }
   }
 
+  // No @theme block at all (confirmed above) means Tailwind was never wired into this file —
+  // append the whole @theme/:root/@layer base block, or every color/radius CSS variable here
+  // would silently never become a real Tailwind utility (bg-primary, text-foreground, …).
+  // Only the first clone's boundary spacing is normalized — the rest keep their relative
+  // spacing to each other from the template, which is already correct for that block's own shape.
   if (bodyNodes.length) {
     const bodyClones = bodyNodes.map((n) => n.clone())
     bodyClones[0].raws.before = existingRoot.nodes.length ? '\n\n' : ''

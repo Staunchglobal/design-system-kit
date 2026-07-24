@@ -15,6 +15,12 @@ export function detectInstalledComponents(root: string, srcDir = 'src'): Set<str
   return installed
 }
 
+/**
+ * The baseline to pre-check in the picker / union into a re-run: prefer the persisted
+ * design-kit.json (the user's own picks, never polluted by tool-chrome deps); fall back to
+ * on-disk detection — minus whatever the theme editor's own chrome always needs — for a
+ * project that ran an older version of this CLI before design-kit.json existed.
+ */
 export function priorSelectionFor(root: string, toolOnly: Set<string>, srcDir = 'src'): Set<string> {
   const config = readSelectionConfig(root)
   if (config.components.length) return new Set(config.components)

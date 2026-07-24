@@ -17,6 +17,7 @@ type AuthHandoff = {
 
 const EMPTY_HANDOFF: AuthHandoff = { email: null, mode: null, otpHint: null }
 
+/** Cache so useSyncExternalStore getSnapshot returns a stable reference when storage is unchanged. */
 let sessionSnapshot: AuthSession | null = null
 let sessionRaw: string | null | undefined = undefined
 let handoffSnapshot: AuthHandoff = EMPTY_HANDOFF

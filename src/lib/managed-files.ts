@@ -1,3 +1,8 @@
+/**
+ * Files installed regardless of component selection — shared between `init` (which copies them)
+ * and `update` (which needs the exact same list to know what it's allowed to resync). Centralized
+ * here instead of duplicated in init-next.ts/init-vite.ts so the two can never drift apart.
+ */
 export const ALWAYS_SHARED_FILES = [
   'lib/utils.ts',
   'lib/theme/types.ts',

@@ -46,6 +46,7 @@
 [data-slot='input']:focus-visible {
   border-width: 2px;
   border-color: var(--input-focus-border-color);
+  /* Kill Tailwind focus-visible:ring-3 — border-only focus */
   --tw-ring-shadow: 0 0 #0000;
   --tw-ring-offset-shadow: 0 0 #0000;
   box-shadow: none;

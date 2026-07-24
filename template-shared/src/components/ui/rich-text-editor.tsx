@@ -63,6 +63,9 @@ function RichTextEditor({
     },
   })
 
+  // Sync external value changes without triggering a feedback loop.
+  // The guard `editor.getHTML() === value` prevents re-setting content that
+  // the editor just emitted — the editor already holds that state.
   React.useEffect(() => {
     if (!editor || editor.isDestroyed) return
     if (editor.getHTML() === value) return

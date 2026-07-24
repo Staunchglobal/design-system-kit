@@ -16,6 +16,7 @@
 }
 
 [data-slot='input-otp-slot'] {
+  /* Aliased to Input tokens so Input section changes cascade here. */
   --input-otp-slot-size: var(--input-height);
   --input-otp-slot-border-color: var(--input-border-color);
   --input-otp-slot-bg: var(--input-bg);

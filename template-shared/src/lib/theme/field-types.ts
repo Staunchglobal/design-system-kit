@@ -176,6 +176,10 @@ export function scopePriority(scope?: string): number {
   return 1;
 }
 
+/**
+ * Apply editor values onto an element. Values are keyed by unique variable id.
+ * When several ids share a CSS name, prefer root (light), then editor, never dark.
+ */
 export function applyCssVars(
   values: Record<string, string>,
   nameById: Record<string, string>,
@@ -210,6 +214,25 @@ export function clearAppliedCssVars(
   }
 }
 
+/**
+ * Component CSS declares its own override vars (e.g. `--button-bg`) directly on the
+ * same selector that consumes them (`[data-slot="button"][data-variant="default"]`).
+ * A rule that targets an element directly always wins over a value the element only
+ * *inherits* from an ancestor — so writing these via `host.style.setProperty(...)` on
+ * an ancestor (what `applyCssVars` does) can never be visible live; it only becomes
+ * visible once Save rewrites the literal value inside that same selector on disk.
+ * Reconstruct the selector from `scope` (as produced by generate-theme-manifest.mjs's
+ * `inferScope`) so these can be applied as real, higher-specificity CSS rules instead.
+ * Returns null for global/token scopes (root, dark, editor, default) with no slot.
+ *
+ * Handles three shapes beyond a plain `slot/variant=x/size=y`:
+ * - `ancestor-slot=x` — a descendant combinator (e.g. kbd inside a tooltip renders as
+ *   `[data-slot="tooltip-content"] [data-slot="kbd"]`).
+ * - any other `key=value` — a generic attribute qualifier (e.g. `orientation=horizontal`).
+ * - `key=value1|value2` — the source rule was a comma-separated list of alternatives
+ *   that all declare this variable (e.g. drawer's top/bottom vs left/right rules);
+ *   fans out into a real comma-separated selector so every alternative is covered.
+ */
 export function scopeToSelector(scope?: string): string | null {
   if (!scope) return null;
   const parts = scope.split("/");
@@ -241,6 +264,18 @@ export function scopeToSelector(scope?: string): string | null {
     .join(", ");
 }
 
+/**
+ * Builds selector-qualified override rules for every component-scoped variable
+ * (see `scopeToSelector`), scoped under `hostSelector` so they only affect the live
+ * preview. Dark-scoped entries are skipped — the editor chrome always previews light.
+ *
+ * A handful of variables can't be disambiguated from scope alone (e.g. two
+ * occurrences whose only distinguishing DOM attribute isn't captured, or a
+ * genuinely duplicate declaration) and would collapse onto the identical
+ * selector+name pair. When that happens we can no longer tell which occurrence a
+ * live edit belongs to, so skip emitting a rule for that pair entirely rather than
+ * have one occurrence silently overwrite another's preview.
+ */
 export function buildScopedVarsCss(
   values: Record<string, string>,
   manifest: ThemeManifest,

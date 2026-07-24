@@ -84,6 +84,8 @@ export function VariableForm() {
         <div className="flex flex-col gap-4 p-4">
           {RENAME_FAMILY_BY_GROUP[group.id] && (
             <RenameTokenForm
+              // Remount on group change instead of an effect that resets state —
+              // avoids a setState-in-effect (each group gets fresh initial state for free).
               key={group.id}
               family={RENAME_FAMILY_BY_GROUP[group.id]}
               manifest={manifest}
@@ -240,6 +242,8 @@ function RenameTokenForm({
   onPreview: (req: { family: RenameTokenFamily; from: string; to: string }) => Promise<RenameTokenResponse>
   onApply: (req: { family: RenameTokenFamily; from: string; to: string }) => Promise<RenameTokenResponse>
 }) {
+  // Parent remounts this component (key={group.id}) on family change, so this only
+  // ever needs to initialize once per mount — no reset effect required.
   const fromOptions = React.useMemo(() => fromOptionsFor(family, manifest), [family, manifest])
   const existingNames = React.useMemo(() => allTokenNames(manifest), [manifest])
   const reserved = React.useMemo(() => reservedWordsFor(family), [family])
@@ -639,6 +643,9 @@ function AddFontForm({
     [googleFamily]
   )
   const [selectedWeights, setSelectedWeights] = React.useState<number[]>([400])
+  // Reset the weight selection whenever the chosen font changes underneath it, since a
+  // previously-picked weight may not exist for the new font (same render-time-adjustment
+  // pattern as HexField/NumberField elsewhere in this file, not a useEffect).
   const [prevGoogleFamily, setPrevGoogleFamily] = React.useState(googleFamily)
   if (googleFamily !== prevGoogleFamily) {
     setPrevGoogleFamily(googleFamily)

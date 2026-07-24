@@ -2,6 +2,8 @@ import type { ThemeGroup, ThemeVariable } from './types'
 import { humanizeKey, humanizeScopeValue, humanizeVarName, scopeConditions } from './humanize'
 import tokenFamilies from './token-families.json'
 
+// Sourced from token-families.json — the canonical registry, shared with
+// generate-theme-manifest.mjs and value-parsers.ts so the family list never drifts.
 const SHADE_FAMILY_RE = new RegExp(`^(${tokenFamilies.shadeFamilies.join('|')})-(\\d+)$`)
 
 const SEMANTIC_DESCRIPTIONS: Record<string, string> = {

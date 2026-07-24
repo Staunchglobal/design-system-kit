@@ -113,6 +113,9 @@ describe('generateLivePreview', () => {
   })
 
   it('does not map sonner-toast to a module when sonner was never selected', () => {
+    // 'sonner-toast' as a bare string always appears in the hardcoded SECTION_ID_ALIASES
+    // constant (unconditional in every generated file) — what must NOT happen without sonner
+    // selected is a GROUP_TO_MODULE entry pointing it at a component that was never installed.
     const navGroups = navGroupsFor(resolveUiClosure(['kbd']))
     const out = generateLivePreview({
       navGroups,

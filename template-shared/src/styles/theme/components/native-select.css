@@ -4,6 +4,7 @@
 }
 
 [data-slot='native-select'] {
+  /* Aliased to Input tokens so Input section changes cascade here. */
   --native-select-radius: var(--input-radius);
   --native-select-border-width: var(--input-border-width);
   --native-select-border-color: var(--input-border-color);

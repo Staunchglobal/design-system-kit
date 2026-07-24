@@ -34,6 +34,17 @@ const TOKEN_FILES = [
   'styles/theme/tokens/typography-patterns.css',
 ]
 
+/**
+ * Re-syncs every file `init` installed for your current selection to whatever the *currently
+ * installed CLI version's* template looks like now — for picking up fixes/improvements made to
+ * this package after you first ran `init`, without re-running the whole picker.
+ *
+ * A file only gets overwritten if its disk content still exactly matches the hash recorded the
+ * last time init/update actually wrote it (see selection-state.ts) — if you've edited it since,
+ * it's left alone and reported as "customized, skipped" unless you pass --force. Files newly
+ * required by your existing selection (e.g. a component's dependencies grew in a newer template)
+ * are copied fresh. Never removes a file — that's `design-kit remove`'s job.
+ */
 export async function update(options: UpdateOptions) {
   const root = path.resolve(options.cwd)
   log.title('Update installed files')
@@ -100,6 +111,11 @@ export async function update(options: UpdateOptions) {
     ...frameworkExtraFiles.map((f) => ({ relPath: f, templateSrc: remoteUrl(frameworkSrc, f) })),
   ]
 
+  // A previously-renamed token (via /theme-editor) only touched files that existed at
+  // the time — reapply it to every freshly-fetched template file below, before any
+  // comparison, so an already-renamed local file is never mistaken for drift against
+  // the (otherwise still-original-named) template, and a component added after the
+  // rename doesn't land back on the original name.
   const renameHistory = loadRenameHistory(destRoot)
 
   const toWrite: Pending[] = []

@@ -248,6 +248,12 @@ export function LivePreview() {
 }
 `
 
+/**
+ * live-preview.tsx hardcodes an import + GROUP_TO_MODULE entry per section file so the theme
+ * editor can show "the same demo as /design-system" for whatever CSS group you're editing.
+ * Only the header (imports + the map) depends on the selection — the component logic below
+ * it (LIVE_PREVIEW_BODY) never changes, so it's regenerated verbatim from the original file.
+ */
 export function generateLivePreview(opts: {
   navGroups: NavGroup[]
   designSystemImportBase: string

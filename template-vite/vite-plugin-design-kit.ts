@@ -87,6 +87,10 @@ function writeFontsCss(fonts: CustomFont[], values: Record<string, string>): str
       )
       varLines.push(`  --font-${f.id}: '${f.id}', sans-serif;`)
     } else if (f.source === 'google') {
+      // Loaded via a <link> in index.html (see patchIndexHtmlFonts), not @import here —
+      // this file gets nested-imported into src/index.css, and CSS requires @import to
+      // be the first rule in a stylesheet; buried this deep, it never is, and the build
+      // fails with "@import rules must precede all rules" for the whole app.
       varLines.push(`  --font-${f.id}: '${f.googleFamily}', sans-serif;`)
     }
   }
@@ -192,6 +196,14 @@ function patchIndexCssColorBridge(root: string, customColors: CustomColor[]) {
   fs.writeFileSync(indexCssPath, css)
 }
 
+// This endpoint takes an arbitrary JSON payload from the client and writes it into
+// files on disk — including generated .ts source that gets imported and executed,
+// and font ids that become filesystem paths. Editing an existing CSS variable's
+// *value* is the theme editor's actual feature and is already scoped inside a
+// `property: <value>;` slot, so it's intentionally left free-form; these checks
+// cover the identifiers that instead become selectors, property names, filenames,
+// or literal source code, where an unescaped value would let a request break out
+// of its intended syntactic slot.
 export const SAFE_TOKEN_RE = /^[a-zA-Z0-9_-]+$/
 export const SAFE_ICON_KEY_RE = /^[a-zA-Z][a-zA-Z0-9.-]*$/
 export const SAFE_ICON_NAME_RE = /^[A-Za-z][A-Za-z0-9]*$/
@@ -207,6 +219,11 @@ export function isSafeCustomColorValue(value: string): boolean {
   return m !== null && SAFE_TOKEN_RE.test(m[1].replace(/^--/, ''))
 }
 
+/**
+ * A theme variable's value is written verbatim into `property: <value>;` in a real
+ * .css file (see replaceCssVarAtOccurrence) — a value containing `;`, `{`, `}`, or a
+ * `/*` comment-opener could close that declaration early and splice in new CSS rules.
+ */
 export function isSafeCssValue(value: string): boolean {
   return !CSS_VALUE_BREAKOUT_RE.test(value)
 }
@@ -456,6 +473,11 @@ function appendRenameHistoryRename(root: string, entry: { family: RenameFamily; 
   fs.writeFileSync(historyPath, JSON.stringify({ renames: history }, null, 2) + '\n')
 }
 
+/**
+ * Vite dev-server plugin that gives the /theme-editor's Save button somewhere to write to
+ * (the equivalent of the Next.js kit's `/api/theme/save` route handler). Only wired up by
+ * `configureServer`, so it never ships in a production build.
+ */
 export function designKit(): Plugin {
   return {
     name: 'design-kit-theme-save',
@@ -478,6 +500,10 @@ export function designKit(): Plugin {
           return
         }
 
+        // Reject identifiers that would land in a filename, a generated .ts source
+        // file, or a CSS selector/property name rather than an already-scoped CSS
+        // value — see the comment above isSafeCustomFont for what this is (and
+        // isn't) guarding.
         payload.customFonts = payload.customFonts.filter(isSafeCustomFont)
         payload.customColors = payload.customColors.filter(
           (c) => SAFE_TOKEN_RE.test(c.name.replace(/^--/, '')) && isSafeCustomColorValue(c.hex)
@@ -490,6 +516,12 @@ export function designKit(): Plugin {
             ([k, v]) => SAFE_ICON_KEY_RE.test(k) && SAFE_ICON_NAME_RE.test(v)
           )
         )
+        // Values are intentionally free-form (that's the theme editor's actual feature —
+        // any CSS value, not just an allowlisted charset), but every one still lands
+        // verbatim at `property: <value>;` inside a real .css file
+        // (replaceCssVarAtOccurrence below), so a value containing `;`, `{`, `}`, or `/*`
+        // could end that declaration early and splice in new CSS rules. Reject those
+        // specifically instead of allowlisting the rest away.
         payload.values = Object.fromEntries(
           Object.entries(payload.values).filter(([, v]) => isSafeCssValue(v))
         )

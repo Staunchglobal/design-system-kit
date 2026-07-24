@@ -103,6 +103,11 @@ export function detectProject(root: string): ProjectInfo {
   }
 }
 
+/**
+ * Walks up from `root` looking for a lockfile — in a monorepo the lockfile lives at the
+ * workspace root, not inside the individual app directory `init` is run from, so checking
+ * only `root` itself would silently misdetect pnpm/yarn/bun workspaces as plain npm.
+ */
 export function detectPackageManager(root: string): PackageManager {
   let dir = root
   for (let i = 0; i < 6; i++) {

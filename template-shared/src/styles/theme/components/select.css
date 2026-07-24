@@ -1,4 +1,5 @@
 [data-slot='select-trigger'] {
+  /* Aliased to Input tokens so Input section changes cascade here. */
   --select-trigger-radius: var(--input-radius);
   --select-trigger-border-width: var(--input-border-width);
   --select-trigger-border-color: var(--input-border-color);

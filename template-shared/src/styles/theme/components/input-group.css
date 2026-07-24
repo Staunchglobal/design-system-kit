@@ -1,4 +1,5 @@
 [data-slot='input-group'] {
+  /* Aliased to Input tokens so Input section changes cascade here. */
   --input-group-radius: var(--input-radius);
   --input-group-border-width: var(--input-border-width);
   --input-group-border-color: var(--input-border-color);

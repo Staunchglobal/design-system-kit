@@ -2,6 +2,16 @@
 
 import * as React from 'react'
 
+/**
+ * Tracks a live element's bounding rect — re-measures on scroll/resize (catches viewport-driven
+ * moves) and via ResizeObserver/MutationObserver on the element itself (catches content-driven
+ * size changes, e.g. a live theme edit changing padding, with no scroll/resize event at all).
+ * Returns null once the element is detached (e.g. a closed Dialog unmounted its content).
+ *
+ * The rect itself is computed with useMemo during render (a plain DOM read, safe any time) —
+ * the effect below only subscribes to observers/listeners, which call setState from their own
+ * callbacks (bumping `tick` to trigger a re-measure), never synchronously within the effect body.
+ */
 export function useElementTracking(target: Element | null): DOMRect | null {
   const [tick, setTick] = React.useState(0)
 
@@ -31,5 +41,7 @@ export function useElementTracking(target: Element | null): DOMRect | null {
     if (!target || !target.isConnected) return null
     return target.getBoundingClientRect()
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // `tick` intentionally participates only to force a re-measure on observer/listener events —
+    // it carries no data of its own.
   }, [target, tick])
 }

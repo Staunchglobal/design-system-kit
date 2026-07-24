@@ -16,6 +16,9 @@ function InputOTP({
 }: React.ComponentProps<typeof OTPInput> & {
   containerClassName?: string
 }) {
+  // input-otp forwards rest props onto the native <input> while also setting
+  // value={l} internally. If defaultValue is in rest, React warns about having
+  // both value and defaultValue — so we own state here and never pass defaultValue through.
   const [uncontrolledValue, setUncontrolledValue] = React.useState(
     typeof defaultValue === 'string' ? defaultValue : ''
   )

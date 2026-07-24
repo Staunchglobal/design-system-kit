@@ -22,6 +22,8 @@ export default [
     },
     rules: {
       ...js.configs.recommended.rules,
+      // Babel parses TS 7 syntax without coupling ESLint to the installed TS compiler, but its
+      // scope manager treats type-only names as values. `tsc --noEmit` owns these two checks.
       'no-undef': 'off',
       'no-unused-vars': 'off',
     },

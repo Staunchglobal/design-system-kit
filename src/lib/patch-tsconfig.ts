@@ -26,6 +26,22 @@ function defaultTsconfig(aliasTarget: string) {
   }
 }
 
+/**
+ * tsconfig files are commonly JSONC (comments, trailing commas) — a real project's
+ * tsconfig.app.json will happily fail `JSON.parse`. Uses jsonc-parser's tolerant parse plus its
+ * edit API (modify/applyEdits) so comments and existing formatting survive the edit, and nested
+ * objects that don't exist yet ("compilerOptions", "paths") get created automatically rather
+ * than needing separate manual-splice cases for each.
+ *
+ * `aliasTarget` is `./src/*` for a `src/` layout, `./*` for a root layout (Next.js without
+ * `--src-dir`) — only used when inserting a brand new "@/*" entry; an existing one is left as-is.
+ *
+ * Also silently ensures `compilerOptions.resolveJsonModule` is `true` — needed because
+ * `lib/theme/token-families.json` (the token-rename registry) is imported directly by shared
+ * theme code. Next's default tsconfig already sets this; Vite's react-ts template (which
+ * type-checks for real via `tsc -b && vite build`) does not, so without this a scaffolded Vite
+ * project's build would fail on that import.
+ */
 export function patchTsconfig(filePath: string, aliasTarget: string = './src/*'): TsconfigPatchResult {
   if (!fs.existsSync(filePath)) {
     fs.writeFileSync(filePath, JSON.stringify(defaultTsconfig(aliasTarget), null, 2) + '\n')

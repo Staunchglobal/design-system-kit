@@ -56,6 +56,8 @@ function scaffoldNext(dir) {
 }
 
 function scaffoldVite(dir) {
+  // create-vite mishandles an absolute path argument (it re-joins it onto cwd instead of using
+  // it as-is) — passing just the basename with cwd set to its parent is the reliable form.
   assert(
     run('npx', ['--yes', 'create-vite@latest', path.basename(dir), '--template', 'react-ts'], path.dirname(dir), {
       quiet: true,
@@ -100,6 +102,8 @@ async function waitForHttp(url, timeoutMs = 60_000) {
       if (response.ok) return
     } catch {
       void 0
+        // The process group already exited.
+      // The production server is still starting.
     }
     await new Promise((resolve) => setTimeout(resolve, 500))
   }
@@ -210,6 +214,11 @@ if (!run('npm', ['run', 'build'], root)) {
   process.exit(1)
 }
 
+// A partial selection that exercises: cross-category uiDeps (combobox → button/input-group),
+// demo-file-only deps (table → badge, button → spinner), body-local state (calendar, item),
+// and framework-specific wiring (sonner → Toaster, needs layout/App root changes to fully build,
+// so it's deliberately excluded from these fully-automated scenarios — see README's manual-step
+// notes for that path).
 const PARTIAL_COMPONENTS = 'button,combobox,dialog,table,accordion,chart,navigation-menu,calendar,item,badge'
 
 await scenario('Next.js — full install (--all)', () => {

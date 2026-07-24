@@ -80,6 +80,11 @@ export function ThemeEditorProvider({
     }
     return set
   }, [manifest])
+  // Colors/typography that get saved are folded into the regular manifest-parsed
+  // variable set on the next load (still fully editable, just no longer tracked here).
+  // Fonts aren't: Save rewrites tokens/fonts.css wholesale from this state, so starting
+  // empty after a reload would silently delete every previously saved font on the next
+  // Save. Seed from the manifest (recovered from tokens/fonts.css) instead.
   const [values, setValues] = React.useState<Record<string, string>>(() => ({ ...baseline }))
   const [customColors, setCustomColors] = React.useState<CustomColor[]>([])
   const [customTypography, setCustomTypography] = React.useState<CustomTypography[]>([])
@@ -92,6 +97,8 @@ export function ThemeEditorProvider({
   const [activeGroupId, setActiveGroupId] = React.useState(() => manifest.groups[0]?.id ?? 'colors')
 
   React.useEffect(() => {
+    // Always scope live vars to the editor host — never paint <html> (that leaks
+    // dark mode into /design-system and the rest of the app).
     const host = document.querySelector('[data-theme-editor]') as HTMLElement | null
     if (!host) return
 
