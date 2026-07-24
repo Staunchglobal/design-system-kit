@@ -19,7 +19,6 @@ type NotificationItem = {
 
 type DateGroup = {
   label: string
-  /** Stable sort key for deterministic ordering (ISO date string or 'invalid'). */
   sortKey: string
   items: NotificationItem[]
 }
@@ -32,7 +31,6 @@ function getGroupLabel(date: Date, now: Date): string {
   if (!isValid(date)) return 'Earlier'
   if (isSameDay(date, now)) return 'Today'
   if (isSameDay(date, subDays(now, 1))) return 'Yesterday'
-  // Same year as reference: show "Month Day", otherwise show full date
   if (date.getFullYear() === now.getFullYear()) {
     return format(date, 'MMMM d')
   }
@@ -64,7 +62,6 @@ function groupByDate(items: NotificationItem[], now: Date): DateGroup[] {
     group.items.push(item)
   }
 
-  // Newest first; 'invalid' always goes last
   return Array.from(map.values()).sort((a, b) => {
     if (a.sortKey === 'invalid') return 1
     if (b.sortKey === 'invalid') return -1

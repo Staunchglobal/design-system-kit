@@ -1,19 +1,12 @@
-/* ==========================================================================
-   Tag Input
-   ==========================================================================
-   Paramount Design System — Select multi/tags container (Figma 20863:122744)
-   Shell matches Medium Select/Input; chips match Input Tags (radius 4, border).
-   ========================================================================== */
-
 [data-slot='tag-input'] {
   --tag-input-bg: var(--input-bg);
   --tag-input-border-color: var(--input-border-color);
   --tag-input-border-width: var(--input-border-width);
-  --tag-input-radius: var(--input-radius); /* Medium — 20px */
-  --tag-input-min-height: var(--input-height); /* Medium — 48px */
-  --tag-input-padding-x: var(--input-padding-x); /* 16px */
-  --tag-input-padding-y: var(--input-padding-y); /* 12px */
-  --tag-input-gap: 0.25rem; /* spacing/xxxs — 4px */
+  --tag-input-radius: var(--input-radius);
+  --tag-input-min-height: var(--input-height);
+  --tag-input-padding-x: var(--input-padding-x);
+  --tag-input-padding-y: var(--input-padding-y);
+  --tag-input-gap: 0.25rem;
   --tag-input-font-size: var(--input-font-size);
   --tag-input-focus-border-color: var(--input-focus-border-color);
   --tag-input-invalid-border-color: var(--input-invalid-border-color);
@@ -47,19 +40,17 @@
   background-color: var(--tag-input-disabled-bg);
   opacity: 1;
 }
-
-/* Input Tags chip */
 [data-slot='tag-chip'] {
   --tag-chip-bg: var(--neutral-0);
   --tag-chip-fg: var(--foreground);
-  --tag-chip-border-color: var(--border); /* border/light */
+  --tag-chip-border-color: var(--border);
   --tag-chip-border-width: 1px;
-  --tag-chip-radius: var(--radius-sm); /* radius/xs — 4px */
-  --tag-chip-padding-inline-start: 0.5rem; /* spacing/xxs — 8px */
-  --tag-chip-padding-inline-end: 0.125rem; /* spacing/xxxxs — 2px */
+  --tag-chip-radius: var(--radius-sm);
+  --tag-chip-padding-inline-start: 0.5rem;
+  --tag-chip-padding-inline-end: 0.125rem;
   --tag-chip-padding-block: 0.125rem;
   --tag-chip-gap: 0.125rem;
-  --tag-chip-font-size: var(--typography-small-font-size); /* Body B3 — 14px */
+  --tag-chip-font-size: var(--typography-small-font-size);
   --tag-chip-font-weight: var(--typography-small-font-weight);
   --tag-chip-line-height: var(--typography-small-line-height);
   --tag-chip-height: auto;
@@ -84,8 +75,8 @@
 }
 
 [data-slot='tag-input-error'] {
-  --tag-input-error-fg: var(--destructive); /* text/danger */
-  --tag-input-error-font-size: var(--typography-p-font-size); /* Body B2 — helper size */
+  --tag-input-error-fg: var(--destructive);
+  --tag-input-error-font-size: var(--typography-p-font-size);
   color: var(--tag-input-error-fg);
   font-size: var(--tag-input-error-font-size);
 }

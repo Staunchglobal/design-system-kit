@@ -1,17 +1,8 @@
-/* ==========================================================================
-   Accordion
-   ==========================================================================
-   Safer Health Design System — Accordion (Figma 290:4154)
-   Grouped shell: Border/Low + radius 8. Trigger px 12 / py 10, text-sm Medium;
-   caret 20px Icon/Medium. Content pt 4 / pb 10 / px 12, text-sm Regular.
-   Mapped onto existing kit tokens (border, foreground, muted, radius-md).
-   ========================================================================== */
-
 [data-slot='accordion'] {
   --accordion-width: 100%;
-  --accordion-border-color: var(--border); /* Border/Low */
+  --accordion-border-color: var(--border);
   --accordion-border-width: 1px;
-  --accordion-radius: var(--radius-md); /* Spacing/spacing-2 — 8px */
+  --accordion-radius: var(--radius-md);
   width: var(--accordion-width);
   border: var(--accordion-border-width) solid var(--accordion-border-color);
   border-radius: var(--accordion-radius);
@@ -28,13 +19,13 @@
 
 [data-slot='accordion-trigger'] {
   --accordion-trigger-radius: 0;
-  --accordion-trigger-padding-x: 0.75rem; /* Spacing/spacing-3 — 12px */
-  --accordion-trigger-padding-y: 0.625rem; /* Spacing/spacing-2-5 — 10px */
-  --accordion-trigger-gap: 0.5rem; /* Spacing/spacing-2 — 8px */
-  --accordion-trigger-font-size: var(--typography-small-font-size); /* text-sm — 14px */
-  --accordion-trigger-line-height: var(--typography-small-line-height); /* 20px */
-  --accordion-trigger-font-weight: var(--typography-small-font-weight); /* Medium — 500 */
-  --accordion-trigger-fg: var(--foreground); /* Text/High */
+  --accordion-trigger-padding-x: 0.75rem;
+  --accordion-trigger-padding-y: 0.625rem;
+  --accordion-trigger-gap: 0.5rem;
+  --accordion-trigger-font-size: var(--typography-small-font-size);
+  --accordion-trigger-line-height: var(--typography-small-line-height);
+  --accordion-trigger-font-weight: var(--typography-small-font-weight);
+  --accordion-trigger-fg: var(--foreground);
   --accordion-trigger-focus-ring-color: var(--ring);
   --accordion-trigger-focus-ring-width: 3px;
   --accordion-trigger-disabled-opacity: 0.5;
@@ -61,8 +52,8 @@
 }
 
 [data-slot='accordion-trigger-icon'] {
-  --accordion-trigger-icon-fg: var(--muted-600); /* Icon/Medium */
-  --accordion-trigger-icon-size: 1.25rem; /* 20px */
+  --accordion-trigger-icon-fg: var(--muted-600);
+  --accordion-trigger-icon-size: 1.25rem;
   color: var(--accordion-trigger-icon-fg);
   width: var(--accordion-trigger-icon-size);
   height: var(--accordion-trigger-icon-size);
@@ -71,7 +62,7 @@
 [data-slot='accordion-content'] {
   --accordion-content-font-size: var(--typography-small-font-size);
   --accordion-content-line-height: var(--typography-small-line-height);
-  --accordion-content-font-weight: var(--typography-p-font-weight); /* Regular — 400 */
+  --accordion-content-font-weight: var(--typography-p-font-weight);
   --accordion-content-fg: var(--foreground);
   font-size: var(--accordion-content-font-size);
   line-height: var(--accordion-content-line-height);
@@ -79,12 +70,12 @@
   color: var(--accordion-content-fg);
 }
 [data-slot='accordion-content'] > div {
-  --accordion-content-padding-x: 0.75rem; /* 12px */
-  --accordion-content-padding-top: 0.25rem; /* Spacing/spacing-1 — 4px */
-  --accordion-content-padding-bottom: 0.625rem; /* 10px */
+  --accordion-content-padding-x: 0.75rem;
+  --accordion-content-padding-top: 0.25rem;
+  --accordion-content-padding-bottom: 0.625rem;
   --accordion-content-link-hover-fg: var(--foreground);
   --accordion-content-link-underline-offset: 3px;
-  --accordion-content-paragraph-gap: 0.5rem; /* Spacing/spacing-2 — 8px */
+  --accordion-content-paragraph-gap: 0.5rem;
   padding-inline: var(--accordion-content-padding-x);
   padding-block-start: var(--accordion-content-padding-top);
   padding-block-end: var(--accordion-content-padding-bottom);

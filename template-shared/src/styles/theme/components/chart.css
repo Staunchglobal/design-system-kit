@@ -1,7 +1,3 @@
-/* ==========================================================================
-   Chart
-   ========================================================================== */
-
 [data-slot='chart'] {
   --chart-font-size: var(--typography-small-font-size);
   --chart-aspect-ratio: 16 / 9;
@@ -22,14 +18,6 @@
   font-size: var(--chart-font-size);
   aspect-ratio: var(--chart-aspect-ratio);
 }
-
-/* ChartTooltipContent and ChartLegendContent render as plain <div>s with no
-   data-slot (or any other identifying attribute) of their own. Recharts
-   wraps custom tooltip/legend content in its own `.recharts-tooltip-wrapper`
-   / `.recharts-legend-wrapper` elements though, so those (real DOM classes,
-   just not shadcn's data-slot convention) are used to reach the content
-   root as a direct child — this is the only reliable hook available without
-   editing chart.tsx. */
 [data-slot='chart'] .recharts-tooltip-wrapper > div {
   gap: var(--chart-tooltip-gap);
   padding-inline: var(--chart-tooltip-padding-x);

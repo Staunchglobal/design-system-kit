@@ -10,7 +10,6 @@ type ImpersonationBannerProps = {
   message: React.ReactNode
   actionLabel?: string
   onAction?: () => void
-  /** Optional fully custom action; takes precedence over actionLabel/onAction. */
   action?: React.ReactNode
   onDismiss?: () => void
   className?: string

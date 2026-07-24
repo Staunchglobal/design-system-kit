@@ -1,20 +1,12 @@
-/* ==========================================================================
-   Calendar
-   ==========================================================================
-   Paramount Design System — Date & Time Pickers (Figma 29336:2739)
-   Compact shell 370× cells 44. Caption B2 Medium; weekdays Caption Semibold.
-   Today = text/primary. Selected = Primary/200 + Primary/500 Semibold.
-   ========================================================================== */
-
 [data-slot='calendar'] {
-  --calendar-cell-size: 2.75rem; /* 44px */
+  --calendar-cell-size: 2.75rem;
   --calendar-cell-radius: var(--radius-full);
-  --calendar-padding: 1rem; /* 16px */
+  --calendar-padding: 1rem;
   --calendar-bg: var(--neutral-0);
-  --calendar-radius: 0.8125rem; /* 13px */
+  --calendar-radius: 0.8125rem;
   --calendar-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
   --calendar-months-gap: 1rem;
-  --calendar-width: 23.125rem; /* 370px */
+  --calendar-width: 23.125rem;
   --cell-size: var(--calendar-cell-size);
   --cell-radius: var(--calendar-cell-radius);
 
@@ -31,7 +23,7 @@
 }
 
 [data-slot='calendar'] .rdp-nav {
-  --calendar-nav-gap: 1.75rem; /* 28px */
+  --calendar-nav-gap: 1.75rem;
   gap: var(--calendar-nav-gap);
 }
 
@@ -75,8 +67,6 @@
 [data-slot='calendar'] .rdp-dropdown {
   background-color: var(--calendar-dropdown-bg);
 }
-
-/* Day — B1 Regular 20/24 */
 [data-slot='calendar'] [data-slot='button'] {
   --calendar-day-font-size: var(--typography-lead-font-size);
   --calendar-day-line-height: var(--typography-lead-line-height);
@@ -88,8 +78,6 @@
   color: var(--calendar-day-fg);
   border-radius: var(--calendar-cell-radius);
 }
-
-/* Today — primary text, no fill */
 [data-slot='calendar'] .rdp-today:not([data-selected='true']) [data-slot='button'],
 [data-slot='calendar'] .rdp-today:not([data-selected='true']) {
   --calendar-today-bg: transparent;
@@ -107,8 +95,6 @@
   --calendar-disabled-opacity: 0.5;
   opacity: var(--calendar-disabled-opacity);
 }
-
-/* Selected / range ends — Primary/200 + Primary/500 */
 [data-slot='calendar'] [data-slot='button'][data-selected-single='true'],
 [data-slot='calendar'] [data-slot='button'][data-range-start='true'],
 [data-slot='calendar'] [data-slot='button'][data-range-end='true'] {
@@ -128,8 +114,6 @@
   color: var(--calendar-range-middle-fg) !important;
   border-radius: 0 !important;
 }
-
-/* Neutralize DayPicker range bridge pseudos (caused bleed between demos) */
 [data-slot='calendar'] .rdp-range_start,
 [data-slot='calendar'] .rdp-range_end {
   background-color: transparent !important;
@@ -147,8 +131,6 @@
   border-color: var(--calendar-focus-border-color);
   box-shadow: 0 0 0 3px rgb(from var(--calendar-focus-ring-color) r g b / var(--calendar-focus-ring-opacity));
 }
-
-/* Popover: grow to calendar; no double chrome */
 [data-slot='popover-content']:has([data-slot='calendar']) {
   --popover-content-width: auto;
   --popover-content-padding: 0;

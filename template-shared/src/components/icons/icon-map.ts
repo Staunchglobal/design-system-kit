@@ -1,7 +1,3 @@
-/**
- * Semantic icon keys → Lucide icon component names.
- * Edited from /theme-editor; rewritten by POST /api/theme/save.
- */
 export const defaultIconMap = {
   'dialog.close': 'X',
   'sheet.close': 'X',
@@ -44,7 +40,6 @@ export const defaultIconMap = {
 
 export type IconKey = keyof typeof defaultIconMap
 
-/** Mutable map used at runtime (overrides applied before save). */
 export let iconMap: Record<string, string> = { ...defaultIconMap }
 
 export function setIconMap(next: Record<string, string>) {

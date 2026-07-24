@@ -1,11 +1,3 @@
-/* ==========================================================================
-   Copy Input
-   ==========================================================================
-   Root is an InputGroup with data-slot overridden to 'copy-input', so it does
-   not inherit input-group.css's root rule — mirror the same shell + control
-   rules here.
-   ========================================================================== */
-
 [data-slot='copy-input'] {
   --copy-input-radius: var(--input-radius);
   --copy-input-border-width: var(--input-border-width);
@@ -34,8 +26,6 @@
   border-color: var(--copy-input-focus-border-color);
   box-shadow: none;
 }
-
-/* Nested field — no second border / radius / ring */
 [data-slot='copy-input'] [data-ui='input-group-control'],
 [data-slot='copy-input'] [data-ui='input-group-control']:focus-visible,
 [data-slot='copy-input'] [data-slot='input'],

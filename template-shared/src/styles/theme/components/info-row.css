@@ -1,7 +1,3 @@
-/* ==========================================================================
-   Info Row / Info List / Info Card
-   ========================================================================== */
-
 [data-slot='info-row'] {
   --info-row-font-size: var(--typography-small-font-size);
   font-size: var(--info-row-font-size);
@@ -23,9 +19,6 @@
   column-gap: var(--info-list-gap-x);
   row-gap: var(--info-list-gap-y);
 }
-
-/* Root renders as a Card with its data-slot overridden to 'info-card', so it
-   no longer inherits card.css's rules — restate the same override surface here. */
 [data-slot='info-card'] {
   --info-card-bg: var(--card);
   --info-card-fg: var(--card-foreground);

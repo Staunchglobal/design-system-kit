@@ -1,19 +1,4 @@
-/* ==========================================================================
-   Color Scales
-   ==========================================================================
-   The base palette every semantic token (in colors.css) and every component
-   draws from. Theme-invariant — same value in light and dark — and also
-   registered as Tailwind utilities, e.g. `bg-primary-500`, `text-destructive-600`.
-   This is the ONLY place a raw hex value should ever appear; everything else
-   should reference one of these steps, never a custom/one-off hex.
-
-   Default scales cascade from paramount-mobile-app (repo 1), with
-   success/warning/info added as first-class families shared across all four
-   reference apps.
-   ========================================================================== */
-
 :root {
-  /* Paramount Black/black — pure black (tooltips, overlays that need #000) */
   --black: #000000;
 
   --neutral-0: #ffffff;
@@ -64,8 +49,6 @@
   --accent-800: #252a76;
   --accent-900: #181c4e;
   --accent-950: #0f112f;
-
-  /* Muted mirrors neutral so semantic muted-* steps stay aligned with the gray scale. */
   --muted-50: #f6f6f6;
   --muted-100: #f0f0f1;
   --muted-200: #e8e8e9;

@@ -18,8 +18,6 @@ function manifestOf(groupId: string, variables: ThemeVariable[]): ThemeManifest 
 
 describe('listColorTokenNames', () => {
   it('includes shade steps but excludes semantic tokens that share the family prefix', () => {
-    // Regression: --primary-foreground used to match a naive `startsWith('primary-')`
-    // check and leak into the scale-only select alongside real steps like --primary-500.
     const manifest = manifestOf('colors', [
       v({ id: 'colors:--primary-foreground:0', name: '--primary-foreground', value: 'var(--primary-50)' }),
       v({ id: 'colors:--secondary-foreground:0', name: '--secondary-foreground', value: 'var(--secondary-900)' }),
@@ -118,8 +116,6 @@ describe('scopeToSelector', () => {
   })
 
   it('fans a varying attribute (from a comma-separated source rule) into a comma selector list', () => {
-    // drawer's top/bottom radius rule declares the same variable across two branches —
-    // the reconstructed selector must cover both, or a live edit would only ever reach one.
     expect(scopeToSelector('drawer-content/vaul-drawer-direction=top|bottom')).toBe(
       '[data-slot="drawer-content"][data-vaul-drawer-direction="top"], [data-slot="drawer-content"][data-vaul-drawer-direction="bottom"]'
     )
@@ -222,8 +218,6 @@ describe('buildScopedVarsCss', () => {
   })
 
   it('no longer collides when scope carries the real distinguishing attribute (orientation)', () => {
-    // Same variable name, but the manifest now records which orientation each occurrence
-    // belongs to — they must emit as two separate, independently-editable rules.
     const manifest = manifestOf('scroll-area', [
       v({
         id: 'scroll-area:--scroll-area-scrollbar-size:0',
@@ -254,8 +248,6 @@ describe('buildScopedVarsCss', () => {
   })
 
   it('qualifies every branch of a fanned-out comma selector under hostSelector', () => {
-    // Regression guard: hostSelector must prefix EVERY branch, not just the first —
-    // otherwise the second branch would apply outside the live preview entirely.
     const manifest = manifestOf('drawer', [
       v({
         id: 'drawer:--drawer-content-radius:0',

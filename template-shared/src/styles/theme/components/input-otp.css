@@ -1,10 +1,3 @@
-/* ==========================================================================
-   Input OTP
-   ==========================================================================
-   Joined slots share one Input-radius pill. Active cell uses an inset outline
-   so focus doesn’t float a partial ring across segment dividers.
-   ========================================================================== */
-
 [data-slot='input-otp'] {
   --input-otp-disabled-opacity: 0.5;
 }

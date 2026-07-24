@@ -1,20 +1,4 @@
-/* ==========================================================================
-   Sidebar
-   ==========================================================================
-   Safer Health Side navbar (Figma 715:158752)
-   White surface · Border/Low · 44px items · amber/200 active · circular info badge.
-   Mapped to kit sidebar / secondary / info / muted tokens. Demo copy unchanged.
-   ========================================================================== */
-
 [data-slot='sidebar-wrapper'] {
-  /* Public sizing knobs. SidebarProvider sets --sidebar-width /
-     --sidebar-width-icon inline via the style attribute on this very
-     element — an unlayered rule cannot out-prioritize an inline style for
-     the same property on the same element, so redeclaring them here would
-     be silently ignored. Instead each consumer below redeclares --sidebar-*
-     directly on itself (an element that has no competing inline style),
-     which correctly shadows the inherited inline-set value for its own
-     subtree. */
   --sidebar-width: 16rem;
   --sidebar-width-icon: 3rem;
   --sidebar-width-mobile: 18rem;
@@ -30,8 +14,6 @@
   background-color: var(--sidebar-bg);
   color: var(--sidebar-fg);
 }
-/* Mobile sidebar (rendered inside a Sheet) reads --sidebar-width for its own
-   width on the very element carrying data-mobile="true"; redeclare it there. */
 [data-slot='sidebar'][data-mobile='true'] {
   --sidebar-width: 18rem;
   width: var(--sidebar-width);
@@ -76,9 +58,6 @@
     0 0 0 1px var(--sidebar-floating-ring-color);
 }
 
-/* sidebar-trigger is a plain <Button variant="ghost" size="icon-sm"> with no
-   sidebar-specific styling of its own, so it has no dedicated block here. */
-
 [data-slot='sidebar-rail'] {
   --sidebar-rail-width: 1rem;
   --sidebar-rail-hover-bg: var(--sidebar-border);
@@ -95,15 +74,10 @@
   --sidebar-inset-shadow: var(--shadow-sm);
   background-color: var(--sidebar-inset-bg);
 }
-
-/* SidebarInput is a real Input (data-slot="input"). Height/chrome from Input
-   section; only surface color differs here. */
 [data-ui='sidebar-input'] {
   --sidebar-input-bg: var(--background);
   background-color: var(--sidebar-input-bg);
 }
-
-/* Header / footer — Figma 16px padding */
 [data-slot='sidebar-header'],
 [data-slot='sidebar-footer'] {
   --sidebar-header-footer-gap: 0.75rem;
@@ -111,8 +85,6 @@
   gap: var(--sidebar-header-footer-gap);
   padding: var(--sidebar-header-footer-padding);
 }
-
-/* Full-bleed divider with 8px vertical inset (Figma Divider) */
 [data-slot='sidebar-separator'] {
   --sidebar-separator-bg: var(--sidebar-border);
   --sidebar-separator-margin-x: 0;
@@ -126,16 +98,12 @@
   --sidebar-content-gap: 0;
   gap: var(--sidebar-content-gap);
 }
-
-/* Section — Figma px 16 / pt 8 */
 [data-slot='sidebar-group'] {
   --sidebar-group-padding-x: 1rem;
   --sidebar-group-padding-y: 0.5rem;
   padding-inline: var(--sidebar-group-padding-x);
   padding-block: var(--sidebar-group-padding-y);
 }
-
-/* Subheader — text-base Medium, Text/Medium (not overline) */
 [data-slot='sidebar-group-label'] {
   --sidebar-group-label-height: auto;
   --sidebar-group-label-padding-x: 1rem;
@@ -183,8 +151,6 @@
   --sidebar-menu-gap: 0;
   gap: var(--sidebar-menu-gap);
 }
-
-/* Sidebar Item — 44× full width, radius-lg, gap 12, Text/Medium default */
 [data-slot='sidebar-menu-button'] {
   --sidebar-menu-button-radius: var(--radius-md);
   --sidebar-menu-button-padding-x: 1rem;
@@ -242,7 +208,7 @@
   box-shadow: 0 0 0 1px var(--sidebar-menu-button-outline-ring);
 }
 [data-slot='sidebar-menu-button'][data-size='default'] {
-  --sidebar-menu-button-height: 2.75rem; /* 44px */
+  --sidebar-menu-button-height: 2.75rem;
   --sidebar-menu-button-font-size: var(--typography-small-font-size);
   height: var(--sidebar-menu-button-height);
   font-size: var(--sidebar-menu-button-font-size);
@@ -275,15 +241,13 @@
   background-color: var(--sidebar-menu-action-hover-bg);
   color: var(--sidebar-menu-action-hover-fg);
 }
-
-/* Count badge — circular info fill (Figma Semantic/Info) */
 [data-slot='sidebar-menu-badge'] {
-  --sidebar-menu-badge-height: 1.375rem; /* 22px */
+  --sidebar-menu-badge-height: 1.375rem;
   --sidebar-menu-badge-min-width: 1.375rem;
   --sidebar-menu-badge-padding-x: 0.25rem;
   --sidebar-menu-badge-padding-y: 0.125rem;
   --sidebar-menu-badge-radius: var(--radius-full);
-  --sidebar-menu-badge-font-size: 0.625rem; /* text-xxs 10px */
+  --sidebar-menu-badge-font-size: 0.625rem;
   --sidebar-menu-badge-font-weight: var(--typography-small-font-weight);
   --sidebar-menu-badge-line-height: 0.75rem;
   --sidebar-menu-badge-bg: var(--sidebar-primary);
@@ -369,10 +333,6 @@
 .dark [data-slot='sidebar-menu-button'] {
   --sidebar-menu-button-hover-bg: var(--sidebar-accent);
 }
-
-/* —— Icon-collapsed rail (data-collapsible="icon") ——
-   Expanded items are 44×full with 16px pad; that overflows a 48px rail.
-   Collapse to centered 32×32 squares. */
 [data-slot='sidebar'][data-collapsible='icon'] [data-slot='sidebar-header'],
 [data-slot='sidebar'][data-collapsible='icon'] [data-slot='sidebar-footer'] {
   --sidebar-header-footer-padding: 0.5rem;
@@ -428,9 +388,6 @@
   margin-inline: var(--sidebar-separator-margin-x);
   margin-block: var(--sidebar-separator-margin-y);
 }
-
-/* Design-system showcase: keep collapsible sidebar inside the example frame
-   instead of fixed to the viewport. */
 [data-sidebar-demo] {
   position: relative;
 }

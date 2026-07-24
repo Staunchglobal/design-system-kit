@@ -1,16 +1,8 @@
-/* ==========================================================================
-   Sonner (Toast)
-   ==========================================================================
-   Paramount Design System — Toast (Figma 58:1104)
-   Light shell: white, border/light, shadow-xs, radius 8.
-   Success icon badge uses success-500.
-   ========================================================================== */
-
 .toaster {
   --sonner-bg: var(--neutral-0);
   --sonner-text: var(--foreground);
   --sonner-border: var(--border);
-  --sonner-radius: 0.5rem; /* 8px — padding-and-corner-radius/2 */
+  --sonner-radius: 0.5rem;
   --sonner-shadow: var(--shadow-xs);
 
   --normal-bg: var(--sonner-bg);

@@ -10,30 +10,12 @@ import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 
 type PaymentMethodFormProps = {
-  /**
-   * Called with the newly created PaymentMethod on success.
-   * Send pm.id to your backend to attach it to a Customer or confirm a SetupIntent.
-   */
   onSuccess: (paymentMethod: PaymentMethod) => void
-  /** Optional cancel handler — renders a Cancel button when provided. */
   onCancel?: () => void
-  /** Label for the submit button. Defaults to "Save card". */
   submitLabel?: string
   className?: string
 }
 
-/**
- * Collects payment details via Stripe's PaymentElement and creates a PaymentMethod.
- *
- * Flow (Stripe.js v9 deferred-intent):
- *   1. elements.submit()          — validates fields, collects details
- *   2. stripe.createPaymentMethod({ elements }) — creates a raw PaymentMethod object
- *   3. onSuccess(paymentMethod)   — caller sends pm.id to their backend
- *
- * Must be rendered inside <StripeElementsProvider> (i.e. inside <Elements>).
- * The parent Elements must be configured with { mode: 'setup' } or a client_secret;
- * without either, elements.submit() will error.
- */
 function PaymentMethodForm({
   onSuccess,
   onCancel,
@@ -50,14 +32,12 @@ function PaymentMethodForm({
     e.preventDefault()
 
     if (!stripe || !elements) {
-      // Stripe.js hasn't loaded yet — this button should be disabled anyway.
       return
     }
 
     setBusy(true)
     setErrorMessage(null)
 
-    // Step 1: validate fields and collect payment details into the Elements instance.
     const { error: submitError } = await elements.submit()
     if (submitError) {
       setErrorMessage(submitError.message ?? 'Validation failed. Please check your card details.')
@@ -65,8 +45,6 @@ function PaymentMethodForm({
       return
     }
 
-    // Step 2: create a PaymentMethod from the submitted Elements data.
-    // createPaymentMethod({elements}) requires elements.submit() to have been called first.
     const { paymentMethod, error: pmError } = await stripe.createPaymentMethod({ elements })
     if (pmError) {
       setErrorMessage(pmError.message ?? 'Could not save payment method. Please try again.')

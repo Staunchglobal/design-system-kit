@@ -1,12 +1,3 @@
-/* ==========================================================================
-   Dialog
-   ==========================================================================
-   Paramount Design System — dialog (Figma 30807:24422)
-   Compact confirm shell: white, radius 24, p 16, gap 16.
-   Title B1 Bold + description B3 Regular (gap 12). Footer actions gap 12,
-   equal-width pills (outline + destructive from Button theme).
-   ========================================================================== */
-
 [data-slot='dialog-overlay'] {
   --dialog-overlay-bg: var(--overlay-bg);
   --dialog-overlay-opacity: 0.5;
@@ -22,14 +13,14 @@
 }
 
 [data-slot='dialog-content'] {
-  --dialog-content-bg: var(--neutral-0); /* White */
-  --dialog-content-fg: var(--foreground); /* text/dark */
+  --dialog-content-bg: var(--neutral-0);
+  --dialog-content-fg: var(--foreground);
   --dialog-content-ring-color: transparent;
   --dialog-content-ring-width: 0px;
-  --dialog-content-radius: var(--radius-3xl); /* 24px — Button/x-padding/large */
-  --dialog-content-max-width: 22.375rem; /* ~358px — 326 content + 16×2 pad */
-  --dialog-content-padding: 1rem; /* 16px */
-  --dialog-content-gap: 1rem; /* 16px — text block ↔ actions */
+  --dialog-content-radius: var(--radius-3xl);
+  --dialog-content-max-width: 22.375rem;
+  --dialog-content-padding: 1rem;
+  --dialog-content-gap: 1rem;
   --dialog-content-font-size: var(--typography-small-font-size);
   --dialog-content-duration: 100ms;
   --dialog-content-shadow: var(--shadow-md);
@@ -45,18 +36,14 @@
   font-size: var(--dialog-content-font-size);
   transition-duration: var(--dialog-content-duration);
 }
-
-/* Optional close — Figma dialog has none; keep for showCloseButton demos */
 [data-ui='dialog-close'] {
   --dialog-close-top: 0.75rem;
   --dialog-close-right: 0.75rem;
   top: var(--dialog-close-top) !important;
   right: var(--dialog-close-right) !important;
 }
-
-/* Text stack — gap 12, no grey header strip */
 [data-slot='dialog-header'] {
-  --dialog-header-gap: 0.75rem; /* 12px */
+  --dialog-header-gap: 0.75rem;
   --dialog-header-bg: transparent;
   --dialog-header-margin-inline: 0;
   --dialog-header-margin-block-start: 0;
@@ -69,13 +56,11 @@
   padding: var(--dialog-header-padding) !important;
   border-radius: var(--dialog-header-radius);
 }
-
-/* Actions — gap 12, no border-top footer strip; equal-width buttons */
 [data-slot='dialog-footer'] {
   --dialog-footer-bg: transparent;
   --dialog-footer-margin-inline: 0;
   --dialog-footer-margin-block-end: 0;
-  --dialog-footer-gap: 0.75rem; /* 12px */
+  --dialog-footer-gap: 0.75rem;
   --dialog-footer-radius: 0;
   --dialog-footer-border-color: transparent;
   --dialog-footer-border-width: 0;
@@ -94,12 +79,10 @@
   flex: 1 1 0;
   min-width: 0;
 }
-
-/* Title — Body/B1/Bold 20/24, text/dark */
 [data-slot='dialog-title'] {
   --dialog-title-font-family: var(--font-sans);
   --dialog-title-font-size: var(--typography-lead-font-size);
-  --dialog-title-font-weight: var(--typography-h1-font-weight); /* 700 */
+  --dialog-title-font-weight: var(--typography-h1-font-weight);
   --dialog-title-line-height: var(--typography-lead-line-height);
   --dialog-title-fg: var(--foreground);
   font-family: var(--dialog-title-font-family);
@@ -108,8 +91,6 @@
   line-height: var(--dialog-title-line-height);
   color: var(--dialog-title-fg);
 }
-
-/* Description — Body/B3/Regular, text/medium */
 [data-slot='dialog-description'] {
   --dialog-description-fg: var(--muted-600);
   --dialog-description-font-size: var(--typography-small-font-size);

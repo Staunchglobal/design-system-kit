@@ -1,7 +1,3 @@
-/* ==========================================================================
-   Native Select
-   ========================================================================== */
-
 [data-slot='native-select-wrapper']:has(select:disabled) {
   --native-select-disabled-opacity: 1;
   opacity: var(--native-select-disabled-opacity);
@@ -65,7 +61,6 @@
   opacity: var(--input-disabled-opacity);
   cursor: not-allowed;
 }
-/* Kit sm → Paramount Small (40 / radius 16) */
 [data-slot='native-select'][data-size='sm'] {
   --native-select-height: 2.5rem;
   --native-select-radius: var(--radius-xl);
@@ -80,7 +75,7 @@
 
 [data-slot='native-select-icon'] {
   --native-select-icon-color: var(--muted-600);
-  --native-select-icon-size: 1.5rem; /* 24px */
+  --native-select-icon-size: 1.5rem;
   color: var(--native-select-icon-color);
   width: var(--native-select-icon-size);
   height: var(--native-select-icon-size);

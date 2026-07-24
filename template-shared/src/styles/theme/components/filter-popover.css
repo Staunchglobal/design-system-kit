@@ -1,27 +1,19 @@
-/* ==========================================================================
-   Filter Popover
-   ==========================================================================
-   Paramount Design System — Filter Button (Figma 26903:4992)
-   CSS can style Default + Applied colors/size on the existing single Button.
-   Clear (X) segment requires a component change — not in markup today.
-   ========================================================================== */
-
 [data-slot='filter-popover'] [data-slot='button'] {
   --filter-popover-trigger-radius: var(--radius-full);
   --filter-popover-trigger-border-width: 1px;
-  --filter-popover-trigger-border-color: var(--border); /* border/light #e8e8e9 */
+  --filter-popover-trigger-border-color: var(--border);
   --filter-popover-trigger-bg: var(--neutral-0);
-  --filter-popover-trigger-fg: var(--foreground); /* text/dark */
+  --filter-popover-trigger-fg: var(--foreground);
   --filter-popover-trigger-hover-bg: var(--neutral-50);
   --filter-popover-trigger-height: auto;
-  --filter-popover-trigger-padding-x: 0.5rem; /* Button/x-padding/extra-small — 8px */
-  --filter-popover-trigger-padding-y: 0.5rem; /* Button/y-padding/extra-small — 8px */
-  --filter-popover-trigger-gap: 0.25rem; /* Button/gap/extra-small — 4px */
-  --filter-popover-trigger-font-size: var(--typography-caption-font-size); /* Caption — 12px */
+  --filter-popover-trigger-padding-x: 0.5rem;
+  --filter-popover-trigger-padding-y: 0.5rem;
+  --filter-popover-trigger-gap: 0.25rem;
+  --filter-popover-trigger-font-size: var(--typography-caption-font-size);
   --filter-popover-trigger-font-weight: var(--typography-small-font-weight);
-  --filter-popover-trigger-line-height: var(--typography-caption-line-height); /* 16px */
-  --filter-popover-trigger-icon-size: 0.875rem; /* 14px */
-  --filter-popover-trigger-icon-color: var(--muted-600); /* icon/grey */
+  --filter-popover-trigger-line-height: var(--typography-caption-line-height);
+  --filter-popover-trigger-icon-size: 0.875rem;
+  --filter-popover-trigger-icon-color: var(--muted-600);
 
   height: var(--filter-popover-trigger-height);
   min-height: 0;
@@ -49,14 +41,12 @@
   height: var(--filter-popover-trigger-icon-size);
   color: var(--filter-popover-trigger-icon-color);
 }
-
-/* Applied — filters selected (count badge present) */
 [data-slot='filter-popover'] [data-slot='button']:has([data-slot='filter-popover-count']) {
-  --filter-popover-trigger-bg: var(--primary-50); /* Primary/50 #f2fbff */
+  --filter-popover-trigger-bg: var(--primary-50);
   --filter-popover-trigger-border-width: 0;
   --filter-popover-trigger-border-color: transparent;
   --filter-popover-trigger-hover-bg: var(--primary-50);
-  --filter-popover-trigger-icon-color: var(--primary-500); /* icon/primary */
+  --filter-popover-trigger-icon-color: var(--primary-500);
   background-color: var(--filter-popover-trigger-bg);
   border-width: var(--filter-popover-trigger-border-width);
   border-color: var(--filter-popover-trigger-border-color);
@@ -71,16 +61,14 @@
 [data-slot='filter-popover'] [data-slot='button']:has([data-slot='filter-popover-count']) svg {
   color: var(--filter-popover-trigger-icon-color);
 }
-
-/* Count badge — circle like Figma (beats TSX h-4 / px-1 / text-[10px]) */
 [data-slot='filter-popover-count'] {
   --filter-popover-count-bg: var(--primary-500);
   --filter-popover-count-fg: var(--neutral-0);
   --filter-popover-count-radius: var(--radius-full);
-  --filter-popover-count-size: 1.25rem; /* 20px circle for single digit */
-  --filter-popover-count-padding-x: 0.5rem; /* spacing/xxs — grows for 10+ */
+  --filter-popover-count-size: 1.25rem;
+  --filter-popover-count-padding-x: 0.5rem;
   --filter-popover-count-padding-y: 0;
-  --filter-popover-count-font-size: var(--typography-caption-font-size); /* Caption — 12px */
+  --filter-popover-count-font-size: var(--typography-caption-font-size);
   --filter-popover-count-font-weight: var(--typography-small-font-weight);
   --filter-popover-count-line-height: 1;
   --filter-popover-count-margin-inline-start: 0;

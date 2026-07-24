@@ -1,4 +1,3 @@
-/* Rich Text Editor */
 [data-slot='rich-text-editor'] {
   --rich-text-editor-bg: var(--background);
   --rich-text-editor-border: var(--input);

@@ -1,6 +1,3 @@
-// This file is the canonical component/group data scripts/build-registry.mjs parses into
-// src/generated/registry.ts — it is NOT copied into consumer projects. The CLI generates a
-// filtered nav.ts (via src/lib/codegen.ts) scoped to whatever components were chosen instead.
 
 export type NavItem = {
   id: string

@@ -1,20 +1,10 @@
-/* ==========================================================================
-   Badge
-   ==========================================================================
-   Paramount Design System — Tags (Figma 810:164 / 6897:7105)
-   Default size = Small + pill (Default shape).
-   Colors: Grey, Red, Primary, Blue(info), Yellow(warning), Green(success),
-   white Info → outline.
-   Large size + Square shape exist in Figma but need component props (not CSS).
-   ========================================================================== */
-
 [data-slot='badge'] {
-  --badge-height: 1.5rem; /* 24px */
+  --badge-height: 1.5rem;
   --badge-gap: 0.25rem;
   --badge-radius: var(--radius-full);
-  --badge-padding-x: 0.75rem; /* spacing/xs — 12px */
-  --badge-padding-y: 0.25rem; /* spacing/xxxs — 4px */
-  --badge-font-size: var(--typography-caption-font-size); /* Caption — 12px */
+  --badge-padding-x: 0.75rem;
+  --badge-padding-y: 0.25rem;
+  --badge-font-size: var(--typography-caption-font-size);
   --badge-font-weight: var(--typography-small-font-weight);
   --badge-line-height: var(--typography-caption-line-height);
   --badge-border-width: 1px;
@@ -32,11 +22,9 @@
   border-width: var(--badge-border-width);
   border-color: rgb(from var(--badge-border-color) r g b / var(--badge-border-opacity));
 }
-
-/* default → Tag Primary */
 [data-slot='badge'][data-variant='default'] {
-  --badge-bg: var(--primary-100); /* #dbf5ff */
-  --badge-fg: var(--primary-500); /* #3ab5fe */
+  --badge-bg: var(--primary-100);
+  --badge-fg: var(--primary-500);
   --badge-link-hover-bg: var(--primary-200);
   background-color: var(--badge-bg);
   color: var(--badge-fg);
@@ -44,11 +32,9 @@
 [data-slot='badge'][data-variant='default'] a:hover {
   background-color: var(--badge-link-hover-bg);
 }
-
-/* secondary → Tag Neutral / Grey */
 [data-slot='badge'][data-variant='secondary'] {
-  --badge-bg: var(--neutral-100); /* #f0f0f1 */
-  --badge-fg: var(--foreground); /* text/dark #001c26 */
+  --badge-bg: var(--neutral-100);
+  --badge-fg: var(--foreground);
   --badge-link-hover-bg: var(--neutral-200);
   background-color: var(--badge-bg);
   color: var(--badge-fg);
@@ -56,11 +42,9 @@
 [data-slot='badge'][data-variant='secondary'] a:hover {
   background-color: var(--badge-link-hover-bg);
 }
-
-/* destructive → Tag Danger / Red */
 [data-slot='badge'][data-variant='destructive'] {
-  --badge-bg: var(--destructive-100); /* #fcdadc */
-  --badge-fg: var(--destructive-500); /* #d94c51 */
+  --badge-bg: var(--destructive-100);
+  --badge-fg: var(--destructive-500);
   --badge-link-hover-bg: var(--destructive-200);
   background-color: var(--badge-bg);
   color: var(--badge-fg);
@@ -68,11 +52,9 @@
 [data-slot='badge'][data-variant='destructive'] a:hover {
   background-color: var(--badge-link-hover-bg);
 }
-
-/* success → Tag Green */
 [data-slot='badge'][data-variant='success'] {
-  --badge-bg: var(--success-50); /* #e8f7eb */
-  --badge-fg: var(--success-500); /* #2e8540 */
+  --badge-bg: var(--success-50);
+  --badge-fg: var(--success-500);
   --badge-link-hover-bg: var(--success-100);
   background-color: var(--badge-bg);
   color: var(--badge-fg);
@@ -80,11 +62,9 @@
 [data-slot='badge'][data-variant='success'] a:hover {
   background-color: var(--badge-link-hover-bg);
 }
-
-/* warning → Tag Yellow */
 [data-slot='badge'][data-variant='warning'] {
-  --badge-bg: var(--warning-50); /* #ffefd9 */
-  --badge-fg: var(--warning-600); /* #d49137 */
+  --badge-bg: var(--warning-50);
+  --badge-fg: var(--warning-600);
   --badge-link-hover-bg: var(--warning-100);
   background-color: var(--badge-bg);
   color: var(--badge-fg);
@@ -92,11 +72,9 @@
 [data-slot='badge'][data-variant='warning'] a:hover {
   background-color: var(--badge-link-hover-bg);
 }
-
-/* info → Tag Blue */
 [data-slot='badge'][data-variant='info'] {
-  --badge-bg: var(--info-100); /* #dae4f7 */
-  --badge-fg: var(--info-500); /* #4676d9 */
+  --badge-bg: var(--info-100);
+  --badge-fg: var(--info-500);
   --badge-link-hover-bg: var(--info-200);
   background-color: var(--badge-bg);
   color: var(--badge-fg);
@@ -104,11 +82,9 @@
 [data-slot='badge'][data-variant='info'] a:hover {
   background-color: var(--badge-link-hover-bg);
 }
-
-/* outline → Tag Info (white shell, border/light, text/dark) */
 [data-slot='badge'][data-variant='outline'] {
   --badge-bg: var(--neutral-0);
-  --badge-border-color: var(--border); /* #e8e8e9 */
+  --badge-border-color: var(--border);
   --badge-fg: var(--foreground);
   --badge-link-hover-bg: var(--muted);
   --badge-link-hover-fg: var(--muted-foreground);

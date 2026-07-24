@@ -17,7 +17,6 @@ function go(path: string) {
   window.location.assign(path)
 }
 
-/** Mount at `/auth/login` (e.g. react-router Route). */
 export default function LoginPage() {
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)

@@ -1,11 +1,3 @@
-/* ==========================================================================
-   Tabs
-   ==========================================================================
-   Paramount Design System — Tabs (Figma 6848:6685)
-   line  → underline tabs (active: primary text + 2px primary underline)
-   default → pill / chip tabs (inactive: neutral-100; active: white + shadow-xs)
-   ========================================================================== */
-
 [data-slot='tabs'] {
   --tabs-gap: 0.5rem;
   gap: var(--tabs-gap);
@@ -23,16 +15,12 @@
 [data-slot='tabs'][data-orientation='horizontal'] [data-slot='tabs-list'] {
   height: var(--tabs-list-height);
 }
-
-/* Pill strip track */
 [data-slot='tabs-list'][data-variant='default'] {
   --tabs-list-bg: transparent;
-  --tabs-list-gap: 1rem; /* Button/gap/large — 16px */
+  --tabs-list-gap: 1rem;
   background-color: var(--tabs-list-bg);
   gap: var(--tabs-list-gap);
 }
-
-/* Underline strip */
 [data-slot='tabs-list'][data-variant='line'] {
   --tabs-list-bg: transparent;
   --tabs-list-gap: 0;
@@ -46,26 +34,25 @@
   border-bottom-width: var(--tabs-list-border-width);
   border-bottom-style: solid;
   border-bottom-color: var(--tabs-list-border-color);
-  /* Kill Tailwind h-8 so triggers + indicator share one baseline */
   height: auto !important;
   align-items: stretch;
 }
 
 [data-slot='tabs-trigger'] {
   --tabs-trigger-radius: var(--radius-full);
-  --tabs-trigger-padding-x: 1rem; /* spacing/s — 16px (pills) */
-  --tabs-trigger-padding-y: 0.5rem; /* spacing/xxs — 8px */
+  --tabs-trigger-padding-x: 1rem;
+  --tabs-trigger-padding-y: 0.5rem;
   --tabs-trigger-gap: 0.5rem;
-  --tabs-trigger-min-height: 2.5rem; /* 40px pills */
-  --tabs-trigger-font-size: var(--typography-small-font-size); /* Body B3 — 14px */
+  --tabs-trigger-min-height: 2.5rem;
+  --tabs-trigger-font-size: var(--typography-small-font-size);
   --tabs-trigger-font-weight: var(--typography-small-font-weight);
   --tabs-trigger-line-height: var(--typography-small-line-height);
-  --tabs-trigger-fg: var(--foreground); /* text/dark */
+  --tabs-trigger-fg: var(--foreground);
   --tabs-trigger-hover-fg: var(--foreground);
   --tabs-trigger-focus-ring-color: var(--ring);
   --tabs-trigger-focus-ring-width: 3px;
   --tabs-trigger-disabled-opacity: 0.5;
-  --tabs-trigger-indicator-color: var(--primary); /* border/primary #3ab5fe */
+  --tabs-trigger-indicator-color: var(--primary);
   --tabs-trigger-border-width: 1px;
   --tabs-trigger-border-color: transparent;
 
@@ -90,8 +77,6 @@
 [data-slot='tabs-trigger']:disabled {
   opacity: var(--tabs-trigger-disabled-opacity);
 }
-
-/* —— Pills (default list) —— */
 [data-slot='tabs-list'][data-variant='default'] [data-slot='tabs-trigger'] {
   --tabs-trigger-bg: var(--neutral-100);
   --tabs-trigger-border-color: var(--neutral-200);
@@ -110,8 +95,6 @@
   box-shadow: var(--tabs-trigger-active-shadow);
   border-color: var(--tabs-trigger-border-color);
 }
-
-/* —— Underline (line list) —— */
 [data-slot='tabs-list'][data-variant='line'] [data-slot='tabs-trigger'] {
   --tabs-trigger-radius: 0;
   --tabs-trigger-padding-x: 0.5rem;
@@ -131,11 +114,10 @@
 }
 [data-slot='tabs-list'][data-variant='line'] [data-slot='tabs-trigger'][data-state='active'] {
   --tabs-trigger-active-bg: transparent;
-  --tabs-trigger-active-fg: var(--primary); /* text/primary #3ab5fe */
+  --tabs-trigger-active-fg: var(--primary);
   background-color: var(--tabs-trigger-active-bg);
   color: var(--tabs-trigger-active-fg);
 }
-/* Sit the active bar on the list border — not 5px below (Tailwind after:bottom-[-5px]) */
 [data-slot='tabs-list'][data-variant='line'] [data-slot='tabs-trigger']::after {
   bottom: calc(-1 * var(--tabs-list-border-width, 1px)) !important;
   left: 0 !important;

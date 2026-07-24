@@ -18,14 +18,8 @@ export const CORE_RUNTIME_DEPENDENCIES: Record<string, string> = {
   'tw-animate-css': '^1.4.0',
 }
 
-/**
- * Every package a specific component (per src/generated/registry.ts) might import — only
- * the subset a given selection actually needs gets installed. Version pins mirror the app
- * this kit was extracted from.
- */
 export const OPTIONAL_RUNTIME_DEPENDENCIES: Record<string, string> = optionalRuntimeDependencies
 
-/** All runtime deps this kit could ever need — used to resolve version pins for a chosen subset. */
 export const ALL_RUNTIME_DEPENDENCIES: Record<string, string> = {
   ...CORE_RUNTIME_DEPENDENCIES,
   ...OPTIONAL_RUNTIME_DEPENDENCIES,
@@ -39,25 +33,16 @@ export const SHARED_DEV_DEPENDENCIES: Record<string, string> = {
   tailwindcss: '^4',
 }
 
-/** Next.js builds Tailwind through PostCSS. */
 export const NEXT_DEV_DEPENDENCIES: Record<string, string> = {
   ...SHARED_DEV_DEPENDENCIES,
   '@tailwindcss/postcss': '^4',
 }
 
-/** Vite has a dedicated first-party Tailwind plugin — no PostCSS config needed. */
 export const VITE_DEV_DEPENDENCIES: Record<string, string> = {
   ...SHARED_DEV_DEPENDENCIES,
   '@tailwindcss/vite': '^4',
 }
 
-/**
- * Next.js loads Manrope (sans) + Geist Mono via next/font/google in layout.tsx — Vite has no
- * built-in equivalent, so these self-host the same families via @fontsource instead of falling
- * back to bare system fonts (or requiring a Google Fonts CDN request). Always installed for
- * Vite, mirroring how Next always gets the kit default fonts regardless of which components
- * you pick.
- */
 export const VITE_FONT_DEPENDENCIES: Record<string, string> = {
   '@fontsource/manrope': '^5.2.5',
   '@fontsource/geist-mono': '^5.2.8',
@@ -67,7 +52,6 @@ function withVersions(map: Record<string, string>): string[] {
   return Object.entries(map).map(([name, version]) => `${name}@${version}`)
 }
 
-/** Returns the subset of `map` not already present (in any form) in the consumer's package.json. */
 export function missingDeps(
   map: Record<string, string>,
   existing: Record<string, string>

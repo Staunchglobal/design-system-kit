@@ -11,7 +11,6 @@ export const metadata: Metadata = {
 }
 
 function loadManifest(): ThemeManifest {
-  // Works whether the project uses a src/ directory or not (Next.js supports both).
   const srcDir = fs.existsSync(path.join(process.cwd(), 'src')) ? 'src' : '.'
   const file = path.join(process.cwd(), srcDir, 'styles/theme/theme.manifest.json')
   return JSON.parse(fs.readFileSync(file, 'utf8')) as ThemeManifest
@@ -22,8 +21,6 @@ export default function ThemeEditorPage() {
   const isProd = process.env.NODE_ENV === 'production'
 
   return (
-    // fixed inset-0: isolate from root body flex so columns get a real viewport height and can scroll
-    // data-theme-editor: scoping host the live-preview CSS var writer targets (see theme-editor-context.tsx)
     <div
       data-theme-editor=""
       className="bg-background text-foreground fixed inset-0 z-50 flex flex-col overflow-hidden"

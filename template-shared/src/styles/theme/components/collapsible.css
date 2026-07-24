@@ -1,9 +1,1 @@
-/* ==========================================================================
-   Collapsible
-   ========================================================================== */
 
-/* collapsible.tsx renders bare Radix primitives (Root/Trigger/Content) with
-   no className, so there are no hardcoded spacing/color/typography values
-   to lift into variables. data-state="open"/"closed" is available on the
-   trigger and content for a consumer's own styling, but nothing in the
-   source itself is visually tunable without editing the component. */

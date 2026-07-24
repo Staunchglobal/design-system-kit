@@ -15,13 +15,6 @@ import {
   isValidRenameTargetInline,
 } from './vite-plugin-design-kit.js'
 
-// Mirrors template-shared/src/lib/theme/validation.test.ts — the Vite plugin can't
-// import from `@/lib/theme/validation` (it's loaded by vite.config.ts outside the
-// app's own alias-resolved module graph, so it deliberately duplicates these
-// validators rather than importing them). Testing both copies directly guards
-// against exactly the kind of drift this session already found once between
-// template-next and template-vite.
-
 describe('SAFE_TOKEN_RE (font ids, custom color names, typography ids)', () => {
   it('accepts plain identifiers', () => {
     expect(SAFE_TOKEN_RE.test('display')).toBe(true)

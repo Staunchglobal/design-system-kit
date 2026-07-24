@@ -1,35 +1,19 @@
-/* ==========================================================================
-   Stepper Input
-   ==========================================================================
-   Paramount Design System — Stepper (Figma 8967:332)
-   Default size = Medium: 44px / radius 20 / px 12
-   States: Default (border/light), Active/Focus-within (1px primary),
-   Focused (2px action-focus #005170), Error (border/error),
-   Disabled (Neutral/50).
-   CSS-only gap: Figma groups −|+ on the right with a divider; kit places
-   − left / + right around the value.
-   ========================================================================== */
-
-/* Root renders as an InputGroup with its data-slot overridden to
-   'stepper-input', so it no longer inherits input-group.css's root rule —
-   restate it here. Its InputGroupInput/Addon/Button children keep their own
-   data-slot and are still styled normally by input-group.css. */
 [data-slot="stepper-input"] {
   --stepper-input-radius: var(--radius-2xl); /* Button and Input border-radius/medium — 20px */
   --stepper-input-border-width: 1px;
-  --stepper-input-border-color: var(--border); /* border/light #e8e8e9 */
-  --stepper-input-bg: var(--neutral-0); /* surface/primary */
-  --stepper-input-height: 2.75rem; /* Medium — 44px (Figma; not Input 48) */
-  --stepper-input-padding-x: 0.75rem; /* 12px */
-  --stepper-input-gap: 0.5rem; /* 8px */
-  --stepper-input-focus-border-color: var(--primary-800); /* border/action-focus #005170 */
+  --stepper-input-border-color: var(--border);
+  --stepper-input-bg: var(--neutral-0);
+  --stepper-input-height: 2.75rem;
+  --stepper-input-padding-x: 0.75rem;
+  --stepper-input-gap: 0.5rem;
+  --stepper-input-focus-border-color: var(--primary-800);
   --stepper-input-focus-border-width: 2px;
-  --stepper-input-active-border-color: var(--primary-500); /* border/action #3ab5fe */
-  --stepper-input-invalid-border-color: var(--destructive); /* border/error #d94c51 */
-  --stepper-input-disabled-bg: var(--neutral-50); /* Neutral/50 #f6f6f6 */
+  --stepper-input-active-border-color: var(--primary-500);
+  --stepper-input-invalid-border-color: var(--destructive);
+  --stepper-input-disabled-bg: var(--neutral-50);
   --stepper-input-disabled-opacity: 1;
-  --stepper-input-icon-color: var(--muted-600); /* icon/grey */
-  --stepper-input-icon-size: 1.5rem; /* Medium — 24px */
+  --stepper-input-icon-color: var(--muted-600);
+  --stepper-input-icon-size: 1.5rem;
   --stepper-input-divider-color: var(--border);
 
   display: flex;
@@ -44,8 +28,6 @@
   background-color: var(--stepper-input-bg);
   overflow: clip;
 }
-
-/* Active / typing — primary border (maps to focus when ring isn’t the dark focus) */
 [data-slot="stepper-input"]:has([data-slot="input"]:focus-visible) {
   --stepper-input-border-width: var(--stepper-input-focus-border-width);
   --stepper-input-border-color: var(--stepper-input-focus-border-color);
@@ -67,8 +49,6 @@
   background-color: var(--stepper-input-bg);
   opacity: var(--stepper-input-disabled-opacity);
 }
-
-/* Value field — borderless inside shell; centered between − / + */
 [data-slot="stepper-input"] [data-ui="input-group-control"],
 [data-slot="stepper-input"] [data-slot="input"] {
   height: 100%;
@@ -81,7 +61,7 @@
   box-shadow: none;
   padding-inline: 0;
   padding-block: 0;
-  --stepper-input-font-size: var(--typography-p-font-size); /* Body B2 — 16px */
+  --stepper-input-font-size: var(--typography-p-font-size);
   --stepper-input-line-height: var(--typography-p-line-height);
   font-size: var(--stepper-input-font-size);
   line-height: var(--stepper-input-line-height);
@@ -96,14 +76,12 @@
 [data-slot="stepper-input"] [data-slot="input"]::placeholder {
   color: var(
     --muted-400
-  ); /* text/light — Default; Figma also uses text/body-2 on focus */
+  );
 }
 
 [data-slot="stepper-input"]:has(:disabled) [data-slot="input"] {
-  color: var(--muted-500); /* text/on-disabled #8e8f93 */
+  color: var(--muted-500);
 }
-
-/* Addons / ± buttons */
 [data-slot="stepper-input"] [data-slot="input-group-addon"] {
   --input-group-addon-padding-y: 0;
   --input-group-addon-padding-inline-start: 0;
@@ -159,10 +137,6 @@
   color: var(--muted-500);
   opacity: 1;
 }
-
-/* Suppress the native number spinner — the component provides its own
-   Minus/Plus buttons, so the browser's built-in arrows would be a redundant,
-   visually clashing second affordance. */
 [data-slot="stepper-input"] input[type="number"]::-webkit-inner-spin-button,
 [data-slot="stepper-input"] input[type="number"]::-webkit-outer-spin-button {
   appearance: none;

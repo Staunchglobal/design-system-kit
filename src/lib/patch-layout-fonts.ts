@@ -19,10 +19,6 @@ const GEIST_MONO_DECL = `const geistMono = Geist_Mono({
   subsets: ["latin"],
 });`
 
-/**
- * Swaps create-next-app's default Geist Sans for Manrope (kit default font) while
- * keeping Geist Mono. Idempotent: skips when `--font-manrope` is already present.
- */
 export function patchLayoutFonts(filePath: string): LayoutFontPatchResult {
   if (!fs.existsSync(filePath)) {
     return { action: 'needs-manual', reason: `${filePath} not found.` }
@@ -34,25 +30,21 @@ export function patchLayoutFonts(filePath: string): LayoutFontPatchResult {
     return { action: 'already-present' }
   }
 
-  // Stock create-next-app (recent): Geist + Geist_Mono from next/font/google
   if (
     src.includes('Geist') &&
     src.includes('next/font/google') &&
     (src.includes('--font-geist-sans') || src.includes('geistSans'))
   ) {
-    // Replace the google-font import line(s) that pull Geist*
     src = src.replace(
       /import\s*\{[^}]*Geist[^}]*\}\s*from\s*["']next\/font\/google["']\s*;?/,
       MANROPE_IMPORT
     )
 
-    // Replace geistSans declaration block
     src = src.replace(
       /const\s+geistSans\s*=\s*Geist\(\{[\s\S]*?\}\)\s*;?/,
       MANROPE_DECL
     )
 
-    // Ensure geistMono uses Geist_Mono (may already)
     if (!src.includes('Geist_Mono') && src.includes('geistMono')) {
       src = src.replace(
         /const\s+geistMono\s*=\s*Geist_Mono\(\{[\s\S]*?\}\)\s*;?/,
@@ -60,14 +52,12 @@ export function patchLayoutFonts(filePath: string): LayoutFontPatchResult {
       )
     }
 
-    // className: swap geistSans.variable → manrope.variable
     src = src.replace(/\bgeistSans\.variable\b/g, 'manrope.variable')
 
     fs.writeFileSync(filePath, src)
     return { action: 'patched' }
   }
 
-  // Older / alternate: only Geist_Mono present, or Inter, etc. — leave alone
   if (!src.includes('next/font/google')) {
     return { action: 'not-needed' }
   }

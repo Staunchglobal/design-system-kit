@@ -96,11 +96,6 @@ export function subscribeAuthSession(onStoreChange: () => void): () => void {
   }
 }
 
-/**
- * Persist OTP handoff in localStorage (not the URL) so email/mode can't be spoofed via query params.
- * Also starts a fresh 60s resend cooldown — each new OTP send resets the timer.
- * Timer is cleared on successful verify (`clearAuthHandoff`) and when leaving the OTP page.
- */
 export function setAuthHandoff(email: string, mode: 'login' | 'reset', otpHint?: string): void {
   const s = storage()
   const normalized = email.trim().toLowerCase()

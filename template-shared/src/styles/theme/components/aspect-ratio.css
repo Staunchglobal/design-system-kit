@@ -1,11 +1,3 @@
-/* ==========================================================================
-   Aspect Ratio
-   ========================================================================== */
-
-/* aspect-ratio.tsx renders AspectRatioPrimitive.Root with no className and
-   no size/variant props, so there are no hardcoded visual values in the
-   component to expose. The block below only offers pass-through hooks a
-   consumer's own className additions can rely on. */
 [data-slot='aspect-ratio'] {
   --aspect-ratio-radius: 0;
   --aspect-ratio-overflow: visible;

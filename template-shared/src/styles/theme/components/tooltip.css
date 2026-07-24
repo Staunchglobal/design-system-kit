@@ -1,23 +1,15 @@
-/* ==========================================================================
-   Tooltip
-   ==========================================================================
-   Paramount Design System — Tooltips (Figma 60:1832 / 60:1906)
-   Black shell + white Body B3 (14/20), radius_xs 4, padding 12×8, Shadow/sm.
-   Arrow tip filled to match shell (Radix rotated square).
-   ========================================================================== */
-
 [data-slot='tooltip-content'] {
-  --tooltip-content-bg: var(--black); /* Black/black */
-  --tooltip-content-fg: var(--neutral-0); /* White */
-  --tooltip-content-radius: var(--radius-sm); /* Corner radius/radius_xs — 4px */
+  --tooltip-content-bg: var(--black);
+  --tooltip-content-fg: var(--neutral-0);
+  --tooltip-content-radius: var(--radius-sm);
   --tooltip-content-max-width: 20rem;
-  --tooltip-content-gap: 0.5rem; /* Padding/padding_xs — 8px */
-  --tooltip-content-padding-x: 0.75rem; /* Padding/padding_sm — 12px */
-  --tooltip-content-padding-y: 0.5rem; /* Padding/padding_xs — 8px */
-  --tooltip-content-font-size: var(--typography-small-font-size); /* Body B3 — 14px */
-  --tooltip-content-line-height: var(--typography-small-line-height); /* 20px */
-  --tooltip-content-font-weight: var(--typography-p-font-weight); /* Regular — 400 */
-  --tooltip-content-shadow: var(--shadow-sm); /* Figma effect "sm" */
+  --tooltip-content-gap: 0.5rem;
+  --tooltip-content-padding-x: 0.75rem;
+  --tooltip-content-padding-y: 0.5rem;
+  --tooltip-content-font-size: var(--typography-small-font-size);
+  --tooltip-content-line-height: var(--typography-small-line-height);
+  --tooltip-content-font-weight: var(--typography-p-font-weight);
+  --tooltip-content-shadow: var(--shadow-sm);
 
   background-color: var(--tooltip-content-bg);
   color: var(--tooltip-content-fg);
@@ -31,12 +23,8 @@
   font-weight: var(--tooltip-content-font-weight);
   box-shadow: var(--tooltip-content-shadow);
 }
-
-/* The arrow is rendered via TooltipPrimitive.Arrow with a hardcoded
-   className and no data-slot attribute; targeted structurally as the sole
-   svg child of tooltip-content. */
 [data-slot='tooltip-content'] > svg {
-  --tooltip-arrow-size: 0.6875rem; /* ~11px — Figma Arrow tip height */
+  --tooltip-arrow-size: 0.6875rem;
   --tooltip-arrow-radius: 2px;
   fill: var(--tooltip-content-bg);
   color: var(--tooltip-content-bg);
