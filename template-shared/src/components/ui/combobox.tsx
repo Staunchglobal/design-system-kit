@@ -227,7 +227,6 @@ function ComboboxChips({
   ...props
 }: React.ComponentPropsWithRef<typeof ComboboxPrimitive.Chips> &
   ComboboxPrimitive.Chips.Props & {
-    /** Collapse chips past this count to a "+N more" affordance. */
     maxVisibleChips?: number
   }) {
   const [expanded, setExpanded] = React.useState(false)

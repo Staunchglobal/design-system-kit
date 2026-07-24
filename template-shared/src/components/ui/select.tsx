@@ -57,7 +57,7 @@ function SelectContent({
   className,
   children,
   position = 'item-aligned',
-  align = 'center',
+  align = 'start',
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Content>) {
   return (

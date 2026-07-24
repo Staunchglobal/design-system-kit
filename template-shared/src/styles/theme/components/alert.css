@@ -1,32 +1,34 @@
-/* ==========================================================================
-   Alert
-   ==========================================================================
-   Variants cascaded from paramount Alert: info/success/warning/danger use
-   *-50 shell + *-500/600 text. Kit `default` stays card-neutral; `destructive`
-   maps to danger.
-   ========================================================================== */
-
 [data-slot='alert'] {
-  --alert-radius: var(--radius-lg);
-  --alert-padding-x: 0.625rem;
-  --alert-padding-y: 0.5rem;
-  --alert-gap: 0.125rem;
+  --alert-radius: var(--radius-3xl);
+  --alert-padding-x: 1rem;
+  --alert-padding-y: 0.75rem;
+  --alert-gap-x: 0.75rem;
+  --alert-gap-y: 0;
   --alert-font-size: var(--typography-small-font-size);
-  --alert-action-offset: 0.5rem;
+  --alert-action-offset: 0.75rem;
+  --alert-border-width: 0px;
+  --alert-border-color: transparent;
+  --alert-icon-size: 1.5rem;
+
   border-radius: var(--alert-radius);
   padding-inline: var(--alert-padding-x);
   padding-block: var(--alert-padding-y);
-  gap: var(--alert-gap);
+  column-gap: var(--alert-gap-x);
+  row-gap: var(--alert-gap-y);
   font-size: var(--alert-font-size);
+  border-width: var(--alert-border-width);
+  border-color: var(--alert-border-color);
 }
-
+[data-slot='alert'] > svg {
+  width: var(--alert-icon-size);
+  height: var(--alert-icon-size);
+}
 [data-slot='alert'][data-variant='default'] {
-  --alert-bg: var(--card);
-  --alert-fg: var(--card-foreground);
+  --alert-bg: var(--neutral-50);
+  --alert-fg: var(--muted-600);
   background-color: var(--alert-bg);
   color: var(--alert-fg);
 }
-
 [data-slot='alert'][data-variant='destructive'] {
   --alert-destructive-bg: var(--destructive-50);
   --alert-destructive-fg: var(--destructive-500);
@@ -38,7 +40,6 @@
 [data-slot='alert'][data-variant='destructive'] [data-slot='alert-description'] {
   color: var(--alert-destructive-description-fg);
 }
-
 [data-slot='alert'][data-variant='success'] {
   --alert-success-bg: var(--success-50);
   --alert-success-fg: var(--success-500);
@@ -50,7 +51,6 @@
 [data-slot='alert'][data-variant='success'] [data-slot='alert-description'] {
   color: var(--alert-success-description-fg);
 }
-
 [data-slot='alert'][data-variant='warning'] {
   --alert-warning-bg: var(--warning-50);
   --alert-warning-fg: var(--warning-600);
@@ -62,7 +62,6 @@
 [data-slot='alert'][data-variant='warning'] [data-slot='alert-description'] {
   color: var(--alert-warning-description-fg);
 }
-
 [data-slot='alert'][data-variant='info'] {
   --alert-info-bg: var(--info-50);
   --alert-info-fg: var(--info-500);
@@ -74,24 +73,35 @@
 [data-slot='alert'][data-variant='info'] [data-slot='alert-description'] {
   color: var(--alert-info-description-fg);
 }
-
 [data-slot='alert-title'] {
-  --alert-title-font-family: var(--font-heading);
-  --alert-title-font-weight: var(--typography-h6-font-weight);
+  --alert-title-font-family: var(--font-sans);
+  --alert-title-font-size: var(--typography-p-font-size);
+  --alert-title-font-weight: var(--typography-small-font-weight);
+  --alert-title-line-height: var(--typography-p-line-height);
+  --alert-title-fg: var(--foreground);
   --alert-title-link-hover-fg: var(--foreground);
   font-family: var(--alert-title-font-family);
+  font-size: var(--alert-title-font-size);
   font-weight: var(--alert-title-font-weight);
+  line-height: var(--alert-title-line-height);
+  color: var(--alert-title-fg);
 }
 [data-slot='alert-title'] a:hover {
   color: var(--alert-title-link-hover-fg);
 }
-
 [data-slot='alert-description'] {
-  --alert-description-font-size: var(--typography-caption-font-size);
-  --alert-description-fg: var(--muted-foreground);
+  --alert-description-font-size: var(--typography-muted-font-size);
+  --alert-description-font-weight: var(--typography-muted-font-weight);
+  --alert-description-line-height: var(--typography-muted-line-height);
+  --alert-description-fg: var(--muted-600);
   --alert-description-link-hover-fg: var(--foreground);
   font-size: var(--alert-description-font-size);
+  font-weight: var(--alert-description-font-weight);
+  line-height: var(--alert-description-line-height);
   color: var(--alert-description-fg);
+}
+[data-slot='alert'][data-variant='default'] [data-slot='alert-description'] {
+  color: var(--muted-600);
 }
 [data-slot='alert-description'] a:hover {
   color: var(--alert-description-link-hover-fg);
@@ -100,6 +110,11 @@
 [data-slot='alert-action'] {
   top: var(--alert-action-offset);
   right: var(--alert-action-offset);
+}
+
+.dark [data-slot='alert'][data-variant='default'] {
+  --alert-bg: var(--neutral-900);
+  --alert-fg: var(--neutral-400);
 }
 
 .dark [data-slot='alert'][data-variant='destructive'] {
@@ -124,4 +139,8 @@
   --alert-info-bg: var(--info-950);
   --alert-info-fg: var(--info-400);
   --alert-info-description-fg: var(--info-400);
+}
+
+.dark [data-slot='alert-title'] {
+  --alert-title-fg: var(--neutral-50);
 }

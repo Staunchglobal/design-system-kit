@@ -22,9 +22,6 @@ export type AuthShellProps = {
   className?: string
 }
 
-/**
- * Centered auth card layout — logo slot, title, form body, footer links.
- */
 export function AuthShell({
   title,
   description,

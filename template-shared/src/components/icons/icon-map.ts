@@ -1,16 +1,12 @@
-/**
- * Semantic icon keys → Lucide icon component names.
- * Edited from /theme-editor; rewritten by POST /api/theme/save.
- */
 export const defaultIconMap = {
   'dialog.close': 'X',
   'sheet.close': 'X',
   'accordion.chevron': 'ChevronDown',
   'breadcrumb.separator': 'ChevronRight',
-  'breadcrumb.ellipsis': 'MoreHorizontal',
+  'breadcrumb.ellipsis': 'Ellipsis',
   'pagination.previous': 'ChevronLeft',
   'pagination.next': 'ChevronRight',
-  'pagination.ellipsis': 'MoreHorizontal',
+  'pagination.ellipsis': 'Ellipsis',
   'carousel.previous': 'ChevronLeft',
   'carousel.next': 'ChevronRight',
   'calendar.previous': 'ChevronLeft',
@@ -44,7 +40,6 @@ export const defaultIconMap = {
 
 export type IconKey = keyof typeof defaultIconMap
 
-/** Mutable map used at runtime (overrides applied before save). */
 export let iconMap: Record<string, string> = { ...defaultIconMap }
 
 export function setIconMap(next: Record<string, string>) {

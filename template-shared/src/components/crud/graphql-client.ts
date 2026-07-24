@@ -1,8 +1,3 @@
-/**
- * Tiny native-fetch GraphQL helper — no Apollo/urql/graphql-request.
- * Throws an Error when the response includes a GraphQL `errors` array so
- * callers can pass the promise straight to `toast.promise`.
- */
 export async function graphqlFetch<T>(
   endpoint: string,
   query: string,

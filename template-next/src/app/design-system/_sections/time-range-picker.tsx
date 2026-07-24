@@ -11,7 +11,6 @@ const INITIAL: DayAvailability[] = [
   {
     day: 'thu',
     enabled: true,
-    // Deliberately overlapping — shows the conflict warning without needing to edit anything.
     ranges: [{ start: '10:00', end: '16:00' }, { start: '15:00', end: '18:00' }],
   },
   { day: 'fri', enabled: true, ranges: [{ start: '09:00', end: '15:00' }] },

@@ -202,7 +202,6 @@ function describeComponentVariable(bare: string, group: ThemeGroup): string {
     }
   }
 
-  // Drop a leading word that's just the component's own slug (e.g. "button" in "button-hover-bg").
   const groupWords = new Set(group.id.split('-'))
   while (remainder.length && groupWords.has(remainder[0])) {
     remainder = remainder.slice(1)

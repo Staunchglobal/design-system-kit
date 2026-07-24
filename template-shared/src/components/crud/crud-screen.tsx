@@ -40,12 +40,9 @@ export type CrudScreenProps<T> = {
   edit?: CrudEditConfig<T>
   delete?: CrudDeleteConfig<T>
   empty?: CrudEmptyConfig
-  /** Extra row actions beyond Edit/Delete from configs. */
   actions?: CrudAction<T>[]
   className?: string
-  /** Mount a local Toaster (default true). Set false if the app already has one. */
   withToaster?: boolean
-  /** Entity label used in default empty / toast copy. */
   entityLabel?: string
 }
 
@@ -56,10 +53,6 @@ function defaultEditValues<T>(row: T, fieldNames: string[]): Record<string, stri
   )
 }
 
-/**
- * Low-prop composed CRUD screen — owns search, tabs, table, pagination, and
- * create/edit/delete overlays. Pass columns + fetchPage + optional configs.
- */
 export function CrudScreen<T>({
   columns,
   fetchPage,
@@ -149,7 +142,7 @@ export function CrudScreen<T>({
   }
 
   return (
-    <div className={cn('w-full space-y-4', className)} data-slot="crud-screen">
+    <div className={cn('w-full', className)} data-slot="crud-screen">
       {withToaster ? <Toaster /> : null}
 
       <CrudToolbar
@@ -168,7 +161,7 @@ export function CrudScreen<T>({
 
       {list.error ? (
         <div
-          className="border-destructive/30 bg-destructive/5 text-destructive flex flex-wrap items-center justify-between gap-2 rounded-lg border px-3 py-2 text-sm"
+          className="border-destructive/30 bg-destructive/5 text-destructive m-4 flex flex-wrap items-center justify-between gap-2 rounded-lg border px-3 py-2 text-sm"
           role="alert"
         >
           <span>{list.error.message}</span>
@@ -207,17 +200,17 @@ export function CrudScreen<T>({
         pageCount={list.pageCount}
         onPageChange={list.setPage}
         totalCount={list.totalCount}
+        itemLabel={`${entityLabel}${list.totalCount === 1 ? '' : 's'}`}
         totalLabel={
           list.debouncedSearch
-            ? `${list.totalCount} ${entityLabel}${list.totalCount === 1 ? '' : 's'} matching “${list.debouncedSearch}”`
-            : `${list.totalCount} ${entityLabel}${list.totalCount === 1 ? '' : 's'}`
+            ? `Showing matches for “${list.debouncedSearch}” · ${list.totalCount} ${entityLabel}${list.totalCount === 1 ? '' : 's'}`
+            : undefined
         }
         pageSize={list.pageSize}
         pageSizeOptions={pageSizeOptions}
         onPageSizeChange={list.setPageSize}
       />
 
-      {/* Create */}
       {create && isCrudFormFieldsConfig(create) ? (
         <CrudEntityFormDialog
           open={createOpen}
@@ -250,7 +243,6 @@ export function CrudScreen<T>({
           })
         : null}
 
-      {/* Edit */}
       {edit && editing && isCrudEditFieldsConfig(edit) ? (
         <CrudEntityFormDialog
           open={editing != null}
@@ -294,7 +286,6 @@ export function CrudScreen<T>({
           })
         : null}
 
-      {/* Delete */}
       {deleteConfig ? (
         <CrudDeleteDialog
           open={deleteTarget != null}

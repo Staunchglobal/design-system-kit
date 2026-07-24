@@ -1,112 +1,125 @@
-/* ==========================================================================
-   Alert Dialog
-   ========================================================================== */
-
 [data-slot='alert-dialog-overlay'] {
-  --alert-dialog-overlay-bg: color-mix(in srgb, var(--overlay-bg) 50%, transparent);
+  --alert-dialog-overlay-bg: var(--overlay-bg);
+  --alert-dialog-overlay-opacity: 0.5;
+  --alert-dialog-overlay-blur: 4px;
   --alert-dialog-overlay-duration: 100ms;
-  background-color: var(--alert-dialog-overlay-bg);
+  background-color: rgb(from var(--alert-dialog-overlay-bg) r g b / var(--alert-dialog-overlay-opacity));
   transition-duration: var(--alert-dialog-overlay-duration);
+}
+@supports (backdrop-filter: blur(1px)) {
+  [data-slot='alert-dialog-overlay'] {
+    backdrop-filter: blur(var(--alert-dialog-overlay-blur));
+  }
 }
 
 [data-slot='alert-dialog-content'] {
-  --alert-dialog-content-bg: var(--popover);
-  --alert-dialog-content-fg: var(--popover-foreground);
-  --alert-dialog-content-ring-color: var(--neutral-950);
-  --alert-dialog-content-ring-width: 1px;
+  --alert-dialog-content-bg: var(--neutral-0);
+  --alert-dialog-content-fg: var(--foreground);
+  --alert-dialog-content-ring-color: transparent;
+  --alert-dialog-content-ring-width: 0px;
   --alert-dialog-content-radius: var(--radius-3xl);
+  --alert-dialog-content-max-width: 22.375rem;
   --alert-dialog-content-padding: 1rem;
   --alert-dialog-content-gap: 1rem;
   --alert-dialog-content-duration: 100ms;
+  --alert-dialog-content-shadow: var(--shadow-md);
   background-color: var(--alert-dialog-content-bg);
   color: var(--alert-dialog-content-fg);
-  box-shadow: 0 0 0 var(--alert-dialog-content-ring-width) var(--alert-dialog-content-ring-color);
+  box-shadow:
+    var(--alert-dialog-content-shadow),
+    0 0 0 var(--alert-dialog-content-ring-width) var(--alert-dialog-content-ring-color);
   border-radius: var(--alert-dialog-content-radius);
+  max-width: var(--alert-dialog-content-max-width);
   padding: var(--alert-dialog-content-padding);
   gap: var(--alert-dialog-content-gap);
   transition-duration: var(--alert-dialog-content-duration);
 }
-[data-slot='alert-dialog-content'][data-size='default'] {
-  --alert-dialog-content-max-width: 20rem;
-  max-width: var(--alert-dialog-content-max-width);
-}
+[data-slot='alert-dialog-content'][data-size='default'],
 [data-slot='alert-dialog-content'][data-size='sm'] {
-  --alert-dialog-content-max-width: 20rem;
   max-width: var(--alert-dialog-content-max-width);
 }
-
 [data-slot='alert-dialog-header'] {
-  --alert-dialog-header-gap: 0.375rem;
-  gap: var(--alert-dialog-header-gap);
+  --alert-dialog-header-gap: 0.75rem;
+  gap: var(--alert-dialog-header-gap) !important;
+}
+[data-slot='alert-dialog-footer'] {
+  --alert-dialog-footer-bg: transparent;
+  --alert-dialog-footer-margin-inline: 0;
+  --alert-dialog-footer-margin-block-end: 0;
+  --alert-dialog-footer-gap: 0.75rem;
+  --alert-dialog-footer-radius: 0;
+  --alert-dialog-footer-border-color: transparent;
+  --alert-dialog-footer-border-width: 0;
+  --alert-dialog-footer-padding: 0;
+  background-color: var(--alert-dialog-footer-bg) !important;
+  margin-inline: var(--alert-dialog-footer-margin-inline) !important;
+  margin-block-end: var(--alert-dialog-footer-margin-block-end) !important;
+  gap: var(--alert-dialog-footer-gap) !important;
+  border-radius: var(--alert-dialog-footer-radius) !important;
+  border-top: var(--alert-dialog-footer-border-width) solid var(--alert-dialog-footer-border-color) !important;
+  padding: var(--alert-dialog-footer-padding) !important;
+}
+[data-slot='alert-dialog-footer'] > [data-slot='button'],
+[data-slot='alert-dialog-footer'] > a,
+[data-slot='alert-dialog-footer'] > button,
+[data-ui='alert-dialog-action'],
+[data-ui='alert-dialog-cancel'] {
+  flex: 1 1 0;
+  min-width: 0;
+  border-radius: var(--radius-full);
 }
 
 [data-slot='alert-dialog-content'][data-size='sm'] [data-slot='alert-dialog-footer'] {
-  --alert-dialog-footer-gap-cols: 0.5rem;
+  --alert-dialog-footer-gap-cols: 0.75rem;
   column-gap: var(--alert-dialog-footer-gap-cols);
 }
 
-[data-slot='alert-dialog-footer'] {
-  --alert-dialog-footer-bg: var(--neutral-100);
-  --alert-dialog-footer-margin-inline: -1rem;
-  --alert-dialog-footer-margin-block-end: -1rem;
-  --alert-dialog-footer-gap: 0.5rem;
-  --alert-dialog-footer-radius: var(--radius-3xl);
-  --alert-dialog-footer-border-color: var(--border);
-  --alert-dialog-footer-border-width: 1px;
-  --alert-dialog-footer-padding: 1rem;
-  background-color: var(--alert-dialog-footer-bg);
-  margin-inline: var(--alert-dialog-footer-margin-inline);
-  margin-block-end: var(--alert-dialog-footer-margin-block-end);
-  gap: var(--alert-dialog-footer-gap);
-  border-end-start-radius: var(--alert-dialog-footer-radius);
-  border-end-end-radius: var(--alert-dialog-footer-radius);
-  border-top: var(--alert-dialog-footer-border-width) solid var(--alert-dialog-footer-border-color);
-  padding: var(--alert-dialog-footer-padding);
-}
-
 [data-slot='alert-dialog-media'] {
-  --alert-dialog-media-bg: var(--muted);
+  --alert-dialog-media-bg: var(--neutral-0);
+  --alert-dialog-media-border-color: var(--border);
+  --alert-dialog-media-border-width: 1px;
   --alert-dialog-media-size: 2.5rem;
   --alert-dialog-media-radius: var(--radius-md);
-  --alert-dialog-media-margin-bottom: 0.5rem;
+  --alert-dialog-media-margin-bottom: 0;
   background-color: var(--alert-dialog-media-bg);
+  border: var(--alert-dialog-media-border-width) solid var(--alert-dialog-media-border-color);
   inline-size: var(--alert-dialog-media-size);
   block-size: var(--alert-dialog-media-size);
   border-radius: var(--alert-dialog-media-radius);
   margin-block-end: var(--alert-dialog-media-margin-bottom);
 }
-
 [data-slot='alert-dialog-title'] {
-  --alert-dialog-title-font-family: var(--font-heading);
-  --alert-dialog-title-font-size: var(--typography-h6-font-size);
-  --alert-dialog-title-font-weight: var(--typography-h6-font-weight);
+  --alert-dialog-title-font-family: var(--font-sans);
+  --alert-dialog-title-font-size: var(--typography-lead-font-size);
+  --alert-dialog-title-font-weight: var(--typography-h1-font-weight);
+  --alert-dialog-title-line-height: var(--typography-lead-line-height);
+  --alert-dialog-title-fg: var(--foreground);
   font-family: var(--alert-dialog-title-font-family);
   font-size: var(--alert-dialog-title-font-size);
   font-weight: var(--alert-dialog-title-font-weight);
+  line-height: var(--alert-dialog-title-line-height);
+  color: var(--alert-dialog-title-fg);
 }
-
 [data-slot='alert-dialog-description'] {
-  --alert-dialog-description-fg: var(--muted-foreground);
-  --alert-dialog-description-font-size: var(--typography-caption-font-size);
+  --alert-dialog-description-fg: var(--muted-600);
+  --alert-dialog-description-font-size: var(--typography-small-font-size);
+  --alert-dialog-description-line-height: var(--typography-small-line-height);
+  --alert-dialog-description-font-weight: var(--typography-p-font-weight);
   --alert-dialog-description-link-hover-fg: var(--foreground);
+  --alert-dialog-description-link-underline-offset: 3px;
   color: var(--alert-dialog-description-fg);
   font-size: var(--alert-dialog-description-font-size);
+  line-height: var(--alert-dialog-description-line-height);
+  font-weight: var(--alert-dialog-description-font-weight);
+}
+[data-slot='alert-dialog-description'] a {
+  text-underline-offset: var(--alert-dialog-description-link-underline-offset);
 }
 [data-slot='alert-dialog-description'] a:hover {
   color: var(--alert-dialog-description-link-hover-fg);
 }
 
-/* AlertDialogAction / Cancel render real <Button>s (data-slot="button").
-   Paramount uses fully pill-shaped actions regardless of Button radius. */
-[data-ui='alert-dialog-action'],
-[data-ui='alert-dialog-cancel'] {
-  border-radius: 9999px;
-}
-
 .dark [data-slot='alert-dialog-content'] {
-  --alert-dialog-content-ring-color: var(--neutral-50);
-}
-
-.dark [data-slot='alert-dialog-footer'] {
-  --alert-dialog-footer-bg: var(--neutral-800);
+  --alert-dialog-content-bg: var(--neutral-900);
+  --alert-dialog-content-ring-color: transparent;
 }

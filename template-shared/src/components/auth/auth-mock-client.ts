@@ -2,22 +2,12 @@ import { DEMO_OTP_CODE } from '@/components/auth/auth-operations'
 import { makeDemoUser } from '@/components/auth/auth-session'
 import type { AuthUser } from '@/components/auth/types'
 
-/**
- * In-memory dummy GraphQL auth API.
- * Same signature as graphqlFetch so pages can swap endpoint + fetchImpl.
- *
- * Demo credentials:
- * - Seeded user: demo@example.com / Password1!
- * - OTP always: 123456
- * - Invite token: invite-demo-token
- */
-
 type StoredUser = AuthUser & { password: string }
 
 const users = new Map<string, StoredUser>()
 const pendingOtps = new Map<string, { code: string; purpose: 'login' | 'reset' }>()
-const resetTokens = new Map<string, string>() // token -> email
-const sessions = new Map<string, string>() // bearer token -> email
+const resetTokens = new Map<string, string>()
+const sessions = new Map<string, string>()
 
 function seed() {
   if (users.size > 0) return
@@ -59,10 +49,6 @@ function requireMatch(password: string, confirmation: string) {
   }
 }
 
-/**
- * Mock GraphQL fetch — drop-in for auth pages.
- * Pass any endpoint string; it is ignored (in-memory only).
- */
 export async function authMockFetch<T>(
   _endpoint: string,
   query: string,
@@ -84,7 +70,6 @@ export async function authMockFetch<T>(
         if (!user || user.password !== password) {
           throw new Error('Invalid email or password')
         }
-        // Always require OTP in the demo (mirrors learnerpass); switch to token-only by returning token.
         pendingOtps.set(email, { code: DEMO_OTP_CODE, purpose: 'login' })
         return {
           loginUser: {
@@ -146,7 +131,6 @@ export async function authMockFetch<T>(
       case 'SendPasswordResetOtp': {
         const email = String(v.email ?? '').toLowerCase().trim()
         if (!users.has(email)) {
-          // Don't leak existence — still "succeed"
           return {
             sendPasswordResetOtp: {
               message: 'If that email exists, an OTP was sent',
@@ -200,7 +184,6 @@ export async function authMockFetch<T>(
         const user = users.get(email)
         if (!user) throw new Error('Invitation not found')
         user.password = password
-        // Keep the fixed demo invite token reusable across page reloads.
         if (token !== 'invite-demo-token') resetTokens.delete(token)
         const authToken = issueToken(email)
         const { password: _, ...publicUser } = user
@@ -216,7 +199,6 @@ export async function authMockFetch<T>(
               : headers instanceof Headers
                 ? headers.get('Authorization')
                 : undefined
-        // Also accept from variables for mock convenience
         const bearer =
           authHeader?.replace(/^Bearer\s+/i, '') ||
           String((v as { _token?: string })._token ?? '')
@@ -240,5 +222,4 @@ export async function authMockFetch<T>(
   }
 }
 
-/** Marker endpoint — pages use this with authMockFetch by default. */
 export const AUTH_MOCK_ENDPOINT = 'mock://auth'

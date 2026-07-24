@@ -3,6 +3,11 @@
 import { SearchIcon } from 'lucide-react'
 import { ComponentSection, Example } from '@/app/design-system/_lib/showcase'
 import { Input } from '@/components/ui/input'
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from '@/components/ui/input-group'
 
 export default function InputDemo() {
   return (
@@ -28,10 +33,12 @@ export default function InputDemo() {
         </Example>
 
         <Example title="With leading icon">
-          <div className="relative w-64">
-            <SearchIcon className="text-muted-foreground pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2" />
-            <Input className="pl-8" placeholder="Search..." />
-          </div>
+          <InputGroup className="w-64">
+            <InputGroupAddon>
+              <SearchIcon />
+            </InputGroupAddon>
+            <InputGroupInput placeholder="Search..." />
+          </InputGroup>
         </Example>
       </ComponentSection>
   )

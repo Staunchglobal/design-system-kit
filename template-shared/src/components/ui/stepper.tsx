@@ -10,9 +10,7 @@ type StepperProps = {
   orientation?: 'horizontal' | 'vertical'
   className?: string
   children?: React.ReactNode
-  /** Used by the `segments` variant. */
   currentStep?: number
-  /** Used by the `segments` variant. */
   totalSteps?: number
 }
 
@@ -36,6 +34,7 @@ function StepperItem({
   orientation = 'horizontal',
 }: StepperItemProps) {
   const vertical = orientation === 'vertical'
+  const connectorActive = state === 'complete' || state === 'active'
 
   return (
     <div
@@ -44,15 +43,21 @@ function StepperItem({
       data-orientation={orientation}
       className={cn(
         'flex',
-        vertical ? 'gap-3' : 'min-w-0 flex-1 flex-col items-center gap-2',
+        vertical ? 'gap-3' : 'relative min-w-0 flex-1 flex-col items-center gap-2',
         className
       )}
     >
-      <div className={cn('flex items-center', vertical ? 'flex-col' : 'w-full')}>
+      <div
+        data-slot="stepper-indicator-row"
+        className={cn(
+          'relative flex items-center justify-center',
+          vertical ? 'flex-col' : 'w-full'
+        )}
+      >
         <div
           data-slot="stepper-indicator"
           className={cn(
-            'flex size-8 shrink-0 items-center justify-center rounded-full border text-xs font-medium transition-colors',
+            'relative z-[1] flex size-8 shrink-0 items-center justify-center rounded-full border text-xs font-medium transition-colors',
             state === 'upcoming' && 'border-border bg-background text-muted-foreground',
             state === 'active' && 'border-primary bg-primary text-primary-foreground',
             state === 'complete' && 'border-primary bg-primary text-primary-foreground',
@@ -70,15 +75,23 @@ function StepperItem({
         {!isLast ? (
           <div
             data-slot="stepper-connector"
+            aria-hidden
             className={cn(
               'bg-border',
-              vertical ? 'mt-2 h-8 w-px' : 'mx-2 h-px flex-1',
-              (state === 'complete' || state === 'active') && 'bg-primary'
+              vertical
+                ? 'mt-2 h-8 w-px'
+                :
+                  'absolute top-1/2 left-[calc(50%+1.25rem)] right-[calc(-50%+1.25rem)] h-px -translate-y-1/2',
+              connectorActive && 'bg-primary'
             )}
           />
         ) : null}
       </div>
-      <div className={cn(!vertical && 'text-center')}>
+
+      <div
+        data-slot="stepper-copy"
+        className={cn(!vertical && 'w-full text-center', vertical && 'min-w-0 pt-0.5')}
+      >
         <p
           data-slot="stepper-label"
           className={cn(

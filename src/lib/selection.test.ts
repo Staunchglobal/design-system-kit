@@ -20,7 +20,6 @@ describe('resolveUiClosure', () => {
   })
 
   it('follows uiDeps transitively', () => {
-    // combobox depends on button + input-group (per registry) — picking it must pull both in.
     const closure = resolveUiClosure(['combobox'])
     expect(closure.has('combobox')).toBe(true)
     for (const dep of COMPONENTS.combobox.uiDeps) {
@@ -113,7 +112,6 @@ describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
     const closure = resolveUiClosure(['button', 'direction'])
     const files = cssFilesFor(closure)
     expect(files.has('button.css')).toBe(true)
-    // "direction" is pure logic with nothing to theme — registry marks it with no cssFile.
     expect(COMPONENTS.direction.cssFile).toBeNull()
   })
 
@@ -136,7 +134,7 @@ describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
     expect(COMPONENTS['crud-table'].uiDeps).toEqual(
       expect.arrayContaining(['dialog', 'alert-dialog', 'field', 'table', 'button', 'pagination'])
     )
-    expect(COMPONENTS['crud-table'].cssFile).toBeNull()
+    expect(COMPONENTS['crud-table'].cssFile).toBe('crud-screen.css')
   })
 
   it('extraFilesFor surfaces auth companions', () => {

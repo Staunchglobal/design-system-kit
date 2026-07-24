@@ -1,17 +1,4 @@
 #!/usr/bin/env node
-/**
- * End-to-end smoke test: scaffolds real Next.js + Vite apps, runs `design-kit init` against
- * them with a few different component selections, and runs each project's own `build`/`lint`.
- * This is the exact manual loop used throughout development (create-next-app/create-vite → CLI
- * init → framework build → lint) — formalized here so it's a single command instead of retyping
- * a long shell sequence, and so it can be wired into CI.
- *
- * Usage: node scripts/smoke-test.mjs [--keep] [--only next|vite]
- *   --keep         Don't delete the scaffolded scratch projects afterward (for debugging).
- *   --only <fw>    Only run that framework's scenarios.
- *
- * Always passes `--templates <repo-root>` so init exercises the local checkout (not the CDN pin).
- */
 import { spawn, spawnSync } from 'node:child_process'
 import fs from 'node:fs'
 import os from 'node:os'
@@ -80,7 +67,6 @@ function scaffoldVite(dir) {
   assert(run('npm', ['install', '--no-audit', '--no-fund'], dir, { quiet: true }), 'vite npm install failed')
 }
 
-/** Mounts DesignSystemPage/ThemeEditorPage into the stock create-vite App.tsx so `vite build` actually bundles them. */
 function mountVitePages(dir) {
   const appPath = path.join(dir, 'src/App.tsx')
   let src = fs.readFileSync(appPath, 'utf8')
@@ -115,6 +101,8 @@ async function waitForHttp(url, timeoutMs = 60_000) {
       const response = await fetch(url)
       if (response.ok) return
     } catch {
+      void 0
+        // The process group already exited.
       // The production server is still starting.
     }
     await new Promise((resolve) => setTimeout(resolve, 500))
@@ -201,7 +189,7 @@ async function runtimeCheckNext(dir) {
       try {
         process.kill(-server.pid, 'SIGTERM')
       } catch {
-        // The process group already exited.
+        void 0
       }
     }
   }

@@ -50,7 +50,6 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
     log.warn('Could not find vite.config.{ts,js,mts} — the Tailwind/theme-save plugin wiring will need to be manual.')
   }
 
-  // ---- Which components? ------------------------------------------------------
   log.title('Components')
   const toolOnly = resolveUiClosure(THEME_EDITOR_REQUIRED_COMPONENTS)
   const prior = priorSelectionFor(root, toolOnly)
@@ -68,7 +67,6 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
     log.info(`Also included (required by your picks): ${[...addedByDeps].sort().join(', ')}`)
   }
 
-  // ---- Dependencies -------------------------------------------------------
   const existingDeps = {
     ...((project.packageJson.dependencies as Record<string, string>) ?? {}),
     ...((project.packageJson.devDependencies as Record<string, string>) ?? {}),
@@ -113,7 +111,6 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
     }
   }
 
-  // ---- Copy files -------------------------------------------------------------
   log.title('Files')
   const uiFiles = [...closure].filter((s) => s !== 'patterns').map((s) => `components/ui/${s}.tsx`)
   const cssFiles = [...cssFilesFor(closure)].map((f) => `styles/theme/components/${f}`)
@@ -263,7 +260,6 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
     return
   }
 
-  // ---- Patch configs ------------------------------------------------------------
   log.title('Wiring it up')
 
   const cssPath = path.join(root, 'src/index.css')
@@ -329,7 +325,6 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
       : 'package.json already has a "theme:manifest" script'
   )
 
-  // ---- Done ------------------------------------------------------------------------
   const includeTooltip = closure.has('tooltip')
   const includeToaster = closure.has('sonner')
   log.title('Manual step: mount the pages')

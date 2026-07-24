@@ -1,7 +1,3 @@
-/* ==========================================================================
-   Popover
-   ========================================================================== */
-
 [data-slot='popover-content'] {
   --popover-content-bg: var(--popover);
   --popover-content-fg: var(--popover-foreground);

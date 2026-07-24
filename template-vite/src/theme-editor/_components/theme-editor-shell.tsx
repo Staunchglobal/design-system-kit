@@ -19,7 +19,6 @@ export function ThemeEditorShell({ manifest }: { manifest: ThemeManifest }) {
         <Inspector>
           <div className="flex h-full min-h-0 overflow-hidden">
             <ThemeNav />
-            {/* flex (not grid): stacked rows on mobile each get flex-1 + min-h-0 so overflow-y-auto works */}
             <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden lg:flex-row">
               <div className="min-h-0 min-w-0 flex-1 overflow-hidden border-r">
                 <VariableForm />

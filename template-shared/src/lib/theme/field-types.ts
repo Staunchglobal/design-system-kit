@@ -33,9 +33,6 @@ export function toVarRef(tokenName: string): string {
   return `var(${n})`;
 }
 
-// A shade STEP only — e.g. "primary-500" — not a semantic token that merely shares the
-// family prefix, like "primary-foreground" (that belongs in listSemanticColorTokenNames).
-// Family list sourced from token-families.json — the canonical registry.
 const SHADE_STEP_RE = new RegExp(
   `^(${tokenFamilies.shadeFamilies.join("|")})-\\d+$`
 );
@@ -59,8 +56,6 @@ export function listColorTokenNames(
   return [...names].sort();
 }
 
-/** Semantic color tokens (--primary, --border, --sidebar-accent, ...) — the "Colors" group,
- *  as opposed to listColorTokenNames' raw shade-scale steps ("Color Scales" group). */
 export function listSemanticColorTokenNames(
   manifest: ThemeManifest,
   extra: string[] = []
@@ -132,8 +127,6 @@ export function listTypographyTokenNames(
 const TYPOGRAPHY_VARIANT_RE =
   /^--typography-([a-z0-9-]+)-(?:font-family|font-size|font-weight|line-height|letter-spacing|font-style|bg|radius|padding-x|padding-y|text-transform)$/;
 
-/** Bare variant names only (e.g. "h3", "display", "lead") — for a rename target
- *  picker, as opposed to listTypographyTokenNames' full per-property var names. */
 export function listTypographyVariantNames(manifest: ThemeManifest): string[] {
   const names = new Set<string>();
   for (const g of manifest.groups) {
@@ -145,7 +138,6 @@ export function listTypographyVariantNames(manifest: ThemeManifest): string[] {
   return [...names].sort();
 }
 
-/** Flatten defaults from manifest into an id→value map (unique React / store keys). */
 export function defaultsFromManifest(
   manifest: ThemeManifest
 ): Record<string, string> {
@@ -158,7 +150,6 @@ export function defaultsFromManifest(
   return values;
 }
 
-/** Map variable id → CSS custom property name. */
 export function idToNameMap(manifest: ThemeManifest): Record<string, string> {
   const map: Record<string, string> = {};
   for (const g of manifest.groups) {
@@ -169,10 +160,8 @@ export function idToNameMap(manifest: ThemeManifest): Record<string, string> {
   return map;
 }
 
-/** True for `.dark { … }` token entries (live editor chrome always uses light). */
 export function isDarkScopeVar(id: string, scope?: string): boolean {
   if (scope) return scope === "dark" || scope.startsWith("dark/");
-  // ids look like `colors:--background:1` — occurrence ≥ 1 for colors = non-root blocks
   const parts = id.split(":");
   const occurrence = Number(parts[parts.length - 1]);
   return (
@@ -312,9 +301,6 @@ export function buildScopedVarsCss(
   for (const entries of bySelectorName.values()) {
     if (entries.length > 1) continue;
     const { selector, name, value } = entries[0];
-    // A selector may itself be a comma-separated list (see scopeToSelector's
-    // `varying` branch) — hostSelector must prefix every branch, not just the first,
-    // or later branches would apply unscoped, outside the live preview.
     const qualified = selector
       .split(",")
       .map((branch) => `${hostSelector} ${branch.trim()}`)
@@ -326,7 +312,6 @@ export function buildScopedVarsCss(
 
 const UNIT_RE = /^(-?\d+(?:\.\d+)?)(px|rem|em|%|deg|ms|s|vh|vw|vmin|vmax)$/;
 
-/** Splits e.g. "0.375rem" into { num: 0.375, unit: 'rem' }; null if not a plain number+unit value. */
 export function parseUnitValue(
   value: string
 ): { num: number; unit: string } | null {
@@ -339,7 +324,6 @@ export function isPlainNumber(value: string): boolean {
   return /^-?\d+(\.\d+)?$/.test(value.trim());
 }
 
-/** Strips trailing float noise, e.g. 0.375 * 16 = 6.000000000000001 → "6". */
 export function formatNumber(n: number): string {
   return String(Math.round(n * 10000) / 10000);
 }
@@ -352,11 +336,6 @@ export function pxToRem(px: number): number {
   return Math.round((px / 16) * 10000) / 10000;
 }
 
-/**
- * Flattens the manifest + live edits into name → value, preferring root scope over
- * editor/dark duplicates (same precedence as applyCssVars). Used to resolve a color
- * token reference (e.g. `--primary-500`) down to its actual hex for display.
- */
 export function buildRootValueMap(
   manifest: ThemeManifest,
   values: Record<string, string>
@@ -378,7 +357,6 @@ export function buildRootValueMap(
   return out;
 }
 
-/** Resolves a token name (with or without `--`) through `var(...)` chains down to a hex value. */
 export function resolveTokenHex(
   token: string,
   nameValueMap: Record<string, string>,
@@ -399,11 +377,9 @@ export function groupVariablesForEditor(
   groupId: string,
   variables: ThemeVariable[]
 ): ThemeVariable[] {
-  // Radius: only show editable theme-radius-* sources
   if (groupId === "radius") {
     return variables.filter((v) => v.name.startsWith("--theme-radius"));
   }
-  // Colors: editor UI is light-only — hide .dark / [data-theme-editor] duplicates
   if (groupId === "colors") {
     return variables.filter((v) => {
       const s = v.scope ?? "";

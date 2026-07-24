@@ -1,7 +1,3 @@
-/* ==========================================================================
-   Table
-   ========================================================================== */
-
 [data-slot='table'] {
   --table-font-size: var(--typography-small-font-size);
   font-size: var(--table-font-size);
@@ -46,7 +42,7 @@
   --table-head-fg: var(--muted-foreground);
   --table-head-height: 2.5rem;
   --table-head-padding-x: 0.5rem;
-  --table-head-font-weight: 600;
+  --table-head-font-weight: var(--typography-large-font-weight);
   --table-head-letter-spacing: 0.05em;
   --table-head-text-transform: uppercase;
   color: var(--table-head-fg);

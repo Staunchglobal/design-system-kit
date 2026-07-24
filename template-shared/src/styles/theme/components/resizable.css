@@ -1,15 +1,7 @@
-/* ==========================================================================
-   Resizable
-   ========================================================================== */
-
 [data-slot='resizable-panel-group'] {
   --resizable-group-gap: 0px;
   gap: var(--resizable-group-gap);
 }
-
-/* react-resizable-panels reflects orientation via a real aria-orientation
-   attribute on both the group and the handle — used here instead of a
-   data-orientation attribute, which this component doesn't render. */
 [data-slot='resizable-handle'] {
   --resizable-handle-size: 1px;
   --resizable-handle-bg: var(--border);

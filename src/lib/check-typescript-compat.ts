@@ -3,7 +3,6 @@ import type { TypeScriptVersionInfo } from './detect.js'
 import { log } from './log.js'
 
 export type TsCompatIssue = {
-  /** 'broken': errors today on the detected version. 'future': fine today, breaks on a future TS7+ upgrade. 'info': FYI only. */
   severity: 'broken' | 'future' | 'info'
   message: string
 }
@@ -94,7 +93,7 @@ function checkTypesDefault(
   tsMajor: number | null,
   deps: Record<string, string>
 ): TsCompatIssue | null {
-  if (/"types"\s*:/.test(tsconfigSrc)) return null // already explicit — respect it, don't touch
+  if (/"types"\s*:/.test(tsconfigSrc)) return null
 
   const knownTypes = typesArrayFromDeps(deps)
   const listHint = knownTypes.length ? ` (yours: ${knownTypes.join(', ')})` : ''
@@ -119,7 +118,7 @@ function checkTypesDefault(
  */
 function checkRootDirDefault(tsconfigSrc: string, tsMajor: number | null): TsCompatIssue | null {
   if (/"rootDir"\s*:/.test(tsconfigSrc)) return null
-  if (/"noEmit"\s*:\s*true/.test(tsconfigSrc)) return null // nothing is emitted — rootDir is moot
+  if (/"noEmit"\s*:\s*true/.test(tsconfigSrc)) return null
   const isTs7Plus = tsMajor !== null && tsMajor >= 7
   return {
     severity: isTs7Plus ? 'future' : 'info',

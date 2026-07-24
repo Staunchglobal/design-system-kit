@@ -1,17 +1,7 @@
-/* ==========================================================================
-   Payment Method List
-   ========================================================================== */
-
-/* Root renders as an ItemGroup with its data-slot overridden to
-   'payment-method-list', so it no longer inherits item.css's group-gap rule. */
 [data-slot='payment-method-list'] {
   --payment-method-list-gap: 0.5rem;
   gap: var(--payment-method-list-gap);
 }
-
-/* Each row renders as an Item with its data-slot overridden to
-   'payment-method-card', so it no longer inherits item.css's rules —
-   restate the relevant subset here. */
 [data-slot='payment-method-card'] {
   --payment-method-card-radius: var(--radius-lg);
   --payment-method-card-gap: 0.625rem;

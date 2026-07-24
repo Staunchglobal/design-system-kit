@@ -1,11 +1,8 @@
-/* ==========================================================================
-   Drawer
-   ========================================================================== */
-
 [data-slot='drawer-overlay'] {
-  --drawer-overlay-bg: color-mix(in srgb, var(--overlay-bg) 50%, transparent);
+  --drawer-overlay-bg: var(--overlay-bg);
+  --drawer-overlay-opacity: 0.5;
   --drawer-overlay-blur: 4px;
-  background-color: var(--drawer-overlay-bg);
+  background-color: rgb(from var(--drawer-overlay-bg) r g b / var(--drawer-overlay-opacity));
 }
 
 [data-slot='drawer-content'] {
@@ -51,9 +48,6 @@
   border-bottom-left-radius: var(--drawer-content-radius);
   border-left: var(--drawer-content-border-width) solid var(--drawer-content-border-color);
 }
-/* The drag-handle bar rendered inside drawer-content is a bare <div> with no
-   data-slot attribute in drawer.tsx, so it cannot be targeted without
-   editing the component; only a structural fallback is available: */
 [data-slot='drawer-content'] > div:first-child {
   --drawer-handle-bg: var(--muted);
   --drawer-handle-width: 100px;

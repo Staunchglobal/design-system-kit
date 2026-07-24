@@ -1,25 +1,9 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-/**
- * A project's theme editor may have renamed tokens (e.g. "accent" -> "info") after the
- * initial `design-kit init`. Those renames only touch files that existed at the time —
- * a component added *later* via another `init`/`update` run is fetched fresh from the
- * template and would otherwise arrive still saying "accent". This module re-applies the
- * project's own rename history to newly-copied files before they're written, so a
- * component added after a rename shows up already using the current names.
- *
- * Mirrors the rewrite rules in rename-engine.ts under the template-next/template-vite
- * sources (and the Vite plugin's inline duplicate) — same duplication convention, since
- * this runs in the CLI's own process, a different package from the scaffolded project's
- * runtime code.
- */
-
 export type RenameFamily = 'color' | 'radius' | 'typography' | 'shadow'
 export type RenameHistoryEntry = { family: RenameFamily; from: string; to: string }
 
-/** `destRoot` is the project's src root (e.g. `<project>/src` or `<project>` for a
- *  no-src-dir Next layout) — the same base `lib/theme/*` files are copied under. */
 export function loadRenameHistory(destRoot: string): RenameHistoryEntry[] {
   const historyPath = path.join(destRoot, 'lib/theme/token-renames.json')
   if (!fs.existsSync(historyPath)) return []

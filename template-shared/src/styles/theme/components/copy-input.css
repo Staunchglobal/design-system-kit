@@ -1,26 +1,51 @@
-/* ==========================================================================
-   Copy Input
-   ========================================================================== */
-
-/* Root renders as an InputGroup with its data-slot overridden to 'copy-input',
-   so it no longer inherits input-group.css's root rule — restate it here.
-   Its InputGroupInput/Addon/Button children keep their own data-slot and are
-   still styled normally by input-group.css. */
 [data-slot='copy-input'] {
   --copy-input-radius: var(--input-radius);
   --copy-input-border-width: var(--input-border-width);
   --copy-input-border-color: var(--input-border-color);
   --copy-input-bg: var(--input-bg);
   --copy-input-height: var(--input-height);
+  --copy-input-focus-border-color: var(--input-focus-border-color);
+  --copy-input-focus-border-width: 2px;
+
+  display: flex;
+  align-items: center;
+  height: var(--copy-input-height);
   border-radius: var(--copy-input-radius);
   border-width: var(--copy-input-border-width);
+  border-style: solid;
   border-color: var(--copy-input-border-color);
   background-color: var(--copy-input-bg);
-  height: var(--copy-input-height);
+  overflow: clip;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
+  box-shadow: none;
 }
-[data-slot='copy-input']:has([data-slot='input']:focus-visible) {
-  --copy-input-focus-border-color: var(--input-focus-border-color);
-  --copy-input-focus-ring-color: var(--input-focus-ring-color);
+[data-slot='copy-input']:has([data-slot='input']:focus-visible),
+[data-slot='copy-input']:focus-within {
+  border-width: var(--copy-input-focus-border-width);
   border-color: var(--copy-input-focus-border-color);
-  box-shadow: 0 0 0 var(--input-focus-ring-width) var(--copy-input-focus-ring-color);
+  box-shadow: none;
+}
+[data-slot='copy-input'] [data-ui='input-group-control'],
+[data-slot='copy-input'] [data-ui='input-group-control']:focus-visible,
+[data-slot='copy-input'] [data-slot='input'],
+[data-slot='copy-input'] [data-slot='input']:focus-visible {
+  border-width: 0 !important;
+  border-color: transparent !important;
+  border-radius: 0 !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
+  outline: none !important;
+}
+
+[data-slot='copy-input'] [data-slot='button'] {
+  box-shadow: none !important;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
+}
+[data-slot='copy-input'] [data-slot='button']:focus-visible {
+  box-shadow: none !important;
+  outline: none;
 }

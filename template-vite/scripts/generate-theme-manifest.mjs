@@ -1,18 +1,12 @@
 #!/usr/bin/env node
-/**
- * Regenerates <src?>/styles/theme/theme.manifest.json from split CSS files.
- * Usage: node scripts/generate-theme-manifest.mjs
- */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
-// Works whether the project uses a src/ directory or not (Next.js supports both).
 const srcDir = fs.existsSync(path.join(root, "src")) ? "src" : ".";
 let themeRoot = path.join(root, srcDir, "styles/theme");
-// CLI monorepo: template-next/vite scripts run against template-shared's canonical theme.
 if (!fs.existsSync(path.join(themeRoot, "tokens/colors.css"))) {
   const shared = path.join(
     root,
@@ -24,10 +18,6 @@ if (!fs.existsSync(path.join(themeRoot, "tokens/colors.css"))) {
   if (fs.existsSync(path.join(shared, "tokens/colors.css"))) themeRoot = shared;
 }
 
-// Canonical registry (single source of truth, shared with value-parsers.ts/field-types.ts/
-// descriptions.ts on the runtime side) — resolved relative to themeRoot's sibling `lib/theme/`
-// dir so this works both in a scaffolded project (src/styles/theme + src/lib/theme) and in
-// the CLI monorepo dev fallback (template-shared/src/styles/theme + .../src/lib/theme).
 const tokenFamiliesPath = path.join(
   themeRoot,
   "..",
@@ -209,7 +199,6 @@ function resolveVarFieldType(
   return inferred === "raw" ? null : inferred;
 }
 
-/** Second pass: upgrade var(--local-token) fields using the full manifest value map. */
 export function refineFieldTypes(groups) {
   const valueByName = new Map();
   for (const g of groups) {
@@ -370,8 +359,6 @@ export function parseCustomFonts(css) {
   return fonts;
 }
 
-// Guarded so importing this module (e.g. from a test) doesn't try to read a
-// theme dir that may not exist relative to the importer's cwd.
 const isMain = import.meta.url === `file://${process.argv[1]}`;
 if (isMain) {
   const groups = [];

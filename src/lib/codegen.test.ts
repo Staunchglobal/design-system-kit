@@ -35,7 +35,6 @@ describe('generateNavTs', () => {
     const groups = navGroupsFor(resolveUiClosure(['button', 'dialog']))
     const out = generateNavTs(groups)
     expect(out).toContain('export const NAV_GROUPS')
-    // Every generated group object should open and close cleanly.
     expect(out.match(/\{/g)?.length).toBe(out.match(/\}/g)?.length)
   })
 

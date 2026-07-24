@@ -48,7 +48,6 @@ export function SignupForm({
     passwordConfirmation?: string
     termsAccepted?: string
   }>({})
-  /** Errors stay hidden until the first submit attempt, then update live while typing. */
   const [submitted, setSubmitted] = React.useState(false)
 
   function passwordErrorsFor(value: string) {

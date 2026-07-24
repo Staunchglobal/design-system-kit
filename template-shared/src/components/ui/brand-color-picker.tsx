@@ -7,9 +7,7 @@ import { cn } from '@/lib/utils'
 type BrandColorOption = {
   id: string
   label: string
-  /** CSS color value (hex recommended for contrast auto-calculation). */
   swatch: string
-  /** Override the check-icon foreground. Auto-computed from `color` when omitted. */
   foreground?: string
 }
 
@@ -17,16 +15,10 @@ type BrandColorPickerProps = {
   options: BrandColorOption[]
   value: string
   onValueChange: (value: string) => void
-  /** Accessible label for the radiogroup. Defaults to "Brand color". */
   label?: string
   className?: string
 }
 
-/**
- * Determines whether black or white text provides sufficient contrast against
- * the given hex background color using the WCAG relative-luminance formula.
- * Returns '#ffffff' or '#000000'.
- */
 function getContrastForeground(hex: string): string {
   const clean = hex.replace('#', '')
   const src = clean.length === 3

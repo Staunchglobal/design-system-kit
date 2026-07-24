@@ -1,23 +1,13 @@
-/* ==========================================================================
-   Radius
-   ==========================================================================
-   Editable source tokens (--theme-radius-*). Public --radius* aliases are what
-   components reference. Tailwind @theme maps utilities to --theme-radius-*.
-
-   Pixel values cascade from paramount-mobile-app / function-rx
-   (xs/sm/md/lg/xl/xxl = 4/8/12/16/20/24px), mapped onto this kit's 7-step
-   naming with one extrapolated +4px step for 4xl.
-   ========================================================================== */
-
 :root {
-  --theme-radius: 0.75rem; /* 12px — default Button/Card/Modal radius */
-  --theme-radius-sm: 0.25rem; /* 4px */
-  --theme-radius-md: 0.5rem; /* 8px */
-  --theme-radius-lg: 0.75rem; /* 12px */
-  --theme-radius-xl: 1rem; /* 16px */
-  --theme-radius-2xl: 1.25rem; /* 20px */
-  --theme-radius-3xl: 1.5rem; /* 24px */
-  --theme-radius-4xl: 1.75rem; /* 28px */
+  --theme-radius: 0.75rem;
+  --theme-radius-sm: 0.25rem;
+  --theme-radius-md: 0.5rem;
+  --theme-radius-lg: 0.75rem;
+  --theme-radius-xl: 1rem;
+  --theme-radius-2xl: 1.25rem;
+  --theme-radius-3xl: 1.5rem;
+  --theme-radius-4xl: 1.75rem;
+  --theme-radius-full: 9999px;
 
   --radius: var(--theme-radius);
   --radius-sm: var(--theme-radius-sm);
@@ -27,4 +17,5 @@
   --radius-2xl: var(--theme-radius-2xl);
   --radius-3xl: var(--theme-radius-3xl);
   --radius-4xl: var(--theme-radius-4xl);
+  --radius-full: var(--theme-radius-full);
 }
