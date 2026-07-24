@@ -1,5 +1,9 @@
 /* ==========================================================================
    Input Group
+   ==========================================================================
+   Shell owns the field edge + focus. Nested Input/Textarea/Button must stay
+   borderless — otherwise theme input focus (2px primary) draws a second
+   pill inside the group and clips through addons.
    ========================================================================== */
 
 [data-slot='input-group'] {
@@ -10,27 +14,37 @@
   --input-group-bg: var(--input-bg);
   --input-group-height: var(--input-height);
   --input-group-focus-border-color: var(--input-focus-border-color);
-  --input-group-focus-ring-width: var(--input-focus-ring-width);
-  --input-group-focus-ring-color: var(--input-focus-ring-color);
+  --input-group-focus-border-width: 2px;
+  --input-group-focus-ring-width: 0px;
+  --input-group-focus-ring-color: transparent;
   --input-group-invalid-border-color: var(--input-invalid-border-color);
-  --input-group-invalid-ring-color: var(--input-invalid-ring-color);
+  --input-group-invalid-ring-color: transparent;
   --input-group-disabled-bg: var(--input-disabled-bg);
   --input-group-disabled-opacity: var(--input-disabled-opacity);
 
   height: var(--input-group-height);
   border-radius: var(--input-group-radius);
   border-width: var(--input-group-border-width);
+  border-style: solid;
   border-color: var(--input-group-border-color);
   background-color: var(--input-group-bg);
+  overflow: clip;
+  /* Kill Tailwind has-*:ring-3 from the component className */
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
+  box-shadow: none;
 }
 [data-slot='input-group']:has([data-slot='input']:focus-visible),
-[data-slot='input-group']:has([data-slot='textarea']:focus-visible) {
+[data-slot='input-group']:has([data-slot='textarea']:focus-visible),
+[data-slot='input-group']:focus-within {
+  border-width: var(--input-group-focus-border-width);
   border-color: var(--input-group-focus-border-color);
-  box-shadow: 0 0 0 var(--input-group-focus-ring-width) var(--input-group-focus-ring-color);
+  box-shadow: none;
 }
 [data-slot='input-group']:has([data-slot][aria-invalid='true']) {
+  border-width: var(--input-group-focus-border-width);
   border-color: var(--input-group-invalid-border-color);
-  box-shadow: 0 0 0 var(--input-group-focus-ring-width) var(--input-group-invalid-ring-color);
+  box-shadow: none;
 }
 [data-slot='input-group']:has(:disabled) {
   background-color: var(--input-group-disabled-bg);
@@ -57,7 +71,7 @@
   color: var(--input-group-addon-fg);
 }
 [data-slot='input-group-addon'][data-align='inline-start'] {
-  --input-group-addon-padding-inline-start: 0.5rem;
+  --input-group-addon-padding-inline-start: 0.75rem;
   padding-inline-start: var(--input-group-addon-padding-inline-start);
 }
 [data-slot='input-group-addon'][data-align='inline-end'] {
@@ -77,25 +91,49 @@
   padding-bottom: var(--input-group-addon-padding-bottom);
 }
 
-/* InputGroupButton is a real Button — sizes/colors from the Button section.
-   Only drop shadow so it sits flush inside the group. */
+/* Adornment icons — Paramount icon/grey */
+[data-slot='input-group-addon'] > svg {
+  --input-group-addon-icon-fg: var(--muted-600);
+  --input-group-addon-icon-size: 1rem;
+  width: var(--input-group-addon-icon-size);
+  height: var(--input-group-addon-icon-size);
+  color: var(--input-group-addon-icon-fg);
+  flex-shrink: 0;
+}
+
+/* InputGroupButton — flush inside the shell; no own ring/shadow */
 [data-slot='input-group-addon'] [data-slot='button'] {
-  box-shadow: none;
+  box-shadow: none !important;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
+}
+[data-slot='input-group-addon'] [data-slot='button']:focus-visible {
+  box-shadow: none !important;
+  outline: none;
 }
 
-/* InputGroupText renders no data-slot attribute (plain <span> with no
-   identifying DOM hook) — cannot be targeted without editing input-group.tsx.
-   Its current look: text-muted-foreground, text-sm, gap-2. */
-
-/* InputGroupInput/Textarea are real Input/Textarea — keep borderless chrome
-   so the group container owns the field edge. Heights/fonts still from Input. */
-[data-ui='input-group-control'] {
-  --input-group-control-padding-y: 0.5rem;
+/* InputGroupInput/Textarea — shell owns chrome; kill Input/Textarea focus */
+[data-slot='input-group'] [data-ui='input-group-control'],
+[data-slot='input-group'] [data-ui='input-group-control']:focus-visible,
+[data-slot='input-group'] [data-slot='input'],
+[data-slot='input-group'] [data-slot='input']:focus-visible,
+[data-slot='input-group'] [data-slot='input'][aria-invalid='true'],
+[data-slot='input-group'] [data-slot='textarea'],
+[data-slot='input-group'] [data-slot='textarea']:focus-visible,
+[data-slot='input-group'] [data-slot='textarea'][aria-invalid='true'] {
+  border-width: 0 !important;
+  border-color: transparent !important;
+  border-radius: 0 !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
+  outline: none !important;
+}
+[data-slot='input-group'] [data-ui='input-group-control'] {
+  --input-group-control-padding-y: 0;
   padding-block: var(--input-group-control-padding-y);
-  border-width: 0;
-  background-color: transparent;
-  box-shadow: none;
-}
-[data-ui='input-group-control']:focus-visible {
-  box-shadow: none;
+  line-height: var(--input-group-height);
+  min-width: 0;
+  flex: 1 1 auto;
 }

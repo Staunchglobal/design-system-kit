@@ -1,5 +1,8 @@
 /* ==========================================================================
    Input OTP
+   ==========================================================================
+   Joined slots share one Input-radius pill. Active cell uses an inset outline
+   so focus doesn’t float a partial ring across segment dividers.
    ========================================================================== */
 
 [data-slot='input-otp'] {
@@ -9,14 +12,14 @@
 [data-slot='input-otp-group'] {
   --input-otp-group-radius: var(--input-radius);
   --input-otp-group-invalid-border-color: var(--input-invalid-border-color);
-  --input-otp-group-invalid-ring-color: var(--input-invalid-ring-color);
-  --input-otp-group-focus-ring-width: var(--input-focus-ring-width);
   border-radius: var(--input-otp-group-radius);
+  overflow: clip;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
+  box-shadow: none;
 }
 [data-slot='input-otp-group']:has([aria-invalid='true']) {
-  border-color: var(--input-otp-group-invalid-border-color);
-  box-shadow: 0 0 0 var(--input-otp-group-focus-ring-width)
-    var(--input-otp-group-invalid-ring-color);
+  box-shadow: none;
 }
 
 [data-slot='input-otp-slot'] {
@@ -27,8 +30,6 @@
   --input-otp-slot-font-size: var(--input-file-font-size);
   --input-otp-slot-radius: var(--input-radius);
   --input-otp-slot-active-border-color: var(--input-focus-border-color);
-  --input-otp-slot-active-ring-width: var(--input-focus-ring-width);
-  --input-otp-slot-active-ring-color: var(--input-focus-ring-color);
   --input-otp-slot-invalid-border-color: var(--input-invalid-border-color);
   --input-otp-slot-caret-color: var(--input-fg);
   --input-otp-slot-caret-width: 1px;
@@ -39,21 +40,32 @@
   border-color: var(--input-otp-slot-border-color);
   background-color: var(--input-otp-slot-bg);
   font-size: var(--input-otp-slot-font-size);
+  border-radius: 0 !important;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
+  box-shadow: none !important;
 }
 [data-slot='input-otp-slot']:first-child {
-  border-start-start-radius: var(--input-otp-slot-radius);
-  border-end-start-radius: var(--input-otp-slot-radius);
+  border-start-start-radius: var(--input-otp-slot-radius) !important;
+  border-end-start-radius: var(--input-otp-slot-radius) !important;
 }
 [data-slot='input-otp-slot']:last-child {
-  border-start-end-radius: var(--input-otp-slot-radius);
-  border-end-end-radius: var(--input-otp-slot-radius);
+  border-start-end-radius: var(--input-otp-slot-radius) !important;
+  border-end-end-radius: var(--input-otp-slot-radius) !important;
 }
 [data-slot='input-otp-slot'][data-active='true'] {
-  border-color: var(--input-otp-slot-active-border-color);
-  box-shadow: 0 0 0 var(--input-otp-slot-active-ring-width) var(--input-otp-slot-active-ring-color);
+  z-index: 1;
+  border-color: var(--input-otp-slot-border-color);
+  box-shadow: none !important;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
 }
 [data-slot='input-otp-slot'][aria-invalid='true'] {
   border-color: var(--input-otp-slot-invalid-border-color);
+}
+[data-slot='input-otp-slot'][data-active='true'][aria-invalid='true'] {
+  border-color: var(--input-otp-slot-invalid-border-color);
+  box-shadow: none !important;
 }
 [data-slot='input-otp-slot'] .animate-caret-blink {
   background-color: var(--input-otp-slot-caret-color);

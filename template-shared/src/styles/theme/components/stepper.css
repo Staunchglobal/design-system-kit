@@ -1,13 +1,30 @@
 /* ==========================================================================
    Stepper
+   ==========================================================================
+   Circles: indicator centered above labels; connector spans to next circle.
    ========================================================================== */
+
+[data-slot='stepper'][data-variant='circles'][data-orientation='horizontal'] {
+  width: 100%;
+  align-items: flex-start;
+}
+
+[data-slot='stepper-item'][data-orientation='horizontal'] {
+  position: relative;
+  min-width: 0;
+  flex: 1 1 0;
+  align-items: center;
+}
 
 [data-slot='stepper-indicator'] {
   --stepper-indicator-size: 2rem;
   --stepper-indicator-font-size: var(--typography-caption-font-size);
+  --stepper-indicator-font-weight: var(--typography-small-font-weight);
   width: var(--stepper-indicator-size);
   height: var(--stepper-indicator-size);
   font-size: var(--stepper-indicator-font-size);
+  font-weight: var(--stepper-indicator-font-weight);
+  flex-shrink: 0;
 }
 
 [data-slot='stepper-connector'] {
@@ -18,6 +35,15 @@
 [data-slot='stepper-item'][data-state='complete'] [data-slot='stepper-connector'],
 [data-slot='stepper-item'][data-state='active'] [data-slot='stepper-connector'] {
   background-color: var(--stepper-connector-bg-active);
+}
+/* Error stops progress — line after error stays muted */
+[data-slot='stepper-item'][data-state='error'] [data-slot='stepper-connector'] {
+  background-color: var(--stepper-connector-bg);
+}
+
+[data-slot='stepper-copy'] {
+  width: 100%;
+  text-align: center;
 }
 
 [data-slot='stepper-label'] {
@@ -50,4 +76,8 @@
 }
 [data-slot='stepper-segment'][data-active] {
   background-color: var(--stepper-segment-bg-active);
+}
+
+.dark [data-slot='stepper-connector'] {
+  --stepper-connector-bg: var(--neutral-700);
 }

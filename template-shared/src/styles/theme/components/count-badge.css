@@ -1,8 +1,9 @@
 /* ==========================================================================
    Count Badge
    ==========================================================================
-   Paramount Design System — Tabs badges (Figma 6848:6685)
-   Primary (default kit usage): primary fill, white caption 12, pill, px 8 py 4
+   Paramount Design System — Tabs badges (Figma 6848:6685 / Primary)
+   Primary: #3ab5fe fill, white Caption 12/16 Medium, pill, px 8 py 4, min-w 30
+   Overlay: compact 20px pill for icon buttons (sibling of the button, not a child).
    ========================================================================== */
 
 [data-slot='count-badge'] {
@@ -12,25 +13,40 @@
   --count-badge-border-color: transparent;
   --count-badge-radius: var(--radius-full);
   --count-badge-padding-x: 0.5rem; /* spacing/xxs — 8px */
-  --count-badge-padding-y: 0.25rem; /* spacing/xxxs — 4px */
-  --count-badge-min-width: 1.875rem; /* ~30px */
-  --count-badge-height: auto;
-  --count-badge-font-size: var(--typography-caption-font-size); /* Caption — 12px */
-  --count-badge-font-weight: var(--typography-small-font-weight);
-  --count-badge-line-height: var(--typography-caption-line-height);
+  --count-badge-padding-y: 0;
+  --count-badge-min-width: 1.875rem; /* 30px — Figma Count Badge */
+  --count-badge-height: 1.5rem; /* 24px — centers Caption 12/16 */
+  --count-badge-font-size: var(--typography-caption-font-size); /* 12px */
+  --count-badge-font-weight: var(--typography-small-font-weight); /* 500 */
+  --count-badge-line-height: 1;
 
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
   min-width: var(--count-badge-min-width);
   height: var(--count-badge-height);
   padding-inline: var(--count-badge-padding-x);
   padding-block: var(--count-badge-padding-y);
-  border-radius: var(--count-badge-radius);
+  border-radius: var(--count-badge-radius) !important;
   border-width: var(--count-badge-border-width);
+  border-style: solid;
   border-color: var(--count-badge-border-color);
   background: var(--count-badge-bg);
   color: var(--count-badge-fg);
   font-size: var(--count-badge-font-size);
   font-weight: var(--count-badge-font-weight);
   line-height: var(--count-badge-line-height);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Compact pill for icon-button overlays */
+[data-slot='count-badge'][data-size='overlay'] {
+  --count-badge-min-width: 1.25rem; /* 20px */
+  --count-badge-height: 1.25rem;
+  --count-badge-padding-x: 0.25rem;
+  --count-badge-font-size: 0.625rem; /* 10px */
 }
 
 .dark [data-slot='count-badge'] {

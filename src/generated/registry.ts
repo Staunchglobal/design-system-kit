@@ -313,6 +313,8 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "textarea",
       "alert-dialog",
       "pagination",
+      "select",
+      "input-group",
       "sonner"
     ],
     "npmDeps": [
@@ -320,7 +322,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "lucide-react",
       "sonner"
     ],
-    "cssFile": null,
+    "cssFile": "crud-screen.css",
     "extraFiles": [
       "hooks/use-mobile.ts",
       "components/crud/types.ts",
@@ -545,7 +547,9 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "extraFiles": []
   },
   "input": {
-    "uiDeps": [],
+    "uiDeps": [
+      "input-group"
+    ],
     "npmDeps": [
       "lucide-react"
     ],

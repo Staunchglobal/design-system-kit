@@ -149,7 +149,7 @@ export function CrudScreen<T>({
   }
 
   return (
-    <div className={cn('w-full space-y-4', className)} data-slot="crud-screen">
+    <div className={cn('w-full', className)} data-slot="crud-screen">
       {withToaster ? <Toaster /> : null}
 
       <CrudToolbar
@@ -168,7 +168,7 @@ export function CrudScreen<T>({
 
       {list.error ? (
         <div
-          className="border-destructive/30 bg-destructive/5 text-destructive flex flex-wrap items-center justify-between gap-2 rounded-lg border px-3 py-2 text-sm"
+          className="border-destructive/30 bg-destructive/5 text-destructive m-4 flex flex-wrap items-center justify-between gap-2 rounded-lg border px-3 py-2 text-sm"
           role="alert"
         >
           <span>{list.error.message}</span>
@@ -207,10 +207,11 @@ export function CrudScreen<T>({
         pageCount={list.pageCount}
         onPageChange={list.setPage}
         totalCount={list.totalCount}
+        itemLabel={`${entityLabel}${list.totalCount === 1 ? '' : 's'}`}
         totalLabel={
           list.debouncedSearch
-            ? `${list.totalCount} ${entityLabel}${list.totalCount === 1 ? '' : 's'} matching “${list.debouncedSearch}”`
-            : `${list.totalCount} ${entityLabel}${list.totalCount === 1 ? '' : 's'}`
+            ? `Showing matches for “${list.debouncedSearch}” · ${list.totalCount} ${entityLabel}${list.totalCount === 1 ? '' : 's'}`
+            : undefined
         }
         pageSize={list.pageSize}
         pageSizeOptions={pageSizeOptions}

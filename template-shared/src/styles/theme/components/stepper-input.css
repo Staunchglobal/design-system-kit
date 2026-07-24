@@ -14,18 +14,26 @@
    'stepper-input', so it no longer inherits input-group.css's root rule —
    restate it here. Its InputGroupInput/Addon/Button children keep their own
    data-slot and are still styled normally by input-group.css. */
-[data-slot='stepper-input'] {
-  --stepper-input-radius: var(--radius-2xl); /* Button and Input border-radius/medium — 20px */
+[data-slot="stepper-input"] {
+  --stepper-input-radius: var(
+    --radius-2xl
+  ); /* Button and Input border-radius/medium — 20px */
   --stepper-input-border-width: 1px;
   --stepper-input-border-color: var(--border); /* border/light #e8e8e9 */
   --stepper-input-bg: var(--neutral-0); /* surface/primary */
   --stepper-input-height: 2.75rem; /* Medium — 44px (Figma; not Input 48) */
   --stepper-input-padding-x: 0.75rem; /* 12px */
   --stepper-input-gap: 0.5rem; /* 8px */
-  --stepper-input-focus-border-color: var(--primary-800); /* border/action-focus #005170 */
+  --stepper-input-focus-border-color: var(
+    --primary-800
+  ); /* border/action-focus #005170 */
   --stepper-input-focus-border-width: 2px;
-  --stepper-input-active-border-color: var(--primary-500); /* border/action #3ab5fe */
-  --stepper-input-invalid-border-color: var(--destructive); /* border/error #d94c51 */
+  --stepper-input-active-border-color: var(
+    --primary-500
+  ); /* border/action #3ab5fe */
+  --stepper-input-invalid-border-color: var(
+    --destructive
+  ); /* border/error #d94c51 */
   --stepper-input-disabled-bg: var(--neutral-50); /* Neutral/50 #f6f6f6 */
   --stepper-input-disabled-opacity: 1;
   --stepper-input-icon-color: var(--muted-600); /* icon/grey */
@@ -46,7 +54,7 @@
 }
 
 /* Active / typing — primary border (maps to focus when ring isn’t the dark focus) */
-[data-slot='stepper-input']:has([data-slot='input']:focus-visible) {
+[data-slot="stepper-input"]:has([data-slot="input"]:focus-visible) {
   --stepper-input-border-width: var(--stepper-input-focus-border-width);
   --stepper-input-border-color: var(--stepper-input-focus-border-color);
   border-width: var(--stepper-input-border-width);
@@ -54,25 +62,27 @@
   box-shadow: none;
 }
 
-[data-slot='stepper-input']:has([data-slot][aria-invalid='true']),
-[data-slot='stepper-input']:has([aria-invalid='true']) {
+[data-slot="stepper-input"]:has([data-slot][aria-invalid="true"]),
+[data-slot="stepper-input"]:has([aria-invalid="true"]) {
   --stepper-input-border-color: var(--stepper-input-invalid-border-color);
   border-width: 1px;
   border-color: var(--stepper-input-border-color);
   box-shadow: none;
 }
 
-[data-slot='stepper-input']:has(:disabled) {
+[data-slot="stepper-input"]:has(:disabled) {
   --stepper-input-bg: var(--stepper-input-disabled-bg);
   background-color: var(--stepper-input-bg);
   opacity: var(--stepper-input-disabled-opacity);
 }
 
-/* Value field — borderless inside shell; left-aligned like Figma */
-[data-slot='stepper-input'] [data-ui='input-group-control'],
-[data-slot='stepper-input'] [data-slot='input'] {
+/* Value field — borderless inside shell; centered between − / + */
+[data-slot="stepper-input"] [data-ui="input-group-control"],
+[data-slot="stepper-input"] [data-slot="input"] {
   height: 100%;
   min-height: 0;
+  min-width: 0;
+  flex: 1 1 auto;
   border-width: 0;
   border-radius: 0;
   background-color: transparent;
@@ -83,24 +93,26 @@
   --stepper-input-line-height: var(--typography-p-line-height);
   font-size: var(--stepper-input-font-size);
   line-height: var(--stepper-input-line-height);
-  text-align: start;
+  text-align: center;
 }
 
-[data-slot='stepper-input'] [data-slot='input']:focus-visible {
+[data-slot="stepper-input"] [data-slot="input"]:focus-visible {
   border-width: 0;
   box-shadow: none;
 }
 
-[data-slot='stepper-input'] [data-slot='input']::placeholder {
-  color: var(--muted-400); /* text/light — Default; Figma also uses text/body-2 on focus */
+[data-slot="stepper-input"] [data-slot="input"]::placeholder {
+  color: var(
+    --muted-400
+  ); /* text/light — Default; Figma also uses text/body-2 on focus */
 }
 
-[data-slot='stepper-input']:has(:disabled) [data-slot='input'] {
+[data-slot="stepper-input"]:has(:disabled) [data-slot="input"] {
   color: var(--muted-500); /* text/on-disabled #8e8f93 */
 }
 
 /* Addons / ± buttons */
-[data-slot='stepper-input'] [data-slot='input-group-addon'] {
+[data-slot="stepper-input"] [data-slot="input-group-addon"] {
   --input-group-addon-padding-y: 0;
   --input-group-addon-padding-inline-start: 0;
   --input-group-addon-padding-inline-end: 0;
@@ -110,13 +122,17 @@
   color: var(--stepper-input-icon-color);
 }
 
-[data-slot='stepper-input'] [data-slot='input-group-addon'][data-align='inline-start'],
-[data-slot='stepper-input'] [data-slot='input-group-addon'][data-align='inline-end'] {
+[data-slot="stepper-input"]
+  [data-slot="input-group-addon"][data-align="inline-start"],
+[data-slot="stepper-input"]
+  [data-slot="input-group-addon"][data-align="inline-end"] {
   padding-inline-start: 0;
   padding-inline-end: 0;
 }
 
-[data-slot='stepper-input'] [data-slot='input-group-addon'] [data-slot='button'] {
+[data-slot="stepper-input"]
+  [data-slot="input-group-addon"]
+  [data-slot="button"] {
   --stepper-input-button-size: var(--stepper-input-icon-size);
   width: var(--stepper-input-button-size);
   height: var(--stepper-input-button-size);
@@ -129,18 +145,25 @@
   color: var(--stepper-input-icon-color);
 }
 
-[data-slot='stepper-input'] [data-slot='input-group-addon'] [data-slot='button']:hover {
+[data-slot="stepper-input"]
+  [data-slot="input-group-addon"]
+  [data-slot="button"]:hover {
   background-color: transparent;
   color: var(--foreground);
 }
 
-[data-slot='stepper-input'] [data-slot='input-group-addon'] [data-slot='button'] svg {
+[data-slot="stepper-input"]
+  [data-slot="input-group-addon"]
+  [data-slot="button"]
+  svg {
   width: var(--stepper-input-icon-size);
   height: var(--stepper-input-icon-size);
   color: inherit;
 }
 
-[data-slot='stepper-input']:has(:disabled) [data-slot='input-group-addon'] [data-slot='button'] {
+[data-slot="stepper-input"]:has(:disabled)
+  [data-slot="input-group-addon"]
+  [data-slot="button"] {
   color: var(--muted-500);
   opacity: 1;
 }
@@ -148,16 +171,16 @@
 /* Suppress the native number spinner — the component provides its own
    Minus/Plus buttons, so the browser's built-in arrows would be a redundant,
    visually clashing second affordance. */
-[data-slot='stepper-input'] input[type='number']::-webkit-inner-spin-button,
-[data-slot='stepper-input'] input[type='number']::-webkit-outer-spin-button {
+[data-slot="stepper-input"] input[type="number"]::-webkit-inner-spin-button,
+[data-slot="stepper-input"] input[type="number"]::-webkit-outer-spin-button {
   appearance: none;
   margin: 0;
 }
-[data-slot='stepper-input'] input[type='number'] {
+[data-slot="stepper-input"] input[type="number"] {
   appearance: textfield;
 }
 
-.dark [data-slot='stepper-input'] {
+.dark [data-slot="stepper-input"] {
   --stepper-input-bg: var(--neutral-900);
   --stepper-input-disabled-bg: var(--neutral-800);
   --stepper-input-focus-border-color: var(--primary-400);

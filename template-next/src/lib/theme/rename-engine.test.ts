@@ -82,9 +82,15 @@ describe("color family rename — accent -> info (real files)", () => {
     expect(colors).not.toMatch(/--accent\b/);
 
     // sidebar-accent is a DIFFERENT token that only shares the substring "accent" —
-    // its own name must never be touched, only its var() reference target.
-    expect(colors).toMatch(/--sidebar-accent:\s*var\(--info-100\);/);
-    expect(colors).toMatch(/--sidebar-accent-foreground:\s*var\(--info-900\);/);
+    // its own name must never be touched. It derives from --secondary-*, not --accent-*,
+    // in the current palette, so its value is untouched too; the invariant under test
+    // is that the property NAME survives the rename.
+    expect(colors).toMatch(/--sidebar-accent:\s*var\(--secondary-50\);/);
+    expect(colors).toMatch(/--sidebar-accent-foreground:\s*var\(--primary-950\);/);
+
+    // chart-5 DOES reference the renamed family's scale value (even though "chart-5"
+    // itself doesn't contain "accent"), proving var() reference targets still update.
+    expect(colors).toMatch(/--chart-5:\s*var\(--info-500\);/);
   });
 
   it("renames literal Tailwind utility classNames, preserving compound variants and -foreground pairing", () => {

@@ -136,7 +136,9 @@ describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
     expect(COMPONENTS['crud-table'].uiDeps).toEqual(
       expect.arrayContaining(['dialog', 'alert-dialog', 'field', 'table', 'button', 'pagination'])
     )
-    expect(COMPONENTS['crud-table'].cssFile).toBeNull()
+    // crud-table's chrome (sidebar rail, toolbar, pagination) is themed via crud-screen.css,
+    // not a crud-table.css that doesn't exist.
+    expect(COMPONENTS['crud-table'].cssFile).toBe('crud-screen.css')
   })
 
   it('extraFilesFor surfaces auth companions', () => {

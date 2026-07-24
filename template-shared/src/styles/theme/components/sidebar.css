@@ -1,5 +1,9 @@
 /* ==========================================================================
    Sidebar
+   ==========================================================================
+   Safer Health Side navbar (Figma 715:158752)
+   White surface · Border/Low · 44px items · amber/200 active · circular info badge.
+   Mapped to kit sidebar / secondary / info / muted tokens. Demo copy unchanged.
    ========================================================================== */
 
 [data-slot='sidebar-wrapper'] {
@@ -99,49 +103,66 @@
   background-color: var(--sidebar-input-bg);
 }
 
+/* Header / footer — Figma 16px padding */
 [data-slot='sidebar-header'],
 [data-slot='sidebar-footer'] {
-  --sidebar-header-footer-gap: 0.5rem;
-  --sidebar-header-footer-padding: 0.5rem;
+  --sidebar-header-footer-gap: 0.75rem;
+  --sidebar-header-footer-padding: 1rem;
   gap: var(--sidebar-header-footer-gap);
   padding: var(--sidebar-header-footer-padding);
 }
 
+/* Full-bleed divider with 8px vertical inset (Figma Divider) */
 [data-slot='sidebar-separator'] {
   --sidebar-separator-bg: var(--sidebar-border);
-  --sidebar-separator-margin-x: 0.5rem;
+  --sidebar-separator-margin-x: 0;
+  --sidebar-separator-margin-y: 0.5rem;
   background-color: var(--sidebar-separator-bg);
   margin-inline: var(--sidebar-separator-margin-x);
+  margin-block: var(--sidebar-separator-margin-y);
 }
 
 [data-slot='sidebar-content'] {
-  --sidebar-content-gap: 0px;
+  --sidebar-content-gap: 0;
   gap: var(--sidebar-content-gap);
 }
 
+/* Section — Figma px 16 / pt 8 */
 [data-slot='sidebar-group'] {
-  --sidebar-group-padding: 0.5rem;
-  padding: var(--sidebar-group-padding);
+  --sidebar-group-padding-x: 1rem;
+  --sidebar-group-padding-y: 0.5rem;
+  padding-inline: var(--sidebar-group-padding-x);
+  padding-block: var(--sidebar-group-padding-y);
 }
 
+/* Subheader — text-base Medium, Text/Medium (not overline) */
 [data-slot='sidebar-group-label'] {
-  --sidebar-group-label-height: 2rem;
-  --sidebar-group-label-padding-x: 0.5rem;
-  --sidebar-group-label-font-size: var(--typography-overline-font-size);
-  --sidebar-group-label-font-weight: var(--typography-overline-font-weight);
-  --sidebar-group-label-fg: var(--neutral-950);
+  --sidebar-group-label-height: auto;
+  --sidebar-group-label-padding-x: 1rem;
+  --sidebar-group-label-padding-y: 0.625rem;
+  --sidebar-group-label-font-size: var(--typography-p-font-size);
+  --sidebar-group-label-font-weight: var(--typography-small-font-weight);
+  --sidebar-group-label-line-height: var(--typography-p-line-height);
+  --sidebar-group-label-fg: var(--muted-foreground);
   --sidebar-group-label-focus-ring: var(--sidebar-ring);
+  --sidebar-group-label-letter-spacing: 0;
+  --sidebar-group-label-text-transform: none;
   height: var(--sidebar-group-label-height);
+  min-height: 2.5rem;
   padding-inline: var(--sidebar-group-label-padding-x);
+  padding-block: var(--sidebar-group-label-padding-y);
   font-size: var(--sidebar-group-label-font-size);
   font-weight: var(--sidebar-group-label-font-weight);
+  line-height: var(--sidebar-group-label-line-height);
+  letter-spacing: var(--sidebar-group-label-letter-spacing);
+  text-transform: var(--sidebar-group-label-text-transform);
   color: var(--sidebar-group-label-fg);
 }
 
 [data-slot='sidebar-group-action'] {
   --sidebar-group-action-size: 1.25rem;
   --sidebar-group-action-radius: var(--radius-md);
-  --sidebar-group-action-fg: var(--sidebar-foreground);
+  --sidebar-group-action-fg: var(--muted-foreground);
   --sidebar-group-action-hover-bg: var(--sidebar-accent);
   --sidebar-group-action-hover-fg: var(--sidebar-accent-foreground);
   width: var(--sidebar-group-action-size);
@@ -159,24 +180,38 @@
 }
 
 [data-slot='sidebar-menu'] {
-  --sidebar-menu-gap: 0px;
+  --sidebar-menu-gap: 0;
   gap: var(--sidebar-menu-gap);
 }
 
+/* Sidebar Item — 44× full width, radius-lg, gap 12, Text/Medium default */
 [data-slot='sidebar-menu-button'] {
   --sidebar-menu-button-radius: var(--radius-md);
-  --sidebar-menu-button-padding: 0.5rem;
-  --sidebar-menu-button-fg: var(--sidebar-foreground);
-  --sidebar-menu-button-hover-bg: var(--primary-50);
-  --sidebar-menu-button-hover-fg: var(--primary-950);
-  --sidebar-menu-button-active-bg: var(--primary-50);
-  --sidebar-menu-button-active-fg: var(--primary-500);
+  --sidebar-menu-button-padding-x: 1rem;
+  --sidebar-menu-button-padding-y: 0.625rem;
+  --sidebar-menu-button-gap: 0.75rem;
+  --sidebar-menu-button-fg: var(--muted-foreground);
+  --sidebar-menu-button-icon-fg: var(--muted-foreground);
+  --sidebar-menu-button-hover-bg: var(--secondary-50);
+  --sidebar-menu-button-hover-fg: var(--sidebar-foreground);
+  --sidebar-menu-button-active-bg: var(--sidebar-accent);
+  --sidebar-menu-button-active-fg: var(--sidebar-accent-foreground);
+  --sidebar-menu-button-active-icon-fg: var(--sidebar-primary);
   --sidebar-menu-button-active-font-weight: var(--typography-small-font-weight);
   --sidebar-menu-button-disabled-opacity: 0.5;
   --sidebar-menu-button-focus-ring: var(--sidebar-ring);
+  --sidebar-menu-button-icon-size: 1.5rem;
+  gap: var(--sidebar-menu-button-gap);
   border-radius: var(--sidebar-menu-button-radius);
-  padding: var(--sidebar-menu-button-padding);
+  padding-inline: var(--sidebar-menu-button-padding-x);
+  padding-block: var(--sidebar-menu-button-padding-y);
   color: var(--sidebar-menu-button-fg);
+  font-weight: var(--typography-small-font-weight);
+}
+[data-slot='sidebar-menu-button'] svg {
+  width: var(--sidebar-menu-button-icon-size);
+  height: var(--sidebar-menu-button-icon-size);
+  color: var(--sidebar-menu-button-icon-fg);
 }
 [data-slot='sidebar-menu-button']:hover,
 [data-slot='sidebar-menu-button']:active,
@@ -184,29 +219,38 @@
   background-color: var(--sidebar-menu-button-hover-bg);
   color: var(--sidebar-menu-button-hover-fg);
 }
+[data-slot='sidebar-menu-button']:hover svg,
+[data-slot='sidebar-menu-button']:active svg,
+[data-slot='sidebar-menu-button'][data-open] svg {
+  color: var(--sidebar-menu-button-hover-fg);
+}
 [data-slot='sidebar-menu-button'][data-active='true'] {
   background-color: var(--sidebar-menu-button-active-bg);
   color: var(--sidebar-menu-button-active-fg);
   font-weight: var(--sidebar-menu-button-active-font-weight);
 }
+[data-slot='sidebar-menu-button'][data-active='true'] svg {
+  color: var(--sidebar-menu-button-active-icon-fg);
+}
 [data-slot='sidebar-menu-button']:disabled {
   opacity: var(--sidebar-menu-button-disabled-opacity);
 }
 [data-slot='sidebar-menu-button'][data-variant='outline'] {
-  --sidebar-menu-button-outline-bg: var(--background);
+  --sidebar-menu-button-outline-bg: var(--sidebar);
   --sidebar-menu-button-outline-ring: var(--sidebar-border);
   background-color: var(--sidebar-menu-button-outline-bg);
   box-shadow: 0 0 0 1px var(--sidebar-menu-button-outline-ring);
 }
 [data-slot='sidebar-menu-button'][data-size='default'] {
-  --sidebar-menu-button-height: 2rem;
+  --sidebar-menu-button-height: 2.75rem; /* 44px */
   --sidebar-menu-button-font-size: var(--typography-small-font-size);
   height: var(--sidebar-menu-button-height);
   font-size: var(--sidebar-menu-button-font-size);
 }
 [data-slot='sidebar-menu-button'][data-size='sm'] {
-  --sidebar-menu-button-height: 1.75rem;
+  --sidebar-menu-button-height: 2.25rem;
   --sidebar-menu-button-font-size: var(--typography-caption-font-size);
+  --sidebar-menu-button-icon-size: 1.25rem;
   height: var(--sidebar-menu-button-height);
   font-size: var(--sidebar-menu-button-font-size);
 }
@@ -220,7 +264,7 @@
 [data-slot='sidebar-menu-action'] {
   --sidebar-menu-action-size: 1.25rem;
   --sidebar-menu-action-radius: var(--radius-md);
-  --sidebar-menu-action-fg: var(--sidebar-foreground);
+  --sidebar-menu-action-fg: var(--muted-foreground);
   --sidebar-menu-action-hover-bg: var(--sidebar-accent);
   --sidebar-menu-action-hover-fg: var(--sidebar-accent-foreground);
   width: var(--sidebar-menu-action-size);
@@ -232,27 +276,39 @@
   color: var(--sidebar-menu-action-hover-fg);
 }
 
+/* Count badge — circular info fill (Figma Semantic/Info) */
 [data-slot='sidebar-menu-badge'] {
-  --sidebar-menu-badge-height: 1.25rem;
-  --sidebar-menu-badge-min-width: 1.25rem;
+  --sidebar-menu-badge-height: 1.375rem; /* 22px */
+  --sidebar-menu-badge-min-width: 1.375rem;
   --sidebar-menu-badge-padding-x: 0.25rem;
-  --sidebar-menu-badge-radius: var(--radius-md);
-  --sidebar-menu-badge-font-size: var(--typography-caption-font-size);
-  --sidebar-menu-badge-font-weight: var(--typography-caption-font-weight);
-  --sidebar-menu-badge-fg: var(--sidebar-foreground);
+  --sidebar-menu-badge-padding-y: 0.125rem;
+  --sidebar-menu-badge-radius: var(--radius-full);
+  --sidebar-menu-badge-font-size: 0.625rem; /* text-xxs 10px */
+  --sidebar-menu-badge-font-weight: var(--typography-small-font-weight);
+  --sidebar-menu-badge-line-height: 0.75rem;
+  --sidebar-menu-badge-bg: var(--sidebar-primary);
+  --sidebar-menu-badge-fg: var(--sidebar-primary-foreground);
+  --sidebar-menu-badge-top: 50%;
+  --sidebar-menu-badge-right: 1rem;
   height: var(--sidebar-menu-badge-height);
   min-width: var(--sidebar-menu-badge-min-width);
   padding-inline: var(--sidebar-menu-badge-padding-x);
+  padding-block: var(--sidebar-menu-badge-padding-y);
   border-radius: var(--sidebar-menu-badge-radius);
   font-size: var(--sidebar-menu-badge-font-size);
   font-weight: var(--sidebar-menu-badge-font-weight);
+  line-height: var(--sidebar-menu-badge-line-height);
   color: var(--sidebar-menu-badge-fg);
+  background-color: var(--sidebar-menu-badge-bg);
+  top: var(--sidebar-menu-badge-top);
+  right: var(--sidebar-menu-badge-right);
+  translate: 0 -50%;
 }
 
 [data-slot='sidebar-menu-skeleton'] {
-  --sidebar-menu-skeleton-height: 2rem;
-  --sidebar-menu-skeleton-gap: 0.5rem;
-  --sidebar-menu-skeleton-padding-x: 0.5rem;
+  --sidebar-menu-skeleton-height: 2.75rem;
+  --sidebar-menu-skeleton-gap: 0.75rem;
+  --sidebar-menu-skeleton-padding-x: 1rem;
   --sidebar-menu-skeleton-radius: var(--radius-md);
   height: var(--sidebar-menu-skeleton-height);
   gap: var(--sidebar-menu-skeleton-gap);
@@ -262,7 +318,7 @@
 
 [data-slot='sidebar-menu-sub'] {
   --sidebar-menu-sub-margin-x: 0.875rem;
-  --sidebar-menu-sub-gap: 0.25rem;
+  --sidebar-menu-sub-gap: 0;
   --sidebar-menu-sub-padding-x: 0.625rem;
   --sidebar-menu-sub-padding-y: 0.125rem;
   --sidebar-menu-sub-border-color: var(--sidebar-border);
@@ -274,15 +330,15 @@
 }
 
 [data-slot='sidebar-menu-sub-button'] {
-  --sidebar-menu-sub-button-height: 1.75rem;
-  --sidebar-menu-sub-button-gap: 0.5rem;
+  --sidebar-menu-sub-button-height: 2.25rem;
+  --sidebar-menu-sub-button-gap: 0.75rem;
   --sidebar-menu-sub-button-padding-x: 0.5rem;
   --sidebar-menu-sub-button-radius: var(--radius-md);
-  --sidebar-menu-sub-button-fg: var(--sidebar-foreground);
-  --sidebar-menu-sub-button-hover-bg: var(--primary-50);
-  --sidebar-menu-sub-button-hover-fg: var(--primary-950);
-  --sidebar-menu-sub-button-active-bg: var(--primary-50);
-  --sidebar-menu-sub-button-active-fg: var(--primary-500);
+  --sidebar-menu-sub-button-fg: var(--muted-foreground);
+  --sidebar-menu-sub-button-hover-bg: var(--secondary-50);
+  --sidebar-menu-sub-button-hover-fg: var(--sidebar-foreground);
+  --sidebar-menu-sub-button-active-bg: var(--sidebar-accent);
+  --sidebar-menu-sub-button-active-fg: var(--sidebar-accent-foreground);
   height: var(--sidebar-menu-sub-button-height);
   gap: var(--sidebar-menu-sub-button-gap);
   padding-inline: var(--sidebar-menu-sub-button-padding-x);
@@ -308,5 +364,82 @@
 }
 
 .dark [data-slot='sidebar-group-label'] {
-  --sidebar-group-label-fg: var(--neutral-50);
+  --sidebar-group-label-fg: var(--muted-foreground);
+}
+.dark [data-slot='sidebar-menu-button'] {
+  --sidebar-menu-button-hover-bg: var(--sidebar-accent);
+}
+
+/* —— Icon-collapsed rail (data-collapsible="icon") ——
+   Expanded items are 44×full with 16px pad; that overflows a 48px rail.
+   Collapse to centered 32×32 squares. */
+[data-slot='sidebar'][data-collapsible='icon'] [data-slot='sidebar-header'],
+[data-slot='sidebar'][data-collapsible='icon'] [data-slot='sidebar-footer'] {
+  --sidebar-header-footer-padding: 0.5rem;
+  padding: var(--sidebar-header-footer-padding);
+  align-items: center;
+}
+
+[data-slot='sidebar'][data-collapsible='icon'] [data-slot='sidebar-group'] {
+  --sidebar-group-padding-x: 0.5rem;
+  --sidebar-group-padding-y: 0.5rem;
+  padding-inline: var(--sidebar-group-padding-x);
+  padding-block: var(--sidebar-group-padding-y);
+}
+
+[data-slot='sidebar'][data-collapsible='icon'] [data-slot='sidebar-group-label'] {
+  height: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+[data-slot='sidebar'][data-collapsible='icon'] [data-slot='sidebar-group-action'] {
+  display: none;
+}
+
+[data-slot='sidebar'][data-collapsible='icon'] [data-slot='sidebar-menu-button'],
+[data-slot='sidebar'][data-collapsible='icon'] [data-slot='sidebar-menu-button'][data-size='default'],
+[data-slot='sidebar'][data-collapsible='icon'] [data-slot='sidebar-menu-button'][data-size='sm'],
+[data-slot='sidebar'][data-collapsible='icon'] [data-slot='sidebar-menu-button'][data-size='lg'] {
+  --sidebar-menu-button-height: 2rem;
+  --sidebar-menu-button-padding-x: 0.5rem;
+  --sidebar-menu-button-padding-y: 0.5rem;
+  --sidebar-menu-button-gap: 0;
+  --sidebar-menu-button-icon-size: 1rem;
+  width: 2rem;
+  height: 2rem;
+  min-width: 2rem;
+  padding: 0.5rem;
+  gap: 0;
+  justify-content: center;
+}
+
+[data-slot='sidebar'][data-collapsible='icon'] [data-slot='sidebar-menu-button'] > span {
+  display: none;
+}
+
+[data-slot='sidebar'][data-collapsible='icon'] [data-slot='sidebar-separator'] {
+  --sidebar-separator-margin-x: 0.5rem;
+  --sidebar-separator-margin-y: 0.25rem;
+  margin-inline: var(--sidebar-separator-margin-x);
+  margin-block: var(--sidebar-separator-margin-y);
+}
+
+/* Design-system showcase: keep collapsible sidebar inside the example frame
+   instead of fixed to the viewport. */
+[data-sidebar-demo] {
+  position: relative;
+}
+[data-sidebar-demo] [data-slot='sidebar-wrapper'] {
+  min-height: 0;
+  height: 100%;
+}
+[data-sidebar-demo] [data-slot='sidebar-container'] {
+  position: absolute;
+  height: 100%;
+  max-height: 100%;
 }

@@ -37,12 +37,18 @@
   --tabs-list-bg: transparent;
   --tabs-list-gap: 0;
   --tabs-list-radius: 0;
-  --tabs-list-border-color: color-mix(in oklab, var(--neutral-950) 8%, transparent);
+  --tabs-list-border-color: var(--border);
+  --tabs-list-border-width: 1px;
+  position: relative;
   background-color: var(--tabs-list-bg);
   gap: var(--tabs-list-gap);
   border-radius: var(--tabs-list-radius);
-  border-bottom-width: 1px;
+  border-bottom-width: var(--tabs-list-border-width);
+  border-bottom-style: solid;
   border-bottom-color: var(--tabs-list-border-color);
+  /* Kill Tailwind h-8 so triggers + indicator share one baseline */
+  height: auto !important;
+  align-items: stretch;
 }
 
 [data-slot='tabs-trigger'] {
@@ -107,18 +113,21 @@
 
 /* —— Underline (line list) —— */
 [data-slot='tabs-list'][data-variant='line'] [data-slot='tabs-trigger'] {
-  --tabs-trigger-radius: var(--radius-md); /* 8px text chip */
+  --tabs-trigger-radius: 0;
   --tabs-trigger-padding-x: 0.5rem;
-  --tabs-trigger-padding-y: 0.25rem;
+  --tabs-trigger-padding-y: 0.5rem;
   --tabs-trigger-min-height: auto;
   --tabs-trigger-bg: transparent;
   --tabs-trigger-border-width: 0;
+  position: relative;
+  height: auto !important;
   background-color: var(--tabs-trigger-bg);
   border-radius: var(--tabs-trigger-radius);
   padding-inline: var(--tabs-trigger-padding-x);
   padding-block: var(--tabs-trigger-padding-y);
   min-height: var(--tabs-trigger-min-height);
   border-width: var(--tabs-trigger-border-width);
+  box-shadow: none !important;
 }
 [data-slot='tabs-list'][data-variant='line'] [data-slot='tabs-trigger'][data-state='active'] {
   --tabs-trigger-active-bg: transparent;
@@ -126,11 +135,19 @@
   background-color: var(--tabs-trigger-active-bg);
   color: var(--tabs-trigger-active-fg);
 }
+/* Sit the active bar on the list border — not 5px below (Tailwind after:bottom-[-5px]) */
+[data-slot='tabs-list'][data-variant='line'] [data-slot='tabs-trigger']::after {
+  bottom: calc(-1 * var(--tabs-list-border-width, 1px)) !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 2px !important;
+  border-radius: 0;
+  background-color: var(--tabs-trigger-indicator-color);
+  z-index: 1;
+}
 [data-slot='tabs-list'][data-variant='line']
   [data-slot='tabs-trigger'][data-state='active']::after {
   opacity: 1;
-  background-color: var(--tabs-trigger-indicator-color);
-  height: 2px;
 }
 
 [data-slot='tabs-content'] {

@@ -73,13 +73,14 @@ function NotificationCenter({
             variant="ghost"
             size="icon"
             aria-label={`Notifications${hasUnread ? `, ${unreadCount} unread` : ''}`}
-            className={cn('relative', triggerClassName)}
+            className={cn('relative overflow-visible', triggerClassName)}
           >
             <Bell />
             {hasUnread ? (
               <CountBadge
                 count={unreadCount}
-                className="absolute -top-1 -right-1 h-4 min-w-4 px-1 text-[10px]"
+                size="overlay"
+                className="absolute -top-1 -right-1 z-10"
               />
             ) : null}
           </Button>

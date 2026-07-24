@@ -32,9 +32,9 @@ const NPM_PACKAGES = [
 ]
 
 // Files not named after their own component (component slug -> css filename).
-const CSS_FILE_OVERRIDES = { sonner: 'sonner-toast.css' }
+const CSS_FILE_OVERRIDES = { sonner: 'sonner-toast.css', 'crud-table': 'crud-screen.css' }
 // Components with no dedicated theme CSS file (pure logic/utility, nothing to theme).
-const NO_CSS = new Set(['direction', 'crud-table', 'auth'])
+const NO_CSS = new Set(['direction', 'auth'])
 // Extra non-ui files a component's runtime needs (paths relative to template-shared/src/).
 const EXTRA_FILES = {
   sidebar: ['hooks/use-mobile.ts'],

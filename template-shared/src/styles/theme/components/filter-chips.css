@@ -17,20 +17,21 @@
 [data-slot='filter-chip'] {
   --filter-chip-bg: var(--neutral-0); /* Surface/primary white */
   --filter-chip-fg: var(--muted-600); /* text/medium #77787e */
-  --filter-chip-border-color: var(--neutral-200); /* border/light #e8e8e9 */
+  --filter-chip-border-color: var(--border); /* border/low */
   --filter-chip-border-width: 1px;
-  --filter-chip-radius: var(--radius-sm); /* radius/xs — 4px */
-  --filter-chip-padding-x: 0.5rem; /* spacing/xxs — 8px */
+  --filter-chip-radius: var(--radius-md); /* Figma radius-md ~6–8px */
+  --filter-chip-padding-x: 0.375rem; /* 6px */
   --filter-chip-padding-y: 0.375rem; /* 6px */
-  --filter-chip-gap: 0.125rem; /* spacing/xxxxs — 2px */
+  --filter-chip-gap: 0;
   --filter-chip-font-size: var(--typography-small-font-size); /* Body B3 — 14px */
   --filter-chip-font-weight: var(--typography-small-font-weight);
   --filter-chip-line-height: var(--typography-small-line-height); /* 20px */
-  --filter-chip-height: auto;
+  --filter-chip-height: 2rem; /* 32px — matches toolbar search */
 
   background-color: var(--filter-chip-bg);
   color: var(--filter-chip-fg);
   border-width: var(--filter-chip-border-width);
+  border-style: solid;
   border-color: var(--filter-chip-border-color);
   border-radius: var(--filter-chip-radius);
   padding-inline: var(--filter-chip-padding-x);
@@ -52,13 +53,13 @@
   border-color: var(--filter-chip-border-color);
 }
 
-/* Selected (when pressed / on) */
+/* Selected — Safer Health active chip (brand soft + border); kit maps to primary */
 [data-slot='filter-chip'][aria-pressed='true'],
 [data-slot='filter-chip'][data-state='on'],
 [data-slot='filter-chip'][data-selected='true'] {
-  --filter-chip-bg: var(--neutral-0);
-  --filter-chip-fg: var(--primary-500); /* text/primary #3ab5fe */
-  --filter-chip-border-color: var(--primary-500); /* border/primary */
+  --filter-chip-bg: var(--primary-50);
+  --filter-chip-fg: var(--foreground);
+  --filter-chip-border-color: var(--primary-700);
   background-color: var(--filter-chip-bg);
   color: var(--filter-chip-fg);
   border-color: var(--filter-chip-border-color);
@@ -68,9 +69,9 @@
 [data-slot='filter-chip'][aria-pressed='true']:hover,
 [data-slot='filter-chip'][data-state='on']:hover,
 [data-slot='filter-chip'][data-selected='true']:hover {
-  --filter-chip-bg: var(--primary-50); /* Primary/50 #f2fbff */
-  --filter-chip-fg: var(--primary-500);
-  --filter-chip-border-color: var(--primary-500);
+  --filter-chip-bg: var(--primary-50);
+  --filter-chip-fg: var(--foreground);
+  --filter-chip-border-color: var(--primary-700);
   background-color: var(--filter-chip-bg);
   color: var(--filter-chip-fg);
   border-color: var(--filter-chip-border-color);
@@ -91,8 +92,8 @@
 .dark [data-slot='filter-chip'][aria-pressed='true'],
 .dark [data-slot='filter-chip'][data-state='on'],
 .dark [data-slot='filter-chip'][data-selected='true'] {
-  --filter-chip-bg: var(--neutral-900);
-  --filter-chip-fg: var(--primary-400);
+  --filter-chip-bg: var(--primary-950);
+  --filter-chip-fg: var(--neutral-100);
   --filter-chip-border-color: var(--primary-400);
 }
 
@@ -100,6 +101,6 @@
 .dark [data-slot='filter-chip'][data-state='on']:hover,
 .dark [data-slot='filter-chip'][data-selected='true']:hover {
   --filter-chip-bg: var(--primary-950);
-  --filter-chip-fg: var(--primary-400);
+  --filter-chip-fg: var(--neutral-50);
   --filter-chip-border-color: var(--primary-400);
 }

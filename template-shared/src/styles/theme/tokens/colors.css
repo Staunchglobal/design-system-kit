@@ -43,14 +43,15 @@
   --chart-3: var(--info-500);
   --chart-4: var(--success-500);
   --chart-5: var(--accent-500);
-  --sidebar: var(--neutral-50);
+  /* Safer Health Side navbar (Figma 715:158752) — white surface, warm active, info badge */
+  --sidebar: var(--neutral-0);
   --sidebar-foreground: var(--primary-950);
-  --sidebar-primary: var(--primary-500);
+  --sidebar-primary: var(--info-700);
   --sidebar-primary-foreground: var(--neutral-0);
-  --sidebar-accent: var(--accent-100);
-  --sidebar-accent-foreground: var(--accent-900);
+  --sidebar-accent: var(--secondary-50);
+  --sidebar-accent-foreground: var(--primary-950);
   --sidebar-border: var(--neutral-200);
-  --sidebar-ring: var(--primary-500);
+  --sidebar-ring: var(--info-700);
 
   /* Shared effect — composed only from shade scales in color-scales.css (never raw hex/rgb). */
   --overlay-bg: var(--neutral-950);
@@ -90,12 +91,12 @@
   --chart-5: var(--accent-400);
   --sidebar: var(--neutral-900);
   --sidebar-foreground: var(--neutral-50);
-  --sidebar-primary: var(--primary-400);
-  --sidebar-primary-foreground: var(--primary-950);
-  --sidebar-accent: var(--accent-800);
-  --sidebar-accent-foreground: var(--accent-50);
+  --sidebar-primary: var(--info-400);
+  --sidebar-primary-foreground: var(--neutral-0);
+  --sidebar-accent: var(--secondary-800);
+  --sidebar-accent-foreground: var(--secondary-50);
   --sidebar-border: var(--neutral-800);
-  --sidebar-ring: var(--primary-400);
+  --sidebar-ring: var(--info-400);
 }
 
 /* Theme editor always uses light semantic tokens (overrides .dark if present). */
@@ -131,12 +132,12 @@
   --chart-3: var(--info-500);
   --chart-4: var(--success-500);
   --chart-5: var(--accent-500);
-  --sidebar: var(--neutral-50);
+  --sidebar: var(--neutral-0);
   --sidebar-foreground: var(--primary-950);
-  --sidebar-primary: var(--primary-500);
+  --sidebar-primary: var(--info-700);
   --sidebar-primary-foreground: var(--neutral-0);
-  --sidebar-accent: var(--accent-100);
-  --sidebar-accent-foreground: var(--accent-900);
+  --sidebar-accent: var(--secondary-50);
+  --sidebar-accent-foreground: var(--primary-950);
   --sidebar-border: var(--neutral-200);
-  --sidebar-ring: var(--primary-500);
+  --sidebar-ring: var(--info-700);
 }

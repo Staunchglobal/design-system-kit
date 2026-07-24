@@ -1066,7 +1066,7 @@
         {
           "id": "colors:--sidebar:0",
           "name": "--sidebar",
-          "value": "var(--neutral-50)",
+          "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
@@ -1082,7 +1082,7 @@
         {
           "id": "colors:--sidebar-primary:0",
           "name": "--sidebar-primary",
-          "value": "var(--primary-500)",
+          "value": "var(--info-700)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
@@ -1098,7 +1098,7 @@
         {
           "id": "colors:--sidebar-accent:0",
           "name": "--sidebar-accent",
-          "value": "var(--accent-100)",
+          "value": "var(--secondary-50)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
@@ -1106,7 +1106,7 @@
         {
           "id": "colors:--sidebar-accent-foreground:0",
           "name": "--sidebar-accent-foreground",
-          "value": "var(--accent-900)",
+          "value": "var(--primary-950)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
@@ -1122,7 +1122,7 @@
         {
           "id": "colors:--sidebar-ring:0",
           "name": "--sidebar-ring",
-          "value": "var(--primary-500)",
+          "value": "var(--info-700)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
@@ -1394,7 +1394,7 @@
         {
           "id": "colors:--sidebar-primary:1",
           "name": "--sidebar-primary",
-          "value": "var(--primary-400)",
+          "value": "var(--info-400)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -1402,7 +1402,7 @@
         {
           "id": "colors:--sidebar-primary-foreground:1",
           "name": "--sidebar-primary-foreground",
-          "value": "var(--primary-950)",
+          "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -1410,7 +1410,7 @@
         {
           "id": "colors:--sidebar-accent:1",
           "name": "--sidebar-accent",
-          "value": "var(--accent-800)",
+          "value": "var(--secondary-800)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -1418,7 +1418,7 @@
         {
           "id": "colors:--sidebar-accent-foreground:1",
           "name": "--sidebar-accent-foreground",
-          "value": "var(--accent-50)",
+          "value": "var(--secondary-50)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -1434,7 +1434,7 @@
         {
           "id": "colors:--sidebar-ring:1",
           "name": "--sidebar-ring",
-          "value": "var(--primary-400)",
+          "value": "var(--info-400)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -1682,7 +1682,7 @@
         {
           "id": "colors:--sidebar:2",
           "name": "--sidebar",
-          "value": "var(--neutral-50)",
+          "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "editor"
@@ -1698,7 +1698,7 @@
         {
           "id": "colors:--sidebar-primary:2",
           "name": "--sidebar-primary",
-          "value": "var(--primary-500)",
+          "value": "var(--info-700)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "editor"
@@ -1714,7 +1714,7 @@
         {
           "id": "colors:--sidebar-accent:2",
           "name": "--sidebar-accent",
-          "value": "var(--accent-100)",
+          "value": "var(--secondary-50)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "editor"
@@ -1722,7 +1722,7 @@
         {
           "id": "colors:--sidebar-accent-foreground:2",
           "name": "--sidebar-accent-foreground",
-          "value": "var(--accent-900)",
+          "value": "var(--primary-950)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "editor"
@@ -1738,7 +1738,7 @@
         {
           "id": "colors:--sidebar-ring:2",
           "name": "--sidebar-ring",
-          "value": "var(--primary-500)",
+          "value": "var(--info-700)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "editor"
@@ -5258,15 +5258,23 @@
         {
           "id": "button-group:--button-group-radius:0",
           "name": "--button-group-radius",
-          "value": "var(--radius-lg)",
+          "value": "var(--radius-full)",
           "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "button-group"
+        },
+        {
+          "id": "button-group:--button-group-border-color:0",
+          "name": "--button-group-border-color",
+          "value": "var(--neutral-200)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "button-group"
         },
         {
           "id": "button-group:--button-group-separator-color:0",
           "name": "--button-group-separator-color",
-          "value": "var(--input)",
+          "value": "var(--neutral-200)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "button-group-separator"
@@ -5278,6 +5286,22 @@
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "button-group-separator"
+        },
+        {
+          "id": "button-group:--button-group-text-bg:0",
+          "name": "--button-group-text-bg",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "button-group"
+        },
+        {
+          "id": "button-group:--button-group-text-border-color:0",
+          "name": "--button-group-text-border-color",
+          "value": "var(--neutral-200)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "button-group"
         }
       ]
     },
@@ -8044,15 +8068,63 @@
           "value": "var(--input-focus-border-color)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "input/ancestor-slot=copy-input"
+          "scope": "default"
         },
         {
-          "id": "copy-input:--copy-input-focus-ring-color:0",
-          "name": "--copy-input-focus-ring-color",
-          "value": "var(--input-focus-ring-color)",
-          "fieldType": "color-ref",
+          "id": "copy-input:--copy-input-focus-border-width:0",
+          "name": "--copy-input-focus-border-width",
+          "value": "2px",
+          "fieldType": "raw",
           "occurrence": 0,
-          "scope": "input/ancestor-slot=copy-input"
+          "scope": "default"
+        },
+        {
+          "id": "copy-input:--tw-ring-shadow:0",
+          "name": "--tw-ring-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "copy-input:--tw-ring-offset-shadow:0",
+          "name": "--tw-ring-offset-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "copy-input:--tw-ring-shadow:1",
+          "name": "--tw-ring-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "copy-input/ui=input-group-control"
+        },
+        {
+          "id": "copy-input:--tw-ring-offset-shadow:1",
+          "name": "--tw-ring-offset-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "copy-input/ui=input-group-control"
+        },
+        {
+          "id": "copy-input:--tw-ring-shadow:2",
+          "name": "--tw-ring-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 2,
+          "scope": "button/ancestor-slot=copy-input"
+        },
+        {
+          "id": "copy-input:--tw-ring-offset-shadow:2",
+          "name": "--tw-ring-offset-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 2,
+          "scope": "button/ancestor-slot=copy-input"
         }
       ]
     },
@@ -8113,7 +8185,7 @@
         {
           "id": "count-badge:--count-badge-padding-y:0",
           "name": "--count-badge-padding-y",
-          "value": "0.25rem",
+          "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -8129,7 +8201,7 @@
         {
           "id": "count-badge:--count-badge-height:0",
           "name": "--count-badge-height",
-          "value": "auto",
+          "value": "1.5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -8153,10 +8225,42 @@
         {
           "id": "count-badge:--count-badge-line-height:0",
           "name": "--count-badge-line-height",
-          "value": "var(--typography-caption-line-height)",
-          "fieldType": "typography-ref",
+          "value": "1",
+          "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
+        },
+        {
+          "id": "count-badge:--count-badge-min-width:1",
+          "name": "--count-badge-min-width",
+          "value": "1.25rem",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "count-badge/size=overlay"
+        },
+        {
+          "id": "count-badge:--count-badge-height:1",
+          "name": "--count-badge-height",
+          "value": "1.25rem",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "count-badge/size=overlay"
+        },
+        {
+          "id": "count-badge:--count-badge-padding-x:1",
+          "name": "--count-badge-padding-x",
+          "value": "0.25rem",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "count-badge/size=overlay"
+        },
+        {
+          "id": "count-badge:--count-badge-font-size:1",
+          "name": "--count-badge-font-size",
+          "value": "0.625rem",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "count-badge/size=overlay"
         },
         {
           "id": "count-badge:--count-badge-bg:1",
@@ -8173,6 +8277,166 @@
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/count-badge"
+        }
+      ]
+    },
+    {
+      "id": "crud-screen",
+      "title": "CRUD Screen",
+      "kind": "component",
+      "file": "theme/components/crud-screen.css",
+      "variables": [
+        {
+          "id": "crud-screen:--crud-screen-gap:0",
+          "name": "--crud-screen-gap",
+          "value": "0",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "crud-screen:--crud-toolbar-padding-x:0",
+          "name": "--crud-toolbar-padding-x",
+          "value": "1rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "crud-toolbar"
+        },
+        {
+          "id": "crud-screen:--crud-toolbar-padding-y:0",
+          "name": "--crud-toolbar-padding-y",
+          "value": "0.75rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "crud-toolbar"
+        },
+        {
+          "id": "crud-screen:--crud-toolbar-gap:0",
+          "name": "--crud-toolbar-gap",
+          "value": "0.75rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "crud-toolbar"
+        },
+        {
+          "id": "crud-screen:--input-group-height:0",
+          "name": "--input-group-height",
+          "value": "2rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "crud-screen:--input-group-radius:0",
+          "name": "--input-group-radius",
+          "value": "var(--radius-md)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "crud-screen:--input-group-border-color:0",
+          "name": "--input-group-border-color",
+          "value": "var(--border)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "crud-screen:--crud-table-header-bg:0",
+          "name": "--crud-table-header-bg",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "table-header/ancestor-slot=crud-table"
+        },
+        {
+          "id": "crud-screen:--table-head-fg:0",
+          "name": "--table-head-fg",
+          "value": "var(--muted-600)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "table-head/ancestor-slot=crud-table"
+        },
+        {
+          "id": "crud-screen:--table-head-height:0",
+          "name": "--table-head-height",
+          "value": "2.25rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "table-head/ancestor-slot=crud-table"
+        },
+        {
+          "id": "crud-screen:--table-head-padding-x:0",
+          "name": "--table-head-padding-x",
+          "value": "0.5rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "table-head/ancestor-slot=crud-table"
+        },
+        {
+          "id": "crud-screen:--table-head-font-size:0",
+          "name": "--table-head-font-size",
+          "value": "var(--typography-caption-font-size)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "table-head/ancestor-slot=crud-table"
+        },
+        {
+          "id": "crud-screen:--table-head-font-weight:0",
+          "name": "--table-head-font-weight",
+          "value": "var(--typography-large-font-weight)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "table-head/ancestor-slot=crud-table"
+        },
+        {
+          "id": "crud-screen:--table-head-letter-spacing:0",
+          "name": "--table-head-letter-spacing",
+          "value": "0",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "table-head/ancestor-slot=crud-table"
+        },
+        {
+          "id": "crud-screen:--table-head-text-transform:0",
+          "name": "--table-head-text-transform",
+          "value": "none",
+          "fieldType": "text-transform",
+          "occurrence": 0,
+          "scope": "table-head/ancestor-slot=crud-table"
+        },
+        {
+          "id": "crud-screen:--table-cell-padding-x:0",
+          "name": "--table-cell-padding-x",
+          "value": "0.5rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "table-cell/ancestor-slot=crud-table"
+        },
+        {
+          "id": "crud-screen:--table-cell-padding-y:0",
+          "name": "--table-cell-padding-y",
+          "value": "0.625rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "table-cell/ancestor-slot=crud-table"
+        },
+        {
+          "id": "crud-screen:--table-cell-min-height:0",
+          "name": "--table-cell-min-height",
+          "value": "3.5rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "table-cell/ancestor-slot=crud-table"
+        },
+        {
+          "id": "crud-screen:--crud-table-header-bg:1",
+          "name": "--crud-table-header-bg",
+          "value": "var(--neutral-900)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/table-header/ancestor-slot=crud-table"
         }
       ]
     },
@@ -9753,7 +10017,7 @@
         {
           "id": "filter-chips:--filter-chip-border-color:0",
           "name": "--filter-chip-border-color",
-          "value": "var(--neutral-200)",
+          "value": "var(--border)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
@@ -9769,7 +10033,7 @@
         {
           "id": "filter-chips:--filter-chip-radius:0",
           "name": "--filter-chip-radius",
-          "value": "var(--radius-sm)",
+          "value": "var(--radius-md)",
           "fieldType": "radius-ref",
           "occurrence": 0,
           "scope": "default"
@@ -9777,7 +10041,7 @@
         {
           "id": "filter-chips:--filter-chip-padding-x:0",
           "name": "--filter-chip-padding-x",
-          "value": "0.5rem",
+          "value": "0.375rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -9793,7 +10057,7 @@
         {
           "id": "filter-chips:--filter-chip-gap:0",
           "name": "--filter-chip-gap",
-          "value": "0.125rem",
+          "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -9825,7 +10089,7 @@
         {
           "id": "filter-chips:--filter-chip-height:0",
           "name": "--filter-chip-height",
-          "value": "auto",
+          "value": "2rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -9857,7 +10121,7 @@
         {
           "id": "filter-chips:--filter-chip-bg:2",
           "name": "--filter-chip-bg",
-          "value": "var(--neutral-0)",
+          "value": "var(--primary-50)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "filter-chip"
@@ -9865,7 +10129,7 @@
         {
           "id": "filter-chips:--filter-chip-fg:2",
           "name": "--filter-chip-fg",
-          "value": "var(--primary-500)",
+          "value": "var(--foreground)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "filter-chip"
@@ -9873,7 +10137,7 @@
         {
           "id": "filter-chips:--filter-chip-border-color:2",
           "name": "--filter-chip-border-color",
-          "value": "var(--primary-500)",
+          "value": "var(--primary-700)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "filter-chip"
@@ -9889,7 +10153,7 @@
         {
           "id": "filter-chips:--filter-chip-fg:3",
           "name": "--filter-chip-fg",
-          "value": "var(--primary-500)",
+          "value": "var(--foreground)",
           "fieldType": "color-ref",
           "occurrence": 3,
           "scope": "filter-chip"
@@ -9897,7 +10161,7 @@
         {
           "id": "filter-chips:--filter-chip-border-color:3",
           "name": "--filter-chip-border-color",
-          "value": "var(--primary-500)",
+          "value": "var(--primary-700)",
           "fieldType": "color-ref",
           "occurrence": 3,
           "scope": "filter-chip"
@@ -9953,7 +10217,7 @@
         {
           "id": "filter-chips:--filter-chip-bg:6",
           "name": "--filter-chip-bg",
-          "value": "var(--neutral-900)",
+          "value": "var(--primary-950)",
           "fieldType": "color-ref",
           "occurrence": 6,
           "scope": "dark/filter-chip"
@@ -9961,7 +10225,7 @@
         {
           "id": "filter-chips:--filter-chip-fg:6",
           "name": "--filter-chip-fg",
-          "value": "var(--primary-400)",
+          "value": "var(--neutral-100)",
           "fieldType": "color-ref",
           "occurrence": 6,
           "scope": "dark/filter-chip"
@@ -9985,7 +10249,7 @@
         {
           "id": "filter-chips:--filter-chip-fg:7",
           "name": "--filter-chip-fg",
-          "value": "var(--primary-400)",
+          "value": "var(--neutral-50)",
           "fieldType": "color-ref",
           "occurrence": 7,
           "scope": "dark/filter-chip"
@@ -10679,18 +10943,26 @@
           "scope": "input-group"
         },
         {
+          "id": "input-group:--input-group-focus-border-width:0",
+          "name": "--input-group-focus-border-width",
+          "value": "2px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "input-group"
+        },
+        {
           "id": "input-group:--input-group-focus-ring-width:0",
           "name": "--input-group-focus-ring-width",
-          "value": "var(--input-focus-ring-width)",
-          "fieldType": "color-ref",
+          "value": "0px",
+          "fieldType": "raw",
           "occurrence": 0,
           "scope": "input-group"
         },
         {
           "id": "input-group:--input-group-focus-ring-color:0",
           "name": "--input-group-focus-ring-color",
-          "value": "var(--input-focus-ring-color)",
-          "fieldType": "color-ref",
+          "value": "transparent",
+          "fieldType": "color-keyword",
           "occurrence": 0,
           "scope": "input-group"
         },
@@ -10705,8 +10977,8 @@
         {
           "id": "input-group:--input-group-invalid-ring-color:0",
           "name": "--input-group-invalid-ring-color",
-          "value": "var(--input-invalid-ring-color)",
-          "fieldType": "color-ref",
+          "value": "transparent",
+          "fieldType": "color-keyword",
           "occurrence": 0,
           "scope": "input-group"
         },
@@ -10723,6 +10995,22 @@
           "name": "--input-group-disabled-opacity",
           "value": "var(--input-disabled-opacity)",
           "fieldType": "token-ref",
+          "occurrence": 0,
+          "scope": "input-group"
+        },
+        {
+          "id": "input-group:--tw-ring-shadow:0",
+          "name": "--tw-ring-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "input-group"
+        },
+        {
+          "id": "input-group:--tw-ring-offset-shadow:0",
+          "name": "--tw-ring-offset-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
           "occurrence": 0,
           "scope": "input-group"
         },
@@ -10777,7 +11065,7 @@
         {
           "id": "input-group:--input-group-addon-padding-inline-start:0",
           "name": "--input-group-addon-padding-inline-start",
-          "value": "0.5rem",
+          "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "input-group-addon/align=inline-start"
@@ -10823,12 +11111,60 @@
           "scope": "input-group-addon/align=block-end"
         },
         {
-          "id": "input-group:--input-group-control-padding-y:0",
-          "name": "--input-group-control-padding-y",
-          "value": "0.5rem",
+          "id": "input-group:--input-group-addon-icon-fg:0",
+          "name": "--input-group-addon-icon-fg",
+          "value": "var(--muted-600)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "input-group-addon"
+        },
+        {
+          "id": "input-group:--input-group-addon-icon-size:0",
+          "name": "--input-group-addon-icon-size",
+          "value": "1rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "input-group-addon"
+        },
+        {
+          "id": "input-group:--tw-ring-shadow:1",
+          "name": "--tw-ring-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "button/ancestor-slot=input-group-addon"
+        },
+        {
+          "id": "input-group:--tw-ring-offset-shadow:1",
+          "name": "--tw-ring-offset-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "button/ancestor-slot=input-group-addon"
+        },
+        {
+          "id": "input-group:--tw-ring-shadow:2",
+          "name": "--tw-ring-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 2,
+          "scope": "input-group/ui=input-group-control"
+        },
+        {
+          "id": "input-group:--tw-ring-offset-shadow:2",
+          "name": "--tw-ring-offset-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 2,
+          "scope": "input-group/ui=input-group-control"
+        },
+        {
+          "id": "input-group:--input-group-control-padding-y:0",
+          "name": "--input-group-control-padding-y",
+          "value": "0",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "input-group/ui=input-group-control"
         }
       ]
     },
@@ -10863,18 +11199,18 @@
           "scope": "input-otp-group"
         },
         {
-          "id": "input-otp:--input-otp-group-invalid-ring-color:0",
-          "name": "--input-otp-group-invalid-ring-color",
-          "value": "var(--input-invalid-ring-color)",
-          "fieldType": "color-ref",
+          "id": "input-otp:--tw-ring-shadow:0",
+          "name": "--tw-ring-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
           "occurrence": 0,
           "scope": "input-otp-group"
         },
         {
-          "id": "input-otp:--input-otp-group-focus-ring-width:0",
-          "name": "--input-otp-group-focus-ring-width",
-          "value": "var(--input-focus-ring-width)",
-          "fieldType": "color-ref",
+          "id": "input-otp:--tw-ring-offset-shadow:0",
+          "name": "--tw-ring-offset-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
           "occurrence": 0,
           "scope": "input-otp-group"
         },
@@ -10927,22 +11263,6 @@
           "scope": "input-otp-slot"
         },
         {
-          "id": "input-otp:--input-otp-slot-active-ring-width:0",
-          "name": "--input-otp-slot-active-ring-width",
-          "value": "var(--input-focus-ring-width)",
-          "fieldType": "color-ref",
-          "occurrence": 0,
-          "scope": "input-otp-slot"
-        },
-        {
-          "id": "input-otp:--input-otp-slot-active-ring-color:0",
-          "name": "--input-otp-slot-active-ring-color",
-          "value": "var(--input-focus-ring-color)",
-          "fieldType": "color-ref",
-          "occurrence": 0,
-          "scope": "input-otp-slot"
-        },
-        {
           "id": "input-otp:--input-otp-slot-invalid-border-color:0",
           "name": "--input-otp-slot-invalid-border-color",
           "value": "var(--input-invalid-border-color)",
@@ -10973,6 +11293,38 @@
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "input-otp-slot"
+        },
+        {
+          "id": "input-otp:--tw-ring-shadow:1",
+          "name": "--tw-ring-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "input-otp-slot"
+        },
+        {
+          "id": "input-otp:--tw-ring-offset-shadow:1",
+          "name": "--tw-ring-offset-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "input-otp-slot"
+        },
+        {
+          "id": "input-otp:--tw-ring-shadow:2",
+          "name": "--tw-ring-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 2,
+          "scope": "input-otp-slot/active=true"
+        },
+        {
+          "id": "input-otp:--tw-ring-offset-shadow:2",
+          "name": "--tw-ring-offset-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 2,
+          "scope": "input-otp-slot/active=true"
         },
         {
           "id": "input-otp:--input-otp-separator-icon-size:0",
@@ -11149,6 +11501,38 @@
           "fieldType": "color-keyword",
           "occurrence": 0,
           "scope": "root"
+        },
+        {
+          "id": "input:--tw-ring-shadow:0",
+          "name": "--tw-ring-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "input"
+        },
+        {
+          "id": "input:--tw-ring-offset-shadow:0",
+          "name": "--tw-ring-offset-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "input"
+        },
+        {
+          "id": "input:--tw-ring-shadow:1",
+          "name": "--tw-ring-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "input"
+        },
+        {
+          "id": "input:--tw-ring-offset-shadow:1",
+          "name": "--tw-ring-offset-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "input"
         },
         {
           "id": "input:--input-bg:1",
@@ -12409,8 +12793,8 @@
         {
           "id": "native-select:--native-select-padding-block:0",
           "name": "--native-select-padding-block",
-          "value": "var(--input-padding-y)",
-          "fieldType": "token-ref",
+          "value": "0",
+          "fieldType": "raw",
           "occurrence": 0,
           "scope": "native-select"
         },
@@ -12463,6 +12847,38 @@
           "scope": "native-select"
         },
         {
+          "id": "native-select:--tw-ring-shadow:0",
+          "name": "--tw-ring-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "native-select"
+        },
+        {
+          "id": "native-select:--tw-ring-offset-shadow:0",
+          "name": "--tw-ring-offset-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "native-select"
+        },
+        {
+          "id": "native-select:--tw-ring-shadow:1",
+          "name": "--tw-ring-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "native-select"
+        },
+        {
+          "id": "native-select:--tw-ring-offset-shadow:1",
+          "name": "--tw-ring-offset-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "native-select"
+        },
+        {
           "id": "native-select:--native-select-disabled-bg:0",
           "name": "--native-select-disabled-bg",
           "value": "var(--input-disabled-bg)",
@@ -12489,7 +12905,7 @@
         {
           "id": "native-select:--native-select-padding-block:1",
           "name": "--native-select-padding-block",
-          "value": "0.5rem",
+          "value": "0",
           "fieldType": "raw",
           "occurrence": 1,
           "scope": "native-select/size=sm"
@@ -12943,60 +13359,252 @@
       "file": "theme/components/pagination.css",
       "variables": [
         {
+          "id": "pagination:--pagination-gap:0",
+          "name": "--pagination-gap",
+          "value": "0.25rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
           "id": "pagination:--pagination-content-gap:0",
           "name": "--pagination-content-gap",
-          "value": "0.125rem",
-          "fieldType": "raw",
+          "value": "var(--pagination-gap, 0.25rem)",
+          "fieldType": "token-ref",
           "occurrence": 0,
           "scope": "pagination-content"
         },
         {
-          "id": "pagination:--button-bg:0",
-          "name": "--button-bg",
-          "value": "var(--primary-50)",
+          "id": "pagination:--pagination-item-width:0",
+          "name": "--pagination-item-width",
+          "value": "2rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "pagination:--pagination-item-height:0",
+          "name": "--pagination-item-height",
+          "value": "1.5rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "pagination:--pagination-item-radius:0",
+          "name": "--pagination-item-radius",
+          "value": "var(--radius-md)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "pagination:--pagination-item-border-color:0",
+          "name": "--pagination-item-border-color",
+          "value": "var(--border)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
         },
         {
-          "id": "pagination:--button-fg:0",
-          "name": "--button-fg",
-          "value": "var(--primary-500)",
+          "id": "pagination:--pagination-item-bg:0",
+          "name": "--pagination-item-bg",
+          "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
         },
         {
-          "id": "pagination:--button-border-color:0",
-          "name": "--button-border-color",
-          "value": "var(--primary-200)",
+          "id": "pagination:--pagination-item-fg:0",
+          "name": "--pagination-item-fg",
+          "value": "var(--muted-600)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
         },
         {
-          "id": "pagination:--button-hover-bg:0",
-          "name": "--button-hover-bg",
-          "value": "var(--primary-100)",
-          "fieldType": "color-ref",
+          "id": "pagination:--pagination-item-font-size:0",
+          "name": "--pagination-item-font-size",
+          "value": "var(--typography-caption-font-size)",
+          "fieldType": "typography-ref",
           "occurrence": 0,
           "scope": "default"
         },
         {
-          "id": "pagination:--pagination-ellipsis-size:0",
-          "name": "--pagination-ellipsis-size",
+          "id": "pagination:--pagination-item-font-weight:0",
+          "name": "--pagination-item-font-weight",
+          "value": "var(--typography-small-font-weight)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "pagination:--tw-ring-shadow:0",
+          "name": "--tw-ring-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "pagination:--tw-ring-offset-shadow:0",
+          "name": "--tw-ring-offset-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "pagination:--pagination-item-bg:1",
+          "name": "--pagination-item-bg",
+          "value": "var(--info-50)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "default"
+        },
+        {
+          "id": "pagination:--pagination-item-fg:1",
+          "name": "--pagination-item-fg",
+          "value": "var(--info-700)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "default"
+        },
+        {
+          "id": "pagination:--pagination-item-border-color:1",
+          "name": "--pagination-item-border-color",
+          "value": "transparent",
+          "fieldType": "color-keyword",
+          "occurrence": 1,
+          "scope": "default"
+        },
+        {
+          "id": "pagination:--pagination-ellipsis-width:0",
+          "name": "--pagination-ellipsis-width",
           "value": "2rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "pagination-ellipsis"
         },
         {
-          "id": "pagination:--pagination-ellipsis-icon-size:0",
-          "name": "--pagination-ellipsis-icon-size",
-          "value": "1rem",
+          "id": "pagination:--pagination-ellipsis-height:0",
+          "name": "--pagination-ellipsis-height",
+          "value": "1.5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "pagination-ellipsis"
+        },
+        {
+          "id": "pagination:--pagination-ellipsis-radius:0",
+          "name": "--pagination-ellipsis-radius",
+          "value": "var(--radius-md)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "pagination-ellipsis"
+        },
+        {
+          "id": "pagination:--pagination-ellipsis-border-color:0",
+          "name": "--pagination-ellipsis-border-color",
+          "value": "var(--border)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "pagination-ellipsis"
+        },
+        {
+          "id": "pagination:--pagination-ellipsis-fg:0",
+          "name": "--pagination-ellipsis-fg",
+          "value": "var(--muted-600)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "pagination-ellipsis"
+        },
+        {
+          "id": "pagination:--pagination-ellipsis-font-size:0",
+          "name": "--pagination-ellipsis-font-size",
+          "value": "var(--typography-caption-font-size)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "pagination-ellipsis"
+        },
+        {
+          "id": "pagination:--crud-pagination-padding-x:0",
+          "name": "--crud-pagination-padding-x",
+          "value": "1rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "crud-pagination"
+        },
+        {
+          "id": "pagination:--crud-pagination-padding-y:0",
+          "name": "--crud-pagination-padding-y",
+          "value": "0.75rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "crud-pagination"
+        },
+        {
+          "id": "pagination:--crud-pagination-summary-fg:0",
+          "name": "--crud-pagination-summary-fg",
+          "value": "var(--muted-600)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "crud-pagination"
+        },
+        {
+          "id": "pagination:--crud-pagination-range-fg:0",
+          "name": "--crud-pagination-range-fg",
+          "value": "var(--foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "crud-pagination"
+        },
+        {
+          "id": "pagination:--crud-pagination-font-size:0",
+          "name": "--crud-pagination-font-size",
+          "value": "var(--typography-small-font-size)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "crud-pagination"
+        },
+        {
+          "id": "pagination:--pagination-item-bg:2",
+          "name": "--pagination-item-bg",
+          "value": "var(--neutral-900)",
+          "fieldType": "color-ref",
+          "occurrence": 2,
+          "scope": "dark"
+        },
+        {
+          "id": "pagination:--pagination-item-fg:2",
+          "name": "--pagination-item-fg",
+          "value": "var(--muted-400)",
+          "fieldType": "color-ref",
+          "occurrence": 2,
+          "scope": "dark"
+        },
+        {
+          "id": "pagination:--pagination-item-border-color:2",
+          "name": "--pagination-item-border-color",
+          "value": "var(--neutral-700)",
+          "fieldType": "color-ref",
+          "occurrence": 2,
+          "scope": "dark"
+        },
+        {
+          "id": "pagination:--pagination-item-bg:3",
+          "name": "--pagination-item-bg",
+          "value": "var(--info-950)",
+          "fieldType": "color-ref",
+          "occurrence": 3,
+          "scope": "dark"
+        },
+        {
+          "id": "pagination:--pagination-item-fg:3",
+          "name": "--pagination-item-fg",
+          "value": "var(--info-300)",
+          "fieldType": "color-ref",
+          "occurrence": 3,
+          "scope": "dark"
         }
       ]
     },
@@ -14281,8 +14889,8 @@
         {
           "id": "select:--select-trigger-padding-block:0",
           "name": "--select-trigger-padding-block",
-          "value": "var(--input-padding-y)",
-          "fieldType": "token-ref",
+          "value": "0",
+          "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
         },
@@ -14311,33 +14919,9 @@
           "scope": "default"
         },
         {
-          "id": "select:--select-trigger-focus-ring-width:0",
-          "name": "--select-trigger-focus-ring-width",
-          "value": "var(--input-focus-ring-width)",
-          "fieldType": "color-ref",
-          "occurrence": 0,
-          "scope": "default"
-        },
-        {
-          "id": "select:--select-trigger-focus-ring-color:0",
-          "name": "--select-trigger-focus-ring-color",
-          "value": "var(--input-focus-ring-color)",
-          "fieldType": "color-ref",
-          "occurrence": 0,
-          "scope": "default"
-        },
-        {
           "id": "select:--select-trigger-invalid-border-color:0",
           "name": "--select-trigger-invalid-border-color",
           "value": "var(--input-invalid-border-color)",
-          "fieldType": "color-ref",
-          "occurrence": 0,
-          "scope": "default"
-        },
-        {
-          "id": "select:--select-trigger-invalid-ring-color:0",
-          "name": "--select-trigger-invalid-ring-color",
-          "value": "var(--input-invalid-ring-color)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
@@ -14369,10 +14953,58 @@
         {
           "id": "select:--select-trigger-icon-size:0",
           "name": "--select-trigger-icon-size",
-          "value": "1.5rem",
+          "value": "1rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
+        },
+        {
+          "id": "select:--tw-ring-shadow:0",
+          "name": "--tw-ring-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "select:--tw-ring-offset-shadow:0",
+          "name": "--tw-ring-offset-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "select:--tw-ring-shadow:1",
+          "name": "--tw-ring-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "select-trigger"
+        },
+        {
+          "id": "select:--tw-ring-offset-shadow:1",
+          "name": "--tw-ring-offset-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "select-trigger"
+        },
+        {
+          "id": "select:--tw-ring-shadow:2",
+          "name": "--tw-ring-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 2,
+          "scope": "select-trigger"
+        },
+        {
+          "id": "select:--tw-ring-offset-shadow:2",
+          "name": "--tw-ring-offset-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 2,
+          "scope": "select-trigger"
         },
         {
           "id": "select:--select-trigger-height:0",
@@ -14407,9 +15039,25 @@
           "scope": "select-trigger/size=sm"
         },
         {
-          "id": "select:--select-trigger-padding-block:1",
-          "name": "--select-trigger-padding-block",
+          "id": "select:--select-trigger-padding-inline-start:1",
+          "name": "--select-trigger-padding-inline-start",
+          "value": "0.75rem",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "select-trigger/size=sm"
+        },
+        {
+          "id": "select:--select-trigger-padding-inline-end:1",
+          "name": "--select-trigger-padding-inline-end",
           "value": "0.5rem",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "select-trigger/size=sm"
+        },
+        {
+          "id": "select:--select-trigger-gap:1",
+          "name": "--select-trigger-gap",
+          "value": "0.25rem",
           "fieldType": "raw",
           "occurrence": 1,
           "scope": "select-trigger/size=sm"
@@ -14457,7 +15105,7 @@
         {
           "id": "select:--select-content-min-width:0",
           "name": "--select-content-min-width",
-          "value": "9rem",
+          "value": "5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "select-content"
@@ -14521,7 +15169,7 @@
         {
           "id": "select:--select-item-padding-inline-end:0",
           "name": "--select-item-padding-inline-end",
-          "value": "2rem",
+          "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "select-item"
@@ -14529,7 +15177,7 @@
         {
           "id": "select:--select-item-padding-inline-start:0",
           "name": "--select-item-padding-inline-start",
-          "value": "0.75rem",
+          "value": "2rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "select-item"
@@ -14562,6 +15210,22 @@
           "id": "select:--select-item-focus-fg:0",
           "name": "--select-item-focus-fg",
           "value": "var(--foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "select-item"
+        },
+        {
+          "id": "select:--select-item-checked-bg:0",
+          "name": "--select-item-checked-bg",
+          "value": "var(--primary)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "select-item"
+        },
+        {
+          "id": "select:--select-item-checked-fg:0",
+          "name": "--select-item-checked-fg",
+          "value": "var(--primary-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "select-item"
@@ -15065,7 +15729,7 @@
         {
           "id": "sidebar:--sidebar-header-footer-gap:0",
           "name": "--sidebar-header-footer-gap",
-          "value": "0.5rem",
+          "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "sidebar-header"
@@ -15073,7 +15737,7 @@
         {
           "id": "sidebar:--sidebar-header-footer-padding:0",
           "name": "--sidebar-header-footer-padding",
-          "value": "0.5rem",
+          "value": "1rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "sidebar-header"
@@ -15089,6 +15753,14 @@
         {
           "id": "sidebar:--sidebar-separator-margin-x:0",
           "name": "--sidebar-separator-margin-x",
+          "value": "0",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "sidebar-separator"
+        },
+        {
+          "id": "sidebar:--sidebar-separator-margin-y:0",
+          "name": "--sidebar-separator-margin-y",
           "value": "0.5rem",
           "fieldType": "raw",
           "occurrence": 0,
@@ -15097,14 +15769,22 @@
         {
           "id": "sidebar:--sidebar-content-gap:0",
           "name": "--sidebar-content-gap",
-          "value": "0px",
+          "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "sidebar-content"
         },
         {
-          "id": "sidebar:--sidebar-group-padding:0",
-          "name": "--sidebar-group-padding",
+          "id": "sidebar:--sidebar-group-padding-x:0",
+          "name": "--sidebar-group-padding-x",
+          "value": "1rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "sidebar-group"
+        },
+        {
+          "id": "sidebar:--sidebar-group-padding-y:0",
+          "name": "--sidebar-group-padding-y",
           "value": "0.5rem",
           "fieldType": "raw",
           "occurrence": 0,
@@ -15113,42 +15793,58 @@
         {
           "id": "sidebar:--sidebar-group-label-height:0",
           "name": "--sidebar-group-label-height",
-          "value": "2rem",
+          "value": "auto",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "sidebar-group-label"
+          "scope": "default"
         },
         {
           "id": "sidebar:--sidebar-group-label-padding-x:0",
           "name": "--sidebar-group-label-padding-x",
-          "value": "0.5rem",
+          "value": "1rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "sidebar-group-label"
+          "scope": "default"
+        },
+        {
+          "id": "sidebar:--sidebar-group-label-padding-y:0",
+          "name": "--sidebar-group-label-padding-y",
+          "value": "0.625rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
         },
         {
           "id": "sidebar:--sidebar-group-label-font-size:0",
           "name": "--sidebar-group-label-font-size",
-          "value": "var(--typography-overline-font-size)",
+          "value": "var(--typography-p-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "sidebar-group-label"
+          "scope": "default"
         },
         {
           "id": "sidebar:--sidebar-group-label-font-weight:0",
           "name": "--sidebar-group-label-font-weight",
-          "value": "var(--typography-overline-font-weight)",
+          "value": "var(--typography-small-font-weight)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "sidebar-group-label"
+          "scope": "default"
+        },
+        {
+          "id": "sidebar:--sidebar-group-label-line-height:0",
+          "name": "--sidebar-group-label-line-height",
+          "value": "var(--typography-p-line-height)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "default"
         },
         {
           "id": "sidebar:--sidebar-group-label-fg:0",
           "name": "--sidebar-group-label-fg",
-          "value": "var(--neutral-950)",
+          "value": "var(--muted-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "sidebar-group-label"
+          "scope": "default"
         },
         {
           "id": "sidebar:--sidebar-group-label-focus-ring:0",
@@ -15156,7 +15852,23 @@
           "value": "var(--sidebar-ring)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "sidebar-group-label"
+          "scope": "default"
+        },
+        {
+          "id": "sidebar:--sidebar-group-label-letter-spacing:0",
+          "name": "--sidebar-group-label-letter-spacing",
+          "value": "0",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "sidebar:--sidebar-group-label-text-transform:0",
+          "name": "--sidebar-group-label-text-transform",
+          "value": "none",
+          "fieldType": "text-transform",
+          "occurrence": 0,
+          "scope": "default"
         },
         {
           "id": "sidebar:--sidebar-group-action-size:0",
@@ -15177,7 +15889,7 @@
         {
           "id": "sidebar:--sidebar-group-action-fg:0",
           "name": "--sidebar-group-action-fg",
-          "value": "var(--sidebar-foreground)",
+          "value": "var(--muted-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sidebar-group-action"
@@ -15209,7 +15921,7 @@
         {
           "id": "sidebar:--sidebar-menu-gap:0",
           "name": "--sidebar-menu-gap",
-          "value": "0px",
+          "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "sidebar-menu"
@@ -15220,55 +15932,87 @@
           "value": "var(--radius-md)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "sidebar-menu-button"
+          "scope": "default"
         },
         {
-          "id": "sidebar:--sidebar-menu-button-padding:0",
-          "name": "--sidebar-menu-button-padding",
-          "value": "0.5rem",
+          "id": "sidebar:--sidebar-menu-button-padding-x:0",
+          "name": "--sidebar-menu-button-padding-x",
+          "value": "1rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "sidebar-menu-button"
+          "scope": "default"
+        },
+        {
+          "id": "sidebar:--sidebar-menu-button-padding-y:0",
+          "name": "--sidebar-menu-button-padding-y",
+          "value": "0.625rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "sidebar:--sidebar-menu-button-gap:0",
+          "name": "--sidebar-menu-button-gap",
+          "value": "0.75rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
         },
         {
           "id": "sidebar:--sidebar-menu-button-fg:0",
           "name": "--sidebar-menu-button-fg",
-          "value": "var(--sidebar-foreground)",
+          "value": "var(--muted-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "sidebar-menu-button"
+          "scope": "default"
+        },
+        {
+          "id": "sidebar:--sidebar-menu-button-icon-fg:0",
+          "name": "--sidebar-menu-button-icon-fg",
+          "value": "var(--muted-foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
         },
         {
           "id": "sidebar:--sidebar-menu-button-hover-bg:0",
           "name": "--sidebar-menu-button-hover-bg",
-          "value": "var(--primary-50)",
+          "value": "var(--secondary-50)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "sidebar-menu-button"
+          "scope": "default"
         },
         {
           "id": "sidebar:--sidebar-menu-button-hover-fg:0",
           "name": "--sidebar-menu-button-hover-fg",
-          "value": "var(--primary-950)",
+          "value": "var(--sidebar-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "sidebar-menu-button"
+          "scope": "default"
         },
         {
           "id": "sidebar:--sidebar-menu-button-active-bg:0",
           "name": "--sidebar-menu-button-active-bg",
-          "value": "var(--primary-50)",
+          "value": "var(--sidebar-accent)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "sidebar-menu-button"
+          "scope": "default"
         },
         {
           "id": "sidebar:--sidebar-menu-button-active-fg:0",
           "name": "--sidebar-menu-button-active-fg",
-          "value": "var(--primary-500)",
+          "value": "var(--sidebar-accent-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "sidebar-menu-button"
+          "scope": "default"
+        },
+        {
+          "id": "sidebar:--sidebar-menu-button-active-icon-fg:0",
+          "name": "--sidebar-menu-button-active-icon-fg",
+          "value": "var(--sidebar-primary)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
         },
         {
           "id": "sidebar:--sidebar-menu-button-active-font-weight:0",
@@ -15276,7 +16020,7 @@
           "value": "var(--typography-small-font-weight)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "sidebar-menu-button"
+          "scope": "default"
         },
         {
           "id": "sidebar:--sidebar-menu-button-disabled-opacity:0",
@@ -15284,7 +16028,7 @@
           "value": "0.5",
           "fieldType": "opacity",
           "occurrence": 0,
-          "scope": "sidebar-menu-button"
+          "scope": "default"
         },
         {
           "id": "sidebar:--sidebar-menu-button-focus-ring:0",
@@ -15292,12 +16036,20 @@
           "value": "var(--sidebar-ring)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "sidebar-menu-button"
+          "scope": "default"
+        },
+        {
+          "id": "sidebar:--sidebar-menu-button-icon-size:0",
+          "name": "--sidebar-menu-button-icon-size",
+          "value": "1.5rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
         },
         {
           "id": "sidebar:--sidebar-menu-button-outline-bg:0",
           "name": "--sidebar-menu-button-outline-bg",
-          "value": "var(--background)",
+          "value": "var(--sidebar)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sidebar-menu-button/variant=outline"
@@ -15313,7 +16065,7 @@
         {
           "id": "sidebar:--sidebar-menu-button-height:0",
           "name": "--sidebar-menu-button-height",
-          "value": "2rem",
+          "value": "2.75rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "sidebar-menu-button/size=default"
@@ -15329,7 +16081,7 @@
         {
           "id": "sidebar:--sidebar-menu-button-height:1",
           "name": "--sidebar-menu-button-height",
-          "value": "1.75rem",
+          "value": "2.25rem",
           "fieldType": "raw",
           "occurrence": 1,
           "scope": "sidebar-menu-button/size=sm"
@@ -15339,6 +16091,14 @@
           "name": "--sidebar-menu-button-font-size",
           "value": "var(--typography-caption-font-size)",
           "fieldType": "typography-ref",
+          "occurrence": 1,
+          "scope": "sidebar-menu-button/size=sm"
+        },
+        {
+          "id": "sidebar:--sidebar-menu-button-icon-size:1",
+          "name": "--sidebar-menu-button-icon-size",
+          "value": "1.25rem",
+          "fieldType": "raw",
           "occurrence": 1,
           "scope": "sidebar-menu-button/size=sm"
         },
@@ -15377,7 +16137,7 @@
         {
           "id": "sidebar:--sidebar-menu-action-fg:0",
           "name": "--sidebar-menu-action-fg",
-          "value": "var(--sidebar-foreground)",
+          "value": "var(--muted-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sidebar-menu-action"
@@ -15401,7 +16161,7 @@
         {
           "id": "sidebar:--sidebar-menu-badge-height:0",
           "name": "--sidebar-menu-badge-height",
-          "value": "1.25rem",
+          "value": "1.375rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "sidebar-menu-badge"
@@ -15409,7 +16169,7 @@
         {
           "id": "sidebar:--sidebar-menu-badge-min-width:0",
           "name": "--sidebar-menu-badge-min-width",
-          "value": "1.25rem",
+          "value": "1.375rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "sidebar-menu-badge"
@@ -15423,9 +16183,17 @@
           "scope": "sidebar-menu-badge"
         },
         {
+          "id": "sidebar:--sidebar-menu-badge-padding-y:0",
+          "name": "--sidebar-menu-badge-padding-y",
+          "value": "0.125rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "sidebar-menu-badge"
+        },
+        {
           "id": "sidebar:--sidebar-menu-badge-radius:0",
           "name": "--sidebar-menu-badge-radius",
-          "value": "var(--radius-md)",
+          "value": "var(--radius-full)",
           "fieldType": "radius-ref",
           "occurrence": 0,
           "scope": "sidebar-menu-badge"
@@ -15433,31 +16201,63 @@
         {
           "id": "sidebar:--sidebar-menu-badge-font-size:0",
           "name": "--sidebar-menu-badge-font-size",
-          "value": "var(--typography-caption-font-size)",
-          "fieldType": "typography-ref",
+          "value": "0.625rem",
+          "fieldType": "raw",
           "occurrence": 0,
           "scope": "sidebar-menu-badge"
         },
         {
           "id": "sidebar:--sidebar-menu-badge-font-weight:0",
           "name": "--sidebar-menu-badge-font-weight",
-          "value": "var(--typography-caption-font-weight)",
+          "value": "var(--typography-small-font-weight)",
           "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "sidebar-menu-badge"
+        },
+        {
+          "id": "sidebar:--sidebar-menu-badge-line-height:0",
+          "name": "--sidebar-menu-badge-line-height",
+          "value": "0.75rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "sidebar-menu-badge"
+        },
+        {
+          "id": "sidebar:--sidebar-menu-badge-bg:0",
+          "name": "--sidebar-menu-badge-bg",
+          "value": "var(--sidebar-primary)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sidebar-menu-badge"
         },
         {
           "id": "sidebar:--sidebar-menu-badge-fg:0",
           "name": "--sidebar-menu-badge-fg",
-          "value": "var(--sidebar-foreground)",
+          "value": "var(--sidebar-primary-foreground)",
           "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "sidebar-menu-badge"
+        },
+        {
+          "id": "sidebar:--sidebar-menu-badge-top:0",
+          "name": "--sidebar-menu-badge-top",
+          "value": "50%",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "sidebar-menu-badge"
+        },
+        {
+          "id": "sidebar:--sidebar-menu-badge-right:0",
+          "name": "--sidebar-menu-badge-right",
+          "value": "1rem",
+          "fieldType": "raw",
           "occurrence": 0,
           "scope": "sidebar-menu-badge"
         },
         {
           "id": "sidebar:--sidebar-menu-skeleton-height:0",
           "name": "--sidebar-menu-skeleton-height",
-          "value": "2rem",
+          "value": "2.75rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "sidebar-menu-skeleton"
@@ -15465,7 +16265,7 @@
         {
           "id": "sidebar:--sidebar-menu-skeleton-gap:0",
           "name": "--sidebar-menu-skeleton-gap",
-          "value": "0.5rem",
+          "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "sidebar-menu-skeleton"
@@ -15473,7 +16273,7 @@
         {
           "id": "sidebar:--sidebar-menu-skeleton-padding-x:0",
           "name": "--sidebar-menu-skeleton-padding-x",
-          "value": "0.5rem",
+          "value": "1rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "sidebar-menu-skeleton"
@@ -15497,7 +16297,7 @@
         {
           "id": "sidebar:--sidebar-menu-sub-gap:0",
           "name": "--sidebar-menu-sub-gap",
-          "value": "0.25rem",
+          "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "sidebar-menu-sub"
@@ -15529,7 +16329,7 @@
         {
           "id": "sidebar:--sidebar-menu-sub-button-height:0",
           "name": "--sidebar-menu-sub-button-height",
-          "value": "1.75rem",
+          "value": "2.25rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "sidebar-menu-sub-button"
@@ -15537,7 +16337,7 @@
         {
           "id": "sidebar:--sidebar-menu-sub-button-gap:0",
           "name": "--sidebar-menu-sub-button-gap",
-          "value": "0.5rem",
+          "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "sidebar-menu-sub-button"
@@ -15561,7 +16361,7 @@
         {
           "id": "sidebar:--sidebar-menu-sub-button-fg:0",
           "name": "--sidebar-menu-sub-button-fg",
-          "value": "var(--sidebar-foreground)",
+          "value": "var(--muted-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sidebar-menu-sub-button"
@@ -15569,7 +16369,7 @@
         {
           "id": "sidebar:--sidebar-menu-sub-button-hover-bg:0",
           "name": "--sidebar-menu-sub-button-hover-bg",
-          "value": "var(--primary-50)",
+          "value": "var(--secondary-50)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sidebar-menu-sub-button"
@@ -15577,7 +16377,7 @@
         {
           "id": "sidebar:--sidebar-menu-sub-button-hover-fg:0",
           "name": "--sidebar-menu-sub-button-hover-fg",
-          "value": "var(--primary-950)",
+          "value": "var(--sidebar-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sidebar-menu-sub-button"
@@ -15585,7 +16385,7 @@
         {
           "id": "sidebar:--sidebar-menu-sub-button-active-bg:0",
           "name": "--sidebar-menu-sub-button-active-bg",
-          "value": "var(--primary-50)",
+          "value": "var(--sidebar-accent)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sidebar-menu-sub-button"
@@ -15593,7 +16393,7 @@
         {
           "id": "sidebar:--sidebar-menu-sub-button-active-fg:0",
           "name": "--sidebar-menu-sub-button-active-fg",
-          "value": "var(--primary-500)",
+          "value": "var(--sidebar-accent-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sidebar-menu-sub-button"
@@ -15617,10 +16417,98 @@
         {
           "id": "sidebar:--sidebar-group-label-fg:1",
           "name": "--sidebar-group-label-fg",
-          "value": "var(--neutral-50)",
+          "value": "var(--muted-foreground)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/sidebar-group-label"
+        },
+        {
+          "id": "sidebar:--sidebar-menu-button-hover-bg:1",
+          "name": "--sidebar-menu-button-hover-bg",
+          "value": "var(--sidebar-accent)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/sidebar-menu-button"
+        },
+        {
+          "id": "sidebar:--sidebar-header-footer-padding:1",
+          "name": "--sidebar-header-footer-padding",
+          "value": "0.5rem",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "sidebar-header/ancestor-slot=sidebar/collapsible=icon"
+        },
+        {
+          "id": "sidebar:--sidebar-group-padding-x:1",
+          "name": "--sidebar-group-padding-x",
+          "value": "0.5rem",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "sidebar-group/ancestor-slot=sidebar/collapsible=icon"
+        },
+        {
+          "id": "sidebar:--sidebar-group-padding-y:1",
+          "name": "--sidebar-group-padding-y",
+          "value": "0.5rem",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "sidebar-group/ancestor-slot=sidebar/collapsible=icon"
+        },
+        {
+          "id": "sidebar:--sidebar-menu-button-height:3",
+          "name": "--sidebar-menu-button-height",
+          "value": "2rem",
+          "fieldType": "raw",
+          "occurrence": 3,
+          "scope": "sidebar-menu-button/ancestor-slot=sidebar/collapsible=icon"
+        },
+        {
+          "id": "sidebar:--sidebar-menu-button-padding-x:1",
+          "name": "--sidebar-menu-button-padding-x",
+          "value": "0.5rem",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "sidebar-menu-button/ancestor-slot=sidebar/collapsible=icon"
+        },
+        {
+          "id": "sidebar:--sidebar-menu-button-padding-y:1",
+          "name": "--sidebar-menu-button-padding-y",
+          "value": "0.5rem",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "sidebar-menu-button/ancestor-slot=sidebar/collapsible=icon"
+        },
+        {
+          "id": "sidebar:--sidebar-menu-button-gap:1",
+          "name": "--sidebar-menu-button-gap",
+          "value": "0",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "sidebar-menu-button/ancestor-slot=sidebar/collapsible=icon"
+        },
+        {
+          "id": "sidebar:--sidebar-menu-button-icon-size:2",
+          "name": "--sidebar-menu-button-icon-size",
+          "value": "1rem",
+          "fieldType": "raw",
+          "occurrence": 2,
+          "scope": "sidebar-menu-button/ancestor-slot=sidebar/collapsible=icon"
+        },
+        {
+          "id": "sidebar:--sidebar-separator-margin-x:1",
+          "name": "--sidebar-separator-margin-x",
+          "value": "0.5rem",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "sidebar-separator/ancestor-slot=sidebar/collapsible=icon"
+        },
+        {
+          "id": "sidebar:--sidebar-separator-margin-y:1",
+          "name": "--sidebar-separator-margin-y",
+          "value": "0.25rem",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "sidebar-separator/ancestor-slot=sidebar/collapsible=icon"
         }
       ]
     },
@@ -16185,8 +17073,8 @@
         {
           "id": "stepper-input:--stepper-input-radius:0",
           "name": "--stepper-input-radius",
-          "value": "var(--radius-2xl)",
-          "fieldType": "radius-ref",
+          "value": "var( --radius-2xl )",
+          "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
         },
@@ -16241,8 +17129,8 @@
         {
           "id": "stepper-input:--stepper-input-focus-border-color:0",
           "name": "--stepper-input-focus-border-color",
-          "value": "var(--primary-800)",
-          "fieldType": "color-ref",
+          "value": "var( --primary-800 )",
+          "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
         },
@@ -16257,16 +17145,16 @@
         {
           "id": "stepper-input:--stepper-input-active-border-color:0",
           "name": "--stepper-input-active-border-color",
-          "value": "var(--primary-500)",
-          "fieldType": "color-ref",
+          "value": "var( --primary-500 )",
+          "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
         },
         {
           "id": "stepper-input:--stepper-input-invalid-border-color:0",
           "name": "--stepper-input-invalid-border-color",
-          "value": "var(--destructive)",
-          "fieldType": "color-ref",
+          "value": "var( --destructive )",
+          "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
         },
@@ -16455,6 +17343,14 @@
           "scope": "stepper-indicator"
         },
         {
+          "id": "stepper:--stepper-indicator-font-weight:0",
+          "name": "--stepper-indicator-font-weight",
+          "value": "var(--typography-small-font-weight)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "stepper-indicator"
+        },
+        {
           "id": "stepper:--stepper-connector-bg:0",
           "name": "--stepper-connector-bg",
           "value": "var(--border)",
@@ -16541,6 +17437,14 @@
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "stepper-segment"
+        },
+        {
+          "id": "stepper:--stepper-connector-bg:1",
+          "name": "--stepper-connector-bg",
+          "value": "var(--neutral-700)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/stepper-connector"
         }
       ]
     },
@@ -17137,7 +18041,15 @@
         {
           "id": "tabs:--tabs-list-border-color:0",
           "name": "--tabs-list-border-color",
-          "value": "color-mix(in oklab, var(--neutral-950) 8%, transparent)",
+          "value": "var(--border)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "tabs-list/variant=line"
+        },
+        {
+          "id": "tabs:--tabs-list-border-width:0",
+          "name": "--tabs-list-border-width",
+          "value": "1px",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "tabs-list/variant=line"
@@ -17329,8 +18241,8 @@
         {
           "id": "tabs:--tabs-trigger-radius:1",
           "name": "--tabs-trigger-radius",
-          "value": "var(--radius-md)",
-          "fieldType": "radius-ref",
+          "value": "0",
+          "fieldType": "raw",
           "occurrence": 1,
           "scope": "tabs-trigger/ancestor-slot=tabs-list/variant=line"
         },
@@ -17345,7 +18257,7 @@
         {
           "id": "tabs:--tabs-trigger-padding-y:1",
           "name": "--tabs-trigger-padding-y",
-          "value": "0.25rem",
+          "value": "0.5rem",
           "fieldType": "raw",
           "occurrence": 1,
           "scope": "tabs-trigger/ancestor-slot=tabs-list/variant=line"
