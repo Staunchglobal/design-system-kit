@@ -15,9 +15,11 @@
   --radio-group-item-checked-hover-border-color: var(--primary-600);
   --radio-group-item-focus-ring-width: 3px;
   --radio-group-item-focus-border-color: var(--primary-500);
-  --radio-group-item-focus-ring-color: color-mix(in oklab, var(--primary-500) 35%, transparent);
+  --radio-group-item-focus-ring-color: var(--primary-500);
+  --radio-group-item-focus-ring-opacity: 0.35;
   --radio-group-item-invalid-border-color: var(--destructive);
-  --radio-group-item-invalid-ring-color: color-mix(in oklab, var(--destructive) 35%, transparent);
+  --radio-group-item-invalid-ring-color: var(--destructive);
+  --radio-group-item-invalid-ring-opacity: 0.35;
   --radio-group-item-disabled-opacity: 0.5;
 
   width: var(--radio-group-item-size);
@@ -39,7 +41,7 @@
 [data-slot='radio-group-item']:focus-visible {
   border-color: var(--radio-group-item-focus-border-color);
   box-shadow: 0 0 0 var(--radio-group-item-focus-ring-width)
-    var(--radio-group-item-focus-ring-color);
+    rgb(from var(--radio-group-item-focus-ring-color) r g b / var(--radio-group-item-focus-ring-opacity));
 }
 [data-slot='radio-group'] [data-slot='radio-group-item'][data-state='checked'],
 [data-slot='radio-group-item'][data-state='checked'] {
@@ -58,7 +60,7 @@
 [data-slot='radio-group-item'][aria-invalid='true'] {
   border-color: var(--radio-group-item-invalid-border-color);
   box-shadow: 0 0 0 var(--radio-group-item-focus-ring-width)
-    var(--radio-group-item-invalid-ring-color);
+    rgb(from var(--radio-group-item-invalid-ring-color) r g b / var(--radio-group-item-invalid-ring-opacity));
 }
 
 [data-slot='radio-group'] [data-slot='radio-group-item'][aria-invalid='true'][data-state='checked'],
@@ -115,8 +117,8 @@
 .dark [data-slot='radio-group-item'] {
   --radio-group-item-bg: var(--neutral-900);
   --radio-group-item-checked-bg: var(--neutral-900);
-  --radio-group-item-focus-ring-color: color-mix(in oklab, var(--primary-400) 35%, transparent);
-  --radio-group-item-invalid-ring-color: color-mix(in oklab, var(--destructive-400) 35%, transparent);
+  --radio-group-item-focus-ring-color: var(--primary-400);
+  --radio-group-item-invalid-ring-color: var(--destructive-400);
   --radio-group-item-hover-border-color: var(--primary-400);
   --radio-group-item-checked-border-color: var(--primary-400);
   --radio-group-item-checked-hover-border-color: var(--primary-300);

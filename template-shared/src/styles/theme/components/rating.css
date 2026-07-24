@@ -4,19 +4,22 @@
 }
 
 [data-slot='rating-segment'] {
-  --rating-segment-bg: color-mix(in oklab, var(--muted) 30%, transparent);
+  --rating-segment-bg: var(--muted);
+  --rating-segment-bg-opacity: 0.3;
   --rating-segment-fg: var(--muted-foreground);
   --rating-segment-radius: var(--radius-sm);
-  background: var(--rating-segment-bg);
+  background: rgb(from var(--rating-segment-bg) r g b / var(--rating-segment-bg-opacity));
   color: var(--rating-segment-fg);
   border-radius: var(--rating-segment-radius);
 }
 
 [data-slot='rating-segment']:not([data-filled]):hover {
   --rating-segment-bg: var(--muted);
+  --rating-segment-bg-opacity: 1;
 }
 
 [data-slot='rating-segment'][data-filled] {
   --rating-segment-bg: var(--primary);
+  --rating-segment-bg-opacity: 1;
   --rating-segment-fg: var(--primary-foreground);
 }

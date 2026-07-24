@@ -109,8 +109,8 @@
 }
 
 .dark [data-slot='filter-popover'] [data-slot='button']:has([data-slot='filter-popover-count']) {
-  --filter-popover-trigger-bg: color-mix(in oklab, var(--primary-500) 18%, var(--neutral-900));
-  --filter-popover-trigger-hover-bg: color-mix(in oklab, var(--primary-500) 22%, var(--neutral-900));
+  --filter-popover-trigger-bg: var(--neutral-800);
+  --filter-popover-trigger-hover-bg: var(--neutral-700);
   --filter-popover-trigger-icon-color: var(--primary-400);
 }
 

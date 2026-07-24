@@ -1,8 +1,9 @@
 [data-slot='sheet-overlay'] {
-  --sheet-overlay-bg: color-mix(in srgb, var(--overlay-bg) 50%, transparent);
+  --sheet-overlay-bg: var(--overlay-bg);
+  --sheet-overlay-opacity: 0.5;
   --sheet-overlay-blur: 4px;
   --sheet-overlay-duration: 100ms;
-  background-color: var(--sheet-overlay-bg);
+  background-color: rgb(from var(--sheet-overlay-bg) r g b / var(--sheet-overlay-opacity));
   transition-duration: var(--sheet-overlay-duration);
 }
 

@@ -9,5 +9,5 @@
 
 [data-slot='segmented-radio-item'][data-selected] {
   --segmented-radio-border: var(--primary);
-  --segmented-radio-bg: color-mix(in oklab, var(--primary) 7%, var(--card));
+  --segmented-radio-bg: var(--primary-50);
 }

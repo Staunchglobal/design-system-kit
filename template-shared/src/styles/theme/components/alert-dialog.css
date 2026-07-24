@@ -1,8 +1,9 @@
 [data-slot='alert-dialog-overlay'] {
-  --alert-dialog-overlay-bg: color-mix(in srgb, var(--overlay-bg) 50%, transparent);
+  --alert-dialog-overlay-bg: var(--overlay-bg);
+  --alert-dialog-overlay-opacity: 0.5;
   --alert-dialog-overlay-blur: 4px;
   --alert-dialog-overlay-duration: 100ms;
-  background-color: var(--alert-dialog-overlay-bg);
+  background-color: rgb(from var(--alert-dialog-overlay-bg) r g b / var(--alert-dialog-overlay-opacity));
   transition-duration: var(--alert-dialog-overlay-duration);
 }
 @supports (backdrop-filter: blur(1px)) {

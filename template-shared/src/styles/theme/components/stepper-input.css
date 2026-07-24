@@ -1,23 +1,15 @@
 [data-slot="stepper-input"] {
-  --stepper-input-radius: var(
-    --radius-2xl
-  );
+  --stepper-input-radius: var(--radius-2xl); /* Button and Input border-radius/medium — 20px */
   --stepper-input-border-width: 1px;
   --stepper-input-border-color: var(--border);
   --stepper-input-bg: var(--neutral-0);
   --stepper-input-height: 2.75rem;
   --stepper-input-padding-x: 0.75rem;
   --stepper-input-gap: 0.5rem;
-  --stepper-input-focus-border-color: var(
-    --primary-800
-  );
+  --stepper-input-focus-border-color: var(--primary-800);
   --stepper-input-focus-border-width: 2px;
-  --stepper-input-active-border-color: var(
-    --primary-500
-  );
-  --stepper-input-invalid-border-color: var(
-    --destructive
-  );
+  --stepper-input-active-border-color: var(--primary-500);
+  --stepper-input-invalid-border-color: var(--destructive);
   --stepper-input-disabled-bg: var(--neutral-50);
   --stepper-input-disabled-opacity: 1;
   --stepper-input-icon-color: var(--muted-600);
