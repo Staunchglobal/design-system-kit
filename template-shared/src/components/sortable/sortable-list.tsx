@@ -19,6 +19,7 @@ import {
 
 import { cn } from '@/lib/utils'
 import { SortableItem } from '@/components/sortable/sortable-item'
+import { useMounted } from '@/components/inspector/use-mounted'
 import { GripVertical } from 'lucide-react'
 
 type SortableListProps<T extends { id: string }> = {
@@ -78,10 +79,7 @@ function SortableList<T extends { id: string }>({
 }: SortableListProps<T>) {
   // @dnd-kit uses a module-level a11y id counter (DndDescribedBy-N) that drifts
   // between SSR and the client — mount the DnD tree only after hydration.
-  const [mounted, setMounted] = React.useState(false)
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
+  const mounted = useMounted()
 
   const sensors = useSensors(
     useSensor(PointerSensor),
