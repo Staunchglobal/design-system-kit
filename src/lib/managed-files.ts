@@ -79,6 +79,18 @@ export const FRAMEWORK_EXTRA_FILES: Record<
       'auth/AuthHomePage.tsx',
     ],
   },
+  chat: {
+    next: [
+      'app/chat/layout.tsx',
+      'app/chat/chat-app.tsx',
+      'app/chat/chat-href.ts',
+      'app/chat/page.tsx',
+      'app/chat/[id]/page.tsx',
+      'app/chat/archived/page.tsx',
+      'app/chat/archived/[id]/page.tsx',
+    ],
+    vite: ['chat/ChatPage.tsx'],
+  },
   'address-autocomplete': {
     next: [
       'app/api/places/autocomplete/route.ts',

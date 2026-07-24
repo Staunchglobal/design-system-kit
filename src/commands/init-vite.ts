@@ -352,6 +352,7 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
           `  import ChangePasswordPage from '@/auth/ChangePasswordPage'\n` +
           `  import AuthHomePage from '@/auth/AuthHomePage'\n`
         : '') +
+      (userClosure.has('chat') ? `  import ChatPage from '@/chat/ChatPage'\n` : '') +
       '  …\n' +
       '  <Route path="/design-system" element={<DesignSystemPage />} />\n' +
       '  <Route path="/theme-editor" element={<ThemeEditorPage />} />' +
@@ -365,6 +366,10 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
           '  <Route path="/auth/change-password" element={<ChangePasswordPage />} />\n' +
           '  <Route path="/auth/home" element={<AuthHomePage />} />'
         : '') +
+      (userClosure.has('chat')
+        ? '\n  <Route path="/chat/archived/:id?" element={<ChatPage />} />\n' +
+          '  <Route path="/chat/:id?" element={<ChatPage />} />'
+        : '') +
       (providerLines.length
         ? '\n\nAlso wrap your app root once with the tooltip/toast providers:\n' + providerLines.join('\n')
         : '')
@@ -375,6 +380,9 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   log.title('Done')
   log.success('Design system kit installed.')
   log.info(`Run your dev server, then visit whatever route you mounted ${pc.bold('DesignSystemPage')}/${pc.bold('ThemeEditorPage')} at.`)
+  if (userClosure.has('chat')) {
+    log.info(`Chat inbox: mount ${pc.bold('/chat')}, ${pc.bold('/chat/:id')}, ${pc.bold('/chat/archived')} — set VITE_GRAPHQL_URL / VITE_GRAPHQL_WS_URL for Nest API`)
+  }
   log.info(`Run \`${pc.bold('design-kit init')}\` again any time to add more components.`)
   if (skipped.length) {
     log.warn(`${skipped.length} file(s) already existed and were left untouched — see the list above.`)
