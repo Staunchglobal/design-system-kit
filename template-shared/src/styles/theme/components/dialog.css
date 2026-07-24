@@ -8,10 +8,11 @@
    ========================================================================== */
 
 [data-slot='dialog-overlay'] {
-  --dialog-overlay-bg: color-mix(in srgb, var(--overlay-bg) 50%, transparent);
+  --dialog-overlay-bg: var(--overlay-bg);
+  --dialog-overlay-opacity: 0.5;
   --dialog-overlay-blur: 4px;
   --dialog-overlay-duration: 100ms;
-  background-color: var(--dialog-overlay-bg);
+  background-color: rgb(from var(--dialog-overlay-bg) r g b / var(--dialog-overlay-opacity));
   transition-duration: var(--dialog-overlay-duration);
 }
 @supports (backdrop-filter: blur(1px)) {

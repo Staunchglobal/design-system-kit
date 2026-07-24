@@ -18,9 +18,11 @@
   --switch-unchecked-hover-bg: var(--neutral-300);
   --switch-focus-ring-width: 3px;
   --switch-focus-border-color: var(--primary-500);
-  --switch-focus-ring-color: color-mix(in oklab, var(--primary-500) 35%, transparent);
+  --switch-focus-ring-color: var(--primary-500);
+  --switch-focus-ring-opacity: 0.35;
   --switch-invalid-border-color: var(--destructive);
-  --switch-invalid-ring-color: color-mix(in oklab, var(--destructive) 35%, transparent);
+  --switch-invalid-ring-color: var(--destructive);
+  --switch-invalid-ring-opacity: 0.35;
   --switch-disabled-opacity: 0.5;
   --switch-thumb-size: 1rem; /* 16px */
   --switch-track-width: 2.25rem; /* 36px */
@@ -66,13 +68,13 @@
 }
 
 [data-slot='switch']:focus-visible {
-  box-shadow: 0 0 0 var(--switch-focus-ring-width) var(--switch-focus-ring-color);
+  box-shadow: 0 0 0 var(--switch-focus-ring-width) rgb(from var(--switch-focus-ring-color) r g b / var(--switch-focus-ring-opacity));
 }
 
 [data-slot='switch'][aria-invalid='true'] {
   border-width: 1px !important;
   border-color: var(--switch-invalid-border-color) !important;
-  box-shadow: 0 0 0 var(--switch-focus-ring-width) var(--switch-invalid-ring-color);
+  box-shadow: 0 0 0 var(--switch-focus-ring-width) rgb(from var(--switch-invalid-ring-color) r g b / var(--switch-invalid-ring-opacity));
 }
 
 [data-slot='switch'][data-disabled] {
@@ -134,6 +136,6 @@
   --switch-unchecked-hover-bg: var(--neutral-600);
   --switch-checked-bg: var(--primary-400);
   --switch-checked-hover-bg: var(--primary-300);
-  --switch-focus-ring-color: color-mix(in oklab, var(--primary-400) 35%, transparent);
-  --switch-invalid-ring-color: color-mix(in oklab, var(--destructive-400) 35%, transparent);
+  --switch-focus-ring-color: var(--primary-400);
+  --switch-invalid-ring-color: var(--destructive-400);
 }

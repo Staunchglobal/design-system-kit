@@ -15,25 +15,17 @@
    restate it here. Its InputGroupInput/Addon/Button children keep their own
    data-slot and are still styled normally by input-group.css. */
 [data-slot="stepper-input"] {
-  --stepper-input-radius: var(
-    --radius-2xl
-  ); /* Button and Input border-radius/medium — 20px */
+  --stepper-input-radius: var(--radius-2xl); /* Button and Input border-radius/medium — 20px */
   --stepper-input-border-width: 1px;
   --stepper-input-border-color: var(--border); /* border/light #e8e8e9 */
   --stepper-input-bg: var(--neutral-0); /* surface/primary */
   --stepper-input-height: 2.75rem; /* Medium — 44px (Figma; not Input 48) */
   --stepper-input-padding-x: 0.75rem; /* 12px */
   --stepper-input-gap: 0.5rem; /* 8px */
-  --stepper-input-focus-border-color: var(
-    --primary-800
-  ); /* border/action-focus #005170 */
+  --stepper-input-focus-border-color: var(--primary-800); /* border/action-focus #005170 */
   --stepper-input-focus-border-width: 2px;
-  --stepper-input-active-border-color: var(
-    --primary-500
-  ); /* border/action #3ab5fe */
-  --stepper-input-invalid-border-color: var(
-    --destructive
-  ); /* border/error #d94c51 */
+  --stepper-input-active-border-color: var(--primary-500); /* border/action #3ab5fe */
+  --stepper-input-invalid-border-color: var(--destructive); /* border/error #d94c51 */
   --stepper-input-disabled-bg: var(--neutral-50); /* Neutral/50 #f6f6f6 */
   --stepper-input-disabled-opacity: 1;
   --stepper-input-icon-color: var(--muted-600); /* icon/grey */

@@ -142,9 +142,10 @@
 
 [data-slot='calendar'] [data-slot='button'][data-focused='true'] {
   --calendar-focus-border-color: var(--primary);
-  --calendar-focus-ring-color: color-mix(in oklab, var(--primary) 35%, transparent);
+  --calendar-focus-ring-color: var(--primary);
+  --calendar-focus-ring-opacity: 0.35;
   border-color: var(--calendar-focus-border-color);
-  box-shadow: 0 0 0 3px var(--calendar-focus-ring-color);
+  box-shadow: 0 0 0 3px rgb(from var(--calendar-focus-ring-color) r g b / var(--calendar-focus-ring-opacity));
 }
 
 /* Popover: grow to calendar; no double chrome */

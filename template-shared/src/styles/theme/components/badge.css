@@ -18,7 +18,8 @@
   --badge-font-weight: var(--typography-small-font-weight);
   --badge-line-height: var(--typography-caption-line-height);
   --badge-border-width: 1px;
-  --badge-border-color: color-mix(in oklab, var(--neutral-950) 8%, transparent);
+  --badge-border-color: var(--neutral-950);
+  --badge-border-opacity: 0.08;
 
   height: var(--badge-height);
   gap: var(--badge-gap);
@@ -29,7 +30,7 @@
   font-weight: var(--badge-font-weight);
   line-height: var(--badge-line-height);
   border-width: var(--badge-border-width);
-  border-color: var(--badge-border-color);
+  border-color: rgb(from var(--badge-border-color) r g b / var(--badge-border-opacity));
 }
 
 /* default → Tag Primary */

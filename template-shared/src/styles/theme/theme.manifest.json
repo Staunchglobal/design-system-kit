@@ -2954,8 +2954,16 @@
         {
           "id": "alert-dialog:--alert-dialog-overlay-bg:0",
           "name": "--alert-dialog-overlay-bg",
-          "value": "color-mix(in srgb, var(--overlay-bg) 50%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--overlay-bg)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "alert-dialog:--alert-dialog-overlay-opacity:0",
+          "name": "--alert-dialog-overlay-opacity",
+          "value": "0.5",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "default"
         },
@@ -4298,7 +4306,15 @@
         {
           "id": "badge:--badge-border-color:0",
           "name": "--badge-border-color",
-          "value": "color-mix(in oklab, var(--neutral-950) 8%, transparent)",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "badge:--badge-border-opacity:0",
+          "name": "--badge-border-opacity",
+          "value": "0.08",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -6306,7 +6322,15 @@
         {
           "id": "calendar:--calendar-focus-ring-color:0",
           "name": "--calendar-focus-ring-color",
-          "value": "color-mix(in oklab, var(--primary) 35%, transparent)",
+          "value": "var(--primary)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "button/ancestor-slot=calendar/focused=true"
+        },
+        {
+          "id": "calendar:--calendar-focus-ring-opacity:0",
+          "name": "--calendar-focus-ring-opacity",
+          "value": "0.35",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "button/ancestor-slot=calendar/focused=true"
@@ -6794,8 +6818,16 @@
         {
           "id": "checkbox:--checkbox-border-color:0",
           "name": "--checkbox-border-color",
-          "value": "color-mix(in oklab, var(--neutral-950) 40%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "checkbox:--checkbox-border-opacity:0",
+          "name": "--checkbox-border-opacity",
+          "value": "0.4",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "default"
         },
@@ -6850,7 +6882,15 @@
         {
           "id": "checkbox:--checkbox-focus-ring-color:0",
           "name": "--checkbox-focus-ring-color",
-          "value": "color-mix(in oklab, var(--primary-500) 35%, transparent)",
+          "value": "var(--primary-500)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "checkbox:--checkbox-focus-ring-opacity:0",
+          "name": "--checkbox-focus-ring-opacity",
+          "value": "0.35",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -6866,7 +6906,15 @@
         {
           "id": "checkbox:--checkbox-invalid-ring-color:0",
           "name": "--checkbox-invalid-ring-color",
-          "value": "color-mix(in oklab, var(--destructive) 35%, transparent)",
+          "value": "var(--destructive)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "checkbox:--checkbox-invalid-ring-opacity:0",
+          "name": "--checkbox-invalid-ring-opacity",
+          "value": "0.35",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -6890,8 +6938,8 @@
         {
           "id": "checkbox:--checkbox-border-color:1",
           "name": "--checkbox-border-color",
-          "value": "color-mix(in oklab, var(--neutral-0) 40%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--neutral-0)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/checkbox"
         },
@@ -6906,16 +6954,16 @@
         {
           "id": "checkbox:--checkbox-focus-ring-color:1",
           "name": "--checkbox-focus-ring-color",
-          "value": "color-mix(in oklab, var(--primary-400) 35%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--primary-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/checkbox"
         },
         {
           "id": "checkbox:--checkbox-invalid-ring-color:1",
           "name": "--checkbox-invalid-ring-color",
-          "value": "color-mix(in oklab, var(--destructive-400) 35%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/checkbox"
         },
@@ -8529,8 +8577,16 @@
         {
           "id": "dialog:--dialog-overlay-bg:0",
           "name": "--dialog-overlay-bg",
-          "value": "color-mix(in srgb, var(--overlay-bg) 50%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--overlay-bg)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "dialog:--dialog-overlay-opacity:0",
+          "name": "--dialog-overlay-opacity",
+          "value": "0.5",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "default"
         },
@@ -8873,8 +8929,16 @@
         {
           "id": "drawer:--drawer-overlay-bg:0",
           "name": "--drawer-overlay-bg",
-          "value": "color-mix(in srgb, var(--overlay-bg) 50%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--overlay-bg)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "drawer-overlay"
+        },
+        {
+          "id": "drawer:--drawer-overlay-opacity:0",
+          "name": "--drawer-overlay-opacity",
+          "value": "0.5",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "drawer-overlay"
         },
@@ -10561,16 +10625,16 @@
         {
           "id": "filter-popover:--filter-popover-trigger-bg:3",
           "name": "--filter-popover-trigger-bg",
-          "value": "color-mix(in oklab, var(--primary-500) 18%, var(--neutral-900))",
-          "fieldType": "raw",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
           "occurrence": 3,
           "scope": "dark/filter-popover-count/ancestor-slot=button"
         },
         {
           "id": "filter-popover:--filter-popover-trigger-hover-bg:3",
           "name": "--filter-popover-trigger-hover-bg",
-          "value": "color-mix(in oklab, var(--primary-500) 22%, var(--neutral-900))",
-          "fieldType": "raw",
+          "value": "var(--neutral-700)",
+          "fieldType": "color-ref",
           "occurrence": 3,
           "scope": "dark/filter-popover-count/ancestor-slot=button"
         },
@@ -14113,7 +14177,15 @@
         {
           "id": "radio-group:--radio-group-item-focus-ring-color:0",
           "name": "--radio-group-item-focus-ring-color",
-          "value": "color-mix(in oklab, var(--primary-500) 35%, transparent)",
+          "value": "var(--primary-500)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "radio-group-item/ancestor-slot=radio-group"
+        },
+        {
+          "id": "radio-group:--radio-group-item-focus-ring-opacity:0",
+          "name": "--radio-group-item-focus-ring-opacity",
+          "value": "0.35",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "radio-group-item/ancestor-slot=radio-group"
@@ -14129,7 +14201,15 @@
         {
           "id": "radio-group:--radio-group-item-invalid-ring-color:0",
           "name": "--radio-group-item-invalid-ring-color",
-          "value": "color-mix(in oklab, var(--destructive) 35%, transparent)",
+          "value": "var(--destructive)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "radio-group-item/ancestor-slot=radio-group"
+        },
+        {
+          "id": "radio-group:--radio-group-item-invalid-ring-opacity:0",
+          "name": "--radio-group-item-invalid-ring-opacity",
+          "value": "0.35",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "radio-group-item/ancestor-slot=radio-group"
@@ -14185,16 +14265,16 @@
         {
           "id": "radio-group:--radio-group-item-focus-ring-color:1",
           "name": "--radio-group-item-focus-ring-color",
-          "value": "color-mix(in oklab, var(--primary-400) 35%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--primary-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/radio-group-item/ancestor-slot=radio-group"
         },
         {
           "id": "radio-group:--radio-group-item-invalid-ring-color:1",
           "name": "--radio-group-item-invalid-ring-color",
-          "value": "color-mix(in oklab, var(--destructive-400) 35%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/radio-group-item/ancestor-slot=radio-group"
         },
@@ -14257,8 +14337,16 @@
         {
           "id": "rating:--rating-segment-bg:0",
           "name": "--rating-segment-bg",
-          "value": "color-mix(in oklab, var(--muted) 30%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--muted)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "rating-segment"
+        },
+        {
+          "id": "rating:--rating-segment-bg-opacity:0",
+          "name": "--rating-segment-bg-opacity",
+          "value": "0.3",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "rating-segment"
         },
@@ -14287,10 +14375,26 @@
           "scope": "rating-segment"
         },
         {
+          "id": "rating:--rating-segment-bg-opacity:1",
+          "name": "--rating-segment-bg-opacity",
+          "value": "1",
+          "fieldType": "opacity",
+          "occurrence": 1,
+          "scope": "rating-segment"
+        },
+        {
           "id": "rating:--rating-segment-bg:2",
           "name": "--rating-segment-bg",
           "value": "var(--primary)",
           "fieldType": "color-ref",
+          "occurrence": 2,
+          "scope": "rating-segment"
+        },
+        {
+          "id": "rating:--rating-segment-bg-opacity:2",
+          "name": "--rating-segment-bg-opacity",
+          "value": "1",
+          "fieldType": "opacity",
           "occurrence": 2,
           "scope": "rating-segment"
         },
@@ -14809,8 +14913,8 @@
         {
           "id": "segmented-radio-group:--segmented-radio-bg:1",
           "name": "--segmented-radio-bg",
-          "value": "color-mix(in oklab, var(--primary) 7%, var(--card))",
-          "fieldType": "raw",
+          "value": "var(--primary-50)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "segmented-radio-item"
         }
@@ -15329,8 +15433,16 @@
         {
           "id": "sheet:--sheet-overlay-bg:0",
           "name": "--sheet-overlay-bg",
-          "value": "color-mix(in srgb, var(--overlay-bg) 50%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--overlay-bg)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "sheet-overlay"
+        },
+        {
+          "id": "sheet:--sheet-overlay-opacity:0",
+          "name": "--sheet-overlay-opacity",
+          "value": "0.5",
+          "fieldType": "opacity",
           "occurrence": 0,
           "scope": "sheet-overlay"
         },
@@ -17073,8 +17185,8 @@
         {
           "id": "stepper-input:--stepper-input-radius:0",
           "name": "--stepper-input-radius",
-          "value": "var( --radius-2xl )",
-          "fieldType": "raw",
+          "value": "var(--radius-2xl)",
+          "fieldType": "radius-ref",
           "occurrence": 0,
           "scope": "default"
         },
@@ -17129,8 +17241,8 @@
         {
           "id": "stepper-input:--stepper-input-focus-border-color:0",
           "name": "--stepper-input-focus-border-color",
-          "value": "var( --primary-800 )",
-          "fieldType": "raw",
+          "value": "var(--primary-800)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
         },
@@ -17145,16 +17257,16 @@
         {
           "id": "stepper-input:--stepper-input-active-border-color:0",
           "name": "--stepper-input-active-border-color",
-          "value": "var( --primary-500 )",
-          "fieldType": "raw",
+          "value": "var(--primary-500)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
         },
         {
           "id": "stepper-input:--stepper-input-invalid-border-color:0",
           "name": "--stepper-input-invalid-border-color",
-          "value": "var( --destructive )",
-          "fieldType": "raw",
+          "value": "var(--destructive)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "default"
         },
@@ -17537,7 +17649,15 @@
         {
           "id": "switch:--switch-focus-ring-color:0",
           "name": "--switch-focus-ring-color",
-          "value": "color-mix(in oklab, var(--primary-500) 35%, transparent)",
+          "value": "var(--primary-500)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "switch:--switch-focus-ring-opacity:0",
+          "name": "--switch-focus-ring-opacity",
+          "value": "0.35",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -17553,7 +17673,15 @@
         {
           "id": "switch:--switch-invalid-ring-color:0",
           "name": "--switch-invalid-ring-color",
-          "value": "color-mix(in oklab, var(--destructive) 35%, transparent)",
+          "value": "var(--destructive)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "switch:--switch-invalid-ring-opacity:0",
+          "name": "--switch-invalid-ring-opacity",
+          "value": "0.35",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
@@ -17737,16 +17865,16 @@
         {
           "id": "switch:--switch-focus-ring-color:1",
           "name": "--switch-focus-ring-color",
-          "value": "color-mix(in oklab, var(--primary-400) 35%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--primary-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/switch"
         },
         {
           "id": "switch:--switch-invalid-ring-color:1",
           "name": "--switch-invalid-ring-color",
-          "value": "color-mix(in oklab, var(--destructive-400) 35%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--destructive-400)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/switch"
         }
