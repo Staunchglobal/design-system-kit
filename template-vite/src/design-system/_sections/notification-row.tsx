@@ -2,7 +2,6 @@ import { ComponentSection, Example } from '@/design-system/_lib/showcase'
 import { ItemGroup } from '@/components/ui/item'
 import { NotificationRow } from '@/components/ui/notification-row'
 
-/** Fixed demo timestamps — avoid Date.now() during render (react-hooks/purity). */
 const DEMO_TIMESTAMPS = {
   hourAgo: new Date('2026-07-17T12:00:00.000Z'),
   dayAgo: new Date('2026-07-16T13:00:00.000Z'),

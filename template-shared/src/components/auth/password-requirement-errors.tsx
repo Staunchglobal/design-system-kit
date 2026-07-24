@@ -2,7 +2,6 @@
 
 import { FieldError } from '@/components/ui/field'
 
-/** Renders password policy failures as a bullet list (always a list, even for one item). */
 export function PasswordRequirementErrors({ errors }: { errors: string[] }) {
   if (!errors.length) return null
 

@@ -1,6 +1,5 @@
 import fs from 'node:fs'
 
-/** owner/repo on GitHub — the public source of truth the CDN mirrors. */
 export const TEMPLATES_REPO = 'Staunchglobal/design-system-kit'
 
 /**
@@ -43,13 +42,10 @@ export function cdnBaseFor(templateDirName: string): string {
   return `${CDN_PREFIX}${templateDirName}`
 }
 
-/** Joins a base (a CDN URL from cdnBaseFor) with segments, always with `/`. */
 export function remoteUrl(base: string, ...segments: string[]): string {
   return [base, ...segments].join('/').replace(/([^:])\/{2,}/g, '$1/')
 }
 
-/** If a local templates root is set and this CDN url's repo-relative path exists
- *  under it, returns that local path — local always takes priority over the CDN. */
 function localShadowPath(url: string): string | null {
   const root = localTemplatesRoot()
   if (!root || !url.startsWith(CDN_PREFIX)) return null
@@ -99,8 +95,6 @@ export async function fetchTemplateText(url: string, { retries = 2 } = {}): Prom
   }
 }
 
-/** Like fetchTemplateText, but for a file that's always expected to exist — a null/missing
- *  result here means something is actually wrong (bad ref, renamed file), not a normal case. */
 export async function fetchRequiredTemplateText(url: string): Promise<string> {
   const text = await fetchTemplateText(url)
   if (text === null) {
@@ -111,7 +105,6 @@ export async function fetchRequiredTemplateText(url: string): Promise<string> {
   return text
 }
 
-/** HEAD request for a file's byte size — used only by `--report`, so a full GET isn't needed. */
 export async function fetchTemplateSize(url: string): Promise<number | null> {
   const shadow = localShadowPath(url)
   if (shadow) return fs.statSync(shadow).size
@@ -125,8 +118,6 @@ export async function fetchTemplateSize(url: string): Promise<number | null> {
   return len ? Number(len) : null
 }
 
-/** Runs `fn` over `items` with at most `limit` in flight at once — keeps a full install
- *  from opening dozens of simultaneous connections while still being far faster than serial. */
 export async function mapWithConcurrency<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
   const results: R[] = new Array(items.length)
   let next = 0

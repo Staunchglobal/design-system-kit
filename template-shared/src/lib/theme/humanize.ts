@@ -1,4 +1,3 @@
-/** Word-level overrides applied when turning a kebab-case CSS var name into a human label. */
 const WORD_OVERRIDES: Record<string, string> = {
   bg: 'Background',
   fg: 'Foreground',
@@ -30,33 +29,23 @@ export function humanizeWord(word: string): string {
   return word.charAt(0).toUpperCase() + word.slice(1)
 }
 
-/** `--button-hover-bg` → "Button Hover Background" */
 export function humanizeVarName(name: string): string {
   const bare = name.replace(/^--/, '')
   return bare.split('-').filter(Boolean).map(humanizeWord).join(' ')
 }
 
-/** `ancestor-slot` → "Ancestor Slot"; `variant` → "Variant" */
 export function humanizeKey(key: string): string {
   return key.split('-').filter(Boolean).map(humanizeWord).join(' ')
 }
 
-/**
- * A scope value can carry more than one option when the source CSS rule was a
- * comma-separated list of alternatives (see generate-theme-manifest.mjs's
- * `inferScope`) — e.g. `top|bottom`. `humanizeVarName` alone would render the
- * raw pipe verbatim ("Top|bottom"); split it into a human "or" list first.
- */
 export function humanizeScopeValue(value: string): string {
   return value.split('|').map(humanizeVarName).join(' or ')
 }
 
-/** `--button-hover-bg` → "Button Hover Background (--button-hover-bg)" */
 export function formatFieldLabel(name: string): string {
   return `${humanizeVarName(name)} (${name})`
 }
 
-/** `button/variant=outline/size=xs` → [{key:'variant',value:'outline'}, {key:'size',value:'xs'}] */
 export function scopeConditions(scope?: string): Array<{ key: string; value: string }> {
   if (!scope) return []
   return scope
@@ -69,7 +58,6 @@ export function scopeConditions(scope?: string): Array<{ key: string; value: str
     .filter((x): x is { key: string; value: string } => x !== null)
 }
 
-/** `button/variant=outline/size=xs` → "Variant = Outline, Size = XS" */
 export function humanizeScope(scope?: string): string | null {
   const conditions = scopeConditions(scope)
   if (!conditions.length) return null

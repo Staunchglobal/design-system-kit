@@ -1,11 +1,3 @@
-/* ==========================================================================
-   Error State
-   ========================================================================== */
-
-/* Root renders as an Empty with its data-slot overridden to 'error-state', so
-   it no longer inherits empty.css's root rule — restate it here. Its children
-   (empty-header/empty-icon/empty-title/empty-description/empty-content) keep
-   their original data-slot and are still styled by empty.css. */
 [data-slot='error-state'] {
   --error-state-radius: var(--radius-xl);
   --error-state-padding: 1.5rem;
@@ -16,10 +8,6 @@
   gap: var(--error-state-gap);
   border-color: var(--error-state-border-color);
 }
-
-/* The icon chip is destructive-tinted, unlike a plain Empty's neutral icon —
-   same --destructive-100/--destructive pairing sonner-toast.css uses for its
-   error variant. */
 [data-slot='error-state'] [data-slot='empty-icon'][data-variant='icon'] {
   --error-state-icon-bg: var(--destructive-100);
   --error-state-icon-fg: var(--destructive);

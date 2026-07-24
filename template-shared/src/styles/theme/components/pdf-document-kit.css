@@ -1,6 +1,3 @@
-/* PDF Document Kit
-   @react-pdf/renderer uses its own StyleSheet runtime rather than DOM CSS.
-   This marker documents the registry/theme surface for the installable kit. */
 [data-slot='pdf-document-preview'] {
   --pdf-document-preview-bg: var(--muted);
   --pdf-document-preview-radius: var(--radius-xl);

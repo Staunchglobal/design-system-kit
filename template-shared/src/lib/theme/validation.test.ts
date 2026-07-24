@@ -41,8 +41,6 @@ describe('SAFE_ICON_KEY_RE / SAFE_ICON_NAME_RE', () => {
   })
 
   it('rejects an icon value crafted to break out of a generated .ts string literal', () => {
-    // e.g. `'; require("child_process").execSync(...); const x='` — the exact shape
-    // that would let a saved icon value execute as code once icon-map.ts is imported.
     expect(SAFE_ICON_NAME_RE.test("X'; require('child_process'); const y='Y")).toBe(false)
     expect(SAFE_ICON_KEY_RE.test("evil'; process.exit(1); //")).toBe(false)
   })
@@ -57,8 +55,6 @@ describe('SAFE_FONT_FAMILY_RE / SAFE_WEIGHTS_RE', () => {
   })
 
   it('rejects a family name crafted to break out of a JSX/HTML attribute string', () => {
-    // e.g. `Inter" onLoad={alert(1)} data-x="` — landed in layout.tsx's href="..." or
-    // index.html's href="..." with no escaping, this is a source-code injection.
     expect(SAFE_FONT_FAMILY_RE.test('Inter" onLoad={alert(1)} data-x="')).toBe(false)
     expect(SAFE_FONT_FAMILY_RE.test("Inter'; DROP TABLE x; --")).toBe(false)
   })
@@ -86,8 +82,6 @@ describe('isSafeCssValue', () => {
   })
 
   it('rejects a value crafted to close the declaration early and inject a new CSS rule', () => {
-    // The exact shape that would let a saved value break out of `property: <value>;`
-    // and splice a new rule into the real .css file it's written into.
     expect(isSafeCssValue('0} body{background:url(https://evil.example/x)} /*')).toBe(false)
   })
 
@@ -172,7 +166,6 @@ describe('isValidRenameTarget', () => {
     expect(isValidRenameTarget('radius', 'xl', 'full', [])).toMatch(/reserved/)
     expect(isValidRenameTarget('shadow', 'xl', 'none', [])).toMatch(/reserved/)
     expect(isValidRenameTarget('color', 'accent', 'transparent', [])).toMatch(/reserved/)
-    // "full" is only reserved for radius, not color — a color family could validly be named "full".
     expect(isValidRenameTarget('color', 'accent', 'full', [])).toBeNull()
   })
 

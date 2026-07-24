@@ -38,9 +38,6 @@ export const ALWAYS_NEXT_FILES = [
   'app/theme-editor/_lib/theme-editor-context.tsx',
   'app/api/theme/save/route.ts',
   'app/api/theme/rename-token/route.ts',
-  // Node-only (fs) — Vite's client tsconfig has no Node types and would fail to
-  // type-check this via its blanket `include: ["src"]`; the Vite plugin instead
-  // duplicates this logic inline (see vite-plugin-design-kit.ts).
   'lib/theme/rename-engine.ts',
 ]
 
@@ -55,11 +52,6 @@ export const ALWAYS_VITE_FILES = [
   'theme-editor/_lib/theme-editor-context.tsx',
 ]
 
-/**
- * Framework route/page files copied only when the matching opt-in slug is in the
- * install closure (e.g. `auth` product pages under /auth/*). Paths are relative to
- * template-next/src or template-vite/src.
- */
 export const FRAMEWORK_EXTRA_FILES: Record<
   string,
   { next: string[]; vite: string[] }
@@ -101,9 +93,6 @@ export const FRAMEWORK_EXTRA_FILES: Record<
   },
   'address-autocomplete': {
     next: [
-      // Proxies Google's Places REST endpoints (browser calls are CORS-blocked
-      // otherwise). Vite has no equivalent file — its proxy is inline in
-      // vite-plugin-design-kit.ts, already always present.
       'app/api/places/autocomplete/route.ts',
       'app/api/places/details/route.ts',
     ],

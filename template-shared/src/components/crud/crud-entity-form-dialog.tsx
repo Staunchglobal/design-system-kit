@@ -21,10 +21,6 @@ export type CrudEntityFormDialogProps = {
   onSubmit: (values: Record<string, string>) => Promise<void> | void
 }
 
-/**
- * Form dialog that owns field state + validation from CrudFieldDef[].
- * For fully custom bodies, use CrudFormDialog directly (or CrudScreen create.render).
- */
 export function CrudEntityFormDialog({
   open,
   onOpenChange,
@@ -43,7 +39,6 @@ export function CrudEntityFormDialog({
   const [formError, setFormError] = React.useState<string | null>(null)
   const [submitting, setSubmitting] = React.useState(false)
 
-  // Reset form when the dialog opens (React "adjusting state during render" pattern).
   const [prevOpen, setPrevOpen] = React.useState(open)
   if (open !== prevOpen) {
     setPrevOpen(open)

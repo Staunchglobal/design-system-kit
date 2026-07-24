@@ -1,9 +1,3 @@
-/* ==========================================================================
-   Stat Card
-   ========================================================================== */
-
-/* Root renders as a Card with its data-slot overridden to 'stat-card', so it
-   no longer inherits card.css's rules — restate the same override surface here. */
 [data-slot='stat-card'] {
   --stat-card-bg: var(--card);
   --stat-card-fg: var(--card-foreground);

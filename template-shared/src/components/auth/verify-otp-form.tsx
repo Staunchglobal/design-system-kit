@@ -19,7 +19,6 @@ export type VerifyOtpFormProps = {
   loading?: boolean
   resendLoading?: boolean
   error?: string | null
-  /** Demo hint — mock returns DEMO_OTP_CODE */
   otpHint?: string | null
   startTimerOnMount?: boolean
 }
@@ -41,7 +40,6 @@ export function VerifyOtpForm({
   const { secondsLeft, canResend, ready, start, startIfNeeded } = useOtpTimer()
 
   React.useEffect(() => {
-    // Resume cooldown started by setAuthHandoff (login/forgot/resend), or start if missing.
     if (startTimerOnMount) startIfNeeded()
   }, [startTimerOnMount, startIfNeeded])
 

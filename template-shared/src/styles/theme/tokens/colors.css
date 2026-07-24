@@ -1,58 +1,48 @@
-/* ==========================================================================
-   Global Color Tokens
-   ==========================================================================
-   Semantic tokens — every component references these, never a shade step
-   directly (see tokens/color-scales.css), so that light/dark switching
-   (below) keeps working. `:root` holds light mode, `.dark` holds dark mode
-   (applied when a `dark` class is present on an ancestor element). Each
-   token just points at a shade from the scales in tokens/color-scales.css.
-   ========================================================================== */
-
 :root {
-  --background: var(--neutral-0);
-  --foreground: var(--neutral-950);
+  color-scheme: light;
+  --background: var(--neutral-50);
+  --foreground: var(--primary-950);
   --card: var(--neutral-0);
-  --card-foreground: var(--neutral-950);
+  --card-foreground: var(--primary-950);
   --popover: var(--neutral-0);
-  --popover-foreground: var(--neutral-950);
+  --popover-foreground: var(--primary-950);
   --primary: var(--primary-500);
   --primary-foreground: var(--neutral-0);
   --secondary: var(--secondary-500);
   --secondary-foreground: var(--primary-950);
   --muted: var(--muted-100);
-  --muted-foreground: var(--muted-500);
+  --muted-foreground: var(--muted-600);
   --accent: var(--accent-100);
   --accent-foreground: var(--accent-900);
-  --destructive: var(--destructive-600);
+  --destructive: var(--destructive-500);
   --destructive-foreground: var(--neutral-0);
-  --success: var(--success-600);
+  --success: var(--success-500);
   --success-foreground: var(--neutral-0);
   --warning: var(--warning-500);
-  --warning-foreground: var(--neutral-950);
+  --warning-foreground: var(--primary-950);
   --info: var(--info-500);
   --info-foreground: var(--neutral-0);
   --border: var(--neutral-200);
   --input: var(--neutral-200);
-  --ring: var(--neutral-400);
+  --ring: var(--primary-500);
   --chart-1: var(--primary-500);
   --chart-2: var(--secondary-500);
   --chart-3: var(--info-500);
   --chart-4: var(--success-500);
   --chart-5: var(--accent-500);
-  --sidebar: var(--neutral-50);
-  --sidebar-foreground: var(--neutral-950);
-  --sidebar-primary: var(--primary-500);
+  --sidebar: var(--neutral-0);
+  --sidebar-foreground: var(--primary-950);
+  --sidebar-primary: var(--info-700);
   --sidebar-primary-foreground: var(--neutral-0);
-  --sidebar-accent: var(--accent-100);
-  --sidebar-accent-foreground: var(--accent-900);
+  --sidebar-accent: var(--secondary-50);
+  --sidebar-accent-foreground: var(--primary-950);
   --sidebar-border: var(--neutral-200);
-  --sidebar-ring: var(--neutral-400);
-
-  /* Shared effect — composed only from shade scales in color-scales.css (never raw hex/rgb). */
+  --sidebar-ring: var(--info-700);
   --overlay-bg: var(--neutral-950);
 }
 
 .dark {
+  color-scheme: dark;
   --background: var(--neutral-950);
   --foreground: var(--neutral-50);
   --card: var(--neutral-900);
@@ -77,7 +67,7 @@
   --info-foreground: var(--info-950);
   --border: var(--neutral-800);
   --input: var(--neutral-800);
-  --ring: var(--neutral-500);
+  --ring: var(--primary-400);
   --chart-1: var(--primary-400);
   --chart-2: var(--secondary-400);
   --chart-3: var(--info-400);
@@ -85,53 +75,51 @@
   --chart-5: var(--accent-400);
   --sidebar: var(--neutral-900);
   --sidebar-foreground: var(--neutral-50);
-  --sidebar-primary: var(--primary-400);
-  --sidebar-primary-foreground: var(--primary-950);
-  --sidebar-accent: var(--accent-800);
-  --sidebar-accent-foreground: var(--accent-50);
+  --sidebar-primary: var(--info-400);
+  --sidebar-primary-foreground: var(--neutral-0);
+  --sidebar-accent: var(--secondary-800);
+  --sidebar-accent-foreground: var(--secondary-50);
   --sidebar-border: var(--neutral-800);
-  --sidebar-ring: var(--neutral-500);
+  --sidebar-ring: var(--info-400);
 }
-
-/* Theme editor always uses light semantic tokens (overrides .dark if present). */
 [data-theme-editor] {
   color-scheme: light;
-  --background: var(--neutral-0);
-  --foreground: var(--neutral-950);
+  --background: var(--neutral-50);
+  --foreground: var(--primary-950);
   --card: var(--neutral-0);
-  --card-foreground: var(--neutral-950);
+  --card-foreground: var(--primary-950);
   --popover: var(--neutral-0);
-  --popover-foreground: var(--neutral-950);
+  --popover-foreground: var(--primary-950);
   --primary: var(--primary-500);
   --primary-foreground: var(--neutral-0);
   --secondary: var(--secondary-500);
   --secondary-foreground: var(--primary-950);
   --muted: var(--muted-100);
-  --muted-foreground: var(--muted-500);
+  --muted-foreground: var(--muted-600);
   --accent: var(--accent-100);
   --accent-foreground: var(--accent-900);
-  --destructive: var(--destructive-600);
+  --destructive: var(--destructive-500);
   --destructive-foreground: var(--neutral-0);
-  --success: var(--success-600);
+  --success: var(--success-500);
   --success-foreground: var(--neutral-0);
   --warning: var(--warning-500);
-  --warning-foreground: var(--neutral-950);
+  --warning-foreground: var(--primary-950);
   --info: var(--info-500);
   --info-foreground: var(--neutral-0);
   --border: var(--neutral-200);
   --input: var(--neutral-200);
-  --ring: var(--neutral-400);
+  --ring: var(--primary-500);
   --chart-1: var(--primary-500);
   --chart-2: var(--secondary-500);
   --chart-3: var(--info-500);
   --chart-4: var(--success-500);
   --chart-5: var(--accent-500);
-  --sidebar: var(--neutral-50);
-  --sidebar-foreground: var(--neutral-950);
-  --sidebar-primary: var(--primary-500);
+  --sidebar: var(--neutral-0);
+  --sidebar-foreground: var(--primary-950);
+  --sidebar-primary: var(--info-700);
   --sidebar-primary-foreground: var(--neutral-0);
-  --sidebar-accent: var(--accent-100);
-  --sidebar-accent-foreground: var(--accent-900);
+  --sidebar-accent: var(--secondary-50);
+  --sidebar-accent-foreground: var(--primary-950);
   --sidebar-border: var(--neutral-200);
-  --sidebar-ring: var(--neutral-400);
+  --sidebar-ring: var(--info-700);
 }

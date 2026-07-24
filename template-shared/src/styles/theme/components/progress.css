@@ -1,10 +1,6 @@
-/* ==========================================================================
-   Progress
-   ========================================================================== */
-
 [data-slot='progress'] {
   --progress-height: 0.25rem;
-  --progress-radius: 9999px;
+  --progress-radius: var(--radius-full);
   --progress-track-bg: var(--neutral-200);
   height: var(--progress-height);
   border-radius: var(--progress-radius);

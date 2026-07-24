@@ -63,12 +63,6 @@ import {
 } from "@/lib/theme/validation";
 import type { ThemeFieldType, ThemeVariable } from "@/lib/theme/types";
 
-/**
- * Every select field in the theme editor is a searchable combobox, not a plain <select> —
- * this is the one shared primitive they all render through. Generic over the item shape so
- * plain string options (EnumSelect) and {name,label} token options (TokenSelect) share the
- * same combobox wiring instead of each reimplementing it.
- */
 export function SearchSelect<T>({
   items,
   value,
@@ -150,10 +144,6 @@ function TokenSelect({
   onChange: (v: string) => void;
   allowEmpty?: boolean;
 }) {
-  // Checked against this select's own options (not just "is there a ref at all") so that
-  // two TokenSelects covering disjoint option sets for the same value (e.g. a color-ref
-  // field's "Color Scale" and "Colors" selects) each independently show blank when the
-  // current value belongs to the other one, instead of both claiming a mismatched value.
   const ref = extractVarRef(value);
   const current =
     value === "transparent" && options.some((o) => o.name === "transparent")

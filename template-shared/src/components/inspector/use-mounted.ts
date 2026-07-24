@@ -14,7 +14,7 @@ import * as React from 'react'
 export function useMounted(): boolean {
   const [mounted, setMounted] = React.useState(false)
   React.useEffect(() => {
-    // Intentional one-shot flip after hydration (canonical hasMounted pattern).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
   }, [])
   return mounted

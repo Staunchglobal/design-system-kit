@@ -6,7 +6,6 @@ import { isLikelyColorVarName, listShadowTokenNames } from "./value-parsers";
 // now derive from token-families.json instead of 4+ independently hardcoded copies
 // (value-parsers.ts, both generate-theme-manifest.mjs scripts, descriptions.ts). These
 // tests assert the derived behavior is unchanged from before the refactor.
-
 describe("token-families.json", () => {
   it("has the expected shape", () => {
     expect(tokenFamilies.colorSemantic).toContain("background");

@@ -45,7 +45,6 @@ export default function VerifyOtpPage() {
   }, [handoff.email, handoff.mode, router])
 
   React.useEffect(() => {
-    // Leaving the OTP page (back, navigate away) clears the cooldown from localStorage.
     return () => {
       clearOtpCooldown()
     }

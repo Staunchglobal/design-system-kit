@@ -37,7 +37,6 @@ export function LoginForm({
   const [password, setPassword] = React.useState('')
   const [rememberMe, setRememberMe] = React.useState(false)
   const [fieldErrors, setFieldErrors] = React.useState<Partial<Record<FieldKey, string>>>({})
-  /** Errors stay hidden until the first submit attempt, then update live while typing. */
   const [submitted, setSubmitted] = React.useState(false)
 
   function validateAll(nextEmail = email, nextPassword = password) {

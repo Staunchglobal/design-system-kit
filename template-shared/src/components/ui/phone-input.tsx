@@ -5,10 +5,6 @@ import * as React from 'react'
 import { cn } from '@/lib/utils'
 import { Input } from '@/components/ui/input'
 
-/**
- * Strips non-digits from `raw`, walks `pattern` char-by-char, inserting literal
- * characters and consuming one digit per `#` placeholder.
- */
 export function formatPhoneMask(raw: string, pattern: string): string {
   const digits = raw.replace(/\D/g, '')
   let digitIndex = 0

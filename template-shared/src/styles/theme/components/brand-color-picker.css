@@ -1,4 +1,3 @@
-/* Brand Color Picker */
 [data-slot='brand-color-picker'] {
   --brand-color-picker-gap: 0.5rem;
   gap: var(--brand-color-picker-gap);
@@ -6,10 +5,7 @@
 
 [data-slot='brand-color-swatch'] {
   --brand-color-swatch-size: 2rem;
-  /* 9999px, not --radius-full — that token isn't defined anywhere in this design system;
-     an undefined var() with no fallback resolves border-radius to its initial value (0),
-     which would render the swatches as squares. */
-  --brand-color-swatch-radius: 9999px;
+  --brand-color-swatch-radius: var(--radius-full);
   width: var(--brand-color-swatch-size);
   height: var(--brand-color-swatch-size);
   border-radius: var(--brand-color-swatch-radius);

@@ -25,9 +25,6 @@ export type CrudDeleteDialogProps = {
   onConfirm: () => void
 }
 
-/**
- * Shared destructive confirmation dialog for row delete (and similar) actions.
- */
 export function CrudDeleteDialog({
   open,
   onOpenChange,
@@ -54,7 +51,6 @@ export function CrudDeleteDialog({
             variant="destructive"
             disabled={confirming}
             onClick={(event) => {
-              // Keep dialog open while the async mutation runs; parent closes on success.
               event.preventDefault()
               onConfirm()
             }}

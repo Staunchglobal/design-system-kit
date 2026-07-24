@@ -1,7 +1,3 @@
-/**
- * Theme entry ? split from component-theme.css.
- * Tokens first, then per-component override files.
- */
 @import './tokens/color-scales.css';
 @import './tokens/colors.css';
 @import './tokens/shadows.css';
@@ -93,6 +89,7 @@
 @import './components/impersonation-banner.css';
 @import './components/media-gallery.css';
 @import './components/count-badge.css';
+@import './components/crud-screen.css';
 @import './components/brand-color-picker.css';
 @import './components/notification-center.css';
 @import './components/sortable-list.css';
