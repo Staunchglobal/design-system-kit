@@ -162,18 +162,12 @@ export function InspectorPanel() {
   const [activeState, setActiveState] = React.useState<'resting' | InteractiveState>('resting')
   const [, forceTick] = React.useReducer((c: number) => c + 1, 0)
 
-  // Reset to the Resting tab whenever a *different* element gets pinned — adjusted during render
-  // (not in an effect) per React's "you might not need an effect" guidance for state resets.
   const [prevPinned, setPrevPinned] = React.useState(pinned)
   if (pinned !== prevPinned) {
     setPrevPinned(pinned)
     setActiveState('resting')
   }
 
-  // Auto-refresh only the cheap resting-state view (a handful of getComputedStyle calls) — this
-  // is what makes the panel reflect live theme-editor edits with no coupling to theme-editor
-  // internals, just re-reading the DOM. Hover/focus/active involve a full stylesheet scan, so
-  // those re-sample on tab switch rather than on a timer, to avoid scanning every 400ms.
   React.useEffect(() => {
     if (!pinned || activeState !== 'resting') return
     const id = setInterval(forceTick, 400)

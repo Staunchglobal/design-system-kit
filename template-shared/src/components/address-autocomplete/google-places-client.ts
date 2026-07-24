@@ -64,9 +64,6 @@ export async function fetchPlacePredictions(
     params.set('components', `country:${opts.country}`)
   }
 
-  // Routed through this app's own /api/places proxy rather than called directly —
-  // Google's legacy Places REST endpoints don't return CORS headers for browser
-  // callers, so a direct fetch from client code is blocked before it ever reaches Google.
   const res = await fetch(`/api/places/autocomplete?${params.toString()}`)
   if (!res.ok) throw new Error(`Places autocomplete failed (${res.status})`)
   const data = (await res.json()) as AutocompleteResponse

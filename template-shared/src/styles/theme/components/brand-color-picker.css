@@ -1,4 +1,3 @@
-/* Brand Color Picker */
 [data-slot='brand-color-picker'] {
   --brand-color-picker-gap: 0.5rem;
   gap: var(--brand-color-picker-gap);

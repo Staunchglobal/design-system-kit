@@ -6,8 +6,6 @@ import { applyRenameHistory, type RenameHistoryEntry } from './rename-history.js
 export type CopyResult = {
   copied: string[]
   skipped: string[]
-  /** Content fetched for every path in `copied`/`skipped`, keyed by relPath — populated once
-   *  here so callers that also need it (hashEntriesFor) never issue a second fetch for it. */
   contents: Map<string, string>
 }
 
@@ -27,15 +25,6 @@ export async function copyTemplateFile(
   return 'copied'
 }
 
-/**
- * Fetches and copies only the given relative paths (used for selective installs).
- * Never overwrites an existing file — those are reported back as `skipped` so the
- * caller can tell the user what wasn't touched (their own edits are never at risk).
- * A path that 404s at `srcBase` (removed/renamed in a newer template version) is
- * silently omitted from both lists, matching the old `fs.existsSync(src)` guard.
- * `dryRun: true` computes the exact same copied/skipped classification without
- * writing anything — used by `init --dry-run` to preview what would happen.
- */
 export async function copySelectedFiles(
   srcBase: string,
   destDir: string,
@@ -50,10 +39,6 @@ export async function copySelectedFiles(
   await mapWithConcurrency([...relativePaths], 8, async (rel) => {
     let content = await fetchTemplateText(remoteUrl(srcBase, rel))
     if (content === null) return
-    // Applied before recording into `contents` either way — a skipped file's
-    // recorded baseline hash (see recordFileHashes) represents "what the CLI would
-    // currently write here," which must include this project's own rename history,
-    // or a later `update` would see the historical correction as user drift.
     if (renameHistory.length) content = applyRenameHistory(rel, content, renameHistory)
     contents.set(rel, content)
     const dest = path.join(destDir, rel)
@@ -71,15 +56,12 @@ export async function copySelectedFiles(
   return { copied, skipped, contents }
 }
 
-/** Overwrites a file unconditionally — used for CLI-generated files (nav.ts, page.tsx, index.css). */
 export function writeGeneratedFile(destFile: string, content: string, dryRun = false): void {
   if (dryRun) return
   fs.mkdirSync(path.dirname(destFile), { recursive: true })
   fs.writeFileSync(destFile, content)
 }
 
-/** Turns a copySelectedFiles CopyResult into recordFileHashes-ready entries — pure data
- *  reshaping, no I/O, since `result.contents` already has everything it needs. */
 export function hashEntriesFor(result: CopyResult): { destRel: string; templateContent: string; written: boolean }[] {
   const entries: { destRel: string; templateContent: string; written: boolean }[] = []
   for (const rel of result.copied) {

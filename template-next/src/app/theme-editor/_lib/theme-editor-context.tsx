@@ -21,7 +21,6 @@ import { defaultIconMap } from '@/components/icons/icon-map'
 
 type ThemeEditorContextValue = {
   manifest: ThemeManifest
-  /** Values keyed by unique variable id (not CSS name). */
   values: Record<string, string>
   customColors: CustomColor[]
   customTypography: CustomTypography[]
@@ -72,9 +71,6 @@ export function ThemeEditorProvider({
     }
     return map
   }, [manifest])
-  // Vars whose scope resolves to a component selector (e.g. `--button-bg`) must be
-  // applied as real selector-qualified CSS rules, not inline vars on an ancestor —
-  // see `scopeToSelector` for why inheritance can't reach them live.
   const scopedIds = React.useMemo(() => {
     const set = new Set<string>()
     for (const g of manifest.groups) {
@@ -84,11 +80,6 @@ export function ThemeEditorProvider({
     }
     return set
   }, [manifest])
-  // Colors/typography that get saved are folded into the regular manifest-parsed
-  // variable set on the next load (still fully editable, just no longer tracked here).
-  // Fonts aren't: Save rewrites tokens/fonts.css wholesale from this state, so starting
-  // empty after a reload would silently delete every previously saved font on the next
-  // Save. Seed from the manifest (recovered from tokens/fonts.css) instead.
   const [values, setValues] = React.useState<Record<string, string>>(() => ({ ...baseline }))
   const [customColors, setCustomColors] = React.useState<CustomColor[]>([])
   const [customTypography, setCustomTypography] = React.useState<CustomTypography[]>([])
@@ -101,8 +92,6 @@ export function ThemeEditorProvider({
   const [activeGroupId, setActiveGroupId] = React.useState(() => manifest.groups[0]?.id ?? 'colors')
 
   React.useEffect(() => {
-    // Always scope live vars to the editor host — never paint <html> (that leaks
-    // dark mode into /design-system and the rest of the app).
     const host = document.querySelector('[data-theme-editor]') as HTMLElement | null
     if (!host) return
 
@@ -128,7 +117,6 @@ export function ThemeEditorProvider({
     scopedEl.textContent = buildScopedVarsCss(values, manifest)
   }, [values, nameById, scopeById, scopedIds, manifest])
 
-  // Inject preview style for custom colors / fonts / typography
   React.useEffect(() => {
     const id = 'theme-editor-dynamic'
     let el = document.getElementById(id) as HTMLStyleElement | null
@@ -213,9 +201,6 @@ ${typoRules}`
     setDirty(true)
   }, [])
 
-  // Only removes a color added earlier *this session* and not yet saved — once saved,
-  // a custom color is folded into the regular manifest-parsed variable set (see the
-  // state-init comment above) and this can no longer target it.
   const removeColor = React.useCallback((name: string) => {
     setCustomColors((prev) => prev.filter((c) => c.name !== name))
     setDirty(true)
@@ -226,8 +211,6 @@ ${typoRules}`
     setDirty(true)
   }, [])
 
-  // Same pending-only caveat as removeColor — typography has no persistent "custom"
-  // marker either, so this only ever targets this session's not-yet-saved additions.
   const removeTypography = React.useCallback((id: string) => {
     setCustomTypography((prev) => prev.filter((t) => t.id !== id))
     setDirty(true)
@@ -238,9 +221,6 @@ ${typoRules}`
     setDirty(true)
   }, [])
 
-  // Fonts round-trip persistently (manifest.customFonts, seeded above), so unlike
-  // removeColor/removeTypography this also removes an already-saved custom font —
-  // Save wholesale-rewrites tokens/fonts.css from customFonts, so the next save drops it.
   const removeFont = React.useCallback((id: string) => {
     setCustomFonts((prev) => prev.filter((f) => f.id !== id))
     setDirty(true)
@@ -255,8 +235,6 @@ ${typoRules}`
     setValues({ ...baseline })
     setCustomColors([])
     setCustomTypography([])
-    // Back to what's on disk, not empty — an empty array here would delete every
-    // previously saved font on the very next Save (see the state init above).
     setCustomFonts(manifest.customFonts ?? [])
     setIconMap({ ...defaultIconMap })
     setDirty(false)
@@ -389,8 +367,6 @@ ${typoRules}`
         body: JSON.stringify({ ...req, mode: 'apply' }),
       })
       const data = (await res.json()) as RenameTokenResponse
-      // Renamed vars get new manifest ids — reload so the server re-reads the fresh
-      // manifest rather than trying to patch a live id->name map in place.
       if (data.ok) window.location.reload()
       return data
     },

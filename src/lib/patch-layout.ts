@@ -10,20 +10,6 @@ export type LayoutPatchResult =
 const TOOLTIP_IMPORT = `import { TooltipProvider } from '@/components/ui/tooltip'`
 const TOASTER_IMPORT = `import { Toaster } from '@/components/ui/sonner'`
 
-/**
- * Best-effort: wraps the single `{children}` expression in <TooltipProvider> and/or drops
- * a <Toaster /> after it — but only for whichever of those two components were actually
- * installed (picking neither is a no-op; picking only "sonner" skips the Tooltip wrapper,
- * and vice versa, since importing a component that isn't on disk would break the build).
- * Anything more custom than a single `{children}` is left alone and reported back so the
- * caller can print manual steps.
- *
- * Uses ts-morph to find the real `{children}` JsxExpression (excluding, e.g., the `children`
- * identifier in the function's own destructured parameter, which a plain `/\{children\}/`
- * regex can't tell apart) and the real last top-level import declaration to anchor new imports
- * to. The edit itself is still a plain text splice at the AST-computed positions, to preserve
- * the file's existing formatting instead of routing it through ts-morph's printer.
- */
 export function patchLayout(
   filePath: string,
   opts: { includeTooltip: boolean; includeToaster: boolean }

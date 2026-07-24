@@ -46,7 +46,6 @@ function CopyInput({
       if (timeoutRef.current) clearTimeout(timeoutRef.current)
       timeoutRef.current = setTimeout(() => setCopied(false), 2000)
     } catch {
-      // Clipboard may be unavailable in insecure contexts — leave UI unchanged.
     }
   }
 

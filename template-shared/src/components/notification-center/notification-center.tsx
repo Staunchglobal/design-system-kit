@@ -18,9 +18,7 @@ type NotificationCenterProps = {
   onItemClick?: (id: string) => void
   onMarkAllRead?: () => void
   onOpen?: (open: boolean) => void
-  /** Controlled open state. */
   open?: boolean
-  /** Width of the popover panel (Tailwind class). Defaults to `w-80`. */
   panelWidth?: string
   emptyMessage?: React.ReactNode
   className?: string
@@ -44,7 +42,6 @@ function NotificationCenter({
   triggerClassName,
 }: NotificationCenterProps) {
   const [internalOpen, setInternalOpen] = React.useState(false)
-  // Stable calendar reference captured when the panel opens (not Date.now during render).
   const [now, setNow] = React.useState(NOTIFICATION_EPOCH)
   const isControlled = controlledOpen !== undefined
   const open = isControlled ? controlledOpen : internalOpen
@@ -92,7 +89,6 @@ function NotificationCenter({
           data-ui="notification-center-content"
           className={cn('p-0', panelWidth, panelClassName)}
         >
-        {/* Header */}
         <div
           data-slot="notification-center-header"
           className="flex items-center justify-between px-3 py-2.5"
@@ -112,7 +108,6 @@ function NotificationCenter({
 
         <Separator />
 
-        {/* List */}
         <ScrollArea className="max-h-[min(480px,60dvh)]">
           <NotificationList
             items={items}

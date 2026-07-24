@@ -1,6 +1,5 @@
 import type { AuthUser } from '@/components/auth/types'
 
-/** Fixed demo OTP — mock always accepts this code. */
 export const DEMO_OTP_CODE = '123456'
 
 export const LOGIN_USER = `

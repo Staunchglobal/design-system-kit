@@ -28,9 +28,6 @@ export default function BrandColorPickerDemo() {
         <p className="text-muted-foreground text-sm">
           Selected: {selected?.label} ({selected?.swatch})
         </p>
-        {/* Recommended consumer pattern:
-            document.documentElement.style.setProperty('--primary', selected.swatch)
-            + persist to your backend / localStorage */}
       </Example>
     </ComponentSection>
   )

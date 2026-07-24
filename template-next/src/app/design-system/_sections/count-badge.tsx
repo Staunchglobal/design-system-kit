@@ -18,7 +18,6 @@ export default function CountBadgeDemo() {
           <CountBadge count={150} max={99} />
         </Example>
         <Example title="On a button">
-          {/* Badge is a sibling of the button so border-radius / bg-clip don't clip it. */}
           <span className="relative inline-flex">
             <Button
               variant="outline"

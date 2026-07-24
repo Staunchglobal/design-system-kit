@@ -40,12 +40,9 @@ export type CrudScreenProps<T> = {
   edit?: CrudEditConfig<T>
   delete?: CrudDeleteConfig<T>
   empty?: CrudEmptyConfig
-  /** Extra row actions beyond Edit/Delete from configs. */
   actions?: CrudAction<T>[]
   className?: string
-  /** Mount a local Toaster (default true). Set false if the app already has one. */
   withToaster?: boolean
-  /** Entity label used in default empty / toast copy. */
   entityLabel?: string
 }
 
@@ -56,10 +53,6 @@ function defaultEditValues<T>(row: T, fieldNames: string[]): Record<string, stri
   )
 }
 
-/**
- * Low-prop composed CRUD screen — owns search, tabs, table, pagination, and
- * create/edit/delete overlays. Pass columns + fetchPage + optional configs.
- */
 export function CrudScreen<T>({
   columns,
   fetchPage,
@@ -142,7 +135,6 @@ export function CrudScreen<T>({
 
       setDeleteTarget(null)
     } catch {
-      // toast.promise already surfaced the error
     } finally {
       setDeleting(false)
     }
@@ -218,7 +210,6 @@ export function CrudScreen<T>({
         onPageSizeChange={list.setPageSize}
       />
 
-      {/* Create */}
       {create && isCrudFormFieldsConfig(create) ? (
         <CrudEntityFormDialog
           open={createOpen}
@@ -251,7 +242,6 @@ export function CrudScreen<T>({
           })
         : null}
 
-      {/* Edit */}
       {edit && editing && isCrudEditFieldsConfig(edit) ? (
         <CrudEntityFormDialog
           open={editing != null}
@@ -295,7 +285,6 @@ export function CrudScreen<T>({
           })
         : null}
 
-      {/* Delete */}
       {deleteConfig ? (
         <CrudDeleteDialog
           open={deleteTarget != null}

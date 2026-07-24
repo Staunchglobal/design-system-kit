@@ -1,29 +1,20 @@
-/* ==========================================================================
-   Select
-   ==========================================================================
-   Paramount Design System — Select (Figma 20863:122744)
-   Default size = Medium (48 / radius 20). States: Default, Filled, Focused
-   (2px primary), Error (2px danger), Disabled (Neutral/100).
-   ========================================================================== */
-
 [data-slot='select-trigger'] {
-  /* Aliased to Input tokens so Input section changes cascade here. */
   --select-trigger-radius: var(--input-radius);
   --select-trigger-border-width: var(--input-border-width);
   --select-trigger-border-color: var(--input-border-color);
   --select-trigger-bg: var(--input-bg);
   --select-trigger-fg: var(--input-fg);
-  --select-trigger-gap: 0.25rem; /* spacing/xxxs — 4px (tag/input gap) */
-  --select-trigger-padding-inline-start: var(--input-padding-x); /* spacing/s — 16px */
-  --select-trigger-padding-inline-end: var(--input-padding-x); /* spacing/s — 16px */
+  --select-trigger-gap: 0.25rem;
+  --select-trigger-padding-inline-start: var(--input-padding-x);
+  --select-trigger-padding-inline-end: var(--input-padding-x);
   --select-trigger-padding-block: 0;
-  --select-trigger-font-size: var(--input-font-size); /* Body B2 — 16px */
-  --select-trigger-placeholder-color: var(--input-placeholder-color); /* text/light */
+  --select-trigger-font-size: var(--input-font-size);
+  --select-trigger-placeholder-color: var(--input-placeholder-color);
   --select-trigger-focus-border-color: var(--input-focus-border-color);
   --select-trigger-invalid-border-color: var(--input-invalid-border-color);
   --select-trigger-disabled-bg: var(--input-disabled-bg);
   --select-trigger-disabled-opacity: var(--input-disabled-opacity);
-  --select-trigger-icon-color: var(--muted-600); /* icon/grey #77787e */
+  --select-trigger-icon-color: var(--muted-600);
   --select-trigger-icon-size: 1rem;
 
   display: inline-flex;
@@ -39,7 +30,6 @@
   padding-inline-start: var(--select-trigger-padding-inline-start);
   padding-inline-end: var(--select-trigger-padding-inline-end);
   font-size: var(--select-trigger-font-size);
-  /* Kill Tailwind focus-visible:ring-3 */
   --tw-ring-shadow: 0 0 #0000;
   --tw-ring-offset-shadow: 0 0 #0000;
   box-shadow: none;
@@ -70,14 +60,13 @@
   cursor: not-allowed;
 }
 [data-slot='select-trigger'][data-size='default'] {
-  --select-trigger-height: var(--input-height); /* Medium — 48px */
+  --select-trigger-height: var(--input-height);
   height: var(--select-trigger-height);
 }
-/* Kit sm → Paramount Small (40 / radius 16) */
 [data-slot='select-trigger'][data-size='sm'] {
-  --select-trigger-height: 2.5rem; /* Input Container Height/small — 40px */
-  --select-trigger-radius: var(--radius-xl); /* Button and Input border-radius/small — 16px */
-  --select-trigger-font-size: var(--typography-small-font-size); /* Body B3 — 14px */
+  --select-trigger-height: 2.5rem;
+  --select-trigger-radius: var(--radius-xl);
+  --select-trigger-font-size: var(--typography-small-font-size);
   --select-trigger-padding-inline-start: 0.75rem;
   --select-trigger-padding-inline-end: 0.5rem;
   --select-trigger-gap: 0.25rem;
@@ -101,8 +90,8 @@
 [data-slot='select-content'] {
   --select-content-bg: var(--popover);
   --select-content-fg: var(--popover-foreground);
-  --select-content-ring-color: var(--border); /* border/light */
-  --select-content-radius: var(--radius-2xl); /* match Medium input radius */
+  --select-content-ring-color: var(--border);
+  --select-content-radius: var(--radius-2xl);
   --select-content-shadow: var(--shadow-md);
   --select-content-min-width: 5rem;
 
@@ -136,10 +125,10 @@
   --select-item-radius: var(--radius-md);
   --select-item-padding-block: 0.5rem;
   --select-item-padding-inline-end: 0.75rem;
-  --select-item-padding-inline-start: 2rem; /* room for leading check */
-  --select-item-font-size: var(--typography-p-font-size); /* Body B2 — 16px */
+  --select-item-padding-inline-start: 2rem;
+  --select-item-font-size: var(--typography-p-font-size);
   --select-item-gap: 0.375rem;
-  --select-item-focus-bg: var(--neutral-50); /* Neutral/50 */
+  --select-item-focus-bg: var(--neutral-50);
   --select-item-focus-fg: var(--foreground);
   --select-item-checked-bg: var(--primary);
   --select-item-checked-fg: var(--primary-foreground);
@@ -165,7 +154,6 @@
 [data-slot='select-item'][data-disabled] {
   opacity: var(--select-item-disabled-opacity);
 }
-/* Leading check — keeps option numbers in one column */
 [data-slot='select-item'] > span:first-child {
   left: 0.5rem;
   right: auto;
@@ -190,9 +178,6 @@
   background-color: var(--select-scroll-button-bg);
   padding-block: var(--select-scroll-button-padding-y);
 }
-
-/* SelectValue carries no independent visual styling of its own (line-clamp
-   and layout are applied to it via the trigger's descendant selector). */
 
 .dark [data-slot='select-content'] {
   --select-content-ring-color: var(--neutral-700);

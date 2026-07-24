@@ -1,17 +1,4 @@
 #!/usr/bin/env node
-/**
- * End-to-end smoke test: scaffolds real Next.js + Vite apps, runs `design-kit init` against
- * them with a few different component selections, and runs each project's own `build`/`lint`.
- * This is the exact manual loop used throughout development (create-next-app/create-vite → CLI
- * init → framework build → lint) — formalized here so it's a single command instead of retyping
- * a long shell sequence, and so it can be wired into CI.
- *
- * Usage: node scripts/smoke-test.mjs [--keep] [--only next|vite]
- *   --keep         Don't delete the scaffolded scratch projects afterward (for debugging).
- *   --only <fw>    Only run that framework's scenarios.
- *
- * Always passes `--templates <repo-root>` so init exercises the local checkout (not the CDN pin).
- */
 import { spawn, spawnSync } from 'node:child_process'
 import fs from 'node:fs'
 import os from 'node:os'
@@ -69,8 +56,6 @@ function scaffoldNext(dir) {
 }
 
 function scaffoldVite(dir) {
-  // create-vite mishandles an absolute path argument (it re-joins it onto cwd instead of using
-  // it as-is) — passing just the basename with cwd set to its parent is the reliable form.
   assert(
     run('npx', ['--yes', 'create-vite@latest', path.basename(dir), '--template', 'react-ts'], path.dirname(dir), {
       quiet: true,
@@ -80,7 +65,6 @@ function scaffoldVite(dir) {
   assert(run('npm', ['install', '--no-audit', '--no-fund'], dir, { quiet: true }), 'vite npm install failed')
 }
 
-/** Mounts DesignSystemPage/ThemeEditorPage into the stock create-vite App.tsx so `vite build` actually bundles them. */
 function mountVitePages(dir) {
   const appPath = path.join(dir, 'src/App.tsx')
   let src = fs.readFileSync(appPath, 'utf8')
@@ -115,7 +99,7 @@ async function waitForHttp(url, timeoutMs = 60_000) {
       const response = await fetch(url)
       if (response.ok) return
     } catch {
-      // The production server is still starting.
+      void 0
     }
     await new Promise((resolve) => setTimeout(resolve, 500))
   }
@@ -201,7 +185,7 @@ async function runtimeCheckNext(dir) {
       try {
         process.kill(-server.pid, 'SIGTERM')
       } catch {
-        // The process group already exited.
+        void 0
       }
     }
   }
@@ -226,11 +210,6 @@ if (!run('npm', ['run', 'build'], root)) {
   process.exit(1)
 }
 
-// A partial selection that exercises: cross-category uiDeps (combobox → button/input-group),
-// demo-file-only deps (table → badge, button → spinner), body-local state (calendar, item),
-// and framework-specific wiring (sonner → Toaster, needs layout/App root changes to fully build,
-// so it's deliberately excluded from these fully-automated scenarios — see README's manual-step
-// notes for that path).
 const PARTIAL_COMPONENTS = 'button,combobox,dialog,table,accordion,chart,navigation-menu,calendar,item,badge'
 
 await scenario('Next.js — full install (--all)', () => {

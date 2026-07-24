@@ -1,18 +1,7 @@
-/* ==========================================================================
-   Segmented Control
-   ==========================================================================
-   Paramount Design System — Segmented Buttons (Figma 8907:2387)
-   Track: Neutral/100 pill, 4px padding
-   Selected item: white pill + shadow-xs, text/dark Semibold 14/20, px 24 py 8
-   Default item: transparent, text/medium Medium 14/20, h 30, px 24 py 4
-   ========================================================================== */
-
-/* Desktop: root renders as a ToggleGroup with its data-slot overridden to
-   'segmented-control' — its ToggleGroupItem children keep their own data-slot. */
 [data-slot='segmented-control']:not(button) {
   --segmented-control-radius: var(--radius-full);
-  --segmented-control-bg: var(--neutral-100); /* Neutral/100 #f0f0f1 */
-  --segmented-control-padding: 0.25rem; /* Button/gap/extra-small — 4px */
+  --segmented-control-bg: var(--neutral-100);
+  --segmented-control-padding: 0.25rem;
   --segmented-control-gap: 0;
 
   display: flex;
@@ -25,18 +14,16 @@
   border-width: 0;
   box-shadow: none;
 }
-
-/* Segment items (ToggleGroupItem) */
 [data-slot='segmented-control']:not(button) > [data-slot='toggle-group-item'] {
   --segmented-control-item-radius: var(--radius-full);
-  --segmented-control-item-padding-x: 1.5rem; /* spacing/m — 24px */
-  --segmented-control-item-padding-y: 0.25rem; /* spacing/xxxs — 4px */
-  --segmented-control-item-height: 1.875rem; /* 30px */
-  --segmented-control-item-gap: 0.5rem; /* spacing/xxs — 8px */
-  --segmented-control-item-font-size: var(--typography-small-font-size); /* Body B3 — 14px */
+  --segmented-control-item-padding-x: 1.5rem;
+  --segmented-control-item-padding-y: 0.25rem;
+  --segmented-control-item-height: 1.875rem;
+  --segmented-control-item-gap: 0.5rem;
+  --segmented-control-item-font-size: var(--typography-small-font-size);
   --segmented-control-item-font-weight: var(--typography-small-font-weight);
-  --segmented-control-item-line-height: var(--typography-small-line-height); /* 20px */
-  --segmented-control-item-fg: var(--muted-600); /* text/medium #77787e */
+  --segmented-control-item-line-height: var(--typography-small-line-height);
+  --segmented-control-item-fg: var(--muted-600);
   --segmented-control-item-bg: transparent;
   --segmented-control-item-border-width: 0;
   --segmented-control-item-border-color: transparent;
@@ -58,8 +45,6 @@
   font-weight: var(--segmented-control-item-font-weight);
   line-height: var(--segmented-control-item-line-height);
 }
-
-/* Kill outline / spacing=0 joined-segment look from toggle-group */
 [data-slot='segmented-control']:not(button) > [data-slot='toggle-group-item'][data-spacing='0'],
 [data-slot='segmented-control']:not(button) > [data-slot='toggle-group-item'][data-spacing='0']:first-child,
 [data-slot='segmented-control']:not(button) > [data-slot='toggle-group-item'][data-spacing='0']:last-child {
@@ -73,15 +58,13 @@
   background-color: var(--segmented-control-item-bg);
   color: var(--segmented-control-item-fg);
 }
-
-/* Selected */
 [data-slot='segmented-control']:not(button) > [data-slot='toggle-group-item'][data-state='on'] {
-  --segmented-control-item-padding-y: 0.5rem; /* spacing/xxs — 8px */
+  --segmented-control-item-padding-y: 0.5rem;
   --segmented-control-item-height: auto;
-  --segmented-control-item-bg: var(--neutral-0); /* white */
-  --segmented-control-item-fg: var(--foreground); /* text/dark #001c26 */
+  --segmented-control-item-bg: var(--neutral-0);
+  --segmented-control-item-fg: var(--foreground);
   --segmented-control-item-font-weight: var(--typography-large-font-weight);
-  --segmented-control-item-shadow: var(--shadow-xs); /* 0 1px 4px rgba(0,0,0,0.15) */
+  --segmented-control-item-shadow: var(--shadow-xs);
   height: var(--segmented-control-item-height);
   padding-block: var(--segmented-control-item-padding-y);
   background-color: var(--segmented-control-item-bg);
@@ -100,16 +83,10 @@
 [data-slot='segmented-control']:not(button) > [data-slot='toggle-group-item']:disabled {
   opacity: 0.5;
 }
-
-/* Count muted text inside segments */
 [data-slot='segmented-control']:not(button) > [data-slot='toggle-group-item'] .text-muted-foreground {
   color: inherit;
   opacity: 0.7;
 }
-
-/* Mobile: root renders as a SelectTrigger with its data-slot overridden to
-   'segmented-control' — aliased straight to the shared Input tokens, same
-   source select-trigger.css itself resolves from. */
 button[data-slot='segmented-control'] {
   --segmented-control-select-radius: var(--input-radius);
   --segmented-control-select-border-color: var(--input-border-color);

@@ -20,7 +20,6 @@ program
     'use a local design-system-kit checkout for templates instead of the CDN (maintainer/dev; same as DESIGN_KIT_LOCAL_TEMPLATES)'
   )
   .hook('preAction', (thisCommand) => {
-    // Global opts live on the root program; subcommands inherit via parent.
     const root = thisCommand.parent ?? thisCommand
     const templates = (root.opts() as { templates?: string }).templates
     applyLocalTemplatesOption(templates)

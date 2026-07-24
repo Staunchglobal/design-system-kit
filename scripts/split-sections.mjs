@@ -1,23 +1,4 @@
 #!/usr/bin/env node
-/**
- * Splits the hand-authored category demo files (_sections/buttons.tsx, forms.tsx, …) into one
- * file per component (_sections/button.tsx, _sections/dialog.tsx, …) so picking a single
- * component installs only its own demo, not its whole category's.
- *
- * Two source shapes exist in the category files:
- *  - "inline": the default-exported section function's JSX directly contains multiple sibling
- *    `<ComponentSection id="...">...</ComponentSection>` blocks (buttons.tsx, forms.tsx, …).
- *  - "named-function": the default export just renders `<XSection />` for several locally
- *    defined `function XSection() { … return <ComponentSection id="…">…</ComponentSection> … }`
- *    (overlays.tsx). Each named function is already a clean per-component unit.
- *
- * Import/helper references are resolved by substring match against each extracted block's
- * text — over-inclusive in rare edge cases (safe: an unused import is a lint nit, never a
- * broken build) rather than under-inclusive (would break the build).
- *
- * Run with `npm run split:sections` after editing a category file's component list; re-run
- * `npm run build:registry` afterward too, since it reads _sections/*.tsx file names.
- */
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -29,19 +10,8 @@ const TARGETS = [
   { dir: 'template-vite', sectionsRel: 'src/design-system/_sections' },
 ]
 
-// Category files that map 1:1 to a single always-included/pseudo group — left untouched.
 const NO_SPLIT = new Set(['colors.tsx', 'typography.tsx', 'patterns.tsx'])
 
-/**
- * Word-boundary identifier check — plain `.includes()` false-positives constantly (e.g. "Select"
- * inside "Selected", "Input" inside "ComboboxInput"), which would leak unused imports/helpers
- * into split files and break a strict `noUnusedLocals` build.
- *
- * Word-boundary alone still false-positives on plain English inside string/JSX text — a label
- * reading "Select all" mentions no such component, but \bSelect\b matches it. Blank out string
- * literals and JSX text runs (content between `>` and `<`) before matching, since a real
- * identifier reference (tag name, `{expression}`, import specifier) never appears there.
- */
 const noiseCache = new Map()
 function stripNoise(text) {
   let cached = noiseCache.get(text)
@@ -51,8 +21,6 @@ function stripNoise(text) {
       .replace(/"(?:[^"\\]|\\.)*"/g, '""')
       .replace(/'(?:[^'\\]|\\.)*'/g, "''")
       .replace(/>([^<>{]*)</g, (_m, inner) => '>' + inner.replace(/[A-Za-z_$][A-Za-z0-9_$]*/g, '_') + '<')
-      // Plain-word JSX text directly followed by an expression, e.g. `>Message {index + 1}<` —
-      // blank just the leading word run, leave the {expression} itself untouched (still scanned).
       .replace(/>([\sA-Za-z0-9_]*)\{/g, (_m, textBefore) => '>' + textBefore.replace(/[A-Za-z_$][A-Za-z0-9_$]*/g, '_') + '{')
     noiseCache.set(text, cached)
   }
@@ -69,7 +37,6 @@ function toPascalCase(slug) {
     .join('')
 }
 
-/** Splits a source file into { imports: string[], preamble: string, body: string, hasUseClient } */
 function splitHeader(source) {
   const lines = source.split('\n')
   let i = 0
@@ -102,21 +69,12 @@ function splitHeader(source) {
   return { imports, preamble, hasUseClient, body }
 }
 
-/** Every top-level `function name(` / `const name = (` declared in the preamble. */
 function extractHelperNames(preamble) {
   const names = []
   for (const m of preamble.matchAll(/^(?:function|const)\s+([A-Za-z0-9_]+)/gm)) names.push(m[1])
   return names
 }
 
-/**
- * Filters an import statement down to only the specifiers a given block's text actually uses —
- * NOT whole-statement include/exclude. A leftover unused named import (e.g. `ExampleGrid` next
- * to a used `Example`) is a hard `tsc` error under a strict `noUnusedLocals` tsconfig (Vite's
- * default), not just a lint nit, so this has to be precise for named-import groups. Default/
- * namespace imports and any shape this doesn't recognize are kept whole rather than dropped —
- * a stray default import is at worst a lint nit; a *missing* one breaks the build outright.
- */
 function filterImportStatement(stmt, blockText) {
   const ns = stmt.match(/^import \* as (\w+) from (.+)$/s)
   if (ns) return blockText.includes(ns[1]) ? stmt : null
@@ -164,7 +122,6 @@ function neededHelpers(blockText, helperNames) {
   return helperNames.filter((name) => usesIdentifier(blockText, name))
 }
 
-/** Non-nested `<ComponentSection id="…" …>…</ComponentSection>` siblings inside `body`. */
 function extractInlineBlocks(body) {
   const blocks = []
   const re = /<ComponentSection\s+id="([a-z0-9-]+)"[\s\S]*?<\/ComponentSection>/g
@@ -182,15 +139,6 @@ function bracketDepthOf(line) {
   return depth
 }
 
-/**
- * `const [selectedDate, setSelectedDate] = React.useState(…)`-style local declarations that sit
- * in the default-exported function's body BEFORE its first ComponentSection block (e.g.
- * media-charts.tsx declares 4 useState hooks once, then several sibling sections each use one) —
- * these never showed up in the preamble scan since they're inside the function, not beside it.
- * Since they're hook calls, they can't be hoisted to a shared module-level file like other
- * helpers — each demo file that needs one gets its own private copy, injected into its own
- * function body, not shared as an import.
- */
 function extractBodyLocals(preBlockText) {
   const lines = preBlockText.split('\n')
   const stmts = []
@@ -224,7 +172,6 @@ function extractBodyLocals(preBlockText) {
   return stmts
 }
 
-/** `function XSection() { … return (… <ComponentSection id="y" …> … ) }` — whole function per id. */
 function extractNamedFunctionBlocks(preamble) {
   const blocks = []
   const fnRe = /^function (\w+)\(\) \{/gm
@@ -239,10 +186,6 @@ function extractNamedFunctionBlocks(preamble) {
   return blocks
 }
 
-/**
- * Slices the preamble into per-declaration source text, keyed by declared name — same top-level
- * `function`/`const` boundaries as extractHelperNames, just keeping the text instead of the name.
- */
 function extractHelperTexts(preamble) {
   const texts = new Map()
   const declRe = /^(?:function|const)\s+([A-Za-z0-9_]+)/gm
@@ -301,14 +244,9 @@ function splitFile(sectionsDir, fileName) {
   }
 
   const category = fileName.replace(/\.tsx$/, '')
-  // Helpers not already captured as their own block (named-function mode captures its helpers
-  // as blocks directly; inline mode never does, so all preamble helpers land here).
   const helperFnNames = helperNames.filter((n) => !blocks.some((b) => b.fnName === n))
   const helperTexts = extractHelperTexts(preamble)
 
-  // Helpers can reference other helpers (e.g. a component function using a sibling constant) —
-  // a block's real helper need is the transitive closure over these cross-references, not just
-  // what's literally typed in the block's own JSX text.
   const directHelperRefs = new Map(
     helperFnNames.map((n) => [n, helperFnNames.filter((m) => m !== n && usesIdentifier(helperTexts.get(n), m))])
   )
@@ -329,10 +267,6 @@ function splitFile(sectionsDir, fileName) {
 
   const blockClosures = blocks.map((b) => closureFor(b.text))
 
-  // A helper used by exactly one block isn't actually "shared" — inline it into that block's
-  // own file instead of a category-wide _shared file. Otherwise selecting e.g. just "dialog"
-  // would import a _shared/overlays.tsx bundling all 11 overlay helpers (and every import any
-  // of them need — Tooltip, Sheet, Drawer, …) just to get the one function dialog.tsx uses.
   const usageCount = new Map(helperFnNames.map((n) => [n, 0]))
   for (const closure of blockClosures) for (const n of closure) usageCount.set(n, usageCount.get(n) + 1)
   const sharedNames = helperFnNames.filter((n) => usageCount.get(n) > 1)
@@ -353,9 +287,6 @@ function splitFile(sectionsDir, fileName) {
     fs.writeFileSync(path.join(sectionsDir, '_shared', `${category}.tsx`), helperSource)
   }
 
-  // Local `const`/`let` declarations (typically useState hooks) sitting before the first block
-  // in the default-exported function's own body — can't be shared as a module-level import since
-  // they're hook calls, so every block that needs one gets its own private copy inlined instead.
   const firstBlockIdx = useNamedFunctionMode ? -1 : body.search(/<ComponentSection\s+id="/)
   const bodyLocalStmts = firstBlockIdx > 0 ? extractBodyLocals(body.slice(0, firstBlockIdx)) : []
 
@@ -364,9 +295,6 @@ function splitFile(sectionsDir, fileName) {
     const block = blocks[i]
     const text = block.text
     const closure = blockClosures[i]
-    // Filtering helperFnNames (rather than iterating the Set directly) preserves the original
-    // declaration order — needed since a `const` helper referencing another `const` declared
-    // earlier in the file isn't hoisted, so the inlined/shared output must keep that order.
     const sharedUsed = helperFnNames.filter((n) => closure.has(n) && sharedNames.includes(n))
     const singleUsed = helperFnNames.filter((n) => closure.has(n) && singleUseNames.includes(n))
     const prelude = singleUsed.map((n) => helperTexts.get(n)).join('\n\n') || undefined

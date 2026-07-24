@@ -25,9 +25,6 @@ import { isValidRenameTarget, validateHex } from '@/lib/theme/validation'
 import tokenFamilies from '@/lib/theme/token-families.json'
 import type { RenameTokenFamily, RenameTokenPlan, RenameTokenResponse, ThemeManifest } from '@/lib/theme/types'
 
-// A handful of icon-map key prefixes ("context.check") don't match their component's
-// manifest group id ("context-menu") one-for-one — listed here so their icon field still
-// lands on the right page instead of orphaning them back onto a standalone Icons page.
 const ICON_GROUP_ALIAS: Record<string, string> = {
   context: 'context-menu',
   dropdown: 'dropdown-menu',
@@ -41,7 +38,6 @@ function iconKeysForGroup(groupId: string): string[] {
   })
 }
 
-// Which token families a "Rename" affordance applies to, and their manifest group id.
 const RENAME_FAMILY_BY_GROUP: Record<string, RenameTokenFamily> = {
   colors: 'color',
   'color-scales': 'color',
@@ -88,8 +84,6 @@ export function VariableForm() {
         <div className="flex flex-col gap-4 p-4">
           {RENAME_FAMILY_BY_GROUP[group.id] && (
             <RenameTokenForm
-              // Remount on group change instead of an effect that resets state —
-              // avoids a setState-in-effect (each group gets fresh initial state for free).
               key={group.id}
               family={RENAME_FAMILY_BY_GROUP[group.id]}
               manifest={manifest}
@@ -211,7 +205,6 @@ function fromOptionsFor(family: RenameTokenFamily, manifest: ThemeManifest): str
   }
 }
 
-/** Cosmetic only — shortens an absolute path to its project-relative tail for display. */
 function relDisplay(absPath: string): string {
   const marker = absPath.lastIndexOf('/src/')
   return marker === -1 ? absPath : `src/${absPath.slice(marker + '/src/'.length)}`
@@ -230,8 +223,6 @@ function reservedWordsFor(family: RenameTokenFamily): string[] {
   }
 }
 
-/** Every bare token name currently in the manifest — used for the client-side
- *  "already used by another token" pre-check (mirrors the server's own check). */
 function allTokenNames(manifest: ThemeManifest): string[] {
   const names = new Set<string>()
   for (const g of manifest.groups) for (const v of g.variables) names.add(v.name.replace(/^--/, ''))
@@ -249,8 +240,6 @@ function RenameTokenForm({
   onPreview: (req: { family: RenameTokenFamily; from: string; to: string }) => Promise<RenameTokenResponse>
   onApply: (req: { family: RenameTokenFamily; from: string; to: string }) => Promise<RenameTokenResponse>
 }) {
-  // Parent remounts this component (key={group.id}) on family change, so this only
-  // ever needs to initialize once per mount — no reset effect required.
   const fromOptions = React.useMemo(() => fromOptionsFor(family, manifest), [family, manifest])
   const existingNames = React.useMemo(() => allTokenNames(manifest), [manifest])
   const reserved = React.useMemo(() => reservedWordsFor(family), [family])
@@ -261,8 +250,6 @@ function RenameTokenForm({
   const [busy, setBusy] = React.useState(false)
 
   const toTrimmed = to.trim()
-  // Same rule the server enforces (isValidRenameTarget) — checked here too so the
-  // user sees the error immediately, before round-tripping to Preview.
   const toError = toTrimmed ? isValidRenameTarget(family, from, toTrimmed, existingNames) : null
 
   return (
@@ -292,9 +279,6 @@ function RenameTokenForm({
           <div className="flex items-center gap-1">
             <Label className="text-xs">To</Label>
             {reserved.length > 0 && (
-              // Native title, not the Tooltip component — the theme editor is always
-              // installed, but Tooltip is an optional selectable component and can't
-              // be assumed present here.
               <span
                 title={`Reserved — can't be used: ${reserved.join(', ')}`}
                 className="text-muted-foreground inline-flex"
@@ -366,10 +350,6 @@ function RenameTokenForm({
   )
 }
 
-/** Lists whatever's currently staged via an Add* form (this session's pending
- *  additions), each removable before Save. For fonts specifically this also covers
- *  already-saved custom fonts — see removeFont's comment for why colors/typography
- *  can't do the same yet. */
 function PendingItemsList<T>({
   items,
   keyOf,
@@ -659,9 +639,6 @@ function AddFontForm({
     [googleFamily]
   )
   const [selectedWeights, setSelectedWeights] = React.useState<number[]>([400])
-  // Reset the weight selection whenever the chosen font changes underneath it, since a
-  // previously-picked weight may not exist for the new font (same render-time-adjustment
-  // pattern as HexField/NumberField elsewhere in this file, not a useEffect).
   const [prevGoogleFamily, setPrevGoogleFamily] = React.useState(googleFamily)
   if (googleFamily !== prevGoogleFamily) {
     setPrevGoogleFamily(googleFamily)

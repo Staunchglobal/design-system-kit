@@ -1,15 +1,4 @@
 #!/usr/bin/env node
-/**
- * Derives src/generated/registry.ts from the bundled templates:
- * - NAV_GROUPS (template-next design-system nav.ts) for slug -> label, and its own
- *   _sections/<slug>.tsx demo file (one file per component, since scripts/split-sections.mjs)
- * - each ui/*.tsx file's cross-component + npm imports for uiDeps/npmDeps
- * - patterns.tsx's imports for the "patterns" pseudo-component
- * - each demo file's `from './_shared/xxx'` imports for extraDemoFiles (the shared helper file
- *   it needs copied alongside it)
- *
- * Run with `npm run build:registry` whenever the templates change.
- */
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -31,11 +20,8 @@ const NPM_PACKAGES = [
   'tw-animate-css',
 ]
 
-// Files not named after their own component (component slug -> css filename).
 const CSS_FILE_OVERRIDES = { sonner: 'sonner-toast.css', 'crud-table': 'crud-screen.css' }
-// Components with no dedicated theme CSS file (pure logic/utility, nothing to theme).
 const NO_CSS = new Set(['direction', 'auth'])
-// Extra non-ui files a component's runtime needs (paths relative to template-shared/src/).
 const EXTRA_FILES = {
   sidebar: ['hooks/use-mobile.ts'],
   'segmented-control': ['hooks/use-mobile.ts'],
@@ -152,9 +138,6 @@ function fileDeps(file) {
 const navSrc = fs.readFileSync(navPath, 'utf8')
 const navGroups = parseNavGroups(navSrc)
 
-// Every nav item slug maps 1:1 to its own _sections/<slug>.tsx demo file (split-sections.mjs
-// guarantees this). Verify both directions so drift (a renamed nav id, a stray leftover file)
-// fails the build loudly instead of silently shipping a broken import.
 {
   const allSlugs = new Set(navGroups.flatMap((g) => g.items.map((i) => i.id)))
   const missing = [...allSlugs].filter((slug) => !fs.existsSync(path.join(sectionsDir, `${slug}.tsx`)))
@@ -168,7 +151,6 @@ const navGroups = parseNavGroups(navSrc)
   }
 }
 
-/** `./_shared/xxx` imports inside a demo file -> the `_shared/xxx.tsx` files it needs alongside it. */
 function extraDemoFilesFor(slug) {
   const src = fs.readFileSync(path.join(sectionsDir, `${slug}.tsx`), 'utf8')
   const files = []
@@ -192,16 +174,9 @@ for (const f of uiFiles) {
   const slug = f.replace(/\.tsx$/, '')
   const { uiDeps, npmDeps } = fileDeps(path.join(uiDir, f))
 
-  // The demo file (and any _shared companions it needs) can reference other ui components
-  // purely for illustration — e.g. the table demo renders a Badge for invoice status, the
-  // button demo shows a Spinner for a loading state — even though the Table/Button component's
-  // own implementation has no such dependency. Those need installing too, or picking just
-  // "table" ships a demo that imports a Badge component that was never copied.
   const demoUiDeps = new Set(uiDeps)
   const demoNpmDeps = new Set(npmDeps)
 
-  // EXTRA_FILES (e.g. components/crud/* for crud-table) often hold the real ui/npm imports —
-  // scan them too, or dialog/alert-dialog/field never land in uiDeps.
   for (const extra of EXTRA_FILES[slug] ?? []) {
     const extraPath = path.join(root, 'template-shared/src', extra)
     if (!fs.existsSync(extraPath)) {
@@ -229,7 +204,6 @@ for (const f of uiFiles) {
   }
 }
 
-// "patterns" is a pseudo-component (no ui/patterns.tsx) demoed by _sections/patterns.tsx.
 const patternsDeps = fileDeps(path.join(sectionsDir, 'patterns.tsx'))
 components.patterns = {
   uiDeps: patternsDeps.uiDeps,

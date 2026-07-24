@@ -1,12 +1,3 @@
-/* ==========================================================================
-   Alert Dialog
-   ==========================================================================
-   Paramount Design System — dialog (Figma 30807:24422)
-   Same confirm shell as Dialog: white, radius 24, p 16, gap 16.
-   Title B1 Bold + description B3 Regular (gap 12). Footer actions gap 12,
-   equal-width pills (outline + destructive from Button theme).
-   ========================================================================== */
-
 [data-slot='alert-dialog-overlay'] {
   --alert-dialog-overlay-bg: color-mix(in srgb, var(--overlay-bg) 50%, transparent);
   --alert-dialog-overlay-blur: 4px;
@@ -25,10 +16,10 @@
   --alert-dialog-content-fg: var(--foreground);
   --alert-dialog-content-ring-color: transparent;
   --alert-dialog-content-ring-width: 0px;
-  --alert-dialog-content-radius: var(--radius-3xl); /* 24px */
-  --alert-dialog-content-max-width: 22.375rem; /* ~358px */
-  --alert-dialog-content-padding: 1rem; /* 16px */
-  --alert-dialog-content-gap: 1rem; /* 16px */
+  --alert-dialog-content-radius: var(--radius-3xl);
+  --alert-dialog-content-max-width: 22.375rem;
+  --alert-dialog-content-padding: 1rem;
+  --alert-dialog-content-gap: 1rem;
   --alert-dialog-content-duration: 100ms;
   --alert-dialog-content-shadow: var(--shadow-md);
   background-color: var(--alert-dialog-content-bg);
@@ -46,19 +37,15 @@
 [data-slot='alert-dialog-content'][data-size='sm'] {
   max-width: var(--alert-dialog-content-max-width);
 }
-
-/* Text stack — gap 12 */
 [data-slot='alert-dialog-header'] {
-  --alert-dialog-header-gap: 0.75rem; /* 12px */
+  --alert-dialog-header-gap: 0.75rem;
   gap: var(--alert-dialog-header-gap) !important;
 }
-
-/* Actions — no grey strip; gap 12; equal-width pills */
 [data-slot='alert-dialog-footer'] {
   --alert-dialog-footer-bg: transparent;
   --alert-dialog-footer-margin-inline: 0;
   --alert-dialog-footer-margin-block-end: 0;
-  --alert-dialog-footer-gap: 0.75rem; /* 12px */
+  --alert-dialog-footer-gap: 0.75rem;
   --alert-dialog-footer-radius: 0;
   --alert-dialog-footer-border-color: transparent;
   --alert-dialog-footer-border-width: 0;
@@ -90,8 +77,8 @@
   --alert-dialog-media-bg: var(--neutral-0);
   --alert-dialog-media-border-color: var(--border);
   --alert-dialog-media-border-width: 1px;
-  --alert-dialog-media-size: 2.5rem; /* 40px — Paramount icon tile */
-  --alert-dialog-media-radius: var(--radius-md); /* 8px */
+  --alert-dialog-media-size: 2.5rem;
+  --alert-dialog-media-radius: var(--radius-md);
   --alert-dialog-media-margin-bottom: 0;
   background-color: var(--alert-dialog-media-bg);
   border: var(--alert-dialog-media-border-width) solid var(--alert-dialog-media-border-color);
@@ -100,12 +87,10 @@
   border-radius: var(--alert-dialog-media-radius);
   margin-block-end: var(--alert-dialog-media-margin-bottom);
 }
-
-/* Title — Body/B1/Bold 20/24, text/dark */
 [data-slot='alert-dialog-title'] {
   --alert-dialog-title-font-family: var(--font-sans);
   --alert-dialog-title-font-size: var(--typography-lead-font-size);
-  --alert-dialog-title-font-weight: var(--typography-h1-font-weight); /* 700 */
+  --alert-dialog-title-font-weight: var(--typography-h1-font-weight);
   --alert-dialog-title-line-height: var(--typography-lead-line-height);
   --alert-dialog-title-fg: var(--foreground);
   font-family: var(--alert-dialog-title-font-family);
@@ -114,8 +99,6 @@
   line-height: var(--alert-dialog-title-line-height);
   color: var(--alert-dialog-title-fg);
 }
-
-/* Description — Body/B3/Regular, text/medium */
 [data-slot='alert-dialog-description'] {
   --alert-dialog-description-fg: var(--muted-600);
   --alert-dialog-description-font-size: var(--typography-small-font-size);

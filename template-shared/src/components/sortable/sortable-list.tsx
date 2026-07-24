@@ -44,7 +44,6 @@ function SortableListShell({
   )
 }
 
-/** Static row used for SSR / pre-hydration so dnd-kit a11y ids don’t mismatch. */
 function SortableItemPlaceholder({
   children,
   disabled,
@@ -77,8 +76,6 @@ function SortableList<T extends { id: string }>({
   className,
   disabled = false,
 }: SortableListProps<T>) {
-  // @dnd-kit uses a module-level a11y id counter (DndDescribedBy-N) that drifts
-  // between SSR and the client — mount the DnD tree only after hydration.
   const mounted = useMounted()
 
   const sensors = useSensors(
@@ -88,7 +85,6 @@ function SortableList<T extends { id: string }>({
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event
-    // No drop target, drop on self, or item not found — all are no-ops
     if (!over || active.id === over.id) return
     const oldIndex = items.findIndex((item) => item.id === active.id)
     const newIndex = items.findIndex((item) => item.id === over.id)

@@ -13,9 +13,7 @@ export type ProjectInfo = {
   nextVersion: string | null
   nextMajor: number | null
   viteVersion: string | null
-  // Next-only
   appDirRelative: 'src/app' | 'app' | null
-  // Vite-only
   viteConfigPath: string | null
   mainEntryPath: string | null
   hasTypeScriptDependency: boolean
@@ -27,15 +25,9 @@ export type ProjectInfo = {
 export type TypeScriptVersionInfo = {
   major: number
   raw: string
-  /** true if read from node_modules/typescript (actual installed version); false if only the package.json semver range was available. */
   installed: boolean
 }
 
-/**
- * Prefers the actually-installed compiler (node_modules/typescript/package.json) since that's
- * what will really run — a package.json range like "^5 || ^6 || ^7" or "latest" doesn't tell
- * you which major you're on. Falls back to the declared range (e.g. before a fresh install).
- */
 export function detectTypeScriptVersion(root: string, deps: Record<string, string>): TypeScriptVersionInfo | null {
   const installedPkgPath = path.join(root, 'node_modules/typescript/package.json')
   const installedPkg = readJson(installedPkgPath)
@@ -111,11 +103,6 @@ export function detectProject(root: string): ProjectInfo {
   }
 }
 
-/**
- * Walks up from `root` looking for a lockfile — in a monorepo the lockfile lives at the
- * workspace root, not inside the individual app directory `init` is run from, so checking
- * only `root` itself would silently misdetect pnpm/yarn/bun workspaces as plain npm.
- */
 export function detectPackageManager(root: string): PackageManager {
   let dir = root
   for (let i = 0; i < 6; i++) {
@@ -132,7 +119,6 @@ export function detectPackageManager(root: string): PackageManager {
 
 export type WorkspaceCandidate = { relativePath: string; framework: Framework }
 
-/** True if this directory looks like the root of a pnpm/yarn/npm/turborepo/nx workspace. */
 export function isMonorepoRoot(root: string, packageJson: Record<string, unknown>): boolean {
   if (fs.existsSync(path.join(root, 'pnpm-workspace.yaml'))) return true
   if (fs.existsSync(path.join(root, 'turbo.json'))) return true
@@ -141,7 +127,6 @@ export function isMonorepoRoot(root: string, packageJson: Record<string, unknown
   return Array.isArray(workspaces) || (typeof workspaces === 'object' && workspaces !== null)
 }
 
-/** Scans the common apps/*, packages/* conventions one level deep for a Next.js or Vite app. */
 export function findWorkspaceApps(root: string): WorkspaceCandidate[] {
   const candidates: WorkspaceCandidate[] = []
   for (const dir of ['apps', 'packages']) {

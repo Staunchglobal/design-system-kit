@@ -2,9 +2,7 @@ import { cn } from '@/lib/utils'
 
 type CountBadgeProps = {
   count: number
-  /** Items are capped at this value and shown as `{max}+`. Defaults to 99. */
   max?: number
-  /** `overlay` = compact pill for icon buttons (position as a sibling, not a child). */
   size?: 'default' | 'overlay'
   className?: string
 }

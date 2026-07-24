@@ -20,15 +20,6 @@ function formatBytes(bytes: number): string {
 
 export type ReportCategory = { label: string; baseDir: string; relPaths: Iterable<string> }
 
-/**
- * Prints a deterministic "how much does this selection add" summary — total source bytes/file
- * counts per category (sized via a HEAD request per file against the templates CDN, no
- * build/bundler needed) plus the npm package lists. Deliberately doesn't estimate real npm
- * install/node_modules size: that needs either a registry round-trip per package or an actual
- * install, and either would make --report slow or unreliable for a number this tool can already
- * answer honestly — "how much source lands in your repo" is the metric that's actually
- * meaningful for a CLI that copies files rather than shipping a bundled library.
- */
 export async function printBundleReport(opts: {
   categories: ReportCategory[]
   runtimeDeps: string[]

@@ -1,9 +1,3 @@
-/* ==========================================================================
-   Stepper
-   ==========================================================================
-   Circles: indicator centered above labels; connector spans to next circle.
-   ========================================================================== */
-
 [data-slot='stepper'][data-variant='circles'][data-orientation='horizontal'] {
   width: 100%;
   align-items: flex-start;
@@ -36,7 +30,6 @@
 [data-slot='stepper-item'][data-state='active'] [data-slot='stepper-connector'] {
   background-color: var(--stepper-connector-bg-active);
 }
-/* Error stops progress — line after error stays muted */
 [data-slot='stepper-item'][data-state='error'] [data-slot='stepper-connector'] {
   background-color: var(--stepper-connector-bg);
 }

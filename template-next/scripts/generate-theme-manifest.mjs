@@ -1,18 +1,12 @@
 #!/usr/bin/env node
-/**
- * Regenerates <src?>/styles/theme/theme.manifest.json from split CSS files.
- * Usage: node scripts/generate-theme-manifest.mjs
- */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
-// Works whether the project uses a src/ directory or not (Next.js supports both).
 const srcDir = fs.existsSync(path.join(root, "src")) ? "src" : ".";
 let themeRoot = path.join(root, srcDir, "styles/theme");
-// CLI monorepo: template-next/vite scripts run against template-shared's canonical theme.
 if (!fs.existsSync(path.join(themeRoot, "tokens/colors.css"))) {
   const shared = path.join(
     root,
@@ -24,10 +18,6 @@ if (!fs.existsSync(path.join(themeRoot, "tokens/colors.css"))) {
   if (fs.existsSync(path.join(shared, "tokens/colors.css"))) themeRoot = shared;
 }
 
-// Canonical registry (single source of truth, shared with value-parsers.ts/field-types.ts/
-// descriptions.ts on the runtime side) — resolved relative to themeRoot's sibling `lib/theme/`
-// dir so this works both in a scaffolded project (src/styles/theme + src/lib/theme) and in
-// the CLI monorepo dev fallback (template-shared/src/styles/theme + .../src/lib/theme).
 const tokenFamiliesPath = path.join(
   themeRoot,
   "..",
@@ -209,7 +199,6 @@ function resolveVarFieldType(
   return inferred === "raw" ? null : inferred;
 }
 
-/** Second pass: upgrade var(--local-token) fields using the full manifest value map. */
 export function refineFieldTypes(groups) {
   const valueByName = new Map();
   for (const g of groups) {
@@ -229,22 +218,6 @@ export function refineFieldTypes(groups) {
   }
 }
 
-/**
- * Infer a short scope label from the selector of the CSS rule that directly
- * encloses the variable declaration at `index` — i.e. the text between the
- * previous rule's closing `}` and this rule's opening `{`. Scanning the whole
- * file backward (the old approach) picks up slot/variant/size attributes from
- * unrelated earlier rules — e.g. button.css's un-variant-scoped `[data-size='icon']`
- * block would inherit `variant=link` merely because `[data-variant='link']` was
- * the last variant rule textually before it, mislabeling every size-only variable.
- *
- * Captures any `[data-xxx='yyy']` attribute generically (not just variant/size), an
- * ancestor `data-slot` when the selector is a descendant combinator (e.g. kbd inside
- * a tooltip), and — when the rule's selector is a comma-separated list of alternatives
- * that all declare the same variable (e.g. drawer's top/bottom vs left/right rules) —
- * every branch, so a value that varies between them survives as `key=value1|value2`
- * instead of being silently collapsed to just the last branch.
- */
 export function inferScope(css, index) {
   const before = css.slice(0, index);
   const selectorStart = before.lastIndexOf("}") + 1;
@@ -274,8 +247,6 @@ export function inferScope(css, index) {
   });
 
   const parts = [];
-  // Nearest marker wins — editor light lock must not be tagged as dark
-  // just because `.dark` appears earlier in the same selector text.
   const nearest = Math.max(lastEditor, lastDark, lastRoot);
   if (nearest === lastEditor && lastEditor !== -1) parts.push("editor");
   else if (nearest === lastDark && lastDark !== -1) parts.push("dark");
@@ -325,17 +296,6 @@ export function sectionTitle(css, fallback) {
   return m ? m[1].trim() : fallback;
 }
 
-/**
- * Recover the custom font list from tokens/fonts.css so the theme editor can
- * rehydrate them on reload — without this, `customFonts` state always starts
- * empty, and a subsequent Save would overwrite this file with an empty one,
- * silently deleting any font added in a previous session.
- *
- * File fonts round-trip exactly (their @font-face `font-family` IS the id).
- * Google fonts don't carry their id in the @import URL, so it's recovered by
- * matching the @import's family against the `--font-<id>: 'family', ...;` var
- * that `writeFontsCss` always writes alongside it.
- */
 export function parseCustomFonts(css) {
   const fonts = [];
 
@@ -370,8 +330,6 @@ export function parseCustomFonts(css) {
   return fonts;
 }
 
-// Guarded so importing this module (e.g. from a test) doesn't try to read a
-// theme dir that may not exist relative to the importer's cwd.
 const isMain = import.meta.url === `file://${process.argv[1]}`;
 if (isMain) {
   const groups = [];

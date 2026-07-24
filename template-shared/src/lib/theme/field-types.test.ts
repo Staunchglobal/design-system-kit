@@ -18,8 +18,6 @@ function manifestOf(groupId: string, variables: ThemeVariable[]): ThemeManifest 
 
 describe('listColorTokenNames', () => {
   it('includes shade steps but excludes semantic tokens that share the family prefix', () => {
-    // Regression: --primary-foreground used to match a naive `startsWith('primary-')`
-    // check and leak into the scale-only select alongside real steps like --primary-500.
     const manifest = manifestOf('colors', [
       v({ id: 'colors:--primary-foreground:0', name: '--primary-foreground', value: 'var(--primary-50)' }),
       v({ id: 'colors:--secondary-foreground:0', name: '--secondary-foreground', value: 'var(--secondary-900)' }),
@@ -80,8 +78,6 @@ describe('scopeToSelector', () => {
   })
 
   it('reconstructs a slot + size selector — the exact shape button.css relies on', () => {
-    // This is the case that regressed: button.css's [data-size='icon'] block carries no
-    // data-variant at all, so the selector must not require one.
     expect(scopeToSelector('button/size=icon')).toBe('[data-slot="button"][data-size="icon"]')
   })
 
@@ -118,8 +114,6 @@ describe('scopeToSelector', () => {
   })
 
   it('fans a varying attribute (from a comma-separated source rule) into a comma selector list', () => {
-    // drawer's top/bottom radius rule declares the same variable across two branches —
-    // the reconstructed selector must cover both, or a live edit would only ever reach one.
     expect(scopeToSelector('drawer-content/vaul-drawer-direction=top|bottom')).toBe(
       '[data-slot="drawer-content"][data-vaul-drawer-direction="top"], [data-slot="drawer-content"][data-vaul-drawer-direction="bottom"]'
     )
@@ -136,8 +130,6 @@ describe('buildScopedVarsCss', () => {
   })
 
   it('emits a selector-qualified rule for a size-scoped variable with no variant qualifier', () => {
-    // Regression guard for the button icon-size mislabel bug: this must NOT come out
-    // requiring [data-variant="..."], since [data-size='icon'] applies to every variant.
     const manifest = manifestOf('button', [
       v({ id: 'button:--button-size:0', name: '--button-size', value: '2rem', scope: 'button/size=icon' }),
     ])
@@ -173,11 +165,6 @@ describe('buildScopedVarsCss', () => {
   })
 
   it('skips a variable+selector pair when two distinct occurrences would collapse onto it', () => {
-    // e.g. scroll-area's horizontal/vertical scrollbar-size, or drawer's top/bottom vs
-    // left/right radius — scopeToSelector can't recover the distinguishing attribute
-    // (data-orientation, data-vaul-drawer-direction), so both occurrences reconstruct
-    // to the identical selector. Emitting either one would silently misrepresent the
-    // other's live preview, so neither should be emitted.
     const manifest = manifestOf('scroll-area', [
       v({
         id: 'scroll-area:--scroll-area-scrollbar-size:0',
@@ -222,8 +209,6 @@ describe('buildScopedVarsCss', () => {
   })
 
   it('no longer collides when scope carries the real distinguishing attribute (orientation)', () => {
-    // Same variable name, but the manifest now records which orientation each occurrence
-    // belongs to — they must emit as two separate, independently-editable rules.
     const manifest = manifestOf('scroll-area', [
       v({
         id: 'scroll-area:--scroll-area-scrollbar-size:0',
@@ -254,8 +239,6 @@ describe('buildScopedVarsCss', () => {
   })
 
   it('qualifies every branch of a fanned-out comma selector under hostSelector', () => {
-    // Regression guard: hostSelector must prefix EVERY branch, not just the first —
-    // otherwise the second branch would apply outside the live preview entirely.
     const manifest = manifestOf('drawer', [
       v({
         id: 'drawer:--drawer-content-radius:0',

@@ -5,7 +5,6 @@ import { GROUPS, COMPONENTS } from '../generated/registry.js'
 import { log } from './log.js'
 import { readSelectionConfig } from './selection-state.js'
 
-/** Which component slugs already have a <srcDir>/components/ui/<slug>.tsx on disk. */
 export function detectInstalledComponents(root: string, srcDir = 'src'): Set<string> {
   const installed = new Set<string>()
   const uiDir = path.join(root, srcDir, 'components/ui')
@@ -16,12 +15,6 @@ export function detectInstalledComponents(root: string, srcDir = 'src'): Set<str
   return installed
 }
 
-/**
- * The baseline to pre-check in the picker / union into a re-run: prefer the persisted
- * design-kit.json (the user's own picks, never polluted by tool-chrome deps); fall back to
- * on-disk detection — minus whatever the theme editor's own chrome always needs — for a
- * project that ran an older version of this CLI before design-kit.json existed.
- */
 export function priorSelectionFor(root: string, toolOnly: Set<string>, srcDir = 'src'): Set<string> {
   const config = readSelectionConfig(root)
   if (config.components.length) return new Set(config.components)
@@ -35,11 +28,6 @@ export type ComponentPickOptions = {
   components?: string
 }
 
-/**
- * Resolves which component slugs the user wants. Priority: explicit --components list, then
- * --all / --yes (full install, the historical default), then an interactive multiselect
- * pre-checked with `prior` (design-kit.json from an earlier run, if any).
- */
 export async function pickComponents(
   prior: Set<string>,
   options: ComponentPickOptions

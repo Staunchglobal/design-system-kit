@@ -2,11 +2,6 @@ import { describe, expect, it } from "vitest";
 import tokenFamilies from "./token-families.json";
 import { isLikelyColorVarName, listShadowTokenNames } from "./value-parsers";
 
-// Locks in the Phase 1 registry refactor: COLOR_SEMANTIC/SHADE_PREFIXES/shadow steps
-// now derive from token-families.json instead of 4+ independently hardcoded copies
-// (value-parsers.ts, both generate-theme-manifest.mjs scripts, descriptions.ts). These
-// tests assert the derived behavior is unchanged from before the refactor.
-
 describe("token-families.json", () => {
   it("has the expected shape", () => {
     expect(tokenFamilies.colorSemantic).toContain("background");

@@ -33,9 +33,6 @@ export function toVarRef(tokenName: string): string {
   return `var(${n})`;
 }
 
-// A shade STEP only — e.g. "primary-500" — not a semantic token that merely shares the
-// family prefix, like "primary-foreground" (that belongs in listSemanticColorTokenNames).
-// Family list sourced from token-families.json — the canonical registry.
 const SHADE_STEP_RE = new RegExp(
   `^(${tokenFamilies.shadeFamilies.join("|")})-\\d+$`
 );
@@ -59,8 +56,6 @@ export function listColorTokenNames(
   return [...names].sort();
 }
 
-/** Semantic color tokens (--primary, --border, --sidebar-accent, ...) — the "Colors" group,
- *  as opposed to listColorTokenNames' raw shade-scale steps ("Color Scales" group). */
 export function listSemanticColorTokenNames(
   manifest: ThemeManifest,
   extra: string[] = []
@@ -132,8 +127,6 @@ export function listTypographyTokenNames(
 const TYPOGRAPHY_VARIANT_RE =
   /^--typography-([a-z0-9-]+)-(?:font-family|font-size|font-weight|line-height|letter-spacing|font-style|bg|radius|padding-x|padding-y|text-transform)$/;
 
-/** Bare variant names only (e.g. "h3", "display", "lead") — for a rename target
- *  picker, as opposed to listTypographyTokenNames' full per-property var names. */
 export function listTypographyVariantNames(manifest: ThemeManifest): string[] {
   const names = new Set<string>();
   for (const g of manifest.groups) {
@@ -145,7 +138,6 @@ export function listTypographyVariantNames(manifest: ThemeManifest): string[] {
   return [...names].sort();
 }
 
-/** Flatten defaults from manifest into an id→value map (unique React / store keys). */
 export function defaultsFromManifest(
   manifest: ThemeManifest
 ): Record<string, string> {
@@ -158,7 +150,6 @@ export function defaultsFromManifest(
   return values;
 }
 
-/** Map variable id → CSS custom property name. */
 export function idToNameMap(manifest: ThemeManifest): Record<string, string> {
   const map: Record<string, string> = {};
   for (const g of manifest.groups) {
@@ -169,10 +160,8 @@ export function idToNameMap(manifest: ThemeManifest): Record<string, string> {
   return map;
 }
 
-/** True for `.dark { … }` token entries (live editor chrome always uses light). */
 export function isDarkScopeVar(id: string, scope?: string): boolean {
   if (scope) return scope === "dark" || scope.startsWith("dark/");
-  // ids look like `colors:--background:1` — occurrence ≥ 1 for colors = non-root blocks
   const parts = id.split(":");
   const occurrence = Number(parts[parts.length - 1]);
   return (
@@ -187,10 +176,6 @@ export function scopePriority(scope?: string): number {
   return 1;
 }
 
-/**
- * Apply editor values onto an element. Values are keyed by unique variable id.
- * When several ids share a CSS name, prefer root (light), then editor, never dark.
- */
 export function applyCssVars(
   values: Record<string, string>,
   nameById: Record<string, string>,
@@ -225,25 +210,6 @@ export function clearAppliedCssVars(
   }
 }
 
-/**
- * Component CSS declares its own override vars (e.g. `--button-bg`) directly on the
- * same selector that consumes them (`[data-slot="button"][data-variant="default"]`).
- * A rule that targets an element directly always wins over a value the element only
- * *inherits* from an ancestor — so writing these via `host.style.setProperty(...)` on
- * an ancestor (what `applyCssVars` does) can never be visible live; it only becomes
- * visible once Save rewrites the literal value inside that same selector on disk.
- * Reconstruct the selector from `scope` (as produced by generate-theme-manifest.mjs's
- * `inferScope`) so these can be applied as real, higher-specificity CSS rules instead.
- * Returns null for global/token scopes (root, dark, editor, default) with no slot.
- *
- * Handles three shapes beyond a plain `slot/variant=x/size=y`:
- * - `ancestor-slot=x` — a descendant combinator (e.g. kbd inside a tooltip renders as
- *   `[data-slot="tooltip-content"] [data-slot="kbd"]`).
- * - any other `key=value` — a generic attribute qualifier (e.g. `orientation=horizontal`).
- * - `key=value1|value2` — the source rule was a comma-separated list of alternatives
- *   that all declare this variable (e.g. drawer's top/bottom vs left/right rules);
- *   fans out into a real comma-separated selector so every alternative is covered.
- */
 export function scopeToSelector(scope?: string): string | null {
   if (!scope) return null;
   const parts = scope.split("/");
@@ -275,18 +241,6 @@ export function scopeToSelector(scope?: string): string | null {
     .join(", ");
 }
 
-/**
- * Builds selector-qualified override rules for every component-scoped variable
- * (see `scopeToSelector`), scoped under `hostSelector` so they only affect the live
- * preview. Dark-scoped entries are skipped — the editor chrome always previews light.
- *
- * A handful of variables can't be disambiguated from scope alone (e.g. two
- * occurrences whose only distinguishing DOM attribute isn't captured, or a
- * genuinely duplicate declaration) and would collapse onto the identical
- * selector+name pair. When that happens we can no longer tell which occurrence a
- * live edit belongs to, so skip emitting a rule for that pair entirely rather than
- * have one occurrence silently overwrite another's preview.
- */
 export function buildScopedVarsCss(
   values: Record<string, string>,
   manifest: ThemeManifest,
@@ -312,9 +266,6 @@ export function buildScopedVarsCss(
   for (const entries of bySelectorName.values()) {
     if (entries.length > 1) continue;
     const { selector, name, value } = entries[0];
-    // A selector may itself be a comma-separated list (see scopeToSelector's
-    // `varying` branch) — hostSelector must prefix every branch, not just the first,
-    // or later branches would apply unscoped, outside the live preview.
     const qualified = selector
       .split(",")
       .map((branch) => `${hostSelector} ${branch.trim()}`)
@@ -326,7 +277,6 @@ export function buildScopedVarsCss(
 
 const UNIT_RE = /^(-?\d+(?:\.\d+)?)(px|rem|em|%|deg|ms|s|vh|vw|vmin|vmax)$/;
 
-/** Splits e.g. "0.375rem" into { num: 0.375, unit: 'rem' }; null if not a plain number+unit value. */
 export function parseUnitValue(
   value: string
 ): { num: number; unit: string } | null {
@@ -339,7 +289,6 @@ export function isPlainNumber(value: string): boolean {
   return /^-?\d+(\.\d+)?$/.test(value.trim());
 }
 
-/** Strips trailing float noise, e.g. 0.375 * 16 = 6.000000000000001 → "6". */
 export function formatNumber(n: number): string {
   return String(Math.round(n * 10000) / 10000);
 }
@@ -352,11 +301,6 @@ export function pxToRem(px: number): number {
   return Math.round((px / 16) * 10000) / 10000;
 }
 
-/**
- * Flattens the manifest + live edits into name → value, preferring root scope over
- * editor/dark duplicates (same precedence as applyCssVars). Used to resolve a color
- * token reference (e.g. `--primary-500`) down to its actual hex for display.
- */
 export function buildRootValueMap(
   manifest: ThemeManifest,
   values: Record<string, string>
@@ -378,7 +322,6 @@ export function buildRootValueMap(
   return out;
 }
 
-/** Resolves a token name (with or without `--`) through `var(...)` chains down to a hex value. */
 export function resolveTokenHex(
   token: string,
   nameValueMap: Record<string, string>,
@@ -399,11 +342,9 @@ export function groupVariablesForEditor(
   groupId: string,
   variables: ThemeVariable[]
 ): ThemeVariable[] {
-  // Radius: only show editable theme-radius-* sources
   if (groupId === "radius") {
     return variables.filter((v) => v.name.startsWith("--theme-radius"));
   }
-  // Colors: editor UI is light-only — hide .dark / [data-theme-editor] duplicates
   if (groupId === "colors") {
     return variables.filter((v) => {
       const s = v.scope ?? "";

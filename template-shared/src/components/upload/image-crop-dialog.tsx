@@ -16,11 +16,8 @@ import {
 type ImageCropDialogProps = {
   open: boolean
   onOpenChange: (open: boolean) => void
-  /** The image file to crop. A new object URL is created (and cleaned up) whenever this changes. */
   file: File | null
-  /** Crop aspect ratio (width / height). Omit for free-form. */
   aspect?: number
-  /** Called with the cropped File on successful apply. */
   onCropped: (file: File) => void
 }
 
@@ -30,7 +27,6 @@ async function cropToFile(
   originalName: string
 ): Promise<File> {
   const canvas = document.createElement('canvas')
-  // PixelCrop coordinates are in displayed-image pixels; scale to natural resolution.
   const scaleX = image.naturalWidth / image.width
   const scaleY = image.naturalHeight / image.height
   canvas.width = Math.max(1, Math.round(pixelCrop.width * scaleX))
@@ -72,7 +68,6 @@ function ImageCropDialog({ open, onOpenChange, file, aspect, onCropped }: ImageC
   const [error, setError] = React.useState<string | null>(null)
   const imageRef = React.useRef<HTMLImageElement>(null)
 
-  // Create/revoke object URL whenever the file changes.
   /* eslint-disable react-hooks/set-state-in-effect -- file changes must synchronously reset crop state while managing the object URL lifecycle */
   React.useEffect(() => {
     if (!file) {
@@ -100,7 +95,6 @@ function ImageCropDialog({ open, onOpenChange, file, aspect, onCropped }: ImageC
       if (hasCrop) {
         result = await cropToFile(imageRef.current, completedCrop, file.name)
       } else {
-        // No selection made — pass the original file through unchanged.
         result = file
       }
       onCropped(result)

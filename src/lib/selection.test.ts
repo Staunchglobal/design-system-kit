@@ -20,7 +20,6 @@ describe('resolveUiClosure', () => {
   })
 
   it('follows uiDeps transitively', () => {
-    // combobox depends on button + input-group (per registry) — picking it must pull both in.
     const closure = resolveUiClosure(['combobox'])
     expect(closure.has('combobox')).toBe(true)
     for (const dep of COMPONENTS.combobox.uiDeps) {
@@ -40,8 +39,6 @@ describe('resolveUiClosure', () => {
   })
 
   it('never produces a cycle-induced infinite loop for the full component set', () => {
-    // A cyclic uiDeps graph would hang resolveUiClosure's while loop — running it over every
-    // known slug at once is a cheap way to catch that regression without special-casing it.
     const closure = resolveUiClosure(allComponentSlugs())
     expect(closure.size).toBe(allComponentSlugs().length)
   })
@@ -63,15 +60,12 @@ describe('navGroupsFor', () => {
     for (const g of groups) {
       const original = GROUPS.find((og) => og.title === g.title)
       if (!original?.alwaysIncluded) {
-        // Only reachable if some item slipped through unselected — should never happen.
         expect(g.items.length).toBeGreaterThan(0)
       }
     }
   })
 
   it('only includes the specific selected item, not its whole category', () => {
-    // "kbd" has zero uiDeps, so its closure is just itself — a clean way to confirm picking one
-    // item never drags its 5 "Buttons & Actions" category-mates in as a side effect.
     expect(COMPONENTS.kbd.uiDeps).toEqual([])
     const groups = navGroupsFor(new Set(['kbd']))
     const buttonsGroup = groups.find((g) => g.items.some((i) => i.slug === 'kbd'))
@@ -113,7 +107,6 @@ describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
     const closure = resolveUiClosure(['button', 'direction'])
     const files = cssFilesFor(closure)
     expect(files.has('button.css')).toBe(true)
-    // "direction" is pure logic with nothing to theme — registry marks it with no cssFile.
     expect(COMPONENTS.direction.cssFile).toBeNull()
   })
 
@@ -136,8 +129,6 @@ describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
     expect(COMPONENTS['crud-table'].uiDeps).toEqual(
       expect.arrayContaining(['dialog', 'alert-dialog', 'field', 'table', 'button', 'pagination'])
     )
-    // crud-table's chrome (sidebar rail, toolbar, pagination) is themed via crud-screen.css,
-    // not a crud-table.css that doesn't exist.
     expect(COMPONENTS['crud-table'].cssFile).toBe('crud-screen.css')
   })
 

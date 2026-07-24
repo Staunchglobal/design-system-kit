@@ -1,29 +1,21 @@
-/* ==========================================================================
-   Textarea
-   ==========================================================================
-   Paramount Design System — Figma Text Area (node 20915:133610)
-   Default size = Medium. Theme-editor style: existing tokens only.
-   Radius: Button/Input large 24px. Focus/Error: 2px primary/danger border.
-   ========================================================================== */
-
 [data-slot='textarea'] {
-  --textarea-radius: var(--radius-3xl); /* 24px — Button and Input border-radius/large */
+  --textarea-radius: var(--radius-3xl);
   --textarea-border-width: 1px;
-  --textarea-border-color: var(--border); /* border/light #e8e8e9 */
+  --textarea-border-color: var(--border);
   --textarea-bg: var(--neutral-0);
-  --textarea-fg: var(--foreground); /* text/dark */
-  --textarea-placeholder-color: var(--muted-400); /* text/light #b4b5b7 */
-  --textarea-min-height: 9rem; /* Medium field box (~144px) */
-  --textarea-padding-x: 1rem; /* spacing/s — 16px */
-  --textarea-padding-y: 0.75rem; /* spacing/xs — 12px */
-  --textarea-font-size: var(--typography-p-font-size); /* Body B2 — 16px */
-  --textarea-line-height: var(--typography-p-line-height); /* 24px */
-  --textarea-focus-border-color: var(--primary); /* border/primary #3ab5fe */
+  --textarea-fg: var(--foreground);
+  --textarea-placeholder-color: var(--muted-400);
+  --textarea-min-height: 9rem;
+  --textarea-padding-x: 1rem;
+  --textarea-padding-y: 0.75rem;
+  --textarea-font-size: var(--typography-p-font-size);
+  --textarea-line-height: var(--typography-p-line-height);
+  --textarea-focus-border-color: var(--primary);
   --textarea-focus-ring-width: 0px;
   --textarea-focus-ring-color: transparent;
-  --textarea-disabled-bg: var(--neutral-100); /* Neutral/100 #f0f0f1 */
+  --textarea-disabled-bg: var(--neutral-100);
   --textarea-disabled-opacity: 1;
-  --textarea-invalid-border-color: var(--destructive); /* border/danger #d94c51 */
+  --textarea-invalid-border-color: var(--destructive);
   --textarea-invalid-ring-color: transparent;
 
   min-height: var(--textarea-min-height);

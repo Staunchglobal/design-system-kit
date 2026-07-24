@@ -1,7 +1,3 @@
-/* ==========================================================================
-   Field
-   ========================================================================== */
-
 [data-slot='field-set'] {
   --field-set-gap: 1rem;
   gap: var(--field-set-gap);
@@ -28,8 +24,8 @@
 }
 
 [data-slot='field'] {
-  --field-gap: 0.5rem; /* spacing/xxs — 8px (Paramount Input Field) */
-  --field-invalid-fg: var(--destructive); /* text/danger */
+  --field-gap: 0.5rem;
+  --field-invalid-fg: var(--destructive);
   gap: var(--field-gap);
 }
 [data-slot='field'][data-invalid='true'] {
@@ -42,9 +38,6 @@
   gap: var(--field-content-gap);
   line-height: var(--field-content-line-height);
 }
-
-/* Shared by FieldLabel and FieldTitle (both render data-slot="field-label") */
-/* Paramount Input Field Medium label: Body B2 Medium 16/24 */
 [data-slot='field-label'] {
   --field-label-gap: 0.25rem;
   --field-label-line-height: var(--typography-p-line-height);
@@ -70,8 +63,6 @@
   border-color: var(--field-label-checked-border-color);
   background-color: var(--field-label-checked-bg);
 }
-
-/* Paramount helper: Body B2 Regular 16/24, text/medium */
 [data-slot='field-description'] {
   --field-description-fg: var(--muted-foreground);
   --field-description-font-size: var(--typography-p-font-size);

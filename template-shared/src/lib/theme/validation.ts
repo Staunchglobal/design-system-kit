@@ -3,7 +3,6 @@ import tokenFamilies from './token-families.json'
 const HEX_RE = /^[0-9a-fA-F]{3}$|^[0-9a-fA-F]{6}$|^[0-9a-fA-F]{8}$/
 const NUMBER_RE = /^-?\d+(\.\d+)?$/
 
-/** `value` is the bare hex digits the user typed, without the leading `#`. */
 export function validateHex(value: string): string | null {
   if (!HEX_RE.test(value.trim())) {
     return 'Enter a valid hex color without the # — e.g. ff5733.'
@@ -29,19 +28,6 @@ export function validateRaw(value: string): string | null {
   return null
 }
 
-/**
- * Server-side allowlists for `POST /api/theme/save` (Next) and the Vite plugin's
- * equivalent middleware — both take an arbitrary JSON payload from the client and
- * write it into files on disk, including generated .ts/.tsx source that gets
- * imported and executed, and font ids that become filesystem paths. These guard
- * the identifiers that become selectors, property names, or filenames, where an
- * unescaped value would let a request break out of its intended syntactic slot.
- * Editing an existing CSS variable's *value* is the theme editor's actual feature,
- * so it's intentionally left free-form rather than charset-allowlisted (see
- * validateRaw above) — but it still lands verbatim at `property: <value>;` inside
- * a real .css file, so isSafeCssValue below blocks just the handful of characters
- * that could end that declaration early, not the rest of the value space.
- */
 export const SAFE_TOKEN_RE = /^[a-zA-Z0-9_-]+$/
 export const SAFE_ICON_KEY_RE = /^[a-zA-Z][a-zA-Z0-9.-]*$/
 export const SAFE_ICON_NAME_RE = /^[A-Za-z][A-Za-z0-9]*$/
@@ -51,22 +37,10 @@ export const SAFE_HEX_RE = /^#[0-9a-fA-F]{3,8}$/
 const SAFE_VAR_REF_RE = /^var\((--[a-zA-Z0-9_-]+)\)$/
 const CSS_VALUE_BREAKOUT_RE = /[;{}]|\/\*/
 
-/**
- * A theme variable's value is written verbatim into `property: <value>;` in a real
- * .css file (see replaceCssVarAtOccurrence) — a value containing `;`, `{`, `}`, or a
- * `/*` comment-opener could close that declaration early and splice in new CSS rules.
- */
 export function isSafeCssValue(value: string): boolean {
   return !CSS_VALUE_BREAKOUT_RE.test(value)
 }
 
-/**
- * A custom color's value is a literal hex (added from the Color Scales page), a
- * `var(--token)` reference to an existing scale step, or the literal `transparent` keyword
- * (both added from the Colors page, which lets a new semantic token point at either) — all
- * get written verbatim into a real .css file (see ensureColorVar), so all need the same
- * break-out-of-the-declaration protection as SAFE_HEX_RE, just for their own shape.
- */
 export function isSafeCustomColorValue(value: string): boolean {
   if (SAFE_HEX_RE.test(value) || value === 'transparent') return true
   const m = value.match(SAFE_VAR_REF_RE)
@@ -85,13 +59,6 @@ export function isSafeCustomFont(f: SanitizableCustomFont): boolean {
 
 export type RenameFamily = 'color' | 'radius' | 'typography' | 'shadow'
 
-/**
- * Guards a token-rename's `to` name against the same identifier charset as any
- * other new token id, plus per-family reserved words that collide with a
- * Tailwind built-in (e.g. renaming a radius step to "full" would produce a
- * `rounded-full` that's indistinguishable from Tailwind's own fully-rounded
- * utility). Returns a user-facing message, or null if valid.
- */
 export function isValidRenameTarget(
   family: RenameFamily,
   from: string,

@@ -6,10 +6,6 @@ import { inferScope, parseCustomFonts, parseVars } from './generate-theme-manife
 
 describe('inferScope', () => {
   it('does not attribute a variant to a size-only rule that merely follows a variant block', () => {
-    // Regression for the real bug: button.css's variant='link' block is textually the
-    // last variant rule before the [data-size='icon'] block, which carries no
-    // data-variant at all. Scanning the whole file backward (the old approach) picked
-    // up 'link' anyway; scope must come only from the enclosing rule's own selector.
     const css = `
 [data-slot='button'][data-variant='link'] {
   --button-fg: var(--primary);
@@ -58,10 +54,6 @@ describe('inferScope', () => {
   })
 
   it('collapses a varying attribute across comma-separated branches into key=value1|value2', () => {
-    // This is the drawer top/bottom-vs-left/right shape: one declaration, two branches,
-    // each with a different data-vaul-drawer-direction — losing either branch (the old
-    // .pop()-last-match behavior) meant a live edit to one direction silently also
-    // targeted the other via an identical, under-qualified reconstructed selector.
     const css = `[data-slot='drawer-content'][data-vaul-drawer-direction='top'],
 [data-slot='drawer-content'][data-vaul-drawer-direction='bottom'] {
   --drawer-content-radius: var(--radius-lg);
@@ -94,9 +86,6 @@ describe('parseCustomFonts', () => {
   })
 
   it('recovers a google font, matching the @import family back to its --font-<id> var', () => {
-    // The id (chosen by the user when adding the font) isn't in the @import URL at all —
-    // only the family is. Without matching it back via the --font-<id> var, a reload
-    // would either lose the font or regenerate it under a different, wrong id.
     const css = `@import url('https://fonts.googleapis.com/css2?family=Fira%20Code:wght@400;700&display=swap');
 :root {
   --font-heading: var(--font-sans);
@@ -140,10 +129,6 @@ describe('parseVars', () => {
   })
 })
 
-// The two copies of this script (template-next and template-vite) are maintained by
-// hand, not generated from a single source — a fix applied to one and not the other
-// (exactly what almost happened during the live-preview bug fix) would silently ship
-// only half-fixed.
 describe('template-next/vite parity', () => {
   it('keeps generate-theme-manifest.mjs byte-identical between templates', () => {
     const here = path.dirname(fileURLToPath(import.meta.url))

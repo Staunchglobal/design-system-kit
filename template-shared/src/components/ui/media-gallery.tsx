@@ -13,18 +13,11 @@ type MediaItem = {
   type: MediaType
   src: string
   alt?: string
-  /** Explicit thumbnail URL. Falls back to `src` for images. */
   thumbnail?: string
-  /** @deprecated Use `thumbnail`. */
   thumbnailSrc?: string
   title?: string
 }
 
-/**
- * Converts a YouTube or Vimeo watch URL to its embeddable form.
- * Returns `null` when the URL is unrecognised or malformed.
- * Already-embedded URLs are returned unchanged.
- */
 function parseEmbedUrl(url: string): string | null {
   if (!url) return null
 
@@ -37,12 +30,10 @@ function parseEmbedUrl(url: string): string | null {
 
   const { hostname, pathname, searchParams } = parsed
 
-  // YouTube watch page: youtube.com/watch?v=ID
   if (hostname === 'www.youtube.com' || hostname === 'youtube.com') {
     const v = searchParams.get('v')
     if (v) return `https://www.youtube-nocookie.com/embed/${v}`
 
-    // Already-embedded: youtube.com/embed/ID or youtube-nocookie.com/embed/ID
     const embedMatch = pathname.match(/^\/embed\/([^/?#]+)/)
     if (embedMatch) {
       return hostname.includes('nocookie')
@@ -51,24 +42,20 @@ function parseEmbedUrl(url: string): string | null {
     }
   }
 
-  // youtube-nocookie already embedded
   if (hostname === 'www.youtube-nocookie.com' || hostname === 'youtube-nocookie.com') {
     return url
   }
 
-  // Short URL: youtu.be/ID
   if (hostname === 'youtu.be') {
     const vid = pathname.slice(1).split('/')[0]
     if (vid) return `https://www.youtube-nocookie.com/embed/${vid}`
   }
 
-  // Vimeo: vimeo.com/ID or vimeo.com/video/ID
   if (hostname === 'vimeo.com' || hostname === 'www.vimeo.com') {
     const videoMatch = pathname.match(/^\/(?:video\/)?(\d+)/)
     if (videoMatch) return `https://player.vimeo.com/video/${videoMatch[1]}`
   }
 
-  // player.vimeo.com already embedded
   if (hostname === 'player.vimeo.com') return url
 
   return null
@@ -76,7 +63,6 @@ function parseEmbedUrl(url: string): string | null {
 
 type MediaGalleryProps = {
   items: MediaItem[]
-  /** Controlled active item id. When omitted the gallery manages state internally. */
   activeId?: string
   onActiveChange?: (id: string) => void
   className?: string
@@ -137,7 +123,6 @@ function MediaGallery({
     try {
       el.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' })
     } catch {
-      // scrollIntoView is unavailable in some test environments
     }
   }, [activeId])
 
@@ -159,7 +144,6 @@ function MediaGallery({
       aria-label="Media gallery"
       className={cn('flex flex-col gap-2', className)}
     >
-      {/* Main viewer */}
       <div
         data-slot="media-gallery-viewer"
         className={cn(
@@ -192,7 +176,6 @@ function MediaGallery({
         ) : null}
       </div>
 
-      {/* Thumbnail strip */}
       {items.length > 1 ? (
         <div
           data-slot="media-gallery-thumbnails"

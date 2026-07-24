@@ -6,16 +6,6 @@ export type ViteConfigPatchResult =
   | { action: 'already-present' }
   | { action: 'needs-manual'; reason: string }
 
-/**
- * Structurally patches whatever `defineConfig({ … })` call it finds — unlike the old version,
- * which only rewrote a vite.config.ts that still looked exactly like the unmodified
- * `create-vite --template react[-swc]-ts` output (any other content bailed to a manual-merge
- * snippet). Uses ts-morph to locate the defineConfig call's object-literal argument, its
- * `plugins` array (by real AST structure, not a `plugins:\s*\[...\]` regex — so a
- * multi-line array, extra plugins, or a differently-formatted stock file still work), and its
- * `resolve.alias` — only bailing to manual for shapes it can't safely reason about (no
- * defineConfig call at all, a non-object-literal argument, a non-array `plugins`).
- */
 export function patchViteConfig(filePath: string): ViteConfigPatchResult {
   if (!fs.existsSync(filePath)) {
     return { action: 'needs-manual', reason: `${filePath} not found.` }
@@ -81,9 +71,6 @@ export function patchViteConfig(filePath: string): ViteConfigPatchResult {
 
   const resolveProp = configObject.getProperty('resolve')
   if (!resolveProp) {
-    // Built up one empty object at a time (rather than one hand-indented multi-line string) so
-    // ts-morph computes each level's indentation itself — a literal string with its own baked-in
-    // indentation gets ts-morph's nesting indent added on top, doubling up.
     const newResolveProp = configObject
       .addPropertyAssignment({ name: 'resolve', initializer: '{}' })
       .getInitializerIfKindOrThrow(SyntaxKind.ObjectLiteralExpression)
@@ -127,9 +114,6 @@ export function patchViteConfig(filePath: string): ViteConfigPatchResult {
     }
   }
 
-  // Text-splice the new imports in at the AST-computed anchor (after the last existing import)
-  // rather than routing them through ts-morph's own import-declaration printer, so they keep
-  // the file's existing style (no semicolons) instead of picking up ts-morph's defaults.
   let src = sourceFile.getFullText()
   if (importDecls.length) {
     const insertAt = importDecls[importDecls.length - 1].getEnd()

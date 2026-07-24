@@ -1,14 +1,4 @@
-/* ==========================================================================
-   Shadows
-   ==========================================================================
-   Elevation shadows cascaded from paramount-mobile-app / function-rx
-   (byte-identical across those two apps). Values use rgba deliberately —
-   these multi-layer soft shadows cannot be expressed as opaque shade-token
-   composites without losing the intended translucency.
-   ========================================================================== */
-
 :root {
-  /* Paramount Design System — Figma Shadows (node 14:2462) */
   --shadow-xs: 0px 1px 4px 0px rgba(0, 0, 0, 0.15);
   --shadow-sm:
     0px 13.642px 33px -3.411px rgba(0, 0, 0, 0.1), 0px 1.705px 3.411px 0px rgba(0, 0, 0, 0.04);

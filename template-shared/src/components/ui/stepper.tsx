@@ -10,9 +10,7 @@ type StepperProps = {
   orientation?: 'horizontal' | 'vertical'
   className?: string
   children?: React.ReactNode
-  /** Used by the `segments` variant. */
   currentStep?: number
-  /** Used by the `segments` variant. */
   totalSteps?: number
 }
 
@@ -82,7 +80,7 @@ function StepperItem({
               'bg-border',
               vertical
                 ? 'mt-2 h-8 w-px'
-                : // From outside this circle to outside the next circle (next column center)
+                :
                   'absolute top-1/2 left-[calc(50%+1.25rem)] right-[calc(-50%+1.25rem)] h-px -translate-y-1/2',
               connectorActive && 'bg-primary'
             )}

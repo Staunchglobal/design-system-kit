@@ -12,12 +12,6 @@ import {
 
 export { OTP_RESEND_COOLDOWN_SECONDS, clearOtpCooldown, startOtpCooldown }
 
-/**
- * 60s OTP resend cooldown persisted in localStorage.
- *
- * Uses `useSyncExternalStore` so SSR / hydration stay aligned (server snapshot is 0 /
- * not-ready) without calling setState inside an effect.
- */
 export function useOtpTimer(cooldownSeconds: number = OTP_RESEND_COOLDOWN_SECONDS) {
   const secondsLeft = React.useSyncExternalStore(
     subscribeOtpTimer,
@@ -25,7 +19,6 @@ export function useOtpTimer(cooldownSeconds: number = OTP_RESEND_COOLDOWN_SECOND
     () => 0
   )
 
-  // false on the server + first hydration paint; true on the client afterward.
   const ready = React.useSyncExternalStore(
     () => () => {},
     () => true,
@@ -39,7 +32,6 @@ export function useOtpTimer(cooldownSeconds: number = OTP_RESEND_COOLDOWN_SECOND
     [cooldownSeconds]
   )
 
-  /** Resume an in-flight cooldown, or start one if none is active. */
   const startIfNeeded = React.useCallback(
     (seconds: number = cooldownSeconds) => {
       if (readOtpSecondsLeft() > 0) return
@@ -55,7 +47,6 @@ export function useOtpTimer(cooldownSeconds: number = OTP_RESEND_COOLDOWN_SECOND
   return {
     secondsLeft,
     ready,
-    /** Only true after mount and when the cooldown has elapsed. */
     canResend: ready && secondsLeft <= 0,
     start,
     startIfNeeded,

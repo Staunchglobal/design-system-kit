@@ -1,23 +1,14 @@
-/* ==========================================================================
-   Alert
-   ==========================================================================
-   Paramount Design System — Alerts (Figma 58:1104)
-   Inline: Default / Info / Warning / Error / Success
-   Shell: radius 24, px 16, py 12, gap 12. Title always text/dark;
-   description + icon use semantic tint.
-   ========================================================================== */
-
 [data-slot='alert'] {
-  --alert-radius: var(--radius-3xl); /* 24px — Button/Input large */
-  --alert-padding-x: 1rem; /* 16px */
-  --alert-padding-y: 0.75rem; /* 12px */
-  --alert-gap-x: 0.75rem; /* 12px — icon ↔ content */
-  --alert-gap-y: 0; /* title ↔ description stacked tight */
-  --alert-font-size: var(--typography-small-font-size); /* Body B3 — 14px */
+  --alert-radius: var(--radius-3xl);
+  --alert-padding-x: 1rem;
+  --alert-padding-y: 0.75rem;
+  --alert-gap-x: 0.75rem;
+  --alert-gap-y: 0;
+  --alert-font-size: var(--typography-small-font-size);
   --alert-action-offset: 0.75rem;
   --alert-border-width: 0px;
   --alert-border-color: transparent;
-  --alert-icon-size: 1.5rem; /* 24px */
+  --alert-icon-size: 1.5rem;
 
   border-radius: var(--alert-radius);
   padding-inline: var(--alert-padding-x);
@@ -32,19 +23,15 @@
   width: var(--alert-icon-size);
   height: var(--alert-icon-size);
 }
-
-/* Default — Neutral/50 */
 [data-slot='alert'][data-variant='default'] {
   --alert-bg: var(--neutral-50);
-  --alert-fg: var(--muted-600); /* icon / default body */
+  --alert-fg: var(--muted-600);
   background-color: var(--alert-bg);
   color: var(--alert-fg);
 }
-
-/* Error / destructive — Danger/50 + text/danger */
 [data-slot='alert'][data-variant='destructive'] {
-  --alert-destructive-bg: var(--destructive-50); /* #fdf1f1 */
-  --alert-destructive-fg: var(--destructive-500); /* #d94c51 */
+  --alert-destructive-bg: var(--destructive-50);
+  --alert-destructive-fg: var(--destructive-500);
   --alert-destructive-description-fg: var(--destructive-500);
   background-color: var(--alert-destructive-bg);
   color: var(--alert-destructive-fg);
@@ -53,11 +40,9 @@
 [data-slot='alert'][data-variant='destructive'] [data-slot='alert-description'] {
   color: var(--alert-destructive-description-fg);
 }
-
-/* Success — Success/50 + text/success */
 [data-slot='alert'][data-variant='success'] {
-  --alert-success-bg: var(--success-50); /* #e8f7eb */
-  --alert-success-fg: var(--success-500); /* #2e8540 */
+  --alert-success-bg: var(--success-50);
+  --alert-success-fg: var(--success-500);
   --alert-success-description-fg: var(--success-500);
   background-color: var(--alert-success-bg);
   color: var(--alert-success-fg);
@@ -66,11 +51,9 @@
 [data-slot='alert'][data-variant='success'] [data-slot='alert-description'] {
   color: var(--alert-success-description-fg);
 }
-
-/* Warning — Warning/50 + text/secondary ~#d19335 */
 [data-slot='alert'][data-variant='warning'] {
-  --alert-warning-bg: var(--warning-50); /* #ffefd9 */
-  --alert-warning-fg: var(--warning-600); /* #d49137 */
+  --alert-warning-bg: var(--warning-50);
+  --alert-warning-fg: var(--warning-600);
   --alert-warning-description-fg: var(--warning-600);
   background-color: var(--alert-warning-bg);
   color: var(--alert-warning-fg);
@@ -79,11 +62,9 @@
 [data-slot='alert'][data-variant='warning'] [data-slot='alert-description'] {
   color: var(--alert-warning-description-fg);
 }
-
-/* Info — Info/50 + text/info */
 [data-slot='alert'][data-variant='info'] {
-  --alert-info-bg: var(--info-50); /* #ecf1fb */
-  --alert-info-fg: var(--info-500); /* #4676d9 */
+  --alert-info-bg: var(--info-50);
+  --alert-info-fg: var(--info-500);
   --alert-info-description-fg: var(--info-500);
   background-color: var(--alert-info-bg);
   color: var(--alert-info-fg);
@@ -92,8 +73,6 @@
 [data-slot='alert'][data-variant='info'] [data-slot='alert-description'] {
   color: var(--alert-info-description-fg);
 }
-
-/* Title — always text/dark (Body B2 Medium 16/24) */
 [data-slot='alert-title'] {
   --alert-title-font-family: var(--font-sans);
   --alert-title-font-size: var(--typography-p-font-size);
@@ -110,8 +89,6 @@
 [data-slot='alert-title'] a:hover {
   color: var(--alert-title-link-hover-fg);
 }
-
-/* Description — Body B3 Regular 14/20; color from variant */
 [data-slot='alert-description'] {
   --alert-description-font-size: var(--typography-muted-font-size);
   --alert-description-font-weight: var(--typography-muted-font-weight);

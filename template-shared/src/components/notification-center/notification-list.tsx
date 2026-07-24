@@ -19,7 +19,6 @@ type NotificationItem = {
 
 type DateGroup = {
   label: string
-  /** Stable sort key for deterministic ordering (ISO date string or 'invalid'). */
   sortKey: string
   items: NotificationItem[]
 }
@@ -32,7 +31,6 @@ function getGroupLabel(date: Date, now: Date): string {
   if (!isValid(date)) return 'Earlier'
   if (isSameDay(date, now)) return 'Today'
   if (isSameDay(date, subDays(now, 1))) return 'Yesterday'
-  // Same year as reference: show "Month Day", otherwise show full date
   if (date.getFullYear() === now.getFullYear()) {
     return format(date, 'MMMM d')
   }
@@ -43,11 +41,6 @@ function getGroupSortKey(date: Date): string {
   return isValid(date) ? format(date, 'yyyy-MM-dd') : 'invalid'
 }
 
-/**
- * Groups `items` by calendar day relative to `now`.
- * Groups are sorted newest-first; items within each group retain their input order.
- * `now` must be stable (passed in, never derived from Date.now during render).
- */
 function groupByDate(items: NotificationItem[], now: Date): DateGroup[] {
   const map = new Map<string, DateGroup>()
 
@@ -64,7 +57,6 @@ function groupByDate(items: NotificationItem[], now: Date): DateGroup[] {
     group.items.push(item)
   }
 
-  // Newest first; 'invalid' always goes last
   return Array.from(map.values()).sort((a, b) => {
     if (a.sortKey === 'invalid') return 1
     if (b.sortKey === 'invalid') return -1
@@ -74,11 +66,6 @@ function groupByDate(items: NotificationItem[], now: Date): DateGroup[] {
 
 type NotificationListProps = {
   items: NotificationItem[]
-  /**
-   * Stable reference point used for date-group labels ("Today", "Yesterday", …).
-   * Must not be derived from Date.now inside the render cycle — pass a ref value
-   * or a prop from the parent.
-   */
   now: Date
   onItemClick?: (id: string) => void
   emptyMessage?: React.ReactNode

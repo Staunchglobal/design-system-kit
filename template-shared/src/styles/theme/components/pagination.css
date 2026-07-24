@@ -1,13 +1,5 @@
-/* ==========================================================================
-   Pagination
-   ==========================================================================
-   Safer Health Table Footer (Figma 715:158842) — compact 32×24 pills,
-   selected = info soft fill, default = bordered white.
-   Mapped to kit info / border / typography tokens.
-   ========================================================================== */
-
 [data-slot='pagination'] {
-  --pagination-gap: 0.25rem; /* 4px */
+  --pagination-gap: 0.25rem;
   width: auto;
   margin-inline: 0;
   justify-content: flex-end;
@@ -17,17 +9,15 @@
   --pagination-content-gap: var(--pagination-gap, 0.25rem);
   gap: var(--pagination-content-gap);
 }
-
-/* Page number pills — Button chrome overridden to match Figma items */
 [data-ui='pagination-link'][data-size='icon'] {
-  --pagination-item-width: 2rem; /* 32px */
-  --pagination-item-height: 1.5rem; /* 24px */
-  --pagination-item-radius: var(--radius-md); /* 8px */
+  --pagination-item-width: 2rem;
+  --pagination-item-height: 1.5rem;
+  --pagination-item-radius: var(--radius-md);
   --pagination-item-border-color: var(--border);
   --pagination-item-bg: var(--neutral-0);
   --pagination-item-fg: var(--muted-600);
-  --pagination-item-font-size: var(--typography-caption-font-size); /* 12px */
-  --pagination-item-font-weight: var(--typography-small-font-weight); /* 500 */
+  --pagination-item-font-size: var(--typography-caption-font-size);
+  --pagination-item-font-weight: var(--typography-small-font-weight);
 
   box-sizing: border-box;
   inline-size: var(--pagination-item-width) !important;
@@ -58,8 +48,6 @@
   box-shadow: none !important;
   outline: none !important;
 }
-
-/* Selected — semantic info soft (Figma #eff6ff / #1d4ed8) */
 [data-ui='pagination-link'][data-size='icon'][data-active='true'] {
   --pagination-item-bg: var(--info-50);
   --pagination-item-fg: var(--info-700);
@@ -72,8 +60,6 @@
   background-color: var(--info-100) !important;
   color: var(--info-700) !important;
 }
-
-/* Prev / Next text controls (design-system demos) — quieter than number pills */
 [data-slot='pagination-item'] > [data-ui='pagination-link'][data-size='default'],
 [data-slot='pagination-item'] [data-ui='pagination-link'].h-8 {
   inline-size: auto !important;
@@ -100,7 +86,6 @@
   font-weight: var(--typography-small-font-weight);
   gap: 0;
 }
-/* Figma uses "…" text, not a more-horizontal icon */
 [data-slot='pagination-ellipsis'] svg {
   display: none;
 }
@@ -108,8 +93,6 @@
   content: '…';
   line-height: 1;
 }
-
-/* CRUD table footer shell */
 [data-slot='crud-pagination'] {
   --crud-pagination-padding-x: 1rem;
   --crud-pagination-padding-y: 0.75rem;

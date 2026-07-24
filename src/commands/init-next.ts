@@ -59,15 +59,12 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
     return
   }
 
-  // '' for a root layout (no --src-dir), 'src' for the src/ layout — every path below is
-  // built from this so the kit works with either.
   const srcDir = project.appDirRelative === 'src/app' ? 'src' : ''
   const destRoot = path.join(root, srcDir)
   const rel = (p: string) => (srcDir ? `${srcDir}/${p}` : p)
   const aliasTarget = srcDir ? './src/*' : './*'
   log.info(`Layout: ${srcDir ? 'src/ directory' : 'no src/ directory (root layout)'}`)
 
-  // ---- Which components? ------------------------------------------------------
   log.title('Components')
   const toolOnly = resolveUiClosure(THEME_EDITOR_REQUIRED_COMPONENTS)
   const prior = priorSelectionFor(root, toolOnly, srcDir)
@@ -85,7 +82,6 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
     log.info(`Also included (required by your picks): ${[...addedByDeps].sort().join(', ')}`)
   }
 
-  // ---- Dependencies -------------------------------------------------------
   const existingDeps = {
     ...((project.packageJson.dependencies as Record<string, string>) ?? {}),
     ...((project.packageJson.devDependencies as Record<string, string>) ?? {}),
@@ -130,13 +126,10 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
     }
   }
 
-  // ---- Copy files -------------------------------------------------------------
   log.title('Files')
   const uiFiles = [...closure].filter((s) => s !== 'patterns').map((s) => `components/ui/${s}.tsx`)
   const cssFiles = [...cssFilesFor(closure)].map((f) => `styles/theme/components/${f}`)
   const extraFiles = [...extraFilesFor(closure)]
-  // Only the user's own picks decide what shows up in the design-system showcase — the
-  // theme editor's tool-chrome deps (toolOnly) must never drag in an unrelated demo section.
   const navGroups = navGroupsFor(userClosure)
   const sectionFiles = demoFilesFor(navGroups).map((f) => `app/design-system/_sections/${f}`)
   const frameworkExtraFiles = frameworkExtraFilesFor(userClosure, 'next')
@@ -161,9 +154,6 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
   }
 
   const dryRun = !!options.dryRun
-  // A previously-renamed token (via /theme-editor) only touched files that existed at
-  // the time — reapply that history to anything newly copied now, so a component added
-  // after the rename doesn't arrive still using the original name.
   const renameHistory = loadRenameHistory(destRoot)
   const sharedFixed = await copySelectedFiles(sharedSrc, destRoot, ALWAYS_SHARED_FILES, dryRun, renameHistory)
   const sharedUi = await copySelectedFiles(sharedSrc, destRoot, uiFiles, dryRun, renameHistory)
@@ -270,7 +260,6 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
     return
   }
 
-  // ---- Patch configs ------------------------------------------------------------
   log.title('Wiring it up')
 
   const postcssResult = patchPostcssConfig(root)
@@ -366,7 +355,6 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
 
   writeSelectionConfig(root, [...userChosen])
 
-  // ---- Done ------------------------------------------------------------------------
   log.title('Done')
   log.success('Design system kit installed.')
   log.info(`Run your dev server, then visit ${pc.bold('/design-system')} and ${pc.bold('/theme-editor')}.`)

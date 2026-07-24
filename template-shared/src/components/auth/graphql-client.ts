@@ -1,7 +1,3 @@
-/**
- * Tiny native-fetch GraphQL helper — no Apollo/urql.
- * Same signature as the CRUD helper; duplicated so `auth` installs without `crud-table`.
- */
 export async function graphqlFetch<T>(
   endpoint: string,
   query: string,

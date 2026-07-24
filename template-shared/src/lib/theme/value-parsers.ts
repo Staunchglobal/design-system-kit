@@ -99,8 +99,6 @@ export type ParsedTransition = {
   compound: boolean;
 };
 
-// Sourced from token-families.json — the single canonical registry of token-family
-// names, shared with generate-theme-manifest.mjs (Node) so the two never drift.
 const COLOR_SEMANTIC = new Set<string>(tokenFamilies.colorSemantic);
 
 const SHADE_PREFIXES = tokenFamilies.shadeFamilies.map((f) => `${f}-`);
@@ -251,7 +249,6 @@ export function inferFieldType(name: string, value: string): ThemeFieldType {
   if (ref) {
     const refType = refBareToFieldType(ref);
     if (refType) return refType;
-    // Component-local refs like --input-radius, --breadcrumb-list-fg
     if (isLikelyColorVarName(ref)) return "color-ref";
     if (ref.includes("radius")) return "radius-ref";
     if (ref.startsWith("--typography-")) return "typography-ref";
@@ -263,7 +260,6 @@ export function inferFieldType(name: string, value: string): ThemeFieldType {
   return "raw";
 }
 
-/** Resolve var() chains using a name→value map built from the manifest. */
 export function resolveVarFieldType(
   refName: string,
   valueByName: Record<string, string>,

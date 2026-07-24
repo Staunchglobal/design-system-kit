@@ -24,19 +24,16 @@ const REQUIREMENTS = [
   },
 ] as const
 
-/** Missing requirement messages for the given password (empty when valid). */
 export function getPasswordRequirementErrors(password: string): string[] {
   if (!password) return ['Password is required']
   return REQUIREMENTS.filter((r) => !r.test(password)).map((r) => r.message)
 }
 
-/** Strong password policy (paramount-style) for signup / reset / change. */
 export function isPasswordStrong(password: string): boolean {
   if (!password) return false
   return getPasswordRequirementErrors(password).length === 0
 }
 
-/** @returns null when valid; otherwise the first missing requirement (legacy single-string callers). */
 export function validatePassword(password: string): string | null {
   const errors = getPasswordRequirementErrors(password)
   return errors[0] ?? null
@@ -49,7 +46,6 @@ export function validateEmail(email: string): string | null {
   return null
 }
 
-/** Login-only: non-empty + min length 8 (full strength policy is for signup/reset/change). */
 export function validateLoginPassword(password: string): string | null {
   if (!password) return 'Password is required'
   if (password.length < 8) return 'Password must be at least 8 characters'

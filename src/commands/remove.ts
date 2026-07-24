@@ -25,7 +25,6 @@ export type RemoveOptions = {
   dryRun?: boolean
 }
 
-/** Deletes a file if it exists — a no-op (not an error) if it's already gone. */
 function removeFile(filePath: string): boolean {
   if (!fs.existsSync(filePath)) return false
   fs.rmSync(filePath)
@@ -89,10 +88,6 @@ export async function remove(options: RemoveOptions) {
   const newUserClosure = resolveUiClosure(remaining)
   const newClosure = new Set([...newUserClosure, ...toolOnly])
 
-  // A component you asked to remove might still be a dependency of something you're keeping
-  // (e.g. asking to remove "button" while "combobox" — which needs it — stays selected) — the
-  // closure recomputation above naturally keeps it, so tell the user why instead of pretending
-  // it's gone.
   const keptDueToDeps = [...toRemove].filter((s) => newClosure.has(s))
   for (const slug of keptDueToDeps) {
     const dependents = [...remaining].filter((other) => resolveUiClosure([other]).has(slug))
@@ -110,11 +105,6 @@ export async function remove(options: RemoveOptions) {
   const rel = (p: string) => (srcDir ? `${srcDir}/${p}` : p)
   const sectionsRel = project.framework === 'next' ? 'app/design-system/_sections' : 'design-system/_sections'
 
-  // Nav/demo generation must key off the *user's own* closure, not the tool-chrome-inclusive
-  // one — toolOnly components (field, input-group, native-select) get their ui/*.tsx installed
-  // for the theme editor's own use but never get a demo file copied or a nav entry at all (see
-  // the same distinction in init-next.ts/init-vite.ts). Using oldClosure/newClosure here would
-  // regenerate a page.tsx that imports demo files that were never actually installed.
   const oldNavGroups = navGroupsFor(oldUserClosure)
   const newNavGroups = navGroupsFor(newUserClosure)
   const oldDemoFiles = new Set(demoFilesFor(oldNavGroups))

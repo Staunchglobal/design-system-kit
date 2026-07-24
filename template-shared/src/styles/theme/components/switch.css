@@ -1,17 +1,5 @@
-/* ==========================================================================
-   Switch
-   ==========================================================================
-   Paramount Design System — Toggles (Figma 6848:6176 / 6848:6287 / 6848:6291)
-   Small:  36×20, p 2, thumb 16, radius 12
-   Large:  36×24, px 4 py 2, thumb 16, radius 12
-   Off: Neutral/200 → hover Neutral/300
-   On:  Primary/500 full track + justify-end → hover Primary/600
-   Thumb: solid white + Shadow/sm (never clipped)
-   !important used only where TSX utilities (size/translate) otherwise win.
-   ========================================================================== */
-
 [data-slot='switch'] {
-  --switch-radius: var(--radius-lg); /* 12px */
+  --switch-radius: var(--radius-lg);
   --switch-checked-bg: var(--primary-500);
   --switch-checked-hover-bg: var(--primary-600);
   --switch-unchecked-bg: var(--neutral-200);
@@ -22,9 +10,9 @@
   --switch-invalid-border-color: var(--destructive);
   --switch-invalid-ring-color: color-mix(in oklab, var(--destructive) 35%, transparent);
   --switch-disabled-opacity: 0.5;
-  --switch-thumb-size: 1rem; /* 16px */
-  --switch-track-width: 2.25rem; /* 36px */
-  --switch-track-height: 1.5rem; /* Large default */
+  --switch-thumb-size: 1rem;
+  --switch-track-width: 2.25rem;
+  --switch-track-height: 1.5rem;
   --switch-padding-inline: 0.25rem;
   --switch-padding-block: 0.125rem;
 
@@ -42,7 +30,7 @@
   border-color: transparent !important;
   padding-inline: var(--switch-padding-inline) !important;
   padding-block: var(--switch-padding-block) !important;
-  overflow: visible !important; /* do not clip thumb / shadow */
+  overflow: visible !important;
   background-clip: border-box;
   box-shadow: none;
 }
@@ -87,21 +75,17 @@
 [data-slot='switch'][data-disabled]:hover[data-state='unchecked'] {
   background-color: var(--switch-unchecked-bg) !important;
 }
-
-/* Large = kit default (Figma Large) */
 [data-slot='switch'][data-size='default'] {
-  --switch-track-height: 1.5rem; /* 24px */
-  --switch-track-width: 2.25rem; /* 36px */
-  --switch-padding-inline: 0.25rem; /* 4px */
-  --switch-padding-block: 0.125rem; /* 2px */
+  --switch-track-height: 1.5rem;
+  --switch-track-width: 2.25rem;
+  --switch-padding-inline: 0.25rem;
+  --switch-padding-block: 0.125rem;
 }
-
-/* Small = kit sm (Figma Small) */
 [data-slot='switch'][data-size='sm'] {
-  --switch-track-height: 1.25rem; /* 20px */
-  --switch-track-width: 2.25rem; /* 36px */
-  --switch-padding-inline: 0.125rem; /* 2px */
-  --switch-padding-block: 0.125rem; /* 2px */
+  --switch-track-height: 1.25rem;
+  --switch-track-width: 2.25rem;
+  --switch-padding-inline: 0.125rem;
+  --switch-padding-block: 0.125rem;
 }
 
 [data-slot='switch'] [data-slot='switch-thumb'],
@@ -122,7 +106,6 @@
   background-color: var(--switch-thumb-bg) !important;
   border-radius: var(--radius-full) !important;
   box-shadow: var(--switch-thumb-shadow) !important;
-  /* Cancel TSX translate — Figma uses justify-end, not translateX */
   transform: none !important;
   translate: 0 0 !important;
   --tw-translate-x: 0 !important;

@@ -36,7 +36,6 @@ export type CrudFormFieldsProps = {
   idPrefix?: string
 }
 
-/** Renders declarative CrudFieldDef list with kit Field/Input/Textarea. */
 export function CrudFormFields({
   fields,
   values,

@@ -1,17 +1,9 @@
-/* ==========================================================================
-   Breadcrumb
-   ==========================================================================
-   Paramount Design System — Breadcrumbs (Figma 6897:7201)
-   Caption Medium 12/16. Parent link = text/primary; Active page = text/light;
-   Divider chevron 16px = icon/grey.
-   ========================================================================== */
-
 [data-slot='breadcrumb-list'] {
-  --breadcrumb-list-fg: var(--muted-600); /* icon/grey — separators */
-  --breadcrumb-list-gap: 0.5rem; /* 8px */
-  --breadcrumb-list-font-size: var(--typography-caption-font-size); /* 12px */
-  --breadcrumb-list-line-height: var(--typography-caption-line-height); /* 16px */
-  --breadcrumb-list-font-weight: var(--typography-small-font-weight); /* Caption Medium — 500 */
+  --breadcrumb-list-fg: var(--muted-600);
+  --breadcrumb-list-gap: 0.5rem;
+  --breadcrumb-list-font-size: var(--typography-caption-font-size);
+  --breadcrumb-list-line-height: var(--typography-caption-line-height);
+  --breadcrumb-list-font-weight: var(--typography-small-font-weight);
   color: var(--breadcrumb-list-fg);
   gap: var(--breadcrumb-list-gap);
   font-size: var(--breadcrumb-list-font-size);
@@ -23,8 +15,6 @@
   --breadcrumb-item-gap: 0.25rem;
   gap: var(--breadcrumb-item-gap);
 }
-
-/* Parent — text/primary #3ab5fe */
 [data-slot='breadcrumb-link'] {
   --breadcrumb-link-fg: var(--primary);
   --breadcrumb-link-hover-fg: var(--primary-600);
@@ -37,18 +27,14 @@
 [data-slot='breadcrumb-link']:hover {
   color: var(--breadcrumb-link-hover-fg);
 }
-
-/* Active — text/light #b4b5b7 */
 [data-slot='breadcrumb-page'] {
   --breadcrumb-page-fg: var(--muted-400);
   --breadcrumb-page-font-weight: var(--typography-small-font-weight);
   color: var(--breadcrumb-page-fg);
   font-weight: var(--breadcrumb-page-font-weight);
 }
-
-/* Divider — arrow-right 16px, icon/grey */
 [data-slot='breadcrumb-separator'] {
-  --breadcrumb-separator-icon-size: 1rem; /* 16px */
+  --breadcrumb-separator-icon-size: 1rem;
   --breadcrumb-separator-fg: var(--muted-600);
   color: var(--breadcrumb-separator-fg);
 }

@@ -14,7 +14,6 @@ import {
 
 export const runtime = 'nodejs'
 
-/** Works whether the project uses a src/ directory or not (Next.js supports both). */
 function srcRoot(): string {
   return fs.existsSync(path.join(process.cwd(), 'src')) ? 'src' : '.'
 }
@@ -31,7 +30,6 @@ function replaceCssVar(css: string, name: string, value: string): string {
   return css
 }
 
-/** Replace the Nth (0-based) occurrence of `--name: …;` in a CSS file. */
 function replaceCssVarAtOccurrence(
   css: string,
   name: string,
@@ -53,8 +51,6 @@ function ensureColorVar(css: string, name: string, hex: string): string {
   if (css.includes(`${varName}:`)) {
     return replaceCssVar(css, varName, hex)
   }
-  // Append inside the file's first :root { — both color-scales.css and colors.css are
-  // single-:root files, so there's no further section boundary to insert before.
   return css.replace(/:root\s*\{/, `:root {\n  ${varName}: ${hex};`)
 }
 
@@ -113,10 +109,6 @@ function writeFontsCss(
 }`)
       varLines.push(`  --font-${f.id}: '${f.id}', sans-serif;`)
     } else if (f.source === 'google') {
-      // Loaded via a <link> in layout.tsx (see patchLayoutFonts), not @import here —
-      // this file gets nested-imported into globals.css, and CSS requires @import to
-      // be the first rule in a stylesheet; buried this deep, it never is, and Next's
-      // build fails with "@import rules must precede all rules" for the whole app.
       varLines.push(`  --font-${f.id}: '${f.googleFamily}', sans-serif;`)
     }
   }
@@ -143,17 +135,6 @@ function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
-/**
- * Loads Google fonts via real <link> tags in <html>, not a CSS @import — see the
- * comment in writeFontsCss for why @import can't work here. `<html>` is guaranteed
- * to exist in any App Router root layout, so appending as its first children works
- * regardless of how the rest of the file is structured. `rel="preconnect"` links are
- * plain resource hints — React auto-hoists them into <head> from anywhere in the
- * tree. `rel="stylesheet"` is different: without a `precedence` prop, React renders
- * it literally in place rather than hoisting it, and a `<link>` isn't a valid direct
- * child of `<html>` (only `<head>`/`<body>` are), which throws a hydration mismatch —
- * `precedence` is what tells React to treat it as a hoistable resource instead.
- */
 function patchLayoutFonts(fonts: ThemeSavePayload['customFonts']) {
   const layoutPath = path.join(process.cwd(), srcRoot(), 'app/layout.tsx')
   let src = fs.readFileSync(layoutPath, 'utf8')
@@ -170,10 +151,6 @@ function patchLayoutFonts(fonts: ThemeSavePayload['customFonts']) {
     for (const f of googleFonts) {
       const family = encodeURIComponent(f.googleFamily)
       const weights = (f.weights || '400;700').replace(/,/g, ';')
-      // precedence is required for React 19+ to hoist/dedupe a stylesheet link
-      // rendered outside <head> — without it, React renders it literally as a
-      // child of <html>, which isn't a valid place for a <link> and throws a
-      // hydration mismatch.
       links.push(
         `<link rel="stylesheet" precedence="default" href="https://fonts.googleapis.com/css2?family=${family}:wght@${weights}&display=swap" />`
       )
@@ -199,17 +176,12 @@ function writeIconMap(iconMap: Record<string, string>) {
   const entries = Object.entries(iconMap)
     .map(([k, v]) => `  '${k}': '${v}',`)
     .join('\n')
-  const content = `/**
- * Semantic icon keys → Lucide icon component names.
- * Edited from /theme-editor; rewritten by POST /api/theme/save.
- */
-export const defaultIconMap = {
+  const content = `export const defaultIconMap = {
 ${entries}
 } as const
 
 export type IconKey = keyof typeof defaultIconMap
 
-/** Mutable map used at runtime (overrides applied before save). */
 export let iconMap: Record<string, string> = { ...defaultIconMap }
 
 export function setIconMap(next: Record<string, string>) {
@@ -255,9 +227,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, message: 'Invalid JSON' }, { status: 400 })
   }
 
-  // Reject identifiers that would land in a filename, a generated .ts/.tsx source
-  // file, or a CSS selector/property name rather than an already-scoped CSS value —
-  // see the comment above isSafeCustomFont for what this is (and isn't) guarding.
   payload.customFonts = payload.customFonts.filter(isSafeCustomFont)
   payload.customColors = payload.customColors.filter(
     (c) => SAFE_TOKEN_RE.test(c.name.replace(/^--/, '')) && isSafeCustomColorValue(c.hex)
@@ -270,11 +239,6 @@ export async function POST(request: Request) {
       ([k, v]) => SAFE_ICON_KEY_RE.test(k) && SAFE_ICON_NAME_RE.test(v)
     )
   )
-  // Values are intentionally free-form (that's the theme editor's actual feature — any
-  // CSS value, not just an allowlisted charset), but every one still lands verbatim at
-  // `property: <value>;` inside a real .css file (replaceCssVarAtOccurrence below), so a
-  // value containing `;`, `{`, `}`, or `/*` could end that declaration early and splice
-  // in new CSS rules. Reject those specifically instead of allowlisting the rest away.
   payload.values = Object.fromEntries(
     Object.entries(payload.values).filter(([, v]) => isSafeCssValue(v))
   )
@@ -289,7 +253,6 @@ export async function POST(request: Request) {
     }[]
   }
 
-  // Persist file fonts
   const fontsDir = path.join(process.cwd(), 'public/fonts')
   fs.mkdirSync(fontsDir, { recursive: true })
   const fonts = [...payload.customFonts]
@@ -299,8 +262,6 @@ export async function POST(request: Request) {
       const ext = path.extname(f.fileName) || '.woff2'
       const outName = `${f.id}${ext}`
       const outPath = path.join(fontsDir, outName)
-      // Belt-and-suspenders on top of the id charset filter above: refuse to write
-      // anywhere the resolved path escapes fontsDir.
       if (!outPath.startsWith(fontsDir + path.sep)) continue
       const base64 = f.dataUrl.replace(/^data:[^;]+;base64,/, '')
       fs.writeFileSync(outPath, Buffer.from(base64, 'base64'))
@@ -308,7 +269,6 @@ export async function POST(request: Request) {
     }
   }
 
-  // Update each CSS file's declared variables
   for (const group of manifest.groups) {
     const abs = path.join(process.cwd(), srcRoot(), 'styles', group.file)
     if (!fs.existsSync(abs)) continue
@@ -345,7 +305,6 @@ export async function POST(request: Request) {
   patchLayoutFonts(fonts)
   writeIconMap(payload.iconMap)
 
-  // Regenerate manifest
   try {
     execFileSync('node', ['scripts/generate-theme-manifest.mjs'], {
       cwd: process.cwd(),

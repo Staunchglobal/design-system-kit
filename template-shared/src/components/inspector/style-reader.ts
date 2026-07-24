@@ -1,9 +1,3 @@
-/**
- * Pure DOM style-reading helpers — no React. `getComputedStyle` is the single source of truth
- * for "resting" values (always exact, whatever produced the value — saved CSS or a live unsaved
- * theme-editor edit). Hover/active are best-effort since no browser lets you script a real
- * per-element pseudo-state; see readInteractiveState below for the technique and its limits.
- */
 
 export type BoxSide = { top: string; right: string; bottom: string; left: string }
 export type ColorValue = { hex: string; alpha: number } | null
@@ -36,11 +30,8 @@ export type TargetDescription = {
 
 export type InteractiveState = 'hover' | 'focus' | 'active'
 
-// getComputedStyle can return rgb()/rgba() (legacy comma or modern space/slash syntax), or, for
-// anything the browser doesn't normalize that way (oklch(), color(), lab() — Tailwind v4 defaults
-// to oklch), something else entirely that needs the canvas round-trip below.
 const RGB_RE = /^rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:\s*[,/]\s*([\d.]+%?))?\s*\)$/i
-const SENTINEL_HEX = '#010203' // arbitrary, vanishingly unlikely to collide with a real color
+const SENTINEL_HEX = '#010203'
 
 let scratchCtx: CanvasRenderingContext2D | null | undefined
 function getScratchCtx(): CanvasRenderingContext2D | null {
@@ -67,17 +58,6 @@ function parseAlpha(raw: string | undefined): number {
   return raw.endsWith('%') ? parseFloat(raw) / 100 : parseFloat(raw)
 }
 
-/**
- * Normalizes any CSS color string (rgb/hsl/oklch/color()/named/hex/…) to hex + alpha. Modern
- * Chromium's canvas `fillStyle` *getter* now echoes back whatever color-function string you
- * assigned (oklch() stays oklch()) instead of always normalizing to rgb() the way older engines
- * did — so round-tripping through the fillStyle string doesn't work for anything beyond what the
- * regex below already handles directly. Reading the actually-*rendered pixel bytes* instead is
- * reliable regardless of what string format the browser echoes back: cleared-to-transparent
- * canvas + a single fillRect + getImageData always yields that color's own un-premultiplied
- * RGBA, since compositing a single source-over draw onto a fully transparent destination
- * reproduces the source unchanged.
- */
 export function colorToHex(cssColor: string | null | undefined): ColorValue {
   if (!cssColor) return null
   const value = cssColor.trim()
@@ -94,7 +74,7 @@ export function colorToHex(cssColor: string | null | undefined): ColorValue {
   try {
     ctx.fillStyle = SENTINEL_HEX
     ctx.fillStyle = value
-    if (ctx.fillStyle === SENTINEL_HEX) return null // browser rejected `value` outright
+    if (ctx.fillStyle === SENTINEL_HEX) return null
 
     ctx.clearRect(0, 0, 1, 1)
     ctx.fillStyle = value
@@ -170,18 +150,6 @@ function readFocusState(el: Element): ElementStyleSnapshot & { supported: boolea
   }
 }
 
-/**
- * Real `:hover`/`:active` cannot be scripted per-element in any browser. Best-effort technique:
- * scan every stylesheet rule for a selector containing the pseudo-class, keep the ones whose
- * de-pseudo'd selector actually matches this element, substitute the pseudo for a disposable
- * marker attribute, apply that attribute, and read getComputedStyle — then clean up immediately.
- *
- * Known gaps (surfaced via the returned `supported: false` rather than a silently wrong value):
- * `.group:hover .child`-style ancestor-triggered variants (would need matching an ancestor, not
- * this element), Radix `data-[state=open]:`/`data-[highlighted]:` attribute-driven states (not a
- * real `:hover`/`:active`, not covered by this scan), and anything driven by inline JS handlers
- * rather than a real stylesheet rule.
- */
 function readHoverOrActiveState(el: Element, state: 'hover' | 'active'): ElementStyleSnapshot & { supported: boolean } {
   const marker = `data-inspector-force-${state}`
   const rules: string[] = []
@@ -191,7 +159,7 @@ function readHoverOrActiveState(el: Element, state: 'hover' | 'active'): Element
       try {
         cssRules = sheet.cssRules
       } catch {
-        continue // cross-origin stylesheet — inaccessible, skip
+        continue
       }
       collectMatchingRules(cssRules, el, state, marker, rules)
     }
@@ -223,9 +191,6 @@ function collectMatchingRules(
 ): void {
   const pseudoRe = new RegExp(`:${state}\\b`, 'g')
   for (const rule of Array.from(cssRules)) {
-    // @layer/@media/@supports can nest the rules we actually care about — Tailwind v4 wraps
-    // essentially everything in @layer base/components/utilities, so skipping these would mean
-    // finding zero hover rules in practice.
     if (typeof CSSLayerBlockRule !== 'undefined' && rule instanceof CSSLayerBlockRule) {
       collectMatchingRules(rule.cssRules, el, state, marker, out)
       continue
@@ -244,7 +209,7 @@ function collectMatchingRules(
         try {
           return el.matches(part.replace(pseudoRe, ''))
         } catch {
-          return false // invalid selector once stripped — skip rather than throw
+          return false
         }
       })
       .map((part) => part.replace(pseudoRe, `[${marker}]`))

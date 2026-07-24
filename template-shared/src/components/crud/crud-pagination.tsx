@@ -16,7 +16,6 @@ import {
 } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
 
-/** Build a compact page list with ellipsis gaps, e.g. [1, '…', 4, 5, 6, '…', 20]. */
 export function pageItems(page: number, pageCount: number): Array<number | 'ellipsis'> {
   if (pageCount <= 7) {
     return Array.from({ length: pageCount }, (_, i) => i + 1)
@@ -38,9 +37,7 @@ export type CrudPaginationProps = {
   pageCount: number
   onPageChange: (page: number) => void
   totalCount?: number
-  /** Overrides the default “Showing X – Y of Z …” summary. */
   totalLabel?: string
-  /** Plural noun for the default summary, e.g. "orders" / "posts". */
   itemLabel?: string
   pageSize?: number
   pageSizeOptions?: number[]
