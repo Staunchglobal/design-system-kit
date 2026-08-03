@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import * as React from 'react'
-import { getAuthSession } from '@/components/auth/auth-session'
+import { useAuthSession } from '@/components/auth/use-auth-store'
 import { ChatInbox } from '@/components/chat/chat-inbox'
 import { chatHref } from '@/app/chat/chat-href'
 import type { ChatTab } from '@/components/chat/types'
@@ -22,18 +22,9 @@ export function ChatApp({
   tab: ChatTab
 }) {
   const router = useRouter()
-  const [ready, setReady] = React.useState(false)
-  const [authed, setAuthed] = React.useState(false)
-
-  React.useEffect(() => {
-    const session = getAuthSession()
-    setAuthed(Boolean(session?.token))
-    setReady(true)
-  }, [])
-
-  if (!ready) {
-    return <div className="text-muted-foreground p-8 text-sm">Loading…</div>
-  }
+  // useSyncExternalStore — null on the server / first client paint, then the real session.
+  const session = useAuthSession()
+  const authed = Boolean(session?.token)
 
   if (!authed) {
     return (

@@ -3,6 +3,9 @@ import { getAuthSession } from '@/components/auth/auth-session'
 import { graphqlFetch } from '@/components/auth/graphql-client'
 import type { AuthFetch } from '@/components/auth/types'
 
+// Vite doesn't ship @types/node; Next inlines NEXT_PUBLIC_* from this literal.
+declare const process: { env: { NEXT_PUBLIC_GRAPHQL_URL?: string } }
+
 type FetchImpl = <T>(
   endpoint: string,
   query: string,

@@ -38,8 +38,7 @@ export type AddChatDialogProps = {
 }
 
 /**
- * Aligns with function-rx AddChatModal chrome: "Add Chat" title, ~456px width,
- * search + pick a person, then submit. Demo skips clinic/co-admin tabs — flat user list.
+ * Add-chat picker: search people, select one, then submit.
  */
 export function AddChatDialog({
   open,
@@ -56,16 +55,15 @@ export function AddChatDialog({
   onSelect,
 }: AddChatDialogProps): React.JSX.Element {
   const [selectedId, setSelectedId] = React.useState<string | null>(null)
+  const [prevOpen, setPrevOpen] = React.useState(open)
   const busy = Boolean(creating)
   const listLoading = Boolean(searching || loading)
 
-  React.useEffect(() => {
-    if (!open) {
-      setSelectedId(null)
-      return
-    }
+  // Clear selection whenever the dialog opens or closes.
+  if (open !== prevOpen) {
+    setPrevOpen(open)
     setSelectedId(null)
-  }, [open])
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()

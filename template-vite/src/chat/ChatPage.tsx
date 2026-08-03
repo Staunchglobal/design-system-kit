@@ -1,8 +1,7 @@
 'use client'
 
-import { Link, useNavigate, useParams, useLocation } from 'react-router-dom'
 import * as React from 'react'
-import { getAuthSession } from '@/components/auth/auth-session'
+import { useAuthSession } from '@/components/auth/use-auth-store'
 import { ChatInbox } from '@/components/chat/chat-inbox'
 import type { ChatTab } from '@/components/chat/types'
 import { Button } from '@/components/ui/button'
@@ -18,26 +17,33 @@ function chatHref(chatId: string | null, tab: ChatTab) {
   return chatId ? `/chat/${chatId}` : '/chat'
 }
 
+function go(path: string) {
+  window.location.assign(path)
+}
+
+/** Parse /chat/:id and /chat/archived/:id without requiring react-router-dom. */
+function parseChatRoute(): { tab: ChatTab; chatId: string | null } {
+  const parts = window.location.pathname.split('/').filter(Boolean)
+  const archived = parts[0] === 'chat' && parts[1] === 'archived'
+  const tab: ChatTab = archived ? 'archived' : 'chats'
+  const chatId = archived
+    ? (parts[2] ?? null)
+    : parts[0] === 'chat' && parts[1] && parts[1] !== 'archived'
+      ? parts[1]
+      : null
+  return { tab, chatId }
+}
+
 export default function ChatPage() {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const params = useParams<{ id?: string }>()
-  const tab: ChatTab = location.pathname.startsWith('/chat/archived')
-    ? 'archived'
-    : 'chats'
-  const chatId = typeof params.id === 'string' ? params.id : null
-  const [ready, setReady] = React.useState(false)
-  const [authed, setAuthed] = React.useState(false)
+  const [{ tab, chatId }, setRoute] = React.useState(parseChatRoute)
+  const session = useAuthSession()
+  const authed = Boolean(session?.token)
 
   React.useEffect(() => {
-    const session = getAuthSession()
-    setAuthed(Boolean(session?.token))
-    setReady(true)
+    const onPopState = () => setRoute(parseChatRoute())
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
   }, [])
-
-  if (!ready) {
-    return <div className="text-muted-foreground p-8 text-sm">Loading…</div>
-  }
 
   if (!authed) {
     return (
@@ -47,9 +53,9 @@ export default function ChatPage() {
           Use the auth demo pages, then return here.
         </p>
         <Button asChild>
-          <Link to="/auth/login">Go to login</Link>
+          <a href="/auth/login">Go to login</a>
         </Button>
-        <Button variant="outline" onClick={() => navigate(0)}>
+        <Button variant="outline" onClick={() => window.location.reload()}>
           I already signed in
         </Button>
         <Toaster />
@@ -66,10 +72,10 @@ export default function ChatPage() {
         chatId={chatId}
         tab={tab}
         onTabChange={(next) => {
-          void navigate(chatHref(null, next))
+          go(chatHref(null, next))
         }}
         onChatIdChange={(id, options) => {
-          void navigate(chatHref(id, options?.tab ?? tab))
+          go(chatHref(id, options?.tab ?? tab))
         }}
       />
       <Toaster />

@@ -40,10 +40,12 @@ export function OtpField({
   // Per-slot state rather than slicing the joined value: clearing a middle slot
   // shortens that string, and re-deriving from it would shift later digits left.
   const [chars, setChars] = React.useState<string[]>(() => toChars(value, length))
-
-  React.useEffect(() => {
-    setChars((current) => (value === current.join('') ? current : toChars(value, length)))
-  }, [value, length])
+  const [prevExternal, setPrevExternal] = React.useState({ value, length })
+  // Sync when the parent resets/changes the controlled value (not on each keystroke).
+  if (value !== prevExternal.value || length !== prevExternal.length) {
+    setPrevExternal({ value, length })
+    setChars(toChars(value, length))
+  }
 
   function focusSlot(index: number) {
     const input = inputsRef.current[Math.min(Math.max(index, 0), length - 1)]

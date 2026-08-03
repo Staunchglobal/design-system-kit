@@ -6,6 +6,11 @@ import {
 } from '@/components/chat/chat-mock-client'
 import type { Unsubscribe } from '@/components/chat/types'
 
+// Vite doesn't ship @types/node; Next inlines NEXT_PUBLIC_* from these literals.
+declare const process: {
+  env: { NEXT_PUBLIC_GRAPHQL_URL?: string; NEXT_PUBLIC_GRAPHQL_WS_URL?: string }
+}
+
 type Cable = ReturnType<typeof createConsumer>
 type ChatChannel = {
   perform: (action: string, data?: object) => void

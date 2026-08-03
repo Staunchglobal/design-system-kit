@@ -22,8 +22,15 @@ export function ImageLightbox({
   const closeButtonRef = React.useRef<HTMLButtonElement>(null)
   const previouslyFocusedRef = React.useRef<HTMLElement | null>(null)
 
-  React.useEffect(() => setMounted(true), [])
-  React.useEffect(() => setI(index), [index])
+  React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- portal only after hydration
+    setMounted(true)
+  }, [])
+  const [prevIndex, setPrevIndex] = React.useState(index)
+  if (index !== prevIndex) {
+    setPrevIndex(index)
+    setI(index)
+  }
 
   React.useEffect(() => {
     if (!open) return

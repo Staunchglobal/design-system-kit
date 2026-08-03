@@ -9,11 +9,11 @@ import {
 } from '@/components/chat/chat-constants'
 import { createChatFetch } from '@/components/chat/chat-fetch'
 import {
-  AllChatsResult,
-  ApiChatRow,
-  ApiMessageRow,
   mapApiMessage,
   mapConversation,
+  type AllChatsResult,
+  type ApiChatRow,
+  type ApiMessageRow,
 } from '@/components/chat/chat-mappers'
 import {
   ALL_CHATS,
@@ -245,6 +245,7 @@ export function useChatInbox({
   )
 
   React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- kick off the initial/refetch chat list
     void loadChats(1, false)
   }, [loadChats])
 
@@ -297,6 +298,7 @@ export function useChatInbox({
   )
 
   React.useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect -- reset or load the thread when selection changes */
     if (!selectedId) {
       setMessages([])
       setMessagesError(null)
@@ -305,6 +307,7 @@ export function useChatInbox({
     }
     setSendError(null)
     void loadMessages(selectedId, 1, false)
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, [selectedId, loadMessages])
 
   React.useEffect(() => {
@@ -388,6 +391,7 @@ export function useChatInbox({
 
   React.useEffect(() => {
     if (!newChatOpen) return
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- load people when the dialog opens / search changes
     void loadUsers()
   }, [newChatOpen, loadUsers])
 

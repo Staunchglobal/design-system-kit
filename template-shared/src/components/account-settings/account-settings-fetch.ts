@@ -5,6 +5,9 @@ import {
   accountSettingsMockFetch,
 } from '@/components/account-settings/account-settings-mock-client'
 
+// Vite doesn't ship @types/node; Next inlines NEXT_PUBLIC_* from this literal.
+declare const process: { env: { NEXT_PUBLIC_GRAPHQL_URL?: string } }
+
 type FetchImpl = <T>(
   endpoint: string,
   query: string,

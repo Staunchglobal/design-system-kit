@@ -49,6 +49,7 @@ export function ChatComposer({
   const [previews, setPreviews] = React.useState<PreviewItem[]>([])
   const inputRef = React.useRef<HTMLInputElement>(null)
 
+  /* eslint-disable react-hooks/set-state-in-effect -- object URLs must be created/revoked with the file list */
   React.useEffect(() => {
     const next = files.map((file, i) => ({
       key: `${file.name}-${file.size}-${file.lastModified}-${i}`,
@@ -63,6 +64,7 @@ export function ChatComposer({
       })
     }
   }, [files])
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   function addFiles(list: FileList | null) {
     if (!list) return

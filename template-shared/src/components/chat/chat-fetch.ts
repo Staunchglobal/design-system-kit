@@ -3,6 +3,9 @@ import { getAuthSession } from '@/components/auth/auth-session'
 import { graphqlFetch } from '@/components/auth/graphql-client'
 import { CHAT_MOCK_ENDPOINT, chatMockFetch } from '@/components/chat/chat-mock-client'
 
+// Vite doesn't ship @types/node; Next inlines NEXT_PUBLIC_* from this literal.
+declare const process: { env: { NEXT_PUBLIC_GRAPHQL_URL?: string } }
+
 type FetchImpl = <T>(
   endpoint: string,
   query: string,
