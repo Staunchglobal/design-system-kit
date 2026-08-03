@@ -29,16 +29,16 @@ export default function ChangePasswordPage() {
     setError(null)
     try {
       const data = await authFetch<UpdatePasswordResult>(UPDATE_PASSWORD, {
-        currentPassword: values.currentPassword,
-        password: values.password,
-        passwordConfirmation: values.passwordConfirmation,
+        input: {
+          currentPassword: values.currentPassword,
+          password: values.password,
+          passwordConfirmation: values.passwordConfirmation,
+        },
       })
-      toast.success(data.updatePassword.response)
+      toast.success(data.updatePassword.success ? 'Password updated' : 'Password not updated')
       router.push('/auth/home')
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Update failed'
-      setError(message)
-      toast.error(message)
+      setError(err instanceof Error ? err.message : 'Update failed')
     } finally {
       setLoading(false)
     }

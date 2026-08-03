@@ -29,9 +29,12 @@ export default function AuthHomePage() {
   return (
     <AuthShell
       title="You’re signed in"
-      description={`${session.user.firstName} ${session.user.lastName} · ${session.user.email}`}
+      description={session.user.email}
     >
       <div className="flex flex-col gap-3">
+        <Button asChild className="w-full">
+          <Link href="/chat">Chat</Link>
+        </Button>
         <Button asChild variant="outline" className="w-full">
           <Link href="/auth/change-password">Change password</Link>
         </Button>

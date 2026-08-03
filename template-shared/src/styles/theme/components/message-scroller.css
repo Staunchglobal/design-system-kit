@@ -14,6 +14,9 @@
 }
 [data-ui='message-scroller-button'] {
   --message-scroller-button-offset: 1rem;
+  --message-scroller-button-inline-end: 1rem;
+  inset-inline-end: var(--message-scroller-button-inline-end);
+  inset-inline-start: auto;
 }
 [data-ui='message-scroller-button'][data-direction='end'] {
   bottom: var(--message-scroller-button-offset);

@@ -2,11 +2,8 @@
 
 import * as React from 'react'
 
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
-import { Input } from '@/components/ui/input'
+import { AuthFormError } from '@/components/auth/auth-form-error'
+import { AuthSubmitButton } from '@/components/auth/auth-submit-button'
 import { PasswordInput } from '@/components/auth/password-input'
 import { PasswordRequirementErrors } from '@/components/auth/password-requirement-errors'
 import {
@@ -14,15 +11,18 @@ import {
   getPasswordRequirementErrors,
   validateEmail,
   validatePasswordConfirmation,
-  validateRequired,
 } from '@/components/auth/password-policy'
 import type { SignupFormValues } from '@/components/auth/types'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
 
 export type SignupFormProps = {
   onSubmit: (values: SignupFormValues) => void | Promise<void>
   loading?: boolean
   error?: string | null
   loginHref?: string
+  showLoginLink?: boolean
   LinkComponent?: React.ElementType
 }
 
@@ -31,18 +31,15 @@ export function SignupForm({
   loading = false,
   error = null,
   loginHref = '/auth/login',
+  showLoginLink = true,
   LinkComponent = 'a',
 }: SignupFormProps) {
   const Link = LinkComponent
-  const [firstName, setFirstName] = React.useState('')
-  const [lastName, setLastName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [passwordConfirmation, setPasswordConfirmation] = React.useState('')
   const [termsAccepted, setTermsAccepted] = React.useState(false)
   const [fieldErrors, setFieldErrors] = React.useState<{
-    firstName?: string
-    lastName?: string
     email?: string
     password?: string[]
     passwordConfirmation?: string
@@ -57,10 +54,6 @@ export function SignupForm({
 
   function validateAll() {
     const next: typeof fieldErrors = {}
-    const firstErr = validateRequired(firstName, 'First name')
-    if (firstErr) next.firstName = firstErr
-    const lastErr = validateRequired(lastName, 'Last name')
-    if (lastErr) next.lastName = lastErr
     const emailErr = validateEmail(email)
     if (emailErr) next.email = emailErr
     const pwErrors = passwordErrorsFor(password)
@@ -78,8 +71,6 @@ export function SignupForm({
     setFieldErrors(next)
     if (Object.keys(next).length) return
     await onSubmit({
-      firstName: firstName.trim(),
-      lastName: lastName.trim(),
       email: email.trim(),
       password,
       passwordConfirmation,
@@ -89,60 +80,15 @@ export function SignupForm({
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
-      {error ? (
-        <Alert variant="destructive">
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      ) : null}
+      <AuthFormError message={error} />
       <FieldGroup>
-        <div className="grid grid-cols-2 gap-3">
-          <Field data-invalid={submitted && !!fieldErrors.firstName}>
-            <FieldLabel htmlFor="signup-first">First name</FieldLabel>
-            <Input
-              id="signup-first"
-              autoComplete="given-name"
-              value={firstName}
-              onChange={(e) => {
-                const value = e.target.value
-                setFirstName(value)
-                if (submitted) {
-                  setFieldErrors((prev) => ({
-                    ...prev,
-                    firstName: validateRequired(value, 'First name') ?? undefined,
-                  }))
-                }
-              }}
-              disabled={loading}
-            />
-            {submitted ? <FieldError>{fieldErrors.firstName}</FieldError> : null}
-          </Field>
-          <Field data-invalid={submitted && !!fieldErrors.lastName}>
-            <FieldLabel htmlFor="signup-last">Last name</FieldLabel>
-            <Input
-              id="signup-last"
-              autoComplete="family-name"
-              value={lastName}
-              onChange={(e) => {
-                const value = e.target.value
-                setLastName(value)
-                if (submitted) {
-                  setFieldErrors((prev) => ({
-                    ...prev,
-                    lastName: validateRequired(value, 'Last name') ?? undefined,
-                  }))
-                }
-              }}
-              disabled={loading}
-            />
-            {submitted ? <FieldError>{fieldErrors.lastName}</FieldError> : null}
-          </Field>
-        </div>
         <Field data-invalid={submitted && !!fieldErrors.email}>
           <FieldLabel htmlFor="signup-email">Email</FieldLabel>
           <Input
             id="signup-email"
             type="email"
             autoComplete="email"
+            placeholder="Enter your email address"
             value={email}
             onChange={(e) => {
               const value = e.target.value
@@ -154,7 +100,7 @@ export function SignupForm({
                 }))
               }
             }}
-            disabled={loading}
+            aria-invalid={submitted && !!fieldErrors.email}
           />
           {submitted ? <FieldError>{fieldErrors.email}</FieldError> : null}
         </Field>
@@ -163,6 +109,7 @@ export function SignupForm({
           <PasswordInput
             id="signup-password"
             autoComplete="new-password"
+            placeholder="Create a password"
             value={password}
             onChange={(e) => {
               const value = e.target.value
@@ -176,7 +123,7 @@ export function SignupForm({
                 }))
               }
             }}
-            disabled={loading}
+            aria-invalid={submitted && !!fieldErrors.password?.length}
           />
           <FieldDescription>{PASSWORD_POLICY_MESSAGE}</FieldDescription>
           {submitted ? <PasswordRequirementErrors errors={fieldErrors.password ?? []} /> : null}
@@ -186,6 +133,7 @@ export function SignupForm({
           <PasswordInput
             id="signup-confirm"
             autoComplete="new-password"
+            placeholder="Confirm your password"
             value={passwordConfirmation}
             onChange={(e) => {
               const value = e.target.value
@@ -197,7 +145,7 @@ export function SignupForm({
                 }))
               }
             }}
-            disabled={loading}
+            aria-invalid={submitted && !!fieldErrors.passwordConfirmation}
           />
           {submitted ? <FieldError>{fieldErrors.passwordConfirmation}</FieldError> : null}
         </Field>
@@ -215,7 +163,7 @@ export function SignupForm({
                 }))
               }
             }}
-            disabled={loading}
+            aria-invalid={submitted && !!fieldErrors.termsAccepted}
           />
           <FieldLabel htmlFor="signup-terms" className="font-normal">
             I agree to the terms and conditions
@@ -223,15 +171,17 @@ export function SignupForm({
         </Field>
         {submitted ? <FieldError>{fieldErrors.termsAccepted}</FieldError> : null}
       </FieldGroup>
-      <Button type="submit" className="w-full" disabled={loading}>
-        {loading ? 'Creating account…' : 'Create account'}
-      </Button>
-      <p className="text-muted-foreground text-center text-sm">
-        Already have an account?{' '}
-        <Link href={loginHref} className="text-foreground font-medium underline-offset-4 hover:underline">
-          Sign in
-        </Link>
-      </p>
+      <AuthSubmitButton loading={loading} loadingLabel="Creating account…">
+        Create account
+      </AuthSubmitButton>
+      {showLoginLink ? (
+        <p className="text-muted-foreground text-center text-sm">
+          Already have an account?{' '}
+          <Link href={loginHref} className="text-primary font-medium underline-offset-4 hover:underline">
+            Sign in
+          </Link>
+        </p>
+      ) : null}
     </form>
   )
 }

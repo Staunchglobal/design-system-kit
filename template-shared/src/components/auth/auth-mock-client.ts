@@ -1,30 +1,35 @@
-import { DEMO_OTP_CODE } from '@/components/auth/auth-operations'
-import { makeDemoUser } from '@/components/auth/auth-session'
 import type { AuthUser } from '@/components/auth/types'
+import { toast } from '@/components/auth/notify'
 
-type StoredUser = AuthUser & { password: string }
+type StoredUser = AuthUser & {
+  password: string
+  otpCode: string | null
+  otpPurpose: 'signup' | 'login' | 'password_reset' | null
+}
 
 const users = new Map<string, StoredUser>()
-const pendingOtps = new Map<string, { code: string; purpose: 'login' | 'reset' }>()
 const resetTokens = new Map<string, string>()
+const invitationTokens = new Map<string, string>()
 const sessions = new Map<string, string>()
+
+let nextUserId = 1
 
 function seed() {
   if (users.size > 0) return
-  const email = 'demo@example.com'
-  users.set(email, {
-    ...makeDemoUser({ email, firstName: 'Demo', lastName: 'User', id: 'user_demo' }),
+  users.set('demo@example.com', {
+    id: 'user_demo',
+    email: 'demo@example.com',
     password: 'Password1!',
+    otpCode: null,
+    otpPurpose: null,
   })
-  resetTokens.set('invite-demo-token', 'invite@example.com')
+  invitationTokens.set('invite-demo-token', 'invite@example.com')
   users.set('invite@example.com', {
-    ...makeDemoUser({
-      email: 'invite@example.com',
-      firstName: 'Invite',
-      lastName: 'Guest',
-      id: 'user_invite',
-    }),
+    id: 'user_invite',
+    email: 'invite@example.com',
     password: '',
+    otpCode: null,
+    otpPurpose: null,
   })
 }
 
@@ -49,6 +54,19 @@ function requireMatch(password: string, confirmation: string) {
   }
 }
 
+function publicUser(user: StoredUser): AuthUser {
+  return { id: user.id, email: user.email, createdAt: user.createdAt }
+}
+
+// No real inbox in mock mode — surface the code a real email would have contained.
+function sendMockOtp(user: StoredUser, purpose: 'signup' | 'login' | 'password_reset'): string {
+  const code = String(Math.floor(100000 + Math.random() * 900000))
+  user.otpCode = code
+  user.otpPurpose = purpose
+  toast.info(`Demo: no email sent. Your verification code is ${code}`)
+  return code
+}
+
 export async function authMockFetch<T>(
   _endpoint: string,
   query: string,
@@ -59,166 +77,137 @@ export async function authMockFetch<T>(
   await delay()
 
   const name = opName(query)
-  const v = variables
+  const v = (variables.input ?? {}) as Record<string, unknown>
 
-  try {
-    switch (name) {
-      case 'LoginUser': {
-        const email = String(v.email ?? '').toLowerCase().trim()
-        const password = String(v.password ?? '')
-        const user = users.get(email)
-        if (!user || user.password !== password) {
-          throw new Error('Invalid email or password')
-        }
-        pendingOtps.set(email, { code: DEMO_OTP_CODE, purpose: 'login' })
-        return {
-          loginUser: {
-            token: null,
-            otpSent: true,
-            message: 'OTP sent to your email',
-            otpCode: DEMO_OTP_CODE,
-          },
-        } as T
+  switch (name) {
+    case 'SignUp': {
+      const email = String(v.email ?? '').toLowerCase().trim()
+      const password = String(v.password ?? '')
+      requireMatch(password, String(v.passwordConfirmation ?? ''))
+      if (users.has(email) && users.get(email)!.password) {
+        throw new Error('An account with this email already exists')
       }
-
-      case 'RegisterUser': {
-        const email = String(v.email ?? '').toLowerCase().trim()
-        if (users.has(email) && users.get(email)!.password) {
-          throw new Error('An account with this email already exists')
-        }
-        users.set(email, {
-          ...makeDemoUser({
-            email,
-            firstName: String(v.firstName ?? 'New'),
-            lastName: String(v.lastName ?? 'User'),
-          }),
-          password: String(v.password ?? ''),
-        })
-        pendingOtps.set(email, { code: DEMO_OTP_CODE, purpose: 'login' })
-        return {
-          registerUser: {
-            otpSent: true,
-            message: 'Account created. Verify with OTP.',
-            otpCode: DEMO_OTP_CODE,
-          },
-        } as T
+      const user: StoredUser = {
+        id: `user_${nextUserId++}`,
+        email,
+        password,
+        otpCode: null,
+        otpPurpose: null,
+        createdAt: new Date().toISOString(),
       }
-
-      case 'LoginWithOtp': {
-        const email = String(v.email ?? '').toLowerCase().trim()
-        const otp = String(v.otp ?? '')
-        const pending = pendingOtps.get(email)
-        if (!pending || pending.purpose !== 'login' || otp !== pending.code) {
-          throw new Error('Invalid or expired OTP')
-        }
-        pendingOtps.delete(email)
-        const user = users.get(email)
-        if (!user) throw new Error('User not found')
-        const token = issueToken(email)
-        const { password: _, ...publicUser } = user
-        return { loginWithOtp: { token, user: publicUser } } as T
-      }
-
-      case 'ResendOtp': {
-        const email = String(v.email ?? '').toLowerCase().trim()
-        if (!users.has(email)) throw new Error('User not found')
-        pendingOtps.set(email, { code: DEMO_OTP_CODE, purpose: 'login' })
-        return {
-          resendOtp: { message: 'OTP resent', otpCode: DEMO_OTP_CODE },
-        } as T
-      }
-
-      case 'SendPasswordResetOtp': {
-        const email = String(v.email ?? '').toLowerCase().trim()
-        if (!users.has(email)) {
-          return {
-            sendPasswordResetOtp: {
-              message: 'If that email exists, an OTP was sent',
-              otpCode: DEMO_OTP_CODE,
-            },
-          } as T
-        }
-        pendingOtps.set(email, { code: DEMO_OTP_CODE, purpose: 'reset' })
-        return {
-          sendPasswordResetOtp: {
-            message: 'OTP sent for password reset',
-            otpCode: DEMO_OTP_CODE,
-          },
-        } as T
-      }
-
-      case 'VerifyPasswordResetOtp': {
-        const email = String(v.email ?? '').toLowerCase().trim()
-        const otp = String(v.otp ?? '')
-        const pending = pendingOtps.get(email)
-        if (!pending || pending.purpose !== 'reset' || otp !== pending.code) {
-          throw new Error('Invalid or expired OTP')
-        }
-        pendingOtps.delete(email)
-        const resetPasswordToken = `reset_${email}_${Date.now()}`
-        resetTokens.set(resetPasswordToken, email)
-        return { verifyPasswordResetOtp: { resetPasswordToken } } as T
-      }
-
-      case 'SetPassword': {
-        const token = String(v.token ?? '')
-        const password = String(v.password ?? '')
-        const confirmation = String(v.passwordConfirmation ?? '')
-        requireMatch(password, confirmation)
-        const email = resetTokens.get(token)
-        if (!email) throw new Error('Invalid or expired reset token')
-        const user = users.get(email)
-        if (!user) throw new Error('User not found')
-        user.password = password
-        resetTokens.delete(token)
-        return { setPassword: { token: null, user: null } } as T
-      }
-
-      case 'AcceptInvitation': {
-        const token = String(v.token ?? '')
-        const password = String(v.password ?? '')
-        const confirmation = String(v.passwordConfirmation ?? '')
-        requireMatch(password, confirmation)
-        const email = resetTokens.get(token)
-        if (!email) throw new Error('Invalid invitation token')
-        const user = users.get(email)
-        if (!user) throw new Error('Invitation not found')
-        user.password = password
-        if (token !== 'invite-demo-token') resetTokens.delete(token)
-        const authToken = issueToken(email)
-        const { password: _, ...publicUser } = user
-        return { acceptInvitation: { token: authToken, user: publicUser } } as T
-      }
-
-      case 'UpdatePassword': {
-        const authHeader =
-          typeof headers === 'object' && headers && 'Authorization' in (headers as Record<string, string>)
-            ? (headers as Record<string, string>).Authorization
-            : Array.isArray(headers)
-              ? undefined
-              : headers instanceof Headers
-                ? headers.get('Authorization')
-                : undefined
-        const bearer =
-          authHeader?.replace(/^Bearer\s+/i, '') ||
-          String((v as { _token?: string })._token ?? '')
-        const email = sessions.get(bearer)
-        if (!email) throw new Error('Unauthorized')
-        const user = users.get(email)
-        if (!user) throw new Error('User not found')
-        if (user.password !== String(v.currentPassword ?? '')) {
-          throw new Error('Current password is incorrect')
-        }
-        requireMatch(String(v.password ?? ''), String(v.passwordConfirmation ?? ''))
-        user.password = String(v.password ?? '')
-        return { updatePassword: { response: 'Password updated successfully' } } as T
-      }
-
-      default:
-        throw new Error(`Unknown auth operation: ${name || '(unnamed)'}`)
+      users.set(email, user)
+      const signUpOtp = sendMockOtp(user, 'signup')
+      return { signUp: { message: 'Verification code sent.', otpSent: true, otp: signUpOtp } } as T
     }
-  } catch (err) {
-    throw err instanceof Error ? err : new Error(String(err))
+
+    case 'Login': {
+      const email = String(v.email ?? '').toLowerCase().trim()
+      const password = String(v.password ?? '')
+      const user = users.get(email)
+      if (!user || user.password !== password) {
+        throw new Error('Invalid email or password')
+      }
+      const loginOtp = sendMockOtp(user, 'login')
+      return { login: { message: 'Verification code sent.', otpSent: true, otp: loginOtp } } as T
+    }
+
+    case 'VerifyOtp': {
+      const email = String(v.email ?? '').toLowerCase().trim()
+      const otp = String(v.otp ?? '')
+      const user = users.get(email)
+      if (!user || !user.otpCode || !user.otpPurpose || user.otpCode !== otp) {
+        throw new Error('Invalid or expired code')
+      }
+      user.otpCode = null
+      user.otpPurpose = null
+      return { verifyOtp: { token: issueToken(email), user: publicUser(user) } } as T
+    }
+
+    case 'ResendOtp': {
+      const email = String(v.email ?? '').toLowerCase().trim()
+      const user = users.get(email)
+      if (!user || !user.otpPurpose) {
+        throw new Error('No pending verification for that email')
+      }
+      const resendOtpCode = sendMockOtp(user, user.otpPurpose)
+      return { resendOtp: { message: 'Verification code resent.', otpSent: true, otp: resendOtpCode } } as T
+    }
+
+    case 'RequestPasswordReset': {
+      const email = String(v.email ?? '').toLowerCase().trim()
+      const user = users.get(email)
+      // Enumeration-safe: always succeeds, regardless of whether the email exists.
+      const otp = user && user.password ? sendMockOtp(user, 'password_reset') : null
+      return { requestPasswordReset: { success: true, otp } } as T
+    }
+
+    case 'VerifyPasswordResetOtp': {
+      const email = String(v.email ?? '').toLowerCase().trim()
+      const otp = String(v.otp ?? '')
+      const user = users.get(email)
+      if (!user || user.otpPurpose !== 'password_reset' || user.otpCode !== otp) {
+        throw new Error('Invalid or expired code')
+      }
+      user.otpCode = null
+      user.otpPurpose = null
+      const resetPasswordToken = `reset_${email}_${Date.now()}`
+      resetTokens.set(resetPasswordToken, email)
+      return { verifyPasswordResetOtp: { resetPasswordToken } } as T
+    }
+
+    case 'ResetPassword': {
+      const token = String(v.resetPasswordToken ?? '')
+      const password = String(v.password ?? '')
+      requireMatch(password, String(v.passwordConfirmation ?? ''))
+      const email = resetTokens.get(token)
+      if (!email) throw new Error('Invalid or expired reset token')
+      const user = users.get(email)
+      if (!user) throw new Error('User not found')
+      user.password = password
+      resetTokens.delete(token)
+      return {
+        resetPassword: { token: issueToken(email), user: publicUser(user) },
+      } as T
+    }
+
+    case 'AcceptInvitation': {
+      const token = String(v.token ?? '')
+      const password = String(v.password ?? '')
+      requireMatch(password, String(v.passwordConfirmation ?? ''))
+      const email = invitationTokens.get(token)
+      if (!email) throw new Error('Invalid or expired invitation token')
+      const user = users.get(email)
+      if (!user) throw new Error('Invitation not found')
+      user.password = password
+      if (token !== 'invite-demo-token') invitationTokens.delete(token)
+      return { acceptInvitation: { success: true } } as T
+    }
+
+    case 'UpdatePassword': {
+      const authHeader =
+        typeof headers === 'object' && headers && 'Authorization' in (headers as Record<string, string>)
+          ? (headers as Record<string, string>).Authorization
+          : Array.isArray(headers)
+            ? undefined
+            : headers instanceof Headers
+              ? headers.get('Authorization')
+              : undefined
+      const bearer =
+        authHeader?.replace(/^Bearer\s+/i, '') || String((variables as { _token?: string })._token ?? '')
+      const email = sessions.get(bearer)
+      if (!email) throw new Error('Unauthorized')
+      const user = users.get(email)
+      if (!user) throw new Error('User not found')
+      if (user.password !== String(v.currentPassword ?? '')) {
+        throw new Error('Current password is incorrect')
+      }
+      requireMatch(String(v.password ?? ''), String(v.passwordConfirmation ?? ''))
+      user.password = String(v.password ?? '')
+      return { updatePassword: { success: true } } as T
+    }
+
+    default:
+      throw new Error(`Unknown auth operation: ${name || '(unnamed)'}`)
   }
 }
 

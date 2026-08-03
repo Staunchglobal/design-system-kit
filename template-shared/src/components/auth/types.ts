@@ -1,16 +1,13 @@
 export type AuthUser = {
   id: string
   email: string
-  firstName: string
-  lastName: string
+  createdAt?: string
 }
 
 export type AuthSession = {
   token: string
   user: AuthUser
 }
-
-export type OtpMode = 'login' | 'reset'
 
 export type LoginFormValues = {
   email: string
@@ -19,8 +16,6 @@ export type LoginFormValues = {
 }
 
 export type SignupFormValues = {
-  firstName: string
-  lastName: string
   email: string
   password: string
   passwordConfirmation: string
@@ -31,7 +26,7 @@ export type ForgotPasswordFormValues = {
   email: string
 }
 
-export type VerifyOtpFormValues = {
+export type OtpFormValues = {
   otp: string
 }
 

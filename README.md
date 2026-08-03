@@ -89,11 +89,11 @@ npx staunch-shadcn-design-system-kit init --components calendar,chart
 
 ### Auth pages (opt-in)
 
-Install the `auth` slug to get Login, Signup, Forgot Password, Verify OTP, Reset Password,
-Accept Invitation, Change Password, and a post-login home stub — as product routes under
-`/auth/*` (not design-system demos). Includes GraphQL mutation documents and an in-memory mock
-(`demo@example.com` / `Password1!`, OTP always `123456`). Point `createAuthFetch({ endpoint })`
-at your API (or replace documents in `auth-operations.ts`) when you go live.
+Install the `auth` slug to get Login, Signup, Forgot Password, Reset Password, Accept
+Invitation, Change Password, and a post-login home stub — as product routes under `/auth/*`
+(not design-system demos). Includes GraphQL mutation documents and an in-memory mock. Point
+`createAuthFetch({ endpoint })` at your API (or replace documents in `auth-operations.ts`) when
+you go live.
 
 ```bash
 npx staunch-shadcn-design-system-kit init --components auth
@@ -102,6 +102,57 @@ npx staunch-shadcn-design-system-kit init --components auth
 Next.js App Router routes work immediately. Vite: mount the pages from `src/auth/*Page.tsx` with
 your router (the CLI prints example `<Route>` lines). `auth` is not in the interactive picker’s
 nav groups — pass `--components auth` (or `--all`) to install it.
+
+Point auth at a running Rails GraphQL API by setting
+`NEXT_PUBLIC_GRAPHQL_URL=http://localhost:3000/graphql`. Every sign-up and login is a mandatory
+two-step flow — there is no direct-token path and no per-user toggle. `signUp`/`login` never
+return a token; they create the account or check the password, then always email a 6-digit code
+and respond with `{ message, otpSent }`. The login/signup pages show an inline code-entry step
+(with a resend action) and complete the flow with `verifyOtp(email, otp)`, which returns
+`{ token, user }` — it checks whichever purpose (signup or login) is actually pending, so the
+page never has to track which flow sent the code. Forgot-password is a separate, non-OTP flow:
+it emails a reset *link* (`resetPasswordToken` arrives as a URL query param), and accepting an
+invitation only creates the account (`{ success }`, no token) — the new user still has to sign
+in (and complete the OTP step) afterward. There's no `firstName`/`lastName` field anywhere; the
+account record is just `id`/`email`/`createdAt`. Every mutation argument is wrapped in a single
+`input` GraphQL variable (`login(input: $input)`, not flat arguments) — the backend's mutations
+all extend `GraphQL::Schema::RelayClassicMutation`, which always exposes arguments this way.
+
+### Account settings (opt-in)
+
+Install the `account-settings` slug for a change-email wizard (`/auth/email-change`): request a
+change with your current password, verify a code sent to your *current* email, then verify a
+second code sent to the *new* email before it takes effect — cancelable at either verification
+step. Requires the `auth` slug (installed automatically alongside it).
+
+```bash
+npx staunch-shadcn-design-system-kit init --components account-settings,auth
+```
+
+### Chat inbox (opt-in)
+
+Install the `chat` slug for a full realtime inbox: conversation list (Chats / Archived), search,
+new chat, mark-as-read, archive, text + image/video attachments, and GraphQL subscriptions.
+Product route: `/chat` and `/chat/[id]` for active chats, `/chat/archived` and
+`/chat/archived/[id]` for archived (requires an auth session). Defaults to an in-memory mock;
+wire a real API via:
+
+```bash
+npx staunch-shadcn-design-system-kit init --components chat,auth
+```
+
+```env
+NEXT_PUBLIC_GRAPHQL_URL=http://localhost:3000/graphql
+NEXT_PUBLIC_GRAPHQL_WS_URL=ws://localhost:3000/cable
+```
+
+Vite uses `VITE_GRAPHQL_URL`, `VITE_GRAPHQL_WS_URL`. Image/video attachments travel inline
+with `sendMessage` as a GraphQL multipart upload — no separate upload URL needed.
+`messageType` is one of `TEXT`/`IMAGE`/`VIDEO`/`ANNOUNCEMENT`. Subscriptions run over Rails
+ActionCable (not the `graphql-ws` protocol) — `NEXT_PUBLIC_GRAPHQL_WS_URL`/`VITE_GRAPHQL_WS_URL`
+must point at the backend's ActionCable mount (`/cable` by default), and the connection
+identifies the user via a `userId` query param resolved from the current auth session, not a
+signed token — match that on the backend or subscriptions will silently fail to authorize.
 
 ### CRUD system (opt-in)
 

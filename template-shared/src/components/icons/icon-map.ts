@@ -36,6 +36,8 @@ export const defaultIconMap = {
   'sonner.warning': 'TriangleAlert',
   'sonner.error': 'OctagonX',
   'sonner.loading': 'LoaderCircle',
+  /** Chevron pointing left beside auth back-link labels. */
+  'auth.back': 'ChevronLeft',
 } as const
 
 export type IconKey = keyof typeof defaultIconMap

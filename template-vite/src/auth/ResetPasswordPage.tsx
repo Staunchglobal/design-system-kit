@@ -4,10 +4,10 @@ import * as React from 'react'
 
 import { AuthShell } from '@/components/auth/auth-shell'
 import { createAuthFetch } from '@/components/auth/auth-fetch'
-import { SET_PASSWORD, type SetPasswordResult } from '@/components/auth/auth-operations'
+import { RESET_PASSWORD, type ResetPasswordResult } from '@/components/auth/auth-operations'
 import { SetPasswordForm } from '@/components/auth/set-password-form'
 import { toast } from '@/components/auth/notify'
-import { clearAuthHandoff } from '@/components/auth/auth-session'
+import { setAuthSession } from '@/components/auth/auth-session'
 import type { SetPasswordFormValues } from '@/components/auth/types'
 import { Toaster } from '@/components/ui/sonner'
 
@@ -30,13 +30,19 @@ export default function ResetPasswordPage() {
     setLoading(true)
     setError(null)
     try {
-      await authFetch<SetPasswordResult>(SET_PASSWORD, {
-        token,
-        password: values.password,
-        passwordConfirmation: values.passwordConfirmation,
-        resetPassword: true,
+      const data = await authFetch<ResetPasswordResult>(RESET_PASSWORD, {
+        input: {
+          resetPasswordToken: token,
+          password: values.password,
+          passwordConfirmation: values.passwordConfirmation,
+        },
       })
-      clearAuthHandoff()
+      if (data.resetPassword.token && data.resetPassword.user) {
+        setAuthSession({ token: data.resetPassword.token, user: data.resetPassword.user })
+        toast.success('Password updated')
+        go('/auth/home')
+        return
+      }
       toast.success('Password updated — sign in with your new password')
       go('/auth/login')
     } catch (err) {

@@ -32,7 +32,7 @@ export default function AuthHomePage() {
     <>
       <AuthShell
         title="You’re signed in"
-        description={`${session.user.firstName} ${session.user.lastName} · ${session.user.email}`}
+        description={session.user.email}
       >
         <div className="flex flex-col gap-3">
           <Button asChild variant="outline" className="w-full">
