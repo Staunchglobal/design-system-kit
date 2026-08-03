@@ -20,7 +20,7 @@ type ChatChannel = {
 export type CreateChatSubscriptionsOptions = {
   /** wss://localhost:3000/cable — omit for in-memory mock */
   url?: string
-  getUserId?: () => string | null | undefined
+  getToken?: () => string | null | undefined
 }
 
 const cables = new Map<string, Cable>()
@@ -62,15 +62,22 @@ function nextSubscriptionUid(): string {
   return `${Date.now()}-${subscriptionSeq}`
 }
 
-// The cable connection identifies the user via a plain `userId` query param rather than
-// a signed token, so a fresh connection is only opened once per URL+user and reused across
+// The cable connection identifies the user via the same JWT sent as
+// `Authorization: Bearer` on GraphQL HTTP requests, as a `?token=` query
+// param — ActionCable's handshake has no header injection point, so the
+// query string is the only place to carry it. The backend's generated
+// `connection.rb` verifies this token's signature/expiry the same way the
+// GraphQL controller does (`StaunchSaasKit::JsonWebToken.decode`) rather
+// than trusting a bare `userId`, which would let anyone open another
+// user's chat/unread-count subscriptions just by knowing their id. A
+// fresh connection is only opened once per URL+token and reused across
 // every chat subscription.
-function getCable(url: string, getUserId?: () => string | null | undefined): Cable {
-  const userId = getUserId?.() ?? getAuthSession()?.user.id
-  const key = `${url}::${userId ?? ''}`
+function getCable(url: string, getToken?: () => string | null | undefined): Cable {
+  const token = getToken?.() ?? getAuthSession()?.token
+  const key = `${url}::${token ?? ''}`
   const existing = cables.get(key)
   if (existing) return existing
-  const cableUrl = userId ? `${url}?userId=${encodeURIComponent(userId)}` : url
+  const cableUrl = token ? `${url}?token=${encodeURIComponent(token)}` : url
   const cable = createConsumer(cableUrl)
   cables.set(key, cable)
   return cable
@@ -78,7 +85,7 @@ function getCable(url: string, getUserId?: () => string | null | undefined): Cab
 
 export function createChatSubscriptions(options: CreateChatSubscriptionsOptions = {}) {
   const url = resolveWsUrl(options.url)
-  const getUserId = options.getUserId
+  const getToken = options.getToken
 
   function subscribe<T>(
     query: string,
@@ -94,7 +101,7 @@ export function createChatSubscriptions(options: CreateChatSubscriptionsOptions 
       })
     }
 
-    const cable = getCable(url, getUserId)
+    const cable = getCable(url, getToken)
     const operationName = extractOperationName(query)
 
     const channel: ChatChannel = cable.subscriptions.create(
@@ -107,12 +114,18 @@ export function createChatSubscriptions(options: CreateChatSubscriptionsOptions 
         },
         received(payload: { result?: { data?: T; errors?: unknown[] }; more?: boolean }) {
           if (payload.result?.errors?.length) {
-            console.error('[chat subscription]', payload.result.errors)
+            // Message only, not the raw error objects — GraphQL error
+            // `extensions` can carry request context (variables, etc.)
+            // that shouldn't land in the browser console.
+            const messages = payload.result.errors
+              .map((e) => (e && typeof e === 'object' && 'message' in e ? String(e.message) : null))
+              .filter(Boolean)
+            console.error('[chat subscription]', messages.length ? messages : 'unknown error')
           }
           if (payload.result?.data) onData(payload.result.data)
         },
         rejected() {
-          console.error('[chat subscription] rejected — check the cable userId param')
+          console.error('[chat subscription] rejected — check the cable token param')
         },
       }
     )

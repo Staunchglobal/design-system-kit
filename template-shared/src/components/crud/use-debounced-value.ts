@@ -21,7 +21,10 @@ export function useDebouncedValue<T>(value: T, delayMs: number): T {
 
 export const SEARCH_DEBOUNCE_MS = 300
 
-export function useDebouncedSearch(value: string, delayMs: number = SEARCH_DEBOUNCE_MS) {
+export function useDebouncedSearch(
+  value: string,
+  delayMs: number = SEARCH_DEBOUNCE_MS
+): { debouncedValue: string; isPending: boolean } {
   const trimmed = value.trim()
   const debouncedValue = useDebouncedValue(trimmed, delayMs)
   const isPending = trimmed !== debouncedValue

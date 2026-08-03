@@ -147,12 +147,11 @@ function seed() {
   ])
 }
 
-function resolveUserId(variables: Record<string, unknown>, headers?: HeadersInit): string {
+function resolveUserId(headers?: HeadersInit): string {
   const token =
-    String(variables._token ?? '') ||
-    (typeof headers === 'object' && headers && 'Authorization' in (headers as object)
+    typeof headers === 'object' && headers && 'Authorization' in (headers as object)
       ? String((headers as Record<string, string>).Authorization ?? '').replace(/^Bearer\s+/i, '')
-      : '')
+      : ''
   if (token && sessions.has(token)) return sessions.get(token)!
   // Default demo identity for mock without auth session
   if (token.startsWith('tok_')) {
@@ -210,7 +209,7 @@ export async function chatMockFetch<T>(
   seed()
   await delay()
   const name = opName(query)
-  const userId = resolveUserId(variables, headers)
+  const userId = resolveUserId(headers)
   const v = variables
 
   switch (name) {
