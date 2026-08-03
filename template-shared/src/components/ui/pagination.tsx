@@ -56,9 +56,9 @@ function PaginationPrevious({
   return (
     <PaginationLink
       aria-label="Go to previous page"
-      size="default"
       className={cn('pl-1.5!', className)}
       {...props}
+      size="default"
     >
       <AppIcon name="pagination.previous" data-icon="inline-start" />
       <span className="hidden sm:block">{text}</span>
@@ -74,9 +74,9 @@ function PaginationNext({
   return (
     <PaginationLink
       aria-label="Go to next page"
-      size="default"
       className={cn('pr-1.5!', className)}
       {...props}
+      size="default"
     >
       <span className="hidden sm:block">{text}</span>
       <AppIcon name="pagination.next" data-icon="inline-end" />

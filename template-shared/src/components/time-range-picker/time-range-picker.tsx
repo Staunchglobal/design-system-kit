@@ -111,6 +111,12 @@ function TimeRangePicker({
             {day.enabled ? (
               <div className="flex flex-col gap-2">
                 {day.ranges.map((range, index) => (
+                  // Index as key is deliberate, not an oversight: `TimeRange` has no stable id, and
+                  // `updateRange` creates a fresh object for the edited row on every change, so a
+                  // reference/generated-id key would remount (and drop focus on) whichever Select the
+                  // user is actively using. Safe only because every row is fully controlled from
+                  // `range`/`index` props with no per-row local/uncontrolled state — revisit this if
+                  // that ever changes (e.g. drag-to-reorder, per-row animation).
                   <div key={index} className="flex flex-wrap items-center gap-2">
                     <Select
                       value={range.start}

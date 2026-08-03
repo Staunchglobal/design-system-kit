@@ -70,6 +70,7 @@ const EXTRA_FILES = {
     'components/account-settings/account-settings-operations.ts',
     'components/account-settings/account-settings-mock-client.ts',
     'components/account-settings/account-settings-fetch.ts',
+    'components/account-settings/email-change-storage.ts',
     'components/account-settings/use-email-change.ts',
     'components/account-settings/request-email-change-form.tsx',
     'components/account-settings/email-change-settings.tsx',

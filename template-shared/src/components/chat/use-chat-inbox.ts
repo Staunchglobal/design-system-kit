@@ -6,6 +6,7 @@ import { toast } from '@/components/auth/notify'
 import {
   CHATS_PER_PAGE,
   MESSAGES_PER_PAGE,
+  SEARCH_DEBOUNCE_MS,
 } from '@/components/chat/chat-constants'
 import { createChatFetch } from '@/components/chat/chat-fetch'
 import {
@@ -203,12 +204,12 @@ export function useChatInbox({
   const usersRequestId = React.useRef(0)
 
   React.useEffect(() => {
-    const t = window.setTimeout(() => setSearch(searchInput.trim()), 300)
+    const t = window.setTimeout(() => setSearch(searchInput.trim()), SEARCH_DEBOUNCE_MS)
     return () => window.clearTimeout(t)
   }, [searchInput])
 
   React.useEffect(() => {
-    const t = window.setTimeout(() => setDebouncedUserSearch(userSearch.trim()), 300)
+    const t = window.setTimeout(() => setDebouncedUserSearch(userSearch.trim()), SEARCH_DEBOUNCE_MS)
     return () => window.clearTimeout(t)
   }, [userSearch])
 

@@ -192,8 +192,7 @@ export async function authMockFetch<T>(
             : headers instanceof Headers
               ? headers.get('Authorization')
               : undefined
-      const bearer =
-        authHeader?.replace(/^Bearer\s+/i, '') || String((variables as { _token?: string })._token ?? '')
+      const bearer = authHeader?.replace(/^Bearer\s+/i, '') ?? ''
       const email = sessions.get(bearer)
       if (!email) throw new Error('Unauthorized')
       const user = users.get(email)

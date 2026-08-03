@@ -4,6 +4,18 @@ import { clearOtpCooldown, startOtpCooldown } from '@/components/auth/otp-timer-
 const SESSION_KEY = 'design-kit-auth-session'
 const PENDING_OTP_KEY = 'design-kit-auth-otp-pending'
 
+// Matches the backend's default JWT lifetime (`config.jwt_expires_in`,
+// 24 hours) — a session with no expiry would stay "valid" in
+// localStorage forever even after the JWT itself has expired server-side,
+// so a stolen/lingering token looks usable to the UI indefinitely.
+const SESSION_TTL_MS = 24 * 60 * 60 * 1000
+// A bit above the backend's OTP expiry (10 minutes, `DEFAULT_OTP_EXPIRY`)
+// so the client doesn't clear a still-valid pending step early — the
+// backend rejecting an actually-expired code is already handled as a
+// normal error, this just bounds how long a stale entry can pin the user
+// in the OTP step after abandoning the flow.
+const PENDING_OTP_TTL_MS = 15 * 60 * 1000
+
 const sessionListeners = new Set<() => void>()
 const pendingOtpListeners = new Set<() => void>()
 
@@ -18,6 +30,8 @@ export type PendingOtp = {
   otp: string | null
 } | null
 
+type StoredPendingOtp = NonNullable<PendingOtp> & { expiresAt: number }
+
 let pendingOtpSnapshot: PendingOtp = null
 let pendingOtpRaw: string | null | undefined = undefined
 
@@ -30,6 +44,8 @@ function storage(): Storage | null {
   return window.localStorage
 }
 
+type StoredAuthSession = AuthSession & { expiresAt: number }
+
 function readSessionSnapshot(): AuthSession | null {
   const raw = storage()?.getItem(SESSION_KEY) ?? null
   if (raw === sessionRaw) return sessionSnapshot
@@ -39,7 +55,18 @@ function readSessionSnapshot(): AuthSession | null {
     return null
   }
   try {
-    sessionSnapshot = JSON.parse(raw) as AuthSession
+    const parsed = JSON.parse(raw) as Partial<StoredAuthSession>
+    // A session written before this expiry mechanism existed has no
+    // `expiresAt` — treat that as already-expired rather than trusting it
+    // indefinitely, since "no expiry recorded" is exactly the bug this
+    // closes.
+    if (!parsed.expiresAt || Date.now() > parsed.expiresAt) {
+      storage()?.removeItem(SESSION_KEY)
+      sessionRaw = null
+      sessionSnapshot = null
+      return null
+    }
+    sessionSnapshot = parsed as AuthSession
   } catch {
     sessionSnapshot = null
   }
@@ -51,10 +78,11 @@ export function getAuthSession(): AuthSession | null {
 }
 
 export function setAuthSession(session: AuthSession): void {
-  const raw = JSON.stringify(session)
+  const stored: StoredAuthSession = { ...session, expiresAt: Date.now() + SESSION_TTL_MS }
+  const raw = JSON.stringify(stored)
   storage()?.setItem(SESSION_KEY, raw)
   sessionRaw = raw
-  sessionSnapshot = session
+  sessionSnapshot = stored
   emit(sessionListeners)
 }
 
@@ -94,7 +122,17 @@ function readPendingOtpSnapshot(): PendingOtp {
     return null
   }
   try {
-    pendingOtpSnapshot = JSON.parse(raw) as PendingOtp
+    const parsed = JSON.parse(raw) as Partial<StoredPendingOtp>
+    // No `expiresAt` (pre-dates this mechanism) or past it — don't trust
+    // it indefinitely; a stale entry otherwise pins the user in the OTP
+    // step forever after they abandon the flow.
+    if (!parsed.expiresAt || Date.now() > parsed.expiresAt) {
+      storage()?.removeItem(PENDING_OTP_KEY)
+      pendingOtpRaw = null
+      pendingOtpSnapshot = null
+      return null
+    }
+    pendingOtpSnapshot = parsed as PendingOtp
   } catch {
     pendingOtpSnapshot = null
   }
@@ -110,7 +148,12 @@ export function setPendingOtp(
   purpose: 'signup' | 'login' | 'password_reset',
   otp?: string | null
 ): void {
-  const snapshot: PendingOtp = { email, purpose, otp: otp ?? null }
+  const snapshot: StoredPendingOtp = {
+    email,
+    purpose,
+    otp: otp ?? null,
+    expiresAt: Date.now() + PENDING_OTP_TTL_MS
+  }
   const raw = JSON.stringify(snapshot)
   storage()?.setItem(PENDING_OTP_KEY, raw)
   pendingOtpRaw = raw

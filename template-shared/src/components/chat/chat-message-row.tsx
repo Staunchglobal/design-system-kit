@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { Download, FileText } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { cn, formatBytes } from '@/lib/utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Bubble, BubbleContent } from '@/components/ui/bubble'
 import {
@@ -41,11 +41,10 @@ function formatTime(iso: string) {
   }
 }
 
+/** Attachments may lack `sizeBytes` (or carry a bogus value) — `formatBytes` itself always expects a real number. */
 function formatFileSize(bytes?: number): string | null {
   if (bytes == null || bytes < 0 || !Number.isFinite(bytes)) return null
-  if (bytes < 1024) return `${bytes} B`
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(bytes < 10 * 1024 ? 1 : 0)} KB`
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
+  return formatBytes(bytes)
 }
 
 function fileExtLabel(fileName: string, mimeType?: string): string {
@@ -147,7 +146,7 @@ function DocumentCards({ docs }: { docs: DocEntry[] }) {
             key={doc.url}
             href={doc.url}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             download={doc.fileName}
             className="flex items-center gap-2.5 rounded-lg bg-black/5 px-2.5 py-2.5 transition-colors hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/15"
           >
