@@ -8,7 +8,6 @@ import { isValidRenameTarget, type RenameFamily } from '@/lib/theme/validation'
 
 export const runtime = 'nodejs'
 
-/** Works whether the project uses a src/ directory or not (Next.js supports both). */
 function srcRoot(): string {
   return fs.existsSync(path.join(process.cwd(), 'src')) ? 'src' : '.'
 }
@@ -95,7 +94,6 @@ export async function POST(request: Request): Promise<Response> {
     return NextResponse.json<RenameTokenResponse>({ ok: true, plan, message: `Found ${plan.totalMatches} occurrence(s) across ${plan.changes.length} file(s).` })
   }
 
-  // mode === 'apply'
   const plan = planRename({ family, from, to }, ctx)
   if (plan.totalMatches === 0) {
     return NextResponse.json<RenameTokenResponse>(

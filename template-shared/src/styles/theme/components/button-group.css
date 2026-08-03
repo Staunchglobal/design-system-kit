@@ -1,20 +1,63 @@
-/* ==========================================================================
-   Button Group
-   ========================================================================== */
-
 [data-slot='button-group'] {
   --button-group-gap: 0.5rem;
-  --button-group-radius: var(--radius-lg);
+  --button-group-radius: var(--radius-full);
+  --button-group-border-color: var(--neutral-200);
   display: flex;
+  align-items: stretch;
+  width: fit-content;
+  isolation: isolate;
 }
 [data-slot='button-group']:has(> [data-slot='button-group']) {
   gap: var(--button-group-gap);
 }
+[data-slot='button-group']:not([data-orientation='vertical']) > * {
+  position: relative;
+}
+[data-slot='button-group']:not([data-orientation='vertical']) > *:not(:first-child) {
+  margin-inline-start: -1px;
+  border-start-start-radius: 0 !important;
+  border-end-start-radius: 0 !important;
+}
+[data-slot='button-group']:not([data-orientation='vertical']) > *:not(:last-child) {
+  border-start-end-radius: 0 !important;
+  border-end-end-radius: 0 !important;
+}
+[data-slot='button-group']:not([data-orientation='vertical']) > *:first-child {
+  border-start-start-radius: var(--button-group-radius) !important;
+  border-end-start-radius: var(--button-group-radius) !important;
+}
+[data-slot='button-group']:not([data-orientation='vertical']) > *:last-child {
+  border-start-end-radius: var(--button-group-radius) !important;
+  border-end-end-radius: var(--button-group-radius) !important;
+}
+[data-slot='button-group'][data-orientation='vertical'] > *:not(:first-child) {
+  margin-block-start: -1px;
+  border-start-start-radius: 0 !important;
+  border-start-end-radius: 0 !important;
+}
+[data-slot='button-group'][data-orientation='vertical'] > *:not(:last-child) {
+  border-end-start-radius: 0 !important;
+  border-end-end-radius: 0 !important;
+}
+[data-slot='button-group'][data-orientation='vertical'] > *:first-child {
+  border-start-start-radius: var(--button-group-radius) !important;
+  border-start-end-radius: var(--button-group-radius) !important;
+}
+[data-slot='button-group'][data-orientation='vertical'] > *:last-child {
+  border-end-start-radius: var(--button-group-radius) !important;
+  border-end-end-radius: var(--button-group-radius) !important;
+}
+[data-slot='button-group'] > *:focus-visible,
+[data-slot='button-group'] > *:focus-within {
+  z-index: 1;
+}
 
 [data-slot='button-group-separator'] {
-  --button-group-separator-color: var(--input);
+  --button-group-separator-color: var(--neutral-200);
   --button-group-separator-thickness: 1px;
   background-color: var(--button-group-separator-color);
+  z-index: 0;
+  align-self: stretch;
 }
 [data-slot='button-group-separator'][data-orientation='horizontal'] {
   margin-inline: var(--button-group-separator-thickness);
@@ -23,9 +66,12 @@
 [data-slot='button-group-separator'][data-orientation='vertical'] {
   margin-block: var(--button-group-separator-thickness);
   height: auto;
+  width: var(--button-group-separator-thickness);
+  min-width: var(--button-group-separator-thickness);
 }
-
-/* ButtonGroupText renders no data-slot attribute (plain <div>/asChild target
-   with no identifying DOM hook) — cannot be targeted without editing
-   button-group.tsx. Its current look: bg-muted, rounded-lg border, px-2.5,
-   text-sm font-medium, gap-2. */
+[data-slot='button-group'] > div:not([data-slot]) {
+  --button-group-text-bg: var(--neutral-100);
+  --button-group-text-border-color: var(--neutral-200);
+  background-color: var(--button-group-text-bg);
+  border-color: var(--button-group-text-border-color);
+}

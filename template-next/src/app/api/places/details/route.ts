@@ -1,9 +1,5 @@
 import { NextResponse } from 'next/server'
 
-/**
- * Proxies Google's legacy Place Details REST endpoint — same CORS rationale as the
- * autocomplete route in this folder.
- */
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const placeId = searchParams.get('place_id') ?? ''

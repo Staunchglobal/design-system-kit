@@ -40,8 +40,6 @@ export default function DropzoneDemo() {
           file={cropFile}
           aspect={1}
           onCropped={(cropped) => {
-            // Dropzone here is single-file (no `multiple`), so the cropped result replaces
-            // the slot rather than appending to it.
             setFiles([cropped])
             setCropFile(null)
           }}

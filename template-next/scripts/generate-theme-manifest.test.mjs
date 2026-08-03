@@ -6,10 +6,6 @@ import { inferScope, parseCustomFonts, parseVars } from './generate-theme-manife
 
 describe('inferScope', () => {
   it('does not attribute a variant to a size-only rule that merely follows a variant block', () => {
-    // Regression for the real bug: button.css's variant='link' block is textually the
-    // last variant rule before the [data-size='icon'] block, which carries no
-    // data-variant at all. Scanning the whole file backward (the old approach) picked
-    // up 'link' anyway; scope must come only from the enclosing rule's own selector.
     const css = `
 [data-slot='button'][data-variant='link'] {
   --button-fg: var(--primary);
@@ -94,9 +90,6 @@ describe('parseCustomFonts', () => {
   })
 
   it('recovers a google font, matching the @import family back to its --font-<id> var', () => {
-    // The id (chosen by the user when adding the font) isn't in the @import URL at all —
-    // only the family is. Without matching it back via the --font-<id> var, a reload
-    // would either lose the font or regenerate it under a different, wrong id.
     const css = `@import url('https://fonts.googleapis.com/css2?family=Fira%20Code:wght@400;700&display=swap');
 :root {
   --font-heading: var(--font-sans);

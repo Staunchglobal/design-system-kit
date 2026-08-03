@@ -55,7 +55,7 @@ describe('copySelectedFiles + renameHistory', () => {
       { family: 'color', from: 'accent', to: 'info' },
     ])
     expect(result.skipped).toEqual(['components/ui/button.tsx'])
-    expect(fs.readFileSync(dest, 'utf8')).toBe('className="bg-accent"') // untouched on disk
+    expect(fs.readFileSync(dest, 'utf8')).toBe('className="bg-accent"')
   })
 
   it('does not apply rename history when the list is empty (default)', async () => {

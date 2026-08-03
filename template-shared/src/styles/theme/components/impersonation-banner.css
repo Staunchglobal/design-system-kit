@@ -1,4 +1,3 @@
-/* Impersonation Banner — warning semantic tokens (paramount cascade). */
 [data-slot='impersonation-banner'] {
   --impersonation-banner-bg: var(--warning-50);
   --impersonation-banner-fg: var(--warning-900);

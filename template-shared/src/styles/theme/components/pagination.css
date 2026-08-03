@@ -1,35 +1,140 @@
-/* ==========================================================================
-   Pagination
-   ========================================================================== */
+[data-slot='pagination'] {
+  --pagination-gap: 0.25rem;
+  width: auto;
+  margin-inline: 0;
+  justify-content: flex-end;
+}
 
 [data-slot='pagination-content'] {
-  --pagination-content-gap: 0.125rem;
+  --pagination-content-gap: var(--pagination-gap, 0.25rem);
   gap: var(--pagination-content-gap);
 }
+[data-ui='pagination-link'][data-size='icon'] {
+  --pagination-item-width: 2rem;
+  --pagination-item-height: 1.5rem;
+  --pagination-item-radius: var(--radius-md);
+  --pagination-item-border-color: var(--border);
+  --pagination-item-bg: var(--neutral-0);
+  --pagination-item-fg: var(--muted-600);
+  --pagination-item-font-size: var(--typography-caption-font-size);
+  --pagination-item-font-weight: var(--typography-small-font-weight);
 
-/* PaginationLink is a real Button. Active page uses write-now's lighter-touch
-   primary-50 / primary-500 pattern rather than inverse solid primary. */
-[data-ui='pagination-link'][data-active='true'] {
-  --button-bg: var(--primary-50);
-  --button-fg: var(--primary-500);
-  --button-border-color: var(--primary-200);
-  --button-hover-bg: var(--primary-100);
-  background-color: var(--button-bg);
-  color: var(--button-fg);
-  border-color: var(--button-border-color);
+  box-sizing: border-box;
+  inline-size: var(--pagination-item-width) !important;
+  block-size: var(--pagination-item-height) !important;
+  min-inline-size: var(--pagination-item-width) !important;
+  min-block-size: var(--pagination-item-height) !important;
+  padding: 0 !important;
+  border-radius: var(--pagination-item-radius) !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: var(--pagination-item-border-color) !important;
+  background-color: var(--pagination-item-bg) !important;
+  color: var(--pagination-item-fg) !important;
+  font-size: var(--pagination-item-font-size) !important;
+  font-weight: var(--pagination-item-font-weight) !important;
+  line-height: 1 !important;
+  box-shadow: none !important;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
+  outline: none !important;
 }
-[data-ui='pagination-link'][data-active='true']:hover {
-  background-color: var(--button-hover-bg);
-  color: var(--button-fg);
+[data-ui='pagination-link'][data-size='icon']:hover {
+  background-color: var(--neutral-50) !important;
+  color: var(--foreground) !important;
+}
+[data-ui='pagination-link'][data-size='icon']:focus-visible {
+  border-color: var(--info-500) !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+[data-ui='pagination-link'][data-size='icon'][data-active='true'] {
+  --pagination-item-bg: var(--info-50);
+  --pagination-item-fg: var(--info-700);
+  --pagination-item-border-color: transparent;
+  background-color: var(--pagination-item-bg) !important;
+  color: var(--pagination-item-fg) !important;
+  border-color: var(--pagination-item-border-color) !important;
+}
+[data-ui='pagination-link'][data-size='icon'][data-active='true']:hover {
+  background-color: var(--info-100) !important;
+  color: var(--info-700) !important;
+}
+[data-slot='pagination-item'] > [data-ui='pagination-link'][data-size='default'],
+[data-slot='pagination-item'] [data-ui='pagination-link'].h-8 {
+  inline-size: auto !important;
+  min-inline-size: 0 !important;
+  padding-inline: 0.5rem !important;
 }
 
 [data-slot='pagination-ellipsis'] {
-  --pagination-ellipsis-size: 2rem;
-  --pagination-ellipsis-icon-size: 1rem;
-  inline-size: var(--pagination-ellipsis-size);
-  block-size: var(--pagination-ellipsis-size);
+  --pagination-ellipsis-width: 2rem;
+  --pagination-ellipsis-height: 1.5rem;
+  --pagination-ellipsis-radius: var(--radius-md);
+  --pagination-ellipsis-border-color: var(--border);
+  --pagination-ellipsis-fg: var(--muted-600);
+  --pagination-ellipsis-font-size: var(--typography-caption-font-size);
+
+  box-sizing: border-box;
+  inline-size: var(--pagination-ellipsis-width);
+  block-size: var(--pagination-ellipsis-height);
+  border-radius: var(--pagination-ellipsis-radius);
+  border: 1px solid var(--pagination-ellipsis-border-color);
+  background-color: var(--neutral-0);
+  color: var(--pagination-ellipsis-fg);
+  font-size: var(--pagination-ellipsis-font-size);
+  font-weight: var(--typography-small-font-weight);
+  gap: 0;
 }
 [data-slot='pagination-ellipsis'] svg {
-  width: var(--pagination-ellipsis-icon-size);
-  height: var(--pagination-ellipsis-icon-size);
+  display: none;
+}
+[data-slot='pagination-ellipsis']::before {
+  content: '…';
+  line-height: 1;
+}
+[data-slot='crud-pagination'] {
+  --crud-pagination-padding-x: 1rem;
+  --crud-pagination-padding-y: 0.75rem;
+  --crud-pagination-summary-fg: var(--muted-600);
+  --crud-pagination-range-fg: var(--foreground);
+  --crud-pagination-font-size: var(--typography-small-font-size);
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  padding-inline: var(--crud-pagination-padding-x);
+  padding-block: var(--crud-pagination-padding-y);
+  border-top: 1px solid var(--border);
+  background-color: var(--neutral-0);
+  font-size: var(--crud-pagination-font-size);
+}
+[data-slot='crud-pagination-summary'] {
+  color: var(--crud-pagination-summary-fg);
+  line-height: var(--typography-small-line-height);
+}
+[data-slot='crud-pagination-summary'] [data-ui='crud-pagination-range'] {
+  color: var(--crud-pagination-range-fg);
+}
+
+.dark [data-ui='pagination-link'][data-size='icon'] {
+  --pagination-item-bg: var(--neutral-900);
+  --pagination-item-fg: var(--muted-400);
+  --pagination-item-border-color: var(--neutral-700);
+}
+.dark [data-ui='pagination-link'][data-size='icon'][data-active='true'] {
+  --pagination-item-bg: var(--info-950);
+  --pagination-item-fg: var(--info-300);
+}
+.dark [data-slot='pagination-ellipsis'] {
+  background-color: var(--neutral-900);
+  border-color: var(--neutral-700);
+  color: var(--muted-400);
+}
+.dark [data-slot='crud-pagination'] {
+  background-color: var(--neutral-950);
+  border-top-color: var(--neutral-800);
 }

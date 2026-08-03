@@ -1,4 +1,3 @@
-/* Media Gallery */
 [data-slot='media-gallery'] {
   --media-gallery-bg: var(--muted);
   --media-gallery-radius: var(--radius-lg);

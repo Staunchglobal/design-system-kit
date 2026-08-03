@@ -3,7 +3,6 @@ import path from 'node:path'
 import postcss from 'postcss'
 import type { AtRule, ChildNode, Root } from 'postcss'
 
-/** Recognizes the unmodified `create-next-app` (Tailwind v4) default globals.css. */
 function looksLikeStockNextGlobals(css: string): boolean {
   return (
     css.includes('--color-background: var(--background)') &&
@@ -17,7 +16,6 @@ function isAtRule(node: ChildNode, name?: string): node is AtRule {
   return node.type === 'atrule' && (name === undefined || node.name === name)
 }
 
-/** Same at-rule name + params already present at the top level (e.g. `@import 'tailwindcss'`). */
 function findEquivalentAtRule(root: Root, node: AtRule): AtRule | undefined {
   return root.nodes.find((n): n is AtRule => isAtRule(n, node.name) && n.params === node.params)
 }
@@ -28,13 +26,6 @@ export type GlobalsCssPatchResult =
   | { action: 'patched'; addedImports: string[]; addedOther: string[]; addedThemeBlock: boolean }
   | { action: 'needs-manual-merge'; reason: string }
 
-/**
- * Uses postcss to parse both the existing file and the template rather than line-matching
- * strings — at-rules are compared by their real name+params (so `@import "tailwindcss";` and
- * `@import 'tailwindcss'` are recognized as equivalent, formatting differences won't cause a
- * duplicate insert), and merging is done by cloning template AST nodes onto the existing tree
- * rather than string concatenation, so postcss's printer keeps the result syntactically valid.
- */
 export function patchGlobalsCss(filePath: string, templateContent: string): GlobalsCssPatchResult {
   if (!fs.existsSync(filePath)) {
     fs.mkdirSync(path.dirname(filePath), { recursive: true })
@@ -58,7 +49,6 @@ export function patchGlobalsCss(filePath: string, templateContent: string): Glob
   )
 
   if (existingTheme && existingImportsThemeIndex) {
-    // Already wired up (e.g. a re-run of init) — nothing to do.
     return { action: 'patched', addedImports: [], addedOther: [], addedThemeBlock: false }
   }
 
@@ -70,8 +60,6 @@ export function patchGlobalsCss(filePath: string, templateContent: string): Glob
     }
   }
 
-  // Everything before the template's @theme is the header (@import/@custom-variant/@plugin);
-  // everything from @theme onward is the utility-registration block plus :root/@layer base.
   const templateThemeIndex = templateRoot.nodes.findIndex((n) => isAtRule(n, 'theme'))
   const headerNodes = templateThemeIndex === -1 ? templateRoot.nodes : templateRoot.nodes.slice(0, templateThemeIndex)
   const bodyNodes = templateThemeIndex === -1 ? [] : templateRoot.nodes.slice(templateThemeIndex)
@@ -80,11 +68,6 @@ export function patchGlobalsCss(filePath: string, templateContent: string): Glob
   const missingImports = headerAtRules.filter((n) => n.name === 'import' && !findEquivalentAtRule(existingRoot, n))
   const missingOther = headerAtRules.filter((n) => n.name !== 'import' && !findEquivalentAtRule(existingRoot, n))
 
-  // Imports need to lead the file for Tailwind to process correctly — insert in template order,
-  // with @custom-variant/@plugin lines following right after them. Cloned nodes carry their
-  // *template* raws.before (blank-line spacing relative to their old neighbors there), which is
-  // meaningless in this file, so every boundary gets its spacing set explicitly instead of
-  // trusting whatever the clone happened to inherit.
   const headerToInsert = [...missingImports, ...missingOther]
   if (headerToInsert.length) {
     const originalFirst = existingRoot.first

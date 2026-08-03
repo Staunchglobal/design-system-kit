@@ -1,12 +1,9 @@
-/* ==========================================================================
-   Dialog
-   ========================================================================== */
-
 [data-slot='dialog-overlay'] {
-  --dialog-overlay-bg: color-mix(in srgb, var(--overlay-bg) 50%, transparent);
+  --dialog-overlay-bg: var(--overlay-bg);
+  --dialog-overlay-opacity: 0.5;
   --dialog-overlay-blur: 4px;
   --dialog-overlay-duration: 100ms;
-  background-color: var(--dialog-overlay-bg);
+  background-color: rgb(from var(--dialog-overlay-bg) r g b / var(--dialog-overlay-opacity));
   transition-duration: var(--dialog-overlay-duration);
 }
 @supports (backdrop-filter: blur(1px)) {
@@ -16,12 +13,12 @@
 }
 
 [data-slot='dialog-content'] {
-  --dialog-content-bg: var(--popover);
-  --dialog-content-fg: var(--popover-foreground);
-  --dialog-content-ring-color: var(--neutral-950);
-  --dialog-content-ring-width: 1px;
-  --dialog-content-radius: var(--radius-lg);
-  --dialog-content-max-width: 24rem;
+  --dialog-content-bg: var(--neutral-0);
+  --dialog-content-fg: var(--foreground);
+  --dialog-content-ring-color: transparent;
+  --dialog-content-ring-width: 0px;
+  --dialog-content-radius: var(--radius-3xl);
+  --dialog-content-max-width: 22.375rem;
   --dialog-content-padding: 1rem;
   --dialog-content-gap: 1rem;
   --dialog-content-font-size: var(--typography-small-font-size);
@@ -39,69 +36,72 @@
   font-size: var(--dialog-content-font-size);
   transition-duration: var(--dialog-content-duration);
 }
-
-/* Built-in dialog close is a ghost/icon-sm Button (data-slot="button").
-   Only position it — look comes from the Button section. */
 [data-ui='dialog-close'] {
-  --dialog-close-top: 0.5rem;
-  --dialog-close-right: 0.5rem;
-  top: var(--dialog-close-top);
-  right: var(--dialog-close-right);
+  --dialog-close-top: 0.75rem;
+  --dialog-close-right: 0.75rem;
+  top: var(--dialog-close-top) !important;
+  right: var(--dialog-close-right) !important;
 }
-
 [data-slot='dialog-header'] {
-  --dialog-header-gap: 0.5rem;
-  --dialog-header-bg: var(--neutral-50);
-  --dialog-header-margin-inline: -1rem;
-  --dialog-header-margin-block-start: -1rem;
-  --dialog-header-padding: 1rem;
-  --dialog-header-radius: var(--radius-lg);
+  --dialog-header-gap: 0.75rem;
+  --dialog-header-bg: transparent;
+  --dialog-header-margin-inline: 0;
+  --dialog-header-margin-block-start: 0;
+  --dialog-header-padding: 0;
+  --dialog-header-radius: 0;
   gap: var(--dialog-header-gap);
-  background-color: var(--dialog-header-bg);
-  margin-inline: var(--dialog-header-margin-inline);
-  margin-block-start: var(--dialog-header-margin-block-start);
-  padding: var(--dialog-header-padding);
-  border-start-start-radius: var(--dialog-header-radius);
-  border-start-end-radius: var(--dialog-header-radius);
+  background-color: var(--dialog-header-bg) !important;
+  margin-inline: var(--dialog-header-margin-inline) !important;
+  margin-block-start: var(--dialog-header-margin-block-start) !important;
+  padding: var(--dialog-header-padding) !important;
+  border-radius: var(--dialog-header-radius);
 }
-
 [data-slot='dialog-footer'] {
-  --dialog-footer-bg: var(--neutral-100);
-  --dialog-footer-margin-inline: -1rem;
-  --dialog-footer-margin-block-end: -1rem;
-  --dialog-footer-gap: 0.5rem;
-  --dialog-footer-radius: var(--radius-lg);
-  --dialog-footer-border-color: var(--border);
-  --dialog-footer-border-width: 1px;
-  --dialog-footer-padding: 1rem;
-  background-color: var(--dialog-footer-bg);
-  margin-inline: var(--dialog-footer-margin-inline);
-  margin-block-end: var(--dialog-footer-margin-block-end);
+  --dialog-footer-bg: transparent;
+  --dialog-footer-margin-inline: 0;
+  --dialog-footer-margin-block-end: 0;
+  --dialog-footer-gap: 0.75rem;
+  --dialog-footer-radius: 0;
+  --dialog-footer-border-color: transparent;
+  --dialog-footer-border-width: 0;
+  --dialog-footer-padding: 0;
+  background-color: var(--dialog-footer-bg) !important;
+  margin-inline: var(--dialog-footer-margin-inline) !important;
+  margin-block-end: var(--dialog-footer-margin-block-end) !important;
   gap: var(--dialog-footer-gap);
-  border-end-start-radius: var(--dialog-footer-radius);
-  border-end-end-radius: var(--dialog-footer-radius);
-  border-top: var(--dialog-footer-border-width) solid var(--dialog-footer-border-color);
-  padding: var(--dialog-footer-padding);
+  border-radius: var(--dialog-footer-radius) !important;
+  border-top: var(--dialog-footer-border-width) solid var(--dialog-footer-border-color) !important;
+  padding: var(--dialog-footer-padding) !important;
 }
-
+[data-slot='dialog-footer'] > [data-slot='button'],
+[data-slot='dialog-footer'] > a,
+[data-slot='dialog-footer'] > button {
+  flex: 1 1 0;
+  min-width: 0;
+}
 [data-slot='dialog-title'] {
-  --dialog-title-font-family: var(--font-heading);
-  --dialog-title-font-size: var(--typography-h6-font-size);
-  --dialog-title-font-weight: var(--typography-h6-font-weight);
-  --dialog-title-line-height: var(--typography-h6-line-height);
+  --dialog-title-font-family: var(--font-sans);
+  --dialog-title-font-size: var(--typography-lead-font-size);
+  --dialog-title-font-weight: var(--typography-h1-font-weight);
+  --dialog-title-line-height: var(--typography-lead-line-height);
+  --dialog-title-fg: var(--foreground);
   font-family: var(--dialog-title-font-family);
   font-size: var(--dialog-title-font-size);
   font-weight: var(--dialog-title-font-weight);
   line-height: var(--dialog-title-line-height);
+  color: var(--dialog-title-fg);
 }
-
 [data-slot='dialog-description'] {
-  --dialog-description-fg: var(--muted-foreground);
-  --dialog-description-font-size: var(--typography-muted-font-size);
+  --dialog-description-fg: var(--muted-600);
+  --dialog-description-font-size: var(--typography-small-font-size);
+  --dialog-description-line-height: var(--typography-small-line-height);
+  --dialog-description-font-weight: var(--typography-p-font-weight);
   --dialog-description-link-hover-fg: var(--foreground);
   --dialog-description-link-underline-offset: 3px;
   color: var(--dialog-description-fg);
   font-size: var(--dialog-description-font-size);
+  line-height: var(--dialog-description-line-height);
+  font-weight: var(--dialog-description-font-weight);
 }
 [data-slot='dialog-description'] a {
   text-underline-offset: var(--dialog-description-link-underline-offset);
@@ -111,9 +111,5 @@
 }
 
 .dark [data-slot='dialog-content'] {
-  --dialog-content-ring-color: var(--neutral-50);
-}
-
-.dark [data-slot='dialog-footer'] {
-  --dialog-footer-bg: var(--neutral-800);
+  --dialog-content-bg: var(--neutral-900);
 }

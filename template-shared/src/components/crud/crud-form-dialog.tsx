@@ -20,16 +20,11 @@ export type CrudFormDialogProps = {
   description?: string
   submitLabel?: string
   submitting?: boolean
-  /** Form-level error message shown above the footer. */
   error?: string | null
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void
   children: React.ReactNode
 }
 
-/**
- * Shell-only form dialog — owns chrome/loading/error; caller supplies field markup
- * as children and its own validate/submit logic (no schema library required).
- */
 export function CrudFormDialog({
   open,
   onOpenChange,

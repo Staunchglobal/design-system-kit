@@ -19,6 +19,8 @@ import {
 
 import { cn } from '@/lib/utils'
 import { SortableItem } from '@/components/sortable/sortable-item'
+import { useMounted } from '@/components/inspector/use-mounted'
+import { GripVertical } from 'lucide-react'
 
 type SortableListProps<T extends { id: string }> = {
   items: T[]
@@ -28,6 +30,45 @@ type SortableListProps<T extends { id: string }> = {
   disabled?: boolean
 }
 
+function SortableListShell({
+  className,
+  children,
+}: {
+  className?: string
+  children: React.ReactNode
+}) {
+  return (
+    <ul data-slot="sortable-list" className={cn('flex flex-col gap-2', className)}>
+      {children}
+    </ul>
+  )
+}
+
+function SortableItemPlaceholder({
+  children,
+  disabled,
+}: {
+  children: React.ReactNode
+  disabled?: boolean
+}) {
+  return (
+    <div data-slot="sortable-item" className="flex items-center gap-2">
+      <button
+        type="button"
+        aria-label="Drag to reorder"
+        disabled
+        className={cn(
+          'text-muted-foreground shrink-0 cursor-grab touch-none opacity-50',
+          disabled && 'pointer-events-none'
+        )}
+      >
+        <GripVertical className="size-4" />
+      </button>
+      <div className="min-w-0 flex-1">{children}</div>
+    </div>
+  )
+}
+
 function SortableList<T extends { id: string }>({
   items,
   onReorder,
@@ -35,6 +76,8 @@ function SortableList<T extends { id: string }>({
   className,
   disabled = false,
 }: SortableListProps<T>) {
+  const mounted = useMounted()
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
@@ -42,7 +85,6 @@ function SortableList<T extends { id: string }>({
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event
-    // No drop target, drop on self, or item not found — all are no-ops
     if (!over || active.id === over.id) return
     const oldIndex = items.findIndex((item) => item.id === active.id)
     const newIndex = items.findIndex((item) => item.id === over.id)
@@ -50,10 +92,24 @@ function SortableList<T extends { id: string }>({
     onReorder(arrayMove(items, oldIndex, newIndex))
   }
 
+  if (!mounted) {
+    return (
+      <SortableListShell className={className}>
+        {items.map((item, index) => (
+          <li key={item.id}>
+            <SortableItemPlaceholder disabled={disabled}>
+              {renderItem(item, index)}
+            </SortableItemPlaceholder>
+          </li>
+        ))}
+      </SortableListShell>
+    )
+  }
+
   return (
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext items={items} strategy={verticalListSortingStrategy}>
-        <ul data-slot="sortable-list" className={cn('flex flex-col gap-2', className)}>
+        <SortableListShell className={className}>
           {items.map((item, index) => (
             <li key={item.id}>
               <SortableItem id={item.id} disabled={disabled}>
@@ -61,7 +117,7 @@ function SortableList<T extends { id: string }>({
               </SortableItem>
             </li>
           ))}
-        </ul>
+        </SortableListShell>
       </SortableContext>
     </DndContext>
   )

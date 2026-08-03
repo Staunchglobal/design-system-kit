@@ -79,7 +79,6 @@ const TABS: CrudTab[] = [
   { label: 'Est', value: 'est' },
 ]
 
-/** Map tab → GraphQL search term (demo stand-in for status filters). */
 function tabQuery(tab: string | null): string {
   if (!tab || tab === 'all') return ''
   return tab
@@ -106,7 +105,6 @@ async function fetchPostsPage({ page, pageSize, search, sort, tab }: CrudPagePar
 }
 
 function CrudScreenDemo() {
-  // Toolbar slot demo — even-id “featured” filter (client-side on the current page).
   const [featuredOnly, setFeaturedOnly] = React.useState(false)
 
   const fetchPage = React.useCallback(

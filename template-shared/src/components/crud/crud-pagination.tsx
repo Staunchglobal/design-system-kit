@@ -6,12 +6,16 @@ import {
   PaginationEllipsis,
   PaginationItem,
   PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
 } from '@/components/ui/pagination'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { cn } from '@/lib/utils'
 
-/** Build a compact page list with ellipsis gaps, e.g. [1, '…', 4, 5, 6, '…', 20]. */
 export function pageItems(page: number, pageCount: number): Array<number | 'ellipsis'> {
   if (pageCount <= 7) {
     return Array.from({ length: pageCount }, (_, i) => i + 1)
@@ -34,6 +38,7 @@ export type CrudPaginationProps = {
   onPageChange: (page: number) => void
   totalCount?: number
   totalLabel?: string
+  itemLabel?: string
   pageSize?: number
   pageSizeOptions?: number[]
   onPageSizeChange?: (pageSize: number) => void
@@ -46,6 +51,7 @@ export function CrudPagination({
   onPageChange,
   totalCount,
   totalLabel,
+  itemLabel = 'items',
   pageSize,
   pageSizeOptions,
   onPageSizeChange,
@@ -53,54 +59,70 @@ export function CrudPagination({
 }: CrudPaginationProps) {
   const pages = pageItems(page, pageCount)
 
+  const rangeStart =
+    totalCount == null || pageSize == null
+      ? null
+      : totalCount === 0
+        ? 0
+        : (page - 1) * pageSize + 1
+  const rangeEnd =
+    totalCount == null || pageSize == null || rangeStart == null
+      ? null
+      : Math.min(page * pageSize, totalCount)
+
+  const summary =
+    totalLabel ??
+    (rangeStart != null && rangeEnd != null && totalCount != null
+      ? null
+      : totalCount != null
+        ? `${totalCount} ${itemLabel}`
+        : null)
+
   return (
-    <div
-      className={cn(
-        'flex flex-col items-center gap-3 sm:flex-row sm:justify-between',
-        className
-      )}
-    >
-      <div className="text-muted-foreground flex flex-wrap items-center gap-3 text-xs">
-        {totalCount != null ? (
-          <p>
-            {totalLabel ??
-              `${totalCount} item${totalCount === 1 ? '' : 's'}`}
+    <div data-slot="crud-pagination" className={cn(className)}>
+      <div className="flex flex-wrap items-center gap-3">
+        {summary != null ? (
+          <p data-slot="crud-pagination-summary">{summary}</p>
+        ) : rangeStart != null && rangeEnd != null && totalCount != null ? (
+          <p data-slot="crud-pagination-summary">
+            Showing{' '}
+            <span data-ui="crud-pagination-range">
+              {rangeStart} – {rangeEnd}
+            </span>
+            {` of ${totalCount} ${itemLabel}`}
           </p>
         ) : null}
 
         {pageSize != null && pageSizeOptions?.length && onPageSizeChange ? (
-          <label className="flex items-center gap-1.5">
-            <span>Rows</span>
-            <select
-              className="border-input bg-background h-7 rounded-md border px-2 text-xs"
-              value={pageSize}
-              onChange={(e) => onPageSizeChange(Number(e.target.value))}
-              aria-label="Rows per page"
+          <div className="flex items-center gap-1.5">
+            <span id="crud-rows-label" className="text-muted-foreground">
+              Rows
+            </span>
+            <Select
+              value={String(pageSize)}
+              onValueChange={(value) => onPageSizeChange(Number(value))}
             >
-              {pageSizeOptions.map((n) => (
-                <option key={n} value={n}>
-                  {n}
-                </option>
-              ))}
-            </select>
-          </label>
+              <SelectTrigger
+                size="sm"
+                className="w-auto gap-1 px-2.5"
+                aria-labelledby="crud-rows-label"
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent position="popper" align="start">
+                {pageSizeOptions.map((n) => (
+                  <SelectItem key={n} value={String(n)}>
+                    {n}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         ) : null}
       </div>
 
       <Pagination>
         <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              href="#"
-              aria-disabled={page <= 1}
-              className={page <= 1 ? 'pointer-events-none opacity-50' : undefined}
-              onClick={(e) => {
-                e.preventDefault()
-                if (page > 1) onPageChange(page - 1)
-              }}
-            />
-          </PaginationItem>
-
           {pages.map((item, index) =>
             item === 'ellipsis' ? (
               <PaginationItem key={`e-${index}`}>
@@ -121,18 +143,6 @@ export function CrudPagination({
               </PaginationItem>
             )
           )}
-
-          <PaginationItem>
-            <PaginationNext
-              href="#"
-              aria-disabled={page >= pageCount}
-              className={page >= pageCount ? 'pointer-events-none opacity-50' : undefined}
-              onClick={(e) => {
-                e.preventDefault()
-                if (page < pageCount) onPageChange(page + 1)
-              }}
-            />
-          </PaginationItem>
         </PaginationContent>
       </Pagination>
     </div>

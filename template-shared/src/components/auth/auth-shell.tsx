@@ -3,32 +3,23 @@
 import * as React from 'react'
 
 import { cn } from '@/lib/utils'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
 
 export type AuthShellProps = {
   title: string
-  description?: string
+  description?: React.ReactNode
   children: React.ReactNode
+  /** Optional control above the title (e.g. back link). */
+  header?: React.ReactNode
   footer?: React.ReactNode
   logo?: React.ReactNode
   className?: string
 }
 
-/**
- * Centered auth card layout — logo slot, title, form body, footer links.
- */
 export function AuthShell({
   title,
   description,
   children,
+  header,
   footer,
   logo,
   className,
@@ -36,27 +27,27 @@ export function AuthShell({
   return (
     <div
       className={cn(
-        'bg-muted/40 flex min-h-svh flex-col items-center justify-center p-4',
+        'flex min-h-svh flex-col items-center justify-center bg-gradient-to-b from-slate-100 to-slate-50 p-4 sm:p-6',
         className
       )}
     >
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-[445px]">
         {logo ? <div className="mb-6 flex justify-center">{logo}</div> : null}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-xl">{title}</CardTitle>
-            {description ? <CardDescription>{description}</CardDescription> : null}
-          </CardHeader>
-          <CardContent>{children}</CardContent>
+        <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200/80 sm:p-8">
+          {header ? <div className="mb-4">{header}</div> : null}
+          <div className="mb-5 flex flex-col gap-1.5">
+            <h1 className="text-foreground text-2xl font-semibold tracking-tight">{title}</h1>
+            {description ? (
+              <div className="text-muted-foreground text-sm leading-relaxed">{description}</div>
+            ) : null}
+          </div>
+          {children}
           {footer ? (
-            <>
-              <Separator />
-              <CardFooter className="text-muted-foreground flex flex-col items-stretch gap-2 text-sm">
-                {footer}
-              </CardFooter>
-            </>
+            <div className="text-muted-foreground mt-6 flex flex-col items-stretch gap-2 border-t border-slate-100 pt-4 text-sm">
+              {footer}
+            </div>
           ) : null}
-        </Card>
+        </div>
       </div>
     </div>
   )

@@ -1,7 +1,3 @@
-/**
- * Re-exports the NotificationCenter composite and related types from the
- * feature directory so it can be imported from the standard ui/ path.
- */
 export {
   NotificationCenter,
   type NotificationCenterProps,

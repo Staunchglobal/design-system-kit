@@ -59,15 +59,12 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
     return
   }
 
-  // '' for a root layout (no --src-dir), 'src' for the src/ layout — every path below is
-  // built from this so the kit works with either.
   const srcDir = project.appDirRelative === 'src/app' ? 'src' : ''
   const destRoot = path.join(root, srcDir)
   const rel = (p: string) => (srcDir ? `${srcDir}/${p}` : p)
   const aliasTarget = srcDir ? './src/*' : './*'
   log.info(`Layout: ${srcDir ? 'src/ directory' : 'no src/ directory (root layout)'}`)
 
-  // ---- Which components? ------------------------------------------------------
   log.title('Components')
   const toolOnly = resolveUiClosure(THEME_EDITOR_REQUIRED_COMPONENTS)
   const prior = priorSelectionFor(root, toolOnly, srcDir)
@@ -85,7 +82,6 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
     log.info(`Also included (required by your picks): ${[...addedByDeps].sort().join(', ')}`)
   }
 
-  // ---- Dependencies -------------------------------------------------------
   const existingDeps = {
     ...((project.packageJson.dependencies as Record<string, string>) ?? {}),
     ...((project.packageJson.devDependencies as Record<string, string>) ?? {}),
@@ -130,7 +126,6 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
     }
   }
 
-  // ---- Copy files -------------------------------------------------------------
   log.title('Files')
   const uiFiles = [...closure].filter((s) => s !== 'patterns').map((s) => `components/ui/${s}.tsx`)
   const cssFiles = [...cssFilesFor(closure)].map((f) => `styles/theme/components/${f}`)
@@ -270,7 +265,6 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
     return
   }
 
-  // ---- Patch configs ------------------------------------------------------------
   log.title('Wiring it up')
 
   const postcssResult = patchPostcssConfig(root)
@@ -366,15 +360,20 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
 
   writeSelectionConfig(root, [...userChosen])
 
-  // ---- Done ------------------------------------------------------------------------
   log.title('Done')
   log.success('Design system kit installed.')
   log.info(`Run your dev server, then visit ${pc.bold('/design-system')} and ${pc.bold('/theme-editor')}.`)
   if (userClosure.has('auth')) {
     log.info(
-      `Auth pages: ${pc.bold('/auth/login')}, /auth/signup, /auth/forgot-password, /auth/verify-otp, /auth/reset-password, /auth/accept-invitation, /auth/change-password, /auth/home`
+      `Auth pages: ${pc.bold('/auth/login')}, /auth/signup, /auth/forgot-password, /auth/reset-password, /auth/accept-invitation, /auth/change-password, /auth/home`
     )
     log.info('Demo mock: demo@example.com / Password1! — OTP always 123456')
+  }
+  if (userClosure.has('chat')) {
+    log.info(`Chat inbox: ${pc.bold('/chat')}, ${pc.bold('/chat/[id]')}, ${pc.bold('/chat/archived')} (requires auth session)`)
+    log.info(
+      'Real backend (staunch_saas_kit Rails app): set NEXT_PUBLIC_GRAPHQL_URL, NEXT_PUBLIC_GRAPHQL_WS_URL — falls back to the in-memory mock otherwise'
+    )
   }
   log.info(`Run \`${pc.bold('design-kit init')}\` again any time to add more components.`)
   if (skipped.length) {

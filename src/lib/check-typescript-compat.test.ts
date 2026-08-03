@@ -72,7 +72,6 @@ describe('checkTypeScriptCompat', () => {
     expect(result.autoFixed.length).toBe(1)
     const written = fs.readFileSync(p, 'utf8')
     expect(written).toContain('"types": ["node", "react"]')
-    // The issue itself should not also be reported once it's been fixed.
     expect(result.issues.some((i) => i.message.includes('No explicit "types"'))).toBe(false)
   })
 

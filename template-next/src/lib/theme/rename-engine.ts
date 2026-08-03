@@ -11,24 +11,17 @@ import path from "node:path";
  * never drift from what actually gets written — the only difference is whether
  * matched files are written back to disk.
  */
-
 export type RenameFamily = "color" | "radius" | "typography" | "shadow";
 
 export interface RenameRequest {
   family: RenameFamily;
-  /** Bare token name, no `--` prefix — e.g. "accent", "xl", "h3", "sm". */
   from: string;
   to: string;
 }
 
-/** Absolute paths, resolved by the caller (Next route / Vite plugin) per their own
- *  project-layout conventions — this module has no opinion on where files live. */
 export interface RenameContext {
-  /** tokens/*.css + components/*.css + the Tailwind @theme bridge file (globals.css/index.css). */
   cssFiles: string[];
-  /** components/ui/*.tsx + design-system/_sections/*.tsx. */
   tsxFiles: string[];
-  /** lib/theme/descriptions.ts, or null if not found. */
   descriptionsPath: string | null;
 }
 
@@ -84,17 +77,11 @@ function cssRulesFor(family: RenameFamily, escFrom: string, to: string): Rule[] 
           replacement: `--theme-radius-${to}`,
         },
         {
-          // Covers both the public --radius-{step} alias and the Tailwind bridge
-          // line (`--radius-xl: var(--theme-radius-xl);`), which share this name.
           regex: new RegExp(`--radius-${escFrom}(?![\\w-])`, "g"),
           replacement: `--radius-${to}`,
         },
       ];
     case "typography":
-      // Unlike radius/shadow steps, a typography variant name is always followed by
-      // a hyphenated property suffix in its CSS custom-prop form (e.g.
-      // `--typography-h3-font-size`), so only an immediately-following alphanumeric
-      // is excluded (guards against a longer variant name like "h3x"), not a hyphen.
       return [
         {
           regex: new RegExp(`(\\.)?typography-${escFrom}(?![a-zA-Z0-9])`, "g"),
@@ -131,9 +118,6 @@ function tsxRulesFor(family: RenameFamily, escFrom: string, to: string): TsxRule
           ),
           replacement: (_m, prefix, fg) => `${prefix}-${to}${fg ?? ""}`,
         },
-        // The design-system demo pages (colors.tsx/color-scales.tsx) hold the token
-        // name as JS data, not a Tailwind className: `{ name: 'Accent', cssVar:
-        // '--accent', prefix: 'accent' }`.
         {
           kind: "data-literal",
           regex: new RegExp(`(cssVar:\\s*['"\`])--${escFrom}(['"\`])`, "g"),
@@ -149,7 +133,6 @@ function tsxRulesFor(family: RenameFamily, escFrom: string, to: string): TsxRule
       return [
         {
           kind: "tw-class",
-          // Directional variants: rounded-t-xl, rounded-tl-xl, rounded-tr-xl, etc.
           regex: new RegExp(`\\brounded(-[a-z]{1,2})?-${escFrom}${CLASS_BOUNDARY}`, "g"),
           replacement: (_m, dir) => `rounded${dir ?? ""}-${to}`,
         },
@@ -173,12 +156,6 @@ function tsxRulesFor(family: RenameFamily, escFrom: string, to: string): TsxRule
   }
 }
 
-/**
- * `descriptions.ts` hand-authors prose keyed by bare var name (some keys are quoted
- * because they contain a hyphen, e.g. `'accent-foreground'`; some are bare
- * identifiers, e.g. `background`). Renaming always emits a quoted key — trivially
- * valid TS either way, and avoids computing identifier-validity for `to`.
- */
 function descriptionRulesFor(family: RenameFamily, escFrom: string, to: string): Rule[] {
   switch (family) {
     case "color":
@@ -202,8 +179,6 @@ function descriptionRulesFor(family: RenameFamily, escFrom: string, to: string):
           replacement: (_m, indent) => `${indent}'shadow-${to}':`,
         },
       ];
-    // Typography's description is derived from the variant name via regex at
-    // render time (see descriptions.ts's `describeVariable`), not a hardcoded map.
     case "typography":
       return [];
   }
@@ -285,15 +260,10 @@ export function planRename(req: RenameRequest, ctx: RenameContext): RenamePlan {
   return runRename(req, ctx, false);
 }
 
-/** Writes every matched file. Callers are expected to have already re-validated
- *  the request (see rename-token route). */
 export function applyRename(req: RenameRequest, ctx: RenameContext): RenamePlan {
   return runRename(req, ctx, true);
 }
 
-/** Absolute paths to the directories/files a rename traverses — differ between
- *  Next (srcDir may or may not exist, bridge is app/globals.css) and Vite
- *  (always src/, bridge is src/index.css); each caller resolves its own. */
 export interface RenamePathConfig {
   tokensDir: string;
   componentsDir: string;
@@ -319,8 +289,6 @@ function tsxFilesIn(dir: string): string[] {
     .map((f) => path.join(dir, f));
 }
 
-/** Resolves a RenamePathConfig (framework-specific paths) into the concrete file
- *  lists both planRename/applyRename operate on. */
 export function buildRenameContext(cfg: RenamePathConfig): RenameContext {
   const cssFiles = [
     ...cssFilesIn(cfg.tokensDir),
@@ -335,11 +303,6 @@ export function buildRenameContext(cfg: RenamePathConfig): RenameContext {
   };
 }
 
-/**
- * Records a successful rename so a component added *later* (via `design-kit init`/
- * `update`) can be corrected on the way in instead of arriving with the original name —
- * see the CLI's `src/lib/rename-history.ts`, which reads this same file/shape.
- */
 export function appendRenameHistory(historyPath: string, entry: RenameRequest): void {
   let history: RenameRequest[] = [];
   if (fs.existsSync(historyPath)) {

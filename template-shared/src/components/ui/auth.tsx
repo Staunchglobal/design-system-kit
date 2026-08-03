@@ -1,7 +1,3 @@
-/**
- * Opt-in auth feature entry — filesystem discovery picks up slug `auth`.
- * Prefer importing forms/helpers from `@/components/auth/*` directly.
- */
 export { AuthShell } from '@/components/auth/auth-shell'
 export { LoginForm } from '@/components/auth/login-form'
 export { SignupForm } from '@/components/auth/signup-form'
@@ -15,5 +11,4 @@ export {
   setAuthSession,
   clearAuthSession,
 } from '@/components/auth/auth-session'
-/** Ensures sonner lands in auth uiDeps (auth layout / pages mount Toaster). */
 export { Toaster } from '@/components/ui/sonner'

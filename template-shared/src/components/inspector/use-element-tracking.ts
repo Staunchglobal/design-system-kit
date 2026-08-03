@@ -40,8 +40,8 @@ export function useElementTracking(target: Element | null): DOMRect | null {
   return React.useMemo(() => {
     if (!target || !target.isConnected) return null
     return target.getBoundingClientRect()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     // `tick` intentionally participates only to force a re-measure on observer/listener events —
     // it carries no data of its own.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target, tick])
 }

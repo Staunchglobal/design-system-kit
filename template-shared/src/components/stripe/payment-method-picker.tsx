@@ -24,18 +24,10 @@ type PaymentMethodPickerProps = {
    * PaymentMethod to your backend, then refresh the list yourself.
    */
   methods: SavedPaymentMethod[]
-  /** Currently selected saved-method id (controlled). */
   selectedId?: string
-  /** Called when the user picks a different saved method. */
   onSelectExisting: (id: string) => void
-  /**
-   * Called after PaymentMethodForm successfully creates a new PaymentMethod.
-   * Close the dialog and add the new card to methods at the call-site.
-   */
   onAddNew: (paymentMethod: PaymentMethod) => void
-  /** Label for the dialog trigger button. */
   triggerLabel?: string
-  /** Loading state — passed through to PaymentMethodList. */
   loading?: boolean
   className?: string
 }

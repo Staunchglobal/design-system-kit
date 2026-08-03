@@ -1,8 +1,3 @@
-/* Notification Center */
-/* max-width, not width — the component's own `panelWidth` prop (default w-80) sets the
-   actual width via a Tailwind class; this only caps it so a wider custom panelWidth never
-   overflows the viewport. A plain `width` here would win the cascade over that Tailwind
-   class unconditionally and make `panelWidth` dead. */
 [data-ui='notification-center-content'] {
   --notification-center-max-width: 24rem;
   --notification-center-max-height: 32rem;

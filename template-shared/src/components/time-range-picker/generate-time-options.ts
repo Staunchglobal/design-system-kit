@@ -1,4 +1,3 @@
-/** Generate HH:mm options at the given step. */
 export function generateTimeOptions(
   stepMinutes: number
 ): { label: string; value: string }[] {

@@ -13,12 +13,10 @@ import type { NavGroup } from '../generated/registry.js'
  */
 export const THEME_EDITOR_REQUIRED_COMPONENTS = ['field', 'input-group', 'combobox']
 
-/** All real, selectable component slugs (excludes the "patterns" pseudo-component). */
 export function allComponentSlugs(): string[] {
   return Object.keys(COMPONENTS)
 }
 
-/** Follows uiDeps transitively — e.g. picking "combobox" pulls in "popover" + "command". */
 export function resolveUiClosure(selected: Iterable<string>): Set<string> {
   const closure = new Set<string>()
   const stack = [...selected]
@@ -44,7 +42,6 @@ export function navGroupsFor(closure: Set<string>): NavGroup[] {
   })).filter((g) => g.items.length > 0)
 }
 
-/** Every _sections/*.tsx (and _shared/*.tsx companion) file needed to demo these nav groups. */
 export function demoFilesFor(navGroups: NavGroup[]): string[] {
   const files = new Set<string>()
   for (const g of navGroups) {

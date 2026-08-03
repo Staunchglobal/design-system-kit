@@ -1,7 +1,3 @@
-/* ==========================================================================
-   Hover Card
-   ========================================================================== */
-
 [data-slot='hover-card-content'] {
   --hover-card-content-bg: var(--popover);
   --hover-card-content-fg: var(--popover-foreground);

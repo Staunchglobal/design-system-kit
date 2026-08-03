@@ -65,7 +65,7 @@ describe('fetchTemplateText', () => {
     await expect(fetchTemplateText('https://cdn.example.com/button.tsx', { retries: 1 })).rejects.toThrow(
       /Could not reach https:\/\/cdn\.example\.com\/button\.tsx/
     )
-    expect(fetchMock).toHaveBeenCalledTimes(2) // initial attempt + 1 retry
+    expect(fetchMock).toHaveBeenCalledTimes(2)
   })
 
   it('retries a 500 before giving up, then throws with the status code', async () => {
@@ -155,12 +155,10 @@ describe('local shadowing (DESIGN_KIT_LOCAL_TEMPLATES)', () => {
       const fetchMock = vi.fn().mockResolvedValue(jsonResponse({ text: 'from cdn' }))
       vi.stubGlobal('fetch', fetchMock)
 
-      // Present locally — read straight off disk, no network call at all.
       const present = await remote.fetchTemplateText(remote.remoteUrl(base, 'present.tsx'))
       expect(present).toBe('export const local = true')
       expect(fetchMock).not.toHaveBeenCalled()
 
-      // Absent locally — falls through to the (mocked) CDN.
       const absent = await remote.fetchTemplateText(remote.remoteUrl(base, 'missing.tsx'))
       expect(absent).toBe('from cdn')
       expect(fetchMock).toHaveBeenCalledTimes(1)

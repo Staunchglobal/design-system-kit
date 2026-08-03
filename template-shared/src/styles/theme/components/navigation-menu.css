@@ -1,7 +1,3 @@
-/* ==========================================================================
-   Navigation Menu
-   ========================================================================== */
-
 [data-slot='navigation-menu-list'] {
   --navigation-menu-list-gap: 0px;
   gap: var(--navigation-menu-list-gap);
@@ -68,10 +64,6 @@
   --navigation-menu-content-padding: 0.25rem;
   padding: var(--navigation-menu-content-padding);
 }
-/* The bg/fg/ring only render when the parent navigation-menu has
-   data-viewport="false" (real DOM attribute set by NavigationMenu itself),
-   so we scope the color overrides to that state to avoid painting a
-   background behind content that's teleported into the viewport. */
 [data-slot='navigation-menu'][data-viewport='false'] [data-slot='navigation-menu-content'] {
   --navigation-menu-content-radius: var(--radius-lg);
   --navigation-menu-content-bg: var(--popover);

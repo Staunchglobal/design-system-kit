@@ -18,7 +18,6 @@ function scorePassword(password: string): { met: number; level: StrengthLevel; l
   return { met, level: 'strong', label: 'Strong' }
 }
 
-/** Maps strength to how many of the 3 visual bars are filled. */
 function filledBars(level: StrengthLevel): number {
   if (level === 'empty') return 0
   if (level === 'weak') return 1

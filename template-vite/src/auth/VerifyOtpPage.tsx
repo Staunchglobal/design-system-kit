@@ -5,25 +5,16 @@ import * as React from 'react'
 import { AuthShell } from '@/components/auth/auth-shell'
 import { createAuthFetch } from '@/components/auth/auth-fetch'
 import {
-  LOGIN_WITH_OTP,
   RESEND_OTP,
-  SEND_PASSWORD_RESET_OTP,
-  VERIFY_PASSWORD_RESET_OTP,
-  type LoginWithOtpResult,
+  VERIFY_OTP,
   type ResendOtpResult,
-  type SendPasswordResetOtpResult,
-  type VerifyPasswordResetOtpResult,
+  type VerifyOtpResult,
 } from '@/components/auth/auth-operations'
 import { VerifyOtpForm } from '@/components/auth/verify-otp-form'
 import { toast } from '@/components/auth/notify'
-import {
-  clearAuthHandoff,
-  setAuthHandoff,
-  setAuthSession,
-} from '@/components/auth/auth-session'
-import { useAuthHandoff } from '@/components/auth/use-auth-store'
-import { clearOtpCooldown } from '@/components/auth/otp-timer-storage'
-import type { VerifyOtpFormValues } from '@/components/auth/types'
+import { setAuthSession, setPendingOtp, clearPendingOtp } from '@/components/auth/auth-session'
+import { usePendingOtp } from '@/components/auth/use-auth-store'
+import type { OtpFormValues } from '@/components/auth/types'
 import { Toaster } from '@/components/ui/sonner'
 
 const authFetch = createAuthFetch()
@@ -33,52 +24,37 @@ function go(path: string) {
 }
 
 export default function VerifyOtpPage() {
-  const handoff = useAuthHandoff()
-  const email = handoff.email ?? ''
-  const mode = handoff.mode ?? 'login'
-  const otpHint = handoff.otpHint
   const [loading, setLoading] = React.useState(false)
   const [resendLoading, setResendLoading] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
+  // Backed by localStorage — surviving a page refresh here is the whole
+  // point of this being its own route: reloading mid-verification must
+  // not bounce back to the credentials form.
+  const pending = usePendingOtp()
+  // Set right before navigating away on success/cancel — `clearPendingOtp()`
+  // flips `pending` to null a render before the browser navigation actually
+  // lands, and without this the redirect-away effect below races it back
+  // to /auth/login instead of wherever we're actually headed.
+  const navigatingAway = React.useRef(false)
 
   React.useEffect(() => {
-    if (!handoff.email) {
-      go(handoff.mode === 'reset' ? '/auth/forgot-password' : '/auth/login')
-    }
-  }, [handoff.email, handoff.mode])
+    if (!pending && !navigatingAway.current) go('/auth/login')
+  }, [pending])
 
-  React.useEffect(() => {
-    return () => {
-      clearOtpCooldown()
-    }
-  }, [])
+  if (!pending) return null
 
-  async function handleSubmit(values: VerifyOtpFormValues) {
+  async function handleOtp(values: OtpFormValues) {
+    if (!pending) return
     setLoading(true)
     setError(null)
     try {
-      if (mode === 'reset') {
-        const data = await authFetch<VerifyPasswordResetOtpResult>(VERIFY_PASSWORD_RESET_OTP, {
-          email,
-          otp: values.otp,
-        })
-        clearAuthHandoff()
-        toast.success('Code verified')
-        go(
-          `/auth/reset-password?token=${encodeURIComponent(data.verifyPasswordResetOtp.resetPasswordToken)}`
-        )
-        return
-      }
-      const data = await authFetch<LoginWithOtpResult>(LOGIN_WITH_OTP, {
-        email,
-        otp: values.otp,
+      const data = await authFetch<VerifyOtpResult>(VERIFY_OTP, {
+        input: { email: pending.email, otp: values.otp },
       })
-      clearAuthHandoff()
-      setAuthSession({
-        token: data.loginWithOtp.token,
-        user: data.loginWithOtp.user,
-      })
-      toast.success('Signed in')
+      setAuthSession({ token: data.verifyOtp.token, user: data.verifyOtp.user })
+      navigatingAway.current = true
+      clearPendingOtp()
+      toast.success(pending.purpose === 'signup' ? 'Account created' : 'Signed in')
       go('/auth/home')
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Verification failed'
@@ -90,51 +66,46 @@ export default function VerifyOtpPage() {
   }
 
   async function handleResend() {
+    if (!pending) return
     setResendLoading(true)
     try {
-      if (mode === 'reset') {
-        const data = await authFetch<SendPasswordResetOtpResult>(SEND_PASSWORD_RESET_OTP, {
-          email,
-        })
-        setAuthHandoff(email, 'reset', data.sendPasswordResetOtp.otpCode ?? undefined)
-        toast.success(data.sendPasswordResetOtp.message)
-      } else {
-        const data = await authFetch<ResendOtpResult>(RESEND_OTP, { email })
-        setAuthHandoff(email, 'login', data.resendOtp.otpCode ?? undefined)
-        toast.success(data.resendOtp.message)
-      }
+      const data = await authFetch<ResendOtpResult>(RESEND_OTP, { input: { email: pending.email } })
+      setPendingOtp(pending.email, pending.purpose, data.resendOtp.otp)
+      toast.success(data.resendOtp.message)
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Resend failed'
-      toast.error(message)
+      toast.error(err instanceof Error ? err.message : 'Resend failed')
     } finally {
       setResendLoading(false)
     }
   }
 
-  if (!handoff.email) {
-    return (
-      <>
-        <AuthShell title="Verify code">
-          <p className="text-muted-foreground text-sm">Loading…</p>
-        </AuthShell>
-        <Toaster />
-      </>
-    )
-  }
-
   return (
     <>
-      <AuthShell title="Verify code" description="Enter the 6-digit one-time password.">
+      <AuthShell
+        title="Verify your email"
+        description={`Enter the 6-digit code we emailed to ${pending.email}.`}
+      >
         <VerifyOtpForm
-          email={email}
-          mode={mode}
-          onSubmit={handleSubmit}
+          onSubmit={handleOtp}
           onResend={handleResend}
           loading={loading}
           resendLoading={resendLoading}
           error={error}
-          otpHint={otpHint}
+          otpHint={pending.otp}
+          startTimerOnMount
         />
+        <button
+          type="button"
+          className="text-muted-foreground hover:text-foreground mt-4 text-center text-sm underline-offset-4 hover:underline"
+          onClick={() => {
+            navigatingAway.current = true
+            clearPendingOtp()
+            setError(null)
+            go(pending.purpose === 'signup' ? '/auth/signup' : '/auth/login')
+          }}
+        >
+          {pending.purpose === 'signup' ? 'Back to sign up' : 'Back to sign in'}
+        </button>
       </AuthShell>
       <Toaster />
     </>

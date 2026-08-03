@@ -4,17 +4,12 @@ import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { applyRename, planRename, type RenameContext } from "./rename-engine";
 
-// This file lives in template-next/src/lib/theme/ (Next-only — the engine uses Node
-// built-ins unavailable in Vite's client tsconfig), but the CSS/tsx fixtures it exercises
-// are the real, shared ones under template-shared/.
 const MONOREPO_ROOT = path.resolve(__dirname, "../../../../");
 const REPO_THEME_ROOT = path.join(MONOREPO_ROOT, "template-shared/src/styles/theme");
 const REPO_UI_ROOT = path.join(MONOREPO_ROOT, "template-shared/src/components/ui");
 
 let tmpDir: string;
 
-/** Copies real repo files into a temp dir so tests exercise actual current
- *  content, not a static snapshot that could drift from the real files. */
 function fixture(relPath: string, sourceAbsPath: string): string {
   const dest = path.join(tmpDir, relPath);
   fs.mkdirSync(path.dirname(dest), { recursive: true });
@@ -82,9 +77,13 @@ describe("color family rename — accent -> info (real files)", () => {
     expect(colors).not.toMatch(/--accent\b/);
 
     // sidebar-accent is a DIFFERENT token that only shares the substring "accent" —
-    // its own name must never be touched, only its var() reference target.
-    expect(colors).toMatch(/--sidebar-accent:\s*var\(--info-100\);/);
-    expect(colors).toMatch(/--sidebar-accent-foreground:\s*var\(--info-900\);/);
+    // its own name must never be touched. It derives from --secondary-*, not --accent-*,
+    // in the current palette, so its value is untouched too; the invariant under test
+    // is that the property NAME survives the rename.
+    expect(colors).toMatch(/--sidebar-accent:\s*var\(--secondary-50\);/);
+    expect(colors).toMatch(/--sidebar-accent-foreground:\s*var\(--primary-950\);/);
+
+    expect(colors).toMatch(/--chart-5:\s*var\(--info-500\);/);
   });
 
   it("renames literal Tailwind utility classNames, preserving compound variants and -foreground pairing", () => {
@@ -98,12 +97,9 @@ describe("color family rename — accent -> info (real files)", () => {
   it("never touches a cva() variant key that coincidentally shares the family name", () => {
     const ctx = buildCtx();
     const before = fs.readFileSync(ctx.tsxFiles[1], "utf8");
-    expect(before).toMatch(/^\s*secondary:\s*$/m); // button.tsx's cva variant key, own line
+    expect(before).toMatch(/^\s*secondary:\s*$/m);
     applyRename({ family: "color", from: "secondary", to: "brand" }, ctx);
     const after = fs.readFileSync(ctx.tsxFiles[1], "utf8");
-    // The cva variant key "secondary:" (an object property, not a Tailwind class
-    // string) must survive untouched even though we just renamed "secondary" —
-    // while its own bg-secondary/text-secondary-foreground classes DO get renamed.
     expect(after).toMatch(/^\s*secondary:\s*$/m);
     expect(after).toMatch(/bg-brand text-brand-foreground/);
     expect(after).not.toMatch(/bg-secondary\b/);
@@ -143,8 +139,8 @@ describe("radius family rename — xl -> huge (real files)", () => {
     expect(css).toMatch(/--theme-radius-huge:/);
     expect(css).toMatch(/--radius-huge:\s*var\(--theme-radius-huge\);/);
     expect(css).not.toMatch(/--theme-radius-xl\b/);
-    expect(css).toMatch(/--radius:\s*var\(--theme-radius\);/); // base untouched
-    expect(css).toMatch(/--theme-radius-2xl:/); // unrelated step untouched
+    expect(css).toMatch(/--radius:\s*var\(--theme-radius\);/);
+    expect(css).toMatch(/--theme-radius-2xl:/);
   });
 
   it("renames directional Tailwind variants but never rounded-full/rounded-none", () => {
@@ -168,7 +164,7 @@ describe("shadow family rename — xl -> jumbo (real files)", () => {
     const css = fs.readFileSync(ctx.cssFiles[0], "utf8");
     expect(css).toMatch(/--shadow-jumbo:/);
     expect(css).not.toMatch(/--shadow-xl\b/);
-    expect(css).toMatch(/--shadow-lg:/); // unrelated step untouched
+    expect(css).toMatch(/--shadow-lg:/);
 
     const tsx = fs.readFileSync(ctx.tsxFiles[0], "utf8");
     expect(tsx).toBe(`className="shadow-jumbo shadow-inner shadow-none"`);
@@ -191,7 +187,7 @@ describe("typography family rename — h3 -> heading-3", () => {
     expect(css).toMatch(/\.typography-heading-3\s*\{/);
     expect(css).toMatch(/--typography-heading-3-font-size:/);
     expect(css).not.toMatch(/typography-h3\b/);
-    expect(css).toMatch(/\.typography-h4\s*\{/); // unrelated variant untouched
+    expect(css).toMatch(/\.typography-h4\s*\{/);
 
     const tsx = fs.readFileSync(ctx.tsxFiles[0], "utf8");
     expect(tsx).toBe(`<h3 className="typography-heading-3">Title</h3>`);
@@ -216,7 +212,7 @@ describe("descriptions.ts rekeying", () => {
     expect(out).toContain(
       "'info-foreground': 'Text/icon color placed on top of the accent color.'"
     );
-    expect(out).toContain("background: 'The default page background color.'"); // untouched
+    expect(out).toContain("background: 'The default page background color.'");
   });
 
   it("rekeys a radius step's description", () => {

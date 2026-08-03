@@ -13,18 +13,20 @@ export default function SidebarDemo() {
       >
         <Example
           title="App shell"
-          description="Self-contained sidebar with its own provider, scoped to this demo."
+          description="Toggle the panel-left control to collapse the sidebar to icons."
           contentClassName="p-0"
         >
-          <div className="h-[420px] w-full overflow-hidden rounded-lg border">
+          <div data-sidebar-demo className="h-[420px] w-full overflow-hidden rounded-lg border">
             <SidebarProvider className="h-full min-h-0">
-              <Sidebar collapsible="none" className="border-r">
+              <Sidebar collapsible="icon">
                 <SidebarHeader>
-                  <div className="flex items-center gap-2 px-2 py-1.5">
-                    <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
+                  <div className="flex items-center gap-2 px-2 py-1.5 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
+                    <div className="bg-primary text-primary-foreground flex size-6 shrink-0 items-center justify-center rounded-md">
                       <LayoutDashboardIcon className="size-3.5" />
                     </div>
-                    <span className="text-sm font-semibold">Acme Inc</span>
+                    <span className="text-sm font-semibold group-data-[collapsible=icon]:hidden">
+                      Acme Inc
+                    </span>
                   </div>
                 </SidebarHeader>
                 <SidebarContent>
@@ -36,26 +38,26 @@ export default function SidebarDemo() {
                     <SidebarGroupContent>
                       <SidebarMenu>
                         <SidebarMenuItem>
-                          <SidebarMenuButton isActive>
+                          <SidebarMenuButton isActive tooltip="Dashboard">
                             <HomeIcon />
                             <span>Dashboard</span>
                           </SidebarMenuButton>
                         </SidebarMenuItem>
                         <SidebarMenuItem>
-                          <SidebarMenuButton>
+                          <SidebarMenuButton tooltip="Inbox">
                             <InboxIcon />
                             <span>Inbox</span>
                           </SidebarMenuButton>
                           <SidebarMenuBadge>12</SidebarMenuBadge>
                         </SidebarMenuItem>
                         <SidebarMenuItem>
-                          <SidebarMenuButton>
+                          <SidebarMenuButton tooltip="Team">
                             <UsersIcon />
                             <span>Team</span>
                           </SidebarMenuButton>
                         </SidebarMenuItem>
                         <SidebarMenuItem>
-                          <SidebarMenuButton>
+                          <SidebarMenuButton tooltip="Settings">
                             <SettingsIcon />
                             <span>Settings</span>
                           </SidebarMenuButton>
@@ -68,7 +70,7 @@ export default function SidebarDemo() {
                 <SidebarFooter>
                   <SidebarMenu>
                     <SidebarMenuItem>
-                      <SidebarMenuButton>
+                      <SidebarMenuButton tooltip="Jane Doe">
                         <UserIcon />
                         <span>Jane Doe</span>
                       </SidebarMenuButton>
@@ -76,7 +78,7 @@ export default function SidebarDemo() {
                   </SidebarMenu>
                 </SidebarFooter>
               </Sidebar>
-              <SidebarInset>
+              <SidebarInset className="min-h-0">
                 <div className="flex items-center gap-2 border-b p-3">
                   <SidebarTrigger />
                   <span className="text-sm font-medium">Dashboard</span>

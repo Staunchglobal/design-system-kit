@@ -1,25 +1,22 @@
-/* ==========================================================================
-   Textarea
-   ========================================================================== */
-
 [data-slot='textarea'] {
-  --textarea-radius: var(--radius-lg);
+  --textarea-radius: var(--radius-3xl);
   --textarea-border-width: 1px;
   --textarea-border-color: var(--border);
-  --textarea-bg: transparent;
+  --textarea-bg: var(--neutral-0);
   --textarea-fg: var(--foreground);
-  --textarea-placeholder-color: var(--muted-foreground);
-  --textarea-min-height: 4rem;
-  --textarea-padding-x: 0.625rem;
-  --textarea-padding-y: 0.5rem;
+  --textarea-placeholder-color: var(--muted-400);
+  --textarea-min-height: 9rem;
+  --textarea-padding-x: 1rem;
+  --textarea-padding-y: 0.75rem;
   --textarea-font-size: var(--typography-p-font-size);
-  --textarea-focus-border-color: var(--ring);
-  --textarea-focus-ring-width: 3px;
-  --textarea-focus-ring-color: var(--neutral-400);
-  --textarea-disabled-bg: var(--neutral-200);
-  --textarea-disabled-opacity: 0.5;
+  --textarea-line-height: var(--typography-p-line-height);
+  --textarea-focus-border-color: var(--primary);
+  --textarea-focus-ring-width: 0px;
+  --textarea-focus-ring-color: transparent;
+  --textarea-disabled-bg: var(--neutral-100);
+  --textarea-disabled-opacity: 1;
   --textarea-invalid-border-color: var(--destructive);
-  --textarea-invalid-ring-color: var(--destructive-600);
+  --textarea-invalid-ring-color: transparent;
 
   min-height: var(--textarea-min-height);
   border-radius: var(--textarea-radius);
@@ -30,11 +27,13 @@
   padding-inline: var(--textarea-padding-x);
   padding-block: var(--textarea-padding-y);
   font-size: var(--textarea-font-size);
+  line-height: var(--textarea-line-height);
 }
 [data-slot='textarea']::placeholder {
   color: var(--textarea-placeholder-color);
 }
 [data-slot='textarea']:focus-visible {
+  border-width: 2px;
   border-color: var(--textarea-focus-border-color);
   box-shadow: 0 0 0 var(--textarea-focus-ring-width) var(--textarea-focus-ring-color);
 }
@@ -44,17 +43,19 @@
   cursor: not-allowed;
 }
 [data-slot='textarea'][aria-invalid='true'] {
+  border-width: 2px;
   border-color: var(--textarea-invalid-border-color);
   box-shadow: 0 0 0 var(--textarea-focus-ring-width) var(--textarea-invalid-ring-color);
 }
 @media (min-width: 48rem) {
   [data-slot='textarea'] {
-    font-size: var(--typography-small-font-size);
+    font-size: var(--textarea-font-size);
   }
 }
 
 .dark [data-slot='textarea'] {
-  --textarea-focus-ring-color: var(--neutral-500);
-  --textarea-disabled-bg: var(--neutral-0);
-  --textarea-invalid-ring-color: var(--destructive-400);
+  --textarea-bg: var(--neutral-900);
+  --textarea-focus-ring-color: transparent;
+  --textarea-disabled-bg: var(--neutral-800);
+  --textarea-invalid-ring-color: transparent;
 }

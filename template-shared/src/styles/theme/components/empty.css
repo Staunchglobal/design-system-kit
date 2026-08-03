@@ -1,7 +1,3 @@
-/* ==========================================================================
-   Empty
-   ========================================================================== */
-
 [data-slot='empty'] {
   --empty-radius: var(--radius-xl);
   --empty-padding: 1.5rem;
@@ -19,9 +15,6 @@
   gap: var(--empty-header-gap);
   max-width: var(--empty-header-max-width);
 }
-
-/* Rendered with data-slot="empty-icon" in empty.tsx even though the
-   component/export is named EmptyMedia — using the real attribute value. */
 [data-slot='empty-icon'] {
   --empty-media-margin-bottom: 0.5rem;
   margin-bottom: var(--empty-media-margin-bottom);

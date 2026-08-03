@@ -5,7 +5,6 @@ import { GROUPS, COMPONENTS } from '../generated/registry.js'
 import { log } from './log.js'
 import { readSelectionConfig } from './selection-state.js'
 
-/** Which component slugs already have a <srcDir>/components/ui/<slug>.tsx on disk. */
 export function detectInstalledComponents(root: string, srcDir = 'src'): Set<string> {
   const installed = new Set<string>()
   const uiDir = path.join(root, srcDir, 'components/ui')
@@ -35,11 +34,6 @@ export type ComponentPickOptions = {
   components?: string
 }
 
-/**
- * Resolves which component slugs the user wants. Priority: explicit --components list, then
- * --all / --yes (full install, the historical default), then an interactive multiselect
- * pre-checked with `prior` (design-kit.json from an earlier run, if any).
- */
 export async function pickComponents(
   prior: Set<string>,
   options: ComponentPickOptions

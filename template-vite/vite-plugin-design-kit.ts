@@ -45,8 +45,6 @@ function ensureColorVar(css: string, name: string, hex: string): string {
       `$1${hex}$3`
     )
   }
-  // Append inside the file's first :root { — both color-scales.css and colors.css are
-  // single-:root files, so there's no further section boundary to insert before.
   return css.replace(/:root\s*\{/, `:root {\n  ${varName}: ${hex};`)
 }
 
@@ -119,10 +117,6 @@ function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
-/**
- * Loads Google fonts via real <link> tags in index.html's <head>, not a CSS @import —
- * see the comment in writeFontsCss for why @import can't work here.
- */
 function patchIndexHtmlFonts(root: string, fonts: CustomFont[]) {
   const indexHtmlPath = path.join(root, 'index.html')
   if (!fs.existsSync(indexHtmlPath)) return
@@ -165,17 +159,12 @@ function writeIconMap(root: string, iconMap: Record<string, string>) {
   const entries = Object.entries(iconMap)
     .map(([k, v]) => `  '${k}': '${v}',`)
     .join('\n')
-  const content = `/**
- * Semantic icon keys → Lucide icon component names.
- * Edited from the theme editor; rewritten by the design-kit Vite plugin.
- */
-export const defaultIconMap = {
+  const content = `export const defaultIconMap = {
 ${entries}
 } as const
 
 export type IconKey = keyof typeof defaultIconMap
 
-/** Mutable map used at runtime (overrides applied before save). */
 export let iconMap: Record<string, string> = { ...defaultIconMap }
 
 export function setIconMap(next: Record<string, string>) {
@@ -224,13 +213,6 @@ export const SAFE_HEX_RE = /^#[0-9a-fA-F]{3,8}$/
 const SAFE_VAR_REF_RE = /^var\((--[a-zA-Z0-9_-]+)\)$/
 const CSS_VALUE_BREAKOUT_RE = /[;{}]|\/\*/
 
-/**
- * A custom color's value is a literal hex (added from the Color Scales page), a
- * `var(--token)` reference to an existing scale step, or the literal `transparent` keyword
- * (both added from the Colors page, which lets a new semantic token point at either) — all
- * get written verbatim into a real .css file (see ensureColorVar), so all need the same
- * break-out-of-the-declaration protection as SAFE_HEX_RE, just for their own shape.
- */
 export function isSafeCustomColorValue(value: string): boolean {
   if (SAFE_HEX_RE.test(value) || value === 'transparent') return true
   const m = value.match(SAFE_VAR_REF_RE)
@@ -260,15 +242,6 @@ function readBody(req: import('node:http').IncomingMessage): Promise<string> {
     req.on('error', reject)
   })
 }
-
-// ============================================================================
-// Token rename — mirrors template-shared/src/lib/theme/rename-engine.ts and
-// git-guard.ts logic inline, same duplication convention as the save-endpoint
-// helpers above (this file is loaded by vite.config.ts outside the app's own
-// module graph, so it can't import across that boundary). Reads
-// token-families.json via fs (rather than duplicating its data) so the
-// reserved-word list can't drift from the canonical registry.
-// ============================================================================
 
 export type RenameFamily = 'color' | 'radius' | 'typography' | 'shadow'
 type RenameFileChangeKind = 'css' | 'tw-class' | 'data-literal' | 'description'
@@ -484,11 +457,6 @@ function existingTokenNamesRename(root: string): string[] {
   return [...names]
 }
 
-/**
- * Records a successful rename so a component added *later* (via `design-kit init`/
- * `update`) can be corrected on the way in instead of arriving with the original name —
- * see the CLI's `src/lib/rename-history.ts`, which reads this same file/shape.
- */
 function appendRenameHistoryRename(root: string, entry: { family: RenameFamily; from: string; to: string }): void {
   const historyPath = path.join(root, 'src/lib/theme/token-renames.json')
   let history: { family: RenameFamily; from: string; to: string }[] = []
@@ -577,8 +545,6 @@ export function designKit(): Plugin {
             const ext = path.extname(f.fileName) || '.woff2'
             const outName = `${f.id}${ext}`
             const outPath = path.join(fontsDir, outName)
-            // Belt-and-suspenders on top of the id charset filter above: refuse to
-            // write anywhere the resolved path escapes fontsDir.
             if (!outPath.startsWith(fontsDir + path.sep)) continue
             fs.writeFileSync(outPath, Buffer.from(f.dataUrl.replace(/^data:[^;]+;base64,/, ''), 'base64'))
             fonts[i] = { ...f, path: `/fonts/${outName}`, dataUrl: undefined }
@@ -694,7 +660,6 @@ export function designKit(): Plugin {
           return
         }
 
-        // mode === 'apply'
         const plan = runRename({ family, from, to }, root, false)
         if (plan.totalMatches === 0) {
           res.statusCode = 422
@@ -731,9 +696,6 @@ export function designKit(): Plugin {
         )
       })
 
-      // Proxies Google's legacy Places REST endpoints — same CORS rationale as the
-      // Next.js kit's equivalent /api/places/* route handlers. Dev-only, same as
-      // the theme-save/rename-token middleware above.
       server.middlewares.use('/api/places/autocomplete', async (req, res) => {
         const url = new URL(req.url ?? '', 'http://localhost')
         const input = url.searchParams.get('input') ?? ''

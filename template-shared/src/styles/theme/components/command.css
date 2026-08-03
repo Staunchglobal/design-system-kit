@@ -1,7 +1,3 @@
-/* ==========================================================================
-   Command
-   ========================================================================== */
-
 [data-slot='command'] {
   --command-bg: var(--popover);
   --command-fg: var(--popover-foreground);
@@ -90,10 +86,6 @@
 [data-slot='command-item'][data-disabled='true'] {
   opacity: var(--command-item-disabled-opacity);
 }
-/* command-dialog reuses [data-slot='dialog-content'] with extra positioning
-   classes (top-1/3, p-0) applied inline in command.tsx; no separate
-   data-slot hook exists for it beyond the shared dialog-content styling
-   above. */
 
 [data-slot='command-shortcut'] {
   --command-shortcut-fg: var(--muted-foreground);

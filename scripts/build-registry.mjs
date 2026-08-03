@@ -1,15 +1,4 @@
 #!/usr/bin/env node
-/**
- * Derives src/generated/registry.ts from the bundled templates:
- * - NAV_GROUPS (template-next design-system nav.ts) for slug -> label, and its own
- *   _sections/<slug>.tsx demo file (one file per component, since scripts/split-sections.mjs)
- * - each ui/*.tsx file's cross-component + npm imports for uiDeps/npmDeps
- * - patterns.tsx's imports for the "patterns" pseudo-component
- * - each demo file's `from './_shared/xxx'` imports for extraDemoFiles (the shared helper file
- *   it needs copied alongside it)
- *
- * Run with `npm run build:registry` whenever the templates change.
- */
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -31,11 +20,8 @@ const NPM_PACKAGES = [
   'tw-animate-css',
 ]
 
-// Files not named after their own component (component slug -> css filename).
-const CSS_FILE_OVERRIDES = { sonner: 'sonner-toast.css' }
-// Components with no dedicated theme CSS file (pure logic/utility, nothing to theme).
-const NO_CSS = new Set(['direction', 'crud-table', 'auth'])
-// Extra non-ui files a component's runtime needs (paths relative to template-shared/src/).
+const CSS_FILE_OVERRIDES = { sonner: 'sonner-toast.css', 'crud-table': 'crud-screen.css' }
+const NO_CSS = new Set(['direction', 'auth', 'chat', 'account-settings'])
 const EXTRA_FILES = {
   sidebar: ['hooks/use-mobile.ts'],
   'segmented-control': ['hooks/use-mobile.ts'],
@@ -60,13 +46,17 @@ const EXTRA_FILES = {
     'components/auth/auth-session.ts',
     'components/auth/password-policy.ts',
     'components/auth/password-requirement-errors.tsx',
-    'components/auth/otp-timer-storage.ts',
-    'components/auth/use-otp-timer.ts',
     'components/auth/use-auth-store.ts',
+    'components/auth/use-otp-timer.ts',
+    'components/auth/otp-timer-storage.ts',
     'components/auth/graphql-client.ts',
     'components/auth/auth-fetch.ts',
     'components/auth/notify.ts',
     'components/auth/password-input.tsx',
+    'components/auth/auth-back-link.tsx',
+    'components/auth/auth-form-error.tsx',
+    'components/auth/auth-submit-button.tsx',
+    'components/auth/otp-field.tsx',
     'components/auth/auth-shell.tsx',
     'components/auth/login-form.tsx',
     'components/auth/signup-form.tsx',
@@ -75,6 +65,47 @@ const EXTRA_FILES = {
     'components/auth/set-password-form.tsx',
     'components/auth/change-password-form.tsx',
     'components/auth/index.ts',
+  ],
+  'account-settings': [
+    'components/account-settings/account-settings-operations.ts',
+    'components/account-settings/account-settings-mock-client.ts',
+    'components/account-settings/account-settings-fetch.ts',
+    'components/account-settings/use-email-change.ts',
+    'components/account-settings/request-email-change-form.tsx',
+    'components/account-settings/email-change-settings.tsx',
+    'components/account-settings/index.ts',
+  ],
+  chat: [
+    'components/chat/types.ts',
+    'components/chat/chat-constants.ts',
+    'components/chat/chat-operations.ts',
+    'components/chat/chat-mock-client.ts',
+    'components/chat/chat-fetch.ts',
+    'components/chat/chat-graphql-upload.ts',
+    'components/chat/image-compression.ts',
+    'components/chat/chat-subscribe.ts',
+    'components/chat/chat-shell.tsx',
+    'components/chat/contacts-sidebar.tsx',
+    'components/chat/chat-header.tsx',
+    'components/chat/chat-empty-selection.tsx',
+    'components/chat/chat-empty-state.tsx',
+    'components/chat/chat-search-field.tsx',
+    'components/chat/chat-attachment-grid.tsx',
+    'components/chat/image-lightbox.tsx',
+    'components/chat/chat-message-row.tsx',
+    'components/chat/chat-messages-pane.tsx',
+    'components/chat/chat-composer.tsx',
+    'components/chat/add-chat-dialog.tsx',
+    'components/chat/archive-chat-dialog.tsx',
+    'components/chat/chat-status.tsx',
+    'components/chat/chat-utils.ts',
+    'components/chat/chat-mappers.ts',
+    'components/chat/use-chat-inbox.ts',
+    'components/chat/chat-inbox.tsx',
+    'components/chat/index.ts',
+    'components/auth/auth-session.ts',
+    'components/auth/graphql-client.ts',
+    'components/auth/notify.ts',
   ],
   'password-strength-meter': [
     'components/auth/password-policy.ts',
@@ -120,6 +151,13 @@ const EXTRA_FILES = {
     'components/pdf/pdf-info-field.tsx',
     'components/pdf/index.ts',
   ],
+}
+
+// Packages that ship no bundled .d.ts and have no importable `from '<pkg>'` site of their own
+// (types packages are picked up by TS via node_modules/@types, never imported directly) — added
+// here since fileDeps()'s import-scan can never detect them.
+const EXTRA_NPM_DEPS = {
+  chat: ['@types/rails__actioncable'],
 }
 
 function parseNavGroups(src) {
@@ -168,7 +206,6 @@ const navGroups = parseNavGroups(navSrc)
   }
 }
 
-/** `./_shared/xxx` imports inside a demo file -> the `_shared/xxx.tsx` files it needs alongside it. */
 function extraDemoFilesFor(slug) {
   const src = fs.readFileSync(path.join(sectionsDir, `${slug}.tsx`), 'utf8')
   const files = []
@@ -221,6 +258,8 @@ for (const f of uiFiles) {
     }
   }
 
+  for (const dep of EXTRA_NPM_DEPS[slug] ?? []) demoNpmDeps.add(dep)
+
   components[slug] = {
     uiDeps: [...demoUiDeps],
     npmDeps: [...demoNpmDeps],
@@ -229,7 +268,6 @@ for (const f of uiFiles) {
   }
 }
 
-// "patterns" is a pseudo-component (no ui/patterns.tsx) demoed by _sections/patterns.tsx.
 const patternsDeps = fileDeps(path.join(sectionsDir, 'patterns.tsx'))
 components.patterns = {
   uiDeps: patternsDeps.uiDeps,

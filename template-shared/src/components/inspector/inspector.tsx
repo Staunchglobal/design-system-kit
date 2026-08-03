@@ -23,12 +23,6 @@ function isProductionBuild(): boolean {
   return Boolean((import.meta as unknown as { env?: { PROD?: boolean } }).env?.PROD)
 }
 
-/**
- * DevTools-lite element inspector — click any rendered element to see its exact box model,
- * colors (as hex), border, radius, and typography, plus best-effort hover/focus/active values.
- * Dev-only: returns just `children` in production, matching the theme editor's own save endpoint
- * being disabled there (see app/api/theme/save/route.ts).
- */
 export function Inspector({ children }: { children: ReactNode }) {
   if (isProductionBuild()) return <>{children}</>
 

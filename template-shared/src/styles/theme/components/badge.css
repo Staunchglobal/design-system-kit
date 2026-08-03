@@ -1,20 +1,16 @@
-/* ==========================================================================
-   Badge
-   ==========================================================================
-   Semantic tint variants cascaded from paramount Tag (gray/danger/primary/
-   info/warning/success). Kit outline/ghost/link kept for shadcn parity.
-   ========================================================================== */
-
 [data-slot='badge'] {
-  --badge-height: 1.25rem;
+  --badge-height: 1.5rem;
   --badge-gap: 0.25rem;
-  --badge-radius: 9999px;
-  --badge-padding-x: 0.5rem;
-  --badge-padding-y: 0.125rem;
+  --badge-radius: var(--radius-full);
+  --badge-padding-x: 0.75rem;
+  --badge-padding-y: 0.25rem;
   --badge-font-size: var(--typography-caption-font-size);
-  --badge-font-weight: 500;
+  --badge-font-weight: var(--typography-small-font-weight);
+  --badge-line-height: var(--typography-caption-line-height);
   --badge-border-width: 1px;
-  --badge-border-color: transparent;
+  --badge-border-color: var(--neutral-950);
+  --badge-border-opacity: 0.08;
+
   height: var(--badge-height);
   gap: var(--badge-gap);
   border-radius: var(--badge-radius);
@@ -22,11 +18,10 @@
   padding-block: var(--badge-padding-y);
   font-size: var(--badge-font-size);
   font-weight: var(--badge-font-weight);
+  line-height: var(--badge-line-height);
   border-width: var(--badge-border-width);
-  border-color: var(--badge-border-color);
+  border-color: rgb(from var(--badge-border-color) r g b / var(--badge-border-opacity));
 }
-
-/* default → Tag primary */
 [data-slot='badge'][data-variant='default'] {
   --badge-bg: var(--primary-100);
   --badge-fg: var(--primary-500);
@@ -37,11 +32,9 @@
 [data-slot='badge'][data-variant='default'] a:hover {
   background-color: var(--badge-link-hover-bg);
 }
-
-/* secondary → Tag gray */
 [data-slot='badge'][data-variant='secondary'] {
   --badge-bg: var(--neutral-100);
-  --badge-fg: var(--neutral-900);
+  --badge-fg: var(--foreground);
   --badge-link-hover-bg: var(--neutral-200);
   background-color: var(--badge-bg);
   color: var(--badge-fg);
@@ -49,8 +42,6 @@
 [data-slot='badge'][data-variant='secondary'] a:hover {
   background-color: var(--badge-link-hover-bg);
 }
-
-/* destructive → Tag danger */
 [data-slot='badge'][data-variant='destructive'] {
   --badge-bg: var(--destructive-100);
   --badge-fg: var(--destructive-500);
@@ -61,7 +52,6 @@
 [data-slot='badge'][data-variant='destructive'] a:hover {
   background-color: var(--badge-link-hover-bg);
 }
-
 [data-slot='badge'][data-variant='success'] {
   --badge-bg: var(--success-50);
   --badge-fg: var(--success-500);
@@ -72,7 +62,6 @@
 [data-slot='badge'][data-variant='success'] a:hover {
   background-color: var(--badge-link-hover-bg);
 }
-
 [data-slot='badge'][data-variant='warning'] {
   --badge-bg: var(--warning-50);
   --badge-fg: var(--warning-600);
@@ -83,7 +72,6 @@
 [data-slot='badge'][data-variant='warning'] a:hover {
   background-color: var(--badge-link-hover-bg);
 }
-
 [data-slot='badge'][data-variant='info'] {
   --badge-bg: var(--info-100);
   --badge-fg: var(--info-500);
@@ -94,12 +82,13 @@
 [data-slot='badge'][data-variant='info'] a:hover {
   background-color: var(--badge-link-hover-bg);
 }
-
 [data-slot='badge'][data-variant='outline'] {
+  --badge-bg: var(--neutral-0);
   --badge-border-color: var(--border);
   --badge-fg: var(--foreground);
   --badge-link-hover-bg: var(--muted);
   --badge-link-hover-fg: var(--muted-foreground);
+  background-color: var(--badge-bg);
   border-color: var(--badge-border-color);
   color: var(--badge-fg);
 }
@@ -109,8 +98,10 @@
 }
 
 [data-slot='badge'][data-variant='ghost'] {
+  --badge-border-width: 0;
   --badge-hover-bg: var(--muted);
   --badge-hover-fg: var(--muted-foreground);
+  border-width: var(--badge-border-width);
 }
 [data-slot='badge'][data-variant='ghost']:hover {
   background-color: var(--badge-hover-bg);
@@ -118,8 +109,12 @@
 }
 
 [data-slot='badge'][data-variant='link'] {
+  --badge-border-width: 0;
+  --badge-bg: transparent;
   --badge-fg: var(--primary-500);
   --badge-underline-offset: 4px;
+  border-width: var(--badge-border-width);
+  background-color: var(--badge-bg);
   color: var(--badge-fg);
   text-underline-offset: var(--badge-underline-offset);
 }

@@ -1,4 +1,3 @@
-/* Sortable List */
 [data-slot='sortable-list'] {
   --sortable-list-gap: 0.5rem;
   gap: var(--sortable-list-gap);

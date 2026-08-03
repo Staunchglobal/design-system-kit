@@ -2,14 +2,14 @@
 
 import * as React from 'react'
 
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
-import { Input } from '@/components/ui/input'
+import { AuthFormError } from '@/components/auth/auth-form-error'
+import { AuthSubmitButton } from '@/components/auth/auth-submit-button'
 import { PasswordInput } from '@/components/auth/password-input'
 import { validateEmail, validateLoginPassword } from '@/components/auth/password-policy'
 import type { LoginFormValues } from '@/components/auth/types'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
 
 export type LoginFormProps = {
   onSubmit: (values: LoginFormValues) => void | Promise<void>
@@ -18,6 +18,8 @@ export type LoginFormProps = {
   defaultEmail?: string
   forgotPasswordHref?: string
   signupHref?: string
+  /** When false, omit the bottom sign-up link (e.g. when AuthShell description already has it). */
+  showSignupLink?: boolean
   LinkComponent?: React.ElementType
 }
 
@@ -30,6 +32,7 @@ export function LoginForm({
   defaultEmail = '',
   forgotPasswordHref = '/auth/forgot-password',
   signupHref = '/auth/signup',
+  showSignupLink = true,
   LinkComponent = 'a',
 }: LoginFormProps) {
   const Link = LinkComponent
@@ -37,7 +40,6 @@ export function LoginForm({
   const [password, setPassword] = React.useState('')
   const [rememberMe, setRememberMe] = React.useState(false)
   const [fieldErrors, setFieldErrors] = React.useState<Partial<Record<FieldKey, string>>>({})
-  /** Errors stay hidden until the first submit attempt, then update live while typing. */
   const [submitted, setSubmitted] = React.useState(false)
 
   function validateAll(nextEmail = email, nextPassword = password) {
@@ -60,11 +62,7 @@ export function LoginForm({
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
-      {error ? (
-        <Alert variant="destructive">
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      ) : null}
+      <AuthFormError message={error} />
       <FieldGroup>
         <Field data-invalid={submitted && !!fieldErrors.email}>
           <FieldLabel htmlFor="login-email">Email</FieldLabel>
@@ -72,6 +70,7 @@ export function LoginForm({
             id="login-email"
             type="email"
             autoComplete="email"
+            placeholder="Enter your email address"
             value={email}
             onChange={(e) => {
               const value = e.target.value
@@ -83,24 +82,16 @@ export function LoginForm({
                 }))
               }
             }}
-            disabled={loading}
             aria-invalid={submitted && !!fieldErrors.email}
           />
           {submitted ? <FieldError>{fieldErrors.email}</FieldError> : null}
         </Field>
         <Field data-invalid={submitted && !!fieldErrors.password}>
-          <div className="flex items-center justify-between gap-2">
-            <FieldLabel htmlFor="login-password">Password</FieldLabel>
-            <Link
-              href={forgotPasswordHref}
-              className="text-muted-foreground hover:text-foreground text-xs underline-offset-4 hover:underline"
-            >
-              Forgot password?
-            </Link>
-          </div>
+          <FieldLabel htmlFor="login-password">Password</FieldLabel>
           <PasswordInput
             id="login-password"
             autoComplete="current-password"
+            placeholder="Enter your password"
             value={password}
             onChange={(e) => {
               const value = e.target.value
@@ -112,32 +103,38 @@ export function LoginForm({
                 }))
               }
             }}
-            disabled={loading}
             aria-invalid={submitted && !!fieldErrors.password}
           />
           {submitted ? <FieldError>{fieldErrors.password}</FieldError> : null}
+          <Link
+            href={forgotPasswordHref}
+            className="text-primary hover:text-primary/80 text-sm underline-offset-4 hover:underline"
+          >
+            Forgot password?
+          </Link>
         </Field>
         <Field orientation="horizontal">
           <Checkbox
             id="login-remember"
             checked={rememberMe}
             onCheckedChange={(c) => setRememberMe(c === true)}
-            disabled={loading}
           />
           <FieldLabel htmlFor="login-remember" className="font-normal">
             Remember me
           </FieldLabel>
         </Field>
       </FieldGroup>
-      <Button type="submit" className="w-full" disabled={loading}>
-        {loading ? 'Signing in…' : 'Sign in'}
-      </Button>
-      <p className="text-muted-foreground text-center text-sm">
-        Don&apos;t have an account?{' '}
-        <Link href={signupHref} className="text-foreground font-medium underline-offset-4 hover:underline">
-          Sign up
-        </Link>
-      </p>
+      <AuthSubmitButton loading={loading} loadingLabel="Signing in…">
+        Sign in
+      </AuthSubmitButton>
+      {showSignupLink ? (
+        <p className="text-muted-foreground text-center text-sm">
+          Don&apos;t have an account?{' '}
+          <Link href={signupHref} className="text-primary font-medium underline-offset-4 hover:underline">
+            Sign up
+          </Link>
+        </p>
+      ) : null}
     </form>
   )
 }

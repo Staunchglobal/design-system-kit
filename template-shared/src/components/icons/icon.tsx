@@ -8,7 +8,6 @@ import { cn } from '@/lib/utils'
 
 type AppIconProps = LucideProps & {
   name: IconKey | string
-  /** Explicit override (e.g. from theme editor preview). Takes precedence over context. */
   overrideMap?: Record<string, string>
 }
 

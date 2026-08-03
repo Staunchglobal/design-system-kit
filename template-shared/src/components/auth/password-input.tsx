@@ -10,13 +10,6 @@ export type PasswordInputProps = Omit<React.ComponentProps<typeof Input>, 'type'
   inputClassName?: string
 }
 
-/**
- * Password field with show/hide toggle.
- *
- * Uses inline paddingRight (not Tailwind `pr-*`) because Input ships `px-2.5`, and
- * tailwind-merge leaves both `px-*` and `pr-*` in the class list — stylesheet order
- * then often lets `px` win and text runs under the eye icon.
- */
 export function PasswordInput({
   className,
   inputClassName,

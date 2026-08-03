@@ -1,27 +1,25 @@
-import type { AuthSession, AuthUser } from '@/components/auth/types'
+import type { AuthSession } from '@/components/auth/types'
 import { clearOtpCooldown, startOtpCooldown } from '@/components/auth/otp-timer-storage'
 
 const SESSION_KEY = 'design-kit-auth-session'
-const HANDOFF_EMAIL_KEY = 'design-kit-auth-email'
-const HANDOFF_MODE_KEY = 'design-kit-auth-otp-mode'
-const HANDOFF_OTP_HINT_KEY = 'design-kit-auth-otp-hint'
+const PENDING_OTP_KEY = 'design-kit-auth-otp-pending'
 
 const sessionListeners = new Set<() => void>()
-const handoffListeners = new Set<() => void>()
-
-type AuthHandoff = {
-  email: string | null
-  mode: 'login' | 'reset' | null
-  otpHint: string | null
-}
-
-const EMPTY_HANDOFF: AuthHandoff = { email: null, mode: null, otpHint: null }
+const pendingOtpListeners = new Set<() => void>()
 
 /** Cache so useSyncExternalStore getSnapshot returns a stable reference when storage is unchanged. */
 let sessionSnapshot: AuthSession | null = null
 let sessionRaw: string | null | undefined = undefined
-let handoffSnapshot: AuthHandoff = EMPTY_HANDOFF
-let handoffRaw: string | null | undefined = undefined
+
+export type PendingOtp = {
+  email: string
+  purpose: 'signup' | 'login' | 'password_reset'
+  /** The code itself, when the backend returned one in the mutation response (dev/staging convenience). */
+  otp: string | null
+} | null
+
+let pendingOtpSnapshot: PendingOtp = null
+let pendingOtpRaw: string | null | undefined = undefined
 
 function emit(listeners: Set<() => void>): void {
   listeners.forEach((listener) => listener())
@@ -46,20 +44,6 @@ function readSessionSnapshot(): AuthSession | null {
     sessionSnapshot = null
   }
   return sessionSnapshot
-}
-
-function readHandoffSnapshot(): AuthHandoff {
-  const s = storage()
-  const raw = `${s?.getItem(HANDOFF_EMAIL_KEY) ?? ''}\0${s?.getItem(HANDOFF_MODE_KEY) ?? ''}\0${s?.getItem(HANDOFF_OTP_HINT_KEY) ?? ''}`
-  if (raw === handoffRaw) return handoffSnapshot
-  handoffRaw = raw
-  const mode = s?.getItem(HANDOFF_MODE_KEY)
-  handoffSnapshot = {
-    email: s?.getItem(HANDOFF_EMAIL_KEY) ?? null,
-    mode: mode === 'login' || mode === 'reset' ? mode : null,
-    otpHint: s?.getItem(HANDOFF_OTP_HINT_KEY) ?? null,
-  }
-  return handoffSnapshot
 }
 
 export function getAuthSession(): AuthSession | null {
@@ -96,64 +80,64 @@ export function subscribeAuthSession(onStoreChange: () => void): () => void {
   }
 }
 
-/**
- * Persist OTP handoff in localStorage (not the URL) so email/mode can't be spoofed via query params.
- * Also starts a fresh 60s resend cooldown — each new OTP send resets the timer.
- * Timer is cleared on successful verify (`clearAuthHandoff`) and when leaving the OTP page.
- */
-export function setAuthHandoff(email: string, mode: 'login' | 'reset', otpHint?: string): void {
-  const s = storage()
-  const normalized = email.trim().toLowerCase()
-  s?.setItem(HANDOFF_EMAIL_KEY, normalized)
-  s?.setItem(HANDOFF_MODE_KEY, mode)
-  if (otpHint) s?.setItem(HANDOFF_OTP_HINT_KEY, otpHint)
-  else s?.removeItem(HANDOFF_OTP_HINT_KEY)
+// A signup/login that emailed an OTP persists which email is pending here —
+// surviving a page refresh is the whole point: without this, reloading
+// mid-verification loses `pendingEmail` (plain React state) and the page
+// falls back to showing the credentials form instead of the OTP step.
+// Starts (and, on each resend, restarts) the shared resend-cooldown timer.
+function readPendingOtpSnapshot(): PendingOtp {
+  const raw = storage()?.getItem(PENDING_OTP_KEY) ?? null
+  if (raw === pendingOtpRaw) return pendingOtpSnapshot
+  pendingOtpRaw = raw
+  if (!raw) {
+    pendingOtpSnapshot = null
+    return null
+  }
+  try {
+    pendingOtpSnapshot = JSON.parse(raw) as PendingOtp
+  } catch {
+    pendingOtpSnapshot = null
+  }
+  return pendingOtpSnapshot
+}
+
+export function getPendingOtp(): PendingOtp {
+  return readPendingOtpSnapshot()
+}
+
+export function setPendingOtp(
+  email: string,
+  purpose: 'signup' | 'login' | 'password_reset',
+  otp?: string | null
+): void {
+  const snapshot: PendingOtp = { email, purpose, otp: otp ?? null }
+  const raw = JSON.stringify(snapshot)
+  storage()?.setItem(PENDING_OTP_KEY, raw)
+  pendingOtpRaw = raw
+  pendingOtpSnapshot = snapshot
   startOtpCooldown()
-  handoffRaw = undefined
-  readHandoffSnapshot()
-  emit(handoffListeners)
+  emit(pendingOtpListeners)
 }
 
-export function getAuthHandoff(): AuthHandoff {
-  return readHandoffSnapshot()
+export function clearPendingOtp(): void {
+  storage()?.removeItem(PENDING_OTP_KEY)
+  pendingOtpRaw = null
+  pendingOtpSnapshot = null
+  clearOtpCooldown()
+  emit(pendingOtpListeners)
 }
 
-export function subscribeAuthHandoff(onStoreChange: () => void): () => void {
-  handoffListeners.add(onStoreChange)
+export function subscribePendingOtp(onStoreChange: () => void): () => void {
+  pendingOtpListeners.add(onStoreChange)
   const onStorage = (event: StorageEvent) => {
-    if (
-      event.key === HANDOFF_EMAIL_KEY ||
-      event.key === HANDOFF_MODE_KEY ||
-      event.key === HANDOFF_OTP_HINT_KEY ||
-      event.key === null
-    ) {
-      handoffRaw = undefined
+    if (event.key === PENDING_OTP_KEY || event.key === null) {
+      pendingOtpRaw = undefined
       onStoreChange()
     }
   }
   window.addEventListener('storage', onStorage)
   return () => {
-    handoffListeners.delete(onStoreChange)
+    pendingOtpListeners.delete(onStoreChange)
     window.removeEventListener('storage', onStorage)
-  }
-}
-
-export function clearAuthHandoff(): void {
-  const s = storage()
-  s?.removeItem(HANDOFF_EMAIL_KEY)
-  s?.removeItem(HANDOFF_MODE_KEY)
-  s?.removeItem(HANDOFF_OTP_HINT_KEY)
-  clearOtpCooldown()
-  handoffRaw = null
-  handoffSnapshot = EMPTY_HANDOFF
-  emit(handoffListeners)
-}
-
-export function makeDemoUser(partial: Partial<AuthUser> & { email: string }): AuthUser {
-  return {
-    id: partial.id ?? `user_${partial.email}`,
-    email: partial.email,
-    firstName: partial.firstName ?? 'Demo',
-    lastName: partial.lastName ?? 'User',
   }
 }

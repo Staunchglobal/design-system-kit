@@ -67,8 +67,6 @@ function Dropzone({
         setAccepted([...acceptedFiles, ...accepted])
         setRejected((prev) => [...prev, ...mappedRejected])
       } else {
-        // Single-file mode: one working slot — prefer a newly accepted file,
-        // otherwise show the first rejection so the reason is still visible.
         setAccepted(accepted.slice(0, 1))
         setRejected(accepted.length > 0 ? [] : mappedRejected.slice(0, 1))
       }

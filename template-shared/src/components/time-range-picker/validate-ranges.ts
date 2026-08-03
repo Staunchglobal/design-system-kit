@@ -5,7 +5,6 @@ function toMinutes(hhmm: string): number {
   return (h ?? 0) * 60 + (m ?? 0)
 }
 
-/** Returns pairs of overlapping range indices (inclusive overlap). */
 export function findOverlappingRanges(ranges: TimeRange[]): [number, number][] {
   const pairs: [number, number][] = []
   for (let i = 0; i < ranges.length; i++) {

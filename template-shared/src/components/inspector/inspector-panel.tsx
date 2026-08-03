@@ -170,10 +170,6 @@ export function InspectorPanel() {
     setActiveState('resting')
   }
 
-  // Auto-refresh only the cheap resting-state view (a handful of getComputedStyle calls) — this
-  // is what makes the panel reflect live theme-editor edits with no coupling to theme-editor
-  // internals, just re-reading the DOM. Hover/focus/active involve a full stylesheet scan, so
-  // those re-sample on tab switch rather than on a timer, to avoid scanning every 400ms.
   React.useEffect(() => {
     if (!pinned || activeState !== 'resting') return
     const id = setInterval(forceTick, 400)

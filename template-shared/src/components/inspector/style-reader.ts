@@ -1,9 +1,3 @@
-/**
- * Pure DOM style-reading helpers — no React. `getComputedStyle` is the single source of truth
- * for "resting" values (always exact, whatever produced the value — saved CSS or a live unsaved
- * theme-editor edit). Hover/active are best-effort since no browser lets you script a real
- * per-element pseudo-state; see readInteractiveState below for the technique and its limits.
- */
 
 export type BoxSide = { top: string; right: string; bottom: string; left: string }
 export type ColorValue = { hex: string; alpha: number } | null
@@ -36,11 +30,8 @@ export type TargetDescription = {
 
 export type InteractiveState = 'hover' | 'focus' | 'active'
 
-// getComputedStyle can return rgb()/rgba() (legacy comma or modern space/slash syntax), or, for
-// anything the browser doesn't normalize that way (oklch(), color(), lab() — Tailwind v4 defaults
-// to oklch), something else entirely that needs the canvas round-trip below.
 const RGB_RE = /^rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:\s*[,/]\s*([\d.]+%?))?\s*\)$/i
-const SENTINEL_HEX = '#010203' // arbitrary, vanishingly unlikely to collide with a real color
+const SENTINEL_HEX = '#010203'
 
 let scratchCtx: CanvasRenderingContext2D | null | undefined
 function getScratchCtx(): CanvasRenderingContext2D | null {
@@ -94,7 +85,7 @@ export function colorToHex(cssColor: string | null | undefined): ColorValue {
   try {
     ctx.fillStyle = SENTINEL_HEX
     ctx.fillStyle = value
-    if (ctx.fillStyle === SENTINEL_HEX) return null // browser rejected `value` outright
+    if (ctx.fillStyle === SENTINEL_HEX) return null
 
     ctx.clearRect(0, 0, 1, 1)
     ctx.fillStyle = value
@@ -191,7 +182,7 @@ function readHoverOrActiveState(el: Element, state: 'hover' | 'active'): Element
       try {
         cssRules = sheet.cssRules
       } catch {
-        continue // cross-origin stylesheet — inaccessible, skip
+        continue
       }
       collectMatchingRules(cssRules, el, state, marker, rules)
     }
@@ -223,9 +214,6 @@ function collectMatchingRules(
 ): void {
   const pseudoRe = new RegExp(`:${state}\\b`, 'g')
   for (const rule of Array.from(cssRules)) {
-    // @layer/@media/@supports can nest the rules we actually care about — Tailwind v4 wraps
-    // essentially everything in @layer base/components/utilities, so skipping these would mean
-    // finding zero hover rules in practice.
     if (typeof CSSLayerBlockRule !== 'undefined' && rule instanceof CSSLayerBlockRule) {
       collectMatchingRules(rule.cssRules, el, state, marker, out)
       continue
@@ -244,7 +232,7 @@ function collectMatchingRules(
         try {
           return el.matches(part.replace(pseudoRe, ''))
         } catch {
-          return false // invalid selector once stripped — skip rather than throw
+          return false
         }
       })
       .map((part) => part.replace(pseudoRe, `[${marker}]`))

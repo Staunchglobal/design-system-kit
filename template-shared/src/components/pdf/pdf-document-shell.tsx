@@ -32,9 +32,7 @@ const styles = StyleSheet.create({
 
 type PdfDocumentShellProps = {
   children: React.ReactNode
-  /** Document title shown in the PDF metadata and optionally in the header. */
   title?: string
-  /** Custom header content rendered above the body. When omitted and `title` is set, a default title header is shown. */
   header?: React.ReactNode
 }
 

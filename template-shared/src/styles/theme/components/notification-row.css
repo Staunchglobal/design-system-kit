@@ -1,9 +1,3 @@
-/* ==========================================================================
-   Notification Row
-   ========================================================================== */
-
-/* Root renders as an Item with its data-slot overridden to 'notification-row',
-   so it no longer inherits item.css's rules — restate the relevant subset here. */
 [data-slot='notification-row'] {
   --notification-row-radius: var(--radius-lg);
   --notification-row-gap: 0.625rem;

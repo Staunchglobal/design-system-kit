@@ -1,13 +1,4 @@
 #!/usr/bin/env node
-/**
- * Regenerates template-shared/src/lib/theme/google-fonts.ts from Google's public font
- * metadata endpoint (the same one fonts.google.com itself uses — no API key needed, unlike
- * the official Web Fonts Developer API). Run manually when the catalog needs refreshing;
- * the output is committed as a static file, not fetched at CLI runtime, so consumer installs
- * never need network access to the endpoint or an API key of their own.
- *
- * Usage: node scripts/generate-google-fonts.mjs
- */
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -33,13 +24,7 @@ const list = data.familyMetadataList
   .filter((f) => f.weights.length > 0)
   .sort((a, b) => a.family.localeCompare(b.family))
 
-const content = `/**
- * Google Fonts catalog (family name -> available static weights), generated from
- * https://fonts.google.com/metadata/fonts by scripts/generate-google-fonts.mjs.
- * Regenerate with \`node scripts/generate-google-fonts.mjs\` — not auto-run by \`build\`,
- * since it depends on a network call this repo's build shouldn't require.
- */
-export type GoogleFontEntry = { family: string; weights: number[] }
+const content = `export type GoogleFontEntry = { family: string; weights: number[] }
 
 export const googleFonts: GoogleFontEntry[] = ${JSON.stringify(list)}
 `

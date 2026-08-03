@@ -151,7 +151,6 @@ export function useCrudList<T>({
       if (next.length !== prev.length) {
         setTotalCount((c) => {
           const nextCount = Math.max(0, c - 1)
-          // Learnerpass: if this was the last row on a page > 1, step back.
           if (next.length === 0 && pageRef.current > 1) {
             setPage((p) => Math.max(1, p - 1))
           }

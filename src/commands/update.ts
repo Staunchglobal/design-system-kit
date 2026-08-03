@@ -94,9 +94,6 @@ export async function update(options: UpdateOptions) {
   const sharedSrc = remoteUrl(templateSharedDir, 'src')
   const frameworkSrc = remoteUrl(frameworkTemplateDir, 'src')
 
-  // Lives outside destRoot (at the project root, not under src/) — expressed as a relPath
-  // relative to destRoot so it flows through the same managed/hash/confirm machinery as
-  // everything else instead of needing its own bespoke sync path.
   const manifestScriptRelPath = path.relative(destRoot, path.join(root, 'scripts/generate-theme-manifest.mjs'))
 
   const managed: Managed[] = [
@@ -127,7 +124,7 @@ export async function update(options: UpdateOptions) {
 
   await mapWithConcurrency(managed, 8, async ({ relPath, templateSrc }) => {
     let newContent = await fetchTemplateText(templateSrc)
-    if (newContent === null) return // renamed/removed in a newer template — nothing to sync to
+    if (newContent === null) return
     if (renameHistory.length) newContent = applyRenameHistory(relPath, newContent, renameHistory)
     const destPath = path.join(destRoot, relPath)
 

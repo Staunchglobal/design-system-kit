@@ -50,7 +50,6 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
     log.warn('Could not find vite.config.{ts,js,mts} — the Tailwind/theme-save plugin wiring will need to be manual.')
   }
 
-  // ---- Which components? ------------------------------------------------------
   log.title('Components')
   const toolOnly = resolveUiClosure(THEME_EDITOR_REQUIRED_COMPONENTS)
   const prior = priorSelectionFor(root, toolOnly)
@@ -68,7 +67,6 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
     log.info(`Also included (required by your picks): ${[...addedByDeps].sort().join(', ')}`)
   }
 
-  // ---- Dependencies -------------------------------------------------------
   const existingDeps = {
     ...((project.packageJson.dependencies as Record<string, string>) ?? {}),
     ...((project.packageJson.devDependencies as Record<string, string>) ?? {}),
@@ -113,7 +111,6 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
     }
   }
 
-  // ---- Copy files -------------------------------------------------------------
   log.title('Files')
   const uiFiles = [...closure].filter((s) => s !== 'patterns').map((s) => `components/ui/${s}.tsx`)
   const cssFiles = [...cssFilesFor(closure)].map((f) => `styles/theme/components/${f}`)
@@ -263,7 +260,6 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
     return
   }
 
-  // ---- Patch configs ------------------------------------------------------------
   log.title('Wiring it up')
 
   const cssPath = path.join(root, 'src/index.css')
@@ -329,7 +325,6 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
       : 'package.json already has a "theme:manifest" script'
   )
 
-  // ---- Done ------------------------------------------------------------------------
   const includeTooltip = closure.has('tooltip')
   const includeToaster = closure.has('sonner')
   log.title('Manual step: mount the pages')
@@ -351,12 +346,12 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
         ? `  import LoginPage from '@/auth/LoginPage'\n` +
           `  import SignupPage from '@/auth/SignupPage'\n` +
           `  import ForgotPasswordPage from '@/auth/ForgotPasswordPage'\n` +
-          `  import VerifyOtpPage from '@/auth/VerifyOtpPage'\n` +
           `  import ResetPasswordPage from '@/auth/ResetPasswordPage'\n` +
           `  import AcceptInvitationPage from '@/auth/AcceptInvitationPage'\n` +
           `  import ChangePasswordPage from '@/auth/ChangePasswordPage'\n` +
           `  import AuthHomePage from '@/auth/AuthHomePage'\n`
         : '') +
+      (userClosure.has('chat') ? `  import ChatPage from '@/chat/ChatPage'\n` : '') +
       '  …\n' +
       '  <Route path="/design-system" element={<DesignSystemPage />} />\n' +
       '  <Route path="/theme-editor" element={<ThemeEditorPage />} />' +
@@ -364,11 +359,14 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
         ? '\n  <Route path="/auth/login" element={<LoginPage />} />\n' +
           '  <Route path="/auth/signup" element={<SignupPage />} />\n' +
           '  <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />\n' +
-          '  <Route path="/auth/verify-otp" element={<VerifyOtpPage />} />\n' +
           '  <Route path="/auth/reset-password" element={<ResetPasswordPage />} />\n' +
           '  <Route path="/auth/accept-invitation" element={<AcceptInvitationPage />} />\n' +
           '  <Route path="/auth/change-password" element={<ChangePasswordPage />} />\n' +
           '  <Route path="/auth/home" element={<AuthHomePage />} />'
+        : '') +
+      (userClosure.has('chat')
+        ? '\n  <Route path="/chat/archived/:id?" element={<ChatPage />} />\n' +
+          '  <Route path="/chat/:id?" element={<ChatPage />} />'
         : '') +
       (providerLines.length
         ? '\n\nAlso wrap your app root once with the tooltip/toast providers:\n' + providerLines.join('\n')
@@ -380,6 +378,9 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   log.title('Done')
   log.success('Design system kit installed.')
   log.info(`Run your dev server, then visit whatever route you mounted ${pc.bold('DesignSystemPage')}/${pc.bold('ThemeEditorPage')} at.`)
+  if (userClosure.has('chat')) {
+    log.info(`Chat inbox: mount ${pc.bold('/chat')}, ${pc.bold('/chat/:id')}, ${pc.bold('/chat/archived')} — set VITE_GRAPHQL_URL / VITE_GRAPHQL_WS_URL for the real staunch_saas_kit Rails backend (falls back to the in-memory mock otherwise)`)
+  }
   log.info(`Run \`${pc.bold('design-kit init')}\` again any time to add more components.`)
   if (skipped.length) {
     log.warn(`${skipped.length} file(s) already existed and were left untouched — see the list above.`)

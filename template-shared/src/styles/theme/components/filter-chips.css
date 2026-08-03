@@ -1,27 +1,88 @@
-/* ==========================================================================
-   Filter Chips
-   ========================================================================== */
-
 [data-slot='filter-chips'] {
   --filter-chips-gap: 0.5rem;
   gap: var(--filter-chips-gap);
 }
-
-/* Each chip renders as a Badge with its data-slot overridden to 'filter-chip',
-   so it no longer inherits badge.css's 'secondary' variant rule — restate it. */
 [data-slot='filter-chip'] {
-  --filter-chip-bg: var(--muted);
-  --filter-chip-fg: var(--foreground);
-  --filter-chip-radius: 0.25rem;
-  --filter-chip-font-size: var(--typography-caption-font-size);
-  --filter-chip-font-weight: var(--typography-caption-font-weight);
+  --filter-chip-bg: var(--neutral-0);
+  --filter-chip-fg: var(--muted-600);
+  --filter-chip-border-color: var(--border);
+  --filter-chip-border-width: 1px;
+  --filter-chip-radius: var(--radius-md);
+  --filter-chip-padding-x: 0.375rem;
+  --filter-chip-padding-y: 0.375rem;
+  --filter-chip-gap: 0;
+  --filter-chip-font-size: var(--typography-small-font-size);
+  --filter-chip-font-weight: var(--typography-small-font-weight);
+  --filter-chip-line-height: var(--typography-small-line-height);
+  --filter-chip-height: 2rem;
+
   background-color: var(--filter-chip-bg);
   color: var(--filter-chip-fg);
+  border-width: var(--filter-chip-border-width);
+  border-style: solid;
+  border-color: var(--filter-chip-border-color);
   border-radius: var(--filter-chip-radius);
+  padding-inline: var(--filter-chip-padding-x);
+  padding-block: var(--filter-chip-padding-y);
+  gap: var(--filter-chip-gap);
   font-size: var(--filter-chip-font-size);
   font-weight: var(--filter-chip-font-weight);
+  line-height: var(--filter-chip-line-height);
+  height: var(--filter-chip-height);
+}
+[data-slot='filter-chip']:hover {
+  --filter-chip-bg: var(--neutral-50);
+  --filter-chip-fg: var(--muted-600);
+  --filter-chip-border-color: var(--neutral-200);
+  background-color: var(--filter-chip-bg);
+  color: var(--filter-chip-fg);
+  border-color: var(--filter-chip-border-color);
+}
+[data-slot='filter-chip'][aria-pressed='true'],
+[data-slot='filter-chip'][data-state='on'],
+[data-slot='filter-chip'][data-selected='true'] {
+  --filter-chip-bg: var(--primary-50);
+  --filter-chip-fg: var(--foreground);
+  --filter-chip-border-color: var(--primary-700);
+  background-color: var(--filter-chip-bg);
+  color: var(--filter-chip-fg);
+  border-color: var(--filter-chip-border-color);
+}
+[data-slot='filter-chip'][aria-pressed='true']:hover,
+[data-slot='filter-chip'][data-state='on']:hover,
+[data-slot='filter-chip'][data-selected='true']:hover {
+  --filter-chip-bg: var(--primary-50);
+  --filter-chip-fg: var(--foreground);
+  --filter-chip-border-color: var(--primary-700);
+  background-color: var(--filter-chip-bg);
+  color: var(--filter-chip-fg);
+  border-color: var(--filter-chip-border-color);
 }
 
 .dark [data-slot='filter-chip'] {
+  --filter-chip-bg: var(--neutral-900);
+  --filter-chip-fg: var(--neutral-400);
+  --filter-chip-border-color: var(--neutral-700);
+}
+
+.dark [data-slot='filter-chip']:hover {
   --filter-chip-bg: var(--neutral-800);
+  --filter-chip-fg: var(--neutral-300);
+  --filter-chip-border-color: var(--neutral-700);
+}
+
+.dark [data-slot='filter-chip'][aria-pressed='true'],
+.dark [data-slot='filter-chip'][data-state='on'],
+.dark [data-slot='filter-chip'][data-selected='true'] {
+  --filter-chip-bg: var(--primary-950);
+  --filter-chip-fg: var(--neutral-100);
+  --filter-chip-border-color: var(--primary-400);
+}
+
+.dark [data-slot='filter-chip'][aria-pressed='true']:hover,
+.dark [data-slot='filter-chip'][data-state='on']:hover,
+.dark [data-slot='filter-chip'][data-selected='true']:hover {
+  --filter-chip-bg: var(--primary-950);
+  --filter-chip-fg: var(--neutral-50);
+  --filter-chip-border-color: var(--primary-400);
 }

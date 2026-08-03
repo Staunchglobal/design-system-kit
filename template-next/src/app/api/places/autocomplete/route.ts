@@ -1,10 +1,5 @@
 import { NextResponse } from 'next/server'
 
-/**
- * Proxies Google's legacy Places Autocomplete REST endpoint. Google's guidance is that
- * this endpoint isn't meant to be called directly from a browser (no CORS headers), so
- * the request has to go through a server — this route is that server.
- */
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const input = searchParams.get('input') ?? ''

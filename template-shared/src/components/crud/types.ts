@@ -10,17 +10,10 @@ export type CrudSortState = {
 export type CrudColumn<T> = {
   key: string
   header: string
-  /** Custom cell renderer. Defaults to `String(row[key])`. */
   render?: (row: T) => React.ReactNode
   sortable?: boolean
-  /** Mobile card label. Defaults to `header`. */
   mobileLabel?: string
-  /** Skip this column in the mobile card layout. */
   hideOnMobile?: boolean
-  /**
-   * Key of another column to render side-by-side on mobile.
-   * The paired column is skipped when iterating so it isn't shown twice.
-   */
   pairWith?: string
   className?: string
 }
@@ -37,9 +30,7 @@ export type CrudAction<T> = {
   label: string
   icon?: React.ReactNode
   variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'
-  /** May return a Promise — DataTable keeps the confirm dialog open until it settles. */
   onClick: (row: T) => void | Promise<void>
-  /** When set, DataTable shows CrudDeleteDialog before calling onClick. */
   confirm?: CrudActionConfirm
 }
 
@@ -48,7 +39,6 @@ export type CrudPageParams = {
   pageSize: number
   search: string
   sort: CrudSortState
-  /** Active tab value when the screen uses tabs; otherwise null. */
   tab: string | null
 }
 
@@ -93,16 +83,13 @@ type CrudFormBase = {
   submitLabel?: string
 }
 
-/** Declarative fields — kit owns form state + validation. */
 export type CrudFormFieldsConfig<TValues extends Record<string, string> = Record<string, string>> =
   CrudFormBase & {
     fields: CrudFieldDef[]
-    /** Seed values when opening create (defaults to empty strings). */
     initialValues?: Partial<TValues>
     onSubmit: (values: TValues) => Promise<unknown> | unknown
   }
 
-/** Custom body escape hatch — caller owns the form entirely. */
 export type CrudFormCustomConfig = CrudFormBase & {
   render: (api: CrudFormRenderApi) => React.ReactNode
 }
@@ -116,7 +103,6 @@ export type CrudCreateConfig<TItem, TValues extends Record<string, string> = Rec
 export type CrudEditConfig<TItem, TValues extends Record<string, string> = Record<string, string>> =
   | (CrudFormBase & {
       fields: CrudFieldDef[]
-      /** Map a row into form values. Defaults to picking field names from the row. */
       getValues?: (row: TItem) => TValues
       onSubmit: (values: TValues, row: TItem) => Promise<TItem> | TItem
     })

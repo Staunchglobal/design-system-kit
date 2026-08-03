@@ -1,6 +1,6 @@
-/** Shared OTP resend cooldown persistence (localStorage). */
 
-export const OTP_RESEND_COOLDOWN_SECONDS = 60
+/** 2-minute resend cooldown. */
+export const OTP_RESEND_COOLDOWN_SECONDS = 120
 export const OTP_TIMER_STORAGE_KEY = 'design-kit-auth-otp-timer-end'
 
 const listeners = new Set<() => void>()
@@ -30,14 +30,12 @@ export function readOtpSecondsLeft(): number {
   return Math.max(0, Math.ceil((end - Date.now()) / 1000))
 }
 
-/** Force a fresh cooldown window (e.g. login / forgot / resend just sent a new OTP). */
 export function startOtpCooldown(seconds: number = OTP_RESEND_COOLDOWN_SECONDS): void {
   if (typeof window === 'undefined') return
   window.localStorage.setItem(OTP_TIMER_STORAGE_KEY, String(Date.now() + seconds * 1000))
   emit()
 }
 
-/** Remove the cooldown (OTP verified successfully, or user left the OTP page). */
 export function clearOtpCooldown(): void {
   if (typeof window === 'undefined') return
   window.localStorage.removeItem(OTP_TIMER_STORAGE_KEY)

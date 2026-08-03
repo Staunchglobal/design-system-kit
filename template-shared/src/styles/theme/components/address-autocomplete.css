@@ -1,14 +1,7 @@
-/* ==========================================================================
-   Address Autocomplete
-   ========================================================================== */
-
 [data-slot='address-autocomplete'] {
   --address-autocomplete-gap: 0.375rem;
   gap: var(--address-autocomplete-gap);
 }
-
-/* Prediction dropdown — same surface tokens as popover-content.css so it
-   matches every other floating panel in the kit. */
 [data-slot='address-autocomplete-list'] {
   --address-autocomplete-list-bg: var(--popover);
   --address-autocomplete-list-fg: var(--popover-foreground);

@@ -22,10 +22,6 @@ const styles = StyleSheet.create({
 
 type PdfInfoFieldProps = {
   label: string
-  /**
-   * The value to display. Must be a react-pdf-compatible node — i.e. `Text`, `View`, or
-   * a primitive (string / number). Passing DOM elements will cause a runtime render error.
-   */
   value: React.ReactNode
 }
 

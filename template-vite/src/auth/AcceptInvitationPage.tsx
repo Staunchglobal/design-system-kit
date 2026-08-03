@@ -10,7 +10,6 @@ import {
 } from '@/components/auth/auth-operations'
 import { SetPasswordForm } from '@/components/auth/set-password-form'
 import { toast } from '@/components/auth/notify'
-import { setAuthSession } from '@/components/auth/auth-session'
 import type { SetPasswordFormValues } from '@/components/auth/types'
 import { Toaster } from '@/components/ui/sonner'
 
@@ -30,17 +29,13 @@ export default function AcceptInvitationPage() {
     setLoading(true)
     setError(null)
     try {
-      const data = await authFetch<AcceptInvitationResult>(ACCEPT_INVITATION, {
-        token,
-        password: values.password,
-        passwordConfirmation: values.passwordConfirmation,
+      await authFetch<AcceptInvitationResult>(ACCEPT_INVITATION, {
+        input: { token, password: values.password, passwordConfirmation: values.passwordConfirmation },
       })
-      setAuthSession({
-        token: data.acceptInvitation.token,
-        user: data.acceptInvitation.user,
-      })
-      toast.success('Invitation accepted')
-      go('/auth/home')
+      // Accepting an invitation only creates the account — it doesn't issue a session,
+      // so the new user still has to sign in.
+      toast.success('Account created — sign in with your new password')
+      go('/auth/login')
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Invitation failed'
       setError(message)

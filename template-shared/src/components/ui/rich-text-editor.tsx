@@ -32,7 +32,6 @@ type RichTextEditorProps = {
   placeholder?: string
   className?: string
   disabled?: boolean
-  /** Forwarded to the root wrapper `div`. */
   id?: string
   'aria-label'?: string
   'aria-labelledby'?: string
@@ -107,7 +106,6 @@ function RichTextEditor({
       aria-labelledby={ariaLabelledby}
       aria-describedby={ariaDescribedby}
     >
-      {/* Toolbar */}
       <div
         role="toolbar"
         aria-label="Text formatting"
@@ -116,7 +114,6 @@ function RichTextEditor({
           disabled && 'pointer-events-none'
         )}
       >
-        {/* Marks: Bold, Italic, Strikethrough */}
         <Toggle
           size="sm"
           aria-label="Bold"
@@ -165,7 +162,6 @@ function RichTextEditor({
 
         <Separator orientation="vertical" className="mx-0.5 h-5" />
 
-        {/* Headings */}
         <Toggle
           size="sm"
           aria-label="Heading 1"
@@ -193,7 +189,6 @@ function RichTextEditor({
 
         <Separator orientation="vertical" className="mx-0.5 h-5" />
 
-        {/* Lists */}
         <Toggle
           size="sm"
           aria-label="Bullet list"
@@ -213,7 +208,6 @@ function RichTextEditor({
 
         <Separator orientation="vertical" className="mx-0.5 h-5" />
 
-        {/* History */}
         <Button
           type="button"
           variant="ghost"
@@ -236,7 +230,6 @@ function RichTextEditor({
         </Button>
       </div>
 
-      {/* Editor area */}
       <div
         className="relative cursor-text"
         onClick={() => editor?.commands.focus()}
@@ -254,20 +247,15 @@ function RichTextEditor({
           data-slot="rich-text-editor-content"
           className={cn(
             'min-h-32 px-3 py-2',
-            // Target the tiptap ProseMirror root
             '[&_.tiptap]:outline-none',
-            // Block elements
             '[&_.tiptap_>*+*]:mt-2',
             '[&_.tiptap_p]:leading-relaxed',
-            // Headings
             '[&_.tiptap_h1]:text-xl [&_.tiptap_h1]:font-bold [&_.tiptap_h1]:leading-tight',
             '[&_.tiptap_h2]:text-lg [&_.tiptap_h2]:font-semibold [&_.tiptap_h2]:leading-tight',
             '[&_.tiptap_h3]:text-base [&_.tiptap_h3]:font-semibold [&_.tiptap_h3]:leading-tight',
-            // Lists
             '[&_.tiptap_ul]:list-disc [&_.tiptap_ul]:pl-5',
             '[&_.tiptap_ol]:list-decimal [&_.tiptap_ol]:pl-5',
             '[&_.tiptap_li]:my-0.5',
-            // Inline marks
             '[&_.tiptap_strong]:font-semibold',
             '[&_.tiptap_em]:italic',
             '[&_.tiptap_s]:line-through',
