@@ -17,7 +17,7 @@
 }
 [data-slot='tabs-list'][data-variant='default'] {
   --tabs-list-bg: transparent;
-  --tabs-list-gap: 1rem;
+  --tabs-list-gap: 0.5rem;
   background-color: var(--tabs-list-bg);
   gap: var(--tabs-list-gap);
 }

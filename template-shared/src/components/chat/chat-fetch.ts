@@ -1,8 +1,7 @@
-import { CHAT_MOCK_ENDPOINT } from '@/components/chat/chat-constants'
 import type { ChatFetch } from '@/components/chat/types'
 import { getAuthSession } from '@/components/auth/auth-session'
 import { graphqlFetch } from '@/components/auth/graphql-client'
-import { chatMockFetch } from '@/components/chat/chat-mock-client'
+import { CHAT_MOCK_ENDPOINT, chatMockFetch } from '@/components/chat/chat-mock-client'
 
 type FetchImpl = <T>(
   endpoint: string,

@@ -5698,7 +5698,7 @@
         {
           "id": "button:--button-gap:0",
           "name": "--button-gap",
-          "value": "0.75rem",
+          "value": "0.375rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "button/size=default"
@@ -5746,7 +5746,7 @@
         {
           "id": "button:--button-gap:2",
           "name": "--button-gap",
-          "value": "0.5rem",
+          "value": "0.25rem",
           "fieldType": "raw",
           "occurrence": 2,
           "scope": "button/size=sm"
@@ -5770,7 +5770,7 @@
         {
           "id": "button:--button-gap:3",
           "name": "--button-gap",
-          "value": "1rem",
+          "value": "0.5rem",
           "fieldType": "raw",
           "occurrence": 3,
           "scope": "button/size=lg"
@@ -18137,7 +18137,7 @@
         {
           "id": "tabs:--tabs-list-gap:0",
           "name": "--tabs-list-gap",
-          "value": "1rem",
+          "value": "0.5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "tabs-list/variant=default"

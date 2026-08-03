@@ -20,28 +20,43 @@ import {
 import type { ChatMessage } from '@/components/chat/types'
 
 /**
- * Pins the viewport to the latest message on thread open and after the
- * current user sends. Incoming messages while scrolled up rely on
- * MessageScrollerProvider `autoScroll` (near-bottom only).
+ * Keeps the latest message above the composer. Re-runs after layout/images
+ * settle — otherwise tall albums land behind the input until you scroll.
  */
 function ScrollToLatest({
   messages,
-  currentUserId,
 }: {
   messages: ChatMessage[]
-  currentUserId: string
 }) {
   const { scrollToEnd } = useMessageScroller()
   const last = messages[messages.length - 1]
   const lastId = last?.id
-  const lastIsMine = last?.sender.id === currentUserId
+  const lastMediaKey = last
+    ? `${last.attachmentUrls?.join('|') ?? ''}:${last.attachments?.map((a) => a.url).join('|') ?? ''}`
+    : ''
   const primedRef = React.useRef(false)
   const prevLastIdRef = React.useRef<string | null>(null)
+  const followRef = React.useRef(true)
+
+  const stickToEnd = React.useCallback(
+    (behavior: ScrollBehavior = 'smooth') => {
+      scrollToEnd({ behavior, align: 'end' })
+      // Image grids / fonts change height after the first paint — pin again.
+      requestAnimationFrame(() => {
+        scrollToEnd({ behavior: 'instant', align: 'end' })
+        requestAnimationFrame(() => {
+          scrollToEnd({ behavior: 'instant', align: 'end' })
+        })
+      })
+    },
+    [scrollToEnd]
+  )
 
   React.useEffect(() => {
     if (messages.length === 0) {
       primedRef.current = false
       prevLastIdRef.current = null
+      followRef.current = true
       return
     }
     if (!lastId) return
@@ -49,18 +64,27 @@ function ScrollToLatest({
     if (!primedRef.current) {
       primedRef.current = true
       prevLastIdRef.current = lastId
-      scrollToEnd({ behavior: 'instant' })
+      followRef.current = true
+      stickToEnd('instant')
       return
     }
 
-    if (lastId !== prevLastIdRef.current && lastIsMine) {
+    if (lastId !== prevLastIdRef.current) {
       prevLastIdRef.current = lastId
-      scrollToEnd({ behavior: 'smooth' })
-      return
+      // Always reveal the latest message in the open thread. (Reading history
+      // further up is uncommon in this demo; prefer not leaving it under the input.)
+      followRef.current = true
+      stickToEnd('smooth')
     }
+  }, [lastId, messages.length, stickToEnd])
 
-    prevLastIdRef.current = lastId
-  }, [lastId, lastIsMine, messages.length, scrollToEnd])
+  // Media finishes decoding after the message row mounts — stick again so the
+  // album isn't clipped under the composer.
+  React.useEffect(() => {
+    if (!lastId || !followRef.current) return
+    const t = window.setTimeout(() => stickToEnd('instant'), 120)
+    return () => window.clearTimeout(t)
+  }, [lastId, lastMediaKey, stickToEnd])
 
   return null
 }
@@ -90,10 +114,15 @@ export function ChatMessagesPane({
   const showEmpty = !loading && !error && messages.length === 0
 
   return (
-    <MessageScrollerProvider autoScroll defaultScrollPosition="end">
+    <MessageScrollerProvider
+      autoScroll
+      defaultScrollPosition="end"
+      scrollMargin={16}
+      scrollEdgeThreshold={80}
+    >
       <MessageScroller className="min-h-0 flex-1">
         <MessageScrollerViewport>
-          <MessageScrollerContent className="gap-4 p-4">
+          <MessageScrollerContent className="gap-4 p-4 pb-6">
             {error && messages.length === 0 ? (
               <ChatErrorPanel
                 title="Couldn't load messages"
@@ -138,12 +167,15 @@ export function ChatMessagesPane({
                   key={m.id}
                   messageId={m.id}
                   scrollAnchor={idx === messages.length - 1}
+                  // content-visibility + a 10rem guess underestimates image albums
+                  // and leaves the latest message under the composer.
+                  className="[content-visibility:visible] [contain-intrinsic-size:none]"
                 >
                   <ChatMessageRow message={m} isMine={m.sender.id === currentUserId} />
                 </MessageScrollerItem>
               ))}
             </MessageGroup>
-            <ScrollToLatest messages={messages} currentUserId={currentUserId} />
+            <ScrollToLatest messages={messages} />
           </MessageScrollerContent>
         </MessageScrollerViewport>
         <MessageScrollerButton />

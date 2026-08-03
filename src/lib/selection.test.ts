@@ -153,9 +153,9 @@ describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
     expect(files.has('components/chat/chat-subscribe.ts')).toBe(true)
   })
 
-  it('auth uiDeps include card/field/input-otp/sonner from EXTRA_FILES scan', () => {
+  it('auth uiDeps include field/input/sonner from EXTRA_FILES scan', () => {
     expect(COMPONENTS.auth.uiDeps).toEqual(
-      expect.arrayContaining(['card', 'field', 'input', 'input-otp', 'button', 'checkbox', 'alert', 'sonner'])
+      expect.arrayContaining(['field', 'input', 'button', 'checkbox', 'alert', 'sonner', 'spinner'])
     )
     expect(COMPONENTS.auth.cssFile).toBeNull()
     expect(COMPONENTS.auth.npmDeps).toEqual(expect.arrayContaining(['sonner', 'lucide-react']))
@@ -172,9 +172,19 @@ describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
         'error-state',
         'spinner',
         'skeleton',
+        'input-group',
+        'tooltip',
       ])
     )
-    expect(COMPONENTS.chat.npmDeps).toEqual(expect.arrayContaining(['graphql-ws', 'lucide-react']))
+    expect(COMPONENTS.chat.npmDeps).toEqual(
+      expect.arrayContaining(['@rails/actioncable', '@types/rails__actioncable', 'lucide-react'])
+    )
+  })
+
+  it('extraFilesFor surfaces chat-search-field companion', () => {
+    const files = extraFilesFor(resolveUiClosure(['chat']))
+    expect(files.has('components/chat/chat-search-field.tsx')).toBe(true)
+    expect(files.has('components/chat/chat-attachment-grid.tsx')).toBe(true)
   })
 
   it('npmDepsFor unions deps across the whole closure without duplicates', () => {
@@ -201,7 +211,7 @@ describe('FRAMEWORK_EXTRA_FILES', () => {
       expect.arrayContaining(['auth/LoginPage.tsx', 'auth/AuthHomePage.tsx'])
     )
     expect(frameworkExtraFilesFor(resolveUiClosure(['auth']), 'next')).toEqual(
-      expect.arrayContaining(['app/auth/layout.tsx', 'app/auth/verify-otp/page.tsx'])
+      expect.arrayContaining(['app/auth/layout.tsx', 'app/auth/reset-password/page.tsx'])
     )
     expect(frameworkExtraFilesFor(resolveUiClosure(['button']), 'next')).toEqual([])
   })

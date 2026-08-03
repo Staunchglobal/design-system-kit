@@ -58,6 +58,8 @@ export type UseChatInboxResult = {
   showThread: boolean
   searchInput: string
   setSearchInput: (value: string) => void
+  /** Typed query differs from flushed search, or a non-append chat fetch is in flight. */
+  searching: boolean
   conversations: Conversation[]
   chatsLoading: boolean
   chatsLoadingMore: boolean
@@ -82,6 +84,8 @@ export type UseChatInboxResult = {
   availableUsers: ChatUser[]
   userSearch: string
   setUserSearch: (value: string) => void
+  /** People search debounce pending, or users request loading. */
+  usersSearching: boolean
   usersLoading: boolean
   usersError: string | null
   createChatError: string | null
@@ -220,9 +224,10 @@ export function useChatInbox({
           search: search || undefined,
           archived: tab === 'archived',
         })
-        const rows = data.allChats.allData.map(mapConversation)
+        const rows = data.allChats.chats.map(mapConversation)
         setConversations((prev) => (append ? [...prev, ...rows] : rows))
-        setChatsNextPage(data.allChats.nextPage)
+        const { pagination } = data.allChats
+        setChatsNextPage(pagination.page < pagination.pages ? pagination.page + 1 : null)
         if (tab === 'chats' && page === 1) {
           setTotalUnread(rows.reduce((sum, c) => sum + c.unreadCount, 0))
         }
@@ -251,11 +256,11 @@ export function useChatInbox({
       try {
         const data = await realFetch<{
           fetchAllMessages: {
-            allData: ApiMessageRow[]
-            nextPage: number | null
+            messages: ApiMessageRow[]
+            pagination: { page: number; pages: number }
           }
         }>(FETCH_ALL_MESSAGES, { chatId, page, perPage: MESSAGES_PER_PAGE })
-        const rows = data.fetchAllMessages.allData.map(mapApiMessage).reverse()
+        const rows = data.fetchAllMessages.messages.map(mapApiMessage).reverse()
         setMessages((prev) => {
           if (prepend) return [...rows, ...prev]
           // Initial (non-prepend) load: the MESSAGE_ADDED subscription for this chat is
@@ -268,7 +273,8 @@ export function useChatInbox({
           const liveOnly = prev.filter((m) => m.chatId === chatId && !fetchedIds.has(m.id))
           return liveOnly.length ? [...rows, ...liveOnly] : rows
         })
-        setMessagesNextPage(data.fetchAllMessages.nextPage)
+        const { pagination } = data.fetchAllMessages
+        setMessagesNextPage(pagination.page < pagination.pages ? pagination.page + 1 : null)
         try {
           await realFetch(MARK_CHAT_AS_READ, { chatId })
           setConversations((prev) =>
@@ -362,14 +368,14 @@ export function useChatInbox({
     setUsersError(null)
     try {
       const data = await realFetch<{
-        availableUsersForChat: { allData: ChatUser[] }
+        availableUsersForChat: { users: ChatUser[] }
       }>(AVAILABLE_USERS_FOR_CHAT, {
         search: debouncedUserSearch || undefined,
         page: 1,
         perPage: 30,
       })
       if (requestId !== usersRequestId.current) return
-      setAvailableUsers(data.availableUsersForChat.allData)
+      setAvailableUsers(data.availableUsersForChat.users)
       setUsersError(null)
     } catch (err) {
       if (requestId !== usersRequestId.current) return
@@ -395,13 +401,16 @@ export function useChatInbox({
     try {
       const compressed = files.length ? await compressImages(files) : []
       const messageType = compressed.length ? 'IMAGE' : 'TEXT'
+      // SendMessagePayload has no `success` field, only `message` — every
+      // failure path in the resolver raises a real GraphQL error instead
+      // of returning a falsy success flag.
       type SendMessageResult = {
-        sendMessage: { success: boolean; message?: ApiMessageRow | null }
+        sendMessage: { message?: ApiMessageRow | null }
       }
-      // Attachments travel inline with the message as a GraphQL multipart upload (matches
-      // function-rx's sendMessage(files: [Upload!])) — only the real backend can parse
-      // that wire format, so mock mode keeps sending raw `File`s through the in-process
-      // mock client instead (no network serialization happens there).
+      // Attachments travel inline with the message as a GraphQL multipart upload
+      // (`sendMessage(files: [Upload!])`) — only the real backend can parse that wire
+      // format, so mock mode keeps sending raw `File`s through the in-process mock
+      // client instead (no network serialization happens there).
       const data =
         graphqlUrl && compressed.length
           ? await graphqlUploadFetch<SendMessageResult>(
@@ -458,7 +467,7 @@ export function useChatInbox({
     try {
       const data = await realFetch<{
         createChat: { chat: { id: string } }
-      }>(CREATE_CHAT, { participantId })
+      }>(CREATE_CHAT, { participantIds: [participantId] })
       setNewChatOpen(false)
       if (!tabControlled) setInternalTab('chats')
       setSelectedId(data.createChat.chat.id, { tab: 'chats' })
@@ -498,6 +507,8 @@ export function useChatInbox({
 
   function closeNewChat(): void {
     setNewChatOpen(false)
+    setUserSearch('')
+    setDebouncedUserSearch('')
     setUsersError(null)
     setCreateChatError(null)
     setCreatingChat(false)
@@ -523,6 +534,7 @@ export function useChatInbox({
     showThread,
     searchInput,
     setSearchInput,
+    searching: searchInput.trim() !== search || (chatsLoading && !chatsLoadingMore),
     conversations,
     chatsLoading,
     chatsLoadingMore,
@@ -553,6 +565,8 @@ export function useChatInbox({
     availableUsers,
     userSearch,
     setUserSearch,
+    usersSearching:
+      userSearch.trim() !== debouncedUserSearch || usersLoading,
     usersLoading,
     usersError,
     createChatError,

@@ -2,9 +2,8 @@
 
 import * as React from 'react'
 
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Button } from '@/components/ui/button'
-import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
+import { AuthFormError } from '@/components/auth/auth-form-error'
+import { AuthSubmitButton } from '@/components/auth/auth-submit-button'
 import { PasswordInput } from '@/components/auth/password-input'
 import { PasswordRequirementErrors } from '@/components/auth/password-requirement-errors'
 import {
@@ -13,6 +12,7 @@ import {
   validatePasswordConfirmation,
 } from '@/components/auth/password-policy'
 import type { SetPasswordFormValues } from '@/components/auth/types'
+import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 
 export type SetPasswordFormProps = {
   onSubmit: (values: SetPasswordFormValues) => void | Promise<void>
@@ -56,17 +56,14 @@ export function SetPasswordForm({
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
-      {error ? (
-        <Alert variant="destructive">
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      ) : null}
+      <AuthFormError message={error} />
       <FieldGroup>
         <Field data-invalid={submitted && !!fieldErrors.password?.length}>
           <FieldLabel htmlFor="set-password">New password</FieldLabel>
           <PasswordInput
             id="set-password"
             autoComplete="new-password"
+            placeholder="Create a password"
             value={password}
             onChange={(e) => {
               const value = e.target.value
@@ -80,7 +77,7 @@ export function SetPasswordForm({
                 }))
               }
             }}
-            disabled={loading}
+            aria-invalid={submitted && !!fieldErrors.password?.length}
           />
           <FieldDescription>{PASSWORD_POLICY_MESSAGE}</FieldDescription>
           {submitted ? <PasswordRequirementErrors errors={fieldErrors.password ?? []} /> : null}
@@ -90,6 +87,7 @@ export function SetPasswordForm({
           <PasswordInput
             id="set-confirm"
             autoComplete="new-password"
+            placeholder="Confirm your password"
             value={passwordConfirmation}
             onChange={(e) => {
               const value = e.target.value
@@ -101,14 +99,14 @@ export function SetPasswordForm({
                 }))
               }
             }}
-            disabled={loading}
+            aria-invalid={submitted && !!fieldErrors.passwordConfirmation}
           />
           {submitted ? <FieldError>{fieldErrors.passwordConfirmation}</FieldError> : null}
         </Field>
       </FieldGroup>
-      <Button type="submit" className="w-full" disabled={loading}>
-        {loading ? 'Saving…' : submitLabel}
-      </Button>
+      <AuthSubmitButton loading={loading} loadingLabel="Saving…">
+        {submitLabel}
+      </AuthSubmitButton>
     </form>
   )
 }

@@ -23,6 +23,27 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "accordion.css",
     "extraFiles": []
   },
+  "account-settings": {
+    "uiDeps": [
+      "sonner",
+      "auth",
+      "alert",
+      "button",
+      "field",
+      "input"
+    ],
+    "npmDeps": [],
+    "cssFile": null,
+    "extraFiles": [
+      "components/account-settings/account-settings-operations.ts",
+      "components/account-settings/account-settings-mock-client.ts",
+      "components/account-settings/account-settings-fetch.ts",
+      "components/account-settings/use-email-change.ts",
+      "components/account-settings/request-email-change-form.tsx",
+      "components/account-settings/email-change-settings.tsx",
+      "components/account-settings/index.ts"
+    ]
+  },
   "address-autocomplete": {
     "uiDeps": [
       "input",
@@ -83,17 +104,14 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "sonner",
       "field",
       "input",
-      "card",
-      "separator",
       "alert",
       "button",
-      "checkbox",
-      "input-otp"
+      "spinner",
+      "checkbox"
     ],
     "npmDeps": [
       "sonner",
-      "lucide-react",
-      "input-otp"
+      "lucide-react"
     ],
     "cssFile": null,
     "extraFiles": [
@@ -103,13 +121,17 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "components/auth/auth-session.ts",
       "components/auth/password-policy.ts",
       "components/auth/password-requirement-errors.tsx",
-      "components/auth/otp-timer-storage.ts",
-      "components/auth/use-otp-timer.ts",
       "components/auth/use-auth-store.ts",
+      "components/auth/use-otp-timer.ts",
+      "components/auth/otp-timer-storage.ts",
       "components/auth/graphql-client.ts",
       "components/auth/auth-fetch.ts",
       "components/auth/notify.ts",
       "components/auth/password-input.tsx",
+      "components/auth/auth-back-link.tsx",
+      "components/auth/auth-form-error.tsx",
+      "components/auth/auth-submit-button.tsx",
+      "components/auth/otp-field.tsx",
       "components/auth/auth-shell.tsx",
       "components/auth/login-form.tsx",
       "components/auth/signup-form.tsx",
@@ -237,14 +259,13 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "avatar",
       "badge",
       "button",
-      "input",
       "scroll-area",
       "spinner",
       "tabs",
-      "empty",
-      "attachment",
+      "input-group",
       "message-scroller",
       "textarea",
+      "tooltip",
       "dialog",
       "alert",
       "error-state",
@@ -252,9 +273,10 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     ],
     "npmDeps": [
       "browser-image-compression",
-      "graphql-ws",
+      "@rails/actioncable",
       "lucide-react",
-      "sonner"
+      "sonner",
+      "@types/rails__actioncable"
     ],
     "cssFile": null,
     "extraFiles": [
@@ -270,6 +292,9 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "components/chat/contacts-sidebar.tsx",
       "components/chat/chat-header.tsx",
       "components/chat/chat-empty-selection.tsx",
+      "components/chat/chat-empty-state.tsx",
+      "components/chat/chat-search-field.tsx",
+      "components/chat/chat-attachment-grid.tsx",
       "components/chat/image-lightbox.tsx",
       "components/chat/chat-message-row.tsx",
       "components/chat/chat-messages-pane.tsx",

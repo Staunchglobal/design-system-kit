@@ -1,7 +1,12 @@
+// allChats/availableUsersForChat/fetchAllMessages are GraphQL resolvers, not
+// RelayClassicMutation mutations — their arguments are flat, top-level query
+// arguments, not wrapped in a single `$input` variable the way every mutation
+// below is.
+
 export const ALL_CHATS = `
   query AllChats($page: Int, $perPage: Int, $search: String, $archived: Boolean) {
     allChats(page: $page, perPage: $perPage, search: $search, archived: $archived) {
-      allData {
+      chats {
         id
         isActive
         updatedAt
@@ -20,10 +25,12 @@ export const ALL_CHATS = `
           email
         }
       }
-      dataCount
-      nextPage
-      prevPage
-      totalPages
+      pagination {
+        page
+        pages
+        count
+        perPage
+      }
     }
   }
 `
@@ -31,15 +38,18 @@ export const ALL_CHATS = `
 export const AVAILABLE_USERS_FOR_CHAT = `
   query AvailableUsersForChat($search: String, $page: Int, $perPage: Int) {
     availableUsersForChat(search: $search, page: $page, perPage: $perPage) {
-      allData {
+      users {
         id
         fullName
         email
         imageUrl
       }
-      count
-      nextPage
-      totalPages
+      pagination {
+        page
+        pages
+        count
+        perPage
+      }
     }
   }
 `
@@ -47,7 +57,7 @@ export const AVAILABLE_USERS_FOR_CHAT = `
 export const FETCH_ALL_MESSAGES = `
   query FetchAllMessages($chatId: ID!, $page: Int, $perPage: Int) {
     fetchAllMessages(chatId: $chatId, page: $page, perPage: $perPage) {
-      allData {
+      messages {
         id
         content
         createdAt
@@ -60,7 +70,7 @@ export const FETCH_ALL_MESSAGES = `
           mimeType
           sizeBytes
         }
-        user {
+        sender {
           id
           fullName
           imageUrl
@@ -68,17 +78,19 @@ export const FETCH_ALL_MESSAGES = `
         }
         chatId
       }
-      count
-      nextPage
-      prevPage
-      totalPages
+      pagination {
+        page
+        pages
+        count
+        perPage
+      }
     }
   }
 `
 
 export const CREATE_CHAT = `
-  mutation CreateChat($participantId: ID!) {
-    createChat(input: { participantId: $participantId }) {
+  mutation CreateChat($participantIds: [ID!]!) {
+    createChat(input: { participantIds: $participantIds }) {
       chat {
         id
         updatedAt
@@ -110,12 +122,13 @@ export const MARK_CHAT_AS_READ = `
   }
 `
 
+// Attachments only ever arrive as a real multipart `files: [Upload!]` upload
+// — the backend has no argument for a client-supplied attachment URL.
 export const SEND_MESSAGE = `
   mutation SendMessage(
     $chatId: ID!
     $content: String!
-    $messageType: MessageTypeEnum!
-    $attachmentUrls: [String!]
+    $messageType: MessageType!
     $files: [Upload!]
   ) {
     sendMessage(
@@ -123,11 +136,9 @@ export const SEND_MESSAGE = `
         chatId: $chatId
         content: $content
         messageType: $messageType
-        attachmentUrls: $attachmentUrls
         files: $files
       }
     ) {
-      success
       message {
         id
         content
@@ -136,11 +147,6 @@ export const SEND_MESSAGE = `
         attachmentUrls
         chatId
         sender {
-          id
-          fullName
-          imageUrl
-        }
-        user {
           id
           fullName
           imageUrl
@@ -158,9 +164,14 @@ export const MESSAGE_ADDED = `
       messageType
       createdAt
       chatId
-      attachments
       attachmentUrls
-      updatedAt
+      attachments {
+        id
+        url
+        fileName
+        mimeType
+        sizeBytes
+      }
       sender {
         id
         fullName
@@ -203,4 +214,4 @@ export const UNREAD_COUNT_UPDATED = `
   }
 `
 
-export type MessageTypeEnum = 'TEXT' | 'IMAGE' | 'FILE'
+export type MessageTypeEnum = 'TEXT' | 'IMAGE' | 'VIDEO' | 'ANNOUNCEMENT'

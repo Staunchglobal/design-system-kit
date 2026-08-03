@@ -365,14 +365,14 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
   log.info(`Run your dev server, then visit ${pc.bold('/design-system')} and ${pc.bold('/theme-editor')}.`)
   if (userClosure.has('auth')) {
     log.info(
-      `Auth pages: ${pc.bold('/auth/login')}, /auth/signup, /auth/forgot-password, /auth/verify-otp, /auth/reset-password, /auth/accept-invitation, /auth/change-password, /auth/home`
+      `Auth pages: ${pc.bold('/auth/login')}, /auth/signup, /auth/forgot-password, /auth/reset-password, /auth/accept-invitation, /auth/change-password, /auth/home`
     )
     log.info('Demo mock: demo@example.com / Password1! — OTP always 123456')
   }
   if (userClosure.has('chat')) {
     log.info(`Chat inbox: ${pc.bold('/chat')}, ${pc.bold('/chat/[id]')}, ${pc.bold('/chat/archived')} (requires auth session)`)
     log.info(
-      'Optional Nest API: set NEXT_PUBLIC_GRAPHQL_URL, NEXT_PUBLIC_GRAPHQL_WS_URL'
+      'Real backend (staunch_saas_kit Rails app): set NEXT_PUBLIC_GRAPHQL_URL, NEXT_PUBLIC_GRAPHQL_WS_URL — falls back to the in-memory mock otherwise'
     )
   }
   log.info(`Run \`${pc.bold('design-kit init')}\` again any time to add more components.`)

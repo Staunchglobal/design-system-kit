@@ -1,5 +1,6 @@
 
-export const OTP_RESEND_COOLDOWN_SECONDS = 60
+/** 2-minute resend cooldown. */
+export const OTP_RESEND_COOLDOWN_SECONDS = 120
 export const OTP_TIMER_STORAGE_KEY = 'design-kit-auth-otp-timer-end'
 
 const listeners = new Set<() => void>()

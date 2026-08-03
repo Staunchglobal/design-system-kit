@@ -4,9 +4,8 @@ const MAX_SIZE_MB = 1.5
 const MAX_WIDTH_OR_HEIGHT = 1920
 
 /**
- * Compresses an image client-side before it's attached to a chat message (mirrors
- * function-rx's `imageCompression.ts`) — keeps large phone-camera photos from bloating
- * every upload. Non-image files pass through untouched.
+ * Compresses an image client-side before it's attached to a chat message — keeps large
+ * phone-camera photos from bloating every upload. Non-image files pass through untouched.
  */
 export async function compressImageIfNeeded(file: File): Promise<File> {
   if (!file.type.startsWith('image/')) return file

@@ -2,42 +2,46 @@
 
 import * as React from 'react'
 
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Button } from '@/components/ui/button'
-import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
-import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp'
-import { DEMO_OTP_CODE } from '@/components/auth/auth-operations'
+import { AuthFormError } from '@/components/auth/auth-form-error'
+import { AuthSubmitButton } from '@/components/auth/auth-submit-button'
+import { OtpField } from '@/components/auth/otp-field'
+import type { OtpFormValues } from '@/components/auth/types'
 import { useOtpTimer } from '@/components/auth/use-otp-timer'
-import type { OtpMode, VerifyOtpFormValues } from '@/components/auth/types'
-import { REGEXP_ONLY_DIGITS } from 'input-otp'
+import { FieldError } from '@/components/ui/field'
 
 export type VerifyOtpFormProps = {
-  email: string
-  mode: OtpMode
-  onSubmit: (values: VerifyOtpFormValues) => void | Promise<void>
-  onResend: () => void | Promise<void>
+  onSubmit: (values: OtpFormValues) => void | Promise<void>
+  onResend?: () => void | Promise<void>
   loading?: boolean
   resendLoading?: boolean
   error?: string | null
+  submitLabel?: string
+  /** The code itself, when the backend returned one (dev/staging convenience). */
   otpHint?: string | null
+  /** False when the caller already started the cooldown and this mount shouldn't restart it. */
   startTimerOnMount?: boolean
 }
 
+function formatTimer(seconds: number) {
+  const m = String(Math.floor(seconds / 60))
+  const s = String(seconds % 60).padStart(2, '0')
+  return `${m}:${s}`
+}
+
 export function VerifyOtpForm({
-  email,
-  mode,
   onSubmit,
   onResend,
   loading = false,
   resendLoading = false,
   error = null,
+  submitLabel = 'Verify code',
   otpHint = null,
-  startTimerOnMount = true,
+  startTimerOnMount = false,
 }: VerifyOtpFormProps) {
   const [otp, setOtp] = React.useState('')
   const [fieldError, setFieldError] = React.useState<string | null>(null)
   const [submitted, setSubmitted] = React.useState(false)
-  const { secondsLeft, canResend, ready, start, startIfNeeded } = useOtpTimer()
+  const { secondsLeft, canResend, start, startIfNeeded } = useOtpTimer()
 
   React.useEffect(() => {
     if (startTimerOnMount) startIfNeeded()
@@ -59,73 +63,64 @@ export function VerifyOtpForm({
   }
 
   async function handleResend() {
-    if (!canResend || resendLoading) return
+    if (!onResend || !canResend || resendLoading) return
     await onResend()
     start()
   }
 
+  const invalid = submitted && !!fieldError
+
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
-      {error ? (
-        <Alert variant="destructive">
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      ) : null}
-      <FieldGroup>
-        <Field data-invalid={submitted && !!fieldError}>
-          <FieldLabel>Verification code</FieldLabel>
-          <FieldDescription>
-            Enter the 6-digit code sent to <span className="text-foreground font-medium">{email}</span>
-            {mode === 'reset' ? ' to reset your password.' : '.'}
-          </FieldDescription>
-          <InputOTP
-            maxLength={6}
-            value={otp}
-            onChange={(next) => {
-              const digits = next.replace(/\D/g, '')
-              setOtp(digits)
-              if (submitted) setFieldError(otpErrorFor(digits))
-            }}
-            disabled={loading}
-            containerClassName="justify-center"
-            inputMode="numeric"
-            autoComplete="one-time-code"
-            pattern={REGEXP_ONLY_DIGITS}
-          >
-            <InputOTPGroup>
-              {Array.from({ length: 6 }).map((_, i) => (
-                <InputOTPSlot key={i} index={i} />
-              ))}
-            </InputOTPGroup>
-          </InputOTP>
-          {submitted ? <FieldError>{fieldError}</FieldError> : null}
-          {otpHint || DEMO_OTP_CODE ? (
-            <FieldDescription className="text-center">
-              Demo code: <code className="text-foreground">{otpHint || DEMO_OTP_CODE}</code>
-            </FieldDescription>
-          ) : null}
-        </Field>
-      </FieldGroup>
-      <Button type="submit" className="w-full" disabled={loading || otp.length !== 6}>
-        {loading ? 'Verifying…' : 'Verify'}
-      </Button>
-      <p className="text-muted-foreground text-center text-sm">
-        {!ready ? (
-          <>Resend available in …</>
-        ) : canResend ? (
-          <Button
-            type="button"
-            variant="link"
-            className="h-auto p-0"
-            disabled={resendLoading}
-            onClick={handleResend}
-          >
-            {resendLoading ? 'Sending…' : 'Resend code'}
-          </Button>
-        ) : (
-          <>Resend available in {secondsLeft}s</>
-        )}
-      </p>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
+      <AuthFormError message={error} />
+
+      <div className="flex flex-col gap-2">
+        <OtpField
+          value={otp}
+          onChange={(next) => {
+            setOtp(next)
+            if (submitted) setFieldError(otpErrorFor(next))
+          }}
+          disabled={loading}
+          autoFocus
+          invalid={invalid}
+        />
+
+        {submitted && fieldError ? <FieldError>{fieldError}</FieldError> : null}
+
+        {otpHint ? (
+          <p className="text-muted-foreground text-center text-xs">
+            Code: <code className="text-foreground font-medium">{otpHint}</code>
+          </p>
+        ) : null}
+      </div>
+
+      <div className="flex flex-col gap-3">
+        <AuthSubmitButton loading={loading} disabled={resendLoading} loadingLabel="Verifying…">
+          {submitLabel}
+        </AuthSubmitButton>
+
+        {onResend ? (
+          // Plain <button>, not the Button component: the theme's
+          // `[data-slot='button']` rules outrank utility classes, so a
+          // link-styled Button keeps 1rem inline padding and breaks this row.
+          <p className="text-muted-foreground text-center text-sm">
+            Didn&apos;t receive the code?{' '}
+            {canResend ? (
+              <button
+                type="button"
+                className="text-primary hover:text-primary/80 font-medium underline-offset-4 hover:underline disabled:opacity-50"
+                disabled={resendLoading}
+                onClick={() => void handleResend()}
+              >
+                {resendLoading ? 'Sending…' : 'Resend'}
+              </button>
+            ) : (
+              <span className="text-primary/50 font-medium">Resend ({formatTimer(secondsLeft)})</span>
+            )}
+          </p>
+        ) : null}
+      </div>
     </form>
   )
 }

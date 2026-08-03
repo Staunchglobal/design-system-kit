@@ -10,6 +10,8 @@ import type {
   Unsubscribe,
 } from '@/components/chat/types'
 
+export const CHAT_MOCK_ENDPOINT = 'mock://chat'
+
 type StoredUser = ChatUser & { email: string }
 
 type StoredChat = {
@@ -193,15 +195,9 @@ function publish(kind: string, detail: unknown) {
   bus.dispatchEvent(new CustomEvent(kind, { detail }))
 }
 
-function paginateMeta(total: number, page: number, perPage: number) {
-  const totalPages = Math.max(1, Math.ceil(total / perPage))
-  return {
-    dataCount: total,
-    count: total,
-    totalPages,
-    nextPage: page < totalPages ? page + 1 : null,
-    prevPage: page > 1 ? page - 1 : null,
-  }
+function paginationMeta(total: number, page: number, perPage: number) {
+  const pages = Math.max(1, Math.ceil(total / perPage))
+  return { page, pages, count: total, perPage }
 }
 
 export async function chatMockFetch<T>(
@@ -239,7 +235,7 @@ export async function chatMockFetch<T>(
       const slice = list.slice((page - 1) * perPage, page * perPage)
       return {
         allChats: {
-          allData: slice.map((c) => {
+          chats: slice.map((c) => {
             const conv = toConversation(c, userId)
             const other = otherParticipant(c, userId)
             return {
@@ -262,7 +258,7 @@ export async function chatMockFetch<T>(
               },
             }
           }),
-          ...paginateMeta(list.length, page, perPage),
+          pagination: paginationMeta(list.length, page, perPage),
         },
       } as T
     }
@@ -284,13 +280,13 @@ export async function chatMockFetch<T>(
       const slice = list.slice((page - 1) * perPage, page * perPage)
       return {
         availableUsersForChat: {
-          allData: slice.map((u) => ({
+          users: slice.map((u) => ({
             id: u.id,
             fullName: u.fullName,
             email: u.email,
             imageUrl: u.imageUrl,
           })),
-          ...paginateMeta(list.length, page, perPage),
+          pagination: paginationMeta(list.length, page, perPage),
         },
       } as T
     }
@@ -303,17 +299,15 @@ export async function chatMockFetch<T>(
       const slice = all.slice((page - 1) * perPage, page * perPage)
       return {
         fetchAllMessages: {
-          allData: slice,
-          ...paginateMeta(all.length, page, perPage),
+          messages: slice,
+          pagination: paginationMeta(all.length, page, perPage),
         },
       } as T
     }
 
     case 'CreateChat': {
       const participantId = String(
-        (v.input as { participantId?: string } | undefined)?.participantId ??
-          v.participantId ??
-          ''
+        (v.input as { participantIds?: string[] } | undefined)?.participantIds?.[0] ?? ''
       )
       let existing = [...chats.values()].find(
         (c) =>
@@ -401,13 +395,13 @@ export async function chatMockFetch<T>(
       const input = (v.input as {
         chatId: string
         content: string
-        messageType: 'TEXT' | 'IMAGE' | 'FILE'
+        messageType: 'TEXT' | 'IMAGE' | 'VIDEO' | 'ANNOUNCEMENT'
         attachmentUrls?: string[]
         files?: File[]
       }) ?? {
         chatId: String(v.chatId),
         content: String(v.content ?? ''),
-        messageType: (v.messageType as 'TEXT' | 'IMAGE' | 'FILE') ?? 'TEXT',
+        messageType: (v.messageType as 'TEXT' | 'IMAGE' | 'VIDEO' | 'ANNOUNCEMENT') ?? 'TEXT',
         attachmentUrls: v.attachmentUrls as string[] | undefined,
         files: v.files as File[] | undefined,
       }
@@ -418,18 +412,23 @@ export async function chatMockFetch<T>(
         ? await Promise.all(input.files.map(fileToDataUrl))
         : (input.attachmentUrls ?? [])
       const messageType = urls.length && input.messageType === 'TEXT' ? 'IMAGE' : input.messageType
+      const attachments: ChatAttachment[] = urls.map((url, i) => {
+        const file = input.files?.[i]
+        return {
+          id: uid('att'),
+          url,
+          fileName: file?.name ?? `file-${i + 1}`,
+          mimeType: file?.type || 'application/octet-stream',
+          sizeBytes: file?.size,
+        }
+      })
       const msg: StoredMessage = {
         id: uid('msg'),
         content: input.content ?? '',
         createdAt: nowIso(),
         messageType,
         attachmentUrls: urls,
-        attachments: urls.map((url, i) => ({
-          id: uid('att'),
-          url,
-          fileName: `image-${i + 1}.jpg`,
-          mimeType: 'image/jpeg',
-        })),
+        attachments,
         sender,
         chatId: input.chatId,
       }
@@ -468,7 +467,6 @@ export async function chatMockFetch<T>(
       }
       return {
         sendMessage: {
-          success: true,
           message: {
             id: msg.id,
             content: msg.content,

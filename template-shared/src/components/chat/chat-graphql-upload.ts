@@ -1,9 +1,9 @@
 /**
  * Sends a GraphQL mutation as a multipart request per the GraphQL multipart request spec
  * (https://github.com/jaydenseric/graphql-multipart-request-spec) — the same wire format
- * `apollo-upload-client`/`graphql-upload-minimal` use on function-rx and `design-kit-api`,
- * implemented by hand since this kit has no Apollo Client (`graphql-client.ts`'s
- * `graphqlFetch` is a plain JSON `fetch` wrapper, which can't carry a `File`).
+ * `apollo-upload-client`/`graphql-upload-minimal` produce, implemented by hand since this
+ * kit has no Apollo Client (`graphql-client.ts`'s `graphqlFetch` is a plain JSON `fetch`
+ * wrapper, which can't carry a `File`).
  *
  * `variables` should NOT include the `files` key — this appends the required `null`
  * placeholders itself so the shape matches the mutation's `$files: [Upload!]` argument.

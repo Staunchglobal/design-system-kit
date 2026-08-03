@@ -61,8 +61,9 @@ export const FRAMEWORK_EXTRA_FILES: Record<
       'app/auth/layout.tsx',
       'app/auth/login/page.tsx',
       'app/auth/signup/page.tsx',
-      'app/auth/forgot-password/page.tsx',
       'app/auth/verify-otp/page.tsx',
+      'app/auth/forgot-password/page.tsx',
+      'app/auth/verify-reset-otp/page.tsx',
       'app/auth/reset-password/page.tsx',
       'app/auth/accept-invitation/page.tsx',
       'app/auth/change-password/page.tsx',
@@ -71,13 +72,18 @@ export const FRAMEWORK_EXTRA_FILES: Record<
     vite: [
       'auth/LoginPage.tsx',
       'auth/SignupPage.tsx',
-      'auth/ForgotPasswordPage.tsx',
       'auth/VerifyOtpPage.tsx',
+      'auth/ForgotPasswordPage.tsx',
+      'auth/VerifyResetOtpPage.tsx',
       'auth/ResetPasswordPage.tsx',
       'auth/AcceptInvitationPage.tsx',
       'auth/ChangePasswordPage.tsx',
       'auth/AuthHomePage.tsx',
     ],
+  },
+  'account-settings': {
+    next: ['app/auth/email-change/page.tsx'],
+    vite: ['account-settings/EmailChangePage.tsx'],
   },
   chat: {
     next: [

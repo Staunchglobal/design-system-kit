@@ -11,6 +11,9 @@ import { cn } from '@/lib/utils'
 
 export { errorMessage } from '@/components/chat/chat-utils'
 
+// The theme pins the skeleton radius, so avatar placeholders need the token itself.
+const roundSkeleton = { '--skeleton-radius': '9999px' } as React.CSSProperties
+
 export type ChatErrorBannerProps = {
   title?: string
   message: string
@@ -67,7 +70,7 @@ export function ChatListSkeleton({ rows = 6 }: { rows?: number }) {
     <div className="flex flex-col gap-2 p-2" aria-busy="true" aria-label="Loading conversations">
       {Array.from({ length: rows }).map((_, i) => (
         <div key={i} className="flex items-start gap-3 rounded-lg p-3">
-          <Skeleton className="size-10 shrink-0 rounded-full" />
+          <Skeleton className="size-10 shrink-0" style={roundSkeleton} />
           <div className="min-w-0 flex-1 space-y-2">
             <Skeleton className="h-3 w-2/3" />
             <Skeleton className="h-3 w-full" />
@@ -90,7 +93,9 @@ export function ChatMessagesSkeleton({ rows = 4 }: { rows?: number }) {
           key={i}
           className={cn('flex gap-2', i % 2 === 0 ? 'justify-start' : 'justify-end')}
         >
-          {i % 2 === 0 ? <Skeleton className="size-8 shrink-0 rounded-full" /> : null}
+          {i % 2 === 0 ? (
+            <Skeleton className="size-8 shrink-0" style={roundSkeleton} />
+          ) : null}
           <Skeleton className={cn('h-16 rounded-2xl', i % 2 === 0 ? 'w-2/3' : 'w-1/2')} />
         </div>
       ))}

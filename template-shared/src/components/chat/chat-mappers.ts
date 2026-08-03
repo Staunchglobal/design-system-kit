@@ -1,6 +1,6 @@
 import type { ChatAttachment, ChatMessage, Conversation } from '@/components/chat/types'
 
-/** Shape returned by `allChats` / `chatReordered` (verified in design-kit-api `src/schema.gql`). */
+/** Shape returned by `allChats` / `chatReordered`. */
 export type ApiChatRow = {
   id: string
   /** Whether the chat is active (not archived) — `chatReordered` is a global per-user
@@ -23,47 +23,48 @@ export type ApiChatRow = {
   } | null
 }
 
+export type ApiPagination = {
+  page: number
+  pages: number
+  count: number
+  perPage: number
+}
+
 export type AllChatsResult = {
   allChats: {
-    allData: ApiChatRow[]
-    dataCount: number
-    nextPage: number | null
-    prevPage: number | null
-    totalPages: number
+    chats: ApiChatRow[]
+    pagination: ApiPagination
   }
 }
 
-/** Shape shared by `fetchAllMessages`, `sendMessage`, and `messageAdded`. */
+/** Shape shared by `fetchAllMessages`, `sendMessage`, and `messageAdded` — all three
+ *  resolve to the backend's `ChatMessageType`, which only ever exposes `sender`. */
 export type ApiMessageRow = {
   id: string
   content: string
-  // Nullable: ChatMessageType.createdAt is String! but MessageAddedPayload.createdAt is
-  // just String (schema-nullable) — honor the weaker of the two shapes this type covers.
-  createdAt?: string | null
+  createdAt: string
   messageType?: string | null
   attachmentUrls?: string[] | null
-  /** List on queries; subscription may send a comma-joined string. */
-  attachments?:
-    | Array<{ id?: string; url: string; fileName?: string; mimeType?: string }>
-    | string
-    | null
-  user?: {
+  attachments?: Array<{
+    id?: string
+    url: string
+    fileName?: string
+    mimeType?: string
+    sizeBytes?: number
+  }> | null
+  sender: {
     id: string
     fullName: string
     imageUrl?: string | null
     email?: string | null
-  } | null
-  sender?: {
-    id: string
-    fullName: string
-    imageUrl?: string | null
-    email?: string | null
-  } | null
+  }
   chatId?: string | null
 }
 
 function toMessageType(value: string | null | undefined): ChatMessage['messageType'] {
-  if (value === 'IMAGE' || value === 'FILE' || value === 'TEXT') return value
+  if (value === 'IMAGE' || value === 'VIDEO' || value === 'ANNOUNCEMENT' || value === 'TEXT') {
+    return value
+  }
   return 'TEXT'
 }
 
@@ -86,47 +87,25 @@ export function mapConversation(row: ApiChatRow): Conversation {
 }
 
 export function mapApiMessage(m: ApiMessageRow): ChatMessage {
-  const sender = m.sender ?? m.user
-  if (!sender) {
-    throw new Error(`Message ${m.id} is missing sender/user`)
-  }
-
-  const fromAttachmentField = Array.isArray(m.attachments)
-    ? m.attachments.map((a) => a.url)
-    : typeof m.attachments === 'string' && m.attachments.length > 0
-      ? m.attachments
-          .split(',')
-          .map((u) => u.trim())
-          .filter(Boolean)
-      : []
-
-  const rawUrls = [
-    ...(Array.isArray(m.attachmentUrls) ? m.attachmentUrls : []),
-    ...fromAttachmentField,
-  ]
+  const rawUrls = Array.isArray(m.attachmentUrls) ? m.attachmentUrls : []
   const attachmentUrls = [...new Set(rawUrls.filter((u) => u && !u.startsWith('blob:')))]
 
   const attachments: ChatAttachment[] = (
-    Array.isArray(m.attachments)
-      ? m.attachments
-      : attachmentUrls.map((url) => ({ url }))
+    Array.isArray(m.attachments) ? m.attachments : attachmentUrls.map((url) => ({ url }))
   ).filter((a) => a?.url && !a.url.startsWith('blob:'))
 
   return {
     id: m.id,
     content: m.content,
-    // MessageAddedPayload.createdAt is schema-nullable (unlike ChatMessageType's), even
-    // though the live resolver always populates it today — fall back rather than ship a
-    // literal "null" string if that ever changes.
-    createdAt: m.createdAt ?? new Date().toISOString(),
+    createdAt: m.createdAt,
     messageType: toMessageType(m.messageType),
     attachmentUrls,
     attachments,
     sender: {
-      id: sender.id,
-      fullName: sender.fullName,
-      imageUrl: sender.imageUrl,
-      email: sender.email,
+      id: m.sender.id,
+      fullName: m.sender.fullName,
+      imageUrl: m.sender.imageUrl,
+      email: m.sender.email,
     },
     chatId: m.chatId,
   }

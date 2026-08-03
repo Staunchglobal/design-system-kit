@@ -1,4 +1,4 @@
-import { createClient, type Client } from 'graphql-ws'
+import { createConsumer } from '@rails/actioncable'
 import { getAuthSession } from '@/components/auth/auth-session'
 import {
   chatMockSubscribe,
@@ -6,15 +6,21 @@ import {
 } from '@/components/chat/chat-mock-client'
 import type { Unsubscribe } from '@/components/chat/types'
 
-export type CreateChatSubscriptionsOptions = {
-  /** ws://localhost:4000/graphql — omit for in-memory mock */
-  url?: string
-  getToken?: () => string | null | undefined
+type Cable = ReturnType<typeof createConsumer>
+type ChatChannel = {
+  perform: (action: string, data?: object) => void
+  unsubscribe: () => void
 }
 
-const wsClients = new Map<string, Client>()
+export type CreateChatSubscriptionsOptions = {
+  /** wss://localhost:3000/cable — omit for in-memory mock */
+  url?: string
+  getUserId?: () => string | null | undefined
+}
 
-/** Resolve WS URL; prefer explicit, then static env (Next inlines these). */
+const cables = new Map<string, Cable>()
+
+/** Resolve the ActionCable mount URL; prefer explicit, then static env (Next inlines these). */
 function resolveWsUrl(explicit?: string): string | undefined {
   if (explicit) return explicit
   const fromEnv =
@@ -22,34 +28,52 @@ function resolveWsUrl(explicit?: string): string | undefined {
   if (fromEnv) return fromEnv
   const http =
     typeof process !== 'undefined' ? process.env.NEXT_PUBLIC_GRAPHQL_URL : undefined
-  if (http?.startsWith('http')) return http.replace(/^http/, 'ws')
+  if (http?.startsWith('http')) {
+    return `${http.replace(/^http/, 'ws').replace(/\/graphql\/?$/, '')}/cable`
+  }
   return undefined
 }
 
-function getWsClient(url: string, getToken?: () => string | null | undefined) {
-  const existing = wsClients.get(url)
+function extractOperationName(query: string): string | undefined {
+  return query.match(/\b(?:subscription|query|mutation)\s+(\w+)/)?.[1]
+}
+
+// ActionCable's server dedupes `subscribe` commands by identifier *per
+// connection* — a second `subscriptions.create` call with an identifier
+// that's already subscribed is silently ignored server-side (no
+// `confirm_subscription`, so the client's `connected()` callback, and
+// therefore its `perform('execute', ...)`, never fires at all). A bare
+// `{ channel: 'GraphqlChannel' }` identifier is identical across every
+// subscription this app opens (messageAdded/chatReordered/
+// unreadChatCountUpdated, and every chat's own messageAdded) — only
+// whichever one happens to subscribe first on a given connection ever
+// actually runs; the rest look "connected" client-side but never receive
+// anything until the page reloads and re-races. A per-call uid keeps
+// every logical subscription on its own real channel instance.
+let subscriptionSeq = 0
+
+function nextSubscriptionUid(): string {
+  subscriptionSeq += 1
+  return `${Date.now()}-${subscriptionSeq}`
+}
+
+// The cable connection identifies the user via a plain `userId` query param rather than
+// a signed token, so a fresh connection is only opened once per URL+user and reused across
+// every chat subscription.
+function getCable(url: string, getUserId?: () => string | null | undefined): Cable {
+  const userId = getUserId?.() ?? getAuthSession()?.user.id
+  const key = `${url}::${userId ?? ''}`
+  const existing = cables.get(key)
   if (existing) return existing
-  const client = createClient({
-    url,
-    // Connect only when a subscription starts (token should be available by then).
-    lazy: true,
-    retryAttempts: 5,
-    connectionParams: () => {
-      const token = getToken?.() ?? getAuthSession()?.token
-      if (!token) {
-        console.warn('[chat subscription] missing auth token for WebSocket')
-        return {}
-      }
-      return { authorization: `Bearer ${token}` }
-    },
-  })
-  wsClients.set(url, client)
-  return client
+  const cableUrl = userId ? `${url}?userId=${encodeURIComponent(userId)}` : url
+  const cable = createConsumer(cableUrl)
+  cables.set(key, cable)
+  return cable
 }
 
 export function createChatSubscriptions(options: CreateChatSubscriptionsOptions = {}) {
   const url = resolveWsUrl(options.url)
-  const getToken = options.getToken
+  const getUserId = options.getUserId
 
   function subscribe<T>(
     query: string,
@@ -65,22 +89,30 @@ export function createChatSubscriptions(options: CreateChatSubscriptionsOptions 
       })
     }
 
-    const client = getWsClient(url, getToken)
-    return client.subscribe(
-      { query, variables },
+    const cable = getCable(url, getUserId)
+    const operationName = extractOperationName(query)
+
+    const channel: ChatChannel = cable.subscriptions.create(
+      { channel: 'GraphqlChannel', uid: nextSubscriptionUid() },
       {
-        next: (result) => {
-          if (result.errors?.length) {
-            console.error('[chat subscription]', result.errors)
+        connected() {
+          // (Re)send the operation every time the channel confirms — covers both the
+          // first connect and any automatic reconnect after a dropped socket.
+          channel.perform('execute', { query, variables, operationName })
+        },
+        received(payload: { result?: { data?: T; errors?: unknown[] }; more?: boolean }) {
+          if (payload.result?.errors?.length) {
+            console.error('[chat subscription]', payload.result.errors)
           }
-          if (result.data) onData(result.data as T)
+          if (payload.result?.data) onData(payload.result.data)
         },
-        error: (err) => {
-          console.error('[chat subscription error]', err)
+        rejected() {
+          console.error('[chat subscription] rejected — check the cable userId param')
         },
-        complete: () => {},
       }
     )
+
+    return () => channel.unsubscribe()
   }
 
   return { subscribe }

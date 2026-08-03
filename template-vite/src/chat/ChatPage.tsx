@@ -58,8 +58,9 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl p-4">
+    <div className="box-border flex h-dvh w-full flex-col p-2 sm:p-4">
       <ChatInbox
+        className="min-h-0 flex-1"
         graphqlUrl={GRAPHQL_URL}
         graphqlWsUrl={GRAPHQL_WS_URL}
         chatId={chatId}

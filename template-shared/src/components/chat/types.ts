@@ -17,9 +17,11 @@ export type ChatMessage = {
   id: string
   content: string
   createdAt: string
-  messageType: 'TEXT' | 'IMAGE' | 'FILE'
+  messageType: 'TEXT' | 'IMAGE' | 'VIDEO' | 'ANNOUNCEMENT'
   attachmentUrls: string[]
   attachments: ChatAttachment[]
+  // The backend's ChatMessageType only ever exposes `sender` — there is no
+  // separate `user` field on a message.
   sender: ChatUser
   chatId?: string | null
 }

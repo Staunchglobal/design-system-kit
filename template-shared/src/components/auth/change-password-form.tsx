@@ -2,9 +2,8 @@
 
 import * as React from 'react'
 
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Button } from '@/components/ui/button'
-import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
+import { AuthFormError } from '@/components/auth/auth-form-error'
+import { AuthSubmitButton } from '@/components/auth/auth-submit-button'
 import { PasswordInput } from '@/components/auth/password-input'
 import { PasswordRequirementErrors } from '@/components/auth/password-requirement-errors'
 import {
@@ -14,6 +13,7 @@ import {
   validateRequired,
 } from '@/components/auth/password-policy'
 import type { ChangePasswordFormValues } from '@/components/auth/types'
+import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 
 export type ChangePasswordFormProps = {
   onSubmit: (values: ChangePasswordFormValues) => void | Promise<void>
@@ -58,17 +58,14 @@ export function ChangePasswordForm({
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
-      {error ? (
-        <Alert variant="destructive">
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      ) : null}
+      <AuthFormError message={error} />
       <FieldGroup>
         <Field data-invalid={submitted && !!fieldErrors.currentPassword}>
           <FieldLabel htmlFor="change-current">Current password</FieldLabel>
           <PasswordInput
             id="change-current"
             autoComplete="current-password"
+            placeholder="Enter current password"
             value={currentPassword}
             onChange={(e) => {
               const value = e.target.value
@@ -80,7 +77,7 @@ export function ChangePasswordForm({
                 }))
               }
             }}
-            disabled={loading}
+            aria-invalid={submitted && !!fieldErrors.currentPassword}
           />
           {submitted ? <FieldError>{fieldErrors.currentPassword}</FieldError> : null}
         </Field>
@@ -89,6 +86,7 @@ export function ChangePasswordForm({
           <PasswordInput
             id="change-new"
             autoComplete="new-password"
+            placeholder="Create a new password"
             value={password}
             onChange={(e) => {
               const value = e.target.value
@@ -102,7 +100,7 @@ export function ChangePasswordForm({
                 }))
               }
             }}
-            disabled={loading}
+            aria-invalid={submitted && !!fieldErrors.password?.length}
           />
           <FieldDescription>{PASSWORD_POLICY_MESSAGE}</FieldDescription>
           {submitted ? <PasswordRequirementErrors errors={fieldErrors.password ?? []} /> : null}
@@ -112,6 +110,7 @@ export function ChangePasswordForm({
           <PasswordInput
             id="change-confirm"
             autoComplete="new-password"
+            placeholder="Confirm new password"
             value={passwordConfirmation}
             onChange={(e) => {
               const value = e.target.value
@@ -123,14 +122,14 @@ export function ChangePasswordForm({
                 }))
               }
             }}
-            disabled={loading}
+            aria-invalid={submitted && !!fieldErrors.passwordConfirmation}
           />
           {submitted ? <FieldError>{fieldErrors.passwordConfirmation}</FieldError> : null}
         </Field>
       </FieldGroup>
-      <Button type="submit" className="w-full" disabled={loading}>
-        {loading ? 'Updating…' : 'Update password'}
-      </Button>
+      <AuthSubmitButton loading={loading} loadingLabel="Updating…">
+        Update password
+      </AuthSubmitButton>
     </form>
   )
 }

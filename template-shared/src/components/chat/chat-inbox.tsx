@@ -33,12 +33,14 @@ export function ChatInbox({
     <>
       <ChatShell
         className={className}
+        showChat={Boolean(inbox.showThread && threadId)}
         sidebar={
           <ContactsSidebar
             tab={inbox.tab}
             onTabChange={inbox.setTab}
             search={inbox.searchInput}
             onSearchChange={inbox.setSearchInput}
+            searching={inbox.searching}
             conversations={inbox.conversations}
             selectedId={inbox.selectedId}
             onSelect={inbox.setSelectedId}
@@ -63,28 +65,37 @@ export function ChatInbox({
               email={inbox.selected?.email}
               archived={isSelectedArchived}
               onArchiveToggle={inbox.openArchive}
+              onBackClick={() => inbox.setSelectedId(null)}
             />
-            <ChatMessagesPane
-              key={threadId}
-              messages={inbox.messages}
-              currentUserId={inbox.currentUserId}
-              loading={inbox.messagesLoading}
-              loadingOlder={inbox.messagesLoadingOlder}
-              error={inbox.messagesError}
-              onRetry={() => void inbox.loadMessages(threadId, 1, false)}
-              hasMore={inbox.messagesHasMore}
-              onLoadOlder={inbox.loadOlderMessages}
-            />
-            <ChatComposer
-              onSend={inbox.handleSend}
-              sending={inbox.sending}
-              disabled={isSelectedArchived}
-              error={inbox.sendError}
-              onClearError={inbox.clearSendError}
-            />
+            <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+              <ChatMessagesPane
+                key={threadId}
+                messages={inbox.messages}
+                currentUserId={inbox.currentUserId}
+                loading={inbox.messagesLoading}
+                loadingOlder={inbox.messagesLoadingOlder}
+                error={inbox.messagesError}
+                onRetry={() => void inbox.loadMessages(threadId, 1, false)}
+                hasMore={inbox.messagesHasMore}
+                onLoadOlder={inbox.loadOlderMessages}
+              />
+              <div className="shrink-0">
+                <ChatComposer
+                  onSend={inbox.handleSend}
+                  sending={inbox.sending}
+                  disabled={isSelectedArchived}
+                  error={inbox.sendError}
+                  onClearError={inbox.clearSendError}
+                />
+              </div>
+            </div>
           </>
         ) : (
-          <ChatEmptySelection />
+          <ChatEmptySelection
+            onNewChat={() => {
+              inbox.setNewChatOpen(true)
+            }}
+          />
         )}
       </ChatShell>
 
@@ -102,6 +113,7 @@ export function ChatInbox({
         onRetry={() => void inbox.loadUsers()}
         search={inbox.userSearch}
         onSearchChange={inbox.setUserSearch}
+        searching={inbox.usersSearching}
         onSelect={(id) => void inbox.handleCreateChat(id)}
       />
       <ArchiveChatDialog

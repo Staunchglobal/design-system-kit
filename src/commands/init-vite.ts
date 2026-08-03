@@ -346,7 +346,6 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
         ? `  import LoginPage from '@/auth/LoginPage'\n` +
           `  import SignupPage from '@/auth/SignupPage'\n` +
           `  import ForgotPasswordPage from '@/auth/ForgotPasswordPage'\n` +
-          `  import VerifyOtpPage from '@/auth/VerifyOtpPage'\n` +
           `  import ResetPasswordPage from '@/auth/ResetPasswordPage'\n` +
           `  import AcceptInvitationPage from '@/auth/AcceptInvitationPage'\n` +
           `  import ChangePasswordPage from '@/auth/ChangePasswordPage'\n` +
@@ -360,7 +359,6 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
         ? '\n  <Route path="/auth/login" element={<LoginPage />} />\n' +
           '  <Route path="/auth/signup" element={<SignupPage />} />\n' +
           '  <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />\n' +
-          '  <Route path="/auth/verify-otp" element={<VerifyOtpPage />} />\n' +
           '  <Route path="/auth/reset-password" element={<ResetPasswordPage />} />\n' +
           '  <Route path="/auth/accept-invitation" element={<AcceptInvitationPage />} />\n' +
           '  <Route path="/auth/change-password" element={<ChangePasswordPage />} />\n' +
@@ -381,7 +379,7 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   log.success('Design system kit installed.')
   log.info(`Run your dev server, then visit whatever route you mounted ${pc.bold('DesignSystemPage')}/${pc.bold('ThemeEditorPage')} at.`)
   if (userClosure.has('chat')) {
-    log.info(`Chat inbox: mount ${pc.bold('/chat')}, ${pc.bold('/chat/:id')}, ${pc.bold('/chat/archived')} — set VITE_GRAPHQL_URL / VITE_GRAPHQL_WS_URL for Nest API`)
+    log.info(`Chat inbox: mount ${pc.bold('/chat')}, ${pc.bold('/chat/:id')}, ${pc.bold('/chat/archived')} — set VITE_GRAPHQL_URL / VITE_GRAPHQL_WS_URL for the real staunch_saas_kit Rails backend (falls back to the in-memory mock otherwise)`)
   }
   log.info(`Run \`${pc.bold('design-kit init')}\` again any time to add more components.`)
   if (skipped.length) {

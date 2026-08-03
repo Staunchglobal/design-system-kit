@@ -1,17 +1,10 @@
 'use client'
 
+import { ChevronLeft } from 'lucide-react'
 import { Archive, ArchiveRestore } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-
-function initials(name: string) {
-  return name
-    .split(/\s+/)
-    .map((p) => p[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase()
-}
+import { personInitials, personLabels } from '@/components/chat/chat-utils'
 
 export function ChatHeader({
   name,
@@ -19,23 +12,42 @@ export function ChatHeader({
   email,
   archived,
   onArchiveToggle,
+  onBackClick,
 }: {
   name: string
   avatar?: string | null
   email?: string | null
   archived?: boolean
   onArchiveToggle?: () => void
+  /** Mobile back — returns to the contacts list. */
+  onBackClick?: () => void
 }) {
+  const { primary, secondary } = personLabels(name, email)
+
   return (
-    <div className="flex items-center justify-between gap-3 border-b px-4 py-3">
-      <div className="flex min-w-0 items-center gap-3">
-        <Avatar className="size-9">
-          {avatar ? <AvatarImage src={avatar} alt={name} /> : null}
-          <AvatarFallback>{initials(name)}</AvatarFallback>
+    <div className="bg-background sticky top-0 z-10 flex shrink-0 items-center justify-between gap-3 border-b px-4 py-3">
+      <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+        {onBackClick ? (
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-sm"
+            className="text-muted-foreground shrink-0 lg:hidden"
+            onClick={onBackClick}
+            aria-label="Back to conversations"
+          >
+            <ChevronLeft className="size-5" />
+          </Button>
+        ) : null}
+        <Avatar size="lg">
+          {avatar ? <AvatarImage src={avatar} alt={primary} /> : null}
+          <AvatarFallback>{personInitials(name, email)}</AvatarFallback>
         </Avatar>
         <div className="min-w-0">
-          <p className="truncate text-sm font-semibold">{name}</p>
-          {email ? <p className="text-muted-foreground truncate text-xs">{email}</p> : null}
+          <p className="truncate text-sm font-semibold sm:text-base">{primary}</p>
+          {secondary ? (
+            <p className="text-muted-foreground truncate text-xs">{secondary}</p>
+          ) : null}
         </div>
       </div>
       {onArchiveToggle ? (
