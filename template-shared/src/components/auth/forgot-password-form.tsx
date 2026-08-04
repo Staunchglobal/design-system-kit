@@ -22,7 +22,7 @@ export function ForgotPasswordForm({
   onSubmit,
   loading = false,
   error = null,
-  loginHref = '/auth/login',
+  loginHref = '/login',
   showLoginLink = true,
   LinkComponent = 'a',
 }: ForgotPasswordFormProps) {

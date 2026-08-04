@@ -8,9 +8,10 @@ import {
   type ColumnDef,
 } from '@tanstack/react-table'
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react'
+import { toast } from 'sonner'
 
 import { CrudDeleteDialog } from '@/components/crud/crud-delete-dialog'
-import type { CrudAction, CrudColumn, CrudSortState } from '@/components/crud/types'
+import type { CrudAction, CrudColumn, CrudListMutators, CrudSortState } from '@/components/crud/types'
 import { Button } from '@/components/ui/button'
 import {
   Table,
@@ -32,6 +33,8 @@ export type DataTableProps<T> = {
   isLoading?: boolean
   emptyMessage?: string
   actions?: CrudAction<T>[]
+  /** Passed through to every action's onClick as its 2nd argument — lets a custom action update the visible list directly from its own mutation's response instead of refetching. */
+  listMutators?: CrudListMutators<T>
   className?: string
 }
 
@@ -59,29 +62,49 @@ function cycleSort(current: CrudSortState, field: string): CrudSortState {
   return null
 }
 
+function noopListMutators<T>(): CrudListMutators<T> {
+  return { insertItem: () => {}, replaceItem: () => {}, removeItem: () => {} }
+}
+
 function ActionButtons<T>({
   actions,
   row,
   onConfirmRequest,
+  listMutators,
 }: {
   actions: CrudAction<T>[]
   row: T
   onConfirmRequest: (action: CrudAction<T>, row: T) => void
+  listMutators: CrudListMutators<T>
 }) {
+  const visibleActions = actions.filter((action) => !action.isVisible || action.isVisible(row))
+  // Non-confirm actions (e.g. "Restore") have no dialog of their own to show progress/errors —
+  // this is the only feedback a consumer gets unless it rolls its own toast/loading, so give
+  // every one a busy-disabled state and a toast on failure for free.
+  const [pendingKey, setPendingKey] = React.useState<string | null>(null)
+
   return (
     <div className="flex items-center justify-end gap-1">
-      {actions.map((action) => (
+      {visibleActions.map((action) => (
         <Button
           key={action.key}
           type="button"
           size="sm"
           variant={action.variant ?? (action.confirm ? 'destructive' : 'outline')}
-          onClick={() => {
+          disabled={pendingKey === action.key}
+          onClick={async () => {
             if (action.confirm) {
               onConfirmRequest(action, row)
               return
             }
-            action.onClick(row)
+            setPendingKey(action.key)
+            try {
+              await action.onClick(row, listMutators)
+            } catch (err) {
+              toast.error(err instanceof Error ? err.message : `${action.label} failed`)
+            } finally {
+              setPendingKey(null)
+            }
           }}
         >
           {action.icon}
@@ -100,6 +123,7 @@ function MobileCards<T>({
   emptyMessage,
   isLoading,
   onConfirmRequest,
+  listMutators,
 }: {
   columns: CrudColumn<T>[]
   data: T[]
@@ -108,6 +132,7 @@ function MobileCards<T>({
   emptyMessage: string
   isLoading?: boolean
   onConfirmRequest: (action: CrudAction<T>, row: T) => void
+  listMutators: CrudListMutators<T>
 }) {
   const visible = columns.filter((c) => !c.hideOnMobile)
   const pairedKeys = new Set(visible.map((c) => c.pairWith).filter(Boolean) as string[])
@@ -127,7 +152,7 @@ function MobileCards<T>({
           >
             {actions?.length ? (
               <div className="absolute top-3 right-3">
-                <ActionButtons actions={actions} row={row} onConfirmRequest={onConfirmRequest} />
+                <ActionButtons actions={actions} row={row} onConfirmRequest={onConfirmRequest} listMutators={listMutators} />
               </div>
             ) : null}
 
@@ -180,6 +205,7 @@ function DesktopTable<T>({
   emptyMessage,
   actions,
   onConfirmRequest,
+  listMutators,
 }: {
   columns: CrudColumn<T>[]
   data: T[]
@@ -190,6 +216,7 @@ function DesktopTable<T>({
   emptyMessage: string
   actions?: CrudAction<T>[]
   onConfirmRequest: (action: CrudAction<T>, row: T) => void
+  listMutators: CrudListMutators<T>
 }) {
   const columnDefs = React.useMemo<ColumnDef<T, unknown>[]>(() => {
     const defs: ColumnDef<T, unknown>[] = columns.map((column) => ({
@@ -222,6 +249,7 @@ function DesktopTable<T>({
             actions={actions}
             row={row.original}
             onConfirmRequest={onConfirmRequest}
+            listMutators={listMutators}
           />
         ),
         enableSorting: false,
@@ -229,7 +257,7 @@ function DesktopTable<T>({
     }
 
     return defs
-  }, [columns, actions, sortState, onSortChange, onConfirmRequest])
+  }, [columns, actions, sortState, onSortChange, onConfirmRequest, listMutators])
 
   const table = useReactTable({
     data,
@@ -296,9 +324,11 @@ export function DataTable<T>({
   isLoading,
   emptyMessage = 'No results.',
   actions,
+  listMutators,
   className,
 }: DataTableProps<T>) {
   const isMobile = useIsMobile()
+  const resolvedListMutators = listMutators ?? noopListMutators<T>()
   const [pending, setPending] = React.useState<{ action: CrudAction<T>; row: T } | null>(null)
   const [confirming, setConfirming] = React.useState(false)
 
@@ -324,6 +354,7 @@ export function DataTable<T>({
           emptyMessage={isLoading ? 'Loading…' : emptyMessage}
           isLoading={isLoading}
           onConfirmRequest={onConfirmRequest}
+          listMutators={resolvedListMutators}
         />
       ) : (
         <DesktopTable
@@ -336,6 +367,7 @@ export function DataTable<T>({
           emptyMessage={emptyMessage}
           actions={actions}
           onConfirmRequest={onConfirmRequest}
+          listMutators={resolvedListMutators}
         />
       )}
 
@@ -350,6 +382,7 @@ export function DataTable<T>({
         title={pending?.action.confirm?.title}
         description={pending?.action.confirm?.description}
         confirmLabel={pending?.action.confirm?.confirmLabel}
+        confirmingLabel={pending?.action.confirm?.confirmingLabel}
         cancelLabel={pending?.action.confirm?.cancelLabel}
         confirming={confirming}
         onConfirm={async () => {
@@ -357,8 +390,12 @@ export function DataTable<T>({
           const { action, row } = pending
           setConfirming(true)
           try {
-            await action.onClick(row)
+            await action.onClick(row, resolvedListMutators)
             setPending(null)
+          } catch (err) {
+            // Leave `pending` set so the dialog stays open (matches CrudScreen's own
+            // built-in delete flow) — the user sees the toast and can retry or cancel.
+            toast.error(err instanceof Error ? err.message : `${action.label} failed`)
           } finally {
             setConfirming(false)
           }

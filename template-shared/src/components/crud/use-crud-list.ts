@@ -11,6 +11,15 @@ export type UseCrudListOptions<T> = {
   pageSize?: number
   debounceMs?: number
   initialTab?: string | null
+  /**
+   * Controlled tab value (e.g. driven by a route segment) — pass this
+   * together with `onTabChange` to make tab switches navigate instead of
+   * being internal state. Detected by `!== undefined`, the same convention
+   * `useChatInbox`'s `tab`/`chatId` controlled props already use — omit
+   * both to keep the tab as plain internal state (the default).
+   */
+  activeTab?: string | null
+  onTabChange?: (tab: string) => void
 }
 
 export function useCrudList<T>({
@@ -19,12 +28,16 @@ export function useCrudList<T>({
   pageSize: initialPageSize = 10,
   debounceMs = SEARCH_DEBOUNCE_MS,
   initialTab = null,
+  activeTab: activeTabProp,
+  onTabChange: onTabChangeProp,
 }: UseCrudListOptions<T>) {
   const [page, setPage] = React.useState(1)
   const [pageSize, setPageSizeState] = React.useState(initialPageSize)
   const [search, setSearch] = React.useState('')
   const [sort, setSort] = React.useState<CrudSortState>(null)
-  const [activeTab, setActiveTabState] = React.useState<string | null>(initialTab)
+  const tabControlled = activeTabProp !== undefined
+  const [internalTab, setInternalTab] = React.useState<string | null>(initialTab)
+  const activeTab = tabControlled ? activeTabProp : internalTab
   const [items, setItems] = React.useState<T[]>([])
   const [totalCount, setTotalCount] = React.useState(0)
   const [loading, setLoading] = React.useState(true)
@@ -77,10 +90,20 @@ export function useCrudList<T>({
     setPage(1)
   }, [])
 
-  const setActiveTab = React.useCallback((next: string | null) => {
-    setActiveTabState(next)
-    setPage(1)
-  }, [])
+  const setActiveTab = React.useCallback(
+    (next: string | null) => {
+      if (tabControlled) {
+        // The prevQuery diff below resets `page` whenever the resolved
+        // `activeTab` changes for any reason, controlled or not — no need
+        // to duplicate that here once the parent re-renders with `next`.
+        if (next != null) onTabChangeProp?.(next)
+        return
+      }
+      setInternalTab(next)
+      setPage(1)
+    },
+    [tabControlled, onTabChangeProp]
+  )
 
   // When the fetch key changes, flip loading during render (avoids setState-in-effect).
   const fetchKey = isSearchPending

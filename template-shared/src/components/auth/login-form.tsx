@@ -30,8 +30,8 @@ export function LoginForm({
   loading = false,
   error = null,
   defaultEmail = '',
-  forgotPasswordHref = '/auth/forgot-password',
-  signupHref = '/auth/signup',
+  forgotPasswordHref = '/forgot-password',
+  signupHref = '/signup',
   showSignupLink = true,
   LinkComponent = 'a',
 }: LoginFormProps) {

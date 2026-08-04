@@ -1,4 +1,4 @@
-import type { AuthUser } from '@/components/auth/types'
+import type { AuthUser, CurrentUser } from '@/components/auth/types'
 
 // Every mutation here wraps its arguments in a single `$input` variable —
 // the backend's mutations extend GraphQL::Schema::RelayClassicMutation,
@@ -172,4 +172,18 @@ export type UpdatePasswordResult = {
   updatePassword: {
     success: boolean
   }
+}
+
+export const CURRENT_USER = `
+  query CurrentUser {
+    currentUser {
+      roles
+      impersonatorId
+      abilities
+    }
+  }
+`
+
+export type CurrentUserResult = {
+  currentUser: CurrentUser
 }

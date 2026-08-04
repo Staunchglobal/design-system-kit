@@ -3,13 +3,16 @@ import path from 'node:path'
 import type { NavGroup } from '../generated/registry.js'
 import type { Framework } from './detect.js'
 import {
+  generateAppNavTs,
   generateDesignSystemPage,
   generateLivePreview,
   generateNavTs,
+  generateRoutesTsx,
   generateThemeIndexCss,
 } from './codegen.js'
 import { writeGeneratedFile } from './copy.js'
 import { log } from './log.js'
+import { privateNavItemsFor, viteRoutesFor } from './managed-files.js'
 
 type RegenerateGeneratedFilesOptions = {
   root: string
@@ -17,6 +20,7 @@ type RegenerateGeneratedFilesOptions = {
   framework: Framework
   navGroups: NavGroup[]
   cssFiles: string[]
+  closure: Set<string>
   dryRun?: boolean
 }
 
@@ -30,6 +34,7 @@ export function regenerateGeneratedFiles({
   framework,
   navGroups,
   cssFiles,
+  closure,
   dryRun = false,
 }: RegenerateGeneratedFilesOptions): void {
   const isNext = framework === 'next'
@@ -68,9 +73,19 @@ export function regenerateGeneratedFiles({
     dryRun
   )
 
+  if (isNext) {
+    writeGeneratedFile(
+      path.join(destRoot, 'app/(app)/_nav.ts'),
+      generateAppNavTs(privateNavItemsFor(closure)),
+      dryRun
+    )
+  } else {
+    writeGeneratedFile(path.join(destRoot, 'routes.tsx'), generateRoutesTsx(viteRoutesFor(closure)), dryRun)
+  }
+
   log.success(
     `${dryRun ? 'Would regenerate' : 'Regenerated'} nav.ts, the design-system page, ` +
-      'the theme-editor live preview, and theme/index.css.'
+      `the theme-editor live preview, theme/index.css, and ${isNext ? 'app/(app)/_nav.ts' : 'routes.tsx'}.`
   )
 
   if (dryRun) return

@@ -67,7 +67,7 @@ function nextSubscriptionUid(): string {
 // param — ActionCable's handshake has no header injection point, so the
 // query string is the only place to carry it. The backend's generated
 // `connection.rb` verifies this token's signature/expiry the same way the
-// GraphQL controller does (`StaunchSaasKit::JsonWebToken.decode`) rather
+// GraphQL controller does (`SaasKit::JsonWebToken.decode`) rather
 // than trusting a bare `userId`, which would let anyone open another
 // user's chat/unread-count subscriptions just by knowing their id. A
 // fresh connection is only opened once per URL+token and reused across

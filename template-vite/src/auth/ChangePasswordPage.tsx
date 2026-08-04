@@ -1,30 +1,23 @@
 'use client'
 
 import * as React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { AuthShell } from '@/components/auth/auth-shell'
 import { createAuthFetch } from '@/components/auth/auth-fetch'
 import { UPDATE_PASSWORD, type UpdatePasswordResult } from '@/components/auth/auth-operations'
 import { ChangePasswordForm } from '@/components/auth/change-password-form'
 import { toast } from '@/components/auth/notify'
-import { useAuthSession } from '@/components/auth/use-auth-store'
 import type { ChangePasswordFormValues } from '@/components/auth/types'
 import { Toaster } from '@/components/ui/sonner'
 
 const authFetch = createAuthFetch()
 
-function go(path: string) {
-  window.location.assign(path)
-}
-
+// Auth is already guaranteed by PrivateLayout wrapping this route.
 export default function ChangePasswordPage() {
-  const session = useAuthSession()
+  const navigate = useNavigate()
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
-
-  React.useEffect(() => {
-    if (!session) go('/auth/login')
-  }, [session])
 
   async function handleSubmit(values: ChangePasswordFormValues) {
     setLoading(true)
@@ -38,7 +31,7 @@ export default function ChangePasswordPage() {
         },
       })
       toast.success(data.updatePassword.success ? 'Password updated' : 'Password not updated')
-      go('/auth/home')
+      navigate('/dashboard')
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Update failed'
       setError(message)
@@ -48,17 +41,15 @@ export default function ChangePasswordPage() {
     }
   }
 
-  if (!session) return null
-
   return (
     <>
       <AuthShell
         title="Change password"
         description="Update the password for your signed-in account."
         footer={
-          <a href="/auth/home" className="text-foreground text-center underline-offset-4 hover:underline">
+          <Link to="/dashboard" className="text-foreground text-center underline-offset-4 hover:underline">
             Back to home
-          </a>
+          </Link>
         }
       >
         <ChangePasswordForm onSubmit={handleSubmit} loading={loading} error={error} />

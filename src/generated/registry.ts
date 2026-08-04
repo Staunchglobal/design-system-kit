@@ -30,9 +30,13 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "alert",
       "button",
       "field",
-      "input"
+      "input",
+      "sidebar"
     ],
-    "npmDeps": [],
+    "npmDeps": [
+      "lucide-react",
+      "react-router-dom"
+    ],
     "cssFile": null,
     "extraFiles": [
       "components/account-settings/account-settings-operations.ts",
@@ -42,7 +46,8 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "components/account-settings/use-email-change.ts",
       "components/account-settings/request-email-change-form.tsx",
       "components/account-settings/email-change-settings.tsx",
-      "components/account-settings/index.ts"
+      "components/account-settings/index.ts",
+      "components/auth/app-shell.tsx"
     ]
   },
   "address-autocomplete": {
@@ -100,6 +105,58 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "attachment.css",
     "extraFiles": []
   },
+  "audit-trail-viewer": {
+    "uiDeps": [
+      "badge",
+      "sonner",
+      "dialog",
+      "info-row",
+      "button",
+      "field",
+      "input",
+      "select",
+      "textarea",
+      "alert-dialog",
+      "pagination",
+      "input-group",
+      "crud-table",
+      "sidebar"
+    ],
+    "npmDeps": [
+      "lucide-react",
+      "sonner",
+      "react-router-dom"
+    ],
+    "cssFile": null,
+    "extraFiles": [
+      "components/audit-trail-viewer/types.ts",
+      "components/audit-trail-viewer/audit-trail-operations.ts",
+      "components/audit-trail-viewer/audit-trail-mock-client.ts",
+      "components/audit-trail-viewer/audit-trail-fetch.ts",
+      "components/audit-trail-viewer/audit-trail-screen.tsx",
+      "components/audit-trail-viewer/index.ts",
+      "hooks/use-mobile.ts",
+      "components/crud/types.ts",
+      "components/crud/use-debounced-value.ts",
+      "components/crud/use-crud-list.ts",
+      "components/crud/crud-form-dialog.tsx",
+      "components/crud/crud-form-fields.tsx",
+      "components/crud/crud-entity-form-dialog.tsx",
+      "components/crud/crud-delete-dialog.tsx",
+      "components/crud/crud-pagination.tsx",
+      "components/crud/crud-toolbar.tsx",
+      "components/crud/crud-screen.tsx",
+      "components/auth/types.ts",
+      "components/auth/auth-session.ts",
+      "components/auth/auth-operations.ts",
+      "components/auth/auth-mock-client.ts",
+      "components/auth/auth-fetch.ts",
+      "components/auth/use-current-user.ts",
+      "components/auth/graphql-client.ts",
+      "components/auth/notify.ts",
+      "components/auth/app-shell.tsx"
+    ]
+  },
   "auth": {
     "uiDeps": [
       "sonner",
@@ -108,11 +165,13 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "alert",
       "button",
       "spinner",
-      "checkbox"
+      "checkbox",
+      "sidebar"
     ],
     "npmDeps": [
       "sonner",
-      "lucide-react"
+      "lucide-react",
+      "react-router-dom"
     ],
     "cssFile": null,
     "extraFiles": [
@@ -133,6 +192,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "components/auth/auth-form-error.tsx",
       "components/auth/auth-submit-button.tsx",
       "components/auth/otp-field.tsx",
+      "components/auth/use-current-user.ts",
       "components/auth/auth-shell.tsx",
       "components/auth/login-form.tsx",
       "components/auth/signup-form.tsx",
@@ -140,6 +200,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "components/auth/verify-otp-form.tsx",
       "components/auth/set-password-form.tsx",
       "components/auth/change-password-form.tsx",
+      "components/auth/app-shell.tsx",
       "components/auth/index.ts"
     ]
   },
@@ -270,14 +331,16 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "dialog",
       "alert",
       "error-state",
-      "skeleton"
+      "skeleton",
+      "sidebar"
     ],
     "npmDeps": [
       "browser-image-compression",
       "@rails/actioncable",
       "lucide-react",
       "sonner",
-      "@types/rails__actioncable"
+      "@types/rails__actioncable",
+      "react-router-dom"
     ],
     "cssFile": null,
     "extraFiles": [
@@ -310,7 +373,8 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "components/chat/index.ts",
       "components/auth/auth-session.ts",
       "components/auth/graphql-client.ts",
-      "components/auth/notify.ts"
+      "components/auth/notify.ts",
+      "components/auth/app-shell.tsx"
     ]
   },
   "checkbox": {
@@ -394,17 +458,17 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "dialog",
       "field",
       "input",
+      "select",
       "textarea",
       "alert-dialog",
       "pagination",
-      "select",
       "input-group",
       "sonner"
     ],
     "npmDeps": [
       "@tanstack/react-table",
-      "lucide-react",
-      "sonner"
+      "sonner",
+      "lucide-react"
     ],
     "cssFile": "crud-screen.css",
     "extraFiles": [
@@ -434,6 +498,57 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     ],
     "cssFile": "date-picker.css",
     "extraFiles": []
+  },
+  "delivery-logs": {
+    "uiDeps": [
+      "badge",
+      "sonner",
+      "button",
+      "dialog",
+      "field",
+      "input",
+      "select",
+      "textarea",
+      "alert-dialog",
+      "pagination",
+      "input-group",
+      "crud-table",
+      "sidebar"
+    ],
+    "npmDeps": [
+      "lucide-react",
+      "sonner",
+      "react-router-dom"
+    ],
+    "cssFile": null,
+    "extraFiles": [
+      "components/delivery-logs/types.ts",
+      "components/delivery-logs/delivery-logs-operations.ts",
+      "components/delivery-logs/delivery-logs-mock-client.ts",
+      "components/delivery-logs/delivery-logs-fetch.ts",
+      "components/delivery-logs/delivery-logs-screen.tsx",
+      "components/delivery-logs/index.ts",
+      "hooks/use-mobile.ts",
+      "components/crud/types.ts",
+      "components/crud/use-debounced-value.ts",
+      "components/crud/use-crud-list.ts",
+      "components/crud/crud-form-dialog.tsx",
+      "components/crud/crud-form-fields.tsx",
+      "components/crud/crud-entity-form-dialog.tsx",
+      "components/crud/crud-delete-dialog.tsx",
+      "components/crud/crud-pagination.tsx",
+      "components/crud/crud-toolbar.tsx",
+      "components/crud/crud-screen.tsx",
+      "components/auth/types.ts",
+      "components/auth/auth-session.ts",
+      "components/auth/auth-operations.ts",
+      "components/auth/auth-mock-client.ts",
+      "components/auth/auth-fetch.ts",
+      "components/auth/use-current-user.ts",
+      "components/auth/graphql-client.ts",
+      "components/auth/notify.ts",
+      "components/auth/app-shell.tsx"
+    ]
   },
   "dialog": {
     "uiDeps": [
@@ -519,6 +634,38 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     ],
     "cssFile": "error-state.css",
     "extraFiles": []
+  },
+  "feature-flags-admin": {
+    "uiDeps": [
+      "table",
+      "checkbox",
+      "error-state",
+      "skeleton",
+      "sidebar"
+    ],
+    "npmDeps": [
+      "sonner",
+      "lucide-react",
+      "react-router-dom"
+    ],
+    "cssFile": null,
+    "extraFiles": [
+      "components/feature-flags-admin/types.ts",
+      "components/feature-flags-admin/feature-flags-admin-operations.ts",
+      "components/feature-flags-admin/feature-flags-admin-mock-client.ts",
+      "components/feature-flags-admin/feature-flags-admin-fetch.ts",
+      "components/feature-flags-admin/feature-flag-matrix.tsx",
+      "components/feature-flags-admin/index.ts",
+      "components/auth/types.ts",
+      "components/auth/auth-session.ts",
+      "components/auth/auth-operations.ts",
+      "components/auth/auth-mock-client.ts",
+      "components/auth/auth-fetch.ts",
+      "components/auth/use-current-user.ts",
+      "components/auth/graphql-client.ts",
+      "components/auth/notify.ts",
+      "components/auth/app-shell.tsx"
+    ]
   },
   "field-row": {
     "uiDeps": [
@@ -1150,6 +1297,64 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [],
     "cssFile": "truncate.css",
     "extraFiles": []
+  },
+  "user-management": {
+    "uiDeps": [
+      "dialog",
+      "checkbox",
+      "button",
+      "input",
+      "empty",
+      "impersonation-banner",
+      "badge",
+      "sonner",
+      "sidebar",
+      "field",
+      "select",
+      "textarea",
+      "alert-dialog",
+      "pagination",
+      "input-group",
+      "crud-table"
+    ],
+    "npmDeps": [
+      "sonner",
+      "lucide-react",
+      "react-router-dom"
+    ],
+    "cssFile": null,
+    "extraFiles": [
+      "components/user-management/types.ts",
+      "components/user-management/user-management-operations.ts",
+      "components/user-management/user-management-mock-client.ts",
+      "components/user-management/user-management-fetch.ts",
+      "components/user-management/decode-jwt.ts",
+      "components/user-management/roles-dialog.tsx",
+      "components/user-management/grants-dialog.tsx",
+      "components/user-management/impersonation-status.tsx",
+      "components/user-management/user-management-screen.tsx",
+      "components/user-management/index.ts",
+      "components/auth/types.ts",
+      "components/auth/auth-session.ts",
+      "components/auth/auth-operations.ts",
+      "components/auth/auth-mock-client.ts",
+      "components/auth/auth-fetch.ts",
+      "components/auth/use-current-user.ts",
+      "components/auth/graphql-client.ts",
+      "components/auth/notify.ts",
+      "components/auth/app-shell.tsx",
+      "hooks/use-mobile.ts",
+      "components/crud/types.ts",
+      "components/crud/use-debounced-value.ts",
+      "components/crud/use-crud-list.ts",
+      "components/crud/crud-form-dialog.tsx",
+      "components/crud/crud-form-fields.tsx",
+      "components/crud/crud-entity-form-dialog.tsx",
+      "components/crud/crud-delete-dialog.tsx",
+      "components/crud/crud-pagination.tsx",
+      "components/crud/crud-toolbar.tsx",
+      "components/crud/crud-screen.tsx"
+    ]
   },
   "patterns": {
     "uiDeps": [

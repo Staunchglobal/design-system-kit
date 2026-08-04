@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { AuthShell } from '@/components/auth/auth-shell'
 import { createAuthFetch } from '@/components/auth/auth-fetch'
@@ -14,21 +15,18 @@ import { Toaster } from '@/components/ui/sonner'
 
 const authFetch = createAuthFetch()
 
-function go(path: string) {
-  window.location.assign(path)
-}
-
 export default function SignupPage() {
+  const navigate = useNavigate()
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
-  // A stray visit to /auth/signup while a verification is already pending
+  // A stray visit to /signup while a verification is already pending
   // (e.g. the back button) goes straight back to the verify-otp page
   // instead of restarting the signup step.
   const pending = usePendingOtp()
 
   React.useEffect(() => {
-    if (pending) go('/auth/verify-otp')
-  }, [pending])
+    if (pending) navigate('/verify-otp')
+  }, [pending, navigate])
 
   async function handleSubmit(values: SignupFormValues) {
     setLoading(true)
@@ -42,7 +40,7 @@ export default function SignupPage() {
         },
       })
       setPendingOtp(values.email, 'signup', data.signUp.otp)
-      go('/auth/verify-otp')
+      navigate('/verify-otp')
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Signup failed'
       setError(message)

@@ -36,6 +36,9 @@ export type CrudScreenProps<T> = {
   toolbar?: React.ReactNode
   tabs?: CrudTab[]
   initialTab?: string
+  /** Controlled tab value (e.g. from a route segment) — pair with `onTabChange`. Omit both to let CrudScreen manage the tab as internal state. */
+  activeTab?: string
+  onTabChange?: (tab: string) => void
   create?: CrudCreateConfig<T>
   edit?: CrudEditConfig<T>
   delete?: CrudDeleteConfig<T>
@@ -63,6 +66,8 @@ export function CrudScreen<T>({
   toolbar,
   tabs,
   initialTab,
+  activeTab: activeTabProp,
+  onTabChange: onTabChangeProp,
   create,
   edit,
   delete: deleteConfig,
@@ -77,6 +82,8 @@ export function CrudScreen<T>({
     getItemId: getRowId,
     pageSize,
     initialTab: initialTab ?? tabs?.[0]?.value ?? null,
+    activeTab: activeTabProp,
+    onTabChange: onTabChangeProp,
   })
 
   const [createOpen, setCreateOpen] = React.useState(false)
@@ -86,6 +93,11 @@ export function CrudScreen<T>({
 
   const showSearch = search !== false
 
+  const listMutators = React.useMemo(
+    () => ({ insertItem: list.insertItem, replaceItem: list.replaceItem, removeItem: list.removeItem }),
+    [list.insertItem, list.replaceItem, list.removeItem]
+  )
+
   const actions = React.useMemo(() => {
     const built: CrudAction<T>[] = []
 
@@ -94,6 +106,7 @@ export function CrudScreen<T>({
         key: 'edit',
         label: 'Edit',
         variant: 'outline',
+        isVisible: edit.isVisible,
         onClick: (row) => setEditing(row),
       })
     }
@@ -152,7 +165,7 @@ export function CrudScreen<T>({
         searchPlaceholder={typeof search === 'object' ? search.placeholder : undefined}
         isSearchPending={list.isSearchPending}
         onAdd={create ? () => setCreateOpen(true) : undefined}
-        addLabel={create && 'title' in create ? `Add ${entityLabel}` : 'Add'}
+        addLabel={create ? (create.addLabel ?? `Add ${entityLabel}`) : 'Add'}
         toolbar={toolbar}
         tabs={tabs}
         activeTab={list.activeTab}
@@ -192,6 +205,7 @@ export function CrudScreen<T>({
           isLoading={list.loading}
           emptyMessage={emptyMessage}
           actions={actions.length ? actions : undefined}
+          listMutators={listMutators}
         />
       )}
 
@@ -223,12 +237,14 @@ export function CrudScreen<T>({
           onSubmit={async (values) => {
             await toast.promise(
               Promise.resolve(create.onSubmit(values as never)).then((item) => {
-                list.insertItem(item as T)
+                // `void`/`undefined` means the created record doesn't belong on
+                // whatever page/tab is currently showing — skip inserting it.
+                if (item != null) list.insertItem(item as T)
                 return item
               }),
               {
                 loading: `Creating ${entityLabel}…`,
-                success: `${entityLabel[0]!.toUpperCase()}${entityLabel.slice(1)} created`,
+                success: create.successMessage ?? `${entityLabel[0]!.toUpperCase()}${entityLabel.slice(1)} created`,
                 error: (err: unknown) => (err instanceof Error ? err.message : 'Create failed'),
               }
             )
@@ -270,7 +286,7 @@ export function CrudScreen<T>({
               }),
               {
                 loading: `Updating ${entityLabel}…`,
-                success: `${entityLabel[0]!.toUpperCase()}${entityLabel.slice(1)} updated`,
+                success: edit.successMessage ?? `${entityLabel[0]!.toUpperCase()}${entityLabel.slice(1)} updated`,
                 error: (err: unknown) => (err instanceof Error ? err.message : 'Update failed'),
               }
             )
