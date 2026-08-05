@@ -3,7 +3,7 @@
 import * as React from 'react'
 
 import { CrudScreen } from '@/components/crud/crud-screen'
-import type { CrudColumn, CrudPageParams } from '@/components/crud/types'
+import type { CrudAction, CrudColumn, CrudPageParams } from '@/components/crud/types'
 import { Badge } from '@/components/ui/badge'
 import { Toaster } from '@/components/ui/sonner'
 import {
@@ -72,22 +72,35 @@ export function AuditTrailScreen({ fetch, itemType, itemId }: AuditTrailScreenPr
 
   const changeEntries = detail ? Object.entries(detail.meaningfulChanges) : []
 
+  const actions = React.useMemo<CrudAction<AuditTrailEntry>[]>(
+    () => [
+      {
+        key: 'details',
+        label: 'Details',
+        variant: 'outline',
+        onClick: (row) => setDetail(row),
+      },
+    ],
+    []
+  )
+
   return (
-    <div className="flex w-full flex-col gap-4 p-4 sm:p-6">
+    <div className="flex w-full flex-col p-4 sm:p-6">
       <Toaster />
-      <div>
-        <h2 className="text-lg font-semibold">Audit trail</h2>
-        <p className="text-muted-foreground text-sm">Every tracked change across the app, newest first.</p>
-      </div>
       <CrudScreen<AuditTrailEntry>
+        title="Audit trail"
+        description="Every tracked change across the app, newest first."
         entityLabel="change"
         columns={COLUMNS}
         fetchPage={fetchPage}
         getRowId={(row) => row.id}
         search={false}
         withToaster={false}
-        empty={{ title: 'No audit history yet', description: 'Changes to tracked models will show up here.' }}
-        actions={[{ key: 'details', label: 'Details', variant: 'outline', onClick: (row) => setDetail(row) }]}
+        empty={{
+          title: 'No audit history yet',
+          description: 'Changes to tracked models will show up here.',
+        }}
+        actions={actions}
       />
 
       <Dialog open={detail != null} onOpenChange={(open) => !open && setDetail(null)}>
@@ -95,7 +108,8 @@ export function AuditTrailScreen({ fetch, itemType, itemId }: AuditTrailScreenPr
           <DialogHeader>
             <DialogTitle>{detail?.auditSummary}</DialogTitle>
             <DialogDescription>
-              {detail?.itemType} #{detail?.itemId} · {detail ? new Date(detail.createdAt).toLocaleString() : ''}
+              {detail?.itemType} #{detail?.itemId} ·{' '}
+              {detail ? new Date(detail.createdAt).toLocaleString() : ''}
             </DialogDescription>
           </DialogHeader>
           {changeEntries.length === 0 ? (

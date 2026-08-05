@@ -71,7 +71,7 @@ export function FeatureFlagMatrix({ fetch }: { fetch: FeatureFlagsFetch }) {
 
   if (loading) {
     return (
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 p-4">
         {Array.from({ length: 4 }).map((_, i) => (
           <Skeleton key={i} className="h-10 w-full" />
         ))}
@@ -80,17 +80,21 @@ export function FeatureFlagMatrix({ fetch }: { fetch: FeatureFlagsFetch }) {
   }
 
   if (error) {
-    return <ErrorState title="Could not load feature flags" description={error} onRetry={load} />
+    return (
+      <div className="p-4">
+        <ErrorState title="Could not load feature flags" description={error} onRetry={load} />
+      </div>
+    )
   }
 
   return (
-    <div className="overflow-x-auto rounded-lg border">
+    <div data-slot="crud-table" className="w-full overflow-x-auto">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Feature</TableHead>
+            <TableHead className="bg-card sticky left-0 z-10 min-w-40">Feature</TableHead>
             {roles.map((role) => (
-              <TableHead key={role} className="text-center capitalize">
+              <TableHead key={role} className="w-28 text-center capitalize">
                 {role}
               </TableHead>
             ))}
@@ -99,18 +103,22 @@ export function FeatureFlagMatrix({ fetch }: { fetch: FeatureFlagsFetch }) {
         <TableBody>
           {features.map((feature) => (
             <TableRow key={feature}>
-              <TableCell className="font-medium">{humanize(feature)}</TableCell>
+              <TableCell className="bg-card sticky left-0 z-10 font-medium">
+                {humanize(feature)}
+              </TableCell>
               {roles.map((role) => {
                 const cell = cellFor(feature, role)
                 const key = `${feature}:${role}`
                 return (
-                  <TableCell key={role} className="text-center">
-                    <Checkbox
-                      checked={Boolean(cell?.enabled)}
-                      disabled={pending === key}
-                      onCheckedChange={(checked) => toggle(feature, role, checked === true)}
-                      aria-label={`${humanize(feature)} for ${role}`}
-                    />
+                  <TableCell key={role} className="w-28">
+                    <div className="flex items-center justify-center">
+                      <Checkbox
+                        checked={Boolean(cell?.enabled)}
+                        disabled={pending === key}
+                        onCheckedChange={(checked) => toggle(feature, role, checked === true)}
+                        aria-label={`${humanize(feature)} for ${role}`}
+                      />
+                    </div>
                   </TableCell>
                 )
               })}

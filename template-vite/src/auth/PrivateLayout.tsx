@@ -1,6 +1,16 @@
 'use client'
 
+import * as React from 'react'
 import { Link, Navigate, Outlet, useLocation } from 'react-router-dom'
+import {
+  Flag,
+  History,
+  LayoutDashboard,
+  Mail,
+  MessageSquare,
+  Settings,
+  Users,
+} from 'lucide-react'
 
 import { AppShell } from '@/components/auth/app-shell'
 import { clearAuthSession } from '@/components/auth/auth-session'
@@ -9,6 +19,16 @@ import { useCurrentUser } from '@/components/auth/use-current-user'
 import { toast } from '@/components/auth/notify'
 
 const NAV_ITEMS_PLACEHOLDER: { label: string; href: string; requiredAbility?: string }[] = []
+
+const NAV_ICONS: Record<string, React.ReactNode> = {
+  '/user-management': <Users />,
+  '/feature-flags-admin': <Flag />,
+  '/delivery-logs': <Mail />,
+  '/chat': <MessageSquare />,
+  '/dashboard': <LayoutDashboard />,
+  '/audit-trail-viewer': <History />,
+  '/email-change': <Settings />,
+}
 
 /**
  * Wraps every private route (see routes.tsx's PRIVATE_ROUTE_ENTRIES /
@@ -23,7 +43,12 @@ export default function PrivateLayout({
   const location = useLocation()
   const session = useAuthSession()
   const { abilities } = useCurrentUser()
-  const navItems = allNavItems.filter((item) => !item.requiredAbility || abilities.includes(item.requiredAbility))
+  const navItems = allNavItems
+    .filter((item) => !item.requiredAbility || abilities.includes(item.requiredAbility))
+    .map((item) => ({
+      ...item,
+      icon: NAV_ICONS[item.href],
+    }))
 
   if (!session) {
     return <Navigate to="/login" replace />

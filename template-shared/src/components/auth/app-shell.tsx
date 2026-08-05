@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { LogOutIcon, PanelLeftIcon } from 'lucide-react'
+import { LogOutIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import {
@@ -17,12 +17,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
+  SidebarRail,
   SidebarTrigger,
 } from '@/components/ui/sidebar'
 
 export type AppShellNavItem = {
   label: string
   href: string
+  icon?: React.ReactNode
 }
 
 export type AppShellLinkProps = {
@@ -53,9 +55,13 @@ export function AppShell({ navItems, activeHref, userEmail, onLogout, children, 
       <Sidebar collapsible="icon">
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2 py-1.5 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
-            <div className="bg-primary text-primary-foreground flex size-6 shrink-0 items-center justify-center rounded-md">
-              <PanelLeftIcon className="size-3.5" />
-            </div>
+            {/* Same PanelLeft mark already in the header — click collapses to icons on desktop. */}
+            <SidebarTrigger
+              className={cn(
+                'bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground',
+                'size-6 rounded-md [&_svg]:size-3.5'
+              )}
+            />
             <span className="text-sm font-semibold group-data-[collapsible=icon]:hidden">App</span>
           </div>
         </SidebarHeader>
@@ -66,8 +72,21 @@ export function AppShell({ navItems, activeHref, userEmail, onLogout, children, 
               <SidebarMenu>
                 {navItems.map((item) => (
                   <SidebarMenuItem key={item.href}>
-                    <SidebarMenuButton asChild isActive={activeHref === item.href} tooltip={item.label}>
-                      {renderLink({ href: item.href, children: <span>{item.label}</span> })}
+                    <SidebarMenuButton
+                      asChild
+                      isActive={activeHref === item.href || activeHref.startsWith(`${item.href}/`)}
+                      tooltip={item.label}
+                      className="[&_svg]:size-3.5"
+                    >
+                      {renderLink({
+                        href: item.href,
+                        children: (
+                          <>
+                            {item.icon}
+                            <span>{item.label}</span>
+                          </>
+                        ),
+                      })}
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
@@ -78,7 +97,7 @@ export function AppShell({ navItems, activeHref, userEmail, onLogout, children, 
         <SidebarFooter>
           <SidebarMenu>
             {userEmail ? (
-              <SidebarMenuItem>
+              <SidebarMenuItem className="group-data-[collapsible=icon]:hidden">
                 <SidebarMenuButton disabled className="cursor-default opacity-100">
                   <span className="truncate">{userEmail}</span>
                 </SidebarMenuButton>
@@ -92,12 +111,18 @@ export function AppShell({ navItems, activeHref, userEmail, onLogout, children, 
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarFooter>
+        <SidebarRail />
       </Sidebar>
       <SidebarInset>
         <div className={cn('flex items-center gap-2 border-b px-3 py-2 md:hidden')}>
           <SidebarTrigger />
         </div>
-        <div className="min-h-0 flex-1">{children}</div>
+        <div
+          className="scrollbar-gutter-stable min-h-0 flex-1 overflow-y-auto [overflow-anchor:none]"
+          data-slot="app-content-scroll"
+        >
+          {children}
+        </div>
       </SidebarInset>
     </SidebarProvider>
   )

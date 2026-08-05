@@ -3,6 +3,15 @@
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import * as React from 'react'
+import {
+  Flag,
+  History,
+  LayoutDashboard,
+  Mail,
+  MessageSquare,
+  Settings,
+  Users,
+} from 'lucide-react'
 
 import { AppShell } from '@/components/auth/app-shell'
 import { clearAuthSession } from '@/components/auth/auth-session'
@@ -11,6 +20,16 @@ import { useCurrentUser } from '@/components/auth/use-current-user'
 import { toast } from '@/components/auth/notify'
 import { Toaster } from '@/components/ui/sonner'
 import { PRIVATE_NAV_ITEMS } from './_nav'
+
+const NAV_ICONS: Record<string, React.ReactNode> = {
+  '/user-management': <Users />,
+  '/feature-flags-admin': <Flag />,
+  '/delivery-logs': <Mail />,
+  '/chat': <MessageSquare />,
+  '/dashboard': <LayoutDashboard />,
+  '/audit-trail-viewer': <History />,
+  '/email-change': <Settings />,
+}
 
 /**
  * Wraps every private route under `(app)` (chat, account home, change
@@ -23,7 +42,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const session = useAuthSession()
   const { abilities } = useCurrentUser()
-  const navItems = PRIVATE_NAV_ITEMS.filter((item) => !item.requiredAbility || abilities.includes(item.requiredAbility))
+  const navItems = PRIVATE_NAV_ITEMS.filter(
+    (item) => !item.requiredAbility || abilities.includes(item.requiredAbility)
+  ).map((item) => ({
+    ...item,
+    icon: NAV_ICONS[item.href],
+  }))
   // useAuthSession()'s useSyncExternalStore reports `null` on the very first
   // client render (its getServerSnapshot, used to avoid a hydration
   // mismatch) even when a real session exists in localStorage — redirecting

@@ -22,14 +22,22 @@ export default function FeatureFlagsAdminPage() {
   }
 
   return (
-    <div className="flex w-full flex-col gap-4 p-4 sm:p-6">
-      <div>
-        <h2 className="text-lg font-semibold">Feature flags</h2>
-        <p className="text-muted-foreground text-sm">
-          Role × feature matrix. An untouched cell defaults to off (fail-closed).
-        </p>
+    <div className="flex w-full flex-col p-4 sm:p-6">
+      <div data-slot="crud-page">
+        <header data-slot="crud-header">
+          <div data-slot="crud-header-copy">
+            <div data-slot="crud-header-title-row">
+              <h2 data-slot="crud-header-title">Feature flags</h2>
+            </div>
+            <p data-slot="crud-header-description">
+              Role × feature matrix. An untouched cell defaults to off (fail-closed).
+            </p>
+          </div>
+        </header>
+        <div data-slot="crud-screen">
+          <FeatureFlagMatrix fetch={fetch} />
+        </div>
       </div>
-      <FeatureFlagMatrix fetch={fetch} />
     </div>
   )
 }

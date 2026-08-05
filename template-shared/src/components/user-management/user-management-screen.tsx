@@ -36,7 +36,7 @@ import {
 
 export type UserManagementScreenProps = {
   graphqlUrl?: string
-  /** Which tab is showing — driven by the page's own route segment (/user-management/:tab), not internal state. */
+  /** Which tab is showing — prefer query-param URLs (`?tab=`) over path segments so tab switches don't remount the page. */
   tab: string
   onTabChange: (tab: string) => void
   /** Called after a successful impersonateUser — navigate to wherever your app's authenticated home is. */
@@ -55,7 +55,13 @@ function rowKey(row: ManagedUserRow): string {
 }
 
 const COLUMNS: CrudColumn<ManagedUserRow>[] = [
-  { key: 'email', header: 'Email', sortable: true },
+  {
+    key: 'email',
+    header: 'Email',
+    sortable: true,
+    pairWith: 'fullName',
+    className: 'font-medium',
+  },
   {
     key: 'fullName',
     header: 'Name',
@@ -115,152 +121,171 @@ export function UserManagementScreen({ graphqlUrl, tab, onTabChange, onImpersona
     [fetch]
   )
 
-  async function handleImpersonate(row: ManagedUserRow) {
-    if (row.kind !== 'user') return
-    try {
-      const data = await fetch<ImpersonateUserResult>(IMPERSONATE_USER, { input: { userId: row.id } })
-      setAuthSession({ token: data.impersonateUser.token, user: data.impersonateUser.user })
-      toast.success(`Now impersonating ${row.email}`)
-      onImpersonated?.()
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Could not impersonate user')
-    }
-  }
+  const handleImpersonate = React.useCallback(
+    async (row: ManagedUserRow) => {
+      if (row.kind !== 'user') return
+      try {
+        const data = await fetch<ImpersonateUserResult>(IMPERSONATE_USER, { input: { userId: row.id } })
+        setAuthSession({ token: data.impersonateUser.token, user: data.impersonateUser.user })
+        toast.success(`Now impersonating ${row.email}`)
+        onImpersonated?.()
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : 'Could not impersonate user')
+      }
+    },
+    [fetch, onImpersonated]
+  )
+
+  const tabs = React.useMemo(
+    () => [
+      { label: 'All', value: 'all' },
+      { label: 'Active', value: 'active' },
+      { label: 'Archived', value: 'archived' },
+      ...(can('users:invite') ? [{ label: 'Pending', value: 'pending' }] : []),
+    ],
+    [can]
+  )
+
+  const actions = React.useMemo(
+    () => [
+      {
+        key: 'roles',
+        label: 'Roles',
+        variant: 'outline' as const,
+        isVisible: (row: ManagedUserRow) => row.kind === 'user' && can('users:manage_grants'),
+        onClick: (row: ManagedUserRow, list: CrudListMutators<ManagedUserRow>) => {
+          if (row.kind === 'user') setRolesTarget({ row, list })
+        },
+      },
+      {
+        key: 'grants',
+        label: 'Grants',
+        variant: 'outline' as const,
+        isVisible: (row: ManagedUserRow) => row.kind === 'user' && can('users:manage_grants'),
+        onClick: (row: ManagedUserRow) => {
+          if (row.kind === 'user') setGrantsTarget(row)
+        },
+      },
+      {
+        key: 'archive',
+        label: 'Archive',
+        variant: 'destructive' as const,
+        // archive?/restore? don't check the row's own discarded state
+        // server-side (they're viewer-relative, not row-state-relative)
+        // — combine the ability with the row state here so Archive/
+        // Restore don't both show for the same row.
+        isVisible: (row: ManagedUserRow) =>
+          row.kind === 'user' && !row.discarded && row.abilities.includes('archive'),
+        confirm: {
+          title: 'Archive this user?',
+          description: 'They can be restored later from the Archived tab.',
+          confirmLabel: 'Archive',
+          confirmingLabel: 'Archiving…',
+        },
+        onClick: async (row: ManagedUserRow, list: CrudListMutators<ManagedUserRow>) => {
+          if (row.kind !== 'user') return
+          await fetch<ArchiveUserResult>(ARCHIVE_USER, { input: { id: row.id } })
+          // "All" still shows the row (now discarded); Active no longer does.
+          if (tab === 'all') list.replaceItem(rowKey(row), { ...row, discarded: true })
+          else list.removeItem(rowKey(row))
+          toast.success('User archived')
+        },
+      },
+      {
+        key: 'restore',
+        label: 'Restore',
+        variant: 'outline' as const,
+        isVisible: (row: ManagedUserRow) =>
+          row.kind === 'user' && row.discarded && row.abilities.includes('restore'),
+        onClick: async (row: ManagedUserRow, list: CrudListMutators<ManagedUserRow>) => {
+          if (row.kind !== 'user') return
+          await fetch<RestoreUserResult>(RESTORE_USER, { input: { id: row.id } })
+          if (tab === 'all') list.replaceItem(rowKey(row), { ...row, discarded: false })
+          else list.removeItem(rowKey(row))
+          toast.success('User restored')
+        },
+      },
+      {
+        key: 'resend',
+        label: 'Resend',
+        variant: 'outline' as const,
+        isVisible: (row: ManagedUserRow) => row.kind === 'invitation' && row.abilities.includes('resend'),
+        onClick: async (row: ManagedUserRow, list: CrudListMutators<ManagedUserRow>) => {
+          const data = await fetch<ResendInvitationResult>(RESEND_INVITATION, { input: { id: row.id } })
+          list.replaceItem(rowKey(row), { ...data.resendInvitation.invitation, kind: 'invitation' as const })
+          toast.success('Invitation resent')
+        },
+      },
+      {
+        key: 'impersonate',
+        label: 'Impersonate',
+        variant: 'outline' as const,
+        // Already encodes "not yourself" + the restricted-role/super-admin
+        // rule server-side — the row-state check just matches archive/restore.
+        isVisible: (row: ManagedUserRow) =>
+          row.kind === 'user' && !row.discarded && row.abilities.includes('impersonate'),
+        onClick: handleImpersonate,
+      },
+    ],
+    [can, fetch, tab, handleImpersonate]
+  )
 
   return (
-    <div className="flex w-full flex-col gap-8 p-4 sm:p-6">
+    <div className="flex w-full flex-col p-4 sm:p-6">
       <Toaster />
-      <div>
-        <h2 className="text-lg font-semibold">Users</h2>
-        <CrudScreen<ManagedUserRow>
-          entityLabel="user"
-          columns={COLUMNS}
-          fetchPage={fetchPage}
-          getRowId={rowKey}
-          search={{ placeholder: 'Search by email…' }}
-          tabs={[
-            { label: 'All', value: 'all' },
-            { label: 'Active', value: 'active' },
-            { label: 'Archived', value: 'archived' },
-            ...(can('users:invite') ? [{ label: 'Pending', value: 'pending' }] : []),
-          ]}
-          activeTab={tab}
-          onTabChange={onTabChange}
-          withToaster={false}
-          create={
-            can('users:invite')
-              ? {
-                  title: 'Send invite',
-                  addLabel: 'Send invite',
-                  submitLabel: 'Send invite',
-                  successMessage: 'Invitation sent',
-                  initialValues: { role: AVAILABLE_ROLES[AVAILABLE_ROLES.length - 1] },
-                  fields: [
-                    { name: 'email', label: 'Email', required: true, placeholder: 'teammate@example.com' },
-                    { name: 'role', label: 'Role', type: 'select', options: ROLE_OPTIONS },
-                  ],
-                  onSubmit: async (values) => {
-                    const data = await fetch<SendInvitationResult>(SEND_INVITATION, {
-                      input: { email: values.email, roles: [values.role] },
-                    })
-                    // The new invite only belongs on a view that shows invitations —
-                    // inserting it while looking at Active/Archived would show a
-                    // pending invite mixed into a list of real users.
-                    if (tab !== 'pending' && tab !== 'all') return undefined
-                    return { ...data.sendInvitation.invitation, kind: 'invitation' as const }
-                  },
-                }
-              : undefined
-          }
-          edit={{
-            title: 'Edit user',
-            fields: [{ name: 'email', label: 'Email', required: true }],
-            isVisible: (row) => row.kind === 'user' && row.abilities.includes('edit'),
-            getValues: (row) => ({ email: row.email }),
-            onSubmit: async (values, row) => {
-              const data = await fetch<UpdateUserResult>(UPDATE_USER, { input: { id: row.id, email: values.email } })
-              return { ...data.updateUser.user, kind: 'user' as const }
-            },
-          }}
-          actions={[
-            {
-              key: 'roles',
-              label: 'Roles',
-              variant: 'outline',
-              isVisible: (row) => row.kind === 'user' && can('users:manage_grants'),
-              onClick: (row, list) => {
-                if (row.kind === 'user') setRolesTarget({ row, list })
-              },
-            },
-            {
-              key: 'grants',
-              label: 'Grants',
-              variant: 'outline',
-              isVisible: (row) => row.kind === 'user' && can('users:manage_grants'),
-              onClick: (row) => {
-                if (row.kind === 'user') setGrantsTarget(row)
-              },
-            },
-            {
-              key: 'archive',
-              label: 'Archive',
-              variant: 'destructive',
-              // archive?/restore? don't check the row's own discarded state
-              // server-side (they're viewer-relative, not row-state-relative)
-              // — combine the ability with the row state here so Archive/
-              // Restore don't both show for the same row.
-              isVisible: (row) => row.kind === 'user' && !row.discarded && row.abilities.includes('archive'),
-              confirm: {
-                title: 'Archive this user?',
-                description: 'They can be restored later from the Archived tab.',
-                confirmLabel: 'Archive',
-                confirmingLabel: 'Archiving…',
-              },
-              onClick: async (row, list) => {
-                if (row.kind !== 'user') return
-                await fetch<ArchiveUserResult>(ARCHIVE_USER, { input: { id: row.id } })
-                // "All" still shows the row (now discarded); Active no longer does.
-                if (tab === 'all') list.replaceItem(rowKey(row), { ...row, discarded: true })
-                else list.removeItem(rowKey(row))
-                toast.success('User archived')
-              },
-            },
-            {
-              key: 'restore',
-              label: 'Restore',
-              variant: 'outline',
-              isVisible: (row) => row.kind === 'user' && row.discarded && row.abilities.includes('restore'),
-              onClick: async (row, list) => {
-                if (row.kind !== 'user') return
-                await fetch<RestoreUserResult>(RESTORE_USER, { input: { id: row.id } })
-                if (tab === 'all') list.replaceItem(rowKey(row), { ...row, discarded: false })
-                else list.removeItem(rowKey(row))
-                toast.success('User restored')
-              },
-            },
-            {
-              key: 'resend',
-              label: 'Resend',
-              variant: 'outline',
-              isVisible: (row) => row.kind === 'invitation' && row.abilities.includes('resend'),
-              onClick: async (row, list) => {
-                const data = await fetch<ResendInvitationResult>(RESEND_INVITATION, { input: { id: row.id } })
-                list.replaceItem(rowKey(row), { ...data.resendInvitation.invitation, kind: 'invitation' as const })
-                toast.success('Invitation resent')
-              },
-            },
-            {
-              key: 'impersonate',
-              label: 'Impersonate',
-              variant: 'outline',
-              // Already encodes "not yourself" + the restricted-role/super-admin
-              // rule server-side — the row-state check just matches archive/restore.
-              isVisible: (row) => row.kind === 'user' && !row.discarded && row.abilities.includes('impersonate'),
-              onClick: handleImpersonate,
-            },
-          ]}
-        />
-      </div>
+      <CrudScreen<ManagedUserRow>
+        title="Users"
+        description="Invite teammates, manage roles, and archive or restore accounts."
+        entityLabel="user"
+        columns={COLUMNS}
+        fetchPage={fetchPage}
+        getRowId={rowKey}
+        search={{ placeholder: 'Search by email…' }}
+        tabs={tabs}
+        activeTab={tab}
+        onTabChange={onTabChange}
+        withToaster={false}
+        empty={{
+          title: 'No users yet',
+          description: 'Send an invite to add the first teammate.',
+        }}
+        create={
+          can('users:invite')
+            ? {
+                title: 'Send invite',
+                addLabel: 'Send invite',
+                submitLabel: 'Send invite',
+                successMessage: 'Invitation sent',
+                initialValues: { role: AVAILABLE_ROLES[AVAILABLE_ROLES.length - 1] },
+                fields: [
+                  { name: 'email', label: 'Email', required: true, placeholder: 'teammate@example.com' },
+                  { name: 'role', label: 'Role', type: 'select', options: ROLE_OPTIONS },
+                ],
+                onSubmit: async (values) => {
+                  const data = await fetch<SendInvitationResult>(SEND_INVITATION, {
+                    input: { email: values.email, roles: [values.role] },
+                  })
+                  // The new invite only belongs on a view that shows invitations —
+                  // inserting it while looking at Active/Archived would show a
+                  // pending invite mixed into a list of real users.
+                  if (tab !== 'pending' && tab !== 'all') return undefined
+                  return { ...data.sendInvitation.invitation, kind: 'invitation' as const }
+                },
+              }
+            : undefined
+        }
+        edit={{
+          title: 'Edit user',
+          fields: [{ name: 'email', label: 'Email', required: true }],
+          isVisible: (row) => row.kind === 'user' && row.abilities.includes('edit'),
+          getValues: (row) => ({ email: row.email }),
+          onSubmit: async (values, row) => {
+            const data = await fetch<UpdateUserResult>(UPDATE_USER, { input: { id: row.id, email: values.email } })
+            return { ...data.updateUser.user, kind: 'user' as const }
+          },
+        }}
+        actions={actions}
+      />
 
       <RolesDialog
         fetch={fetch}

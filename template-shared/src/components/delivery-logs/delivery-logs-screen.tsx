@@ -4,7 +4,7 @@ import * as React from 'react'
 import { MailIcon, MessageSquareIcon } from 'lucide-react'
 
 import { CrudScreen } from '@/components/crud/crud-screen'
-import type { CrudColumn, CrudPageParams } from '@/components/crud/types'
+import type { CrudColumn, CrudPageParams, CrudTab } from '@/components/crud/types'
 import { Badge } from '@/components/ui/badge'
 import { Toaster } from '@/components/ui/sonner'
 import type { DeliveryLogEntry, DeliveryLogsFetch } from '@/components/delivery-logs/types'
@@ -42,12 +42,12 @@ const COLUMNS: CrudColumn<DeliveryLogEntry>[] = [
         </span>
       ),
   },
-  { key: 'to', header: 'To' },
+  { key: 'to', header: 'To', className: 'font-medium' },
   {
     key: 'content',
     header: 'Content',
     render: (row) => (
-      <span className="text-muted-foreground line-clamp-1 max-w-xs">
+      <span className="text-muted-foreground line-clamp-1">
         {row.__typename === 'EmailLog' ? row.subject : row.body}
       </span>
     ),
@@ -59,6 +59,12 @@ const COLUMNS: CrudColumn<DeliveryLogEntry>[] = [
     sortable: true,
     render: (row) => (row.sentAt ? new Date(row.sentAt).toLocaleString() : '—'),
   },
+]
+
+const TABS: CrudTab[] = [
+  { label: 'All', value: 'all' },
+  { label: 'Email', value: 'email' },
+  { label: 'SMS', value: 'sms' },
 ]
 
 export type DeliveryLogsScreenProps = {
@@ -76,26 +82,23 @@ export function DeliveryLogsScreen({ fetch }: DeliveryLogsScreenProps) {
   )
 
   return (
-    <div className="flex w-full flex-col gap-4 p-4 sm:p-6">
+    <div className="flex w-full flex-col p-4 sm:p-6">
       <Toaster />
-      <div>
-        <h2 className="text-lg font-semibold">Delivery logs</h2>
-        <p className="text-muted-foreground text-sm">Email and SMS delivery history, newest first.</p>
-      </div>
       <CrudScreen<DeliveryLogEntry>
+        title="Delivery logs"
+        description="Email and SMS delivery history, newest first."
         entityLabel="delivery log"
         columns={COLUMNS}
         fetchPage={fetchPage}
         getRowId={(row) => row.id}
         search={false}
-        tabs={[
-          { label: 'All', value: 'all' },
-          { label: 'Email', value: 'email' },
-          { label: 'SMS', value: 'sms' },
-        ]}
+        tabs={TABS}
         initialTab="all"
         withToaster={false}
-        empty={{ title: 'No delivery logs yet', description: 'Emails and texts sent by the app will show up here.' }}
+        empty={{
+          title: 'No delivery logs yet',
+          description: 'Emails and texts sent by the app will show up here.',
+        }}
       />
     </div>
   )
