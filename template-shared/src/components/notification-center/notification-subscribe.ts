@@ -1,21 +1,21 @@
 import { getSharedCable, nextSubscriptionUid } from '@/components/auth/cable-connection'
 import {
-  chatMockSubscribe,
+  notificationMockSubscribe,
   type MockSubscribeOptions,
-} from '@/components/chat/chat-mock-client'
-import type { Unsubscribe } from '@/components/chat/types'
+} from '@/components/notification-center/notification-mock-client'
 
 // Vite doesn't ship @types/node; Next inlines NEXT_PUBLIC_* from these literals.
 declare const process: {
   env: { NEXT_PUBLIC_GRAPHQL_URL?: string; NEXT_PUBLIC_GRAPHQL_WS_URL?: string }
 }
 
-type ChatChannel = {
+type Unsubscribe = () => void
+type NotificationChannel = {
   perform: (action: string, data?: object) => void
   unsubscribe: () => void
 }
 
-export type CreateChatSubscriptionsOptions = {
+export type CreateNotificationSubscriptionsOptions = {
   /** wss://localhost:3000/cable — omit for in-memory mock */
   url?: string
   getToken?: () => string | null | undefined
@@ -39,49 +39,44 @@ function extractOperationName(query: string): string | undefined {
   return query.match(/\b(?:subscription|query|mutation)\s+(\w+)/)?.[1]
 }
 
-export function createChatSubscriptions(options: CreateChatSubscriptionsOptions = {}) {
+export function createNotificationSubscriptions(
+  options: CreateNotificationSubscriptionsOptions = {}
+) {
   const url = resolveWsUrl(options.url)
   const getToken = options.getToken
 
   function subscribe<T>(
     query: string,
     variables: Record<string, unknown>,
-    onData: (data: T) => void,
-    mockKind?: MockSubscribeOptions['kind']
+    onData: (data: T) => void
   ): Unsubscribe {
     if (!url) {
-      return chatMockSubscribe({
-        kind: mockKind ?? 'messageAdded',
+      return notificationMockSubscribe({
         variables,
-        onData: onData as (data: unknown) => void,
+        onData: onData as MockSubscribeOptions['onData'],
       })
     }
 
     const cable = getSharedCable(url, getToken)
     const operationName = extractOperationName(query)
 
-    const channel: ChatChannel = cable.subscriptions.create(
+    const channel: NotificationChannel = cable.subscriptions.create(
       { channel: 'GraphqlChannel', uid: nextSubscriptionUid() },
       {
         connected() {
-          // (Re)send the operation every time the channel confirms — covers both the
-          // first connect and any automatic reconnect after a dropped socket.
           channel.perform('execute', { query, variables, operationName })
         },
         received(payload: { result?: { data?: T; errors?: unknown[] }; more?: boolean }) {
           if (payload.result?.errors?.length) {
-            // Message only, not the raw error objects — GraphQL error
-            // `extensions` can carry request context (variables, etc.)
-            // that shouldn't land in the browser console.
             const messages = payload.result.errors
               .map((e) => (e && typeof e === 'object' && 'message' in e ? String(e.message) : null))
               .filter(Boolean)
-            console.error('[chat subscription]', messages.length ? messages : 'unknown error')
+            console.error('[notification subscription]', messages.length ? messages : 'unknown error')
           }
           if (payload.result?.data) onData(payload.result.data)
         },
         rejected() {
-          console.error('[chat subscription] rejected — check the cable token param')
+          console.error('[notification subscription] rejected — check the cable token param')
         },
       }
     )

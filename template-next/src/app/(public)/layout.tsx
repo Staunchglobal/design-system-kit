@@ -3,9 +3,19 @@
 import { useRouter } from 'next/navigation'
 import type { ReactNode } from 'react'
 import * as React from 'react'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 import { useAuthSession } from '@/components/auth/use-auth-store'
 import { Toaster } from '@/components/ui/sonner'
+
+// Every `<GoogleSignInButton>` needs a `GoogleOAuthProvider` ancestor
+// (@react-oauth/google reads the client ID from context, not a prop on the
+// button itself) — set up once here rather than per-page, since every
+// public auth page potentially wants the button. Empty string is a safe,
+// inert default when the host app hasn't configured
+// NEXT_PUBLIC_GOOGLE_CLIENT_ID yet — login/signup pages only render the
+// button once this is actually set.
+const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? ''
 
 // Wraps every public auth page (login, signup, forgot/reset-password,
 // verify-otp, verify-reset-otp, accept-invitation) — a signed-in user
@@ -32,9 +42,9 @@ export default function PublicOnlyLayout({ children }: { children: ReactNode }) 
   if (mounted && session) return null
 
   return (
-    <>
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       {children}
       <Toaster />
-    </>
+    </GoogleOAuthProvider>
   )
 }

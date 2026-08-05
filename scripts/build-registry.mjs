@@ -120,6 +120,7 @@ const EXTRA_FILES = {
     'components/auth/graphql-client.ts',
     'components/auth/notify.ts',
     'components/auth/app-shell.tsx',
+    'components/auth/cable-connection.ts',
   ],
   'user-management': [
     'components/user-management/types.ts',
@@ -254,6 +255,17 @@ const EXTRA_FILES = {
   'notification-center': [
     'components/notification-center/notification-list.tsx',
     'components/notification-center/notification-center.tsx',
+    'components/notification-center/notification-operations.ts',
+    'components/notification-center/notification-mappers.ts',
+    'components/notification-center/notification-mock-client.ts',
+    'components/notification-center/notification-fetch.ts',
+    'components/notification-center/notification-subscribe.ts',
+    'components/notification-center/use-notifications.ts',
+    'components/notification-center/index.ts',
+    'components/auth/auth-session.ts',
+    'components/auth/graphql-client.ts',
+    'components/auth/notify.ts',
+    'components/auth/cable-connection.ts',
   ],
   'sortable-list': [
     'components/sortable/sortable-item.tsx',

@@ -118,7 +118,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "textarea",
       "alert-dialog",
       "pagination",
-      "input-group",
+      "segmented-control",
       "crud-table",
       "sidebar"
     ],
@@ -336,9 +336,9 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     ],
     "npmDeps": [
       "browser-image-compression",
-      "@rails/actioncable",
       "lucide-react",
       "sonner",
+      "@rails/actioncable",
       "@types/rails__actioncable",
       "react-router-dom"
     ],
@@ -374,7 +374,8 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "components/auth/auth-session.ts",
       "components/auth/graphql-client.ts",
       "components/auth/notify.ts",
-      "components/auth/app-shell.tsx"
+      "components/auth/app-shell.tsx",
+      "components/auth/cable-connection.ts"
     ]
   },
   "checkbox": {
@@ -454,6 +455,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
   "crud-table": {
     "uiDeps": [
       "button",
+      "dropdown-menu",
       "table",
       "dialog",
       "field",
@@ -462,7 +464,8 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "textarea",
       "alert-dialog",
       "pagination",
-      "input-group",
+      "segmented-control",
+      "badge",
       "sonner"
     ],
     "npmDeps": [
@@ -511,7 +514,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "textarea",
       "alert-dialog",
       "pagination",
-      "input-group",
+      "segmented-control",
       "crud-table",
       "sidebar"
     ],
@@ -718,7 +721,9 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "extraFiles": []
   },
   "google-sign-in-button": {
-    "uiDeps": [],
+    "uiDeps": [
+      "button"
+    ],
     "npmDeps": [
       "@react-oauth/google"
     ],
@@ -890,12 +895,25 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     ],
     "npmDeps": [
       "date-fns",
-      "lucide-react"
+      "lucide-react",
+      "sonner",
+      "@rails/actioncable"
     ],
     "cssFile": "notification-center.css",
     "extraFiles": [
       "components/notification-center/notification-list.tsx",
-      "components/notification-center/notification-center.tsx"
+      "components/notification-center/notification-center.tsx",
+      "components/notification-center/notification-operations.ts",
+      "components/notification-center/notification-mappers.ts",
+      "components/notification-center/notification-mock-client.ts",
+      "components/notification-center/notification-fetch.ts",
+      "components/notification-center/notification-subscribe.ts",
+      "components/notification-center/use-notifications.ts",
+      "components/notification-center/index.ts",
+      "components/auth/auth-session.ts",
+      "components/auth/graphql-client.ts",
+      "components/auth/notify.ts",
+      "components/auth/cable-connection.ts"
     ]
   },
   "notification-row": {
@@ -1314,7 +1332,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "textarea",
       "alert-dialog",
       "pagination",
-      "input-group",
+      "segmented-control",
       "crud-table"
     ],
     "npmDeps": [

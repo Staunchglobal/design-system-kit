@@ -174,6 +174,31 @@ export type UpdatePasswordResult = {
   }
 }
 
+// Unlike SignUp/Login, this issues a token immediately — Google's own ID
+// token already proves the account holder controls the email address, so
+// there's no OTP step-up afterward. `idToken` is the credential
+// `GoogleSignInButton`'s `onCredential` receives (a signed JWT — never an
+// OAuth access token).
+export const SIGN_IN_WITH_GOOGLE = `
+  mutation SignInWithGoogle($input: SignInWithGoogleInput!) {
+    signInWithGoogle(input: $input) {
+      token
+      user {
+        id
+        email
+        createdAt
+      }
+    }
+  }
+`
+
+export type SignInWithGoogleResult = {
+  signInWithGoogle: {
+    token: string
+    user: AuthUser
+  }
+}
+
 export const CURRENT_USER = `
   query CurrentUser {
     currentUser {
