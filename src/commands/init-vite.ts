@@ -238,6 +238,7 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
     framework: 'vite',
     navGroups,
     cssFiles: [...cssFilesFor(closure)],
+    closure,
     dryRun,
   })
 
@@ -327,6 +328,14 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
 
   const includeTooltip = closure.has('tooltip')
   const includeToaster = closure.has('sonner')
+  const hasPageRoutes =
+    userClosure.has('auth') ||
+    userClosure.has('chat') ||
+    userClosure.has('account-settings') ||
+    userClosure.has('user-management') ||
+    userClosure.has('feature-flags-admin') ||
+    userClosure.has('delivery-logs') ||
+    userClosure.has('audit-trail-viewer')
   log.title('Manual step: mount the pages')
   const providerLines: string[] = []
   if (includeTooltip || includeToaster) {
@@ -340,34 +349,21 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   }
   log.info(
     'Vite has no built-in router, so wire these up yourself — e.g. with react-router-dom:\n' +
+      `  import { BrowserRouter, Route, Routes } from 'react-router-dom'\n` +
       `  import DesignSystemPage from '@/design-system/DesignSystemPage'\n` +
       `  import ThemeEditorPage from '@/theme-editor/ThemeEditorPage'\n` +
-      (userClosure.has('auth')
-        ? `  import LoginPage from '@/auth/LoginPage'\n` +
-          `  import SignupPage from '@/auth/SignupPage'\n` +
-          `  import ForgotPasswordPage from '@/auth/ForgotPasswordPage'\n` +
-          `  import ResetPasswordPage from '@/auth/ResetPasswordPage'\n` +
-          `  import AcceptInvitationPage from '@/auth/AcceptInvitationPage'\n` +
-          `  import ChangePasswordPage from '@/auth/ChangePasswordPage'\n` +
-          `  import AuthHomePage from '@/auth/AuthHomePage'\n`
-        : '') +
-      (userClosure.has('chat') ? `  import ChatPage from '@/chat/ChatPage'\n` : '') +
+      (hasPageRoutes ? `  import { AppRoutes } from '@/routes'\n` : '') +
       '  …\n' +
-      '  <Route path="/design-system" element={<DesignSystemPage />} />\n' +
-      '  <Route path="/theme-editor" element={<ThemeEditorPage />} />' +
-      (userClosure.has('auth')
-        ? '\n  <Route path="/auth/login" element={<LoginPage />} />\n' +
-          '  <Route path="/auth/signup" element={<SignupPage />} />\n' +
-          '  <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />\n' +
-          '  <Route path="/auth/reset-password" element={<ResetPasswordPage />} />\n' +
-          '  <Route path="/auth/accept-invitation" element={<AcceptInvitationPage />} />\n' +
-          '  <Route path="/auth/change-password" element={<ChangePasswordPage />} />\n' +
-          '  <Route path="/auth/home" element={<AuthHomePage />} />'
+      '  <BrowserRouter>\n' +
+      '    <Routes>\n' +
+      '      <Route path="/design-system" element={<DesignSystemPage />} />\n' +
+      '      <Route path="/theme-editor" element={<ThemeEditorPage />} />\n' +
+      '    </Routes>\n' +
+      (hasPageRoutes
+        ? '    {/* auth/chat/account-settings/user-management routes are already generated — mount them alongside the above: */}\n' +
+          '    <AppRoutes />\n'
         : '') +
-      (userClosure.has('chat')
-        ? '\n  <Route path="/chat/archived/:id?" element={<ChatPage />} />\n' +
-          '  <Route path="/chat/:id?" element={<ChatPage />} />'
-        : '') +
+      '  </BrowserRouter>' +
       (providerLines.length
         ? '\n\nAlso wrap your app root once with the tooltip/toast providers:\n' + providerLines.join('\n')
         : '')
@@ -379,7 +375,24 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   log.success('Design system kit installed.')
   log.info(`Run your dev server, then visit whatever route you mounted ${pc.bold('DesignSystemPage')}/${pc.bold('ThemeEditorPage')} at.`)
   if (userClosure.has('chat')) {
-    log.info(`Chat inbox: mount ${pc.bold('/chat')}, ${pc.bold('/chat/:id')}, ${pc.bold('/chat/archived')} — set VITE_GRAPHQL_URL / VITE_GRAPHQL_WS_URL for the real staunch_saas_kit Rails backend (falls back to the in-memory mock otherwise)`)
+    log.info(`Chat inbox: ${pc.bold('/chat')}, ${pc.bold('/chat/:id')}, ${pc.bold('/chat/archived')} (private route — requires a session) — set VITE_GRAPHQL_URL / VITE_GRAPHQL_WS_URL for the real saas_kit Rails backend (falls back to the in-memory mock otherwise)`)
+  }
+  if (userClosure.has('user-management')) {
+    log.info(`User management: ${pc.bold('/user-management')} (private route, admin-only actions gated client-side)`)
+  }
+  if (userClosure.has('user-management')) {
+    log.info(
+      `Render ${pc.bold('<ImpersonationStatus />')} (from ${pc.bold("'@/components/user-management/impersonation-status'")}) near the top of your app root so an active impersonation session shows its "stop impersonating" banner.`
+    )
+  }
+  if (userClosure.has('feature-flags-admin')) {
+    log.info(`Feature flags: ${pc.bold('/feature-flags-admin')} (private route, role × feature matrix)`)
+  }
+  if (userClosure.has('delivery-logs')) {
+    log.info(`Delivery logs: ${pc.bold('/delivery-logs')} (private route, read-only email/SMS history)`)
+  }
+  if (userClosure.has('audit-trail-viewer')) {
+    log.info(`Audit trail: ${pc.bold('/audit-trail-viewer')} (private route, read-only change history)`)
   }
   log.info(`Run \`${pc.bold('design-kit init')}\` again any time to add more components.`)
   if (skipped.length) {

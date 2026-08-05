@@ -194,6 +194,7 @@ export async function update(options: UpdateOptions) {
     framework: project.framework,
     navGroups,
     cssFiles: [...cssFilesFor(closure)],
+    closure,
   })
 
   log.title('Done')

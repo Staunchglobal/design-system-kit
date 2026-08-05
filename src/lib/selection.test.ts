@@ -205,13 +205,13 @@ describe('THEME_EDITOR_REQUIRED_COMPONENTS', () => {
 describe('FRAMEWORK_EXTRA_FILES', () => {
   it('auth maps Next and Vite product routes', () => {
     expect(FRAMEWORK_EXTRA_FILES.auth.next).toEqual(
-      expect.arrayContaining(['app/auth/login/page.tsx', 'app/auth/home/page.tsx'])
+      expect.arrayContaining(['app/(public)/login/page.tsx', 'app/(app)/dashboard/page.tsx'])
     )
     expect(FRAMEWORK_EXTRA_FILES.auth.vite).toEqual(
-      expect.arrayContaining(['auth/LoginPage.tsx', 'auth/AuthHomePage.tsx'])
+      expect.arrayContaining(['auth/LoginPage.tsx', 'auth/DashboardPage.tsx'])
     )
     expect(frameworkExtraFilesFor(resolveUiClosure(['auth']), 'next')).toEqual(
-      expect.arrayContaining(['app/auth/layout.tsx', 'app/auth/reset-password/page.tsx'])
+      expect.arrayContaining(['app/(public)/layout.tsx', 'app/(public)/reset-password/page.tsx'])
     )
     expect(frameworkExtraFilesFor(resolveUiClosure(['button']), 'next')).toEqual([])
   })
@@ -219,13 +219,13 @@ describe('FRAMEWORK_EXTRA_FILES', () => {
   it('chat maps Next and Vite product routes', () => {
     expect(FRAMEWORK_EXTRA_FILES.chat.next).toEqual(
       expect.arrayContaining([
-        'app/chat/page.tsx',
-        'app/chat/layout.tsx',
-        'app/chat/chat-app.tsx',
-        'app/chat/chat-href.ts',
-        'app/chat/[id]/page.tsx',
-        'app/chat/archived/page.tsx',
-        'app/chat/archived/[id]/page.tsx',
+        'app/(app)/layout.tsx',
+        'app/(app)/chat/page.tsx',
+        'app/(app)/chat/chat-app.tsx',
+        'app/(app)/chat/chat-href.ts',
+        'app/(app)/chat/[id]/page.tsx',
+        'app/(app)/chat/archived/page.tsx',
+        'app/(app)/chat/archived/[id]/page.tsx',
       ])
     )
     expect(FRAMEWORK_EXTRA_FILES.chat.vite).toEqual(
@@ -233,9 +233,9 @@ describe('FRAMEWORK_EXTRA_FILES', () => {
     )
     expect(frameworkExtraFilesFor(resolveUiClosure(['chat']), 'next')).toEqual(
       expect.arrayContaining([
-        'app/chat/page.tsx',
-        'app/chat/[id]/page.tsx',
-        'app/chat/archived/page.tsx',
+        'app/(app)/chat/page.tsx',
+        'app/(app)/chat/[id]/page.tsx',
+        'app/(app)/chat/archived/page.tsx',
       ])
     )
   })

@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { AuthShell } from '@/components/auth/auth-shell'
 import { createAuthFetch } from '@/components/auth/auth-fetch'
@@ -17,11 +18,8 @@ import { Toaster } from '@/components/ui/sonner'
 
 const authFetch = createAuthFetch()
 
-function go(path: string) {
-  window.location.assign(path)
-}
-
 export default function ForgotPasswordPage() {
+  const navigate = useNavigate()
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
   // A stray visit here while a password-reset code is already pending goes
@@ -29,8 +27,8 @@ export default function ForgotPasswordPage() {
   const pending = usePendingOtp()
 
   React.useEffect(() => {
-    if (pending?.purpose === 'password_reset') go('/auth/verify-reset-otp')
-  }, [pending])
+    if (pending?.purpose === 'password_reset') navigate('/verify-reset-otp')
+  }, [pending, navigate])
 
   async function handleSubmit(values: ForgotPasswordFormValues) {
     setLoading(true)
@@ -40,7 +38,7 @@ export default function ForgotPasswordPage() {
         input: { email: values.email },
       })
       setPendingOtp(values.email, 'password_reset', data.requestPasswordReset.otp)
-      go('/auth/verify-reset-otp')
+      navigate('/verify-reset-otp')
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Request failed'
       setError(message)

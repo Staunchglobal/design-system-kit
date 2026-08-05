@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { AuthShell } from '@/components/auth/auth-shell'
 import { createAuthFetch } from '@/components/auth/auth-fetch'
@@ -19,11 +20,8 @@ import { Toaster } from '@/components/ui/sonner'
 
 const authFetch = createAuthFetch()
 
-function go(path: string) {
-  window.location.assign(path)
-}
-
 export default function VerifyResetOtpPage() {
+  const navigate = useNavigate()
   const [loading, setLoading] = React.useState(false)
   const [resendLoading, setResendLoading] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
@@ -35,12 +33,12 @@ export default function VerifyResetOtpPage() {
   // Set right before navigating away on success/cancel — `clearPendingOtp()`
   // flips `isPasswordReset` to false a render before the browser navigation
   // actually lands, and without this the redirect-away effect below races
-  // it back to /auth/forgot-password instead of the reset-password page.
+  // it back to /forgot-password instead of the reset-password page.
   const navigatingAway = React.useRef(false)
 
   React.useEffect(() => {
-    if (!isPasswordReset && !navigatingAway.current) go('/auth/forgot-password')
-  }, [isPasswordReset])
+    if (!isPasswordReset && !navigatingAway.current) navigate('/forgot-password')
+  }, [isPasswordReset, navigate])
 
   if (!isPasswordReset || !pending) return null
 
@@ -58,7 +56,7 @@ export default function VerifyResetOtpPage() {
       })
       navigatingAway.current = true
       clearPendingOtp()
-      go(`/auth/reset-password?token=${encodeURIComponent(data.verifyPasswordResetOtp.resetPasswordToken)}`)
+      navigate(`/reset-password?token=${encodeURIComponent(data.verifyPasswordResetOtp.resetPasswordToken)}`)
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Verification failed'
       setError(message)
@@ -103,7 +101,7 @@ export default function VerifyResetOtpPage() {
             navigatingAway.current = true
             clearPendingOtp()
             setError(null)
-            go('/auth/forgot-password')
+            navigate('/forgot-password')
           }}
         >
           Back to forgot password

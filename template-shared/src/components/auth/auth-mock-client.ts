@@ -205,6 +205,13 @@ export async function authMockFetch<T>(
       return { updatePassword: { success: true } } as T
     }
 
+    case 'CurrentUser': {
+      // The mock has no role system to demo — every admin-gated nav item/
+      // button simply stays hidden in pure-mock mode. Swap in a real
+      // NEXT_PUBLIC_GRAPHQL_URL to see role-based abilities for real.
+      return { currentUser: { roles: [], impersonatorId: null, abilities: [] } } as T
+    }
+
     default:
       throw new Error(`Unknown auth operation: ${name || '(unnamed)'}`)
   }

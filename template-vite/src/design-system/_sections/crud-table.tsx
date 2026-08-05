@@ -119,6 +119,8 @@ function CrudScreenDemo() {
   return (
     <CrudScreen<Post>
       key={featuredOnly ? 'featured' : 'all'}
+      title="Posts"
+      description="Debounced search · tabs · toolbar filter · page size · sort · optimistic CRUD."
       entityLabel="post"
       columns={COLUMNS}
       fetchPage={fetchPage}

@@ -20,6 +20,8 @@ export type CrudDeleteDialogProps = {
   title?: string
   description?: string
   confirmLabel?: string
+  /** Label shown while `confirming` is true. Defaults to "Deleting…" — pass this for non-delete confirm actions (e.g. "Archiving…"). */
+  confirmingLabel?: string
   cancelLabel?: string
   confirming?: boolean
   onConfirm: () => void
@@ -31,6 +33,7 @@ export function CrudDeleteDialog({
   title = 'Delete this item?',
   description = 'This action cannot be undone.',
   confirmLabel = 'Delete',
+  confirmingLabel,
   cancelLabel = 'Cancel',
   confirming = false,
   onConfirm,
@@ -55,7 +58,7 @@ export function CrudDeleteDialog({
               onConfirm()
             }}
           >
-            {confirming ? 'Deleting…' : confirmLabel}
+            {confirming ? (confirmingLabel ?? 'Deleting…') : confirmLabel}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

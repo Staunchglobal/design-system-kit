@@ -165,6 +165,7 @@ export async function remove(options: RemoveOptions) {
     framework: project.framework,
     navGroups: newNavGroups,
     cssFiles: [...cssFilesFor(newClosure)],
+    closure: newClosure,
   })
 
   writeSelectionConfig(root, [...remaining])
