@@ -370,7 +370,7 @@ ${publicRoutes.map((r) => routeLine(r, '        ')).join('\n')}
       : ''
   const privateBlock =
     privateRoutes.length > 0
-      ? `      <Route element={<PrivateLayout navItems={PRIVATE_NAV_ITEMS} />}>
+      ? `      <Route element={<PrivateLayout navItems={PRIVATE_NAV_ITEMS} graphqlUrl={import.meta.env.VITE_GRAPHQL_URL as string | undefined} />}>
 ${privateRoutes.map((r) => routeLine(r, '        ')).join('\n')}
       </Route>\n`
       : ''

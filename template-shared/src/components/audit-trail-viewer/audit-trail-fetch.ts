@@ -32,7 +32,6 @@ export function createAuditTrailFetch(options: CreateAuditTrailFetchOptions = {}
     const session = getAuthSession()
     if (session?.token) {
       headers.Authorization = `Bearer ${session.token}`
-      variables = { ...variables, _token: session.token }
     }
     return fetchImpl<T>(endpoint, query, variables, headers)
   }

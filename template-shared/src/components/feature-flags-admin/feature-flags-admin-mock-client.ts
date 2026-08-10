@@ -5,8 +5,24 @@ export const FEATURE_FLAGS_ADMIN_MOCK_ENDPOINT = 'mock://feature-flags-admin'
 const FEATURES = ['account_settings', 'user_management', 'user_invites', 'delivery_logging', 'audit_trail', 'chat']
 const ROLES = ['admin', 'manager', 'member']
 
+// Mirrors SaasKit::FeatureFlags::ROLE_FLOORS — features absent here have
+// no floor (every role is a real option); the rest match the same
+// hardcoded Pundit policies the real backend enforces regardless of this
+// matrix (e.g. AuditTrailPolicy#index? is admin-only, full stop).
+const ROLE_FLOORS: Record<string, string[]> = {
+  user_management: ['admin', 'manager'],
+  user_invites: ['admin', 'manager'],
+  delivery_logging: ['admin'],
+  audit_trail: ['admin'],
+}
+
+function eligible(feature: string, role: string): boolean {
+  const floor = ROLE_FLOORS[feature]
+  return !floor || floor.includes(role)
+}
+
 let cells: FeatureFlagCell[] = FEATURES.flatMap((feature) =>
-  ROLES.map((role) => ({ feature, role, enabled: false }))
+  ROLES.map((role) => ({ feature, role, enabled: false, eligible: eligible(feature, role) }))
 )
 
 function opName(query: string): string {

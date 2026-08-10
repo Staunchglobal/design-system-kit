@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import pc from 'picocolors'
 import { log } from '../lib/log.js'
-import { detectProject } from '../lib/detect.js'
+import { detectProject, detectPackageManager } from '../lib/detect.js'
 import { confirm } from '../lib/confirm.js'
 import { readSelectionConfig, recordFileHashes, hashContent } from '../lib/selection-state.js'
 import { templateSharedDir, templateNextDir, templateViteDir } from '../lib/paths.js'
@@ -14,8 +14,10 @@ import {
   demoFilesFor,
   extraFilesFor,
   navGroupsFor,
+  npmDepsFor,
   resolveUiClosure,
 } from '../lib/selection.js'
+import { ALL_RUNTIME_DEPENDENCIES, missingDeps, runInstall } from '../lib/deps.js'
 import { applyRenameHistory, loadRenameHistory } from '../lib/rename-history.js'
 import { regenerateGeneratedFiles } from '../lib/regenerate-generated-files.js'
 
@@ -149,6 +151,40 @@ export async function update(options: UpdateOptions) {
       skippedCustomized.push(relPath)
     }
   })
+
+  // A newer template can require an npm dependency the consumer's
+  // original `init` run never installed (e.g. chat's cable-connection.ts
+  // gaining an `@rails/actioncable` import) — without this, `update`
+  // happily writes the new file and the consumer's very next build fails
+  // with "Cannot find module", with no warning from this command at all.
+  const existingDeps = {
+    ...((project.packageJson.dependencies as Record<string, string>) ?? {}),
+    ...((project.packageJson.devDependencies as Record<string, string>) ?? {}),
+  }
+  const neededRuntime: Record<string, string> = {}
+  for (const dep of npmDepsFor(closure)) {
+    if (ALL_RUNTIME_DEPENDENCIES[dep]) neededRuntime[dep] = ALL_RUNTIME_DEPENDENCIES[dep]
+  }
+  const runtimeToInstall = missingDeps(neededRuntime, existingDeps)
+
+  if (Object.keys(runtimeToInstall).length) {
+    log.title('Dependencies')
+    log.warn(`Your current selection now needs: ${Object.keys(runtimeToInstall).join(', ')}`)
+    if (options.dryRun) {
+      log.skip('Skipping install (--dry-run).')
+    } else if (await confirm('Install these now?', options.yes)) {
+      const pm = detectPackageManager(root)
+      const res = runInstall(pm, root, runtimeToInstall, false)
+      if (!res.ok) {
+        log.error(`Dependency install failed: ${res.message}`)
+        process.exitCode = 1
+        return
+      }
+      log.success('Dependencies installed.')
+    } else {
+      log.skip('Skipped install — run it yourself before building, or the new file(s) below will fail to compile.')
+    }
+  }
 
   log.title('Files')
   log.info(`${upToDateCount} file(s) already match the current template.`)

@@ -897,7 +897,8 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "date-fns",
       "lucide-react",
       "sonner",
-      "@rails/actioncable"
+      "@rails/actioncable",
+      "@types/rails__actioncable"
     ],
     "cssFile": "notification-center.css",
     "extraFiles": [

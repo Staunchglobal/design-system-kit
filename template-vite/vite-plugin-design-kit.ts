@@ -699,12 +699,16 @@ export function designKit(): Plugin {
       server.middlewares.use('/api/places/autocomplete', async (req, res) => {
         const url = new URL(req.url ?? '', 'http://localhost')
         const input = url.searchParams.get('input') ?? ''
-        const key = url.searchParams.get('key')
+        // Server-only (Node env, this plugin runs in the dev server
+        // process, never the browser) — never read from the query string.
+        // A client-supplied key would defeat the point of proxying
+        // through here at all; see google-places-client.ts's comment.
+        const key = process.env.GOOGLE_PLACES_API_KEY
         res.setHeader('Content-Type', 'application/json')
 
         if (!key) {
-          res.statusCode = 400
-          res.end(JSON.stringify({ status: 'REQUEST_DENIED', error_message: 'Missing API key' }))
+          res.statusCode = 500
+          res.end(JSON.stringify({ status: 'REQUEST_DENIED', error_message: 'Server is missing GOOGLE_PLACES_API_KEY' }))
           return
         }
         if (!input.trim()) {
@@ -726,12 +730,13 @@ export function designKit(): Plugin {
       server.middlewares.use('/api/places/details', async (req, res) => {
         const url = new URL(req.url ?? '', 'http://localhost')
         const placeId = url.searchParams.get('place_id') ?? ''
-        const key = url.searchParams.get('key')
+        // Server-only — see autocomplete middleware's comment above.
+        const key = process.env.GOOGLE_PLACES_API_KEY
         res.setHeader('Content-Type', 'application/json')
 
         if (!key) {
-          res.statusCode = 400
-          res.end(JSON.stringify({ status: 'REQUEST_DENIED', error_message: 'Missing API key' }))
+          res.statusCode = 500
+          res.end(JSON.stringify({ status: 'REQUEST_DENIED', error_message: 'Server is missing GOOGLE_PLACES_API_KEY' }))
           return
         }
         if (!placeId) {

@@ -48,7 +48,21 @@ type StoredAuthSession = AuthSession & { expiresAt: number }
 
 function readSessionSnapshot(): AuthSession | null {
   const raw = storage()?.getItem(SESSION_KEY) ?? null
-  if (raw === sessionRaw) return sessionSnapshot
+  // The cache-hit path below skips re-parsing, but expiry must still be
+  // re-checked every call even when `raw` hasn't changed — a tab left
+  // open past SESSION_TTL_MS never rewrites localStorage on its own, so
+  // without this the cached snapshot would read as "valid" forever after
+  // the first check, exactly the unbounded-lifetime bug this TTL exists
+  // to close.
+  if (raw === sessionRaw) {
+    if (sessionSnapshot && Date.now() > (sessionSnapshot as StoredAuthSession).expiresAt) {
+      storage()?.removeItem(SESSION_KEY)
+      sessionRaw = null
+      sessionSnapshot = null
+      return null
+    }
+    return sessionSnapshot
+  }
   sessionRaw = raw
   if (!raw) {
     sessionSnapshot = null

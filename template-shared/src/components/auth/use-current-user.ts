@@ -34,7 +34,12 @@ export function useCurrentUser(endpoint?: string) {
     // `loading` already starts `true` — no need to set it again here.
     ;(hasSession ? fetch<CurrentUserResult>(CURRENT_USER) : Promise.resolve(null))
       .then((data) => {
-        if (cancelled || !data) return
+        // `data.currentUser` (not just `data`) can resolve to null with no
+        // GraphQL error at all — an expired/revoked token the backend no
+        // longer maps to a user — so this has to be checked too, or the
+        // field access below throws and the user sees a raw "Cannot read
+        // properties of null" toast instead of "no session".
+        if (cancelled || !data?.currentUser) return
         setRoles(data.currentUser.roles)
         setAbilities(data.currentUser.abilities)
         setImpersonatorId(data.currentUser.impersonatorId)

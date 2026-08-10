@@ -382,8 +382,18 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   }
   if (userClosure.has('user-management')) {
     log.info(
-      `Render ${pc.bold('<ImpersonationStatus />')} (from ${pc.bold("'@/components/user-management/impersonation-status'")}) near the top of your app root so an active impersonation session shows its "stop impersonating" banner.`
+      `Render ${pc.bold('<ImpersonationStatus endpoint={import.meta.env.VITE_GRAPHQL_URL} />')} (from ${pc.bold("'@/components/user-management/impersonation-status'")}) near the top of your app root so an active impersonation session shows its "stop impersonating" banner — the endpoint prop is required on Vite (no NEXT_PUBLIC_*-style build-time inlining here) or it silently talks to the mock client.`
     )
+  }
+  if (userClosure.has('notification-center')) {
+    log.info(
+      `Render ${pc.bold('<NotificationCenter items={...} unreadCount={...} onItemClick={...} onMarkAllRead={...} />')} (from ${pc.bold("'@/components/notification-center/notification-center'")}) wherever your layout wants a bell icon — wire it to ${pc.bold("useNotifications({ graphqlUrl: import.meta.env.VITE_GRAPHQL_URL, graphqlWsUrl: import.meta.env.VITE_GRAPHQL_WS_URL })")} (same import path) for real data.`
+    )
+    if (userClosure.has('chat')) {
+      log.info(
+        `SendMessage raises a "${pc.bold('message_received')}" notification for the other participant automatically — pass a ${pc.bold('describe')} function to ${pc.bold('useNotifications()')} to render its metadata (${pc.bold('sender_name')}, ${pc.bold('preview')}, ${pc.bold('chat_id')}) as real copy instead of the default humanized type.`
+      )
+    }
   }
   if (userClosure.has('feature-flags-admin')) {
     log.info(`Feature flags: ${pc.bold('/feature-flags-admin')} (private route, role × feature matrix)`)

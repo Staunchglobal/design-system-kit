@@ -17,6 +17,7 @@ import { clearAuthSession } from '@/components/auth/auth-session'
 import { useAuthSession } from '@/components/auth/use-auth-store'
 import { useCurrentUser } from '@/components/auth/use-current-user'
 import { toast } from '@/components/auth/notify'
+import { Toaster } from '@/components/ui/sonner'
 
 const NAV_ITEMS_PLACEHOLDER: { label: string; href: string; requiredAbility?: string }[] = []
 
@@ -37,12 +38,19 @@ const NAV_ICONS: Record<string, React.ReactNode> = {
  */
 export default function PrivateLayout({
   navItems: allNavItems = NAV_ITEMS_PLACEHOLDER,
+  graphqlUrl,
 }: {
   navItems?: { label: string; href: string; requiredAbility?: string }[]
+  // Vite has no `process` global in the browser (unlike Next, which
+  // inlines NEXT_PUBLIC_* into `process.env` at build time) — without
+  // this, useCurrentUser() falls back to the mock client, `abilities` is
+  // always `[]`, and every requiredAbility-gated nav item disappears for
+  // everyone regardless of real role. Pass `import.meta.env.VITE_GRAPHQL_URL`.
+  graphqlUrl?: string
 }) {
   const location = useLocation()
   const session = useAuthSession()
-  const { abilities } = useCurrentUser()
+  const { abilities } = useCurrentUser(graphqlUrl)
   const navItems = allNavItems
     .filter((item) => !item.requiredAbility || abilities.includes(item.requiredAbility))
     .map((item) => ({
@@ -60,18 +68,25 @@ export default function PrivateLayout({
   }
 
   return (
-    <AppShell
-      navItems={navItems}
-      activeHref={location.pathname}
-      userEmail={session.user.email}
-      onLogout={logout}
-      renderLink={({ href, className, children }) => (
-        <Link to={href} className={className}>
-          {children}
-        </Link>
-      )}
-    >
-      <Outlet />
-    </AppShell>
+    <>
+      <AppShell
+        navItems={navItems}
+        activeHref={location.pathname}
+        userEmail={session.user.email}
+        onLogout={logout}
+        renderLink={({ href, className, children }) => (
+          <Link to={href} className={className}>
+            {children}
+          </Link>
+        )}
+      >
+        <Outlet />
+      </AppShell>
+      {/* One Toaster for every private page, matching (app)/layout.tsx on
+          Next — without it, pages that report errors solely via `toast`
+          (FeatureFlagMatrix, useCurrentUser's permission-load failure)
+          have nowhere to render them on Vite. */}
+      <Toaster />
+    </>
   )
 }

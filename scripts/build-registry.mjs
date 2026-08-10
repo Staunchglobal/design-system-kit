@@ -301,6 +301,13 @@ const EXTRA_NPM_DEPS = {
   'feature-flags-admin': ['react-router-dom'],
   'delivery-logs': ['react-router-dom'],
   'audit-trail-viewer': ['react-router-dom'],
+  // Pulls in components/auth/cable-connection.ts (see its EXTRA_FILES
+  // entry above), which imports @rails/actioncable directly — that
+  // package ships no .d.ts, so a strict-mode consumer's next build fails
+  // with TS7016 without this, even though notification-center never
+  // installs chat's own npmDeps (they're two independently selectable
+  // slugs that happen to share this one file).
+  'notification-center': ['@types/rails__actioncable'],
 }
 
 function parseNavGroups(src) {

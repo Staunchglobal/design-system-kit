@@ -56,13 +56,19 @@ export function FeatureFlagMatrix({ fetch }: { fetch: FeatureFlagsFetch }) {
 
   async function toggle(feature: string, role: string, enabled: boolean) {
     const key = `${feature}:${role}`
-    const previous = cells
     setCells((prev) => prev.map((c) => (c.feature === feature && c.role === role ? { ...c, enabled } : c)))
     setPending(key)
     try {
       await fetch<UpdateFeatureFlagResult>(UPDATE_FEATURE_FLAG, { input: { feature, role, enabled } })
     } catch (err) {
-      setCells(previous)
+      // Revert only this cell, functionally — snapshotting the whole
+      // `cells` array before the optimistic update and restoring it
+      // wholesale on failure would silently wipe out a DIFFERENT cell's
+      // own optimistic change if that second toggle was applied while
+      // this one was still in flight.
+      setCells((prev) =>
+        prev.map((c) => (c.feature === feature && c.role === role ? { ...c, enabled: !enabled } : c))
+      )
       toast.error(err instanceof Error ? err.message : 'Could not update the flag')
     } finally {
       setPending(null)
@@ -109,6 +115,24 @@ export function FeatureFlagMatrix({ fetch }: { fetch: FeatureFlagsFetch }) {
               {roles.map((role) => {
                 const cell = cellFor(feature, role)
                 const key = `${feature}:${role}`
+                // `eligible: false` means this role's own backend policy for
+                // the feature hard-denies it no matter what — checking the
+                // box would look like it grants access but silently does
+                // nothing (the real resolvers/mutations still deny it), so
+                // this renders as a plain disabled dash instead of an
+                // interactive checkbox.
+                if (cell && !cell.eligible) {
+                  return (
+                    <TableCell key={role} className="w-28">
+                      <div
+                        className="text-muted-foreground/60 flex items-center justify-center text-sm"
+                        title={`${humanize(role)} isn't eligible for ${humanize(feature)}`}
+                      >
+                        —
+                      </div>
+                    </TableCell>
+                  )
+                }
                 return (
                   <TableCell key={role} className="w-28">
                     <div className="flex items-center justify-center">

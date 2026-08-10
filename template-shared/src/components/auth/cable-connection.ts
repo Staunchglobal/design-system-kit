@@ -1,5 +1,5 @@
 import { createConsumer } from '@rails/actioncable'
-import { getAuthSession } from '@/components/auth/auth-session'
+import { getAuthSession, subscribeAuthSession } from '@/components/auth/auth-session'
 
 type Cable = ReturnType<typeof createConsumer>
 
@@ -22,6 +22,37 @@ export function getSharedCable(url: string, getToken?: () => string | null | und
   const cable = createConsumer(cableUrl)
   cables.set(key, cable)
   return cable
+}
+
+// `cables` has no automatic eviction — a subscription's own teardown only
+// sends an `unsubscribe` command (ActionCable's Subscriptions#remove),
+// which does NOT close the underlying socket. Without this, every
+// logout→login, impersonate, and stop-impersonate cycle leaks a live
+// WebSocket (plus its reconnect loop) still authenticated as the PRIOR
+// identity, for the rest of the page's lifetime.
+function closeSharedCables(): void {
+  for (const cable of cables.values()) cable.disconnect()
+  cables.clear()
+}
+
+// Subscribed once, for the app's lifetime, at module load — deliberately
+// NOT a direct call from auth-session.ts's clearAuthSession/setAuthSession
+// (that file is always installed; this one only is when chat/
+// notification-center is, so it can't hold a static import the other way
+// without breaking every app that installs auth alone). `getSharedCable`
+// re-keys by url+token anyway, so a fresh cable is created lazily on the
+// next call — this only needs to close what's now stale.
+//
+// Guarded on `window` because this runs at MODULE EVALUATION time, not
+// inside a component/effect — `subscribeAuthSession` calls
+// `window.addEventListener` unconditionally (safe for its original
+// caller, React's `useSyncExternalStore`, which never invokes `subscribe`
+// during SSR), but a bare module-level call has no such guarantee. Any
+// route whose server-rendered tree imports this module (directly, or
+// transitively via chat/notification-center) would otherwise throw
+// "window is not defined" on every SSR pass.
+if (typeof window !== 'undefined') {
+  subscribeAuthSession(closeSharedCables)
 }
 
 // ActionCable's server dedupes `subscribe` commands by identifier *per

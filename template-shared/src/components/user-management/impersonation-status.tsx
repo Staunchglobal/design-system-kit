@@ -10,15 +10,21 @@ import { decodeJwtPayload } from '@/components/user-management/decode-jwt'
 import { createUserManagementFetch } from '@/components/user-management/user-management-fetch'
 import { STOP_IMPERSONATING, type StopImpersonatingResult } from '@/components/user-management/user-management-operations'
 
-const userManagementFetch = createUserManagementFetch()
-
 /**
  * Render once near the top of your app shell/root layout. Renders nothing
  * unless the current session's JWT carries an `impersonator_id` claim
  * (set by `impersonateUser`) — purely informational on the client; the
  * server independently re-checks every request regardless of this banner.
+ *
+ * `endpoint` only matters on Vite — Next's build inlines
+ * `NEXT_PUBLIC_GRAPHQL_URL` into `process.env` at compile time even
+ * without this prop, but Vite exposes env vars only via `import.meta.env`
+ * (no `process` global in the browser), so a Vite app must pass its own
+ * `import.meta.env.VITE_GRAPHQL_URL` here or every request silently falls
+ * back to the mock client.
  */
-export function ImpersonationStatus() {
+export function ImpersonationStatus({ endpoint }: { endpoint?: string } = {}) {
+  const userManagementFetch = React.useMemo(() => createUserManagementFetch({ endpoint }), [endpoint])
   const session = useAuthSession()
   const [stopping, setStopping] = React.useState(false)
 

@@ -5,7 +5,7 @@ export const FEATURE_FLAGS = `
     featureFlags {
       features
       roles
-      cells { feature role enabled }
+      cells { feature role enabled eligible }
     }
   }
 `

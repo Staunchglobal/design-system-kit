@@ -382,6 +382,16 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
       `Render ${pc.bold('<ImpersonationStatus />')} (from ${pc.bold("'@/components/user-management/impersonation-status'")}) near the top of your root layout so an active impersonation session shows its "stop impersonating" banner.`
     )
   }
+  if (userClosure.has('notification-center')) {
+    log.info(
+      `Render ${pc.bold('<NotificationCenter items={...} unreadCount={...} onItemClick={...} onMarkAllRead={...} />')} (from ${pc.bold("'@/components/notification-center/notification-center'")}) wherever your layout wants a bell icon — wire it to ${pc.bold('useNotifications()')} (same import path) for real data.`
+    )
+    if (userClosure.has('chat')) {
+      log.info(
+        `SendMessage raises a "${pc.bold('message_received')}" notification for the other participant automatically — pass a ${pc.bold('describe')} function to ${pc.bold('useNotifications()')} to render its metadata (${pc.bold('sender_name')}, ${pc.bold('preview')}, ${pc.bold('chat_id')}) as real copy instead of the default humanized type.`
+      )
+    }
+  }
   if (userClosure.has('feature-flags-admin')) {
     log.info(`Feature flags: ${pc.bold('/feature-flags-admin')} (private route, role × feature matrix)`)
   }
