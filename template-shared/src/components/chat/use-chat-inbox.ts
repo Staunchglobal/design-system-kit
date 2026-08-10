@@ -6,6 +6,7 @@ import { toast } from '@/components/auth/notify'
 import {
   CHATS_PER_PAGE,
   MESSAGES_PER_PAGE,
+  SEARCH_DEBOUNCE_MS,
 } from '@/components/chat/chat-constants'
 import { createChatFetch } from '@/components/chat/chat-fetch'
 import {
@@ -201,19 +202,27 @@ export function useChatInbox({
   const [createChatError, setCreateChatError] = React.useState<string | null>(null)
   const [creatingChat, setCreatingChat] = React.useState(false)
   const usersRequestId = React.useRef(0)
+  const chatsRequestId = React.useRef(0)
+  const messagesRequestId = React.useRef(0)
 
   React.useEffect(() => {
-    const t = window.setTimeout(() => setSearch(searchInput.trim()), 300)
+    const t = window.setTimeout(() => setSearch(searchInput.trim()), SEARCH_DEBOUNCE_MS)
     return () => window.clearTimeout(t)
   }, [searchInput])
 
   React.useEffect(() => {
-    const t = window.setTimeout(() => setDebouncedUserSearch(userSearch.trim()), 300)
+    const t = window.setTimeout(() => setDebouncedUserSearch(userSearch.trim()), SEARCH_DEBOUNCE_MS)
     return () => window.clearTimeout(t)
   }, [userSearch])
 
   const loadChats = React.useCallback(
     async (page = 1, append = false): Promise<void> => {
+      // Guards against switching tab/search fast enough that an older
+      // request resolves after a newer one — without this, whichever
+      // request happens to finish LAST wins and overwrites the list with
+      // stale results, even if it was fired first (mirrors loadUsers'
+      // usersRequestId below).
+      const requestId = ++chatsRequestId.current
       if (append) setChatsLoadingMore(true)
       else setChatsLoading(true)
       setChatsError(null)
@@ -224,6 +233,7 @@ export function useChatInbox({
           search: search || undefined,
           archived: tab === 'archived',
         })
+        if (requestId !== chatsRequestId.current) return
         const rows = data.allChats.chats.map(mapConversation)
         setConversations((prev) => (append ? [...prev, ...rows] : rows))
         const { pagination } = data.allChats
@@ -232,13 +242,16 @@ export function useChatInbox({
           setTotalUnread(rows.reduce((sum, c) => sum + c.unreadCount, 0))
         }
       } catch (err) {
+        if (requestId !== chatsRequestId.current) return
         const message = errorMessage(err, 'Failed to load chats')
         setChatsError(message)
         if (!append) setConversations([])
         toast.error(message)
       } finally {
-        setChatsLoading(false)
-        setChatsLoadingMore(false)
+        if (requestId === chatsRequestId.current) {
+          setChatsLoading(false)
+          setChatsLoadingMore(false)
+        }
       }
     },
     [realFetch, search, tab]
@@ -251,6 +264,13 @@ export function useChatInbox({
 
   const loadMessages = React.useCallback(
     async (chatId: string, page = 1, prepend = false): Promise<void> => {
+      // Without this, switching chat A -> B before A's fetch resolves can
+      // let A's response land AFTER B is already selected — A's messages
+      // would replace B's thread under B's still-showing header, and
+      // `handleSend`'s `chatId` (captured fresh from `selectedId` at send
+      // time, not from this closure) would then deliver a reply to the
+      // wrong chat while the wrong history is on screen.
+      const requestId = ++messagesRequestId.current
       if (prepend) setMessagesLoadingOlder(true)
       else setMessagesLoading(true)
       setMessagesError(null)
@@ -261,6 +281,7 @@ export function useChatInbox({
             pagination: { page: number; pages: number }
           }
         }>(FETCH_ALL_MESSAGES, { chatId, page, perPage: MESSAGES_PER_PAGE })
+        if (requestId !== messagesRequestId.current) return
         const rows = data.fetchAllMessages.messages.map(mapApiMessage).reverse()
         setMessages((prev) => {
           if (prepend) return [...rows, ...prev]
@@ -278,20 +299,26 @@ export function useChatInbox({
         setMessagesNextPage(pagination.page < pagination.pages ? pagination.page + 1 : null)
         try {
           await realFetch(MARK_CHAT_AS_READ, { chatId })
+          if (requestId !== messagesRequestId.current) return
           setConversations((prev) =>
             prev.map((c) => (c.id === chatId ? { ...c, unreadCount: 0 } : c))
           )
         } catch (err) {
-          toast.error(errorMessage(err, 'Failed to mark chat as read'))
+          if (requestId === messagesRequestId.current) {
+            toast.error(errorMessage(err, 'Failed to mark chat as read'))
+          }
         }
       } catch (err) {
+        if (requestId !== messagesRequestId.current) return
         const message = errorMessage(err, 'Failed to load messages')
         setMessagesError(message)
         if (!prepend) setMessages([])
         toast.error(message)
       } finally {
-        setMessagesLoading(false)
-        setMessagesLoadingOlder(false)
+        if (requestId === messagesRequestId.current) {
+          setMessagesLoading(false)
+          setMessagesLoadingOlder(false)
+        }
       }
     },
     [realFetch]

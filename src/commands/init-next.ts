@@ -254,6 +254,7 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
     framework: 'next',
     navGroups,
     cssFiles: [...cssFilesFor(closure)],
+    closure,
     dryRun,
   })
 
@@ -365,14 +366,62 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
   log.info(`Run your dev server, then visit ${pc.bold('/design-system')} and ${pc.bold('/theme-editor')}.`)
   if (userClosure.has('auth')) {
     log.info(
-      `Auth pages: ${pc.bold('/auth/login')}, /auth/signup, /auth/forgot-password, /auth/reset-password, /auth/accept-invitation, /auth/change-password, /auth/home`
+      `Auth pages: ${pc.bold('/login')}, /signup, /forgot-password, /reset-password, /accept-invitation, /change-password, /dashboard`
     )
     log.info('Demo mock: demo@example.com / Password1! — OTP always 123456')
   }
   if (userClosure.has('chat')) {
-    log.info(`Chat inbox: ${pc.bold('/chat')}, ${pc.bold('/chat/[id]')}, ${pc.bold('/chat/archived')} (requires auth session)`)
+    log.info(`Chat inbox: ${pc.bold('/chat')}, ${pc.bold('/chat/[id]')}, ${pc.bold('/chat/archived')} (private route — requires a session)`)
     log.info(
-      'Real backend (staunch_saas_kit Rails app): set NEXT_PUBLIC_GRAPHQL_URL, NEXT_PUBLIC_GRAPHQL_WS_URL — falls back to the in-memory mock otherwise'
+      'Real backend (saas_kit Rails app): set NEXT_PUBLIC_GRAPHQL_URL, NEXT_PUBLIC_GRAPHQL_WS_URL — falls back to the in-memory mock otherwise'
+    )
+  }
+  if (userClosure.has('user-management')) {
+    log.info(`User management: ${pc.bold('/user-management')} (private route, admin-only actions gated client-side)`)
+    log.info(
+      `Render ${pc.bold('<ImpersonationStatus />')} (from ${pc.bold("'@/components/user-management/impersonation-status'")}) near the top of your root layout so an active impersonation session shows its "stop impersonating" banner.`
+    )
+  }
+  if (userClosure.has('notification-center')) {
+    log.info(
+      `Render ${pc.bold('<NotificationCenter items={...} unreadCount={...} onItemClick={...} onMarkAllRead={...} />')} (from ${pc.bold("'@/components/notification-center/notification-center'")}) wherever your layout wants a bell icon — wire it to ${pc.bold('useNotifications()')} (same import path) for real data.`
+    )
+    if (userClosure.has('chat')) {
+      log.info(
+        `SendMessage raises a "${pc.bold('message_received')}" notification for the other participant automatically — pass a ${pc.bold('describe')} function to ${pc.bold('useNotifications()')} to render its metadata (${pc.bold('sender_name')}, ${pc.bold('preview')}, ${pc.bold('chat_id')}) as real copy instead of the default humanized type.`
+      )
+    }
+  }
+  if (userClosure.has('feature-flags-admin')) {
+    log.info(`Feature flags: ${pc.bold('/feature-flags-admin')} (private route, role × feature matrix)`)
+  }
+  if (userClosure.has('delivery-logs')) {
+    log.info(`Delivery logs: ${pc.bold('/delivery-logs')} (private route, read-only email/SMS history)`)
+  }
+  if (userClosure.has('audit-trail-viewer')) {
+    log.info(`Audit trail: ${pc.bold('/audit-trail-viewer')} (private route, read-only change history)`)
+  }
+  if (
+    userClosure.has('auth') ||
+    userClosure.has('chat') ||
+    userClosure.has('account-settings') ||
+    userClosure.has('user-management') ||
+    userClosure.has('feature-flags-admin') ||
+    userClosure.has('delivery-logs') ||
+    userClosure.has('audit-trail-viewer')
+  ) {
+    log.info(
+      `Private pages (${[
+        userClosure.has('auth') ? '/dashboard, /change-password' : null,
+        userClosure.has('chat') ? '/chat' : null,
+        userClosure.has('account-settings') ? '/email-change' : null,
+        userClosure.has('user-management') ? '/user-management' : null,
+        userClosure.has('feature-flags-admin') ? '/feature-flags-admin' : null,
+        userClosure.has('delivery-logs') ? '/delivery-logs' : null,
+        userClosure.has('audit-trail-viewer') ? '/audit-trail-viewer' : null,
+      ]
+        .filter(Boolean)
+        .join(', ')}) live under the (app) route group and share its layout.tsx (auth guard + sidebar app shell) — no manual wiring needed.`
     )
   }
   log.info(`Run \`${pc.bold('design-kit init')}\` again any time to add more components.`)

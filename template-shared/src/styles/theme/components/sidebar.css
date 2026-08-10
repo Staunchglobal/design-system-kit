@@ -1,6 +1,6 @@
 [data-slot='sidebar-wrapper'] {
   --sidebar-width: 16rem;
-  --sidebar-width-icon: 3rem;
+  --sidebar-width-icon: 3.5rem;
   --sidebar-width-mobile: 18rem;
 }
 [data-slot='sidebar-wrapper']:has([data-variant='inset']) {
@@ -158,7 +158,7 @@
   --sidebar-menu-button-gap: 0.75rem;
   --sidebar-menu-button-fg: var(--muted-foreground);
   --sidebar-menu-button-icon-fg: var(--muted-foreground);
-  --sidebar-menu-button-hover-bg: var(--secondary-50);
+  --sidebar-menu-button-hover-bg: var(--sidebar-accent);
   --sidebar-menu-button-hover-fg: var(--sidebar-foreground);
   --sidebar-menu-button-active-bg: var(--sidebar-accent);
   --sidebar-menu-button-active-fg: var(--sidebar-accent-foreground);
@@ -166,7 +166,7 @@
   --sidebar-menu-button-active-font-weight: var(--typography-small-font-weight);
   --sidebar-menu-button-disabled-opacity: 0.5;
   --sidebar-menu-button-focus-ring: var(--sidebar-ring);
-  --sidebar-menu-button-icon-size: 1.5rem;
+  --sidebar-menu-button-icon-size: 1rem;
   gap: var(--sidebar-menu-button-gap);
   border-radius: var(--sidebar-menu-button-radius);
   padding-inline: var(--sidebar-menu-button-padding-x);
@@ -299,7 +299,7 @@
   --sidebar-menu-sub-button-padding-x: 0.5rem;
   --sidebar-menu-sub-button-radius: var(--radius-md);
   --sidebar-menu-sub-button-fg: var(--muted-foreground);
-  --sidebar-menu-sub-button-hover-bg: var(--secondary-50);
+  --sidebar-menu-sub-button-hover-bg: var(--sidebar-accent);
   --sidebar-menu-sub-button-hover-fg: var(--sidebar-foreground);
   --sidebar-menu-sub-button-active-bg: var(--sidebar-accent);
   --sidebar-menu-sub-button-active-fg: var(--sidebar-accent-foreground);

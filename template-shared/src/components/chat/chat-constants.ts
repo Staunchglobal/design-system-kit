@@ -1,5 +1,7 @@
 export const CHATS_PER_PAGE = 14
 export const MESSAGES_PER_PAGE = 10
+/** Debounce delay for chat/user search inputs (use-chat-inbox.ts). */
+export const SEARCH_DEBOUNCE_MS = 300
 /** How many files can be attached to one outbound message. */
 export const MAX_ATTACHMENTS = 10
 /** How many image tiles the bubble shows before collapsing the rest into +N. */
@@ -61,5 +63,3 @@ export function isAcceptedAttachment(file: File): boolean {
   return ACCEPTED_EXTENSIONS.has(fileExtension(file.name))
 }
 
-/** @deprecated Use MAX_ATTACHMENTS — kept so older imports keep compiling. */
-export const MAX_IMAGES = MAX_ATTACHMENTS

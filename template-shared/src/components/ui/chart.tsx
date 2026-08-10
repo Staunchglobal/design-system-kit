@@ -5,6 +5,7 @@ import * as RechartsPrimitive from 'recharts'
 import type { TooltipValueType } from 'recharts'
 
 import { cn } from '@/lib/utils'
+import { isSafeCssValue } from '@/lib/theme/validation'
 
 const THEMES = { light: '', dark: '.dark' } as const
 
@@ -93,7 +94,12 @@ ${prefix} [data-chart=${id}] {
 ${colorConfig
   .map(([key, itemConfig]) => {
     const color = itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ?? itemConfig.color
-    return color ? `  --color-${key}: ${color};` : null
+    // `key`/`color` ultimately come from a `ChartConfig` object a caller
+    // provides — same untrusted-value shape the theme editor's own CSS
+    // writer guards against, so this needs the same guard before landing
+    // in a `dangerouslySetInnerHTML` <style> block.
+    if (!color || !isSafeCssValue(color) || !isSafeCssValue(key)) return null
+    return `  --color-${key}: ${color};`
   })
   .join('\n')}
 }

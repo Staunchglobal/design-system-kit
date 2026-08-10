@@ -48,10 +48,10 @@ export function createChatFetch(options: CreateChatFetchOptions = {}): ChatFetch
     const headers: Record<string, string> = {}
     if (withAuth) {
       const session = getAuthSession()
-      if (session?.token) {
-        headers.Authorization = `Bearer ${session.token}`
-        variables = { ...variables, _token: session.token }
-      }
+      // Header only — GraphQL variables get logged by tooling
+      // (server-side request logs, APM traces) far more readily than
+      // Authorization headers do, which are conventionally redacted.
+      if (session?.token) headers.Authorization = `Bearer ${session.token}`
     }
     return fetchImpl<T>(endpoint, query, variables, headers)
   }

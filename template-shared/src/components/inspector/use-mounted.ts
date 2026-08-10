@@ -14,7 +14,7 @@ import * as React from 'react'
 export function useMounted(): boolean {
   const [mounted, setMounted] = React.useState(false)
   React.useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- the whole point per the docblock above: only ever runs post-hydration, on a client-only render
     setMounted(true)
   }, [])
   return mounted

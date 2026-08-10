@@ -3,6 +3,7 @@
 import type { CrudFieldDef } from '@/components/crud/types'
 import { Field, FieldError, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 
 export function validateCrudFields(
@@ -25,7 +26,9 @@ export function validateCrudFields(
 }
 
 export function emptyValuesFromFields(fields: CrudFieldDef[]): Record<string, string> {
-  return Object.fromEntries(fields.map((f) => [f.name, '']))
+  // A select defaults to its first option rather than '' — an empty string
+  // wouldn't match any SelectItem and would render the field unselected.
+  return Object.fromEntries(fields.map((f) => [f.name, f.type === 'select' ? (f.options?.[0]?.value ?? '') : '']))
 }
 
 export type CrudFormFieldsProps = {
@@ -64,6 +67,19 @@ export function CrudFormFields({
                 aria-invalid={Boolean(error)}
                 onChange={(e) => onChange(field.name, e.target.value)}
               />
+            ) : field.type === 'select' ? (
+              <Select value={value} onValueChange={(next) => onChange(field.name, next)}>
+                <SelectTrigger id={id} className="w-full" aria-invalid={Boolean(error)}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent position="popper" align="start">
+                  {(field.options ?? []).map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             ) : (
               <Input
                 id={id}

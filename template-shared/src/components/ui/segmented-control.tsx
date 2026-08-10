@@ -43,20 +43,17 @@ function SegmentedControl({
       <Select value={value} onValueChange={onValueChange} disabled={disabled}>
         <SelectTrigger
           data-slot="segmented-control"
+          size="sm"
           aria-label={ariaLabel}
           className={cn('w-full', className)}
         >
-          <SelectValue />
+          <SelectValue placeholder="Select…" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent position="popper" align="start">
           {options.map((opt) => (
             <SelectItem key={opt.value} value={opt.value}>
-              <span className="flex items-center gap-2">
-                {opt.label}
-                {opt.count != null ? (
-                  <span className="text-muted-foreground text-xs">({opt.count})</span>
-                ) : null}
-              </span>
+              {opt.label}
+              {opt.count != null ? ` (${opt.count})` : ''}
             </SelectItem>
           ))}
         </SelectContent>
@@ -79,7 +76,14 @@ function SegmentedControl({
       className={cn(className)}
     >
       {options.map((opt) => (
-        <ToggleGroupItem key={opt.value} value={opt.value} className="px-3">
+        <ToggleGroupItem
+          key={opt.value}
+          value={opt.value}
+          className="px-3"
+          // Radix focuses the item on pointer down, which scrolls it into
+          // view and jerks the page up/down inside overflow containers.
+          onPointerDown={(e) => e.preventDefault()}
+        >
           <span className="flex items-center gap-1.5">
             {opt.label}
             {opt.count != null ? (

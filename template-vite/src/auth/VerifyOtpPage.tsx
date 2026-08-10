@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { AuthShell } from '@/components/auth/auth-shell'
 import { createAuthFetch } from '@/components/auth/auth-fetch'
@@ -19,11 +20,8 @@ import { Toaster } from '@/components/ui/sonner'
 
 const authFetch = createAuthFetch()
 
-function go(path: string) {
-  window.location.assign(path)
-}
-
 export default function VerifyOtpPage() {
+  const navigate = useNavigate()
   const [loading, setLoading] = React.useState(false)
   const [resendLoading, setResendLoading] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
@@ -34,12 +32,12 @@ export default function VerifyOtpPage() {
   // Set right before navigating away on success/cancel — `clearPendingOtp()`
   // flips `pending` to null a render before the browser navigation actually
   // lands, and without this the redirect-away effect below races it back
-  // to /auth/login instead of wherever we're actually headed.
+  // to /login instead of wherever we're actually headed.
   const navigatingAway = React.useRef(false)
 
   React.useEffect(() => {
-    if (!pending && !navigatingAway.current) go('/auth/login')
-  }, [pending])
+    if (!pending && !navigatingAway.current) navigate('/login')
+  }, [pending, navigate])
 
   if (!pending) return null
 
@@ -55,7 +53,7 @@ export default function VerifyOtpPage() {
       navigatingAway.current = true
       clearPendingOtp()
       toast.success(pending.purpose === 'signup' ? 'Account created' : 'Signed in')
-      go('/auth/home')
+      navigate('/dashboard')
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Verification failed'
       setError(message)
@@ -101,7 +99,7 @@ export default function VerifyOtpPage() {
             navigatingAway.current = true
             clearPendingOtp()
             setError(null)
-            go(pending.purpose === 'signup' ? '/auth/signup' : '/auth/login')
+            navigate(pending.purpose === 'signup' ? '/signup' : '/login')
           }}
         >
           {pending.purpose === 'signup' ? 'Back to sign up' : 'Back to sign in'}

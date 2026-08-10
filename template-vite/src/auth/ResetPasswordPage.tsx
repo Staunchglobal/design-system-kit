@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { AuthShell } from '@/components/auth/auth-shell'
 import { createAuthFetch } from '@/components/auth/auth-fetch'
@@ -13,18 +14,16 @@ import { Toaster } from '@/components/ui/sonner'
 
 const authFetch = createAuthFetch()
 
-function go(path: string) {
-  window.location.assign(path)
-}
-
 export default function ResetPasswordPage() {
-  const token = new URLSearchParams(window.location.search).get('token') ?? ''
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const token = searchParams.get('token') ?? ''
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
 
   React.useEffect(() => {
-    if (!token) go('/auth/forgot-password')
-  }, [token])
+    if (!token) navigate('/forgot-password')
+  }, [token, navigate])
 
   async function handleSubmit(values: SetPasswordFormValues) {
     setLoading(true)
@@ -40,11 +39,11 @@ export default function ResetPasswordPage() {
       if (data.resetPassword.token && data.resetPassword.user) {
         setAuthSession({ token: data.resetPassword.token, user: data.resetPassword.user })
         toast.success('Password updated')
-        go('/auth/home')
+        navigate('/dashboard')
         return
       }
       toast.success('Password updated — sign in with your new password')
-      go('/auth/login')
+      navigate('/login')
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Reset failed'
       setError(message)

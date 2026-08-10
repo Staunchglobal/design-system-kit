@@ -14,7 +14,6 @@ import {
 } from '@/components/address-autocomplete/google-places-client'
 
 type AddressAutocompleteProps = {
-  apiKey: string
   value: string
   onSelect: (details: PlaceDetails) => void
   onValueChange?: (value: string) => void
@@ -25,7 +24,6 @@ type AddressAutocompleteProps = {
 }
 
 function AddressAutocomplete({
-  apiKey,
   value,
   onSelect,
   onValueChange,
@@ -35,7 +33,7 @@ function AddressAutocomplete({
   disabled = false,
 }: AddressAutocompleteProps) {
   const debounced = useDebouncedValue(value, 300)
-  const canSearch = Boolean(apiKey && debounced.trim())
+  const canSearch = Boolean(debounced.trim())
   const [predictions, setPredictions] = React.useState<PlacePrediction[]>([])
   const [open, setOpen] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
@@ -50,7 +48,7 @@ function AddressAutocomplete({
       setLoading(true)
       setError(null)
       try {
-        const results = await fetchPlacePredictions(debounced, apiKey, { country })
+        const results = await fetchPlacePredictions(debounced, { country })
         if (!cancelled) {
           setPredictions(results)
           setOpen(true)
@@ -68,7 +66,7 @@ function AddressAutocomplete({
     return () => {
       cancelled = true
     }
-  }, [debounced, apiKey, country, canSearch])
+  }, [debounced, country, canSearch])
 
   React.useEffect(() => {
     function onDocClick(e: MouseEvent) {
@@ -82,7 +80,7 @@ function AddressAutocomplete({
     onValueChange?.(prediction.description)
     setOpen(false)
     try {
-      const details = await fetchPlaceDetails(prediction.placeId, apiKey)
+      const details = await fetchPlaceDetails(prediction.placeId)
       onSelect(details)
       onValueChange?.(details.formattedAddress || prediction.description)
     } catch (err) {
@@ -94,17 +92,11 @@ function AddressAutocomplete({
   const visibleError = canSearch ? error : null
   const visibleLoading = canSearch ? loading : false
 
-  if (!apiKey) {
-    return (
-      <div data-slot="address-autocomplete" className={cn('space-y-1.5', className)}>
-        <Input disabled placeholder="Set a Google Places API key to enable address search" />
-        <p className="text-muted-foreground text-xs">
-          Pass an <code className="text-foreground">apiKey</code> prop (e.g.{' '}
-          <code className="text-foreground">NEXT_PUBLIC_GOOGLE_PLACES_API_KEY</code>).
-        </p>
-      </div>
-    )
-  }
+  // No client-side "is a key configured" check anymore — the key lives
+  // server-side only (see google-places-client.ts's comment), so the
+  // client has no key to inspect. An unconfigured server surfaces through
+  // the normal error path on the first search instead (visibleError,
+  // below), via GOOGLE_PLACES_API_KEY's own "missing" response.
 
   return (
     <div

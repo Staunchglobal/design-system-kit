@@ -1,5 +1,6 @@
 'use client'
 
+import { AppIcon } from '@/components/icons/icon'
 import {
   Pagination,
   PaginationContent,
@@ -16,18 +17,31 @@ import {
 } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
 
+/**
+ * Page list for many pages — always first + last, a ±2 window around
+ * the current page, and ellipses when the gap is large enough
+ * (`totalPages >= 5`).
+ */
 export function pageItems(page: number, pageCount: number): Array<number | 'ellipsis'> {
-  if (pageCount <= 7) {
-    return Array.from({ length: pageCount }, (_, i) => i + 1)
-  }
+  if (pageCount <= 0) return []
+  if (pageCount === 1) return [1]
 
   const items: Array<number | 'ellipsis'> = [1]
-  const start = Math.max(2, page - 1)
-  const end = Math.min(pageCount - 1, page + 1)
 
-  if (start > 2) items.push('ellipsis')
-  for (let n = start; n <= end; n++) items.push(n)
-  if (end < pageCount - 1) items.push('ellipsis')
+  if (pageCount >= 5 && page > 4) {
+    items.push('ellipsis')
+  }
+
+  const start = Math.max(2, page - 2)
+  const end = Math.min(pageCount - 1, page + 2)
+  for (let n = start; n <= end; n++) {
+    items.push(n)
+  }
+
+  if (pageCount >= 5 && page + 3 < pageCount) {
+    items.push('ellipsis')
+  }
+
   items.push(pageCount)
   return items
 }
@@ -36,9 +50,6 @@ export type CrudPaginationProps = {
   page: number
   pageCount: number
   onPageChange: (page: number) => void
-  totalCount?: number
-  totalLabel?: string
-  itemLabel?: string
   pageSize?: number
   pageSizeOptions?: number[]
   onPageSizeChange?: (pageSize: number) => void
@@ -49,9 +60,6 @@ export function CrudPagination({
   page,
   pageCount,
   onPageChange,
-  totalCount,
-  totalLabel,
-  itemLabel = 'items',
   pageSize,
   pageSizeOptions,
   onPageSizeChange,
@@ -59,40 +67,9 @@ export function CrudPagination({
 }: CrudPaginationProps) {
   const pages = pageItems(page, pageCount)
 
-  const rangeStart =
-    totalCount == null || pageSize == null
-      ? null
-      : totalCount === 0
-        ? 0
-        : (page - 1) * pageSize + 1
-  const rangeEnd =
-    totalCount == null || pageSize == null || rangeStart == null
-      ? null
-      : Math.min(page * pageSize, totalCount)
-
-  const summary =
-    totalLabel ??
-    (rangeStart != null && rangeEnd != null && totalCount != null
-      ? null
-      : totalCount != null
-        ? `${totalCount} ${itemLabel}`
-        : null)
-
   return (
     <div data-slot="crud-pagination" className={cn(className)}>
       <div className="flex flex-wrap items-center gap-3">
-        {summary != null ? (
-          <p data-slot="crud-pagination-summary">{summary}</p>
-        ) : rangeStart != null && rangeEnd != null && totalCount != null ? (
-          <p data-slot="crud-pagination-summary">
-            Showing{' '}
-            <span data-ui="crud-pagination-range">
-              {rangeStart} – {rangeEnd}
-            </span>
-            {` of ${totalCount} ${itemLabel}`}
-          </p>
-        ) : null}
-
         {pageSize != null && pageSizeOptions?.length && onPageSizeChange ? (
           <div className="flex items-center gap-1.5">
             <span id="crud-rows-label" className="text-muted-foreground">
@@ -121,30 +98,62 @@ export function CrudPagination({
         ) : null}
       </div>
 
-      <Pagination>
-        <PaginationContent>
-          {pages.map((item, index) =>
-            item === 'ellipsis' ? (
-              <PaginationItem key={`e-${index}`}>
-                <PaginationEllipsis />
-              </PaginationItem>
-            ) : (
-              <PaginationItem key={item}>
-                <PaginationLink
-                  href="#"
-                  isActive={item === page}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    onPageChange(item)
-                  }}
-                >
-                  {item}
-                </PaginationLink>
-              </PaginationItem>
-            )
-          )}
-        </PaginationContent>
-      </Pagination>
+      {pageCount > 1 ? (
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationLink
+                href="#"
+                size="icon"
+                aria-label="Go to previous page"
+                aria-disabled={page <= 1 || undefined}
+                className={cn(page <= 1 && 'pointer-events-none opacity-50')}
+                onClick={(e) => {
+                  e.preventDefault()
+                  if (page > 1) onPageChange(page - 1)
+                }}
+              >
+                <AppIcon name="pagination.previous" />
+              </PaginationLink>
+            </PaginationItem>
+            {pages.map((item, index) =>
+              item === 'ellipsis' ? (
+                <PaginationItem key={`e-${index}`}>
+                  <PaginationEllipsis />
+                </PaginationItem>
+              ) : (
+                <PaginationItem key={item}>
+                  <PaginationLink
+                    href="#"
+                    isActive={item === page}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      onPageChange(item)
+                    }}
+                  >
+                    {item}
+                  </PaginationLink>
+                </PaginationItem>
+              )
+            )}
+            <PaginationItem>
+              <PaginationLink
+                href="#"
+                size="icon"
+                aria-label="Go to next page"
+                aria-disabled={page >= pageCount || undefined}
+                className={cn(page >= pageCount && 'pointer-events-none opacity-50')}
+                onClick={(e) => {
+                  e.preventDefault()
+                  if (page < pageCount) onPageChange(page + 1)
+                }}
+              >
+                <AppIcon name="pagination.next" />
+              </PaginationLink>
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      ) : null}
     </div>
   )
 }

@@ -2,7 +2,7 @@
 
 import { FileIcon, RefreshCw, X } from 'lucide-react'
 
-import { cn } from '@/lib/utils'
+import { cn, formatBytes } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
   Item,
@@ -12,12 +12,6 @@ import {
   ItemMedia,
   ItemTitle,
 } from '@/components/ui/item'
-
-function formatBytes(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
-}
 
 type FilePreviewCardProps = {
   file: File

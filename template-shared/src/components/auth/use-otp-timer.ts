@@ -12,7 +12,18 @@ import {
 
 export { OTP_RESEND_COOLDOWN_SECONDS, clearOtpCooldown, startOtpCooldown }
 
-export function useOtpTimer(cooldownSeconds: number = OTP_RESEND_COOLDOWN_SECONDS) {
+export type UseOtpTimerResult = {
+  secondsLeft: number
+  ready: boolean
+  canResend: boolean
+  start: (seconds?: number) => void
+  startIfNeeded: (seconds?: number) => void
+  clear: () => void
+}
+
+export function useOtpTimer(
+  cooldownSeconds: number = OTP_RESEND_COOLDOWN_SECONDS
+): UseOtpTimerResult {
   const secondsLeft = React.useSyncExternalStore(
     subscribeOtpTimer,
     readOtpSecondsLeft,
