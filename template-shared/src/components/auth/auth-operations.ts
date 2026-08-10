@@ -1,4 +1,4 @@
-import type { AuthUser } from '@/components/auth/types'
+import type { AuthUser, CurrentUser } from '@/components/auth/types'
 
 // Every mutation here wraps its arguments in a single `$input` variable —
 // the backend's mutations extend GraphQL::Schema::RelayClassicMutation,
@@ -172,4 +172,43 @@ export type UpdatePasswordResult = {
   updatePassword: {
     success: boolean
   }
+}
+
+// Unlike SignUp/Login, this issues a token immediately — Google's own ID
+// token already proves the account holder controls the email address, so
+// there's no OTP step-up afterward. `idToken` is the credential
+// `GoogleSignInButton`'s `onCredential` receives (a signed JWT — never an
+// OAuth access token).
+export const SIGN_IN_WITH_GOOGLE = `
+  mutation SignInWithGoogle($input: SignInWithGoogleInput!) {
+    signInWithGoogle(input: $input) {
+      token
+      user {
+        id
+        email
+        createdAt
+      }
+    }
+  }
+`
+
+export type SignInWithGoogleResult = {
+  signInWithGoogle: {
+    token: string
+    user: AuthUser
+  }
+}
+
+export const CURRENT_USER = `
+  query CurrentUser {
+    currentUser {
+      roles
+      impersonatorId
+      abilities
+    }
+  }
+`
+
+export type CurrentUserResult = {
+  currentUser: CurrentUser
 }

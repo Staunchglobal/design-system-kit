@@ -22,20 +22,28 @@ import type {
 } from '@/components/crud/types'
 import { isCrudEditFieldsConfig, isCrudFormFieldsConfig } from '@/components/crud/types'
 import { DataTable } from '@/components/ui/crud-table'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Toaster } from '@/components/ui/sonner'
 import { cn } from '@/lib/utils'
+import { Plus } from 'lucide-react'
 
 export type CrudScreenProps<T> = {
   columns: CrudColumn<T>[]
   fetchPage: (params: CrudPageParams) => Promise<CrudPageResult<T>>
   getRowId: (row: T) => string
+  /** Page title rendered above the card. */
+  title?: string
+  description?: string
   search?: CrudSearchConfig | false
   pageSize?: number
   pageSizeOptions?: number[]
   toolbar?: React.ReactNode
   tabs?: CrudTab[]
   initialTab?: string
+  /** Controlled tab value (e.g. from a route segment) — pair with `onTabChange`. Omit both to let CrudScreen manage the tab as internal state. */
+  activeTab?: string
+  onTabChange?: (tab: string) => void
   create?: CrudCreateConfig<T>
   edit?: CrudEditConfig<T>
   delete?: CrudDeleteConfig<T>
@@ -57,12 +65,16 @@ export function CrudScreen<T>({
   columns,
   fetchPage,
   getRowId,
+  title,
+  description,
   search = {},
   pageSize = 10,
   pageSizeOptions = [5, 10, 20, 50],
   toolbar,
   tabs,
   initialTab,
+  activeTab: activeTabProp,
+  onTabChange: onTabChangeProp,
   create,
   edit,
   delete: deleteConfig,
@@ -77,6 +89,8 @@ export function CrudScreen<T>({
     getItemId: getRowId,
     pageSize,
     initialTab: initialTab ?? tabs?.[0]?.value ?? null,
+    activeTab: activeTabProp,
+    onTabChange: onTabChangeProp,
   })
 
   const [createOpen, setCreateOpen] = React.useState(false)
@@ -86,6 +100,11 @@ export function CrudScreen<T>({
 
   const showSearch = search !== false
 
+  const listMutators = React.useMemo(
+    () => ({ insertItem: list.insertItem, replaceItem: list.replaceItem, removeItem: list.removeItem }),
+    [list.insertItem, list.replaceItem, list.removeItem]
+  )
+
   const actions = React.useMemo(() => {
     const built: CrudAction<T>[] = []
 
@@ -94,6 +113,7 @@ export function CrudScreen<T>({
         key: 'edit',
         label: 'Edit',
         variant: 'outline',
+        isVisible: edit.isVisible,
         onClick: (row) => setEditing(row),
       })
     }
@@ -141,76 +161,109 @@ export function CrudScreen<T>({
     }
   }
 
+  const addLabel = create ? (create.addLabel ?? `Add ${entityLabel}`) : 'Add'
+  const openCreate = create ? () => setCreateOpen(true) : undefined
+  // When a page title is provided, the create CTA lives in the header —
+  // the toolbar keeps search/filters only.
+  const addInHeader = Boolean(title && openCreate)
+
   return (
-    <div className={cn('w-full', className)} data-slot="crud-screen">
+    <div className={cn('w-full', className)} data-slot="crud-page">
       {withToaster ? <Toaster /> : null}
 
-      <CrudToolbar
-        showSearch={showSearch}
-        search={list.search}
-        onSearchChange={list.setSearch}
-        searchPlaceholder={typeof search === 'object' ? search.placeholder : undefined}
-        isSearchPending={list.isSearchPending}
-        onAdd={create ? () => setCreateOpen(true) : undefined}
-        addLabel={create && 'title' in create ? `Add ${entityLabel}` : 'Add'}
-        toolbar={toolbar}
-        tabs={tabs}
-        activeTab={list.activeTab}
-        onTabChange={list.setActiveTab}
-      />
-
-      {list.error ? (
-        <div
-          className="border-destructive/30 bg-destructive/5 text-destructive m-4 flex flex-wrap items-center justify-between gap-2 rounded-lg border px-3 py-2 text-sm"
-          role="alert"
-        >
-          <span>{list.error.message}</span>
-          <Button type="button" size="sm" variant="outline" onClick={list.refetch}>
-            Retry
-          </Button>
-        </div>
+      {title ? (
+        <header data-slot="crud-header">
+          <div data-slot="crud-header-copy">
+            <div data-slot="crud-header-title-row">
+              <h2 data-slot="crud-header-title">{title}</h2>
+              {/* Always render so the count badge doesn't shift the title on fetch. */}
+              <Badge
+                variant="secondary"
+                className={cn(
+                  'border-border tabular-nums',
+                  list.totalCount <= 0 && 'invisible'
+                )}
+                aria-hidden={list.totalCount <= 0 || undefined}
+              >
+                {list.totalCount > 0 ? list.totalCount : 0}
+              </Badge>
+            </div>
+            {description ? (
+              <p data-slot="crud-header-description">{description}</p>
+            ) : null}
+          </div>
+          {addInHeader ? (
+            <div data-slot="crud-header-actions">
+              <Button type="button" size="sm" onClick={openCreate}>
+                <Plus />
+                {addLabel}
+              </Button>
+            </div>
+          ) : null}
+        </header>
       ) : null}
 
-      {!list.loading &&
-      list.items.length === 0 &&
-      empty?.title &&
-      !list.debouncedSearch ? (
-        <div className="rounded-lg border px-6 py-10 text-center">
-          <p className="text-sm font-medium">{empty.title}</p>
-          {empty.description ? (
-            <p className="text-muted-foreground mt-1 text-sm">{empty.description}</p>
-          ) : null}
-          {empty.action ? <div className="mt-4 flex justify-center">{empty.action}</div> : null}
-        </div>
-      ) : (
+      <div data-slot="crud-screen">
+        <CrudToolbar
+          showSearch={showSearch}
+          search={list.search}
+          onSearchChange={list.setSearch}
+          searchPlaceholder={typeof search === 'object' ? search.placeholder : undefined}
+          isSearchPending={list.isSearchPending}
+          onAdd={addInHeader ? undefined : openCreate}
+          addLabel={addLabel}
+          toolbar={toolbar}
+          tabs={tabs}
+          activeTab={list.activeTab}
+          onTabChange={list.setActiveTab}
+        />
+
+        {list.error ? (
+          <div
+            className="border-destructive/30 bg-destructive/5 text-destructive m-4 flex flex-wrap items-center justify-between gap-2 rounded-lg border px-3 py-2 text-sm"
+            role="alert"
+          >
+            <span>{list.error.message}</span>
+            <Button type="button" size="sm" variant="outline" onClick={list.refetch}>
+              Retry
+            </Button>
+          </div>
+        ) : null}
+
+        {/*
+          Keep DataTable mounted across tab/filter fetches. Swapping it for the
+          empty card (or remounting on URL changes) is what made the table
+          flash/glitch on every tab click.
+        */}
         <DataTable
           columns={columns}
           data={list.items}
           getRowId={getRowId}
           sortState={list.sort}
           onSortChange={list.setSort}
+          // Only the first paint uses a loading empty state. Tab/filter refetches
+          // keep the previous rows until the new page arrives — no height bounce.
           isLoading={list.loading}
-          emptyMessage={emptyMessage}
+          emptyMessage={
+            list.loading
+              ? 'Loading…'
+              : list.debouncedSearch
+                ? emptyMessage
+                : (empty?.title ?? emptyMessage)
+          }
           actions={actions.length ? actions : undefined}
+          listMutators={listMutators}
         />
-      )}
 
-      <CrudPagination
-        page={list.page}
-        pageCount={list.pageCount}
-        onPageChange={list.setPage}
-        totalCount={list.totalCount}
-        itemLabel={`${entityLabel}${list.totalCount === 1 ? '' : 's'}`}
-        totalLabel={
-          list.debouncedSearch
-            ? `Showing matches for “${list.debouncedSearch}” · ${list.totalCount} ${entityLabel}${list.totalCount === 1 ? '' : 's'}`
-            : undefined
-        }
-        pageSize={list.pageSize}
-        pageSizeOptions={pageSizeOptions}
-        onPageSizeChange={list.setPageSize}
-      />
-
+        <CrudPagination
+          page={list.page}
+          pageCount={list.pageCount}
+          onPageChange={list.setPage}
+          pageSize={list.pageSize}
+          pageSizeOptions={pageSizeOptions}
+          onPageSizeChange={list.setPageSize}
+        />
+      </div>
       {create && isCrudFormFieldsConfig(create) ? (
         <CrudEntityFormDialog
           open={createOpen}
@@ -223,12 +276,14 @@ export function CrudScreen<T>({
           onSubmit={async (values) => {
             await toast.promise(
               Promise.resolve(create.onSubmit(values as never)).then((item) => {
-                list.insertItem(item as T)
+                // `void`/`undefined` means the created record doesn't belong on
+                // whatever page/tab is currently showing — skip inserting it.
+                if (item != null) list.insertItem(item as T)
                 return item
               }),
               {
                 loading: `Creating ${entityLabel}…`,
-                success: `${entityLabel[0]!.toUpperCase()}${entityLabel.slice(1)} created`,
+                success: create.successMessage ?? `${entityLabel[0]!.toUpperCase()}${entityLabel.slice(1)} created`,
                 error: (err: unknown) => (err instanceof Error ? err.message : 'Create failed'),
               }
             )
@@ -270,7 +325,7 @@ export function CrudScreen<T>({
               }),
               {
                 loading: `Updating ${entityLabel}…`,
-                success: `${entityLabel[0]!.toUpperCase()}${entityLabel.slice(1)} updated`,
+                success: edit.successMessage ?? `${entityLabel[0]!.toUpperCase()}${entityLabel.slice(1)} updated`,
                 error: (err: unknown) => (err instanceof Error ? err.message : 'Update failed'),
               }
             )

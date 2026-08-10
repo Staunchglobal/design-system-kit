@@ -4,19 +4,17 @@ import { AddressAutocomplete } from '@/components/ui/address-autocomplete'
 import type { PlaceDetails } from '@/components/ui/address-autocomplete'
 
 export default function AddressAutocompleteDemo() {
-  const apiKey = import.meta.env.VITE_GOOGLE_PLACES_API_KEY ?? ''
   const [value, setValue] = React.useState('')
   const [details, setDetails] = React.useState<PlaceDetails | null>(null)
   return (
     <ComponentSection
       id="address-autocomplete"
       title="Address Autocomplete"
-      description="Google Places REST autocomplete. Requires a consumer-supplied API key."
+      description="Google Places REST autocomplete, proxied through /api/places/* dev middleware. Requires GOOGLE_PLACES_API_KEY set server-side (never VITE_*)."
     >
-      <Example title="API key required" contentClassName="block w-full max-w-md">
+      <Example title="Server API key required" contentClassName="block w-full max-w-md">
         <div className="space-y-2">
           <AddressAutocomplete
-            apiKey={apiKey}
             value={value}
             onValueChange={setValue}
             onSelect={setDetails}

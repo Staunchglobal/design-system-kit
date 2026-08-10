@@ -96,14 +96,25 @@ Empty output means every file on disk is registered.
   `process.env[name]`. Dynamic access breaks Next.js's build-time
   inlining of `NEXT_PUBLIC_*` vars and silently falls back to
   mocks/defaults instead of erroring.
-- **Feature flags have no frontend concept yet.** The backend gem
-  (`staunch_saas_kit`) gates every non-auth feature behind a Flipper flag;
-  a disabled feature currently surfaces to this frontend as a raw GraphQL
-  error through the generic `ChatErrorBanner`/`ChatErrorPanel` paths, not
-  a clean "this feature isn't enabled" state. If you build flag-awareness
-  here, it needs to read from wherever the backend ends up exposing
-  flag/permission state alongside auth (not yet decided) — don't assume a
-  shape that doesn't exist on the wire yet.
+- **Authorization visibility is server-computed, never re-derived
+  client-side.** The backend gem computes a flat `abilities: string[]` on
+  `currentUser` (global keys like `"users:invite"`, checked via `can()` from
+  `components/auth/use-current-user.ts`) and per-row on `User`/`Invitation`
+  (bare verbs like `"archive"`, checked via `row.abilities.includes(...)`).
+  Nav items carry an optional `requiredAbility` (`managed-files.ts`'s
+  `RouteEntry`, threaded through `codegen.ts`) filtered in `(app)/layout.tsx`
+  and `PrivateLayout.tsx`; gated pages additionally guard themselves in case
+  the URL is hit directly. Never hand-roll a role check (`roles.includes('admin')`)
+  for a new feature — add an `ability(...)` on the backend type and check it
+  here. One exception: `archive?`/`restore?`/`impersonate?` don't encode the
+  row's own `discarded` state server-side (they're viewer-relative, not
+  row-state-relative) — combine the ability check with the row's `discarded`
+  field client-side, see `user-management-screen.tsx`'s `isVisible`
+  predicates. A disabled Flipper flag still surfaces to this frontend as a
+  raw GraphQL error through the generic `ChatErrorBanner`/`ChatErrorPanel`
+  paths if a mutation is called directly (not through a hidden button) —
+  server-side Pundit/Flipper remain the actual enforcement boundary, this is
+  UX only.
 
 ## What does NOT belong in this file
 

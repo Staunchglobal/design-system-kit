@@ -15,7 +15,7 @@ export default function GoogleSignInButtonDemo() {
     <ComponentSection
       id="google-sign-in-button"
       title="Google Sign-In Button"
-      description="Credential / ID-token flow via @react-oauth/google. Requires GoogleOAuthProvider at the app root. Uses Google's branded widget (not a shadcn Button)."
+      description="Credential / ID-token flow via @react-oauth/google. Requires GoogleOAuthProvider at the app root. Renders as a themed shadcn Button — the real Google widget sits invisibly on top to receive the click."
     >
       <Example title="Sign in" contentClassName="block space-y-3">
         {CLIENT_ID ? (

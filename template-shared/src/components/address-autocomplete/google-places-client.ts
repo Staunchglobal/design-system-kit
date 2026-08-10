@@ -48,16 +48,21 @@ function component(components: AddressComponent[] | undefined, type: string, sho
   return short ? match.short_name : match.long_name
 }
 
+// No API key parameter here on purpose — the key lives server-side only
+// (`GOOGLE_PLACES_API_KEY`, read by the `/api/places/*` proxy routes/dev
+// middleware), never in a `NEXT_PUBLIC_*`/`VITE_*` var. A server-to-server
+// call to Google can't be restricted by HTTP referrer, so a key that ever
+// reached the browser bundle (or even just the Network tab, forwarded
+// unused) would be silently billable by anyone who scraped it — the
+// proxy's whole point is defeated if the client still holds the secret.
 export async function fetchPlacePredictions(
   input: string,
-  apiKey: string,
   opts?: { country?: string }
 ): Promise<PlacePrediction[]> {
-  if (!input.trim() || !apiKey) return []
+  if (!input.trim()) return []
 
   const params = new URLSearchParams({
     input: input.trim(),
-    key: apiKey,
     types: 'address',
   })
   if (opts?.country) {
@@ -76,13 +81,9 @@ export async function fetchPlacePredictions(
   }))
 }
 
-export async function fetchPlaceDetails(
-  placeId: string,
-  apiKey: string
-): Promise<PlaceDetails> {
+export async function fetchPlaceDetails(placeId: string): Promise<PlaceDetails> {
   const params = new URLSearchParams({
     place_id: placeId,
-    key: apiKey,
     fields: 'formatted_address,geometry,address_component',
   })
   const res = await fetch(`/api/places/details?${params.toString()}`)

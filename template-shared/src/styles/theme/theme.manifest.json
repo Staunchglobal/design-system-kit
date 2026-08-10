@@ -1098,7 +1098,7 @@
         {
           "id": "colors:--sidebar-accent:0",
           "name": "--sidebar-accent",
-          "value": "var(--secondary-50)",
+          "value": "var(--neutral-50)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "root"
@@ -1410,7 +1410,7 @@
         {
           "id": "colors:--sidebar-accent:1",
           "name": "--sidebar-accent",
-          "value": "var(--secondary-800)",
+          "value": "var(--neutral-800)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -1418,7 +1418,7 @@
         {
           "id": "colors:--sidebar-accent-foreground:1",
           "name": "--sidebar-accent-foreground",
-          "value": "var(--secondary-50)",
+          "value": "var(--neutral-50)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark"
@@ -1714,7 +1714,7 @@
         {
           "id": "colors:--sidebar-accent:2",
           "name": "--sidebar-accent",
-          "value": "var(--secondary-50)",
+          "value": "var(--neutral-50)",
           "fieldType": "color-ref",
           "occurrence": 2,
           "scope": "editor"
@@ -2573,7 +2573,7 @@
           "value": "1.5rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "typography"
         },
         {
           "id": "typography-patterns:--typography-table-border-color:0",
@@ -2581,7 +2581,7 @@
           "value": "var(--border)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "typography"
         },
         {
           "id": "typography-patterns:--typography-table-cell-padding-x:0",
@@ -2643,7 +2643,7 @@
     },
     {
       "id": "accordion",
-      "title": "Accordion",
+      "title": "accordion",
       "kind": "component",
       "file": "theme/components/accordion.css",
       "variables": [
@@ -2653,7 +2653,7 @@
           "value": "100%",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "accordion"
         },
         {
           "id": "accordion:--accordion-border-color:0",
@@ -2661,7 +2661,7 @@
           "value": "var(--border)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "accordion"
         },
         {
           "id": "accordion:--accordion-border-width:0",
@@ -2669,7 +2669,7 @@
           "value": "1px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "accordion"
         },
         {
           "id": "accordion:--accordion-radius:0",
@@ -2677,7 +2677,7 @@
           "value": "var(--radius-md)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "accordion"
         },
         {
           "id": "accordion:--accordion-item-border-color:0",
@@ -2883,7 +2883,7 @@
     },
     {
       "id": "address-autocomplete",
-      "title": "Address Autocomplete",
+      "title": "address-autocomplete",
       "kind": "component",
       "file": "theme/components/address-autocomplete.css",
       "variables": [
@@ -2947,7 +2947,7 @@
     },
     {
       "id": "alert-dialog",
-      "title": "Alert Dialog",
+      "title": "alert-dialog",
       "kind": "component",
       "file": "theme/components/alert-dialog.css",
       "variables": [
@@ -2957,7 +2957,7 @@
           "value": "var(--overlay-bg)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert-dialog-overlay"
         },
         {
           "id": "alert-dialog:--alert-dialog-overlay-opacity:0",
@@ -2965,7 +2965,7 @@
           "value": "0.5",
           "fieldType": "opacity",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert-dialog-overlay"
         },
         {
           "id": "alert-dialog:--alert-dialog-overlay-blur:0",
@@ -2973,7 +2973,7 @@
           "value": "4px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert-dialog-overlay"
         },
         {
           "id": "alert-dialog:--alert-dialog-overlay-duration:0",
@@ -2981,7 +2981,7 @@
           "value": "100ms",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert-dialog-overlay"
         },
         {
           "id": "alert-dialog:--alert-dialog-content-bg:0",
@@ -3197,7 +3197,7 @@
           "value": "var(--font-sans)",
           "fieldType": "font-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert-dialog-title"
         },
         {
           "id": "alert-dialog:--alert-dialog-title-font-size:0",
@@ -3205,7 +3205,7 @@
           "value": "var(--typography-lead-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert-dialog-title"
         },
         {
           "id": "alert-dialog:--alert-dialog-title-font-weight:0",
@@ -3213,7 +3213,7 @@
           "value": "var(--typography-h1-font-weight)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert-dialog-title"
         },
         {
           "id": "alert-dialog:--alert-dialog-title-line-height:0",
@@ -3221,7 +3221,7 @@
           "value": "var(--typography-lead-line-height)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert-dialog-title"
         },
         {
           "id": "alert-dialog:--alert-dialog-title-fg:0",
@@ -3229,7 +3229,7 @@
           "value": "var(--foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert-dialog-title"
         },
         {
           "id": "alert-dialog:--alert-dialog-description-fg:0",
@@ -3237,7 +3237,7 @@
           "value": "var(--muted-600)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert-dialog-description"
         },
         {
           "id": "alert-dialog:--alert-dialog-description-font-size:0",
@@ -3245,7 +3245,7 @@
           "value": "var(--typography-small-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert-dialog-description"
         },
         {
           "id": "alert-dialog:--alert-dialog-description-line-height:0",
@@ -3253,7 +3253,7 @@
           "value": "var(--typography-small-line-height)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert-dialog-description"
         },
         {
           "id": "alert-dialog:--alert-dialog-description-font-weight:0",
@@ -3261,7 +3261,7 @@
           "value": "var(--typography-p-font-weight)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert-dialog-description"
         },
         {
           "id": "alert-dialog:--alert-dialog-description-link-hover-fg:0",
@@ -3269,7 +3269,7 @@
           "value": "var(--foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert-dialog-description"
         },
         {
           "id": "alert-dialog:--alert-dialog-description-link-underline-offset:0",
@@ -3277,7 +3277,7 @@
           "value": "3px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert-dialog-description"
         },
         {
           "id": "alert-dialog:--alert-dialog-content-bg:1",
@@ -3299,7 +3299,7 @@
     },
     {
       "id": "alert",
-      "title": "Alert",
+      "title": "alert",
       "kind": "component",
       "file": "theme/components/alert.css",
       "variables": [
@@ -3309,7 +3309,7 @@
           "value": "var(--radius-3xl)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert"
         },
         {
           "id": "alert:--alert-padding-x:0",
@@ -3317,7 +3317,7 @@
           "value": "1rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert"
         },
         {
           "id": "alert:--alert-padding-y:0",
@@ -3325,7 +3325,7 @@
           "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert"
         },
         {
           "id": "alert:--alert-gap-x:0",
@@ -3333,7 +3333,7 @@
           "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert"
         },
         {
           "id": "alert:--alert-gap-y:0",
@@ -3341,7 +3341,7 @@
           "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert"
         },
         {
           "id": "alert:--alert-font-size:0",
@@ -3349,7 +3349,7 @@
           "value": "var(--typography-small-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert"
         },
         {
           "id": "alert:--alert-action-offset:0",
@@ -3357,7 +3357,7 @@
           "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert"
         },
         {
           "id": "alert:--alert-border-width:0",
@@ -3365,7 +3365,7 @@
           "value": "0px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert"
         },
         {
           "id": "alert:--alert-border-color:0",
@@ -3373,7 +3373,7 @@
           "value": "transparent",
           "fieldType": "color-keyword",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert"
         },
         {
           "id": "alert:--alert-icon-size:0",
@@ -3381,7 +3381,7 @@
           "value": "1.5rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "alert"
         },
         {
           "id": "alert:--alert-bg:0",
@@ -3707,7 +3707,7 @@
     },
     {
       "id": "aspect-ratio",
-      "title": "Aspect Ratio",
+      "title": "aspect-ratio",
       "kind": "component",
       "file": "theme/components/aspect-ratio.css",
       "variables": [
@@ -3717,7 +3717,7 @@
           "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "aspect-ratio"
         },
         {
           "id": "aspect-ratio:--aspect-ratio-overflow:0",
@@ -3725,13 +3725,13 @@
           "value": "visible",
           "fieldType": "overflow",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "aspect-ratio"
         }
       ]
     },
     {
       "id": "attachment",
-      "title": "Attachment",
+      "title": "attachment",
       "kind": "component",
       "file": "theme/components/attachment.css",
       "variables": [
@@ -4027,7 +4027,7 @@
     },
     {
       "id": "avatar",
-      "title": "Avatar",
+      "title": "avatar",
       "kind": "component",
       "file": "theme/components/avatar.css",
       "variables": [
@@ -4227,7 +4227,7 @@
     },
     {
       "id": "badge",
-      "title": "Badge",
+      "title": "badge",
       "kind": "component",
       "file": "theme/components/badge.css",
       "variables": [
@@ -4237,7 +4237,7 @@
           "value": "1.5rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "badge"
         },
         {
           "id": "badge:--badge-gap:0",
@@ -4245,7 +4245,7 @@
           "value": "0.25rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "badge"
         },
         {
           "id": "badge:--badge-radius:0",
@@ -4253,7 +4253,7 @@
           "value": "var(--radius-full)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "badge"
         },
         {
           "id": "badge:--badge-padding-x:0",
@@ -4261,7 +4261,7 @@
           "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "badge"
         },
         {
           "id": "badge:--badge-padding-y:0",
@@ -4269,7 +4269,7 @@
           "value": "0.25rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "badge"
         },
         {
           "id": "badge:--badge-font-size:0",
@@ -4277,7 +4277,7 @@
           "value": "var(--typography-caption-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "badge"
         },
         {
           "id": "badge:--badge-font-weight:0",
@@ -4285,7 +4285,7 @@
           "value": "var(--typography-small-font-weight)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "badge"
         },
         {
           "id": "badge:--badge-line-height:0",
@@ -4293,7 +4293,7 @@
           "value": "var(--typography-caption-line-height)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "badge"
         },
         {
           "id": "badge:--badge-border-width:0",
@@ -4301,7 +4301,7 @@
           "value": "1px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "badge"
         },
         {
           "id": "badge:--badge-border-color:0",
@@ -4309,7 +4309,7 @@
           "value": "var(--neutral-950)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "badge"
         },
         {
           "id": "badge:--badge-border-opacity:0",
@@ -4317,7 +4317,7 @@
           "value": "0.08",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "badge"
         },
         {
           "id": "badge:--badge-bg:0",
@@ -4469,7 +4469,7 @@
           "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 6,
-          "scope": "default"
+          "scope": "badge/variant=outline"
         },
         {
           "id": "badge:--badge-border-color:1",
@@ -4477,7 +4477,7 @@
           "value": "var(--border)",
           "fieldType": "color-ref",
           "occurrence": 1,
-          "scope": "default"
+          "scope": "badge/variant=outline"
         },
         {
           "id": "badge:--badge-fg:6",
@@ -4485,7 +4485,7 @@
           "value": "var(--foreground)",
           "fieldType": "color-ref",
           "occurrence": 6,
-          "scope": "default"
+          "scope": "badge/variant=outline"
         },
         {
           "id": "badge:--badge-link-hover-bg:6",
@@ -4493,7 +4493,7 @@
           "value": "var(--muted)",
           "fieldType": "color-ref",
           "occurrence": 6,
-          "scope": "default"
+          "scope": "badge/variant=outline"
         },
         {
           "id": "badge:--badge-link-hover-fg:0",
@@ -4501,7 +4501,7 @@
           "value": "var(--muted-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "badge/variant=outline"
         },
         {
           "id": "badge:--badge-border-width:1",
@@ -4739,7 +4739,7 @@
     },
     {
       "id": "breadcrumb",
-      "title": "Breadcrumb",
+      "title": "breadcrumb",
       "kind": "component",
       "file": "theme/components/breadcrumb.css",
       "variables": [
@@ -4845,7 +4845,7 @@
           "value": "1rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "breadcrumb-separator"
         },
         {
           "id": "breadcrumb:--breadcrumb-separator-fg:0",
@@ -4853,7 +4853,7 @@
           "value": "var(--muted-600)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "breadcrumb-separator"
         },
         {
           "id": "breadcrumb:--breadcrumb-ellipsis-size:0",
@@ -4883,7 +4883,7 @@
     },
     {
       "id": "bubble",
-      "title": "Bubble",
+      "title": "bubble",
       "kind": "component",
       "file": "theme/components/bubble.css",
       "variables": [
@@ -5259,7 +5259,7 @@
     },
     {
       "id": "button-group",
-      "title": "Button Group",
+      "title": "button-group",
       "kind": "component",
       "file": "theme/components/button-group.css",
       "variables": [
@@ -5323,7 +5323,7 @@
     },
     {
       "id": "button",
-      "title": "Button",
+      "title": "button",
       "kind": "component",
       "file": "theme/components/button.css",
       "variables": [
@@ -5333,7 +5333,7 @@
           "value": "var(--radius-full)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "button"
         },
         {
           "id": "button:--button-border-width:0",
@@ -5341,7 +5341,7 @@
           "value": "1px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "button"
         },
         {
           "id": "button:--button-font-size:0",
@@ -5349,7 +5349,7 @@
           "value": "var(--typography-small-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "button"
         },
         {
           "id": "button:--button-font-weight:0",
@@ -5357,7 +5357,7 @@
           "value": "var(--typography-small-font-weight)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "button"
         },
         {
           "id": "button:--button-transition:0",
@@ -5365,7 +5365,7 @@
           "value": "all 0.15s ease",
           "fieldType": "transition",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "button"
         },
         {
           "id": "button:--button-disabled-opacity:0",
@@ -5373,7 +5373,7 @@
           "value": "0.5",
           "fieldType": "opacity",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "button"
         },
         {
           "id": "button:--button-focus-ring-width:0",
@@ -5381,7 +5381,7 @@
           "value": "3px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "button"
         },
         {
           "id": "button:--button-focus-ring-color:0",
@@ -5389,7 +5389,7 @@
           "value": "var(--ring)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "button"
         },
         {
           "id": "button:--button-focus-border-color:0",
@@ -5397,7 +5397,7 @@
           "value": "var(--ring)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "button"
         },
         {
           "id": "button:--button-invalid-border-color:0",
@@ -5405,7 +5405,7 @@
           "value": "var(--destructive)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "button"
         },
         {
           "id": "button:--button-invalid-ring-color:0",
@@ -5413,7 +5413,7 @@
           "value": "var(--destructive-600)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "button"
         },
         {
           "id": "button:--button-bg:0",
@@ -6035,7 +6035,7 @@
     },
     {
       "id": "calendar",
-      "title": "Calendar",
+      "title": "calendar",
       "kind": "component",
       "file": "theme/components/calendar.css",
       "variables": [
@@ -6245,7 +6245,7 @@
           "value": "transparent",
           "fieldType": "color-keyword",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "button/ancestor-slot=calendar/selected=true"
         },
         {
           "id": "calendar:--calendar-today-fg:0",
@@ -6253,7 +6253,7 @@
           "value": "var(--primary)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "button/ancestor-slot=calendar/selected=true"
         },
         {
           "id": "calendar:--calendar-outside-fg:0",
@@ -6395,7 +6395,7 @@
     },
     {
       "id": "card",
-      "title": "Card",
+      "title": "card",
       "kind": "component",
       "file": "theme/components/card.css",
       "variables": [
@@ -6611,7 +6611,7 @@
     },
     {
       "id": "carousel",
-      "title": "Carousel",
+      "title": "carousel",
       "kind": "component",
       "file": "theme/components/carousel.css",
       "variables": [
@@ -6621,7 +6621,7 @@
           "value": "1rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "carousel-content"
         },
         {
           "id": "carousel:--carousel-item-spacing:1",
@@ -6651,7 +6651,7 @@
     },
     {
       "id": "chart",
-      "title": "Chart",
+      "title": "chart",
       "kind": "component",
       "file": "theme/components/chart.css",
       "variables": [
@@ -6787,7 +6787,7 @@
     },
     {
       "id": "checkbox",
-      "title": "Checkbox",
+      "title": "checkbox",
       "kind": "component",
       "file": "theme/components/checkbox.css",
       "variables": [
@@ -6797,7 +6797,7 @@
           "value": "1.25rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "checkbox"
         },
         {
           "id": "checkbox:--checkbox-radius:0",
@@ -6805,7 +6805,7 @@
           "value": "var(--radius-sm)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "checkbox"
         },
         {
           "id": "checkbox:--checkbox-border-width:0",
@@ -6813,7 +6813,7 @@
           "value": "1px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "checkbox"
         },
         {
           "id": "checkbox:--checkbox-border-color:0",
@@ -6821,7 +6821,7 @@
           "value": "var(--neutral-950)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "checkbox"
         },
         {
           "id": "checkbox:--checkbox-border-opacity:0",
@@ -6829,7 +6829,7 @@
           "value": "0.4",
           "fieldType": "opacity",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "checkbox"
         },
         {
           "id": "checkbox:--checkbox-bg:0",
@@ -6837,7 +6837,7 @@
           "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "checkbox"
         },
         {
           "id": "checkbox:--checkbox-checked-border-color:0",
@@ -6845,7 +6845,7 @@
           "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "checkbox"
         },
         {
           "id": "checkbox:--checkbox-checked-bg:0",
@@ -6853,7 +6853,7 @@
           "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "checkbox"
         },
         {
           "id": "checkbox:--checkbox-checked-fg:0",
@@ -6861,7 +6861,7 @@
           "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "checkbox"
         },
         {
           "id": "checkbox:--checkbox-focus-ring-width:0",
@@ -6869,7 +6869,7 @@
           "value": "3px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "checkbox"
         },
         {
           "id": "checkbox:--checkbox-focus-border-color:0",
@@ -6877,7 +6877,7 @@
           "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "checkbox"
         },
         {
           "id": "checkbox:--checkbox-focus-ring-color:0",
@@ -6885,7 +6885,7 @@
           "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "checkbox"
         },
         {
           "id": "checkbox:--checkbox-focus-ring-opacity:0",
@@ -6893,7 +6893,7 @@
           "value": "0.35",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "checkbox"
         },
         {
           "id": "checkbox:--checkbox-invalid-border-color:0",
@@ -6901,7 +6901,7 @@
           "value": "var(--destructive)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "checkbox"
         },
         {
           "id": "checkbox:--checkbox-invalid-ring-color:0",
@@ -6909,7 +6909,7 @@
           "value": "var(--destructive)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "checkbox"
         },
         {
           "id": "checkbox:--checkbox-invalid-ring-opacity:0",
@@ -6917,7 +6917,7 @@
           "value": "0.35",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "checkbox"
         },
         {
           "id": "checkbox:--checkbox-disabled-opacity:0",
@@ -6925,7 +6925,7 @@
           "value": "0.5",
           "fieldType": "opacity",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "checkbox"
         },
         {
           "id": "checkbox:--checkbox-indicator-icon-size:0",
@@ -6995,14 +6995,14 @@
     },
     {
       "id": "collapsible",
-      "title": "Collapsible",
+      "title": "collapsible",
       "kind": "component",
       "file": "theme/components/collapsible.css",
       "variables": []
     },
     {
       "id": "combobox",
-      "title": "Combobox",
+      "title": "combobox",
       "kind": "component",
       "file": "theme/components/combobox.css",
       "variables": [
@@ -7436,7 +7436,7 @@
           "value": "var(--neutral-50)",
           "fieldType": "color-ref",
           "occurrence": 1,
-          "scope": "dark"
+          "scope": "dark/combobox-content"
         },
         {
           "id": "combobox:--combobox-chips-focus-ring-color:1",
@@ -7458,7 +7458,7 @@
     },
     {
       "id": "command",
-      "title": "Command",
+      "title": "command",
       "kind": "component",
       "file": "theme/components/command.css",
       "variables": [
@@ -7692,7 +7692,7 @@
           "value": "var(--muted-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "dialog-content"
+          "scope": "command-shortcut"
         },
         {
           "id": "command:--command-shortcut-selected-fg:0",
@@ -7700,7 +7700,7 @@
           "value": "var(--foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "dialog-content"
+          "scope": "command-shortcut"
         },
         {
           "id": "command:--command-shortcut-font-size:0",
@@ -7708,7 +7708,7 @@
           "value": "var(--typography-overline-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "dialog-content"
+          "scope": "command-shortcut"
         },
         {
           "id": "command:--command-shortcut-tracking:0",
@@ -7716,13 +7716,13 @@
           "value": "0.05em",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "dialog-content"
+          "scope": "command-shortcut"
         }
       ]
     },
     {
       "id": "context-menu",
-      "title": "Context Menu",
+      "title": "context-menu",
       "kind": "component",
       "file": "theme/components/context-menu.css",
       "variables": [
@@ -8066,7 +8066,7 @@
     },
     {
       "id": "copy-input",
-      "title": "Copy Input",
+      "title": "copy-input",
       "kind": "component",
       "file": "theme/components/copy-input.css",
       "variables": [
@@ -8076,7 +8076,7 @@
           "value": "var(--input-radius)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "copy-input"
         },
         {
           "id": "copy-input:--copy-input-border-width:0",
@@ -8084,7 +8084,7 @@
           "value": "var(--input-border-width)",
           "fieldType": "token-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "copy-input"
         },
         {
           "id": "copy-input:--copy-input-border-color:0",
@@ -8092,7 +8092,7 @@
           "value": "var(--input-border-color)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "copy-input"
         },
         {
           "id": "copy-input:--copy-input-bg:0",
@@ -8100,7 +8100,7 @@
           "value": "var(--input-bg)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "copy-input"
         },
         {
           "id": "copy-input:--copy-input-height:0",
@@ -8108,7 +8108,7 @@
           "value": "var(--input-height)",
           "fieldType": "token-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "copy-input"
         },
         {
           "id": "copy-input:--copy-input-focus-border-color:0",
@@ -8116,7 +8116,7 @@
           "value": "var(--input-focus-border-color)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "copy-input"
         },
         {
           "id": "copy-input:--copy-input-focus-border-width:0",
@@ -8124,7 +8124,7 @@
           "value": "2px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "copy-input"
         },
         {
           "id": "copy-input:--tw-ring-shadow:0",
@@ -8132,7 +8132,7 @@
           "value": "0 0 #0000",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "copy-input"
         },
         {
           "id": "copy-input:--tw-ring-offset-shadow:0",
@@ -8140,7 +8140,7 @@
           "value": "0 0 #0000",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "copy-input"
         },
         {
           "id": "copy-input:--tw-ring-shadow:1",
@@ -8178,7 +8178,7 @@
     },
     {
       "id": "count-badge",
-      "title": "Count Badge",
+      "title": "count-badge",
       "kind": "component",
       "file": "theme/components/count-badge.css",
       "variables": [
@@ -8188,7 +8188,7 @@
           "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "count-badge"
         },
         {
           "id": "count-badge:--count-badge-fg:0",
@@ -8196,7 +8196,7 @@
           "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "count-badge"
         },
         {
           "id": "count-badge:--count-badge-border-width:0",
@@ -8204,7 +8204,7 @@
           "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "count-badge"
         },
         {
           "id": "count-badge:--count-badge-border-color:0",
@@ -8212,7 +8212,7 @@
           "value": "transparent",
           "fieldType": "color-keyword",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "count-badge"
         },
         {
           "id": "count-badge:--count-badge-radius:0",
@@ -8220,7 +8220,7 @@
           "value": "var(--radius-full)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "count-badge"
         },
         {
           "id": "count-badge:--count-badge-padding-x:0",
@@ -8228,7 +8228,7 @@
           "value": "0.5rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "count-badge"
         },
         {
           "id": "count-badge:--count-badge-padding-y:0",
@@ -8236,7 +8236,7 @@
           "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "count-badge"
         },
         {
           "id": "count-badge:--count-badge-min-width:0",
@@ -8244,7 +8244,7 @@
           "value": "1.875rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "count-badge"
         },
         {
           "id": "count-badge:--count-badge-height:0",
@@ -8252,7 +8252,7 @@
           "value": "1.5rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "count-badge"
         },
         {
           "id": "count-badge:--count-badge-font-size:0",
@@ -8260,7 +8260,7 @@
           "value": "var(--typography-caption-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "count-badge"
         },
         {
           "id": "count-badge:--count-badge-font-weight:0",
@@ -8268,7 +8268,7 @@
           "value": "var(--typography-small-font-weight)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "count-badge"
         },
         {
           "id": "count-badge:--count-badge-line-height:0",
@@ -8276,7 +8276,7 @@
           "value": "1",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "count-badge"
         },
         {
           "id": "count-badge:--count-badge-min-width:1",
@@ -8330,22 +8330,46 @@
     },
     {
       "id": "crud-screen",
-      "title": "CRUD Screen",
+      "title": "crud-screen",
       "kind": "component",
       "file": "theme/components/crud-screen.css",
       "variables": [
+        {
+          "id": "crud-screen:--crud-page-max-width:0",
+          "name": "--crud-page-max-width",
+          "value": "1200px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "crud-page"
+        },
+        {
+          "id": "crud-screen:--crud-page-max-width:1",
+          "name": "--crud-page-max-width",
+          "value": "1320px",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "crud-page"
+        },
         {
           "id": "crud-screen:--crud-screen-gap:0",
           "name": "--crud-screen-gap",
           "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "crud-screen"
+        },
+        {
+          "id": "crud-screen:--crud-screen-radius:0",
+          "name": "--crud-screen-radius",
+          "value": "16px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "crud-screen"
         },
         {
           "id": "crud-screen:--crud-toolbar-padding-x:0",
           "name": "--crud-toolbar-padding-x",
-          "value": "1rem",
+          "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "crud-toolbar"
@@ -8367,33 +8391,145 @@
           "scope": "crud-toolbar"
         },
         {
-          "id": "crud-screen:--input-group-height:0",
-          "name": "--input-group-height",
-          "value": "2rem",
+          "id": "crud-screen:--crud-search-max-width:0",
+          "name": "--crud-search-max-width",
+          "value": "248px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "crud-search"
         },
         {
-          "id": "crud-screen:--input-group-radius:0",
-          "name": "--input-group-radius",
-          "value": "var(--radius-md)",
-          "fieldType": "radius-ref",
+          "id": "crud-screen:--crud-search-min-width:0",
+          "name": "--crud-search-min-width",
+          "value": "200px",
+          "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "crud-search"
         },
         {
-          "id": "crud-screen:--input-group-border-color:0",
-          "name": "--input-group-border-color",
-          "value": "var(--border)",
+          "id": "crud-screen:--crud-search-height:0",
+          "name": "--crud-search-height",
+          "value": "34px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "crud-search"
+        },
+        {
+          "id": "crud-screen:--crud-search-padding-y:0",
+          "name": "--crud-search-padding-y",
+          "value": "10px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "crud-search"
+        },
+        {
+          "id": "crud-screen:--crud-search-padding-inline-end:0",
+          "name": "--crud-search-padding-inline-end",
+          "value": "12px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "crud-search"
+        },
+        {
+          "id": "crud-screen:--crud-search-padding-inline-start:0",
+          "name": "--crud-search-padding-inline-start",
+          "value": "32px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "crud-search"
+        },
+        {
+          "id": "crud-screen:--crud-search-font-size:0",
+          "name": "--crud-search-font-size",
+          "value": "12px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "crud-search"
+        },
+        {
+          "id": "crud-screen:--crud-search-line-height:0",
+          "name": "--crud-search-line-height",
+          "value": "12px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "crud-search"
+        },
+        {
+          "id": "crud-screen:--crud-search-radius:0",
+          "name": "--crud-search-radius",
+          "value": "12px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "crud-search"
+        },
+        {
+          "id": "crud-screen:--crud-search-border-color:0",
+          "name": "--crud-search-border-color",
+          "value": "var(--muted-400)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "crud-search"
+        },
+        {
+          "id": "crud-screen:--crud-search-bg:0",
+          "name": "--crud-search-bg",
+          "value": "var(--neutral-0)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "crud-search"
+        },
+        {
+          "id": "crud-screen:--crud-search-fg:0",
+          "name": "--crud-search-fg",
+          "value": "var(--foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "crud-search"
+        },
+        {
+          "id": "crud-screen:--crud-search-placeholder:0",
+          "name": "--crud-search-placeholder",
+          "value": "var(--muted-400)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "crud-search"
+        },
+        {
+          "id": "crud-screen:--crud-search-icon-size:0",
+          "name": "--crud-search-icon-size",
+          "value": "16px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "crud-search"
+        },
+        {
+          "id": "crud-screen:--crud-search-icon-inset:0",
+          "name": "--crud-search-icon-inset",
+          "value": "10px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "crud-search"
+        },
+        {
+          "id": "crud-screen:--crud-search-icon-fg:0",
+          "name": "--crud-search-icon-fg",
+          "value": "var(--muted-600)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "crud-search"
+        },
+        {
+          "id": "crud-screen:--table-font-size:0",
+          "name": "--table-font-size",
+          "value": "var(--typography-small-font-size)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "table/ancestor-slot=crud-table"
         },
         {
           "id": "crud-screen:--crud-table-header-bg:0",
           "name": "--crud-table-header-bg",
-          "value": "var(--neutral-50)",
+          "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "table-header/ancestor-slot=crud-table"
@@ -8409,7 +8545,7 @@
         {
           "id": "crud-screen:--table-head-height:0",
           "name": "--table-head-height",
-          "value": "2.25rem",
+          "value": "2.5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "table-head/ancestor-slot=crud-table"
@@ -8417,7 +8553,7 @@
         {
           "id": "crud-screen:--table-head-padding-x:0",
           "name": "--table-head-padding-x",
-          "value": "0.5rem",
+          "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "table-head/ancestor-slot=crud-table"
@@ -8433,7 +8569,7 @@
         {
           "id": "crud-screen:--table-head-font-weight:0",
           "name": "--table-head-font-weight",
-          "value": "var(--typography-large-font-weight)",
+          "value": "var(--typography-small-font-weight)",
           "fieldType": "typography-ref",
           "occurrence": 0,
           "scope": "table-head/ancestor-slot=crud-table"
@@ -8441,7 +8577,7 @@
         {
           "id": "crud-screen:--table-head-letter-spacing:0",
           "name": "--table-head-letter-spacing",
-          "value": "0",
+          "value": "0.075em",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "table-head/ancestor-slot=crud-table"
@@ -8449,7 +8585,7 @@
         {
           "id": "crud-screen:--table-head-text-transform:0",
           "name": "--table-head-text-transform",
-          "value": "none",
+          "value": "uppercase",
           "fieldType": "text-transform",
           "occurrence": 0,
           "scope": "table-head/ancestor-slot=crud-table"
@@ -8457,7 +8593,7 @@
         {
           "id": "crud-screen:--table-cell-padding-x:0",
           "name": "--table-cell-padding-x",
-          "value": "0.5rem",
+          "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "table-cell/ancestor-slot=crud-table"
@@ -8465,7 +8601,7 @@
         {
           "id": "crud-screen:--table-cell-padding-y:0",
           "name": "--table-cell-padding-y",
-          "value": "0.625rem",
+          "value": "0.5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "table-cell/ancestor-slot=crud-table"
@@ -8473,15 +8609,127 @@
         {
           "id": "crud-screen:--table-cell-min-height:0",
           "name": "--table-cell-min-height",
-          "value": "3.5rem",
+          "value": "3rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "table-cell/ancestor-slot=crud-table"
         },
         {
+          "id": "crud-screen:--dropdown-menu-min-width:0",
+          "name": "--dropdown-menu-min-width",
+          "value": "11rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "dropdown-menu-content/ui=crud-row-actions-menu"
+        },
+        {
+          "id": "crud-screen:--dropdown-menu-padding:0",
+          "name": "--dropdown-menu-padding",
+          "value": "0.25rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "dropdown-menu-content/ui=crud-row-actions-menu"
+        },
+        {
+          "id": "crud-screen:--dropdown-menu-radius:0",
+          "name": "--dropdown-menu-radius",
+          "value": "var(--radius-lg)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "dropdown-menu-content/ui=crud-row-actions-menu"
+        },
+        {
+          "id": "crud-screen:--dropdown-menu-shadow:0",
+          "name": "--dropdown-menu-shadow",
+          "value": "var(--shadow-sm)",
+          "fieldType": "shadow-ref",
+          "occurrence": 0,
+          "scope": "dropdown-menu-content/ui=crud-row-actions-menu"
+        },
+        {
+          "id": "crud-screen:--dropdown-menu-ring-color:0",
+          "name": "--dropdown-menu-ring-color",
+          "value": "var(--border)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "dropdown-menu-content/ui=crud-row-actions-menu"
+        },
+        {
+          "id": "crud-screen:--dropdown-menu-ring-width:0",
+          "name": "--dropdown-menu-ring-width",
+          "value": "1px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "dropdown-menu-content/ui=crud-row-actions-menu"
+        },
+        {
+          "id": "crud-screen:--dropdown-menu-item-padding-x:0",
+          "name": "--dropdown-menu-item-padding-x",
+          "value": "0.75rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "dropdown-menu-item/ancestor-slot=dropdown-menu-content/ui=crud-row-actions-menu"
+        },
+        {
+          "id": "crud-screen:--dropdown-menu-item-padding-y:0",
+          "name": "--dropdown-menu-item-padding-y",
+          "value": "0.5rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "dropdown-menu-item/ancestor-slot=dropdown-menu-content/ui=crud-row-actions-menu"
+        },
+        {
+          "id": "crud-screen:--dropdown-menu-item-gap:0",
+          "name": "--dropdown-menu-item-gap",
+          "value": "0.75rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "dropdown-menu-item/ancestor-slot=dropdown-menu-content/ui=crud-row-actions-menu"
+        },
+        {
+          "id": "crud-screen:--dropdown-menu-item-font-size:0",
+          "name": "--dropdown-menu-item-font-size",
+          "value": "var(--typography-small-font-size)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "dropdown-menu-item/ancestor-slot=dropdown-menu-content/ui=crud-row-actions-menu"
+        },
+        {
+          "id": "crud-screen:--dropdown-menu-item-destructive-fg:0",
+          "name": "--dropdown-menu-item-destructive-fg",
+          "value": "var(--destructive)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "dropdown-menu-item/ancestor-slot=dropdown-menu-content/ui=crud-row-actions-menu/variant=destructive"
+        },
+        {
+          "id": "crud-screen:--dropdown-menu-item-destructive-focus-bg:0",
+          "name": "--dropdown-menu-item-destructive-focus-bg",
+          "value": "color-mix(in oklab, var(--destructive) 10%, transparent)",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "dropdown-menu-item/ancestor-slot=dropdown-menu-content/ui=crud-row-actions-menu/variant=destructive"
+        },
+        {
+          "id": "crud-screen:--crud-search-bg:1",
+          "name": "--crud-search-bg",
+          "value": "var(--neutral-950)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/crud-search"
+        },
+        {
+          "id": "crud-screen:--crud-search-border-color:1",
+          "name": "--crud-search-border-color",
+          "value": "var(--neutral-700)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/crud-search"
+        },
+        {
           "id": "crud-screen:--crud-table-header-bg:1",
           "name": "--crud-table-header-bg",
-          "value": "var(--neutral-900)",
+          "value": "var(--neutral-950)",
           "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/table-header/ancestor-slot=crud-table"
@@ -8490,7 +8738,7 @@
     },
     {
       "id": "date-picker",
-      "title": "Date Picker",
+      "title": "date-picker",
       "kind": "component",
       "file": "theme/components/date-picker.css",
       "variables": [
@@ -8500,7 +8748,7 @@
           "value": "var(--radius-lg)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "date-picker"
         },
         {
           "id": "date-picker:--date-picker-border-width:0",
@@ -8508,7 +8756,7 @@
           "value": "1px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "date-picker"
         },
         {
           "id": "date-picker:--date-picker-font-size:0",
@@ -8516,7 +8764,7 @@
           "value": "var(--typography-small-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "date-picker"
         },
         {
           "id": "date-picker:--date-picker-bg:0",
@@ -8524,7 +8772,7 @@
           "value": "var(--background)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "date-picker"
         },
         {
           "id": "date-picker:--date-picker-fg:0",
@@ -8532,7 +8780,7 @@
           "value": "var(--foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "date-picker"
         },
         {
           "id": "date-picker:--date-picker-border-color:0",
@@ -8540,7 +8788,7 @@
           "value": "var(--chart-3)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "date-picker"
         },
         {
           "id": "date-picker:--date-picker-hover-bg:0",
@@ -8548,7 +8796,7 @@
           "value": "var(--muted)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "date-picker"
         },
         {
           "id": "date-picker:--date-picker-focus-ring-color:0",
@@ -8570,7 +8818,7 @@
     },
     {
       "id": "dialog",
-      "title": "Dialog",
+      "title": "dialog",
       "kind": "component",
       "file": "theme/components/dialog.css",
       "variables": [
@@ -8580,7 +8828,7 @@
           "value": "var(--overlay-bg)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-overlay"
         },
         {
           "id": "dialog:--dialog-overlay-opacity:0",
@@ -8588,7 +8836,7 @@
           "value": "0.5",
           "fieldType": "opacity",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-overlay"
         },
         {
           "id": "dialog:--dialog-overlay-blur:0",
@@ -8596,7 +8844,7 @@
           "value": "4px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-overlay"
         },
         {
           "id": "dialog:--dialog-overlay-duration:0",
@@ -8604,7 +8852,7 @@
           "value": "100ms",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-overlay"
         },
         {
           "id": "dialog:--dialog-content-bg:0",
@@ -8716,7 +8964,7 @@
           "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-header"
         },
         {
           "id": "dialog:--dialog-header-bg:0",
@@ -8724,7 +8972,7 @@
           "value": "transparent",
           "fieldType": "color-keyword",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-header"
         },
         {
           "id": "dialog:--dialog-header-margin-inline:0",
@@ -8732,7 +8980,7 @@
           "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-header"
         },
         {
           "id": "dialog:--dialog-header-margin-block-start:0",
@@ -8740,7 +8988,7 @@
           "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-header"
         },
         {
           "id": "dialog:--dialog-header-padding:0",
@@ -8748,7 +8996,7 @@
           "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-header"
         },
         {
           "id": "dialog:--dialog-header-radius:0",
@@ -8756,7 +9004,7 @@
           "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-header"
         },
         {
           "id": "dialog:--dialog-footer-bg:0",
@@ -8764,7 +9012,7 @@
           "value": "transparent",
           "fieldType": "color-keyword",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-footer"
         },
         {
           "id": "dialog:--dialog-footer-margin-inline:0",
@@ -8772,7 +9020,7 @@
           "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-footer"
         },
         {
           "id": "dialog:--dialog-footer-margin-block-end:0",
@@ -8780,7 +9028,7 @@
           "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-footer"
         },
         {
           "id": "dialog:--dialog-footer-gap:0",
@@ -8788,7 +9036,7 @@
           "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-footer"
         },
         {
           "id": "dialog:--dialog-footer-radius:0",
@@ -8796,7 +9044,7 @@
           "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-footer"
         },
         {
           "id": "dialog:--dialog-footer-border-color:0",
@@ -8804,7 +9052,7 @@
           "value": "transparent",
           "fieldType": "color-keyword",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-footer"
         },
         {
           "id": "dialog:--dialog-footer-border-width:0",
@@ -8812,7 +9060,7 @@
           "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-footer"
         },
         {
           "id": "dialog:--dialog-footer-padding:0",
@@ -8820,7 +9068,7 @@
           "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-footer"
         },
         {
           "id": "dialog:--dialog-title-font-family:0",
@@ -8828,7 +9076,7 @@
           "value": "var(--font-sans)",
           "fieldType": "font-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-title"
         },
         {
           "id": "dialog:--dialog-title-font-size:0",
@@ -8836,7 +9084,7 @@
           "value": "var(--typography-lead-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-title"
         },
         {
           "id": "dialog:--dialog-title-font-weight:0",
@@ -8844,7 +9092,7 @@
           "value": "var(--typography-h1-font-weight)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-title"
         },
         {
           "id": "dialog:--dialog-title-line-height:0",
@@ -8852,7 +9100,7 @@
           "value": "var(--typography-lead-line-height)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-title"
         },
         {
           "id": "dialog:--dialog-title-fg:0",
@@ -8860,7 +9108,7 @@
           "value": "var(--foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-title"
         },
         {
           "id": "dialog:--dialog-description-fg:0",
@@ -8868,7 +9116,7 @@
           "value": "var(--muted-600)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-description"
         },
         {
           "id": "dialog:--dialog-description-font-size:0",
@@ -8876,7 +9124,7 @@
           "value": "var(--typography-small-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-description"
         },
         {
           "id": "dialog:--dialog-description-line-height:0",
@@ -8884,7 +9132,7 @@
           "value": "var(--typography-small-line-height)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-description"
         },
         {
           "id": "dialog:--dialog-description-font-weight:0",
@@ -8892,7 +9140,7 @@
           "value": "var(--typography-p-font-weight)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-description"
         },
         {
           "id": "dialog:--dialog-description-link-hover-fg:0",
@@ -8900,7 +9148,7 @@
           "value": "var(--foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-description"
         },
         {
           "id": "dialog:--dialog-description-link-underline-offset:0",
@@ -8908,7 +9156,7 @@
           "value": "3px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "dialog-description"
         },
         {
           "id": "dialog:--dialog-content-bg:1",
@@ -8922,7 +9170,7 @@
     },
     {
       "id": "drawer",
-      "title": "Drawer",
+      "title": "drawer",
       "kind": "component",
       "file": "theme/components/drawer.css",
       "variables": [
@@ -9036,7 +9284,7 @@
           "value": "var(--muted)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "drawer-content"
         },
         {
           "id": "drawer:--drawer-handle-width:0",
@@ -9044,7 +9292,7 @@
           "value": "100px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "drawer-content"
         },
         {
           "id": "drawer:--drawer-handle-height:0",
@@ -9052,7 +9300,7 @@
           "value": "0.25rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "drawer-content"
         },
         {
           "id": "drawer:--drawer-header-gap:0",
@@ -9138,7 +9386,7 @@
     },
     {
       "id": "dropdown-menu",
-      "title": "Dropdown Menu",
+      "title": "dropdown-menu",
       "kind": "component",
       "file": "theme/components/dropdown-menu.css",
       "variables": [
@@ -9426,7 +9674,7 @@
     },
     {
       "id": "dropzone",
-      "title": "Dropzone",
+      "title": "dropzone",
       "kind": "component",
       "file": "theme/components/dropzone.css",
       "variables": [
@@ -9444,7 +9692,7 @@
           "value": "var(--border)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "card/ancestor-slot=dropzone"
         },
         {
           "id": "dropzone:--dropzone-drag-border-color:0",
@@ -9452,7 +9700,7 @@
           "value": "var(--primary)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "card/ancestor-slot=dropzone"
         },
         {
           "id": "dropzone:--dropzone-drag-bg:0",
@@ -9460,7 +9708,7 @@
           "value": "var(--muted)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "card/ancestor-slot=dropzone"
         },
         {
           "id": "dropzone:--file-preview-card-radius:0",
@@ -9468,7 +9716,7 @@
           "value": "var(--radius-lg)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "file-preview-card"
         },
         {
           "id": "dropzone:--file-preview-card-border-color:0",
@@ -9476,7 +9724,7 @@
           "value": "var(--border)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "file-preview-card"
         },
         {
           "id": "dropzone:--file-preview-card-gap:0",
@@ -9484,7 +9732,7 @@
           "value": "0.625rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "file-preview-card"
         },
         {
           "id": "dropzone:--file-preview-card-padding-x:0",
@@ -9492,7 +9740,7 @@
           "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "file-preview-card"
         },
         {
           "id": "dropzone:--file-preview-card-padding-y:0",
@@ -9500,7 +9748,7 @@
           "value": "0.625rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "file-preview-card"
         },
         {
           "id": "dropzone:--image-crop-dialog-max-width:0",
@@ -9514,7 +9762,7 @@
     },
     {
       "id": "empty",
-      "title": "Empty",
+      "title": "empty",
       "kind": "component",
       "file": "theme/components/empty.css",
       "variables": [
@@ -9674,7 +9922,7 @@
     },
     {
       "id": "error-state",
-      "title": "Error State",
+      "title": "error-state",
       "kind": "component",
       "file": "theme/components/error-state.css",
       "variables": [
@@ -9684,7 +9932,7 @@
           "value": "var(--radius-xl)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "error-state"
         },
         {
           "id": "error-state:--error-state-padding:0",
@@ -9692,7 +9940,7 @@
           "value": "1.5rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "error-state"
         },
         {
           "id": "error-state:--error-state-gap:0",
@@ -9700,7 +9948,7 @@
           "value": "1rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "error-state"
         },
         {
           "id": "error-state:--error-state-border-color:0",
@@ -9708,7 +9956,7 @@
           "value": "var(--border)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "error-state"
         },
         {
           "id": "error-state:--error-state-icon-bg:0",
@@ -9716,7 +9964,7 @@
           "value": "var(--destructive-100)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "empty-icon/ancestor-slot=error-state/variant=icon"
         },
         {
           "id": "error-state:--error-state-icon-fg:0",
@@ -9724,7 +9972,7 @@
           "value": "var(--destructive)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "empty-icon/ancestor-slot=error-state/variant=icon"
         }
       ]
     },
@@ -9772,13 +10020,13 @@
           "value": "var(--foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "field-row-value"
         }
       ]
     },
     {
       "id": "field",
-      "title": "Field",
+      "title": "field",
       "kind": "component",
       "file": "theme/components/field.css",
       "variables": [
@@ -9940,7 +10188,7 @@
           "value": "var(--muted-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "field-description"
         },
         {
           "id": "field:--field-description-font-size:0",
@@ -9948,7 +10196,7 @@
           "value": "var(--typography-p-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "field-description"
         },
         {
           "id": "field:--field-description-font-weight:0",
@@ -9956,7 +10204,7 @@
           "value": "var(--typography-p-font-weight)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "field-description"
         },
         {
           "id": "field:--field-description-line-height:0",
@@ -9964,7 +10212,7 @@
           "value": "var(--typography-p-line-height)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "field-description"
         },
         {
           "id": "field:--field-separator-height:0",
@@ -10050,7 +10298,7 @@
     },
     {
       "id": "filter-chips",
-      "title": "Filter Chips",
+      "title": "filter-chips",
       "kind": "component",
       "file": "theme/components/filter-chips.css",
       "variables": [
@@ -10060,7 +10308,7 @@
           "value": "0.5rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "filter-chips"
         },
         {
           "id": "filter-chips:--filter-chip-bg:0",
@@ -10068,7 +10316,7 @@
           "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "filter-chip"
         },
         {
           "id": "filter-chips:--filter-chip-fg:0",
@@ -10076,7 +10324,7 @@
           "value": "var(--muted-600)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "filter-chip"
         },
         {
           "id": "filter-chips:--filter-chip-border-color:0",
@@ -10084,7 +10332,7 @@
           "value": "var(--border)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "filter-chip"
         },
         {
           "id": "filter-chips:--filter-chip-border-width:0",
@@ -10092,7 +10340,7 @@
           "value": "1px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "filter-chip"
         },
         {
           "id": "filter-chips:--filter-chip-radius:0",
@@ -10100,7 +10348,7 @@
           "value": "var(--radius-md)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "filter-chip"
         },
         {
           "id": "filter-chips:--filter-chip-padding-x:0",
@@ -10108,7 +10356,7 @@
           "value": "0.375rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "filter-chip"
         },
         {
           "id": "filter-chips:--filter-chip-padding-y:0",
@@ -10116,7 +10364,7 @@
           "value": "0.375rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "filter-chip"
         },
         {
           "id": "filter-chips:--filter-chip-gap:0",
@@ -10124,7 +10372,7 @@
           "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "filter-chip"
         },
         {
           "id": "filter-chips:--filter-chip-font-size:0",
@@ -10132,7 +10380,7 @@
           "value": "var(--typography-small-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "filter-chip"
         },
         {
           "id": "filter-chips:--filter-chip-font-weight:0",
@@ -10140,7 +10388,7 @@
           "value": "var(--typography-small-font-weight)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "filter-chip"
         },
         {
           "id": "filter-chips:--filter-chip-line-height:0",
@@ -10148,7 +10396,7 @@
           "value": "var(--typography-small-line-height)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "filter-chip"
         },
         {
           "id": "filter-chips:--filter-chip-height:0",
@@ -10156,7 +10404,7 @@
           "value": "2rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "filter-chip"
         },
         {
           "id": "filter-chips:--filter-chip-bg:1",
@@ -10330,7 +10578,7 @@
     },
     {
       "id": "filter-popover",
-      "title": "Filter Popover",
+      "title": "filter-popover",
       "kind": "component",
       "file": "theme/components/filter-popover.css",
       "variables": [
@@ -10682,7 +10930,7 @@
     },
     {
       "id": "hover-card",
-      "title": "Hover Card",
+      "title": "hover-card",
       "kind": "component",
       "file": "theme/components/hover-card.css",
       "variables": [
@@ -10834,7 +11082,7 @@
     },
     {
       "id": "info-row",
-      "title": "Info Row / Info List / Info Card",
+      "title": "info-row",
       "kind": "component",
       "file": "theme/components/info-row.css",
       "variables": [
@@ -10884,7 +11132,7 @@
           "value": "var(--card)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "info-card"
         },
         {
           "id": "info-row:--info-card-fg:0",
@@ -10892,7 +11140,7 @@
           "value": "var(--card-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "info-card"
         },
         {
           "id": "info-row:--info-card-radius:0",
@@ -10900,7 +11148,7 @@
           "value": "var(--radius-xl)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "info-card"
         },
         {
           "id": "info-row:--info-card-ring-color:0",
@@ -10908,7 +11156,7 @@
           "value": "var(--neutral-950)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "info-card"
         },
         {
           "id": "info-row:--info-card-ring-width:0",
@@ -10916,7 +11164,7 @@
           "value": "1px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "info-card"
         },
         {
           "id": "info-row:--info-card-icon-bg:0",
@@ -10954,7 +11202,7 @@
     },
     {
       "id": "input-group",
-      "title": "Input Group",
+      "title": "input-group",
       "kind": "component",
       "file": "theme/components/input-group.css",
       "variables": [
@@ -11234,7 +11482,7 @@
     },
     {
       "id": "input-otp",
-      "title": "Input OTP",
+      "title": "input-otp",
       "kind": "component",
       "file": "theme/components/input-otp.css",
       "variables": [
@@ -11402,7 +11650,7 @@
     },
     {
       "id": "input",
-      "title": "Input",
+      "title": "input",
       "kind": "component",
       "file": "theme/components/input.css",
       "variables": [
@@ -11634,7 +11882,7 @@
     },
     {
       "id": "item",
-      "title": "Item",
+      "title": "item",
       "kind": "component",
       "file": "theme/components/item.css",
       "variables": [
@@ -11946,7 +12194,7 @@
     },
     {
       "id": "kbd",
-      "title": "Kbd",
+      "title": "kbd",
       "kind": "component",
       "file": "theme/components/kbd.css",
       "variables": [
@@ -12066,7 +12314,7 @@
     },
     {
       "id": "label",
-      "title": "Label",
+      "title": "label",
       "kind": "component",
       "file": "theme/components/label.css",
       "variables": [
@@ -12114,7 +12362,7 @@
     },
     {
       "id": "marker",
-      "title": "Marker",
+      "title": "marker",
       "kind": "component",
       "file": "theme/components/marker.css",
       "variables": [
@@ -12234,7 +12482,7 @@
     },
     {
       "id": "menubar",
-      "title": "Menubar",
+      "title": "menubar",
       "kind": "component",
       "file": "theme/components/menubar.css",
       "variables": [
@@ -12618,7 +12866,7 @@
     },
     {
       "id": "message-scroller",
-      "title": "Message Scroller",
+      "title": "message-scroller",
       "kind": "component",
       "file": "theme/components/message-scroller.css",
       "variables": [
@@ -12653,12 +12901,20 @@
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
+        },
+        {
+          "id": "message-scroller:--message-scroller-button-inline-end:0",
+          "name": "--message-scroller-button-inline-end",
+          "value": "1rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
         }
       ]
     },
     {
       "id": "message",
-      "title": "Message",
+      "title": "message",
       "kind": "component",
       "file": "theme/components/message.css",
       "variables": [
@@ -12754,7 +13010,7 @@
     },
     {
       "id": "native-select",
-      "title": "Native Select",
+      "title": "native-select",
       "kind": "component",
       "file": "theme/components/native-select.css",
       "variables": [
@@ -13018,7 +13274,7 @@
     },
     {
       "id": "navigation-menu",
-      "title": "Navigation Menu",
+      "title": "navigation-menu",
       "kind": "component",
       "file": "theme/components/navigation-menu.css",
       "variables": [
@@ -13180,7 +13436,7 @@
           "value": "var(--radius-lg)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "navigation-menu-content/ancestor-slot=navigation-menu/viewport=false"
         },
         {
           "id": "navigation-menu:--navigation-menu-content-bg:0",
@@ -13188,7 +13444,7 @@
           "value": "var(--popover)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "navigation-menu-content/ancestor-slot=navigation-menu/viewport=false"
         },
         {
           "id": "navigation-menu:--navigation-menu-content-fg:0",
@@ -13196,7 +13452,7 @@
           "value": "var(--popover-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "navigation-menu-content/ancestor-slot=navigation-menu/viewport=false"
         },
         {
           "id": "navigation-menu:--navigation-menu-content-ring:0",
@@ -13204,7 +13460,7 @@
           "value": "var(--neutral-950)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "navigation-menu-content/ancestor-slot=navigation-menu/viewport=false"
         },
         {
           "id": "navigation-menu:--navigation-menu-viewport-bg:0",
@@ -13338,7 +13594,7 @@
     },
     {
       "id": "notification-row",
-      "title": "Notification Row",
+      "title": "notification-row",
       "kind": "component",
       "file": "theme/components/notification-row.css",
       "variables": [
@@ -13348,7 +13604,7 @@
           "value": "var(--radius-lg)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "notification-row"
         },
         {
           "id": "notification-row:--notification-row-gap:0",
@@ -13356,7 +13612,7 @@
           "value": "0.625rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "notification-row"
         },
         {
           "id": "notification-row:--notification-row-padding-x:0",
@@ -13364,7 +13620,7 @@
           "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "notification-row"
         },
         {
           "id": "notification-row:--notification-row-padding-y:0",
@@ -13372,7 +13628,7 @@
           "value": "0.625rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "notification-row"
         },
         {
           "id": "notification-row:--notification-row-bg:0",
@@ -13418,7 +13674,7 @@
     },
     {
       "id": "pagination",
-      "title": "Pagination",
+      "title": "pagination",
       "kind": "component",
       "file": "theme/components/pagination.css",
       "variables": [
@@ -13428,7 +13684,7 @@
           "value": "0.25rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "pagination"
         },
         {
           "id": "pagination:--pagination-content-gap:0",
@@ -13674,7 +13930,7 @@
     },
     {
       "id": "password-strength-meter",
-      "title": "Password Strength Meter",
+      "title": "password-strength-meter",
       "kind": "component",
       "file": "theme/components/password-strength-meter.css",
       "variables": [
@@ -13746,7 +14002,7 @@
     },
     {
       "id": "payment-method-list",
-      "title": "Payment Method List",
+      "title": "payment-method-list",
       "kind": "component",
       "file": "theme/components/payment-method-list.css",
       "variables": [
@@ -13756,7 +14012,7 @@
           "value": "0.5rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "payment-method-list"
         },
         {
           "id": "payment-method-list:--payment-method-card-radius:0",
@@ -13764,7 +14020,7 @@
           "value": "var(--radius-lg)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "payment-method-card"
         },
         {
           "id": "payment-method-list:--payment-method-card-gap:0",
@@ -13772,7 +14028,7 @@
           "value": "0.625rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "payment-method-card"
         },
         {
           "id": "payment-method-list:--payment-method-card-padding-x:0",
@@ -13780,7 +14036,7 @@
           "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "payment-method-card"
         },
         {
           "id": "payment-method-list:--payment-method-card-padding-y:0",
@@ -13788,7 +14044,7 @@
           "value": "0.625rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "payment-method-card"
         },
         {
           "id": "payment-method-list:--payment-method-card-border-color:0",
@@ -13858,7 +14114,7 @@
     },
     {
       "id": "phone-input",
-      "title": "Phone Input",
+      "title": "phone-input",
       "kind": "component",
       "file": "theme/components/phone-input.css",
       "variables": [
@@ -13890,7 +14146,7 @@
     },
     {
       "id": "popover",
-      "title": "Popover",
+      "title": "popover",
       "kind": "component",
       "file": "theme/components/popover.css",
       "variables": [
@@ -14034,7 +14290,7 @@
     },
     {
       "id": "progress",
-      "title": "Progress",
+      "title": "progress",
       "kind": "component",
       "file": "theme/components/progress.css",
       "variables": [
@@ -14082,7 +14338,7 @@
     },
     {
       "id": "radio-group",
-      "title": "Radio Group",
+      "title": "radio-group",
       "kind": "component",
       "file": "theme/components/radio-group.css",
       "variables": [
@@ -14092,7 +14348,7 @@
           "value": "0.5rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "radio-group"
         },
         {
           "id": "radio-group:--radio-group-item-size:0",
@@ -14410,7 +14666,7 @@
     },
     {
       "id": "resizable",
-      "title": "Resizable",
+      "title": "resizable",
       "kind": "component",
       "file": "theme/components/resizable.css",
       "variables": [
@@ -14428,7 +14684,7 @@
           "value": "1px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "resizable-handle"
         },
         {
           "id": "resizable:--resizable-handle-bg:0",
@@ -14436,7 +14692,7 @@
           "value": "var(--border)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "resizable-handle"
         },
         {
           "id": "resizable:--resizable-handle-focus-ring:0",
@@ -14444,7 +14700,7 @@
           "value": "var(--ring)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "resizable-handle"
         },
         {
           "id": "resizable:--resizable-handle-grip-width:0",
@@ -14522,7 +14778,7 @@
     },
     {
       "id": "scroll-area",
-      "title": "Scroll Area",
+      "title": "scroll-area",
       "kind": "component",
       "file": "theme/components/scroll-area.css",
       "variables": [
@@ -14578,7 +14834,7 @@
     },
     {
       "id": "segmented-control",
-      "title": "Segmented Control",
+      "title": "segmented-control",
       "kind": "component",
       "file": "theme/components/segmented-control.css",
       "variables": [
@@ -14588,7 +14844,7 @@
           "value": "var(--radius-full)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "segmented-control"
         },
         {
           "id": "segmented-control:--segmented-control-bg:0",
@@ -14596,7 +14852,7 @@
           "value": "var(--neutral-100)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "segmented-control"
         },
         {
           "id": "segmented-control:--segmented-control-padding:0",
@@ -14604,7 +14860,7 @@
           "value": "0.25rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "segmented-control"
         },
         {
           "id": "segmented-control:--segmented-control-gap:0",
@@ -14612,7 +14868,7 @@
           "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "segmented-control"
         },
         {
           "id": "segmented-control:--segmented-control-item-radius:0",
@@ -14799,28 +15055,52 @@
           "scope": "toggle-group-item/ancestor-slot=segmented-control/state=on"
         },
         {
+          "id": "segmented-control:--segmented-control-select-height:0",
+          "name": "--segmented-control-select-height",
+          "value": "2.375rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "segmented-control"
+        },
+        {
           "id": "segmented-control:--segmented-control-select-radius:0",
           "name": "--segmented-control-select-radius",
-          "value": "var(--input-radius)",
+          "value": "var(--radius-full)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "segmented-control"
         },
         {
           "id": "segmented-control:--segmented-control-select-border-color:0",
           "name": "--segmented-control-select-border-color",
-          "value": "var(--input-border-color)",
+          "value": "var(--border)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "segmented-control"
         },
         {
           "id": "segmented-control:--segmented-control-select-bg:0",
           "name": "--segmented-control-select-bg",
-          "value": "var(--input-bg)",
+          "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "segmented-control"
+        },
+        {
+          "id": "segmented-control:--select-trigger-height:0",
+          "name": "--select-trigger-height",
+          "value": "var(--segmented-control-select-height)",
+          "fieldType": "token-ref",
+          "occurrence": 0,
+          "scope": "segmented-control"
+        },
+        {
+          "id": "segmented-control:--select-trigger-radius:0",
+          "name": "--select-trigger-radius",
+          "value": "var(--segmented-control-select-radius)",
+          "fieldType": "radius-ref",
+          "occurrence": 0,
+          "scope": "segmented-control"
         },
         {
           "id": "segmented-control:--segmented-control-select-focus-border-color:0",
@@ -14922,7 +15202,7 @@
     },
     {
       "id": "select",
-      "title": "Select",
+      "title": "select",
       "kind": "component",
       "file": "theme/components/select.css",
       "variables": [
@@ -14932,7 +15212,7 @@
           "value": "var(--input-radius)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "select-trigger"
         },
         {
           "id": "select:--select-trigger-border-width:0",
@@ -14940,7 +15220,7 @@
           "value": "var(--input-border-width)",
           "fieldType": "token-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "select-trigger"
         },
         {
           "id": "select:--select-trigger-border-color:0",
@@ -14948,7 +15228,7 @@
           "value": "var(--input-border-color)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "select-trigger"
         },
         {
           "id": "select:--select-trigger-bg:0",
@@ -14956,7 +15236,7 @@
           "value": "var(--input-bg)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "select-trigger"
         },
         {
           "id": "select:--select-trigger-fg:0",
@@ -14964,7 +15244,7 @@
           "value": "var(--input-fg)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "select-trigger"
         },
         {
           "id": "select:--select-trigger-gap:0",
@@ -14972,7 +15252,7 @@
           "value": "0.25rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "select-trigger"
         },
         {
           "id": "select:--select-trigger-padding-inline-start:0",
@@ -14980,7 +15260,7 @@
           "value": "var(--input-padding-x)",
           "fieldType": "token-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "select-trigger"
         },
         {
           "id": "select:--select-trigger-padding-inline-end:0",
@@ -14988,7 +15268,7 @@
           "value": "var(--input-padding-x)",
           "fieldType": "token-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "select-trigger"
         },
         {
           "id": "select:--select-trigger-padding-block:0",
@@ -14996,7 +15276,7 @@
           "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "select-trigger"
         },
         {
           "id": "select:--select-trigger-font-size:0",
@@ -15004,7 +15284,7 @@
           "value": "var(--input-font-size)",
           "fieldType": "token-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "select-trigger"
         },
         {
           "id": "select:--select-trigger-placeholder-color:0",
@@ -15012,7 +15292,7 @@
           "value": "var(--input-placeholder-color)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "select-trigger"
         },
         {
           "id": "select:--select-trigger-focus-border-color:0",
@@ -15020,7 +15300,7 @@
           "value": "var(--input-focus-border-color)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "select-trigger"
         },
         {
           "id": "select:--select-trigger-invalid-border-color:0",
@@ -15028,7 +15308,7 @@
           "value": "var(--input-invalid-border-color)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "select-trigger"
         },
         {
           "id": "select:--select-trigger-disabled-bg:0",
@@ -15036,7 +15316,7 @@
           "value": "var(--input-disabled-bg)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "select-trigger"
         },
         {
           "id": "select:--select-trigger-disabled-opacity:0",
@@ -15044,7 +15324,7 @@
           "value": "var(--input-disabled-opacity)",
           "fieldType": "token-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "select-trigger"
         },
         {
           "id": "select:--select-trigger-icon-color:0",
@@ -15052,7 +15332,7 @@
           "value": "var(--muted-600)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "select-trigger"
         },
         {
           "id": "select:--select-trigger-icon-size:0",
@@ -15060,7 +15340,7 @@
           "value": "1rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "select-trigger"
         },
         {
           "id": "select:--tw-ring-shadow:0",
@@ -15068,7 +15348,7 @@
           "value": "0 0 #0000",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "select-trigger"
         },
         {
           "id": "select:--tw-ring-offset-shadow:0",
@@ -15076,7 +15356,7 @@
           "value": "0 0 #0000",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "select-trigger"
         },
         {
           "id": "select:--tw-ring-shadow:1",
@@ -15402,7 +15682,7 @@
     },
     {
       "id": "separator",
-      "title": "Separator",
+      "title": "separator",
       "kind": "component",
       "file": "theme/components/separator.css",
       "variables": [
@@ -15426,7 +15706,7 @@
     },
     {
       "id": "sheet",
-      "title": "Sheet",
+      "title": "sheet",
       "kind": "component",
       "file": "theme/components/sheet.css",
       "variables": [
@@ -15658,7 +15938,7 @@
     },
     {
       "id": "sidebar",
-      "title": "Sidebar",
+      "title": "sidebar",
       "kind": "component",
       "file": "theme/components/sidebar.css",
       "variables": [
@@ -15673,7 +15953,7 @@
         {
           "id": "sidebar:--sidebar-width-icon:0",
           "name": "--sidebar-width-icon",
-          "value": "3rem",
+          "value": "3.5rem",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "sidebar-wrapper"
@@ -15788,7 +16068,7 @@
           "value": "1rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-rail"
         },
         {
           "id": "sidebar:--sidebar-rail-hover-bg:0",
@@ -15796,7 +16076,7 @@
           "value": "var(--sidebar-border)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-rail"
         },
         {
           "id": "sidebar:--sidebar-inset-bg:0",
@@ -15908,7 +16188,7 @@
           "value": "auto",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-group-label"
         },
         {
           "id": "sidebar:--sidebar-group-label-padding-x:0",
@@ -15916,7 +16196,7 @@
           "value": "1rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-group-label"
         },
         {
           "id": "sidebar:--sidebar-group-label-padding-y:0",
@@ -15924,7 +16204,7 @@
           "value": "0.625rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-group-label"
         },
         {
           "id": "sidebar:--sidebar-group-label-font-size:0",
@@ -15932,7 +16212,7 @@
           "value": "var(--typography-p-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-group-label"
         },
         {
           "id": "sidebar:--sidebar-group-label-font-weight:0",
@@ -15940,7 +16220,7 @@
           "value": "var(--typography-small-font-weight)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-group-label"
         },
         {
           "id": "sidebar:--sidebar-group-label-line-height:0",
@@ -15948,7 +16228,7 @@
           "value": "var(--typography-p-line-height)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-group-label"
         },
         {
           "id": "sidebar:--sidebar-group-label-fg:0",
@@ -15956,7 +16236,7 @@
           "value": "var(--muted-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-group-label"
         },
         {
           "id": "sidebar:--sidebar-group-label-focus-ring:0",
@@ -15964,7 +16244,7 @@
           "value": "var(--sidebar-ring)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-group-label"
         },
         {
           "id": "sidebar:--sidebar-group-label-letter-spacing:0",
@@ -15972,7 +16252,7 @@
           "value": "0",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-group-label"
         },
         {
           "id": "sidebar:--sidebar-group-label-text-transform:0",
@@ -15980,7 +16260,7 @@
           "value": "none",
           "fieldType": "text-transform",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-group-label"
         },
         {
           "id": "sidebar:--sidebar-group-action-size:0",
@@ -16044,7 +16324,7 @@
           "value": "var(--radius-md)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-menu-button"
         },
         {
           "id": "sidebar:--sidebar-menu-button-padding-x:0",
@@ -16052,7 +16332,7 @@
           "value": "1rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-menu-button"
         },
         {
           "id": "sidebar:--sidebar-menu-button-padding-y:0",
@@ -16060,7 +16340,7 @@
           "value": "0.625rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-menu-button"
         },
         {
           "id": "sidebar:--sidebar-menu-button-gap:0",
@@ -16068,7 +16348,7 @@
           "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-menu-button"
         },
         {
           "id": "sidebar:--sidebar-menu-button-fg:0",
@@ -16076,7 +16356,7 @@
           "value": "var(--muted-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-menu-button"
         },
         {
           "id": "sidebar:--sidebar-menu-button-icon-fg:0",
@@ -16084,15 +16364,15 @@
           "value": "var(--muted-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-menu-button"
         },
         {
           "id": "sidebar:--sidebar-menu-button-hover-bg:0",
           "name": "--sidebar-menu-button-hover-bg",
-          "value": "var(--secondary-50)",
+          "value": "var(--sidebar-accent)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-menu-button"
         },
         {
           "id": "sidebar:--sidebar-menu-button-hover-fg:0",
@@ -16100,7 +16380,7 @@
           "value": "var(--sidebar-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-menu-button"
         },
         {
           "id": "sidebar:--sidebar-menu-button-active-bg:0",
@@ -16108,7 +16388,7 @@
           "value": "var(--sidebar-accent)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-menu-button"
         },
         {
           "id": "sidebar:--sidebar-menu-button-active-fg:0",
@@ -16116,7 +16396,7 @@
           "value": "var(--sidebar-accent-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-menu-button"
         },
         {
           "id": "sidebar:--sidebar-menu-button-active-icon-fg:0",
@@ -16124,7 +16404,7 @@
           "value": "var(--sidebar-primary)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-menu-button"
         },
         {
           "id": "sidebar:--sidebar-menu-button-active-font-weight:0",
@@ -16132,7 +16412,7 @@
           "value": "var(--typography-small-font-weight)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-menu-button"
         },
         {
           "id": "sidebar:--sidebar-menu-button-disabled-opacity:0",
@@ -16140,7 +16420,7 @@
           "value": "0.5",
           "fieldType": "opacity",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-menu-button"
         },
         {
           "id": "sidebar:--sidebar-menu-button-focus-ring:0",
@@ -16148,15 +16428,15 @@
           "value": "var(--sidebar-ring)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-menu-button"
         },
         {
           "id": "sidebar:--sidebar-menu-button-icon-size:0",
           "name": "--sidebar-menu-button-icon-size",
-          "value": "1.5rem",
+          "value": "1rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "sidebar-menu-button"
         },
         {
           "id": "sidebar:--sidebar-menu-button-outline-bg:0",
@@ -16481,7 +16761,7 @@
         {
           "id": "sidebar:--sidebar-menu-sub-button-hover-bg:0",
           "name": "--sidebar-menu-sub-button-hover-bg",
-          "value": "var(--secondary-50)",
+          "value": "var(--sidebar-accent)",
           "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "sidebar-menu-sub-button"
@@ -16626,7 +16906,7 @@
     },
     {
       "id": "skeleton",
-      "title": "Skeleton",
+      "title": "skeleton",
       "kind": "component",
       "file": "theme/components/skeleton.css",
       "variables": [
@@ -16658,7 +16938,7 @@
     },
     {
       "id": "slider",
-      "title": "Slider",
+      "title": "slider",
       "kind": "component",
       "file": "theme/components/slider.css",
       "variables": [
@@ -16770,7 +17050,7 @@
     },
     {
       "id": "sonner-toast",
-      "title": "Sonner (Toast)",
+      "title": "sonner-toast",
       "kind": "component",
       "file": "theme/components/sonner-toast.css",
       "variables": [
@@ -17026,7 +17306,7 @@
     },
     {
       "id": "spinner",
-      "title": "Spinner",
+      "title": "spinner",
       "kind": "component",
       "file": "theme/components/spinner.css",
       "variables": [
@@ -17058,7 +17338,7 @@
     },
     {
       "id": "stat-card",
-      "title": "Stat Card",
+      "title": "stat-card",
       "kind": "component",
       "file": "theme/components/stat-card.css",
       "variables": [
@@ -17068,7 +17348,7 @@
           "value": "var(--card)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stat-card"
         },
         {
           "id": "stat-card:--stat-card-fg:0",
@@ -17076,7 +17356,7 @@
           "value": "var(--card-foreground)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stat-card"
         },
         {
           "id": "stat-card:--stat-card-radius:0",
@@ -17084,7 +17364,7 @@
           "value": "var(--radius-2xl)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stat-card"
         },
         {
           "id": "stat-card:--stat-card-ring-color:0",
@@ -17092,7 +17372,7 @@
           "value": "var(--neutral-950)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stat-card"
         },
         {
           "id": "stat-card:--stat-card-ring-width:0",
@@ -17100,7 +17380,7 @@
           "value": "1px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stat-card"
         },
         {
           "id": "stat-card:--stat-card-icon-bg:0",
@@ -17178,7 +17458,7 @@
     },
     {
       "id": "stepper-input",
-      "title": "Stepper Input",
+      "title": "stepper-input",
       "kind": "component",
       "file": "theme/components/stepper-input.css",
       "variables": [
@@ -17188,7 +17468,7 @@
           "value": "var(--radius-2xl)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stepper-input"
         },
         {
           "id": "stepper-input:--stepper-input-border-width:0",
@@ -17196,7 +17476,7 @@
           "value": "1px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stepper-input"
         },
         {
           "id": "stepper-input:--stepper-input-border-color:0",
@@ -17204,7 +17484,7 @@
           "value": "var(--border)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stepper-input"
         },
         {
           "id": "stepper-input:--stepper-input-bg:0",
@@ -17212,7 +17492,7 @@
           "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stepper-input"
         },
         {
           "id": "stepper-input:--stepper-input-height:0",
@@ -17220,7 +17500,7 @@
           "value": "2.75rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stepper-input"
         },
         {
           "id": "stepper-input:--stepper-input-padding-x:0",
@@ -17228,7 +17508,7 @@
           "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stepper-input"
         },
         {
           "id": "stepper-input:--stepper-input-gap:0",
@@ -17236,7 +17516,7 @@
           "value": "0.5rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stepper-input"
         },
         {
           "id": "stepper-input:--stepper-input-focus-border-color:0",
@@ -17244,7 +17524,7 @@
           "value": "var(--primary-800)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stepper-input"
         },
         {
           "id": "stepper-input:--stepper-input-focus-border-width:0",
@@ -17252,7 +17532,7 @@
           "value": "2px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stepper-input"
         },
         {
           "id": "stepper-input:--stepper-input-active-border-color:0",
@@ -17260,7 +17540,7 @@
           "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stepper-input"
         },
         {
           "id": "stepper-input:--stepper-input-invalid-border-color:0",
@@ -17268,7 +17548,7 @@
           "value": "var(--destructive)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stepper-input"
         },
         {
           "id": "stepper-input:--stepper-input-disabled-bg:0",
@@ -17276,7 +17556,7 @@
           "value": "var(--neutral-50)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stepper-input"
         },
         {
           "id": "stepper-input:--stepper-input-disabled-opacity:0",
@@ -17284,7 +17564,7 @@
           "value": "1",
           "fieldType": "opacity",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stepper-input"
         },
         {
           "id": "stepper-input:--stepper-input-icon-color:0",
@@ -17292,7 +17572,7 @@
           "value": "var(--muted-600)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stepper-input"
         },
         {
           "id": "stepper-input:--stepper-input-icon-size:0",
@@ -17300,7 +17580,7 @@
           "value": "1.5rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stepper-input"
         },
         {
           "id": "stepper-input:--stepper-input-divider-color:0",
@@ -17308,7 +17588,7 @@
           "value": "var(--border)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "stepper-input"
         },
         {
           "id": "stepper-input:--stepper-input-border-width:1",
@@ -17434,7 +17714,7 @@
     },
     {
       "id": "stepper",
-      "title": "Stepper",
+      "title": "stepper",
       "kind": "component",
       "file": "theme/components/stepper.css",
       "variables": [
@@ -17586,7 +17866,7 @@
     },
     {
       "id": "switch",
-      "title": "Switch",
+      "title": "switch",
       "kind": "component",
       "file": "theme/components/switch.css",
       "variables": [
@@ -17596,7 +17876,7 @@
           "value": "var(--radius-lg)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "switch"
         },
         {
           "id": "switch:--switch-checked-bg:0",
@@ -17604,7 +17884,7 @@
           "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "switch"
         },
         {
           "id": "switch:--switch-checked-hover-bg:0",
@@ -17612,7 +17892,7 @@
           "value": "var(--primary-600)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "switch"
         },
         {
           "id": "switch:--switch-unchecked-bg:0",
@@ -17620,7 +17900,7 @@
           "value": "var(--neutral-200)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "switch"
         },
         {
           "id": "switch:--switch-unchecked-hover-bg:0",
@@ -17628,7 +17908,7 @@
           "value": "var(--neutral-300)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "switch"
         },
         {
           "id": "switch:--switch-focus-ring-width:0",
@@ -17636,7 +17916,7 @@
           "value": "3px",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "switch"
         },
         {
           "id": "switch:--switch-focus-border-color:0",
@@ -17644,7 +17924,7 @@
           "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "switch"
         },
         {
           "id": "switch:--switch-focus-ring-color:0",
@@ -17652,7 +17932,7 @@
           "value": "var(--primary-500)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "switch"
         },
         {
           "id": "switch:--switch-focus-ring-opacity:0",
@@ -17660,7 +17940,7 @@
           "value": "0.35",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "switch"
         },
         {
           "id": "switch:--switch-invalid-border-color:0",
@@ -17668,7 +17948,7 @@
           "value": "var(--destructive)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "switch"
         },
         {
           "id": "switch:--switch-invalid-ring-color:0",
@@ -17676,7 +17956,7 @@
           "value": "var(--destructive)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "switch"
         },
         {
           "id": "switch:--switch-invalid-ring-opacity:0",
@@ -17684,7 +17964,7 @@
           "value": "0.35",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "switch"
         },
         {
           "id": "switch:--switch-disabled-opacity:0",
@@ -17692,7 +17972,7 @@
           "value": "0.5",
           "fieldType": "opacity",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "switch"
         },
         {
           "id": "switch:--switch-thumb-size:0",
@@ -17700,7 +17980,7 @@
           "value": "1rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "switch"
         },
         {
           "id": "switch:--switch-track-width:0",
@@ -17708,7 +17988,7 @@
           "value": "2.25rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "switch"
         },
         {
           "id": "switch:--switch-track-height:0",
@@ -17716,7 +17996,7 @@
           "value": "1.5rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "switch"
         },
         {
           "id": "switch:--switch-padding-inline:0",
@@ -17724,7 +18004,7 @@
           "value": "0.25rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "switch"
         },
         {
           "id": "switch:--switch-padding-block:0",
@@ -17732,7 +18012,7 @@
           "value": "0.125rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "switch"
         },
         {
           "id": "switch:--switch-track-height:1",
@@ -17882,7 +18162,7 @@
     },
     {
       "id": "table",
-      "title": "Table",
+      "title": "table",
       "kind": "component",
       "file": "theme/components/table.css",
       "variables": [
@@ -18082,7 +18362,7 @@
     },
     {
       "id": "tabs",
-      "title": "Tabs",
+      "title": "tabs",
       "kind": "component",
       "file": "theme/components/tabs.css",
       "variables": [
@@ -18498,7 +18778,7 @@
     },
     {
       "id": "tag-input",
-      "title": "Tag Input",
+      "title": "tag-input",
       "kind": "component",
       "file": "theme/components/tag-input.css",
       "variables": [
@@ -18508,7 +18788,7 @@
           "value": "var(--input-bg)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tag-input"
         },
         {
           "id": "tag-input:--tag-input-border-color:0",
@@ -18516,7 +18796,7 @@
           "value": "var(--input-border-color)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tag-input"
         },
         {
           "id": "tag-input:--tag-input-border-width:0",
@@ -18524,7 +18804,7 @@
           "value": "var(--input-border-width)",
           "fieldType": "token-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tag-input"
         },
         {
           "id": "tag-input:--tag-input-radius:0",
@@ -18532,7 +18812,7 @@
           "value": "var(--input-radius)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tag-input"
         },
         {
           "id": "tag-input:--tag-input-min-height:0",
@@ -18540,7 +18820,7 @@
           "value": "var(--input-height)",
           "fieldType": "token-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tag-input"
         },
         {
           "id": "tag-input:--tag-input-padding-x:0",
@@ -18548,7 +18828,7 @@
           "value": "var(--input-padding-x)",
           "fieldType": "token-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tag-input"
         },
         {
           "id": "tag-input:--tag-input-padding-y:0",
@@ -18556,7 +18836,7 @@
           "value": "var(--input-padding-y)",
           "fieldType": "token-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tag-input"
         },
         {
           "id": "tag-input:--tag-input-gap:0",
@@ -18564,7 +18844,7 @@
           "value": "0.25rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tag-input"
         },
         {
           "id": "tag-input:--tag-input-font-size:0",
@@ -18572,7 +18852,7 @@
           "value": "var(--input-font-size)",
           "fieldType": "token-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tag-input"
         },
         {
           "id": "tag-input:--tag-input-focus-border-color:0",
@@ -18580,7 +18860,7 @@
           "value": "var(--input-focus-border-color)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tag-input"
         },
         {
           "id": "tag-input:--tag-input-invalid-border-color:0",
@@ -18588,7 +18868,7 @@
           "value": "var(--input-invalid-border-color)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tag-input"
         },
         {
           "id": "tag-input:--tag-input-disabled-bg:0",
@@ -18596,7 +18876,7 @@
           "value": "var(--input-disabled-bg)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tag-input"
         },
         {
           "id": "tag-input:--tag-chip-bg:0",
@@ -18738,7 +19018,7 @@
     },
     {
       "id": "textarea",
-      "title": "Textarea",
+      "title": "textarea",
       "kind": "component",
       "file": "theme/components/textarea.css",
       "variables": [
@@ -18922,7 +19202,7 @@
     },
     {
       "id": "time-range-picker",
-      "title": "Time Range Picker",
+      "title": "time-range-picker",
       "kind": "component",
       "file": "theme/components/time-range-picker.css",
       "variables": [
@@ -18954,7 +19234,7 @@
     },
     {
       "id": "toggle-group",
-      "title": "Toggle Group",
+      "title": "toggle-group",
       "kind": "component",
       "file": "theme/components/toggle-group.css",
       "variables": [
@@ -18986,7 +19266,7 @@
     },
     {
       "id": "toggle",
-      "title": "Toggle",
+      "title": "toggle",
       "kind": "component",
       "file": "theme/components/toggle.css",
       "variables": [
@@ -19226,7 +19506,7 @@
     },
     {
       "id": "tooltip",
-      "title": "Tooltip",
+      "title": "tooltip",
       "kind": "component",
       "file": "theme/components/tooltip.css",
       "variables": [
@@ -19236,7 +19516,7 @@
           "value": "var(--black)",
           "fieldType": "token-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tooltip-content"
         },
         {
           "id": "tooltip:--tooltip-content-fg:0",
@@ -19244,7 +19524,7 @@
           "value": "var(--neutral-0)",
           "fieldType": "color-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tooltip-content"
         },
         {
           "id": "tooltip:--tooltip-content-radius:0",
@@ -19252,7 +19532,7 @@
           "value": "var(--radius-sm)",
           "fieldType": "radius-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tooltip-content"
         },
         {
           "id": "tooltip:--tooltip-content-max-width:0",
@@ -19260,7 +19540,7 @@
           "value": "20rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tooltip-content"
         },
         {
           "id": "tooltip:--tooltip-content-gap:0",
@@ -19268,7 +19548,7 @@
           "value": "0.5rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tooltip-content"
         },
         {
           "id": "tooltip:--tooltip-content-padding-x:0",
@@ -19276,7 +19556,7 @@
           "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tooltip-content"
         },
         {
           "id": "tooltip:--tooltip-content-padding-y:0",
@@ -19284,7 +19564,7 @@
           "value": "0.5rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tooltip-content"
         },
         {
           "id": "tooltip:--tooltip-content-font-size:0",
@@ -19292,7 +19572,7 @@
           "value": "var(--typography-small-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tooltip-content"
         },
         {
           "id": "tooltip:--tooltip-content-line-height:0",
@@ -19300,7 +19580,7 @@
           "value": "var(--typography-small-line-height)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tooltip-content"
         },
         {
           "id": "tooltip:--tooltip-content-font-weight:0",
@@ -19308,7 +19588,7 @@
           "value": "var(--typography-p-font-weight)",
           "fieldType": "typography-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tooltip-content"
         },
         {
           "id": "tooltip:--tooltip-content-shadow:0",
@@ -19316,7 +19596,7 @@
           "value": "var(--shadow-sm)",
           "fieldType": "shadow-ref",
           "occurrence": 0,
-          "scope": "default"
+          "scope": "tooltip-content"
         },
         {
           "id": "tooltip:--tooltip-arrow-size:0",
@@ -19338,7 +19618,7 @@
     },
     {
       "id": "truncate",
-      "title": "Truncate",
+      "title": "truncate",
       "kind": "component",
       "file": "theme/components/truncate.css",
       "variables": [

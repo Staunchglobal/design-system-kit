@@ -5,12 +5,7 @@ import { Loader2, Plus, Search, X } from 'lucide-react'
 
 import type { CrudTab } from '@/components/crud/types'
 import { Button } from '@/components/ui/button'
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-} from '@/components/ui/input-group'
+import { SegmentedControl } from '@/components/ui/segmented-control'
 import { cn } from '@/lib/utils'
 
 export type CrudToolbarProps = {
@@ -20,6 +15,7 @@ export type CrudToolbarProps = {
   isSearchPending?: boolean
   showSearch?: boolean
   addLabel?: string
+  /** When omitted, the Add CTA is expected to live in the page header instead. */
   onAdd?: () => void
   toolbar?: React.ReactNode
   tabs?: CrudTab[]
@@ -42,76 +38,71 @@ export function CrudToolbar({
   onTabChange,
   className,
 }: CrudToolbarProps) {
+  const showTabs = Boolean(tabs?.length && onTabChange)
+  const showSearchRow =
+    (showSearch && Boolean(onSearchChange)) || Boolean(toolbar) || Boolean(onAdd)
+
+  if (!showTabs && !showSearchRow) return null
+
   return (
     <div data-slot="crud-toolbar" className={cn(className)}>
-      <div data-slot="crud-toolbar-row">
-        {showSearch && onSearchChange ? (
-          <InputGroup>
-            <InputGroupAddon>
-              <Search />
-            </InputGroupAddon>
-            <InputGroupInput
-              value={search}
-              onChange={(e) => onSearchChange(e.target.value)}
-              placeholder={searchPlaceholder}
-              aria-label={searchPlaceholder}
-            />
-            {(isSearchPending || search) && (
-              <InputGroupAddon align="inline-end">
+      {showTabs ? (
+        <div data-slot="crud-toolbar-tabs">
+          <SegmentedControl
+            ariaLabel="Filter list"
+            value={activeTab ?? tabs![0]!.value}
+            onValueChange={onTabChange!}
+            options={tabs!.map((tab) => ({
+              value: tab.value,
+              label: tab.label,
+              count: tab.count,
+            }))}
+          />
+        </div>
+      ) : null}
+
+      {showSearchRow ? (
+        <div data-slot="crud-toolbar-filters">
+          <div data-slot="crud-toolbar-row">
+            {showSearch && onSearchChange ? (
+              <div data-slot="crud-search">
+                <Search data-ui="crud-search-icon" aria-hidden />
+                <input
+                  data-ui="crud-search-input"
+                  type="search"
+                  value={search}
+                  onChange={(e) => onSearchChange(e.target.value)}
+                  placeholder={searchPlaceholder}
+                  aria-label={searchPlaceholder}
+                  autoComplete="off"
+                />
                 {isSearchPending ? (
-                  <Loader2 className="text-muted-foreground size-4 animate-spin" />
-                ) : null}
-                {search ? (
-                  <InputGroupButton
+                  <Loader2 data-ui="crud-search-pending" aria-hidden />
+                ) : search ? (
+                  <button
                     type="button"
-                    size="icon-xs"
+                    data-ui="crud-search-clear"
                     aria-label="Clear search"
                     onClick={() => onSearchChange('')}
                   >
                     <X />
-                  </InputGroupButton>
+                  </button>
                 ) : null}
-              </InputGroupAddon>
+              </div>
+            ) : (
+              <div className="flex-1" />
             )}
-          </InputGroup>
-        ) : (
-          <div className="flex-1" />
-        )}
 
-        <div data-slot="crud-toolbar-actions">
-          {toolbar}
-          {onAdd ? (
-            <Button type="button" size="sm" variant="outline" onClick={onAdd}>
-              <Plus />
-              {addLabel}
-            </Button>
-          ) : null}
-        </div>
-      </div>
-
-      {tabs?.length && onTabChange ? (
-        <div data-slot="crud-toolbar-tabs" role="tablist">
-          {tabs.map((tab) => {
-            const isActive = tab.value === activeTab
-            return (
-              <Button
-                key={tab.value}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                size="sm"
-                variant={isActive ? 'default' : 'outline'}
-                onClick={() => onTabChange(tab.value)}
-              >
-                {tab.label}
-                {tab.count != null ? (
-                  <span className="text-muted-foreground ml-1 tabular-nums opacity-80">
-                    {tab.count}
-                  </span>
-                ) : null}
-              </Button>
-            )
-          })}
+            <div data-slot="crud-toolbar-actions">
+              {toolbar}
+              {onAdd ? (
+                <Button type="button" size="sm" onClick={onAdd}>
+                  <Plus />
+                  {addLabel}
+                </Button>
+              ) : null}
+            </div>
+          </div>
         </div>
       ) : null}
     </div>

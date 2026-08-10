@@ -21,7 +21,16 @@ const NPM_PACKAGES = [
 ]
 
 const CSS_FILE_OVERRIDES = { sonner: 'sonner-toast.css', 'crud-table': 'crud-screen.css' }
-const NO_CSS = new Set(['direction', 'auth', 'chat', 'account-settings'])
+const NO_CSS = new Set([
+  'direction',
+  'auth',
+  'chat',
+  'account-settings',
+  'user-management',
+  'feature-flags-admin',
+  'delivery-logs',
+  'audit-trail-viewer',
+])
 const EXTRA_FILES = {
   sidebar: ['hooks/use-mobile.ts'],
   'segmented-control': ['hooks/use-mobile.ts'],
@@ -57,6 +66,7 @@ const EXTRA_FILES = {
     'components/auth/auth-form-error.tsx',
     'components/auth/auth-submit-button.tsx',
     'components/auth/otp-field.tsx',
+    'components/auth/use-current-user.ts',
     'components/auth/auth-shell.tsx',
     'components/auth/login-form.tsx',
     'components/auth/signup-form.tsx',
@@ -64,6 +74,7 @@ const EXTRA_FILES = {
     'components/auth/verify-otp-form.tsx',
     'components/auth/set-password-form.tsx',
     'components/auth/change-password-form.tsx',
+    'components/auth/app-shell.tsx',
     'components/auth/index.ts',
   ],
   'account-settings': [
@@ -75,6 +86,7 @@ const EXTRA_FILES = {
     'components/account-settings/request-email-change-form.tsx',
     'components/account-settings/email-change-settings.tsx',
     'components/account-settings/index.ts',
+    'components/auth/app-shell.tsx',
   ],
   chat: [
     'components/chat/types.ts',
@@ -107,6 +119,113 @@ const EXTRA_FILES = {
     'components/auth/auth-session.ts',
     'components/auth/graphql-client.ts',
     'components/auth/notify.ts',
+    'components/auth/app-shell.tsx',
+    'components/auth/cable-connection.ts',
+  ],
+  'user-management': [
+    'components/user-management/types.ts',
+    'components/user-management/user-management-operations.ts',
+    'components/user-management/user-management-mock-client.ts',
+    'components/user-management/user-management-fetch.ts',
+    'components/user-management/decode-jwt.ts',
+    'components/user-management/roles-dialog.tsx',
+    'components/user-management/grants-dialog.tsx',
+    'components/user-management/impersonation-status.tsx',
+    'components/user-management/user-management-screen.tsx',
+    'components/user-management/index.ts',
+    'components/auth/types.ts',
+    'components/auth/auth-session.ts',
+    'components/auth/auth-operations.ts',
+    'components/auth/auth-mock-client.ts',
+    'components/auth/auth-fetch.ts',
+    'components/auth/use-current-user.ts',
+    'components/auth/graphql-client.ts',
+    'components/auth/notify.ts',
+    'components/auth/app-shell.tsx',
+    'hooks/use-mobile.ts',
+    'components/crud/types.ts',
+    'components/crud/use-debounced-value.ts',
+    'components/crud/use-crud-list.ts',
+    'components/crud/crud-form-dialog.tsx',
+    'components/crud/crud-form-fields.tsx',
+    'components/crud/crud-entity-form-dialog.tsx',
+    'components/crud/crud-delete-dialog.tsx',
+    'components/crud/crud-pagination.tsx',
+    'components/crud/crud-toolbar.tsx',
+    'components/crud/crud-screen.tsx',
+  ],
+  'feature-flags-admin': [
+    'components/feature-flags-admin/types.ts',
+    'components/feature-flags-admin/feature-flags-admin-operations.ts',
+    'components/feature-flags-admin/feature-flags-admin-mock-client.ts',
+    'components/feature-flags-admin/feature-flags-admin-fetch.ts',
+    'components/feature-flags-admin/feature-flag-matrix.tsx',
+    'components/feature-flags-admin/index.ts',
+    'components/auth/types.ts',
+    'components/auth/auth-session.ts',
+    'components/auth/auth-operations.ts',
+    'components/auth/auth-mock-client.ts',
+    'components/auth/auth-fetch.ts',
+    'components/auth/use-current-user.ts',
+    'components/auth/graphql-client.ts',
+    'components/auth/notify.ts',
+    'components/auth/app-shell.tsx',
+  ],
+  'delivery-logs': [
+    'components/delivery-logs/types.ts',
+    'components/delivery-logs/delivery-logs-operations.ts',
+    'components/delivery-logs/delivery-logs-mock-client.ts',
+    'components/delivery-logs/delivery-logs-fetch.ts',
+    'components/delivery-logs/delivery-logs-screen.tsx',
+    'components/delivery-logs/index.ts',
+    'hooks/use-mobile.ts',
+    'components/crud/types.ts',
+    'components/crud/use-debounced-value.ts',
+    'components/crud/use-crud-list.ts',
+    'components/crud/crud-form-dialog.tsx',
+    'components/crud/crud-form-fields.tsx',
+    'components/crud/crud-entity-form-dialog.tsx',
+    'components/crud/crud-delete-dialog.tsx',
+    'components/crud/crud-pagination.tsx',
+    'components/crud/crud-toolbar.tsx',
+    'components/crud/crud-screen.tsx',
+    'components/auth/types.ts',
+    'components/auth/auth-session.ts',
+    'components/auth/auth-operations.ts',
+    'components/auth/auth-mock-client.ts',
+    'components/auth/auth-fetch.ts',
+    'components/auth/use-current-user.ts',
+    'components/auth/graphql-client.ts',
+    'components/auth/notify.ts',
+    'components/auth/app-shell.tsx',
+  ],
+  'audit-trail-viewer': [
+    'components/audit-trail-viewer/types.ts',
+    'components/audit-trail-viewer/audit-trail-operations.ts',
+    'components/audit-trail-viewer/audit-trail-mock-client.ts',
+    'components/audit-trail-viewer/audit-trail-fetch.ts',
+    'components/audit-trail-viewer/audit-trail-screen.tsx',
+    'components/audit-trail-viewer/index.ts',
+    'hooks/use-mobile.ts',
+    'components/crud/types.ts',
+    'components/crud/use-debounced-value.ts',
+    'components/crud/use-crud-list.ts',
+    'components/crud/crud-form-dialog.tsx',
+    'components/crud/crud-form-fields.tsx',
+    'components/crud/crud-entity-form-dialog.tsx',
+    'components/crud/crud-delete-dialog.tsx',
+    'components/crud/crud-pagination.tsx',
+    'components/crud/crud-toolbar.tsx',
+    'components/crud/crud-screen.tsx',
+    'components/auth/types.ts',
+    'components/auth/auth-session.ts',
+    'components/auth/auth-operations.ts',
+    'components/auth/auth-mock-client.ts',
+    'components/auth/auth-fetch.ts',
+    'components/auth/use-current-user.ts',
+    'components/auth/graphql-client.ts',
+    'components/auth/notify.ts',
+    'components/auth/app-shell.tsx',
   ],
   'password-strength-meter': [
     'components/auth/password-policy.ts',
@@ -136,6 +255,17 @@ const EXTRA_FILES = {
   'notification-center': [
     'components/notification-center/notification-list.tsx',
     'components/notification-center/notification-center.tsx',
+    'components/notification-center/notification-operations.ts',
+    'components/notification-center/notification-mappers.ts',
+    'components/notification-center/notification-mock-client.ts',
+    'components/notification-center/notification-fetch.ts',
+    'components/notification-center/notification-subscribe.ts',
+    'components/notification-center/use-notifications.ts',
+    'components/notification-center/index.ts',
+    'components/auth/auth-session.ts',
+    'components/auth/graphql-client.ts',
+    'components/auth/notify.ts',
+    'components/auth/cable-connection.ts',
   ],
   'sortable-list': [
     'components/sortable/sortable-item.tsx',
@@ -157,8 +287,27 @@ const EXTRA_FILES = {
 // Packages that ship no bundled .d.ts and have no importable `from '<pkg>'` site of their own
 // (types packages are picked up by TS via node_modules/@types, never imported directly) — added
 // here since fileDeps()'s import-scan can never detect them.
+// `react-router-dom` is only actually imported by the Vite page files under
+// FRAMEWORK_EXTRA_FILES (fileDeps() never scans template-vite/template-next,
+// only template-shared + the ui/ barrel + the demo section — see below), so
+// it's declared here rather than auto-detected. Harmless-but-unused in a
+// Next install (Next has its own router); no per-framework npmDeps split
+// exists in this registry yet to avoid that.
 const EXTRA_NPM_DEPS = {
-  chat: ['@types/rails__actioncable'],
+  chat: ['@types/rails__actioncable', 'react-router-dom'],
+  auth: ['react-router-dom'],
+  'account-settings': ['react-router-dom'],
+  'user-management': ['react-router-dom'],
+  'feature-flags-admin': ['react-router-dom'],
+  'delivery-logs': ['react-router-dom'],
+  'audit-trail-viewer': ['react-router-dom'],
+  // Pulls in components/auth/cable-connection.ts (see its EXTRA_FILES
+  // entry above), which imports @rails/actioncable directly — that
+  // package ships no .d.ts, so a strict-mode consumer's next build fails
+  // with TS7016 without this, even though notification-center never
+  // installs chat's own npmDeps (they're two independently selectable
+  // slugs that happen to share this one file).
+  'notification-center': ['@types/rails__actioncable'],
 }
 
 function parseNavGroups(src) {

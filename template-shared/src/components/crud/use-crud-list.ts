@@ -11,6 +11,15 @@ export type UseCrudListOptions<T> = {
   pageSize?: number
   debounceMs?: number
   initialTab?: string | null
+  /**
+   * Controlled tab value (e.g. driven by a route segment) — pass this
+   * together with `onTabChange` to make tab switches navigate instead of
+   * being internal state. Detected by `!== undefined`, the same convention
+   * `useChatInbox`'s `tab`/`chatId` controlled props already use — omit
+   * both to keep the tab as plain internal state (the default).
+   */
+  activeTab?: string | null
+  onTabChange?: (tab: string) => void
 }
 
 export function useCrudList<T>({
@@ -19,15 +28,20 @@ export function useCrudList<T>({
   pageSize: initialPageSize = 10,
   debounceMs = SEARCH_DEBOUNCE_MS,
   initialTab = null,
+  activeTab: activeTabProp,
+  onTabChange: onTabChangeProp,
 }: UseCrudListOptions<T>) {
   const [page, setPage] = React.useState(1)
   const [pageSize, setPageSizeState] = React.useState(initialPageSize)
   const [search, setSearch] = React.useState('')
   const [sort, setSort] = React.useState<CrudSortState>(null)
-  const [activeTab, setActiveTabState] = React.useState<string | null>(initialTab)
+  const tabControlled = activeTabProp !== undefined
+  const [internalTab, setInternalTab] = React.useState<string | null>(initialTab)
+  const activeTab = tabControlled ? activeTabProp : internalTab
   const [items, setItems] = React.useState<T[]>([])
   const [totalCount, setTotalCount] = React.useState(0)
-  const [loading, setLoading] = React.useState(true)
+  const [initialLoading, setInitialLoading] = React.useState(true)
+  const [fetching, setFetching] = React.useState(true)
   const [error, setError] = React.useState<Error | null>(null)
   const [reloadToken, setReloadToken] = React.useState(0)
 
@@ -77,12 +91,37 @@ export function useCrudList<T>({
     setPage(1)
   }, [])
 
-  const setActiveTab = React.useCallback((next: string | null) => {
-    setActiveTabState(next)
-    setPage(1)
-  }, [])
+  const setActiveTab = React.useCallback(
+    (next: string | null) => {
+      // Switching tabs re-fetches a shorter/taller page than whatever the
+      // user had scrolled to — restore the scroll position after the DOM
+      // updates instead of letting the browser leave it wherever the new
+      // content happens to end.
+      const scroller = document.querySelector<HTMLElement>('[data-slot="app-content-scroll"]')
+      const scrollTop = scroller?.scrollTop ?? 0
+      const restoreScroll = () => {
+        if (!scroller) return
+        scroller.scrollTop = scrollTop
+      }
 
-  // When the fetch key changes, flip loading during render (avoids setState-in-effect).
+      if (tabControlled) {
+        // The prevQuery diff below resets `page` whenever the resolved
+        // `activeTab` changes for any reason, controlled or not — no need
+        // to duplicate that here once the parent re-renders with `next`.
+        if (next != null) onTabChangeProp?.(next)
+        requestAnimationFrame(restoreScroll)
+        return
+      }
+      setInternalTab(next)
+      setPage(1)
+      requestAnimationFrame(restoreScroll)
+    },
+    [tabControlled, onTabChangeProp]
+  )
+
+  // Mark fetching during render when the query key changes.
+  // Do NOT clear `items` here — keep the previous rows painted until the new
+  // page arrives so the area below the tabs doesn't bounce while loading.
   const fetchKey = isSearchPending
     ? null
     : `${page}|${pageSize}|${debouncedSearch}|${sort?.field ?? ''}|${sort?.order ?? ''}|${activeTab ?? ''}|${reloadToken}`
@@ -90,7 +129,7 @@ export function useCrudList<T>({
   if (fetchKey !== prevFetchKey) {
     setPrevFetchKey(fetchKey)
     if (fetchKey !== null) {
-      setLoading(true)
+      setFetching(true)
       setError(null)
     }
   }
@@ -118,7 +157,9 @@ export function useCrudList<T>({
         setError(err instanceof Error ? err : new Error(String(err)))
       })
       .finally(() => {
-        if (!cancelled) setLoading(false)
+        if (cancelled) return
+        setFetching(false)
+        setInitialLoading(false)
       })
 
     return () => {
@@ -179,7 +220,10 @@ export function useCrudList<T>({
     setActiveTab,
     items,
     totalCount,
-    loading,
+    /** True only before the first successful fetch paints rows. */
+    loading: initialLoading && items.length === 0,
+    /** True whenever a fetch is in flight (tab/filter/page). Does not clear rows. */
+    isFetching: fetching,
     error,
     refetch,
     insertItem,

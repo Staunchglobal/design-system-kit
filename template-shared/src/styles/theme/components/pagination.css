@@ -106,6 +106,7 @@
   justify-content: space-between;
   gap: 0.75rem;
   width: 100%;
+  min-height: 3.25rem;
   padding-inline: var(--crud-pagination-padding-x);
   padding-block: var(--crud-pagination-padding-y);
   border-top: 1px solid var(--border);
