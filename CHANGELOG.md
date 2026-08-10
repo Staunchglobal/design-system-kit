@@ -1,5 +1,41 @@
 # Changelog
 
+## 1.0.0
+
+### Major Changes
+
+- 277c23b: Fix Google Places API key being sent to the client at all — it was both exposed in the bundle/Network tab _and_ still proxied through `/api/places/*`, the worst of both approaches (a leaked key is directly billable against your Google Cloud project, and a server-to-server call can't be scoped by HTTP referrer anyway).
+
+  - `AddressAutocomplete`'s `apiKey` prop is removed. The key now lives server-side only, as `GOOGLE_PLACES_API_KEY` (never `NEXT_PUBLIC_`/`VITE_`-prefixed) — read directly by the Next API routes and the Vite dev middleware.
+  - **Breaking**: if you pass `apiKey` to `<AddressAutocomplete>`, remove it and set `GOOGLE_PLACES_API_KEY` in your server environment instead.
+
+### Minor Changes
+
+- 277c23b: Feature-flags admin matrix cells now carry an `eligible` flag, and the CLI's post-install guidance covers `notification-center` for the first time.
+
+  - A role/feature combination whose own backend policy hard-denies it regardless of the flag (e.g. Audit Trail is admin-only, full stop) now renders as a disabled dash instead of a checkbox that could never take effect.
+  - `init-next`/`init-vite` now print setup guidance for `notification-center` (previously undocumented), including the `message_received` notification type the Rails gem's `SendMessage` mutation raises automatically once `chat` is also installed.
+
+- 3de3019: Add realtime chat and account-settings templates, and align auth with the Rails GraphQL OTP flows.
+
+  - New opt-in `chat` inbox (Next + Vite): conversations, archive, search, attachments (images/PDF/DOC), GraphQL uploads, and ActionCable subscriptions (mock-first).
+  - New opt-in `account-settings` email-change wizard.
+  - Auth reworked for mandatory OTP login/signup, link-based password reset, and shared form primitives; smoke fixes for Vite typing and Next `set-state-in-effect` lint.
+
+### Patch Changes
+
+- 277c23b: Close several security gaps and real bugs found in a full review pass across auth, chat, and the feature-flags admin templates.
+
+  - Stop copying the bearer JWT into GraphQL `variables` (user-management, delivery-logs, audit-trail-viewer, feature-flags-admin) — it belongs in the `Authorization` header only, never a logged request body.
+  - Fix Vite's `PrivateLayout`/`ImpersonationStatus` silently falling back to the mock client (no `process` global in the Vite browser bundle, unlike Next's build-time env inlining) — `abilities` was always `[]`, hiding every `requiredAbility`-gated nav item regardless of real role. Both now take an explicit `endpoint`/`graphqlUrl`.
+  - Add request-id guards to chat's `loadMessages`/`loadChats` (mirroring `loadUsers`) so switching chats faster than a fetch resolves can no longer show the wrong thread under the wrong header.
+  - Fix session expiry only being re-checked when the underlying `localStorage` string changed, so a tab left open past the TTL never re-validated.
+  - Fix `useCurrentUser` throwing a raw `TypeError` instead of failing closed when `currentUser` resolves to `null` with no GraphQL error.
+  - Fix ActionCable sockets leaking on every logout/impersonate cycle (a subscription's own `unsubscribe` doesn't close the socket) — also guarded against `window is not defined` once this code can be pulled into a server-rendered tree.
+  - Fix the feature-flag matrix's optimistic-toggle rollback snapshotting the whole `cells` array, so a second concurrent toggle could get wiped out by the first one's failure handler.
+  - Fix `accept-invitation` shipping a literal `invite-demo-token` fallback and advertising it in its own visible copy when no token was in the URL.
+  - `design-kit update` now checks for newly-required npm deps the same way `init` does — a template gaining a new import no longer silently breaks the next build. `notification-center` was also missing its own `@types/rails__actioncable` dependency.
+
 Versioned with [Changesets](https://github.com/changesets/changesets) — every user-facing change
 should ship with a changeset (`npm run changeset`), and this file is regenerated from those on
 release (`npm run version`). See `.changeset/README.md` for the day-to-day workflow.
