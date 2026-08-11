@@ -39,11 +39,16 @@ function StepperInput({
   inputClassName,
 }: StepperInputProps) {
   function bump(delta: number) {
+    if (disabled) return
     const base = value ?? min ?? 0
-    onChange(clamp(base + delta, min, max))
+    const next = clamp(base + delta, min, max)
+    // Avoid redundant updates at the bounds (prevents focus/disabled flicker).
+    if (next === value) return
+    onChange(next)
   }
 
   function handleChange(raw: string) {
+    if (disabled) return
     if (raw === '' || raw === '-') {
       onChange(null)
       return
@@ -57,7 +62,11 @@ function StepperInput({
   const atMax = value != null && max != null && value >= max
 
   return (
-    <InputGroup data-slot="stepper-input" className={cn('w-36', className)}>
+    <InputGroup
+      data-slot="stepper-input"
+      data-disabled={disabled || undefined}
+      className={cn('w-36', className)}
+    >
       <InputGroupAddon align="inline-start">
         <InputGroupButton
           type="button"
@@ -74,11 +83,16 @@ function StepperInput({
         type="number"
         inputMode="numeric"
         disabled={disabled}
+        readOnly={disabled}
         value={value ?? ''}
         min={min}
         max={max}
         step={step}
         onChange={(e) => handleChange(e.target.value)}
+        onKeyDown={(e) => {
+          // Block typing when disabled even if a browser still delivers keys.
+          if (disabled) e.preventDefault()
+        }}
         className={cn('text-center tabular-nums', inputClassName)}
       />
       <InputGroupAddon align="inline-end">

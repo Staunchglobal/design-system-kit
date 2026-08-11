@@ -8,6 +8,7 @@ export default function StepperInputDemo() {
   const [value, setValue] = React.useState<number | null>(2)
   const [unclamped, setUnclamped] = React.useState<number | null>(0)
   const [stepped, setStepped] = React.useState<number | null>(0)
+  const [disabledValue, setDisabledValue] = React.useState<number | null>(4)
   return (
     <ComponentSection
       id="stepper-input"
@@ -23,6 +24,9 @@ export default function StepperInputDemo() {
         </Example>
         <Example title="Custom step (5)">
           <StepperInput value={stepped} onChange={setStepped} step={5} min={-20} max={20} />
+        </Example>
+        <Example title="Disabled">
+          <StepperInput value={disabledValue} onChange={setDisabledValue} min={0} max={10} disabled />
         </Example>
       </ExampleGrid>
     </ComponentSection>
