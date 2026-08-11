@@ -7,6 +7,12 @@
   width: fit-content;
   isolation: isolate;
 }
+[data-slot='button-group'] > [data-slot='button'] {
+  cursor: pointer;
+}
+[data-slot='button-group'] > [data-slot='button']:disabled {
+  cursor: not-allowed;
+}
 [data-slot='button-group']:has(> [data-slot='button-group']) {
   gap: var(--button-group-gap);
 }
