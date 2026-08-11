@@ -1,26 +1,26 @@
-"use client";
+'use client'
 
-import * as React from "react";
-import { X } from "lucide-react";
+import * as React from 'react'
+import { X } from 'lucide-react'
 
-import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { cn } from '@/lib/utils'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 
 type FilterChip = {
-  id: string;
+  id: string
   /** Filter name / title. When `value` is set, rendered with stronger contrast. */
-  label: React.ReactNode;
+  label: React.ReactNode
   /** Optional value shown after the title (e.g. "Active"). */
-  value?: React.ReactNode;
-};
+  value?: React.ReactNode
+}
 
 type FilterChipsProps = {
-  filters: FilterChip[];
-  onRemove: (id: string) => void;
-  onResetAll?: () => void;
-  className?: string;
-};
+  filters: FilterChip[]
+  onRemove: (id: string) => void
+  onResetAll?: () => void
+  className?: string
+}
 
 function FilterChips({
   filters,
@@ -28,23 +28,23 @@ function FilterChips({
   onResetAll,
   className,
 }: FilterChipsProps) {
-  if (filters.length === 0) return null;
+  if (filters.length === 0) return null
 
   return (
     <div
       data-slot="filter-chips"
-      className={cn("flex flex-wrap items-center gap-2", className)}
+      className={cn('flex flex-wrap items-center gap-2', className)}
     >
       <span data-slot="filter-chips-summary">
-        {filters.length} active filter{filters.length === 1 ? "" : "s"}
+        {filters.length} active filter{filters.length === 1 ? '' : 's'}
       </span>
       {filters.map((filter) => {
         const removeLabel =
-          typeof filter.label === "string"
+          typeof filter.label === 'string'
             ? filter.value != null
               ? `${filter.label}: ${String(filter.value)}`
               : filter.label
-            : "filter";
+            : 'filter'
 
         return (
           <Badge
@@ -69,16 +69,18 @@ function FilterChips({
                 <span data-slot="filter-chip-value">{filter.label}</span>
               )}
             </span>
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              size="icon-xs"
               data-slot="filter-chip-remove"
               aria-label={`Remove ${removeLabel}`}
               onClick={() => onRemove(filter.id)}
             >
-              <X aria-hidden className="size-3" />
-            </button>
+              <X className="size-3" />
+            </Button>
           </Badge>
-        );
+        )
       })}
       {onResetAll ? (
         <Button
@@ -93,8 +95,8 @@ function FilterChips({
         </Button>
       ) : null}
     </div>
-  );
+  )
 }
 
-export { FilterChips };
-export type { FilterChipsProps, FilterChip };
+export { FilterChips }
+export type { FilterChipsProps, FilterChip }

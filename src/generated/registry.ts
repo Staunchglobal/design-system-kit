@@ -700,8 +700,13 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "extraFiles": []
   },
   "filter-chips": {
-    "uiDeps": [],
-    "npmDeps": [],
+    "uiDeps": [
+      "badge",
+      "button"
+    ],
+    "npmDeps": [
+      "lucide-react"
+    ],
     "cssFile": "filter-chips.css",
     "extraFiles": []
   },
