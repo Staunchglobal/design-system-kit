@@ -9,3 +9,27 @@
   border-color: var(--time-range-day-border-color);
   padding-bottom: var(--time-range-day-padding-bottom);
 }
+
+[data-slot='time-range-row'] {
+  --time-range-row-gap: 0.5rem;
+  gap: var(--time-range-row-gap);
+}
+
+[data-slot='time-range-select-trigger'] {
+  cursor: pointer;
+}
+
+[data-slot='time-range-select-content'] {
+  --time-range-select-max-height: 15rem;
+  max-height: var(--time-range-select-max-height);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+[data-slot='time-range-select-item'] {
+  cursor: pointer;
+}
+
+[data-slot='time-range-remove'] {
+  cursor: pointer;
+}

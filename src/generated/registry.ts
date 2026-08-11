@@ -1261,7 +1261,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
   "time-range-picker": {
     "uiDeps": [
       "button",
-      "select",
+      "dropdown-menu",
       "switch"
     ],
     "npmDeps": [
