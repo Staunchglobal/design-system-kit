@@ -6,9 +6,10 @@
 [data-slot='combobox-content'] {
   --combobox-content-bg: var(--popover);
   --combobox-content-fg: var(--popover-foreground);
-  --combobox-content-ring-color: var(--neutral-950);
-  --combobox-content-radius: var(--radius-lg);
+  --combobox-content-ring-color: var(--border);
+  --combobox-content-radius: var(--radius-2xl);
   --combobox-content-shadow: var(--shadow-md);
+  --combobox-item-radius: var(--radius-2xl);
 
   background-color: var(--combobox-content-bg);
   color: var(--combobox-content-fg);
@@ -23,30 +24,58 @@
   padding: var(--combobox-list-padding);
 }
 
+[data-slot='combobox-list-loading'] {
+  --combobox-list-loading-padding: 0.5rem;
+  --combobox-list-loading-border-color: var(--border);
+  --combobox-list-loading-fg: var(--muted-foreground);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-block: var(--combobox-list-loading-padding);
+  border-top: 1px solid var(--combobox-list-loading-border-color);
+  color: var(--combobox-list-loading-fg);
+}
+
 [data-slot='combobox-item'] {
-  --combobox-item-radius: var(--radius-md);
-  --combobox-item-padding-block: 0.25rem;
+  --combobox-item-padding-block: 0.5rem;
   --combobox-item-padding-inline-end: 2rem;
   --combobox-item-padding-inline-start: 0.375rem;
   --combobox-item-font-size: var(--typography-small-font-size);
   --combobox-item-gap: 0.5rem;
-  --combobox-item-highlighted-bg: var(--accent);
-  --combobox-item-highlighted-fg: var(--accent-foreground);
+  --combobox-item-fg: var(--foreground);
+  --combobox-item-hover-bg: color-mix(in oklab, var(--primary) 12%, transparent);
+  --combobox-item-selected-bg: var(--primary);
+  --combobox-item-selected-fg: var(--primary-foreground);
+  --combobox-item-selected-hover-bg: color-mix(in oklab, var(--primary) 82%, black);
   --combobox-item-disabled-opacity: 0.5;
 
-  border-radius: var(--combobox-item-radius);
+  border-radius: var(--combobox-item-radius, var(--radius-2xl));
   padding-block: var(--combobox-item-padding-block);
   padding-inline-start: var(--combobox-item-padding-inline-start);
   padding-inline-end: var(--combobox-item-padding-inline-end);
   font-size: var(--combobox-item-font-size);
   gap: var(--combobox-item-gap);
+  color: var(--combobox-item-fg);
+  cursor: pointer;
 }
+/* Hover / keyboard highlight: soft brand tint, keep text color. */
 [data-slot='combobox-item'][data-highlighted] {
-  background-color: var(--combobox-item-highlighted-bg);
-  color: var(--combobox-item-highlighted-fg);
+  background-color: var(--combobox-item-hover-bg);
+  color: var(--combobox-item-fg);
+}
+[data-slot='combobox-item'][data-selected] {
+  background-color: var(--combobox-item-selected-bg);
+  color: var(--combobox-item-selected-fg);
+}
+/* Selected + highlighted: darken fill only — do not change text. */
+[data-slot='combobox-item'][data-selected][data-highlighted] {
+  background-color: var(--combobox-item-selected-hover-bg);
+  color: var(--combobox-item-selected-fg);
 }
 [data-slot='combobox-item'][data-disabled] {
   opacity: var(--combobox-item-disabled-opacity);
+  cursor: not-allowed;
 }
 
 [data-slot='combobox-label'] {
@@ -90,7 +119,7 @@
   --combobox-chips-font-size: var(--typography-small-font-size);
   --combobox-chips-focus-border-color: var(--ring);
   --combobox-chips-focus-ring-width: 3px;
-  --combobox-chips-focus-ring-color: var(--neutral-400);
+  --combobox-chips-focus-ring-color: color-mix(in oklab, var(--primary) 45%, transparent);
   --combobox-chips-invalid-border-color: var(--destructive);
   --combobox-chips-invalid-ring-color: var(--destructive-600);
 
@@ -114,8 +143,9 @@
 }
 
 [data-slot='combobox-chip'] {
-  --combobox-chip-bg: var(--muted);
+  --combobox-chip-bg: color-mix(in oklab, var(--primary) 10%, transparent);
   --combobox-chip-fg: var(--foreground);
+  --combobox-chip-hover-bg: color-mix(in oklab, var(--primary) 16%, transparent);
   --combobox-chip-height: 1.3125rem;
   --combobox-chip-padding-x: 0.375rem;
   --combobox-chip-radius: var(--radius-sm);
@@ -133,17 +163,41 @@
   font-weight: var(--combobox-chip-font-weight);
   gap: var(--combobox-chip-gap);
 }
+[data-slot='combobox-chip']:hover {
+  background-color: var(--combobox-chip-hover-bg);
+}
 [data-slot='combobox-chip']:has(:disabled) {
   opacity: var(--combobox-chip-disabled-opacity);
 }
 
 [data-slot='combobox-chip-remove'] {
-  --combobox-chip-remove-opacity: 0.5;
+  --combobox-chip-remove-opacity: 0.55;
   --combobox-chip-remove-hover-opacity: 1;
   opacity: var(--combobox-chip-remove-opacity);
+  cursor: pointer;
 }
 [data-slot='combobox-chip-remove']:hover {
   opacity: var(--combobox-chip-remove-hover-opacity);
+}
+
+[data-slot='combobox-chip-overflow'] {
+  --combobox-chip-overflow-bg: color-mix(in oklab, var(--primary) 10%, transparent);
+  --combobox-chip-overflow-fg: var(--foreground);
+  --combobox-chip-overflow-hover-bg: color-mix(in oklab, var(--primary) 18%, transparent);
+  --combobox-chip-overflow-active-bg: color-mix(in oklab, var(--primary) 24%, transparent);
+  --combobox-chip-overflow-radius: var(--radius-sm);
+
+  background-color: var(--combobox-chip-overflow-bg);
+  color: var(--combobox-chip-overflow-fg);
+  border-radius: var(--combobox-chip-overflow-radius);
+  cursor: pointer;
+  border: none;
+}
+[data-slot='combobox-chip-overflow']:hover {
+  background-color: var(--combobox-chip-overflow-hover-bg);
+}
+[data-slot='combobox-chip-overflow']:active {
+  background-color: var(--combobox-chip-overflow-active-bg);
 }
 
 [data-slot='combobox-chip-input'] {
@@ -152,10 +206,24 @@
 }
 
 .dark [data-slot='combobox-content'] {
-  --combobox-content-ring-color: var(--neutral-50);
+  --combobox-content-ring-color: var(--neutral-700);
+}
+
+.dark [data-slot='combobox-item'] {
+  --combobox-item-hover-bg: color-mix(in oklab, var(--primary) 18%, transparent);
+  --combobox-item-selected-hover-bg: color-mix(in oklab, var(--primary) 75%, black);
 }
 
 .dark [data-slot='combobox-chips'] {
-  --combobox-chips-focus-ring-color: var(--neutral-500);
+  --combobox-chips-focus-ring-color: color-mix(in oklab, var(--primary) 45%, transparent);
   --combobox-chips-invalid-ring-color: var(--destructive-400);
+}
+
+.dark [data-slot='combobox-chip'],
+.dark [data-slot='combobox-chip-overflow'] {
+  --combobox-chip-bg: color-mix(in oklab, var(--primary) 18%, transparent);
+  --combobox-chip-hover-bg: color-mix(in oklab, var(--primary) 26%, transparent);
+  --combobox-chip-overflow-bg: color-mix(in oklab, var(--primary) 18%, transparent);
+  --combobox-chip-overflow-hover-bg: color-mix(in oklab, var(--primary) 26%, transparent);
+  --combobox-chip-overflow-active-bg: color-mix(in oklab, var(--primary) 32%, transparent);
 }

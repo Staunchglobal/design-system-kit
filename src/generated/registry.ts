@@ -402,6 +402,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "uiDeps": [
       "button",
       "input-group",
+      "spinner",
       "label"
     ],
     "npmDeps": [
