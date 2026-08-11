@@ -1,12 +1,13 @@
 [data-slot='tag-input'] {
+  /* Match Input so the field feels like the same control family. */
   --tag-input-bg: var(--input-bg);
   --tag-input-border-color: var(--input-border-color);
   --tag-input-border-width: var(--input-border-width);
   --tag-input-radius: var(--input-radius);
   --tag-input-min-height: var(--input-height);
   --tag-input-padding-x: var(--input-padding-x);
-  --tag-input-padding-y: var(--input-padding-y);
-  --tag-input-gap: 0.25rem;
+  --tag-input-padding-y: 0.375rem;
+  --tag-input-gap: 0.375rem;
   --tag-input-font-size: var(--input-font-size);
   --tag-input-focus-border-color: var(--input-focus-border-color);
   --tag-input-invalid-border-color: var(--input-invalid-border-color);
@@ -14,6 +15,7 @@
 
   min-height: var(--tag-input-min-height);
   border-width: var(--tag-input-border-width);
+  border-style: solid;
   border-color: var(--tag-input-border-color);
   border-radius: var(--tag-input-radius);
   background-color: var(--tag-input-bg);
@@ -27,6 +29,7 @@
   border-width: 2px;
   border-color: var(--tag-input-focus-border-color);
   box-shadow: none;
+  outline: none;
 }
 
 [data-slot='tag-input']:has([aria-invalid='true']),
@@ -40,24 +43,30 @@
   background-color: var(--tag-input-disabled-bg);
   opacity: 1;
 }
+
+/* Align with filter chips: outlined surface, shared radius — not pill badges. */
 [data-slot='tag-chip'] {
   --tag-chip-bg: var(--neutral-0);
   --tag-chip-fg: var(--foreground);
   --tag-chip-border-color: var(--border);
   --tag-chip-border-width: 1px;
-  --tag-chip-radius: var(--radius-sm);
+  --tag-chip-radius: var(--radius-md);
   --tag-chip-padding-inline-start: 0.5rem;
-  --tag-chip-padding-inline-end: 0.125rem;
+  --tag-chip-padding-inline-end: 0.25rem;
   --tag-chip-padding-block: 0.125rem;
   --tag-chip-gap: 0.125rem;
   --tag-chip-font-size: var(--typography-small-font-size);
   --tag-chip-font-weight: var(--typography-small-font-weight);
   --tag-chip-line-height: var(--typography-small-line-height);
-  --tag-chip-height: auto;
+  --tag-chip-height: 1.5rem;
 
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
   background-color: var(--tag-chip-bg);
   color: var(--tag-chip-fg);
   border-width: var(--tag-chip-border-width);
+  border-style: solid;
   border-color: var(--tag-chip-border-color);
   border-radius: var(--tag-chip-radius);
   padding-inline-start: var(--tag-chip-padding-inline-start);
@@ -68,6 +77,63 @@
   font-weight: var(--tag-chip-font-weight);
   line-height: var(--tag-chip-line-height);
   height: var(--tag-chip-height);
+  max-width: 100%;
+}
+
+[data-slot='tag-chip-label'] {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+/*
+  Native button (not ui/Button): Button always forces data-slot="button" and
+  icon-xs is 2rem, which overflows the 1.5rem chip. Keep icon at 0.75rem inside
+  a 1rem hit target so hover stays inside the chip.
+*/
+[data-slot='tag-chip-remove'] {
+  --tag-chip-remove-size: 1rem;
+  --tag-chip-remove-opacity: 0.45;
+  --tag-chip-remove-hover-bg: var(--neutral-100);
+  --tag-chip-remove-hover-fg: var(--foreground);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--tag-chip-remove-size);
+  height: var(--tag-chip-remove-size);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: inherit;
+  opacity: var(--tag-chip-remove-opacity);
+  cursor: pointer;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+[data-slot='tag-chip-remove'] svg {
+  width: 0.75rem;
+  height: 0.75rem;
+  flex-shrink: 0;
+}
+
+[data-slot='tag-chip-remove']:hover,
+[data-slot='tag-chip-remove']:focus-visible {
+  --tag-chip-remove-opacity: 1;
+  opacity: var(--tag-chip-remove-opacity);
+  background-color: var(--tag-chip-remove-hover-bg);
+  color: var(--tag-chip-remove-hover-fg);
+  outline: none;
+}
+
+[data-slot='tag-input-field'] {
+  min-width: 4rem;
+  color: var(--foreground);
 }
 
 [data-slot='tag-input-field']::placeholder {
@@ -76,7 +142,7 @@
 
 [data-slot='tag-input-error'] {
   --tag-input-error-fg: var(--destructive);
-  --tag-input-error-font-size: var(--typography-p-font-size);
+  --tag-input-error-font-size: var(--typography-muted-font-size);
   color: var(--tag-input-error-fg);
   font-size: var(--tag-input-error-font-size);
 }
@@ -87,4 +153,11 @@
 
 .dark [data-slot='tag-chip'] {
   --tag-chip-bg: var(--neutral-900);
+  --tag-chip-fg: var(--neutral-100);
+  --tag-chip-border-color: var(--neutral-700);
+}
+
+.dark [data-slot='tag-chip-remove'] {
+  --tag-chip-remove-hover-bg: var(--neutral-800);
+  --tag-chip-remove-hover-fg: var(--neutral-50);
 }

@@ -69,16 +69,14 @@ function FilterChips({
                 <span data-slot="filter-chip-value">{filter.label}</span>
               )}
             </span>
-            <Button
+            <button
               type="button"
-              variant="ghost"
-              size="icon-xs"
               data-slot="filter-chip-remove"
               aria-label={`Remove ${removeLabel}`}
               onClick={() => onRemove(filter.id)}
             >
-              <X className="size-3" />
-            </Button>
+              <X aria-hidden className="size-3" />
+            </button>
           </Badge>
         );
       })}
