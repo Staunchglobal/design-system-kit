@@ -35,7 +35,7 @@ function ImpersonationBanner({
     >
       <AlertTriangle
         aria-hidden="true"
-        className="size-4 shrink-0 text-warning-600 dark:text-warning-400"
+        className="size-5 shrink-0 text-warning-600 dark:text-warning-400"
       />
       <span className="flex-1">{message}</span>
       {action ? (

@@ -1,6 +1,6 @@
 'use client'
 
-import { AlertTriangleIcon, InfoIcon } from 'lucide-react'
+import { AlertTriangleIcon, CheckCircle2Icon, CircleAlertIcon, InfoIcon } from 'lucide-react'
 import { ComponentSection, Example, ExampleGrid } from '@/app/design-system/_lib/showcase'
 import { Alert, AlertTitle, AlertDescription, AlertAction } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
@@ -23,7 +23,7 @@ export default function AlertDemo() {
 
           <Example title="Destructive">
             <Alert variant="destructive" className="w-full">
-              <AlertTriangleIcon />
+              <CircleAlertIcon />
               <AlertTitle>Something went wrong</AlertTitle>
               <AlertDescription>
                 Your changes could not be saved. Please try again.
@@ -33,7 +33,7 @@ export default function AlertDemo() {
 
           <Example title="Success">
             <Alert variant="success" className="w-full">
-              <InfoIcon />
+              <CheckCircle2Icon />
               <AlertTitle>Saved</AlertTitle>
               <AlertDescription>Your changes have been saved successfully.</AlertDescription>
             </Alert>

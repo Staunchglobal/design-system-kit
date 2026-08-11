@@ -8,7 +8,7 @@
   --alert-action-offset: 0.75rem;
   --alert-border-width: 0px;
   --alert-border-color: transparent;
-  --alert-icon-size: 1.5rem;
+  --alert-icon-size: 1.25rem;
 
   border-radius: var(--alert-radius);
   padding-inline: var(--alert-padding-x);
@@ -22,6 +22,11 @@
 [data-slot='alert'] > svg {
   width: var(--alert-icon-size);
   height: var(--alert-icon-size);
+  flex-shrink: 0;
+  /* Match first line of the title (title line-height is 1.5rem). */
+  align-self: start;
+  margin-block-start: calc((var(--alert-title-line-height, 1.5rem) - var(--alert-icon-size)) / 2);
+  stroke-width: 2;
 }
 [data-slot='alert'][data-variant='default'] {
   --alert-bg: var(--neutral-50);
@@ -86,6 +91,13 @@
   line-height: var(--alert-title-line-height);
   color: var(--alert-title-fg);
 }
+/* Keep title + icon the same tint on colored variants. */
+[data-slot='alert'][data-variant='destructive'] [data-slot='alert-title'],
+[data-slot='alert'][data-variant='success'] [data-slot='alert-title'],
+[data-slot='alert'][data-variant='warning'] [data-slot='alert-title'],
+[data-slot='alert'][data-variant='info'] [data-slot='alert-title'] {
+  color: inherit;
+}
 [data-slot='alert-title'] a:hover {
   color: var(--alert-title-link-hover-fg);
 }
@@ -143,4 +155,11 @@
 
 .dark [data-slot='alert-title'] {
   --alert-title-fg: var(--neutral-50);
+}
+
+.dark [data-slot='alert'][data-variant='destructive'] [data-slot='alert-title'],
+.dark [data-slot='alert'][data-variant='success'] [data-slot='alert-title'],
+.dark [data-slot='alert'][data-variant='warning'] [data-slot='alert-title'],
+.dark [data-slot='alert'][data-variant='info'] [data-slot='alert-title'] {
+  color: inherit;
 }
