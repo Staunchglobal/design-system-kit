@@ -1,11 +1,12 @@
 'use client'
 
 import * as React from 'react'
-import { Loader2, Plus, Search, X } from 'lucide-react'
+import { Plus, Search, X } from 'lucide-react'
 
 import type { CrudTab } from '@/components/crud/types'
 import { Button } from '@/components/ui/button'
 import { SegmentedControl } from '@/components/ui/segmented-control'
+import { Spinner } from '@/components/ui/spinner'
 import { cn } from '@/lib/utils'
 
 export type CrudToolbarProps = {
@@ -77,7 +78,9 @@ export function CrudToolbar({
                   autoComplete="off"
                 />
                 {isSearchPending ? (
-                  <Loader2 data-ui="crud-search-pending" aria-hidden />
+                  <span data-ui="crud-search-pending" aria-hidden>
+                    <Spinner className="size-3.5" />
+                  </span>
                 ) : search ? (
                   <button
                     type="button"

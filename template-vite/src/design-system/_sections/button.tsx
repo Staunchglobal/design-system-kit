@@ -87,12 +87,12 @@ export default function ButtonDemo() {
         </Example>
 
         <Example title="Loading state">
-          <Button disabled>
-            <Spinner />
+          <Button disabled aria-busy>
+            <Spinner className="size-4" />
             Please wait
           </Button>
-          <Button variant="outline" size="icon" disabled aria-label="Loading">
-            <Spinner />
+          <Button variant="outline" size="icon" disabled aria-busy aria-label="Loading">
+            <Spinner className="size-4" />
           </Button>
         </Example>
       </ComponentSection>

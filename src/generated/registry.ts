@@ -28,9 +28,9 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "sonner",
       "auth",
       "alert",
-      "button",
       "field",
       "input",
+      "button",
       "sidebar"
     ],
     "npmDeps": [
@@ -119,6 +119,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "alert-dialog",
       "pagination",
       "segmented-control",
+      "spinner",
       "crud-table",
       "sidebar"
     ],
@@ -466,6 +467,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "alert-dialog",
       "pagination",
       "segmented-control",
+      "spinner",
       "badge",
       "sonner"
     ],
@@ -516,6 +518,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "alert-dialog",
       "pagination",
       "segmented-control",
+      "spinner",
       "crud-table",
       "sidebar"
     ],
@@ -697,13 +700,8 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "extraFiles": []
   },
   "filter-chips": {
-    "uiDeps": [
-      "badge",
-      "button"
-    ],
-    "npmDeps": [
-      "lucide-react"
-    ],
+    "uiDeps": [],
+    "npmDeps": [],
     "cssFile": "filter-chips.css",
     "extraFiles": []
   },
@@ -1243,8 +1241,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
   },
   "tag-input": {
     "uiDeps": [
-      "badge",
-      "button"
+      "badge"
     ],
     "npmDeps": [
       "lucide-react"
@@ -1333,6 +1330,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "alert-dialog",
       "pagination",
       "segmented-control",
+      "spinner",
       "crud-table"
     ],
     "npmDeps": [

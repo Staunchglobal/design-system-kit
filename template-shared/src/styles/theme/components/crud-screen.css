@@ -225,19 +225,12 @@
 
 [data-slot='crud-search'] [data-ui='crud-search-pending'] {
   cursor: default;
-  animation: crud-search-spin 0.8s linear infinite;
 }
 
 [data-slot='crud-search'] [data-ui='crud-search-clear'] > svg,
-[data-slot='crud-search'] [data-ui='crud-search-pending'] {
+[data-slot='crud-search'] [data-ui='crud-search-pending'] [data-slot='spinner'] {
   width: 14px;
   height: 14px;
-}
-
-@keyframes crud-search-spin {
-  to {
-    transform: translateY(-50%) rotate(360deg);
-  }
 }
 
 [data-slot='crud-toolbar-actions'] {

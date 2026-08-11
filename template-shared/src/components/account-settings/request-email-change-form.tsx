@@ -3,9 +3,9 @@
 import * as React from 'react'
 
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Button } from '@/components/ui/button'
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
+import { AuthSubmitButton } from '@/components/auth/auth-submit-button'
 import { PasswordInput } from '@/components/auth/password-input'
 import { validateEmail, validateRequired } from '@/components/auth/password-policy'
 import type { RequestEmailChangeValues } from '@/components/account-settings/use-email-change'
@@ -89,9 +89,9 @@ export function RequestEmailChangeForm({
           {submitted ? <FieldError>{fieldErrors.currentPassword}</FieldError> : null}
         </Field>
       </FieldGroup>
-      <Button type="submit" className="w-full" disabled={loading}>
-        {loading ? 'Sending code…' : 'Continue'}
-      </Button>
+      <AuthSubmitButton loading={loading} loadingLabel="Sending code…">
+        Continue
+      </AuthSubmitButton>
     </form>
   )
 }
