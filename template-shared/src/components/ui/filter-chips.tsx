@@ -1,63 +1,102 @@
-'use client'
+"use client";
 
-import * as React from 'react'
-import { X } from 'lucide-react'
+import * as React from "react";
+import { X } from "lucide-react";
 
-import { cn } from '@/lib/utils'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 type FilterChip = {
-  id: string
-  label: React.ReactNode
-}
+  id: string;
+  /** Filter name / title. When `value` is set, rendered with stronger contrast. */
+  label: React.ReactNode;
+  /** Optional value shown after the title (e.g. "Active"). */
+  value?: React.ReactNode;
+};
 
 type FilterChipsProps = {
-  filters: FilterChip[]
-  onRemove: (id: string) => void
-  onResetAll?: () => void
-  className?: string
-}
+  filters: FilterChip[];
+  onRemove: (id: string) => void;
+  onResetAll?: () => void;
+  className?: string;
+};
 
-function FilterChips({ filters, onRemove, onResetAll, className }: FilterChipsProps) {
-  if (filters.length === 0) return null
+function FilterChips({
+  filters,
+  onRemove,
+  onResetAll,
+  className,
+}: FilterChipsProps) {
+  if (filters.length === 0) return null;
 
   return (
     <div
       data-slot="filter-chips"
-      className={cn('flex flex-wrap items-center gap-2', className)}
+      className={cn("flex flex-wrap items-center gap-2", className)}
     >
-      <span className="text-muted-foreground text-sm">
-        {filters.length} active filter{filters.length === 1 ? '' : 's'}
+      <span data-slot="filter-chips-summary">
+        {filters.length} active filter{filters.length === 1 ? "" : "s"}
       </span>
-      {filters.map((filter) => (
-        <Badge
-          key={filter.id}
-          variant="secondary"
-          data-slot="filter-chip"
-          className="bg-muted text-foreground gap-1 rounded-sm pr-0.5 font-medium"
-        >
-          {filter.label}
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-xs"
-            className="size-5 opacity-50 hover:opacity-100"
-            aria-label={`Remove ${typeof filter.label === 'string' ? filter.label : 'filter'}`}
-            onClick={() => onRemove(filter.id)}
+      {filters.map((filter) => {
+        const removeLabel =
+          typeof filter.label === "string"
+            ? filter.value != null
+              ? `${filter.label}: ${String(filter.value)}`
+              : filter.label
+            : "filter";
+
+        return (
+          <Badge
+            key={filter.id}
+            variant="secondary"
+            data-slot="filter-chip"
+            className="gap-1 rounded-sm pr-0.5 font-normal"
           >
-            <X className="size-3" />
-          </Button>
-        </Badge>
-      ))}
+            <span
+              data-slot="filter-chip-content"
+              className="inline-flex min-w-0 items-center gap-1"
+            >
+              {filter.value != null ? (
+                <>
+                  <span data-slot="filter-chip-key">{filter.label}</span>
+                  <span data-slot="filter-chip-sep" aria-hidden>
+                    :
+                  </span>
+                  <span data-slot="filter-chip-value">{filter.value}</span>
+                </>
+              ) : (
+                <span data-slot="filter-chip-value">{filter.label}</span>
+              )}
+            </span>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-xs"
+              data-slot="filter-chip-remove"
+              aria-label={`Remove ${removeLabel}`}
+              onClick={() => onRemove(filter.id)}
+            >
+              <X className="size-3" />
+            </Button>
+          </Badge>
+        );
+      })}
       {onResetAll ? (
-        <Button type="button" variant="link" size="sm" className="h-auto p-0" onClick={onResetAll}>
+        <Button
+          type="button"
+          variant="link"
+          size="sm"
+          data-slot="filter-chips-reset"
+          className="h-auto p-0"
+          onClick={onResetAll}
+        >
           Reset all
         </Button>
       ) : null}
     </div>
-  )
+  );
 }
 
-export { FilterChips }
-export type { FilterChipsProps, FilterChip }
+export { FilterChips };
+export type { FilterChipsProps, FilterChip };

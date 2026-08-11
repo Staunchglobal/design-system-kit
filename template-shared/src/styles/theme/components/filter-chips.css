@@ -1,21 +1,38 @@
 [data-slot='filter-chips'] {
   --filter-chips-gap: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   gap: var(--filter-chips-gap);
 }
+
+[data-slot='filter-chips-summary'] {
+  --filter-chips-summary-fg: var(--muted-foreground);
+  --filter-chips-summary-font-size: var(--typography-small-font-size);
+  --filter-chips-summary-line-height: var(--typography-small-line-height);
+  color: var(--filter-chips-summary-fg);
+  font-size: var(--filter-chips-summary-font-size);
+  line-height: var(--filter-chips-summary-line-height);
+}
+
 [data-slot='filter-chip'] {
   --filter-chip-bg: var(--neutral-0);
-  --filter-chip-fg: var(--muted-600);
+  --filter-chip-fg: var(--foreground);
   --filter-chip-border-color: var(--border);
   --filter-chip-border-width: 1px;
   --filter-chip-radius: var(--radius-md);
-  --filter-chip-padding-x: 0.375rem;
-  --filter-chip-padding-y: 0.375rem;
-  --filter-chip-gap: 0;
+  --filter-chip-padding-x: 0.5rem;
+  --filter-chip-padding-y: 0.25rem;
+  --filter-chip-padding-inline-end: 0.25rem;
+  --filter-chip-gap: 0.125rem;
   --filter-chip-font-size: var(--typography-small-font-size);
   --filter-chip-font-weight: var(--typography-small-font-weight);
   --filter-chip-line-height: var(--typography-small-line-height);
   --filter-chip-height: 2rem;
 
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
   background-color: var(--filter-chip-bg);
   color: var(--filter-chip-fg);
   border-width: var(--filter-chip-border-width);
@@ -23,6 +40,7 @@
   border-color: var(--filter-chip-border-color);
   border-radius: var(--filter-chip-radius);
   padding-inline: var(--filter-chip-padding-x);
+  padding-inline-end: var(--filter-chip-padding-inline-end);
   padding-block: var(--filter-chip-padding-y);
   gap: var(--filter-chip-gap);
   font-size: var(--filter-chip-font-size);
@@ -30,59 +48,97 @@
   line-height: var(--filter-chip-line-height);
   height: var(--filter-chip-height);
 }
+
+/* Hover should not restyle the chip body — only the remove control (below). */
 [data-slot='filter-chip']:hover {
-  --filter-chip-bg: var(--neutral-50);
-  --filter-chip-fg: var(--muted-600);
-  --filter-chip-border-color: var(--neutral-200);
   background-color: var(--filter-chip-bg);
   color: var(--filter-chip-fg);
   border-color: var(--filter-chip-border-color);
 }
-[data-slot='filter-chip'][aria-pressed='true'],
-[data-slot='filter-chip'][data-state='on'],
-[data-slot='filter-chip'][data-selected='true'] {
-  --filter-chip-bg: var(--primary-50);
-  --filter-chip-fg: var(--foreground);
-  --filter-chip-border-color: var(--primary-700);
-  background-color: var(--filter-chip-bg);
-  color: var(--filter-chip-fg);
-  border-color: var(--filter-chip-border-color);
+
+[data-slot='filter-chip-content'] {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.25rem;
 }
-[data-slot='filter-chip'][aria-pressed='true']:hover,
-[data-slot='filter-chip'][data-state='on']:hover,
-[data-slot='filter-chip'][data-selected='true']:hover {
-  --filter-chip-bg: var(--primary-50);
-  --filter-chip-fg: var(--foreground);
-  --filter-chip-border-color: var(--primary-700);
-  background-color: var(--filter-chip-bg);
-  color: var(--filter-chip-fg);
-  border-color: var(--filter-chip-border-color);
+
+[data-slot='filter-chip-key'] {
+  --filter-chip-key-fg: var(--muted-foreground);
+  color: var(--filter-chip-key-fg);
+  font-weight: var(--typography-small-font-weight);
+}
+
+[data-slot='filter-chip-sep'] {
+  color: var(--muted-foreground);
+}
+
+[data-slot='filter-chip-value'] {
+  --filter-chip-value-fg: var(--foreground);
+  color: var(--filter-chip-value-fg);
+  font-weight: var(--typography-small-font-weight);
+}
+
+/* Beat [data-slot=button][data-size=icon-xs] (2rem) so the hover ring
+   hugs the icon instead of filling the chip height. */
+[data-slot='filter-chip'] [data-slot='button'][data-slot='filter-chip-remove'],
+[data-slot='filter-chip'] [data-slot='filter-chip-remove'][data-size='icon-xs'] {
+  --filter-chip-remove-size: 1.125rem;
+  --filter-chip-remove-opacity: 0.45;
+  --filter-chip-remove-hover-bg: var(--neutral-100);
+  --filter-chip-remove-hover-fg: var(--foreground);
+  --button-size: var(--filter-chip-remove-size);
+
+  box-sizing: border-box;
+  width: var(--filter-chip-remove-size);
+  height: var(--filter-chip-remove-size);
+  min-width: var(--filter-chip-remove-size);
+  min-height: var(--filter-chip-remove-size);
+  padding: 0;
+  opacity: var(--filter-chip-remove-opacity);
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+}
+
+[data-slot='filter-chip'] [data-slot='filter-chip-remove'] svg {
+  /* Keep the glyph at the usual chip-icon size; only the hit area shrinks. */
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+[data-slot='filter-chip']:hover [data-slot='filter-chip-remove'],
+[data-slot='filter-chip'] [data-slot='filter-chip-remove']:hover,
+[data-slot='filter-chip'] [data-slot='filter-chip-remove']:focus-visible {
+  --filter-chip-remove-opacity: 1;
+  opacity: var(--filter-chip-remove-opacity);
+  background-color: var(--filter-chip-remove-hover-bg);
+  color: var(--filter-chip-remove-hover-fg);
+}
+
+[data-slot='filter-chips-reset'] {
+  cursor: pointer;
 }
 
 .dark [data-slot='filter-chip'] {
   --filter-chip-bg: var(--neutral-900);
-  --filter-chip-fg: var(--neutral-400);
-  --filter-chip-border-color: var(--neutral-700);
-}
-
-.dark [data-slot='filter-chip']:hover {
-  --filter-chip-bg: var(--neutral-800);
-  --filter-chip-fg: var(--neutral-300);
-  --filter-chip-border-color: var(--neutral-700);
-}
-
-.dark [data-slot='filter-chip'][aria-pressed='true'],
-.dark [data-slot='filter-chip'][data-state='on'],
-.dark [data-slot='filter-chip'][data-selected='true'] {
-  --filter-chip-bg: var(--primary-950);
   --filter-chip-fg: var(--neutral-100);
-  --filter-chip-border-color: var(--primary-400);
+  --filter-chip-border-color: var(--neutral-700);
 }
 
-.dark [data-slot='filter-chip'][aria-pressed='true']:hover,
-.dark [data-slot='filter-chip'][data-state='on']:hover,
-.dark [data-slot='filter-chip'][data-selected='true']:hover {
-  --filter-chip-bg: var(--primary-950);
-  --filter-chip-fg: var(--neutral-50);
-  --filter-chip-border-color: var(--primary-400);
+.dark [data-slot='filter-chip-key'],
+.dark [data-slot='filter-chip-sep'] {
+  --filter-chip-key-fg: var(--neutral-400);
+  color: var(--filter-chip-key-fg);
+}
+
+.dark [data-slot='filter-chip-value'] {
+  --filter-chip-value-fg: var(--neutral-50);
+  color: var(--filter-chip-value-fg);
+}
+
+.dark [data-slot='filter-chip'] [data-slot='button'][data-slot='filter-chip-remove'],
+.dark [data-slot='filter-chip'] [data-slot='filter-chip-remove'][data-size='icon-xs'] {
+  --filter-chip-remove-hover-bg: var(--neutral-800);
+  --filter-chip-remove-hover-fg: var(--neutral-50);
 }
