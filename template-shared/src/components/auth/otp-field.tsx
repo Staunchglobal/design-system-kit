@@ -41,13 +41,13 @@ export function OtpField({
   // shortens that string, and re-deriving from it would shift later digits left.
   const [chars, setChars] = React.useState<string[]>(() => toChars(value, length))
   const [prevExternal, setPrevExternal] = React.useState({ value, length })
-  const lastCommittedRef = React.useRef(value)
+  const [lastCommitted, setLastCommitted] = React.useState(value)
   // Sync when the parent resets/changes the controlled value (not our own echo).
   if (value !== prevExternal.value || length !== prevExternal.length) {
     setPrevExternal({ value, length })
-    if (value !== lastCommittedRef.current) {
+    if (value !== lastCommitted) {
       setChars(toChars(value, length))
-      lastCommittedRef.current = value
+      setLastCommitted(value)
     }
   }
 
@@ -60,7 +60,7 @@ export function OtpField({
   function commit(next: string[]) {
     setChars(next)
     const joined = next.join('')
-    lastCommittedRef.current = joined
+    setLastCommitted(joined)
     onChange(joined)
   }
 

@@ -78,20 +78,20 @@ function InputOTP({
   const inputsRef = React.useRef<Array<HTMLInputElement | null>>([])
   // join('') collapses empty middle slots ("12"+" "+ "456" → "12456"). Remember
   // the last value we emitted so echoing it back doesn't rebuild & shift chars.
-  const lastCommittedRef = React.useRef(resolvedValue)
+  const [lastCommitted, setLastCommitted] = React.useState(resolvedValue)
 
   if (resolvedValue !== prevExternal.value || maxLength !== prevExternal.maxLength) {
     setPrevExternal({ value: resolvedValue, maxLength })
-    if (resolvedValue !== lastCommittedRef.current) {
+    if (resolvedValue !== lastCommitted) {
       setChars(toChars(resolvedValue, maxLength))
-      lastCommittedRef.current = resolvedValue
+      setLastCommitted(resolvedValue)
     }
   }
 
   function commit(next: string[]) {
     setChars(next)
     const joined = next.join('')
-    lastCommittedRef.current = joined
+    setLastCommitted(joined)
     if (!isControlled) setUncontrolledValue(joined)
     onChange?.(joined)
     if (joined.length === maxLength && next.every(Boolean)) {
