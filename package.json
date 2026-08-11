@@ -52,7 +52,7 @@
     "changeset": "changeset",
     "version": "changeset version",
     "prepublishOnly": "npm run build",
-    "release": "npm publish"
+    "release": "node scripts/publish-if-new-version.mjs"
   },
   "dependencies": {
     "commander": "^15.0.0",
