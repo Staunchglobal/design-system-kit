@@ -111,34 +111,37 @@ function ImageCropDialog({ open, onOpenChange, file, aspect, onCropped }: ImageC
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent data-ui="image-crop-dialog" className="sm:max-w-lg">
-        <DialogHeader>
+      <DialogContent
+        data-ui="image-crop-dialog"
+        className="flex max-h-[min(90vh,40rem)] flex-col gap-4 overflow-hidden sm:max-w-lg"
+      >
+        <DialogHeader className="shrink-0">
           <DialogTitle>Crop image</DialogTitle>
         </DialogHeader>
 
         {objectUrl ? (
-          <div className="overflow-auto rounded-lg">
+          <div className="min-h-0 flex-1 overflow-auto overscroll-contain rounded-lg">
             <ReactCrop
               crop={crop}
               onChange={(c) => setCrop(c)}
               onComplete={(c) => setCompletedCrop(c)}
               aspect={aspect}
-              className="max-h-[60vh]"
+              className="mx-auto block max-w-full"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 ref={imageRef}
                 src={objectUrl}
                 alt="Image to crop"
-                className="max-w-full"
+                className="mx-auto block max-h-[min(55vh,28rem)] max-w-full object-contain"
               />
             </ReactCrop>
           </div>
         ) : null}
 
-        {error ? <p className="text-destructive text-sm">{error}</p> : null}
+        {error ? <p className="text-destructive shrink-0 text-sm">{error}</p> : null}
 
-        <DialogFooter showCloseButton>
+        <DialogFooter showCloseButton className="shrink-0">
           <Button type="button" disabled={!objectUrl || busy} onClick={handleApply}>
             {busy ? 'Applying…' : 'Apply crop'}
           </Button>
