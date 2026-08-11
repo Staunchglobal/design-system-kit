@@ -151,8 +151,169 @@ with `sendMessage` as a GraphQL multipart upload — no separate upload URL need
 `messageType` is one of `TEXT`/`IMAGE`/`VIDEO`/`ANNOUNCEMENT`. Subscriptions run over Rails
 ActionCable (not the `graphql-ws` protocol) — `NEXT_PUBLIC_GRAPHQL_WS_URL`/`VITE_GRAPHQL_WS_URL`
 must point at the backend's ActionCable mount (`/cable` by default), and the connection
-identifies the user via a `userId` query param resolved from the current auth session, not a
-signed token — match that on the backend or subscriptions will silently fail to authorize.
+identifies the user via a **signed `?token=` query param** — the same JWT sent as
+`Authorization: Bearer` on GraphQL HTTP requests, not a bare `userId` (ActionCable's handshake
+has no header injection point, so the token travels in the URL instead). Match that on the
+backend or subscriptions will silently fail to authorize. The socket itself is shared and reused
+across every feature that subscribes (chat, `notification-center` if also installed) — opening
+one feature's subscriptions doesn't open a second physical connection for the other.
+
+### User management (opt-in)
+
+Install `user-management` for an admin screen at `/user-management` (Next: query-param tabs
+`?tab=all|active|archived|pending`; Vite: `/user-management/:tab`) listing users and pending
+invitations, with edit/archive/restore, send/resend invitation, role-grant management, and
+impersonation.
+
+```bash
+npx staunch-shadcn-design-system-kit init --components user-management,auth
+```
+
+Like `auth`, it's not in the interactive picker's nav groups — pass `--components` (or `--all`)
+to install it. Bundles its own private copies of `auth`'s session/fetch helpers, so it works even
+if `auth` isn't separately selected, but you'll want `auth` too for actual sign-in.
+
+**Every action is gated server-side, never re-derived here.** The page itself checks a single
+global ability (`can('users:view')`) before rendering at all — if your backend doesn't grant it,
+the page shows "You don't have access to this page" instead of an empty or broken table. Each row
+then carries its own `abilities` array (e.g. `edit`, `archive`, `restore`, `impersonate`) computed
+per-row by the backend, and the UI only shows the buttons a given row's abilities list actually
+includes — a `member` viewing another user's row simply has no Impersonate button to click, rather
+than a client-side role check hiding it. `ImpersonateUser`/`StopImpersonating` swap the session's
+JWT via `setAuthSession` and route to `/chat`.
+
+Queries: `users(tab, search, page, perPage)`, `invitations(page, perPage)`,
+`usersAndInvitations(search, page, perPage)` (a union of `User`/`Invitation`), `grants(userId)`.
+Mutations (each wraps its arguments in a single `$input`, per this backend's
+`RelayClassicMutation` convention): `updateUser`, `archiveUser`, `restoreUser`,
+`updateUserRoles`, `sendInvitation`, `resendInvitation`, `createGrant`, `revokeGrant`,
+`impersonateUser`, `stopImpersonating`.
+
+### Feature flags admin (opt-in)
+
+Install `feature-flags-admin` for a role × feature matrix at `/feature-flags-admin` — a checkbox
+grid where each cell toggles whether a role can use a given backend feature flag.
+
+```bash
+npx staunch-shadcn-design-system-kit init --components feature-flags-admin,auth
+```
+
+Not in the interactive picker's nav groups — pass `--components` (or `--all`); like
+`user-management`, it bundles its own private `auth` helper copies, so `auth` isn't a hard
+prerequisite, just needed for actual sign-in. Gated by `can('feature_flags:manage')`. An
+untouched cell defaults to **off** (fail-closed) once any cell for that feature has been touched
+at all. Some cells render as a disabled dash instead of a checkbox: a role whose own backend
+policy hard-denies a feature regardless of the flag (the
+matrix's `eligible` field per cell) can't be "granted" it here — the checkbox would silently do
+nothing, so it isn't offered.
+
+Query: `featureFlags` → `{ features, roles, cells: [{ feature, role, enabled, eligible }] }`.
+Mutation: `updateFeatureFlag(feature, role, enabled)`.
+
+### Delivery logs (opt-in)
+
+Install `delivery-logs` for a read-only email/SMS delivery history at `/delivery-logs`, with
+All/Email/SMS tabs and status badges (sent/delivered, pending/scheduled, failed/undelivered).
+
+```bash
+npx staunch-shadcn-design-system-kit init --components delivery-logs,auth
+```
+
+Not in the interactive picker's nav groups — pass `--components` (or `--all`); bundles its own
+private `auth` helper copies the same way. Gated by `can('delivery_logs:view')`. Read-only by
+design — the one real write path (a delivery provider's status webhook) is server-to-server and
+has no client-facing mutation.
+
+Query: `deliveryLogs(channel, page, perPage)` → a union of `EmailLog`/`TextMessage` entries.
+
+### Audit trail viewer (opt-in)
+
+Install `audit-trail-viewer` for a change-history screen at `/audit-trail-viewer` — every
+create/update/destroy event across your backend's audited models, with a details dialog showing
+a human-readable summary and the actual field-level diff.
+
+```bash
+npx staunch-shadcn-design-system-kit init --components audit-trail-viewer,auth
+```
+
+Not in the interactive picker's nav groups — pass `--components` (or `--all`); bundles its own
+private `auth` helper copies the same way. Gated by `can('audit_trail:view')`. Read-only — audit
+trail has no mutations of its own; rows are written as a side effect of whatever your other
+backend models already do.
+
+Query: `auditTrail(itemType, itemId, page, perPage)` → `{ id, itemType, itemId, event,
+whodunnit, createdAt, auditSummary, meaningfulChanges }`.
+
+### Notification center (opt-in)
+
+Install `notification-center` for a real-time notification bell — unlike the sections above,
+it's a **widget, not a page**: there's no route or nav entry, and no ability gate. It shows up in
+the interactive picker (under Overlays & Menus) since there's nothing else to opt into first.
+
+```bash
+npx staunch-shadcn-design-system-kit init --components notification-center
+```
+
+You mount it yourself, wherever your layout wants a bell icon:
+
+```tsx
+import { NotificationCenter } from '@/components/notification-center/notification-center'
+import { useNotifications } from '@/components/notification-center/use-notifications'
+
+const { items, unreadCount, markAsRead, markAllAsRead } = useNotifications({
+  graphqlUrl: process.env.NEXT_PUBLIC_GRAPHQL_URL, // Vite: import.meta.env.VITE_GRAPHQL_URL
+  graphqlWsUrl: process.env.NEXT_PUBLIC_GRAPHQL_WS_URL,
+})
+
+<NotificationCenter items={items} unreadCount={unreadCount} onItemClick={markAsRead} onMarkAllRead={markAllAsRead} />
+```
+
+Live updates use the exact same ActionCable transport as `chat` (same `?token=` JWT query param,
+same shared socket via `cable-connection.ts` — installing both never opens two connections).
+Query: `notifications(read, page, perPage)` → `{ unreadCount, notifications: [...] }`. Mutations:
+`markNotificationAsRead(notificationId)`, `markAllNotificationsAsRead`. Subscription:
+`notificationUpdated(userId)` → `{ event, unreadCount, notification }`, where `event` is one of
+`"created" | "updated" | "deleted" | "all_read"`.
+
+The backend stores no title/body copy for a notification — only a `notificationType` string and
+a `metadata` object — so the default render is just the humanized type (`"message_received"` →
+"Message Received"). Pass a `describe` function to `useNotifications()` to render real copy from
+`metadata` instead:
+
+```tsx
+useNotifications({
+  describe: (n) =>
+    n.notificationType === 'message_received'
+      ? { title: `New message from ${n.metadata.sender_name}`, description: n.metadata.preview }
+      : { title: n.notificationType },
+})
+```
+
+If you've also installed `chat` against the Rails backend this kit targets, `message_received`
+is raised automatically by its `sendMessage` mutation for every other participant — no backend
+wiring needed for that one notification type.
+
+### Address autocomplete (needs a server-side key)
+
+`AddressAutocomplete` (in the main component picker, under Forms & Inputs) proxies Google Places
+through your own `/api/places/autocomplete` and `/api/places/details` routes (Next API routes;
+Vite dev-server middleware, `vite-plugin-design-kit.ts`) rather than calling Google directly from
+the browser. Set `GOOGLE_PLACES_API_KEY` — **not** `NEXT_PUBLIC_GOOGLE_PLACES_API_KEY` or
+`VITE_GOOGLE_PLACES_API_KEY` — in your server environment; there is no client-side `apiKey` prop
+to pass. A server-to-server Places call can't be restricted by HTTP referrer the way a
+browser-side one can, so keeping the key off the client entirely (rather than exposing it and
+still proxying, which gets you the worst of both) is deliberate, not an oversight.
+
+If the key isn't configured, the component still renders normally and only surfaces the problem
+once a search is actually attempted (a `REQUEST_DENIED`-shaped error from the proxy), rather than
+refusing to render up front.
+
+Unlike Google Places, `stripe-payment-method`/`payment-method-list` (also under Forms & Inputs)
+take a `publishableKey` prop you pass in yourself (e.g.
+`process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`)
+rather than sourcing an env var internally — Stripe's own publishable keys are meant to be
+client-visible, so there's no proxy involved and nothing insecure about the `NEXT_PUBLIC_`/`VITE_`
+prefix here. `StripeElementsProvider` renders an inline "not configured" message if you forget it.
 
 ### CRUD system (opt-in)
 
@@ -203,6 +364,11 @@ match — because you edited it — is left alone and listed as "customized, ski
 to overwrite those too). It never deletes anything (that's `remove`'s job) and always fully
 regenerates `nav.ts`/the design-system page/the theme editor live preview/`theme.manifest.json`,
 since those are meant to be entirely CLI-owned.
+
+If a newer template needs an npm package your original `init` never installed (e.g. a component
+gained a new import), `update` checks for that too — it prints `Will install: <package>` and
+installs it the same way `init` does, before touching any files, so the newly-updated code
+doesn't fail to build for want of a dependency that was never there.
 
 ## Next.js vs Vite
 
