@@ -776,9 +776,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
   },
   "input-otp": {
     "uiDeps": [],
-    "npmDeps": [
-      "input-otp"
-    ],
+    "npmDeps": [],
     "cssFile": "input-otp.css",
     "extraFiles": []
   },
