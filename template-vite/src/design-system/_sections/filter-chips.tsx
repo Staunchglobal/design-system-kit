@@ -1,14 +1,18 @@
+'use client'
+
 import * as React from 'react'
 import { ComponentSection, Example } from '@/design-system/_lib/showcase'
 import { FilterChips } from '@/components/ui/filter-chips'
 
 export default function FilterChipsDemo() {
   const [filters, setFilters] = React.useState([
-    { id: 'status', label: 'Status: Active' },
-    { id: 'role', label: 'Role: Admin' },
-    { id: 'region', label: 'Region: AU' },
+    { id: 'status', label: 'Status', value: 'Active' },
+    { id: 'role', label: 'Role', value: 'Admin' },
+    { id: 'region', label: 'Region', value: 'AU' },
   ])
-  const [singleFilter, setSingleFilter] = React.useState([{ id: 'status', label: 'Status: Active' }])
+  const [singleFilter, setSingleFilter] = React.useState([
+    { id: 'status', label: 'Status', value: 'Active' },
+  ])
   return (
     <ComponentSection
       id="filter-chips"

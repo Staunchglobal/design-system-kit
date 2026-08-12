@@ -1,8 +1,10 @@
 [data-slot='slider'] {
   --slider-disabled-opacity: 0.5;
+  cursor: pointer;
 }
 [data-slot='slider'][data-disabled] {
   opacity: var(--slider-disabled-opacity);
+  cursor: not-allowed;
 }
 
 [data-slot='slider-track'] {
@@ -28,9 +30,9 @@
   --slider-thumb-size: 0.75rem;
   --slider-thumb-bg: var(--neutral-0);
   --slider-thumb-border-width: 1px;
-  --slider-thumb-border-color: var(--ring);
+  --slider-thumb-border-color: var(--primary);
   --slider-thumb-ring-width: 3px;
-  --slider-thumb-ring-color: var(--neutral-400);
+  --slider-thumb-ring-color: color-mix(in oklab, var(--primary) 45%, transparent);
   --slider-thumb-disabled-opacity: 0.5;
 
   width: var(--slider-thumb-size);
@@ -39,16 +41,22 @@
   border-radius: var(--radius-full);
   border-width: var(--slider-thumb-border-width);
   border-color: var(--slider-thumb-border-color);
+  cursor: pointer;
 }
-[data-slot='slider-thumb']:hover,
-[data-slot='slider-thumb']:focus-visible,
-[data-slot='slider-thumb']:active {
+/* Hover / focus / active share one brand ring — no gray swap. */
+[data-slot='slider']:not([data-disabled]) [data-slot='slider-thumb']:hover,
+[data-slot='slider']:not([data-disabled]) [data-slot='slider-thumb']:focus-visible,
+[data-slot='slider']:not([data-disabled]) [data-slot='slider-thumb']:active {
+  border-color: var(--slider-thumb-border-color);
   box-shadow: 0 0 0 var(--slider-thumb-ring-width) var(--slider-thumb-ring-color);
 }
-[data-slot='slider-thumb']:disabled {
-  opacity: var(--slider-thumb-disabled-opacity);
+[data-slot='slider'][data-disabled] [data-slot='slider-thumb'],
+[data-slot='slider-thumb'][data-disabled] {
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
 .dark [data-slot='slider-thumb'] {
-  --slider-thumb-ring-color: var(--neutral-500);
+  --slider-thumb-border-color: var(--primary);
+  --slider-thumb-ring-color: color-mix(in oklab, var(--primary) 45%, transparent);
 }

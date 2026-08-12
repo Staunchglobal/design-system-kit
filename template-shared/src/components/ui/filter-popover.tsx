@@ -90,13 +90,12 @@ function FilterPopover({
                       data-checked={isSelected}
                       onSelect={() => toggle(option.value)}
                       aria-selected={isSelected}
+                      className="cursor-pointer"
                     >
-                      <span className="flex flex-1 items-center gap-2">
-                        {option.label}
+                      <span data-slot="filter-popover-option">
+                        <span data-slot="filter-popover-option-label">{option.label}</span>
                         {option.count != null && (
-                          <span className="text-muted-foreground ml-auto text-xs tabular-nums">
-                            {option.count}
-                          </span>
+                          <span data-slot="filter-popover-option-count">{option.count}</span>
                         )}
                       </span>
                     </CommandItem>

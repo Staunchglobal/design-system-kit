@@ -22,7 +22,12 @@ export function AuthSubmitButton({
   className,
 }: AuthSubmitButtonProps) {
   return (
-    <Button type="submit" className={className ?? 'w-full'} disabled={disabled || loading}>
+    <Button
+      type="submit"
+      className={className ?? 'w-full'}
+      disabled={disabled || loading}
+      aria-busy={loading || undefined}
+    >
       {loading ? (
         <>
           <Spinner className="size-4" />

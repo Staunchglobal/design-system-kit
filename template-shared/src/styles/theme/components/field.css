@@ -44,24 +44,36 @@
   --field-label-font-size: var(--typography-p-font-size);
   --field-label-font-weight: var(--typography-small-font-weight);
   --field-label-disabled-opacity: 0.5;
-  --field-label-checked-border-color: var(--neutral-900);
-  --field-label-checked-bg: var(--neutral-900);
+  --field-label-checked-border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+  --field-label-checked-bg: color-mix(in oklab, var(--primary) 5%, var(--background));
 
   gap: var(--field-label-gap);
   line-height: var(--field-label-line-height);
   font-size: var(--field-label-font-size);
   font-weight: var(--field-label-font-weight);
   color: var(--foreground);
+  cursor: pointer;
+}
+[data-slot='field-label']:has([data-slot='checkbox']:disabled),
+[data-slot='field-label']:has([data-slot='radio-group-item']:disabled),
+[data-slot='field']:has([data-slot='checkbox']:disabled) [data-slot='field-label'],
+[data-slot='field']:has([data-slot='radio-group-item']:disabled) [data-slot='field-label'] {
+  cursor: not-allowed;
+  opacity: var(--field-label-disabled-opacity);
 }
 [data-slot='field-label']:has([data-slot='field']) {
   --field-label-radius: var(--radius-lg);
   --field-label-padding: 0.625rem;
+  --field-label-border-color: var(--border);
   border-radius: var(--field-label-radius);
   border-width: 1px;
+  border-style: solid;
+  border-color: var(--field-label-border-color);
 }
-[data-slot='field-label']:has([data-state='checked']) {
+[data-slot='field-label']:has([data-slot='field']):has([data-state='checked']) {
   border-color: var(--field-label-checked-border-color);
   background-color: var(--field-label-checked-bg);
+  color: var(--foreground);
 }
 [data-slot='field-description'] {
   --field-description-fg: var(--muted-foreground);
@@ -100,6 +112,6 @@
 }
 
 .dark [data-slot='field-label'] {
-  --field-label-checked-border-color: var(--neutral-200);
-  --field-label-checked-bg: var(--neutral-200);
+  --field-label-checked-border-color: color-mix(in oklab, var(--primary) 20%, transparent);
+  --field-label-checked-bg: color-mix(in oklab, var(--primary) 10%, var(--background));
 }

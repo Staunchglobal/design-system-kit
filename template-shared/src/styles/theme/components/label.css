@@ -9,9 +9,13 @@
   font-weight: var(--label-font-weight);
   line-height: var(--label-line-height);
   gap: var(--label-gap);
+  cursor: pointer;
 }
 [data-slot='checkbox']:disabled ~ [data-slot='label'],
-[data-slot='radio-group-item']:disabled ~ [data-slot='label'] {
+[data-slot='radio-group-item']:disabled ~ [data-slot='label'],
+[data-slot='label']:has(
+    + :is([data-slot='checkbox'], [data-slot='radio-group-item']):disabled
+  ) {
   opacity: var(--label-disabled-opacity);
   cursor: not-allowed;
 }

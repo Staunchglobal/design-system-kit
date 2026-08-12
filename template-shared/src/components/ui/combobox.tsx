@@ -12,6 +12,7 @@ import {
   InputGroupInput,
 } from '@/components/ui/input-group'
 import { AppIcon } from '@/components/icons/icon'
+import { Spinner } from '@/components/ui/spinner'
 
 const Combobox = ComboboxPrimitive.Root
 
@@ -124,6 +125,7 @@ function ComboboxList({
   onLoadMore,
   isLoadingMore = false,
   onScroll,
+  children,
   ...props
 }: ComboboxPrimitive.List.Props & {
   onLoadMore?: () => void
@@ -132,28 +134,38 @@ function ComboboxList({
   const loadMoreLock = React.useRef(false)
 
   return (
-    <ComboboxPrimitive.List
-      data-slot="combobox-list"
-      data-loading-more={isLoadingMore ? '' : undefined}
-      aria-busy={isLoadingMore || undefined}
-      className={cn(
-        'no-scrollbar max-h-[min(calc(--spacing(72)---spacing(9)),calc(var(--available-height)---spacing(9)))] scroll-py-1 overflow-y-auto overscroll-contain p-1 data-empty:p-0',
-        className
-      )}
-      onScroll={(e) => {
-        onScroll?.(e)
-        if (!onLoadMore || isLoadingMore || loadMoreLock.current) return
-        const el = e.currentTarget
-        if (el.scrollHeight - el.scrollTop - el.clientHeight < 50) {
-          loadMoreLock.current = true
-          onLoadMore()
-          queueMicrotask(() => {
-            loadMoreLock.current = false
-          })
-        }
-      }}
-      {...props}
-    />
+    <>
+      <ComboboxPrimitive.List
+        data-slot="combobox-list"
+        data-loading-more={isLoadingMore ? '' : undefined}
+        aria-busy={isLoadingMore || undefined}
+        className={cn(
+          'no-scrollbar max-h-[min(calc(--spacing(72)---spacing(9)),calc(var(--available-height)---spacing(9)))] scroll-py-1 overflow-y-auto overscroll-contain p-1 data-empty:p-0',
+          className
+        )}
+        onScroll={(e) => {
+          onScroll?.(e)
+          if (!onLoadMore || isLoadingMore || loadMoreLock.current) return
+          const el = e.currentTarget
+          if (el.scrollHeight - el.scrollTop - el.clientHeight < 50) {
+            loadMoreLock.current = true
+            onLoadMore()
+            queueMicrotask(() => {
+              loadMoreLock.current = false
+            })
+          }
+        }}
+        {...props}
+      >
+        {children}
+      </ComboboxPrimitive.List>
+      {isLoadingMore ? (
+        <div data-slot="combobox-list-loading" role="status" aria-live="polite">
+          <Spinner className="size-4" />
+          <span className="sr-only">Loading more</span>
+        </div>
+      ) : null}
+    </>
   )
 }
 
@@ -162,7 +174,7 @@ function ComboboxItem({ className, children, ...props }: ComboboxPrimitive.Item.
     <ComboboxPrimitive.Item
       data-slot="combobox-item"
       className={cn(
-        "data-highlighted:bg-accent data-highlighted:text-accent-foreground not-data-[variant=destructive]:data-highlighted:**:text-accent-foreground relative flex w-full cursor-default items-center gap-2 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex w-full cursor-pointer items-center gap-2 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -260,7 +272,7 @@ function ComboboxChips({
         <button
           type="button"
           data-slot="combobox-chip-overflow"
-          className="bg-muted text-foreground flex h-[calc(--spacing(5.25))] items-center rounded-sm px-1.5 text-xs font-medium"
+          className="flex h-[calc(--spacing(5.25))] items-center rounded-sm px-1.5 text-xs font-medium"
           onClick={() => setExpanded(true)}
         >
           +{hiddenCount} more
@@ -283,7 +295,7 @@ function ComboboxChip({
     <ComboboxPrimitive.Chip
       data-slot="combobox-chip"
       className={cn(
-        'bg-muted text-foreground flex h-[calc(--spacing(5.25))] w-fit items-center justify-center gap-1 rounded-sm px-1.5 text-xs font-medium whitespace-nowrap has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50 has-data-[slot=combobox-chip-remove]:pr-0',
+        'text-foreground flex h-[calc(--spacing(5.25))] w-fit items-center justify-center gap-1 rounded-sm px-1.5 text-xs font-medium whitespace-nowrap has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50 has-data-[slot=combobox-chip-remove]:pr-0',
         className
       )}
       {...props}

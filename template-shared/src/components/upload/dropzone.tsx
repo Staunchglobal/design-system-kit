@@ -41,10 +41,6 @@ function Dropzone({
   const [rejected, setRejected] = React.useState<DropzoneFile[]>([])
   const controlled = value != null
   const acceptedFiles = controlled ? value : internalAccepted
-  const files: DropzoneFile[] = [
-    ...acceptedFiles.map((file) => ({ file })),
-    ...rejected,
-  ]
 
   const setAccepted = React.useCallback(
     (next: File[]) => {
@@ -59,26 +55,62 @@ function Dropzone({
     maxSizeBytes,
     multiple,
     onFiles: (accepted, rejectedNow) => {
-      const mappedRejected: DropzoneFile[] = rejectedNow.map((r: RejectedFile) => ({
-        file: r.file,
-        error: r.reason,
-      }))
+      // Defensive: never treat oversized / invalid files as accepted.
+      const safeAccepted =
+        maxSizeBytes != null
+          ? accepted.filter((file) => file.size <= maxSizeBytes)
+          : accepted
+      const leaked = accepted.filter((file) => !safeAccepted.includes(file))
+      const mappedRejected: DropzoneFile[] = [
+        ...rejectedNow.map((r: RejectedFile) => ({
+          file: r.file,
+          error: r.reason,
+        })),
+        ...leaked.map((file) => ({
+          file,
+          error:
+            maxSizeBytes != null
+              ? `File exceeds ${(maxSizeBytes / (1024 * 1024)).toFixed(1)} MB limit`
+              : 'File rejected',
+        })),
+      ]
+
       if (multiple) {
-        setAccepted([...acceptedFiles, ...accepted])
-        setRejected((prev) => [...prev, ...mappedRejected])
+        if (safeAccepted.length > 0) {
+          setAccepted([...acceptedFiles, ...safeAccepted])
+        }
+        if (mappedRejected.length > 0) {
+          setRejected((prev) => [...prev, ...mappedRejected])
+        }
+      } else if (safeAccepted.length > 0) {
+        setAccepted(safeAccepted.slice(0, 1))
+        setRejected([])
       } else {
-        setAccepted(accepted.slice(0, 1))
-        setRejected(accepted.length > 0 ? [] : mappedRejected.slice(0, 1))
+        // Rejected-only selection: do not clear / replace an existing valid file
+        // via onValueChange — only surface the rejection error.
+        setRejected(mappedRejected.slice(0, 1))
       }
     },
   })
 
-  function removeAt(index: number) {
-    if (index < acceptedFiles.length) {
+  function removeAt(kind: 'accepted' | 'rejected', index: number) {
+    if (kind === 'accepted') {
       setAccepted(acceptedFiles.filter((_, i) => i !== index))
     } else {
-      const rejectedIndex = index - acceptedFiles.length
-      setRejected((prev) => prev.filter((_, i) => i !== rejectedIndex))
+      setRejected((prev) => prev.filter((_, i) => i !== index))
+    }
+  }
+
+  function handleZoneClick() {
+    if (disabled) return
+    openBrowser()
+  }
+
+  function handleZoneKeyDown(e: React.KeyboardEvent) {
+    if (disabled) return
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      openBrowser()
     }
   }
 
@@ -86,8 +118,14 @@ function Dropzone({
     <div data-slot="dropzone" className={cn('space-y-3', className)}>
       <Card
         {...(disabled ? {} : dragHandlers)}
+        role={disabled ? undefined : 'button'}
+        tabIndex={disabled ? undefined : 0}
+        aria-disabled={disabled || undefined}
+        onClick={handleZoneClick}
+        onKeyDown={handleZoneKeyDown}
         className={cn(
           'border-dashed py-8 transition-colors',
+          !disabled && 'cursor-pointer',
           isDragging && 'border-primary bg-primary/5',
           disabled && 'pointer-events-none opacity-50'
         )}
@@ -107,7 +145,10 @@ function Dropzone({
               size="sm"
               className="h-auto p-0"
               disabled={disabled}
-              onClick={openBrowser}
+              onClick={(e) => {
+                e.stopPropagation()
+                openBrowser()
+              }}
             >
               browse
             </Button>{' '}
@@ -131,17 +172,17 @@ function Dropzone({
           multiple={multiple}
           disabled={disabled}
           onChange={onInputChange}
+          onClick={(e) => e.stopPropagation()}
         />
       </Card>
 
-      {files.length > 0 ? (
+      {acceptedFiles.length > 0 || rejected.length > 0 ? (
         <ul className="flex flex-col gap-2">
-          {files.map((entry, index) => (
-            <li key={`${entry.file.name}-${entry.file.size}-${index}`}>
+          {acceptedFiles.map((file, index) => (
+            <li key={`accepted-${file.name}-${file.size}-${index}`}>
               <FilePreviewCard
-                file={entry.file}
-                error={entry.error}
-                onRemove={() => removeAt(index)}
+                file={file}
+                onRemove={() => removeAt('accepted', index)}
                 onReplace={
                   multiple
                     ? undefined
@@ -149,6 +190,15 @@ function Dropzone({
                         openBrowser()
                       }
                 }
+              />
+            </li>
+          ))}
+          {rejected.map((entry, index) => (
+            <li key={`rejected-${entry.file.name}-${entry.file.size}-${index}`}>
+              <FilePreviewCard
+                file={entry.file}
+                error={entry.error}
+                onRemove={() => removeAt('rejected', index)}
               />
             </li>
           ))}

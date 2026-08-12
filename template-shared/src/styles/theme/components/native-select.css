@@ -24,6 +24,12 @@
   --native-select-invalid-border-color: var(--input-invalid-border-color);
   --native-select-invalid-ring-color: var(--input-invalid-ring-color);
 
+  /* Hide the browser chevron so only the custom icon shows. */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: none;
+
   height: var(--native-select-height);
   border-radius: var(--native-select-radius);
   border-width: var(--native-select-border-width);
@@ -35,6 +41,10 @@
   padding-block: var(--native-select-padding-block);
   font-size: var(--native-select-font-size);
   line-height: var(--native-select-height);
+  cursor: pointer;
+}
+[data-slot='native-select']::-ms-expand {
+  display: none;
 }
 [data-slot='native-select']::selection {
   background-color: var(--native-select-selection-bg);
@@ -75,10 +85,11 @@
 
 [data-slot='native-select-icon'] {
   --native-select-icon-color: var(--muted-600);
-  --native-select-icon-size: 1.5rem;
+  --native-select-icon-size: 1rem;
   color: var(--native-select-icon-color);
   width: var(--native-select-icon-size);
   height: var(--native-select-icon-size);
+  pointer-events: none;
 }
 
 [data-slot='native-select-option'],

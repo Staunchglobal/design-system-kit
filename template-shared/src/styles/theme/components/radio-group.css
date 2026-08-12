@@ -30,6 +30,7 @@
   border-width: var(--radio-group-item-border-width);
   border-color: var(--radio-group-item-border-color);
   background-color: var(--radio-group-item-bg);
+  cursor: pointer;
 }
 
 [data-slot='radio-group'] [data-slot='radio-group-item']:hover,

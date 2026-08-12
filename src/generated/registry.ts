@@ -28,9 +28,9 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "sonner",
       "auth",
       "alert",
-      "button",
       "field",
       "input",
+      "button",
       "sidebar"
     ],
     "npmDeps": [
@@ -119,6 +119,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "alert-dialog",
       "pagination",
       "segmented-control",
+      "spinner",
       "crud-table",
       "sidebar"
     ],
@@ -402,6 +403,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "uiDeps": [
       "button",
       "input-group",
+      "spinner",
       "label"
     ],
     "npmDeps": [
@@ -465,6 +467,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "alert-dialog",
       "pagination",
       "segmented-control",
+      "spinner",
       "badge",
       "sonner"
     ],
@@ -515,6 +518,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "alert-dialog",
       "pagination",
       "segmented-control",
+      "spinner",
       "crud-table",
       "sidebar"
     ],
@@ -776,9 +780,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
   },
   "input-otp": {
     "uiDeps": [],
-    "npmDeps": [
-      "input-otp"
-    ],
+    "npmDeps": [],
     "cssFile": "input-otp.css",
     "extraFiles": []
   },
@@ -1244,8 +1246,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
   },
   "tag-input": {
     "uiDeps": [
-      "badge",
-      "button"
+      "badge"
     ],
     "npmDeps": [
       "lucide-react"
@@ -1262,7 +1263,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
   "time-range-picker": {
     "uiDeps": [
       "button",
-      "select",
+      "dropdown-menu",
       "switch"
     ],
     "npmDeps": [
@@ -1334,6 +1335,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "alert-dialog",
       "pagination",
       "segmented-control",
+      "spinner",
       "crud-table"
     ],
     "npmDeps": [

@@ -24,6 +24,7 @@
   border-color: rgb(from var(--checkbox-border-color) r g b / var(--checkbox-border-opacity));
   background-color: var(--checkbox-bg);
   color: var(--checkbox-checked-fg);
+  cursor: pointer;
 }
 
 [data-slot='checkbox']:focus-visible {

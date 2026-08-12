@@ -5,7 +5,6 @@ import { X } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 
 type TagInputProps = {
   value: string[]
@@ -95,25 +94,18 @@ function TagInput({
     <div
       data-slot="tag-input"
       className={cn(
-        'border-input focus-within:border-ring focus-within:ring-ring/50 has-aria-invalid:border-destructive has-aria-invalid:ring-destructive/20 dark:bg-input/30 dark:has-aria-invalid:border-destructive/50 dark:has-aria-invalid:ring-destructive/40 flex min-h-8 flex-wrap items-center gap-1 rounded-lg border bg-transparent px-2.5 py-1 text-sm transition-colors focus-within:ring-3 has-aria-invalid:ring-3',
+        'flex min-h-8 flex-wrap items-center gap-1 border bg-transparent text-sm transition-colors',
         disabled && 'pointer-events-none cursor-not-allowed opacity-50',
         className
       )}
       onClick={() => inputRef.current?.focus()}
     >
       {value.map((tag) => (
-        <Badge
-          key={tag}
-          data-slot="tag-chip"
-          variant="secondary"
-          className="bg-muted text-foreground h-[calc(--spacing(5.25))] gap-1 rounded-sm pr-0.5 font-medium"
-        >
-          {tag}
-          <Button
+        <Badge key={tag} data-slot="tag-chip" variant="secondary">
+          <span data-slot="tag-chip-label">{tag}</span>
+          <button
             type="button"
-            variant="ghost"
-            size="icon-xs"
-            className="-ml-0.5 size-4 opacity-50 hover:opacity-100"
+            data-slot="tag-chip-remove"
             aria-label={`Remove ${tag}`}
             onClick={(e) => {
               e.stopPropagation()
@@ -121,8 +113,8 @@ function TagInput({
             }}
             tabIndex={-1}
           >
-            <X className="size-3" />
-          </Button>
+            <X aria-hidden className="size-3" />
+          </button>
         </Badge>
       ))}
       <input
@@ -141,10 +133,10 @@ function TagInput({
           [error ? errorId : null, ariaDescribedby].filter(Boolean).join(' ') || undefined
         }
         aria-invalid={ariaInvalid ?? (error ? true : undefined)}
-        className="min-w-16 flex-1 bg-transparent outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed"
+        className="placeholder:text-muted-foreground min-w-16 flex-1 bg-transparent outline-none disabled:cursor-not-allowed"
       />
       {error && (
-        <p id={errorId} data-slot="tag-input-error" className="text-destructive basis-full text-xs">
+        <p id={errorId} data-slot="tag-input-error" className="basis-full text-xs">
           {error}
         </p>
       )}

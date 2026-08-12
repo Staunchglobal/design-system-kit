@@ -22,9 +22,9 @@ function toChars(value: string, length: number): string[] {
 /**
  * Six joined single-character inputs.
  *
- * A real input per slot — rather than the shared `InputOTP`, which hides one
- * input behind the slots — so clicking a slot focuses that slot and Backspace
- * only clears the digit under the caret.
+ * Same per-slot input pattern as `InputOTP` in `components/ui/input-otp.tsx` —
+ * a real input per cell so clicking focuses that slot and Backspace only clears
+ * the digit under the caret.
  */
 export function OtpField({
   value,
@@ -41,10 +41,14 @@ export function OtpField({
   // shortens that string, and re-deriving from it would shift later digits left.
   const [chars, setChars] = React.useState<string[]>(() => toChars(value, length))
   const [prevExternal, setPrevExternal] = React.useState({ value, length })
-  // Sync when the parent resets/changes the controlled value (not on each keystroke).
+  const [lastCommitted, setLastCommitted] = React.useState(value)
+  // Sync when the parent resets/changes the controlled value (not our own echo).
   if (value !== prevExternal.value || length !== prevExternal.length) {
     setPrevExternal({ value, length })
-    setChars(toChars(value, length))
+    if (value !== lastCommitted) {
+      setChars(toChars(value, length))
+      setLastCommitted(value)
+    }
   }
 
   function focusSlot(index: number) {
@@ -55,7 +59,9 @@ export function OtpField({
 
   function commit(next: string[]) {
     setChars(next)
-    onChange(next.join(''))
+    const joined = next.join('')
+    setLastCommitted(joined)
+    onChange(joined)
   }
 
   function handleChange(index: number, raw: string) {

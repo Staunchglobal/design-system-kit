@@ -16,7 +16,8 @@ export default function FilterPopoverDemo() {
   const [selected, setSelected] = React.useState<string[]>(['active'])
   const chips = selected.map((id) => ({
     id,
-    label: OPTIONS.find((o) => o.value === id)?.label ?? id,
+    label: 'Status',
+    value: OPTIONS.find((o) => o.value === id)?.label ?? id,
   }))
 
   return (

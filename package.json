@@ -1,6 +1,6 @@
 {
   "name": "staunch-shadcn-design-system-kit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CLI that scaffolds a full shadcn/ui component set, a token-driven Tailwind v4 theme system, a /design-system showcase page, and a live /theme-editor into a Next.js (App Router) or Vite + React + TypeScript project.",
   "keywords": [
     "shadcn",

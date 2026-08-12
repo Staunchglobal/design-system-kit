@@ -95,6 +95,8 @@
   --select-content-radius: var(--radius-2xl);
   --select-content-shadow: var(--shadow-md);
   --select-content-min-width: 5rem;
+  /* Shared with items so item corners match the popover. */
+  --select-item-radius: var(--radius-2xl);
 
   background-color: var(--select-content-bg);
   color: var(--select-content-fg);
@@ -104,6 +106,8 @@
   border-radius: var(--select-content-radius);
   min-width: var(--select-content-min-width);
   text-align: start;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 [data-slot='select-group'] {
@@ -123,37 +127,50 @@
 }
 
 [data-slot='select-item'] {
-  --select-item-radius: var(--radius-md);
   --select-item-padding-block: 0.5rem;
   --select-item-padding-inline-end: 0.75rem;
   --select-item-padding-inline-start: 2rem;
   --select-item-font-size: var(--typography-p-font-size);
   --select-item-gap: 0.375rem;
-  --select-item-focus-bg: var(--neutral-50);
-  --select-item-focus-fg: var(--foreground);
+  --select-item-fg: var(--foreground);
+  /* Soft brand tint; a touch darker than pure neutral hover. */
+  --select-item-hover-bg: color-mix(in oklab, var(--primary) 12%, transparent);
   --select-item-checked-bg: var(--primary);
   --select-item-checked-fg: var(--primary-foreground);
+  --select-item-checked-hover-bg: color-mix(in oklab, var(--primary) 82%, black);
   --select-item-disabled-opacity: 0.5;
 
   justify-content: flex-start;
   text-align: start;
-  border-radius: var(--select-item-radius);
+  border-radius: var(--select-item-radius, var(--radius-2xl));
   padding-block: var(--select-item-padding-block);
   padding-inline-start: var(--select-item-padding-inline-start);
   padding-inline-end: var(--select-item-padding-inline-end);
   font-size: var(--select-item-font-size);
   gap: var(--select-item-gap);
+  color: var(--select-item-fg);
+  cursor: pointer;
 }
-[data-slot='select-item']:focus {
-  background-color: var(--select-item-focus-bg);
-  color: var(--select-item-focus-fg);
+/* Hover / keyboard highlight: background only — keep text color. */
+[data-slot='select-item']:focus,
+[data-slot='select-item'][data-highlighted] {
+  background-color: var(--select-item-hover-bg);
+  color: var(--select-item-fg);
+  outline: none;
 }
 [data-slot='select-item'][data-state='checked'] {
   background-color: var(--select-item-checked-bg);
   color: var(--select-item-checked-fg);
 }
+/* Selected + hover/focus: darken the brand fill, do not change text. */
+[data-slot='select-item'][data-state='checked']:focus,
+[data-slot='select-item'][data-state='checked'][data-highlighted] {
+  background-color: var(--select-item-checked-hover-bg);
+  color: var(--select-item-checked-fg);
+}
 [data-slot='select-item'][data-disabled] {
   opacity: var(--select-item-disabled-opacity);
+  cursor: not-allowed;
 }
 [data-slot='select-item'] > span:first-child {
   left: 0.5rem;
@@ -182,6 +199,11 @@
 
 .dark [data-slot='select-content'] {
   --select-content-ring-color: var(--neutral-700);
+}
+
+.dark [data-slot='select-item'] {
+  --select-item-hover-bg: color-mix(in oklab, var(--primary) 18%, transparent);
+  --select-item-checked-hover-bg: color-mix(in oklab, var(--primary) 75%, black);
 }
 
 .dark [data-slot='select-trigger']:disabled {

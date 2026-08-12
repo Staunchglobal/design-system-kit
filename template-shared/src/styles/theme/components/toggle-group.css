@@ -15,6 +15,10 @@
 [data-slot='toggle-group-item'] {
   --toggle-group-item-radius: var(--radius-lg);
   flex-shrink: 0;
+  cursor: pointer;
+}
+[data-slot='toggle-group-item']:disabled {
+  cursor: not-allowed;
 }
 [data-slot='toggle-group-item'][data-spacing='0'] {
   border-radius: 0;

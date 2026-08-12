@@ -98,8 +98,8 @@
 [data-slot='calendar'] [data-slot='button'][data-selected-single='true'],
 [data-slot='calendar'] [data-slot='button'][data-range-start='true'],
 [data-slot='calendar'] [data-slot='button'][data-range-end='true'] {
-  --calendar-selected-bg: var(--primary-200);
-  --calendar-selected-fg: var(--primary-500);
+  --calendar-selected-bg: var(--primary-500);
+  --calendar-selected-fg: var(--primary-foreground);
   --calendar-selected-font-weight: var(--typography-large-font-weight);
   background-color: var(--calendar-selected-bg) !important;
   color: var(--calendar-selected-fg) !important;
@@ -108,7 +108,7 @@
 }
 
 [data-slot='calendar'] [data-slot='button'][data-range-middle='true'] {
-  --calendar-range-middle-bg: var(--primary-100);
+  --calendar-range-middle-bg: color-mix(in oklab, var(--primary) 15%, transparent);
   --calendar-range-middle-fg: var(--foreground);
   background-color: var(--calendar-range-middle-bg) !important;
   color: var(--calendar-range-middle-fg) !important;
@@ -154,6 +154,6 @@
 .dark [data-slot='calendar'] [data-slot='button'][data-selected-single='true'],
 .dark [data-slot='calendar'] [data-slot='button'][data-range-start='true'],
 .dark [data-slot='calendar'] [data-slot='button'][data-range-end='true'] {
-  --calendar-selected-bg: var(--primary-800);
-  --calendar-selected-fg: var(--primary-200);
+  --calendar-selected-bg: var(--primary-500);
+  --calendar-selected-fg: var(--primary-foreground);
 }
