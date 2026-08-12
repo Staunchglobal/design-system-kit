@@ -1,11 +1,9 @@
-import { spawnSync } from 'node:child_process'
 import path from 'node:path'
 import type { NavGroup } from '../generated/registry.js'
 import type { Framework } from './detect.js'
 import {
   generateAppNavTs,
   generateDesignSystemPage,
-  generateLivePreview,
   generateNavTs,
   generateRoutesTsx,
   generateThemeIndexCss,
@@ -15,7 +13,6 @@ import { log } from './log.js'
 import { privateNavItemsFor, viteRoutesFor } from './managed-files.js'
 
 type RegenerateGeneratedFilesOptions = {
-  root: string
   destRoot: string
   framework: Framework
   navGroups: NavGroup[]
@@ -29,7 +26,6 @@ type RegenerateGeneratedFilesOptions = {
  * Keep init/update/remove routed through this function so their output cannot drift.
  */
 export function regenerateGeneratedFiles({
-  root,
   destRoot,
   framework,
   navGroups,
@@ -39,9 +35,7 @@ export function regenerateGeneratedFiles({
 }: RegenerateGeneratedFilesOptions): void {
   const isNext = framework === 'next'
   const designSystemDir = isNext ? 'app/design-system' : 'design-system'
-  const themeEditorDir = isNext ? 'app/theme-editor' : 'theme-editor'
   const importBase = isNext ? '@/app/design-system' : '@/design-system'
-  const themeEditorImportBase = isNext ? '@/app/theme-editor' : '@/theme-editor'
 
   writeGeneratedFile(
     path.join(destRoot, designSystemDir, '_lib/nav.ts'),
@@ -55,15 +49,6 @@ export function regenerateGeneratedFiles({
       importBase,
       sidebarImport: `${importBase}/_components/sidebar-nav`,
       withMetadata: isNext,
-    }),
-    dryRun
-  )
-  writeGeneratedFile(
-    path.join(destRoot, themeEditorDir, '_components/live-preview.tsx'),
-    generateLivePreview({
-      navGroups,
-      designSystemImportBase: importBase,
-      themeEditorImportBase,
     }),
     dryRun
   )
@@ -85,19 +70,6 @@ export function regenerateGeneratedFiles({
 
   log.success(
     `${dryRun ? 'Would regenerate' : 'Regenerated'} nav.ts, the design-system page, ` +
-      `the theme-editor live preview, theme/index.css, and ${isNext ? 'app/(app)/_nav.ts' : 'routes.tsx'}.`
+      `theme/index.css, and ${isNext ? 'app/(app)/_nav.ts' : 'routes.tsx'}.`
   )
-
-  if (dryRun) return
-
-  const manifestRun = spawnSync('node', ['scripts/generate-theme-manifest.mjs'], {
-    cwd: root,
-    stdio: 'pipe',
-    encoding: 'utf8',
-  })
-  if (manifestRun.status === 0) {
-    log.success(manifestRun.stdout.trim() || 'Regenerated theme.manifest.json')
-  } else {
-    log.warn(`Could not regenerate theme.manifest.json: ${manifestRun.stderr || manifestRun.error}`)
-  }
 }

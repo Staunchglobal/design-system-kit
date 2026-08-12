@@ -80,227 +80,32 @@ export function generateDesignSystemPage(opts: {
     : ''
 
   return `${metadataImport}import { SidebarNav } from '${sidebarImport}'
-import { Inspector } from '@/components/inspector/inspector'
 ${imports}
 
 ${metadataBlock}export default function DesignSystemPage() {
   return (
-    <Inspector>
-      <div className="bg-background text-foreground mx-auto flex w-full max-w-[1400px] flex-1 gap-10 px-6 py-10 lg:px-10">
-        <aside className="hidden w-56 shrink-0 lg:block">
-          <div className="sticky top-10 max-h-[calc(100vh-5rem)] overflow-y-auto pb-10">
-            <SidebarNav />
-          </div>
-        </aside>
+    <div className="bg-background text-foreground mx-auto flex w-full max-w-[1400px] flex-1 gap-10 px-6 py-10 lg:px-10">
+      <aside className="hidden w-56 shrink-0 lg:block">
+        <div className="sticky top-10 max-h-[calc(100vh-5rem)] overflow-y-auto pb-10">
+          <SidebarNav />
+        </div>
+      </aside>
 
-        <main className="min-w-0 flex-1">
-          <header className="space-y-2 pb-10">
-            <h1 className="text-3xl font-semibold tracking-tight">Design System</h1>
-            <p className="text-muted-foreground max-w-2xl text-sm">
-              Every shadcn/ui component installed in this app, rendered with its full range of
-              variants, sizes, and states for visual QA.
-            </p>
-          </header>
+      <main className="min-w-0 flex-1">
+        <header className="space-y-2 pb-10">
+          <h1 className="text-3xl font-semibold tracking-tight">Design System</h1>
+          <p className="text-muted-foreground max-w-2xl text-sm">
+            Every shadcn/ui component installed in this app, rendered with its full range of
+            variants, sizes, and states for visual QA.
+          </p>
+        </header>
 
 ${renders}
-        </main>
-      </div>
-    </Inspector>
-  )
-}
-`
-}
-
-const EXTRA_GROUP_TO_SLUG: Record<string, string> = {
-  'sonner-toast': 'sonner',
-  'typography-patterns': 'typography',
-}
-
-const LIVE_PREVIEW_BODY = `function TokenPreview({ id, iconMap }: { id: string; iconMap: Record<string, string> }) {
-  if (id === 'radius') {
-    return (
-      <div className="flex flex-col gap-4">
-        <p className="text-muted-foreground text-sm">
-          Radius tokens apply to every rounded control. Sample surfaces:
-        </p>
-        <div className="flex flex-wrap gap-3">
-          {(
-            [
-              ['sm', 'var(--radius-sm)'],
-              ['md', 'var(--radius-md)'],
-              ['lg', 'var(--radius-lg)'],
-              ['xl', 'var(--radius-xl)'],
-              ['2xl', 'var(--radius-2xl)'],
-              ['3xl', 'var(--radius-3xl)'],
-              ['4xl', 'var(--radius-4xl)'],
-            ] as const
-          ).map(([label]) => (
-            <div
-              key={label}
-              className="bg-primary text-primary-foreground flex size-16 items-center justify-center text-xs"
-              style={{ borderRadius: \`var(--radius-\${label})\` }}
-            >
-              {label}
-            </div>
-          ))}
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Button>Default button</Button>
-          <Button variant="outline">Outline</Button>
-          <Button variant="destructive">Destructive</Button>
-        </div>
-      </div>
-    )
-  }
-
-  if (id === 'fonts') {
-    return (
-      <div className="flex flex-col gap-3">
-        <p className="font-sans text-lg">font-sans — The quick brown fox</p>
-        <p className="font-mono text-lg">font-mono — The quick brown fox</p>
-        <p className="text-lg" style={{ fontFamily: 'var(--font-heading)' }}>
-          font-heading — The quick brown fox
-        </p>
-      </div>
-    )
-  }
-
-  if (id === 'icons') {
-    return (
-      <div className="flex flex-wrap gap-3">
-        {Object.keys(iconMap).map((key) => (
-          <div key={key} className="flex flex-col items-center gap-1">
-            <div className="bg-muted flex size-10 items-center justify-center rounded-md border">
-              <AppIcon name={key} overrideMap={iconMap} className="size-4" />
-            </div>
-            <span className="text-muted-foreground max-w-20 truncate text-[10px]">{key}</span>
-          </div>
-        ))}
-      </div>
-    )
-  }
-
-  return null
-}
-
-function DesignSystemSectionPreview({
-  groupId,
-  sectionId,
-}: {
-  groupId: string
-  sectionId: string
-}) {
-  const Module = GROUP_TO_MODULE[groupId]
-  if (!Module) return null
-
-  const safeId = sectionId.replace(/[^a-zA-Z0-9_-]/g, '')
-  return (
-    <div
-      className="theme-editor-preview [&_section]:border-b-0 [&_section]:py-0 [&_section]:first:pt-0"
-      data-preview-section={safeId}
-    >
-      <style>{\`
-        [data-preview-section="\${safeId}"] > section:not(#\${safeId}) {
-          display: none !important;
-        }
-        [data-preview-section="\${safeId}"] > section#\${safeId} {
-          display: block !important;
-        }
-        [data-preview-section="\${safeId}"] > section#\${safeId} > div:first-child {
-          display: none;
-        }
-      \`}</style>
-      <Module />
-    </div>
-  )
-}
-
-export function LivePreview() {
-  const { activeGroupId, iconMap, manifest } = useThemeEditor()
-  const group = manifest.groups.find((g) => g.id === activeGroupId)
-  const sectionId = SECTION_ID_ALIASES[activeGroupId] ?? activeGroupId
-  const hasDesignSystemDemo = Boolean(GROUP_TO_MODULE[activeGroupId])
-  const isTokenOnly =
-    activeGroupId === 'radius' || activeGroupId === 'fonts' || activeGroupId === 'icons'
-
-  return (
-    <div className="bg-background text-foreground flex h-full min-h-0 flex-col border-l">
-      <div className="shrink-0 border-b p-4">
-        <h2 className="typography-h5">Live preview</h2>
-        <p className="text-muted-foreground mt-1 text-xs">
-          {group?.title ?? activeGroupId}
-          {hasDesignSystemDemo ? ' — same demos as /design-system' : ' — token preview'}
-        </p>
-      </div>
-      <div className="min-h-0 flex-1 overflow-y-auto">
-        <div className="p-4">
-          {isTokenOnly ? (
-            <TokenPreview id={activeGroupId} iconMap={iconMap} />
-          ) : hasDesignSystemDemo ? (
-            <DesignSystemSectionPreview groupId={activeGroupId} sectionId={sectionId} />
-          ) : (
-            <TokenPreview id={activeGroupId} iconMap={iconMap} />
-          )}
-        </div>
-      </div>
+      </main>
     </div>
   )
 }
 `
-
-/**
- * live-preview.tsx hardcodes an import + GROUP_TO_MODULE entry per section file so the theme
- * editor can show "the same demo as /design-system" for whatever CSS group you're editing.
- * Only the header (imports + the map) depends on the selection — the component logic below
- * it (LIVE_PREVIEW_BODY) never changes, so it's regenerated verbatim from the original file.
- */
-export function generateLivePreview(opts: {
-  navGroups: NavGroup[]
-  designSystemImportBase: string
-  themeEditorImportBase: string
-}): string {
-  const { navGroups, designSystemImportBase, themeEditorImportBase } = opts
-  const items = navGroups.flatMap((g) => g.items)
-  const bySlug = new Map(items.map((item) => [item.slug, item]))
-
-  const imports = items
-    .map(
-      (item) =>
-        `import ${toPascalCase(item.slug)}Demo from '${designSystemImportBase}/_sections/${item.demoFile.replace(/\.tsx$/, '')}'`
-    )
-    .join('\n')
-
-  const groupEntries: string[] = []
-  for (const item of items) groupEntries.push(`  '${item.slug}': ${toPascalCase(item.slug)}Demo,`)
-  for (const [groupId, slug] of Object.entries(EXTRA_GROUP_TO_SLUG)) {
-    if (bySlug.has(slug)) groupEntries.push(`  '${groupId}': ${toPascalCase(slug)}Demo,`)
-  }
-
-  const moduleNames = items.map((item) => `${toPascalCase(item.slug)}Demo`)
-  const typeUnion = moduleNames.length
-    ? moduleNames.map((n) => `typeof ${n}`).join('\n  | ')
-    : 'React.ComponentType'
-
-  return `'use client'
-
-import { useThemeEditor } from '${themeEditorImportBase}/_lib/theme-editor-context'
-import { AppIcon } from '@/components/icons/icon'
-import { Button } from '@/components/ui/button'
-${imports}
-
-const SECTION_ID_ALIASES: Record<string, string> = {
-  'sonner-toast': 'sonner',
-  'typography-patterns': 'typography',
-}
-
-type ShowcaseModule =
-  | ${typeUnion}
-
-const GROUP_TO_MODULE: Record<string, ShowcaseModule> = {
-${groupEntries.join('\n')}
-}
-
-${LIVE_PREVIEW_BODY}`
 }
 
 /**

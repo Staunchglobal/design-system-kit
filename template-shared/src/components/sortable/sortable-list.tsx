@@ -19,7 +19,7 @@ import {
 
 import { cn } from '@/lib/utils'
 import { SortableItem } from '@/components/sortable/sortable-item'
-import { useMounted } from '@/components/inspector/use-mounted'
+import { useMounted } from '@/hooks/use-mounted'
 import { GripVertical } from 'lucide-react'
 
 type SortableListProps<T extends { id: string }> = {

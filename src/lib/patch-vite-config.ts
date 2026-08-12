@@ -31,17 +31,13 @@ export function patchViteConfig(filePath: string): ViteConfigPatchResult {
   const importDecls = sourceFile.getImportDeclarations()
   const alreadyImported = (specifier: string) => importDecls.some((d) => d.getModuleSpecifierValue() === specifier)
 
-  if (alreadyImported('./vite-plugin-design-kit.ts') || alreadyImported('./vite-plugin-design-kit')) {
-    return { action: 'already-present' }
-  }
-
   const defineConfigCall = sourceFile
     .getDescendantsOfKind(SyntaxKind.CallExpression)
     .find((c) => c.getExpression().getText() === 'defineConfig')
   if (!defineConfigCall) {
     return {
       action: 'needs-manual',
-      reason: 'Could not find a `defineConfig(...)` call — merge the Tailwind/theme-save plugin wiring in by hand.',
+      reason: 'Could not find a `defineConfig(...)` call — merge the Tailwind wiring in by hand.',
     }
   }
 
@@ -60,8 +56,8 @@ export function patchViteConfig(filePath: string): ViteConfigPatchResult {
     return {
       action: 'needs-manual',
       reason: pluginsProp
-        ? '`plugins` is not a plain array literal — merge the Tailwind/theme-save plugin wiring in by hand.'
-        : 'Could not find a `plugins` array — merge the Tailwind/theme-save plugin wiring in by hand.',
+        ? '`plugins` is not a plain array literal — merge the Tailwind wiring in by hand.'
+        : 'Could not find a `plugins` array — merge the Tailwind wiring in by hand.',
     }
   }
   const pluginsArray = pluginsInitializer.asKindOrThrow(SyntaxKind.ArrayLiteralExpression)
@@ -71,16 +67,21 @@ export function patchViteConfig(filePath: string): ViteConfigPatchResult {
       .getElements()
       .some((e) => e.getKind() === SyntaxKind.CallExpression && e.asKindOrThrow(SyntaxKind.CallExpression).getExpression().getText() === name)
 
+  let changed = false
+
   const missingImports: string[] = []
   if (!alreadyImported('@tailwindcss/vite')) missingImports.push(`import tailwindcss from '@tailwindcss/vite'`)
   if (!alreadyImported('node:url')) missingImports.push(`import { fileURLToPath } from 'node:url'`)
-  missingImports.push(`import { designKit } from './vite-plugin-design-kit.ts'`)
+  if (missingImports.length) changed = true
 
-  if (!hasPluginNamed('tailwindcss')) pluginsArray.addElement('tailwindcss()')
-  if (!hasPluginNamed('designKit')) pluginsArray.addElement('designKit()')
+  if (!hasPluginNamed('tailwindcss')) {
+    pluginsArray.addElement('tailwindcss()')
+    changed = true
+  }
 
   const resolveProp = configObject.getProperty('resolve')
   if (!resolveProp) {
+    changed = true
     // Built up one empty object at a time (rather than one hand-indented multi-line string) so
     // ts-morph computes each level's indentation itself — a literal string with its own baked-in
     // indentation gets ts-morph's nesting indent added on top, doubling up.
@@ -105,6 +106,7 @@ export function patchViteConfig(filePath: string): ViteConfigPatchResult {
     const resolveObject = resolveInitializer.asKindOrThrow(SyntaxKind.ObjectLiteralExpression)
     const aliasProp = resolveObject.getProperty('alias')
     if (!aliasProp) {
+      changed = true
       resolveObject.addPropertyAssignment({
         name: 'alias',
         initializer: `{ '@': fileURLToPath(new URL('./src', import.meta.url)) }`,
@@ -119,6 +121,7 @@ export function patchViteConfig(filePath: string): ViteConfigPatchResult {
       }
       const aliasObject = aliasInitializer.asKindOrThrow(SyntaxKind.ObjectLiteralExpression)
       if (!aliasObject.getProperty('@') && !aliasObject.getProperty("'@'")) {
+        changed = true
         aliasObject.addPropertyAssignment({
           name: `'@'`,
           initializer: `fileURLToPath(new URL('./src', import.meta.url))`,
@@ -127,15 +130,19 @@ export function patchViteConfig(filePath: string): ViteConfigPatchResult {
     }
   }
 
+  if (!changed) return { action: 'already-present' }
+
   // Text-splice the new imports in at the AST-computed anchor (after the last existing import)
   // rather than routing them through ts-morph's own import-declaration printer, so they keep
   // the file's existing style (no semicolons) instead of picking up ts-morph's defaults.
   let src = sourceFile.getFullText()
-  if (importDecls.length) {
-    const insertAt = importDecls[importDecls.length - 1].getEnd()
-    src = src.slice(0, insertAt) + `\n${missingImports.join('\n')}` + src.slice(insertAt)
-  } else {
-    src = `${missingImports.join('\n')}\n` + src
+  if (missingImports.length) {
+    if (importDecls.length) {
+      const insertAt = importDecls[importDecls.length - 1].getEnd()
+      src = src.slice(0, insertAt) + `\n${missingImports.join('\n')}` + src.slice(insertAt)
+    } else {
+      src = `${missingImports.join('\n')}\n` + src
+    }
   }
 
   fs.writeFileSync(filePath, src)
@@ -146,10 +153,9 @@ export const VITE_CONFIG_MANUAL_SNIPPET = `import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { fileURLToPath } from 'node:url'
-import { designKit } from './vite-plugin-design-kit.ts'
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), designKit()],
+  plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

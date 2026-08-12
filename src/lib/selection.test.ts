@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { COMPONENTS, GROUPS } from '../generated/registry.js'
 import {
-  THEME_EDITOR_REQUIRED_COMPONENTS,
   allComponentSlugs,
   cssFilesFor,
   demoFilesFor,
@@ -191,14 +190,6 @@ describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
     const deps = npmDepsFor(resolveUiClosure(['combobox', 'chart']))
     expect(deps.size).toBe(new Set(deps).size)
     expect(deps.size).toBeGreaterThan(0)
-  })
-})
-
-describe('THEME_EDITOR_REQUIRED_COMPONENTS', () => {
-  it('resolves to a non-empty closure that never includes "patterns"', () => {
-    const closure = resolveUiClosure(THEME_EDITOR_REQUIRED_COMPONENTS)
-    expect(closure.size).toBeGreaterThan(0)
-    expect(closure.has('patterns')).toBe(false)
   })
 })
 

@@ -1,105 +1,13 @@
-import tokenFamilies from './token-families.json'
-
-const HEX_RE = /^[0-9a-fA-F]{3}$|^[0-9a-fA-F]{6}$|^[0-9a-fA-F]{8}$/
-const NUMBER_RE = /^-?\d+(\.\d+)?$/
-
-export function validateHex(value: string): string | null {
-  if (!HEX_RE.test(value.trim())) {
-    return 'Enter a valid hex color without the # — e.g. ff5733.'
-  }
-  return null
-}
-
-export function validateNumber(value: string, unitLabel?: string): string | null {
-  if (!NUMBER_RE.test(value.trim())) {
-    return unitLabel
-      ? `Enter a number for this ${unitLabel} value — e.g. 12.`
-      : 'Enter a valid number — e.g. 12.'
-  }
-  return null
-}
-
-export function validateRaw(value: string): string | null {
-  const v = value.trim()
-  if (!v) return "This value can't be empty."
-  const opens = (v.match(/\(/g) ?? []).length
-  const closes = (v.match(/\)/g) ?? []).length
-  if (opens !== closes) return "Check the value — parentheses don't match."
-  return null
-}
-
-/**
- * Server-side allowlists for `POST /api/theme/save` (Next) and the Vite plugin's
- * equivalent middleware — both take an arbitrary JSON payload from the client and
- * write it into files on disk, including generated .ts/.tsx source that gets
- * imported and executed, and font ids that become filesystem paths. These guard
- * the identifiers that become selectors, property names, or filenames, where an
- * unescaped value would let a request break out of its intended syntactic slot.
- * Editing an existing CSS variable's *value* is the theme editor's actual feature,
- * so it's intentionally left free-form rather than charset-allowlisted (see
- * validateRaw above) — but it still lands verbatim at `property: <value>;` inside
- * a real .css file, so isSafeCssValue below blocks just the handful of characters
- * that could end that declaration early, not the rest of the value space.
- */
-export const SAFE_TOKEN_RE = /^[a-zA-Z0-9_-]+$/
-export const SAFE_ICON_KEY_RE = /^[a-zA-Z][a-zA-Z0-9.-]*$/
-export const SAFE_ICON_NAME_RE = /^[A-Za-z][A-Za-z0-9]*$/
-export const SAFE_FONT_FAMILY_RE = /^[A-Za-z0-9 ]+$/
-export const SAFE_WEIGHTS_RE = /^[0-9,; ]+$/
-export const SAFE_HEX_RE = /^#[0-9a-fA-F]{3,8}$/
-const SAFE_VAR_REF_RE = /^var\((--[a-zA-Z0-9_-]+)\)$/
 const CSS_VALUE_BREAKOUT_RE = /[;{}]|\/\*/
 
 /**
- * A theme variable's value is written verbatim into `property: <value>;` in a real
- * .css file (see replaceCssVarAtOccurrence) — a value containing `;`, `{`, `}`, or a
- * `/*` comment-opener could close that declaration early and splice in new CSS rules.
+ * `chart.tsx` writes a caller-supplied `ChartConfig` color into a generated
+ * `<style>` block (`dangerouslySetInnerHTML`) as a raw CSS custom-property value
+ * (`--color-<key>: <value>;`). A value containing `;`, `{`, `}`, or a `/*`
+ * comment-opener could close that declaration early and splice in unintended
+ * CSS, so this blocks just the handful of characters that could end a
+ * declaration early, not the rest of the value space.
  */
 export function isSafeCssValue(value: string): boolean {
   return !CSS_VALUE_BREAKOUT_RE.test(value)
-}
-
-export function isSafeCustomColorValue(value: string): boolean {
-  if (SAFE_HEX_RE.test(value) || value === 'transparent') return true
-  const m = value.match(SAFE_VAR_REF_RE)
-  return m !== null && SAFE_TOKEN_RE.test(m[1].replace(/^--/, ''))
-}
-
-type SanitizableCustomFont =
-  | { id: string; source: 'google'; googleFamily: string; weights: string }
-  | { id: string; source: 'file'; fileName: string; dataUrl?: string; path?: string }
-
-export function isSafeCustomFont(f: SanitizableCustomFont): boolean {
-  if (!SAFE_TOKEN_RE.test(f.id)) return false
-  if (f.source === 'google') return SAFE_FONT_FAMILY_RE.test(f.googleFamily) && SAFE_WEIGHTS_RE.test(f.weights || '')
-  return true
-}
-
-export type RenameFamily = 'color' | 'radius' | 'typography' | 'shadow'
-
-export function isValidRenameTarget(
-  family: RenameFamily,
-  from: string,
-  to: string,
-  existingNames: string[]
-): string | null {
-  if (!SAFE_TOKEN_RE.test(to)) {
-    return 'Enter a valid identifier — letters, numbers, hyphens, and underscores only.'
-  }
-  if (to === from) return 'The new name must be different from the current name.'
-  const reserved =
-    family === 'color'
-      ? tokenFamilies.reservedWords.color
-      : family === 'radius'
-        ? tokenFamilies.reservedWords.radius
-        : family === 'shadow'
-          ? tokenFamilies.reservedWords.shadow
-          : []
-  if ((reserved as string[]).includes(to)) {
-    return `"${to}" is reserved by Tailwind's own utilities and can't be used here.`
-  }
-  if (existingNames.includes(to)) {
-    return `"${to}" is already used by another token.`
-  }
-  return null
 }
