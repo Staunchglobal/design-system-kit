@@ -67,6 +67,7 @@
   color: var(--tabs-trigger-fg);
   border-width: var(--tabs-trigger-border-width);
   border-color: var(--tabs-trigger-border-color);
+  cursor: pointer;
 }
 [data-slot='tabs-trigger']:hover {
   color: var(--tabs-trigger-hover-fg);
@@ -76,6 +77,7 @@
 }
 [data-slot='tabs-trigger']:disabled {
   opacity: var(--tabs-trigger-disabled-opacity);
+  cursor: not-allowed;
 }
 [data-slot='tabs-list'][data-variant='default'] [data-slot='tabs-trigger'] {
   --tabs-trigger-bg: var(--neutral-100);
