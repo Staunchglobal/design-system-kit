@@ -17831,9 +17831,33 @@
           "scope": "default"
         },
         {
+          "id": "sonner-toast:--sonner-title-line-height:0",
+          "name": "--sonner-title-line-height",
+          "value": "var(--typography-small-line-height)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
           "id": "sonner-toast:--sonner-icon-size:0",
           "name": "--sonner-icon-size",
-          "value": "1.25rem",
+          "value": "1rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "sonner-toast:--sonner-icon-padding:0",
+          "name": "--sonner-icon-padding",
+          "value": "0.25rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "default"
+        },
+        {
+          "id": "sonner-toast:--sonner-icon-box:0",
+          "name": "--sonner-icon-box",
+          "value": "calc(var(--sonner-icon-size) + 2 * var(--sonner-icon-padding))",
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "default"
