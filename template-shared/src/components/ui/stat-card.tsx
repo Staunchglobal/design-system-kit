@@ -50,9 +50,9 @@ function StatCard({ label, value, icon, loading = false, trend, className }: Sta
             {label}
           </p>
           {loading ? (
-            <Skeleton className="h-7 w-20" />
+            <Skeleton className="h-6 w-20" />
           ) : (
-            <p data-slot="stat-card-value" className="font-heading text-2xl leading-none font-semibold tracking-tight">
+            <p data-slot="stat-card-value" className="font-heading tracking-tight">
               {value}
             </p>
           )}

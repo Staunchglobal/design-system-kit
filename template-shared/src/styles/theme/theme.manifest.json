@@ -12612,7 +12612,7 @@
           "value": "0.625rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "item/size=default|sm"
+          "scope": "item/size=default"
         },
         {
           "id": "item:--item-padding-x:0",
@@ -12620,7 +12620,7 @@
           "value": "0.75rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "item/size=default|sm"
+          "scope": "item/size=default"
         },
         {
           "id": "item:--item-padding-y:0",
@@ -12628,7 +12628,7 @@
           "value": "0.625rem",
           "fieldType": "raw",
           "occurrence": 0,
-          "scope": "item/size=default|sm"
+          "scope": "item/size=default"
         },
         {
           "id": "item:--item-gap:1",
@@ -12636,7 +12636,7 @@
           "value": "0.5rem",
           "fieldType": "raw",
           "occurrence": 1,
-          "scope": "item/size=xs"
+          "scope": "item/size=sm"
         },
         {
           "id": "item:--item-padding-x:1",
@@ -12644,7 +12644,7 @@
           "value": "0.625rem",
           "fieldType": "raw",
           "occurrence": 1,
-          "scope": "item/size=xs"
+          "scope": "item/size=sm"
         },
         {
           "id": "item:--item-padding-y:1",
@@ -12652,6 +12652,30 @@
           "value": "0.5rem",
           "fieldType": "raw",
           "occurrence": 1,
+          "scope": "item/size=sm"
+        },
+        {
+          "id": "item:--item-gap:2",
+          "name": "--item-gap",
+          "value": "0.375rem",
+          "fieldType": "raw",
+          "occurrence": 2,
+          "scope": "item/size=xs"
+        },
+        {
+          "id": "item:--item-padding-x:2",
+          "name": "--item-padding-x",
+          "value": "0.5rem",
+          "fieldType": "raw",
+          "occurrence": 2,
+          "scope": "item/size=xs"
+        },
+        {
+          "id": "item:--item-padding-y:2",
+          "name": "--item-padding-y",
+          "value": "0.375rem",
+          "fieldType": "raw",
+          "occurrence": 2,
           "scope": "item/size=xs"
         },
         {
@@ -12713,15 +12737,15 @@
         {
           "id": "item:--item-title-font-family:0",
           "name": "--item-title-font-family",
-          "value": "var(--font-heading)",
-          "fieldType": "font-ref",
+          "value": "var(--typography-small-font-family)",
+          "fieldType": "typography-ref",
           "occurrence": 0,
           "scope": "item-title"
         },
         {
           "id": "item:--item-title-font-size:0",
           "name": "--item-title-font-size",
-          "value": "var(--typography-h6-font-size)",
+          "value": "var(--typography-small-font-size)",
           "fieldType": "typography-ref",
           "occurrence": 0,
           "scope": "item-title"
@@ -12729,7 +12753,7 @@
         {
           "id": "item:--item-title-font-weight:0",
           "name": "--item-title-font-weight",
-          "value": "var(--typography-h6-font-weight)",
+          "value": "var(--typography-small-font-weight)",
           "fieldType": "typography-ref",
           "occurrence": 0,
           "scope": "item-title"
@@ -12737,7 +12761,7 @@
         {
           "id": "item:--item-title-line-height:0",
           "name": "--item-title-line-height",
-          "value": "var(--typography-h6-line-height)",
+          "value": "var(--typography-small-line-height)",
           "fieldType": "typography-ref",
           "occurrence": 0,
           "scope": "item-title"
@@ -12789,6 +12813,22 @@
           "fieldType": "raw",
           "occurrence": 0,
           "scope": "item-actions"
+        },
+        {
+          "id": "item:--item-action-icon-size:0",
+          "name": "--item-action-icon-size",
+          "value": "1.5rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "button/ancestor-slot=item-actions/size=icon|icon-sm|icon-xs"
+        },
+        {
+          "id": "item:--item-action-icon-size:1",
+          "name": "--item-action-icon-size",
+          "value": "1.25rem",
+          "fieldType": "raw",
+          "occurrence": 1,
+          "scope": "button/ancestor-slot=item-actions/size=xs"
         },
         {
           "id": "item:--item-header-footer-gap:0",
@@ -18225,15 +18265,31 @@
         {
           "id": "stat-card:--stat-card-value-font-family:0",
           "name": "--stat-card-value-font-family",
-          "value": "var(--font-heading)",
-          "fieldType": "font-ref",
+          "value": "var(--typography-h6-font-family)",
+          "fieldType": "typography-ref",
           "occurrence": 0,
           "scope": "stat-card-value"
         },
         {
           "id": "stat-card:--stat-card-value-font-size:0",
           "name": "--stat-card-value-font-size",
-          "value": "var(--typography-h4-font-size)",
+          "value": "var(--typography-h6-font-size)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "stat-card-value"
+        },
+        {
+          "id": "stat-card:--stat-card-value-font-weight:0",
+          "name": "--stat-card-value-font-weight",
+          "value": "var(--typography-h6-font-weight)",
+          "fieldType": "typography-ref",
+          "occurrence": 0,
+          "scope": "stat-card-value"
+        },
+        {
+          "id": "stat-card:--stat-card-value-line-height:0",
+          "name": "--stat-card-value-line-height",
+          "value": "var(--typography-h6-line-height)",
           "fieldType": "typography-ref",
           "occurrence": 0,
           "scope": "stat-card-value"

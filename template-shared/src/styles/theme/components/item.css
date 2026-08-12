@@ -40,8 +40,7 @@
   border-color: var(--item-border-color);
   background-color: var(--item-bg);
 }
-[data-slot='item'][data-size='default'],
-[data-slot='item'][data-size='sm'] {
+[data-slot='item'][data-size='default'] {
   --item-gap: 0.625rem;
   --item-padding-x: 0.75rem;
   --item-padding-y: 0.625rem;
@@ -49,10 +48,18 @@
   padding-inline: var(--item-padding-x);
   padding-block: var(--item-padding-y);
 }
-[data-slot='item'][data-size='xs'] {
+[data-slot='item'][data-size='sm'] {
   --item-gap: 0.5rem;
   --item-padding-x: 0.625rem;
   --item-padding-y: 0.5rem;
+  gap: var(--item-gap);
+  padding-inline: var(--item-padding-x);
+  padding-block: var(--item-padding-y);
+}
+[data-slot='item'][data-size='xs'] {
+  --item-gap: 0.375rem;
+  --item-padding-x: 0.5rem;
+  --item-padding-y: 0.375rem;
   gap: var(--item-gap);
   padding-inline: var(--item-padding-x);
   padding-block: var(--item-padding-y);
@@ -85,10 +92,10 @@
 }
 
 [data-slot='item-title'] {
-  --item-title-font-family: var(--font-heading);
-  --item-title-font-size: var(--typography-h6-font-size);
-  --item-title-font-weight: var(--typography-h6-font-weight);
-  --item-title-line-height: var(--typography-h6-line-height);
+  --item-title-font-family: var(--typography-small-font-family);
+  --item-title-font-size: var(--typography-small-font-size);
+  --item-title-font-weight: var(--typography-small-font-weight);
+  --item-title-line-height: var(--typography-small-line-height);
   font-family: var(--item-title-font-family);
   font-size: var(--item-title-font-size);
   font-weight: var(--item-title-font-weight);
@@ -114,6 +121,23 @@
 [data-slot='item-actions'] {
   --item-actions-gap: 0.5rem;
   gap: var(--item-actions-gap);
+}
+
+/* Icon buttons in rows must fit the item height — icon-sm/xs (2.5rem/2rem) overflow. */
+[data-slot='item-actions'] [data-slot='button'][data-size='icon'],
+[data-slot='item-actions'] [data-slot='button'][data-size='icon-sm'],
+[data-slot='item-actions'] [data-slot='button'][data-size='icon-xs'] {
+  --item-action-icon-size: 1.5rem;
+  width: var(--item-action-icon-size);
+  height: var(--item-action-icon-size);
+  min-width: var(--item-action-icon-size);
+  min-height: var(--item-action-icon-size);
+  padding: 0;
+}
+[data-slot='item'][data-size='xs'] [data-slot='item-actions'] [data-slot='button'][data-size='icon'],
+[data-slot='item'][data-size='xs'] [data-slot='item-actions'] [data-slot='button'][data-size='icon-sm'],
+[data-slot='item'][data-size='xs'] [data-slot='item-actions'] [data-slot='button'][data-size='icon-xs'] {
+  --item-action-icon-size: 1.25rem;
 }
 
 [data-slot='item-header'],
