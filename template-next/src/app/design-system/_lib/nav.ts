@@ -116,7 +116,6 @@ export const NAV_GROUPS: NavGroup[] = [
       { id: 'empty', label: 'Empty' },
       { id: 'error-state', label: 'Error State' },
       { id: 'item', label: 'Item' },
-      { id: 'media-gallery', label: 'Media Gallery' },
       { id: 'pdf-document-kit', label: 'PDF Document Kit' },
     ],
   },

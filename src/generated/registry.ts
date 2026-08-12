@@ -835,16 +835,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "cssFile": "marker.css",
     "extraFiles": []
   },
-  "media-gallery": {
-    "uiDeps": [
-      "button"
-    ],
-    "npmDeps": [
-      "lucide-react"
-    ],
-    "cssFile": "media-gallery.css",
-    "extraFiles": []
-  },
   "menubar": {
     "uiDeps": [],
     "npmDeps": [
@@ -1894,12 +1884,6 @@ export const GROUPS: NavGroup[] = [
         "slug": "item",
         "label": "Item",
         "demoFile": "item.tsx",
-        "extraDemoFiles": []
-      },
-      {
-        "slug": "media-gallery",
-        "label": "Media Gallery",
-        "demoFile": "media-gallery.tsx",
         "extraDemoFiles": []
       },
       {
