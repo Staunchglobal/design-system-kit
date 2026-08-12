@@ -401,7 +401,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
   },
   "combobox": {
     "uiDeps": [
-      "button",
       "input-group",
       "spinner",
       "label"
