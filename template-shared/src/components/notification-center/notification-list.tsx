@@ -106,15 +106,10 @@ function NotificationList({
   }
 
   return (
-    <div data-slot="notification-list" className={cn('flex flex-col', className)}>
+    <div data-slot="notification-list" className={cn(className)}>
       {groups.map((group) => (
         <div key={group.sortKey} data-slot="notification-group">
-          <div
-            data-slot="notification-group-label"
-            className="text-muted-foreground sticky top-0 bg-inherit px-3 py-1.5 text-xs font-medium"
-          >
-            {group.label}
-          </div>
+          <div data-slot="notification-group-label">{group.label}</div>
           {group.items.map((item) => (
             <NotificationRow
               key={item.id}

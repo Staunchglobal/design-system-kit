@@ -35,7 +35,7 @@ function NotificationCenter({
   onMarkAllRead,
   onOpen,
   open: controlledOpen,
-  panelWidth = 'w-80',
+  panelWidth = 'w-96',
   emptyMessage,
   className,
   panelClassName,

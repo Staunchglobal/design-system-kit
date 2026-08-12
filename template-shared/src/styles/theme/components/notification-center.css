@@ -1,10 +1,50 @@
 [data-ui='notification-center-content'] {
   --notification-center-max-width: 24rem;
   --notification-center-max-height: 32rem;
+  /* Override default popover 18rem width so rows/timestamps aren't clipped. */
+  --popover-content-width: var(--notification-center-max-width);
+  width: min(var(--notification-center-max-width), calc(100vw - 2rem)) !important;
   max-width: min(var(--notification-center-max-width), calc(100vw - 2rem));
   max-height: var(--notification-center-max-height);
+  overflow: hidden;
+  padding: 0;
 }
 
 [data-slot='notification-center'] [data-slot='button'] {
   position: relative;
+  overflow: visible;
+}
+
+[data-slot='notification-list'] {
+  --notification-list-gap: 0.5rem;
+  --notification-list-padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--notification-list-gap);
+  padding: var(--notification-list-padding);
+  min-width: 0;
+}
+
+[data-slot='notification-group'] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--notification-list-gap);
+  min-width: 0;
+}
+
+[data-slot='notification-group-label'] {
+  --notification-group-label-fg: var(--muted-foreground);
+  --notification-group-label-font-size: var(--typography-caption-font-size);
+  --notification-group-label-font-weight: var(--typography-caption-font-weight);
+  --notification-group-label-padding-x: 0.5rem;
+  --notification-group-label-padding-y: 0.375rem;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  color: var(--notification-group-label-fg);
+  background-color: var(--popover);
+  font-size: var(--notification-group-label-font-size);
+  font-weight: var(--notification-group-label-font-weight);
+  padding-inline: var(--notification-group-label-padding-x);
+  padding-block: var(--notification-group-label-padding-y);
 }
