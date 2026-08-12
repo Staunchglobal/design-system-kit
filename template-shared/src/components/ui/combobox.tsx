@@ -4,7 +4,6 @@ import * as React from 'react'
 import { Combobox as ComboboxPrimitive } from '@base-ui/react'
 
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
 import {
   InputGroup,
   InputGroupAddon,
@@ -302,12 +301,8 @@ function ComboboxChip({
     >
       {children}
       {showRemove && (
-        <ComboboxPrimitive.ChipRemove
-          render={<Button variant="ghost" size="icon-xs" />}
-          className="-ml-1 opacity-50 hover:opacity-100"
-          data-slot="combobox-chip-remove"
-        >
-          <AppIcon name="combobox.clear" className="pointer-events-none" />
+        <ComboboxPrimitive.ChipRemove data-slot="combobox-chip-remove" tabIndex={-1}>
+          <AppIcon name="combobox.clear" aria-hidden className="pointer-events-none" />
         </ComboboxPrimitive.ChipRemove>
       )}
     </ComboboxPrimitive.Chip>
@@ -318,7 +313,10 @@ function ComboboxChipsInput({ className, ...props }: ComboboxPrimitive.Input.Pro
   return (
     <ComboboxPrimitive.Input
       data-slot="combobox-chip-input"
-      className={cn('min-w-16 flex-1 outline-none', className)}
+      className={cn(
+        'min-w-16 flex-1 border-0 bg-transparent shadow-none outline-none ring-0',
+        className
+      )}
       {...props}
     />
   )

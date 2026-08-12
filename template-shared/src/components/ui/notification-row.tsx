@@ -14,14 +14,7 @@ import {
 } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
-import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemDescription,
-  ItemMedia,
-  ItemTitle,
-} from '@/components/ui/item'
+import { Item, ItemContent, ItemDescription, ItemMedia } from '@/components/ui/item'
 
 type NotificationType =
   | 'lab_results'
@@ -75,8 +68,9 @@ function NotificationRow({
   return (
     <Item
       data-slot="notification-row"
-      variant={unread ? 'muted' : 'default'}
-      className={cn(onPress && 'cursor-pointer', className)}
+      data-unread={unread ? 'true' : undefined}
+      variant="default"
+      className={cn('flex-nowrap items-start', onPress && 'cursor-pointer', className)}
       role={onPress ? 'button' : undefined}
       tabIndex={onPress ? 0 : undefined}
       onClick={onPress}
@@ -91,30 +85,30 @@ function NotificationRow({
           : undefined
       }
     >
-      <ItemMedia variant="icon" className="bg-muted flex size-9 items-center justify-center rounded-lg">
+      <ItemMedia data-slot="notification-row-media" variant="icon">
         {notificationTypeIcon(type)}
       </ItemMedia>
       <ItemContent>
-        <ItemTitle className="gap-2">
-          {title}
-          {unread ? (
-            <span
-              data-slot="notification-unread-dot"
-              className="bg-primary size-2 shrink-0 rounded-full"
-              aria-label="Unread"
-            />
-          ) : null}
-        </ItemTitle>
+        <div data-slot="notification-row-header">
+          <div data-slot="notification-row-title">
+            <span data-slot="notification-row-title-text">{title}</span>
+            {unread ? (
+              <span
+                data-slot="notification-unread-dot"
+                className="size-2 shrink-0 rounded-full"
+                aria-label="Unread"
+              />
+            ) : null}
+          </div>
+          <time
+            data-slot="notification-row-time"
+            dateTime={Number.isNaN(date.getTime()) ? undefined : date.toISOString()}
+          >
+            {relative}
+          </time>
+        </div>
         {description ? <ItemDescription>{description}</ItemDescription> : null}
       </ItemContent>
-      <ItemActions>
-        <time
-          dateTime={Number.isNaN(date.getTime()) ? undefined : date.toISOString()}
-          className="text-muted-foreground text-xs whitespace-nowrap"
-        >
-          {relative}
-        </time>
-      </ItemActions>
     </Item>
   )
 }

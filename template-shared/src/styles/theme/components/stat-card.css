@@ -28,11 +28,15 @@
 
 [data-slot='stat-card-value'] {
   --stat-card-value-fg: var(--foreground);
-  --stat-card-value-font-family: var(--font-heading);
-  --stat-card-value-font-size: var(--typography-h4-font-size);
+  --stat-card-value-font-family: var(--typography-h6-font-family);
+  --stat-card-value-font-size: var(--typography-h6-font-size);
+  --stat-card-value-font-weight: var(--typography-h6-font-weight);
+  --stat-card-value-line-height: var(--typography-h6-line-height);
   color: var(--stat-card-value-fg);
   font-family: var(--stat-card-value-font-family);
   font-size: var(--stat-card-value-font-size);
+  font-weight: var(--stat-card-value-font-weight);
+  line-height: var(--stat-card-value-line-height);
 }
 
 .dark [data-slot='stat-card'] {

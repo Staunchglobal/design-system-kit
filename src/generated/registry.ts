@@ -401,7 +401,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
   },
   "combobox": {
     "uiDeps": [
-      "button",
       "input-group",
       "spinner",
       "label"
@@ -833,16 +832,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "lucide-react"
     ],
     "cssFile": "marker.css",
-    "extraFiles": []
-  },
-  "media-gallery": {
-    "uiDeps": [
-      "button"
-    ],
-    "npmDeps": [
-      "lucide-react"
-    ],
-    "cssFile": "media-gallery.css",
     "extraFiles": []
   },
   "menubar": {
@@ -1894,12 +1883,6 @@ export const GROUPS: NavGroup[] = [
         "slug": "item",
         "label": "Item",
         "demoFile": "item.tsx",
-        "extraDemoFiles": []
-      },
-      {
-        "slug": "media-gallery",
-        "label": "Media Gallery",
-        "demoFile": "media-gallery.tsx",
         "extraDemoFiles": []
       },
       {

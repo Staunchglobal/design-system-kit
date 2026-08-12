@@ -15,6 +15,11 @@
   --sonner-toast-gap: 0.5rem;
   --sonner-toast-padding: 0.75rem;
   --sonner-toast-font-size: var(--typography-small-font-size);
+  --sonner-title-line-height: var(--typography-small-line-height);
+  --sonner-icon-size: 1rem;
+  --sonner-icon-padding: 0.25rem;
+  --sonner-icon-box: calc(var(--sonner-icon-size) + 2 * var(--sonner-icon-padding));
+
   gap: var(--sonner-toast-gap);
   padding: var(--sonner-toast-padding);
   font-size: var(--sonner-toast-font-size);
@@ -22,57 +27,70 @@
   border-color: var(--sonner-border);
   background-color: var(--sonner-bg);
   color: var(--sonner-text);
-}
-.toaster .cn-toast svg {
-  --sonner-icon-size: 1.25rem;
-  width: var(--sonner-icon-size);
-  height: var(--sonner-icon-size);
+  /* Align icon circle to the title row, not the full content block. */
+  align-items: flex-start;
 }
 
-.toaster .cn-toast[data-type='success'] {
+.toaster .cn-toast [data-title] {
+  line-height: var(--sonner-title-line-height);
+}
+
+.toaster .cn-toast svg {
+  width: var(--sonner-icon-size);
+  height: var(--sonner-icon-size);
+  margin: 0;
+}
+
+.toaster .cn-toast[data-type='success'],
+.toaster .cn-toast[data-type='error'],
+.toaster .cn-toast[data-type='info'],
+.toaster .cn-toast[data-type='warning'] {
   --success-bg: var(--neutral-0);
   --success-text: var(--foreground);
   --success-border: var(--border);
-}
-.toaster .cn-toast[data-type='success'] [data-icon] {
-  color: var(--neutral-0);
-  background-color: var(--success-500);
-  border-radius: var(--radius-full);
-  padding: 0.25rem;
-}
-
-.toaster .cn-toast[data-type='error'] {
   --error-bg: var(--neutral-0);
   --error-text: var(--foreground);
   --error-border: var(--border);
-}
-.toaster .cn-toast[data-type='error'] [data-icon] {
-  color: var(--neutral-0);
-  background-color: var(--destructive-500);
-  border-radius: var(--radius-full);
-  padding: 0.25rem;
-}
-
-.toaster .cn-toast[data-type='info'] {
   --info-bg: var(--neutral-0);
   --info-text: var(--foreground);
   --info-border: var(--border);
-}
-.toaster .cn-toast[data-type='info'] [data-icon] {
-  color: var(--neutral-0);
-  background-color: var(--info-500);
-  border-radius: var(--radius-full);
-  padding: 0.25rem;
-}
-
-.toaster .cn-toast[data-type='warning'] {
   --warning-bg: var(--neutral-0);
   --warning-text: var(--foreground);
   --warning-border: var(--border);
 }
+
+/* Override sonner's fixed 16×16 icon slot so the padded circle can size correctly. */
+.toaster .cn-toast[data-type='success'] [data-icon],
+.toaster .cn-toast[data-type='error'] [data-icon],
+.toaster .cn-toast[data-type='info'] [data-icon],
 .toaster .cn-toast[data-type='warning'] [data-icon] {
-  color: var(--neutral-0);
-  background-color: var(--warning-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--sonner-icon-box);
+  height: var(--sonner-icon-box);
+  padding: var(--sonner-icon-padding);
   border-radius: var(--radius-full);
-  padding: 0.25rem;
+  color: var(--neutral-0);
+  /* Optical align with the first title line. */
+  margin-block-start: calc(
+    (var(--sonner-title-line-height) - var(--sonner-icon-box)) / 2
+  );
+}
+
+.toaster .cn-toast[data-type='success'] [data-icon] {
+  background-color: var(--success-500);
+}
+
+.toaster .cn-toast[data-type='error'] [data-icon] {
+  background-color: var(--destructive-500);
+}
+
+.toaster .cn-toast[data-type='info'] [data-icon] {
+  background-color: var(--info-500);
+}
+
+.toaster .cn-toast[data-type='warning'] [data-icon] {
+  background-color: var(--warning-500);
 }
