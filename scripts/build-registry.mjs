@@ -30,6 +30,18 @@ const NO_CSS = new Set([
   'feature-flags-admin',
   'delivery-logs',
   'audit-trail-viewer',
+  // Migrated into their own .tsx via Tailwind classes — see the "inline component CSS"
+  // refactor. Add a slug here as each component's styles/theme/components/<slug>.css is
+  // deleted; this map is naming-convention-only and doesn't check the filesystem, so a
+  // deleted css file left off this list would keep silently claiming a cssFile that 404s
+  // on every install instead of ever being caught here.
+  'button',
+  'button-group',
+  'toggle',
+  'toggle-group',
+  'segmented-control',
+  'kbd',
+  'spinner',
 ])
 const EXTRA_FILES = {
   sidebar: ['hooks/use-mobile.ts'],
@@ -410,10 +422,22 @@ for (const f of uiFiles) {
 
   for (const dep of EXTRA_NPM_DEPS[slug] ?? []) demoNpmDeps.add(dep)
 
+  const cssFile = NO_CSS.has(slug) ? null : (CSS_FILE_OVERRIDES[slug] ?? `${slug}.css`)
+  // Naming-convention-only above — verify the file actually exists, or a component whose
+  // css was deleted (see the "inline component CSS" refactor) but whose slug was left off
+  // NO_CSS would keep claiming a cssFile that 404s on every real install instead of ever
+  // being caught here.
+  if (cssFile && !fs.existsSync(path.join(root, 'template-shared/src/styles/theme/components', cssFile))) {
+    throw new Error(
+      `Computed cssFile '${cssFile}' for '${slug}' but that file doesn't exist. If its CSS was ` +
+        `migrated into the component's own .tsx, add '${slug}' to NO_CSS above.`
+    )
+  }
+
   components[slug] = {
     uiDeps: [...demoUiDeps],
     npmDeps: [...demoNpmDeps],
-    cssFile: NO_CSS.has(slug) ? null : (CSS_FILE_OVERRIDES[slug] ?? `${slug}.css`),
+    cssFile,
     extraFiles: EXTRA_FILES[slug] ?? [],
   }
 }

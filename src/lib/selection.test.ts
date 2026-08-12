@@ -108,9 +108,9 @@ describe('demoFilesFor', () => {
 
 describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
   it('cssFilesFor only returns files for components that actually declare one', () => {
-    const closure = resolveUiClosure(['button', 'direction'])
+    const closure = resolveUiClosure(['dialog', 'direction'])
     const files = cssFilesFor(closure)
-    expect(files.has('button.css')).toBe(true)
+    expect(files.has('dialog.css')).toBe(true)
     expect(COMPONENTS.direction.cssFile).toBeNull()
   })
 

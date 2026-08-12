@@ -261,7 +261,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": "button-group.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "button": {
@@ -273,7 +273,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": "button.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "calendar": {
@@ -810,7 +810,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
   "kbd": {
     "uiDeps": [],
     "npmDeps": [],
-    "cssFile": "kbd.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "label": {
@@ -1053,7 +1053,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "toggle-group"
     ],
     "npmDeps": [],
-    "cssFile": "segmented-control.css",
+    "cssFile": null,
     "extraFiles": [
       "hooks/use-mobile.ts"
     ]
@@ -1154,7 +1154,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
   "spinner": {
     "uiDeps": [],
     "npmDeps": [],
-    "cssFile": "spinner.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "stat-card": {
@@ -1274,7 +1274,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": "toggle-group.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "toggle": {
@@ -1284,7 +1284,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": "toggle.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "tooltip": {
