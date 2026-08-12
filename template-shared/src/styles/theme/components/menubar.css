@@ -25,6 +25,7 @@
   padding-block: var(--menubar-trigger-padding-y);
   font-size: var(--menubar-trigger-font-size);
   font-weight: var(--menubar-trigger-font-weight);
+  cursor: pointer;
 }
 [data-slot='menubar-trigger']:hover {
   background-color: var(--menubar-trigger-hover-bg);
@@ -83,6 +84,7 @@
   padding-inline: var(--menubar-item-padding-x);
   padding-block: var(--menubar-item-padding-y);
   font-size: var(--menubar-item-font-size);
+  cursor: pointer;
 }
 [data-slot='menubar-item']:focus,
 [data-slot='menubar-checkbox-item']:focus,
