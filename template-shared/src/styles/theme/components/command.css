@@ -15,10 +15,44 @@
   padding-block-end: 0;
 }
 
+/* No focus border/outline — command autofocuses and the outer shell already frames it. */
+[data-slot='command-input-wrapper'] [data-slot='input-group'] {
+  --input-group-border-color: transparent;
+  --input-group-focus-border-color: transparent;
+  --input-group-focus-border-width: 0px;
+  --input-group-focus-ring-width: 0px;
+  --input-group-focus-ring-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  outline: none;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
+}
+[data-slot='command-input-wrapper'] [data-slot='input-group']:focus-within,
+[data-slot='command-input-wrapper'] [data-slot='input-group']:has([data-slot='command-input']:focus-visible) {
+  border-color: transparent;
+  border-width: 0;
+  box-shadow: none;
+  outline: none;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
+}
+
 [data-slot='command-input'] {
   --command-input-font-size: var(--typography-small-font-size);
   --command-input-disabled-opacity: 0.5;
   font-size: var(--command-input-font-size);
+  outline: none;
+  box-shadow: none;
+  border: none;
+}
+[data-slot='command-input']:focus,
+[data-slot='command-input']:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
 }
 [data-slot='command-input']:disabled {
   opacity: var(--command-input-disabled-opacity);
