@@ -7727,6 +7727,22 @@
           "scope": "combobox-chip-input"
         },
         {
+          "id": "combobox:--tw-ring-shadow:0",
+          "name": "--tw-ring-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "combobox-chip-input"
+        },
+        {
+          "id": "combobox:--tw-ring-offset-shadow:0",
+          "name": "--tw-ring-offset-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "combobox-chip-input"
+        },
+        {
           "id": "combobox:--combobox-content-ring-color:1",
           "name": "--combobox-content-ring-color",
           "value": "var(--neutral-700)",
@@ -19741,6 +19757,22 @@
           "fieldType": "opacity",
           "occurrence": 1,
           "scope": "tag-chip-remove"
+        },
+        {
+          "id": "tag-input:--tw-ring-shadow:0",
+          "name": "--tw-ring-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "tag-input-field"
+        },
+        {
+          "id": "tag-input:--tw-ring-offset-shadow:0",
+          "name": "--tw-ring-offset-shadow",
+          "value": "0 0 #0000",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "tag-input-field"
         },
         {
           "id": "tag-input:--tag-input-error-fg:0",

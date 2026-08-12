@@ -133,7 +133,7 @@ function TagInput({
           [error ? errorId : null, ariaDescribedby].filter(Boolean).join(' ') || undefined
         }
         aria-invalid={ariaInvalid ?? (error ? true : undefined)}
-        className="placeholder:text-muted-foreground min-w-16 flex-1 bg-transparent outline-none disabled:cursor-not-allowed"
+        className="placeholder:text-muted-foreground min-w-16 flex-1 border-0 bg-transparent shadow-none outline-none ring-0 disabled:cursor-not-allowed"
       />
       {error && (
         <p id={errorId} data-slot="tag-input-error" className="basis-full text-xs">
