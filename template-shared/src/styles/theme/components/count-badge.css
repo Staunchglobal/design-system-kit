@@ -1,6 +1,6 @@
 [data-slot='count-badge'] {
-  --count-badge-bg: var(--primary-500);
-  --count-badge-fg: var(--neutral-0);
+  --count-badge-bg: var(--primary);
+  --count-badge-fg: var(--primary-foreground);
   --count-badge-border-width: 0;
   --count-badge-border-color: transparent;
   --count-badge-radius: var(--radius-full);
@@ -33,13 +33,14 @@
   pointer-events: none;
 }
 [data-slot='count-badge'][data-size='overlay'] {
-  --count-badge-min-width: 1.25rem;
-  --count-badge-height: 1.25rem;
+  --count-badge-min-width: 1.125rem;
+  --count-badge-height: 1.125rem;
   --count-badge-padding-x: 0.25rem;
   --count-badge-font-size: 0.625rem;
+  --count-badge-line-height: 1;
 }
 
 .dark [data-slot='count-badge'] {
-  --count-badge-bg: var(--primary-400);
-  --count-badge-fg: var(--primary-950);
+  --count-badge-bg: var(--primary);
+  --count-badge-fg: var(--primary-foreground);
 }
