@@ -9,7 +9,8 @@
   --combobox-content-ring-color: var(--border);
   --combobox-content-radius: var(--radius-2xl);
   --combobox-content-shadow: var(--shadow-md);
-  --combobox-item-radius: var(--radius-2xl);
+  /* md keeps stacked selected rows clean — 2xl scallops consecutive fills. */
+  --combobox-item-radius: var(--radius-md);
 
   background-color: var(--combobox-content-bg);
   color: var(--combobox-content-fg);
@@ -45,12 +46,10 @@
   --combobox-item-gap: 0.5rem;
   --combobox-item-fg: var(--foreground);
   --combobox-item-hover-bg: color-mix(in oklab, var(--primary) 12%, transparent);
-  --combobox-item-selected-bg: var(--primary);
-  --combobox-item-selected-fg: var(--primary-foreground);
-  --combobox-item-selected-hover-bg: color-mix(in oklab, var(--primary) 82%, black);
+  --combobox-item-selected-indicator-fg: var(--foreground);
   --combobox-item-disabled-opacity: 0.5;
 
-  border-radius: var(--combobox-item-radius, var(--radius-2xl));
+  border-radius: var(--combobox-item-radius, var(--radius-md));
   padding-block: var(--combobox-item-padding-block);
   padding-inline-start: var(--combobox-item-padding-inline-start);
   padding-inline-end: var(--combobox-item-padding-inline-end);
@@ -59,19 +58,21 @@
   color: var(--combobox-item-fg);
   cursor: pointer;
 }
-/* Hover / keyboard highlight: soft brand tint, keep text color. */
+/* Hover / keyboard highlight only — selected state is indicated by the checkmark. */
 [data-slot='combobox-item'][data-highlighted] {
   background-color: var(--combobox-item-hover-bg);
   color: var(--combobox-item-fg);
 }
 [data-slot='combobox-item'][data-selected] {
-  background-color: var(--combobox-item-selected-bg);
-  color: var(--combobox-item-selected-fg);
+  background-color: transparent;
+  color: var(--combobox-item-fg);
 }
-/* Selected + highlighted: darken fill only — do not change text. */
 [data-slot='combobox-item'][data-selected][data-highlighted] {
-  background-color: var(--combobox-item-selected-hover-bg);
-  color: var(--combobox-item-selected-fg);
+  background-color: var(--combobox-item-hover-bg);
+  color: var(--combobox-item-fg);
+}
+[data-slot='combobox-item'][data-selected] svg {
+  color: var(--combobox-item-selected-indicator-fg);
 }
 [data-slot='combobox-item'][data-disabled] {
   opacity: var(--combobox-item-disabled-opacity);
@@ -143,9 +144,11 @@
 }
 
 [data-slot='combobox-chip'] {
-  --combobox-chip-bg: color-mix(in oklab, var(--primary) 10%, transparent);
+  --combobox-chip-bg: var(--neutral-0);
   --combobox-chip-fg: var(--foreground);
-  --combobox-chip-hover-bg: color-mix(in oklab, var(--primary) 16%, transparent);
+  --combobox-chip-border-color: var(--border);
+  --combobox-chip-border-width: 1px;
+  --combobox-chip-hover-bg: var(--neutral-100);
   --combobox-chip-height: 1.3125rem;
   --combobox-chip-padding-x: 0.375rem;
   --combobox-chip-radius: var(--radius-sm);
@@ -154,8 +157,14 @@
   --combobox-chip-gap: 0.25rem;
   --combobox-chip-disabled-opacity: 0.5;
 
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
   background-color: var(--combobox-chip-bg);
   color: var(--combobox-chip-fg);
+  border-width: var(--combobox-chip-border-width);
+  border-style: solid;
+  border-color: var(--combobox-chip-border-color);
   height: var(--combobox-chip-height);
   padding-inline: var(--combobox-chip-padding-x);
   border-radius: var(--combobox-chip-radius);
@@ -170,28 +179,62 @@
   opacity: var(--combobox-chip-disabled-opacity);
 }
 
+/*
+  Native button (not ui/Button): icon-xs is 2rem and overflows the ~1.3rem chip.
+  Keep icon at 0.75rem inside a 1rem hit target so hover stays inside the chip.
+*/
 [data-slot='combobox-chip-remove'] {
+  --combobox-chip-remove-size: 1rem;
   --combobox-chip-remove-opacity: 0.55;
-  --combobox-chip-remove-hover-opacity: 1;
+  --combobox-chip-remove-hover-bg: var(--neutral-100);
+  --combobox-chip-remove-hover-fg: var(--foreground);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--combobox-chip-remove-size);
+  height: var(--combobox-chip-remove-size);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: inherit;
   opacity: var(--combobox-chip-remove-opacity);
   cursor: pointer;
+  flex-shrink: 0;
+  line-height: 0;
 }
-[data-slot='combobox-chip-remove']:hover {
-  opacity: var(--combobox-chip-remove-hover-opacity);
+
+[data-slot='combobox-chip-remove'] svg {
+  width: 0.75rem;
+  height: 0.75rem;
+  flex-shrink: 0;
+}
+
+[data-slot='combobox-chip-remove']:hover,
+[data-slot='combobox-chip-remove']:focus-visible {
+  --combobox-chip-remove-opacity: 1;
+  opacity: var(--combobox-chip-remove-opacity);
+  background-color: var(--combobox-chip-remove-hover-bg);
+  color: var(--combobox-chip-remove-hover-fg);
+  outline: none;
 }
 
 [data-slot='combobox-chip-overflow'] {
-  --combobox-chip-overflow-bg: color-mix(in oklab, var(--primary) 10%, transparent);
+  --combobox-chip-overflow-bg: var(--neutral-0);
   --combobox-chip-overflow-fg: var(--foreground);
-  --combobox-chip-overflow-hover-bg: color-mix(in oklab, var(--primary) 18%, transparent);
-  --combobox-chip-overflow-active-bg: color-mix(in oklab, var(--primary) 24%, transparent);
+  --combobox-chip-overflow-border-color: var(--border);
+  --combobox-chip-overflow-hover-bg: var(--neutral-100);
+  --combobox-chip-overflow-active-bg: var(--neutral-200);
   --combobox-chip-overflow-radius: var(--radius-sm);
 
   background-color: var(--combobox-chip-overflow-bg);
   color: var(--combobox-chip-overflow-fg);
+  border: 1px solid var(--combobox-chip-overflow-border-color);
   border-radius: var(--combobox-chip-overflow-radius);
   cursor: pointer;
-  border: none;
 }
 [data-slot='combobox-chip-overflow']:hover {
   background-color: var(--combobox-chip-overflow-hover-bg);
@@ -235,7 +278,6 @@
 
 .dark [data-slot='combobox-item'] {
   --combobox-item-hover-bg: color-mix(in oklab, var(--primary) 18%, transparent);
-  --combobox-item-selected-hover-bg: color-mix(in oklab, var(--primary) 75%, black);
 }
 
 .dark [data-slot='combobox-chips'] {
@@ -245,9 +287,18 @@
 
 .dark [data-slot='combobox-chip'],
 .dark [data-slot='combobox-chip-overflow'] {
-  --combobox-chip-bg: color-mix(in oklab, var(--primary) 18%, transparent);
-  --combobox-chip-hover-bg: color-mix(in oklab, var(--primary) 26%, transparent);
-  --combobox-chip-overflow-bg: color-mix(in oklab, var(--primary) 18%, transparent);
-  --combobox-chip-overflow-hover-bg: color-mix(in oklab, var(--primary) 26%, transparent);
-  --combobox-chip-overflow-active-bg: color-mix(in oklab, var(--primary) 32%, transparent);
+  --combobox-chip-bg: var(--neutral-900);
+  --combobox-chip-fg: var(--neutral-100);
+  --combobox-chip-border-color: var(--neutral-700);
+  --combobox-chip-hover-bg: var(--neutral-800);
+  --combobox-chip-overflow-bg: var(--neutral-900);
+  --combobox-chip-overflow-fg: var(--neutral-100);
+  --combobox-chip-overflow-border-color: var(--neutral-700);
+  --combobox-chip-overflow-hover-bg: var(--neutral-800);
+  --combobox-chip-overflow-active-bg: var(--neutral-700);
+}
+
+.dark [data-slot='combobox-chip-remove'] {
+  --combobox-chip-remove-hover-bg: var(--neutral-800);
+  --combobox-chip-remove-hover-fg: var(--neutral-50);
 }

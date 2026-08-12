@@ -7265,7 +7265,7 @@
         {
           "id": "combobox:--combobox-item-radius:0",
           "name": "--combobox-item-radius",
-          "value": "var(--radius-2xl)",
+          "value": "var(--radius-md)",
           "fieldType": "radius-ref",
           "occurrence": 0,
           "scope": "combobox-content"
@@ -7359,26 +7359,10 @@
           "scope": "combobox-item"
         },
         {
-          "id": "combobox:--combobox-item-selected-bg:0",
-          "name": "--combobox-item-selected-bg",
-          "value": "var(--primary)",
+          "id": "combobox:--combobox-item-selected-indicator-fg:0",
+          "name": "--combobox-item-selected-indicator-fg",
+          "value": "var(--foreground)",
           "fieldType": "color-ref",
-          "occurrence": 0,
-          "scope": "combobox-item"
-        },
-        {
-          "id": "combobox:--combobox-item-selected-fg:0",
-          "name": "--combobox-item-selected-fg",
-          "value": "var(--primary-foreground)",
-          "fieldType": "color-ref",
-          "occurrence": 0,
-          "scope": "combobox-item"
-        },
-        {
-          "id": "combobox:--combobox-item-selected-hover-bg:0",
-          "name": "--combobox-item-selected-hover-bg",
-          "value": "color-mix(in oklab, var(--primary) 82%, black)",
-          "fieldType": "raw",
           "occurrence": 0,
           "scope": "combobox-item"
         },
@@ -7585,8 +7569,8 @@
         {
           "id": "combobox:--combobox-chip-bg:0",
           "name": "--combobox-chip-bg",
-          "value": "color-mix(in oklab, var(--primary) 10%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--neutral-0)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "combobox-chip"
         },
@@ -7599,10 +7583,26 @@
           "scope": "combobox-chip"
         },
         {
+          "id": "combobox:--combobox-chip-border-color:0",
+          "name": "--combobox-chip-border-color",
+          "value": "var(--border)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "combobox-chip"
+        },
+        {
+          "id": "combobox:--combobox-chip-border-width:0",
+          "name": "--combobox-chip-border-width",
+          "value": "1px",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "combobox-chip"
+        },
+        {
           "id": "combobox:--combobox-chip-hover-bg:0",
           "name": "--combobox-chip-hover-bg",
-          "value": "color-mix(in oklab, var(--primary) 16%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "combobox-chip"
         },
@@ -7663,6 +7663,14 @@
           "scope": "combobox-chip"
         },
         {
+          "id": "combobox:--combobox-chip-remove-size:0",
+          "name": "--combobox-chip-remove-size",
+          "value": "1rem",
+          "fieldType": "raw",
+          "occurrence": 0,
+          "scope": "combobox-chip-remove"
+        },
+        {
           "id": "combobox:--combobox-chip-remove-opacity:0",
           "name": "--combobox-chip-remove-opacity",
           "value": "0.55",
@@ -7671,18 +7679,34 @@
           "scope": "combobox-chip-remove"
         },
         {
-          "id": "combobox:--combobox-chip-remove-hover-opacity:0",
-          "name": "--combobox-chip-remove-hover-opacity",
+          "id": "combobox:--combobox-chip-remove-hover-bg:0",
+          "name": "--combobox-chip-remove-hover-bg",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "combobox-chip-remove"
+        },
+        {
+          "id": "combobox:--combobox-chip-remove-hover-fg:0",
+          "name": "--combobox-chip-remove-hover-fg",
+          "value": "var(--foreground)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "combobox-chip-remove"
+        },
+        {
+          "id": "combobox:--combobox-chip-remove-opacity:1",
+          "name": "--combobox-chip-remove-opacity",
           "value": "1",
           "fieldType": "opacity",
-          "occurrence": 0,
+          "occurrence": 1,
           "scope": "combobox-chip-remove"
         },
         {
           "id": "combobox:--combobox-chip-overflow-bg:0",
           "name": "--combobox-chip-overflow-bg",
-          "value": "color-mix(in oklab, var(--primary) 10%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--neutral-0)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "combobox-chip-overflow"
         },
@@ -7695,18 +7719,26 @@
           "scope": "combobox-chip-overflow"
         },
         {
+          "id": "combobox:--combobox-chip-overflow-border-color:0",
+          "name": "--combobox-chip-overflow-border-color",
+          "value": "var(--border)",
+          "fieldType": "color-ref",
+          "occurrence": 0,
+          "scope": "combobox-chip-overflow"
+        },
+        {
           "id": "combobox:--combobox-chip-overflow-hover-bg:0",
           "name": "--combobox-chip-overflow-hover-bg",
-          "value": "color-mix(in oklab, var(--primary) 18%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "combobox-chip-overflow"
         },
         {
           "id": "combobox:--combobox-chip-overflow-active-bg:0",
           "name": "--combobox-chip-overflow-active-bg",
-          "value": "color-mix(in oklab, var(--primary) 24%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--neutral-200)",
+          "fieldType": "color-ref",
           "occurrence": 0,
           "scope": "combobox-chip-overflow"
         },
@@ -7759,14 +7791,6 @@
           "scope": "dark/combobox-item"
         },
         {
-          "id": "combobox:--combobox-item-selected-hover-bg:1",
-          "name": "--combobox-item-selected-hover-bg",
-          "value": "color-mix(in oklab, var(--primary) 75%, black)",
-          "fieldType": "raw",
-          "occurrence": 1,
-          "scope": "dark/combobox-item"
-        },
-        {
           "id": "combobox:--combobox-chips-focus-ring-color:1",
           "name": "--combobox-chips-focus-ring-color",
           "value": "color-mix(in oklab, var(--primary) 45%, transparent)",
@@ -7785,42 +7809,90 @@
         {
           "id": "combobox:--combobox-chip-bg:1",
           "name": "--combobox-chip-bg",
-          "value": "color-mix(in oklab, var(--primary) 18%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--neutral-900)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/combobox-chip"
+        },
+        {
+          "id": "combobox:--combobox-chip-fg:1",
+          "name": "--combobox-chip-fg",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/combobox-chip"
+        },
+        {
+          "id": "combobox:--combobox-chip-border-color:1",
+          "name": "--combobox-chip-border-color",
+          "value": "var(--neutral-700)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/combobox-chip"
         },
         {
           "id": "combobox:--combobox-chip-hover-bg:1",
           "name": "--combobox-chip-hover-bg",
-          "value": "color-mix(in oklab, var(--primary) 26%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/combobox-chip"
         },
         {
           "id": "combobox:--combobox-chip-overflow-bg:1",
           "name": "--combobox-chip-overflow-bg",
-          "value": "color-mix(in oklab, var(--primary) 18%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--neutral-900)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/combobox-chip"
+        },
+        {
+          "id": "combobox:--combobox-chip-overflow-fg:1",
+          "name": "--combobox-chip-overflow-fg",
+          "value": "var(--neutral-100)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/combobox-chip"
+        },
+        {
+          "id": "combobox:--combobox-chip-overflow-border-color:1",
+          "name": "--combobox-chip-overflow-border-color",
+          "value": "var(--neutral-700)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/combobox-chip"
         },
         {
           "id": "combobox:--combobox-chip-overflow-hover-bg:1",
           "name": "--combobox-chip-overflow-hover-bg",
-          "value": "color-mix(in oklab, var(--primary) 26%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/combobox-chip"
         },
         {
           "id": "combobox:--combobox-chip-overflow-active-bg:1",
           "name": "--combobox-chip-overflow-active-bg",
-          "value": "color-mix(in oklab, var(--primary) 32%, transparent)",
-          "fieldType": "raw",
+          "value": "var(--neutral-700)",
+          "fieldType": "color-ref",
           "occurrence": 1,
           "scope": "dark/combobox-chip"
+        },
+        {
+          "id": "combobox:--combobox-chip-remove-hover-bg:1",
+          "name": "--combobox-chip-remove-hover-bg",
+          "value": "var(--neutral-800)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/combobox-chip-remove"
+        },
+        {
+          "id": "combobox:--combobox-chip-remove-hover-fg:1",
+          "name": "--combobox-chip-remove-hover-fg",
+          "value": "var(--neutral-50)",
+          "fieldType": "color-ref",
+          "occurrence": 1,
+          "scope": "dark/combobox-chip-remove"
         }
       ]
     },
