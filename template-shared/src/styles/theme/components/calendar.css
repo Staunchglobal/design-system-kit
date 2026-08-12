@@ -97,6 +97,12 @@
 }
 [data-slot='calendar'] [data-slot='button'][data-selected-single='true'],
 [data-slot='calendar'] [data-slot='button'][data-range-start='true'],
+[data-slot='calendar'] [data-slot='button'][data-range-end='true'],
+[data-slot='calendar'] [data-slot='button'][data-range-middle='true'] {
+  border-radius: var(--calendar-cell-radius) !important;
+}
+[data-slot='calendar'] [data-slot='button'][data-selected-single='true'],
+[data-slot='calendar'] [data-slot='button'][data-range-start='true'],
 [data-slot='calendar'] [data-slot='button'][data-range-end='true'] {
   --calendar-selected-bg: var(--primary-500);
   --calendar-selected-fg: var(--primary-foreground);
@@ -104,7 +110,6 @@
   background-color: var(--calendar-selected-bg) !important;
   color: var(--calendar-selected-fg) !important;
   font-weight: var(--calendar-selected-font-weight) !important;
-  border-radius: var(--calendar-cell-radius) !important;
 }
 
 [data-slot='calendar'] [data-slot='button'][data-range-middle='true'] {
@@ -112,7 +117,6 @@
   --calendar-range-middle-fg: var(--foreground);
   background-color: var(--calendar-range-middle-bg) !important;
   color: var(--calendar-range-middle-fg) !important;
-  border-radius: 0 !important;
 }
 [data-slot='calendar'] .rdp-range_start,
 [data-slot='calendar'] .rdp-range_end {
