@@ -43,6 +43,7 @@
   padding-inline: var(--dropdown-menu-item-padding-x);
   padding-block: var(--dropdown-menu-item-padding-y);
   font-size: var(--dropdown-menu-item-font-size);
+  cursor: pointer;
 }
 [data-slot='dropdown-menu-item']:focus,
 [data-slot='dropdown-menu-checkbox-item']:focus,
