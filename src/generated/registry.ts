@@ -386,7 +386,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": "checkbox.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "collapsible": {
@@ -408,7 +408,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "@base-ui/react"
     ],
-    "cssFile": "combobox.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "command": {
@@ -440,7 +440,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": "copy-input.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "count-badge": {
@@ -695,7 +695,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "class-variance-authority"
     ],
-    "cssFile": "field.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "filter-chips": {
@@ -774,13 +774,13 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "class-variance-authority",
       "lucide-react"
     ],
-    "cssFile": "input-group.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "input-otp": {
     "uiDeps": [],
     "npmDeps": [],
-    "cssFile": "input-otp.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "input": {
@@ -790,7 +790,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": "input.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "item": {
@@ -821,7 +821,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": "label.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "marker": {
@@ -863,7 +863,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
   "native-select": {
     "uiDeps": [],
     "npmDeps": [],
-    "cssFile": "native-select.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "navigation-menu": {
@@ -1006,7 +1006,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": "radio-group.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "rating": {
@@ -1071,7 +1071,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": "select.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "separator": {
@@ -1124,7 +1124,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": "slider.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "sonner": {
@@ -1213,7 +1213,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": "switch.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "table": {
@@ -1240,13 +1240,13 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": "tag-input.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "textarea": {
     "uiDeps": [],
     "npmDeps": [],
-    "cssFile": "textarea.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "time-range-picker": {
