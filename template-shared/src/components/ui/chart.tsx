@@ -63,7 +63,7 @@ function ChartContainer({
         data-slot="chart"
         data-chart={chartId}
         className={cn(
-          "[&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border flex aspect-video justify-center text-xs [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-hidden [&_.recharts-sector]:outline-hidden [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-surface]:outline-hidden",
+          "[&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border flex aspect-video justify-center text-sm [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-hidden [&_.recharts-sector]:outline-hidden [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-surface]:outline-hidden",
           className
         )}
         {...props}
@@ -173,7 +173,7 @@ function ChartTooltipContent({
   return (
     <div
       className={cn(
-        'border-border/50 bg-background grid min-w-32 items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl',
+        'border-neutral-200 dark:border-neutral-0 bg-background grid min-w-32 items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-(--shadow-xl)',
         className
       )}
     >
@@ -258,7 +258,13 @@ function ChartLegendContent({
   className,
   hideIcon = false,
   payload,
-  verticalAlign = 'bottom',
+  // Recharts still needs this to position the legend wrapper, but chart.css's
+  // `.recharts-legend-wrapper > div` rule (a class + attribute selector, so it
+  // out-specifies a single Tailwind utility) forces symmetric padding-block
+  // regardless of alignment — the old top/bottom-only padding never actually
+  // took visual effect, so it's reproduced here as the always-on `py-3` it
+  // really renders as, not the asymmetric split the props implied.
+  verticalAlign: _verticalAlign = 'bottom',
   nameKey,
 }: React.ComponentProps<'div'> & {
   hideIcon?: boolean
@@ -271,13 +277,7 @@ function ChartLegendContent({
   }
 
   return (
-    <div
-      className={cn(
-        'flex items-center justify-center gap-4',
-        verticalAlign === 'top' ? 'pb-3' : 'pt-3',
-        className
-      )}
-    >
+    <div className={cn('flex items-center justify-center gap-4 py-3', className)}>
       {payload
         .filter((item) => item.type !== 'none')
         .map((item, index) => {

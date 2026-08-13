@@ -5,12 +5,6 @@
 @import './tokens/fonts.css';
 @import './tokens/typography.css';
 @import './tokens/typography-patterns.css';
-@import './components/navigation-menu.css';
-@import './components/carousel.css';
-@import './components/chart.css';
-@import './components/calendar.css';
-@import './components/empty.css';
-@import './components/item.css';
 @import './components/alert.css';
 @import './components/progress.css';
 @import './components/skeleton.css';
@@ -23,7 +17,5 @@
 @import './components/message-scroller.css';
 @import './components/attachment.css';
 @import './components/marker.css';
-@import './components/error-state.css';
 @import './components/stepper.css';
 @import './components/impersonation-banner.css';
-@import './components/pdf-document-kit.css';

@@ -104,6 +104,14 @@ const NO_CSS = new Set([
   'count-badge',
   'sortable-list',
   'crud-table',
+  'navigation-menu',
+  'carousel',
+  'chart',
+  'calendar',
+  'empty',
+  'error-state',
+  'item',
+  'pdf-document-kit',
 ])
 const EXTRA_FILES = {
   sidebar: ['hooks/use-mobile.ts'],

@@ -283,7 +283,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "react-day-picker"
     ],
-    "cssFile": "calendar.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "card": {
@@ -303,7 +303,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "embla-carousel-react"
     ],
-    "cssFile": "carousel.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "chart": {
@@ -311,7 +311,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "recharts"
     ],
-    "cssFile": "chart.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "chat": {
@@ -627,7 +627,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "class-variance-authority",
       "lucide-react"
     ],
-    "cssFile": "empty.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "error-state": {
@@ -638,7 +638,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": "error-state.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "feature-flags-admin": {
@@ -804,7 +804,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": "item.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "kbd": {
@@ -872,7 +872,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "class-variance-authority",
       "radix-ui"
     ],
-    "cssFile": "navigation-menu.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "notification-center": {
@@ -963,7 +963,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "@react-pdf/renderer"
     ],
-    "cssFile": "pdf-document-kit.css",
+    "cssFile": null,
     "extraFiles": [
       "components/pdf/pdf-document-shell.tsx",
       "components/pdf/pdf-tag.tsx",
