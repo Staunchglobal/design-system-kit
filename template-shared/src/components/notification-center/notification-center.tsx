@@ -87,7 +87,11 @@ function NotificationCenter({
           align="end"
           sideOffset={8}
           data-ui="notification-center-content"
-          className={cn('p-0', panelWidth, panelClassName)}
+          className={cn(
+            'max-h-[32rem] max-w-[min(24rem,calc(100vw-2rem))] overflow-hidden p-0',
+            panelWidth,
+            panelClassName
+          )}
         >
         <div
           data-slot="notification-center-header"

@@ -73,6 +73,24 @@ const NO_CSS = new Set([
   'stripe-payment-method',
   'google-sign-in-button',
   'rich-text-editor',
+  'dialog',
+  'alert-dialog',
+  'sheet',
+  'drawer',
+  'popover',
+  'hover-card',
+  'tooltip',
+  'context-menu',
+  'menubar',
+  'command',
+  'notification-center',
+  // 'dropdown-menu' is NOT here yet — its .css file is still on disk and still
+  // imported. dropdown-menu.tsx's own Tailwind classes are already fixed/correct,
+  // but crud-screen.css (batch 4, not yet migrated) reads dropdown-menu.css's
+  // custom properties (--dropdown-menu-item-gap etc.) via CSS variable
+  // inheritance, so deleting the file now would silently break crud-screen's
+  // still-css-driven styling. Add 'dropdown-menu' here and delete its .css only
+  // once crud-screen itself is migrated (or given its own literal values).
 ])
 const EXTRA_FILES = {
   sidebar: ['hooks/use-mobile.ts'],

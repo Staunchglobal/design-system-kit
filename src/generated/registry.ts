@@ -71,7 +71,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": "alert-dialog.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "alert": {
@@ -421,7 +421,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "cmdk",
       "lucide-react"
     ],
-    "cssFile": "command.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "context-menu": {
@@ -430,7 +430,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": "context-menu.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "copy-input": {
@@ -565,7 +565,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": "dialog.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "direction": {
@@ -586,7 +586,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "vaul"
     ],
-    "cssFile": "drawer.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "dropdown-menu": {
@@ -742,7 +742,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": "hover-card.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "impersonation-banner": {
@@ -839,7 +839,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": "menubar.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "message-scroller": {
@@ -891,7 +891,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "@rails/actioncable",
       "@types/rails__actioncable"
     ],
-    "cssFile": "notification-center.css",
+    "cssFile": null,
     "extraFiles": [
       "components/notification-center/notification-list.tsx",
       "components/notification-center/notification-center.tsx",
@@ -988,7 +988,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": "popover.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "progress": {
@@ -1091,7 +1091,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": "sheet.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "sidebar": {
@@ -1295,7 +1295,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": "tooltip.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "truncate": {

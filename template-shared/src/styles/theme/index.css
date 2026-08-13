@@ -5,17 +5,7 @@
 @import './tokens/fonts.css';
 @import './tokens/typography.css';
 @import './tokens/typography-patterns.css';
-@import './components/dialog.css';
-@import './components/alert-dialog.css';
-@import './components/sheet.css';
-@import './components/drawer.css';
-@import './components/popover.css';
-@import './components/hover-card.css';
-@import './components/tooltip.css';
 @import './components/dropdown-menu.css';
-@import './components/context-menu.css';
-@import './components/menubar.css';
-@import './components/command.css';
 @import './components/table.css';
 @import './components/card.css';
 @import './components/avatar.css';
@@ -55,6 +45,5 @@
 @import './components/impersonation-banner.css';
 @import './components/count-badge.css';
 @import './components/crud-screen.css';
-@import './components/notification-center.css';
 @import './components/sortable-list.css';
 @import './components/pdf-document-kit.css';
