@@ -20,7 +20,7 @@ const NPM_PACKAGES = [
   'tw-animate-css',
 ]
 
-const CSS_FILE_OVERRIDES = { sonner: 'sonner-toast.css' }
+const CSS_FILE_OVERRIDES = {}
 const NO_CSS = new Set([
   'direction',
   'auth',
@@ -112,6 +112,12 @@ const NO_CSS = new Set([
   'error-state',
   'item',
   'pdf-document-kit',
+  'alert',
+  'progress',
+  'stepper',
+  'skeleton',
+  'sonner',
+  'impersonation-banner',
 ])
 const EXTRA_FILES = {
   sidebar: ['hooks/use-mobile.ts'],

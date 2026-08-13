@@ -5,10 +5,6 @@
 @import './tokens/fonts.css';
 @import './tokens/typography.css';
 @import './tokens/typography-patterns.css';
-@import './components/alert.css';
-@import './components/progress.css';
-@import './components/skeleton.css';
-@import './components/sonner-toast.css';
 @import './components/sidebar.css';
 @import './components/resizable.css';
 @import './components/scroll-area.css';
@@ -17,5 +13,3 @@
 @import './components/message-scroller.css';
 @import './components/attachment.css';
 @import './components/marker.css';
-@import './components/stepper.css';
-@import './components/impersonation-banner.css';

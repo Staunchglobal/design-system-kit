@@ -29,7 +29,7 @@ function ImpersonationBanner({
       role="alert"
       aria-live="polite"
       className={cn(
-        'sticky top-0 z-50 flex w-full items-center gap-2.5 border-b border-warning-300/40 bg-warning-50 px-4 py-2.5 text-sm text-warning-900 dark:border-warning-700/40 dark:bg-warning-950/60 dark:text-warning-200',
+        'sticky top-0 z-50 flex w-full items-center gap-2.5 border-b border-warning-700 bg-warning-50 px-4 py-2.5 text-sm text-warning-900 dark:bg-warning-950 dark:text-warning-200',
         className
       )}
     >

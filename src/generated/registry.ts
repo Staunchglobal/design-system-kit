@@ -82,7 +82,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "class-variance-authority",
       "lucide-react"
     ],
-    "cssFile": "alert.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "aspect-ratio": {
@@ -752,7 +752,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": "impersonation-banner.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "info-row": {
@@ -996,7 +996,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": "progress.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "radio-group": {
@@ -1116,7 +1116,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
   "skeleton": {
     "uiDeps": [],
     "npmDeps": [],
-    "cssFile": "skeleton.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "slider": {
@@ -1134,7 +1134,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "sonner"
     ],
-    "cssFile": "sonner-toast.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "sortable-list": {
@@ -1183,7 +1183,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": "stepper.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "stripe-payment-method": {

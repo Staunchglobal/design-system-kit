@@ -108,9 +108,9 @@ describe('demoFilesFor', () => {
 
 describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
   it('cssFilesFor only returns files for components that actually declare one', () => {
-    const closure = resolveUiClosure(['alert', 'direction'])
+    const closure = resolveUiClosure(['sidebar', 'direction'])
     const files = cssFilesFor(closure)
-    expect(files.has('alert.css')).toBe(true)
+    expect(files.has('sidebar.css')).toBe(true)
     expect(COMPONENTS.direction.cssFile).toBeNull()
   })
 

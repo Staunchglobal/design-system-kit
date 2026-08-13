@@ -77,7 +77,7 @@ function StepperItem({
             data-slot="stepper-connector"
             aria-hidden
             className={cn(
-              'bg-border',
+              'bg-neutral-200 dark:bg-neutral-700',
               vertical
                 ? 'mt-2 h-8 w-px'
                 :
