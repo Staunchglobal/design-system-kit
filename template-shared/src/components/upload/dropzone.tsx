@@ -124,9 +124,9 @@ function Dropzone({
         onClick={handleZoneClick}
         onKeyDown={handleZoneKeyDown}
         className={cn(
-          'border-dashed py-8 transition-colors',
+          'border-dashed py-8 transition-colors focus-visible:border-ring focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50',
           !disabled && 'cursor-pointer',
-          isDragging && 'border-primary bg-primary/5',
+          isDragging && 'border-primary bg-muted',
           disabled && 'pointer-events-none opacity-50'
         )}
       >

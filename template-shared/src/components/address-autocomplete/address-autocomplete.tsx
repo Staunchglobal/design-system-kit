@@ -120,7 +120,7 @@ function AddressAutocomplete({
       {open && (visiblePredictions.length > 0 || visibleLoading || visibleError) ? (
         <div
           data-slot="address-autocomplete-list"
-          className="bg-popover text-popover-foreground ring-foreground/10 absolute z-50 mt-1 w-full overflow-hidden rounded-lg shadow-md ring-1"
+          className="bg-popover text-popover-foreground ring-neutral-950 absolute z-50 mt-1 w-full overflow-hidden rounded-lg shadow-(--shadow-md) ring-1 dark:ring-neutral-50"
         >
           {visibleLoading ? (
             <p className="text-muted-foreground px-3 py-2 text-sm">Searching…</p>

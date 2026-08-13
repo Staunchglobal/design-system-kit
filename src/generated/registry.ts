@@ -56,7 +56,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "item"
     ],
     "npmDeps": [],
-    "cssFile": "address-autocomplete.css",
+    "cssFile": null,
     "extraFiles": [
       "components/crud/use-debounced-value.ts",
       "components/address-autocomplete/google-places-client.ts",
@@ -229,7 +229,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": "brand-color-picker.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "breadcrumb": {
@@ -501,7 +501,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "date-fns",
       "lucide-react"
     ],
-    "cssFile": "date-picker.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "delivery-logs": {
@@ -611,7 +611,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "lucide-react",
       "react-image-crop"
     ],
-    "cssFile": "dropzone.css",
+    "cssFile": null,
     "extraFiles": [
       "components/upload/use-file-drop.ts",
       "components/upload/file-preview-card.tsx",
@@ -706,7 +706,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": "filter-chips.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "filter-popover": {
@@ -720,7 +720,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": "filter-popover.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "google-sign-in-button": {
@@ -730,7 +730,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "@react-oauth/google"
     ],
-    "cssFile": "google-sign-in-button.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "hover-card": {
@@ -934,7 +934,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": "password-strength-meter.css",
+    "cssFile": null,
     "extraFiles": [
       "components/auth/password-policy.ts",
       "components/auth/password-input.tsx"
@@ -949,7 +949,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": "payment-method-list.css",
+    "cssFile": null,
     "extraFiles": [
       "components/payment-methods/card-brand-icon.tsx",
       "components/payment-methods/payment-method-card.tsx",
@@ -976,7 +976,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "input"
     ],
     "npmDeps": [],
-    "cssFile": "phone-input.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "popover": {
@@ -1012,7 +1012,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
   "rating": {
     "uiDeps": [],
     "npmDeps": [],
-    "cssFile": "rating.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "resizable": {
@@ -1036,7 +1036,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "@tiptap/starter-kit",
       "lucide-react"
     ],
-    "cssFile": "rich-text-editor.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "scroll-area": {
@@ -1063,7 +1063,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radio-group"
     ],
     "npmDeps": [],
-    "cssFile": "segmented-radio-group.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "select": {
@@ -1175,7 +1175,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": "stepper-input.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "stepper": {
@@ -1199,7 +1199,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "@stripe/react-stripe-js",
       "@stripe/stripe-js"
     ],
-    "cssFile": "stripe-payment-method.css",
+    "cssFile": null,
     "extraFiles": [
       "components/stripe/stripe-elements-provider.tsx",
       "components/stripe/payment-method-form.tsx",
@@ -1258,7 +1258,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": "time-range-picker.css",
+    "cssFile": null,
     "extraFiles": [
       "components/time-range-picker/generate-time-options.ts",
       "components/time-range-picker/validate-ranges.ts",
