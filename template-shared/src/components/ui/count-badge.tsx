@@ -21,7 +21,10 @@ function CountBadge({ count, max = 99, size = 'default', className }: CountBadge
       data-slot="count-badge"
       data-size={size}
       aria-label={ariaLabel}
-      className={cn('tabular-nums', className)}
+      className={cn(
+        "bg-primary text-primary-foreground rounded-full! box-border inline-flex h-6 min-w-[1.875rem] items-center justify-center px-2 py-0 text-xs leading-none font-medium whitespace-nowrap pointer-events-none tabular-nums data-[size=overlay]:h-[1.125rem] data-[size=overlay]:min-w-[1.125rem] data-[size=overlay]:px-1 data-[size=overlay]:text-[0.625rem]",
+        className
+      )}
     >
       <span aria-hidden="true">{displayed}</span>
     </span>

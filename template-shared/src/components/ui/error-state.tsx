@@ -32,7 +32,7 @@ function ErrorState({
   return (
     <Empty data-slot="error-state" className={cn('border border-dashed', className)}>
       <EmptyHeader>
-        <EmptyMedia variant="icon" className="bg-destructive/10 text-destructive">
+        <EmptyMedia variant="icon" className="bg-destructive-100 text-destructive">
           {icon ?? <CircleAlert />}
         </EmptyMedia>
         <EmptyTitle>{title}</EmptyTitle>

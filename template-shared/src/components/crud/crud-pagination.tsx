@@ -68,7 +68,13 @@ export function CrudPagination({
   const pages = pageItems(page, pageCount)
 
   return (
-    <div data-slot="crud-pagination" className={cn(className)}>
+    <div
+      data-slot="crud-pagination"
+      className={cn(
+        'flex w-full min-h-13 flex-wrap items-center justify-between gap-3 border-t border-border bg-neutral-0 px-4 py-3 text-sm max-md:flex-col max-md:items-stretch dark:border-neutral-800 dark:bg-neutral-950',
+        className
+      )}
+    >
       <div className="flex flex-wrap items-center gap-3">
         {pageSize != null && pageSizeOptions?.length && onPageSizeChange ? (
           <div className="flex items-center gap-1.5">
@@ -99,7 +105,7 @@ export function CrudPagination({
       </div>
 
       {pageCount > 1 ? (
-        <Pagination>
+        <Pagination className="max-md:justify-center">
           <PaginationContent>
             <PaginationItem>
               <PaginationLink

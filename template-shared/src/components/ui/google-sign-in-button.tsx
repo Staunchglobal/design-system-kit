@@ -80,7 +80,7 @@ function GoogleSignInButton({
     <div
       ref={containerRef}
       data-slot="google-sign-in-button"
-      className={cn('relative isolate w-full', className)}
+      className={cn('relative isolate w-full overflow-hidden rounded-lg', className)}
     >
       <Button type="button" variant="outline" className="w-full gap-2" aria-hidden tabIndex={-1}>
         <GoogleIcon className="size-4" />

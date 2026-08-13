@@ -66,8 +66,8 @@ function SegmentedRadioGroup<T extends string>({
             data-disabled={optionDisabled ? '' : undefined}
             htmlFor={`${baseId}-${option.value}`}
             className={cn(
-              'border-border hover:bg-muted/50 flex w-full cursor-pointer items-start gap-3 rounded-lg border px-3 py-2.5 text-sm transition-colors',
-              isSelected && 'border-primary bg-primary/5',
+              'border-border bg-card hover:bg-muted/50 flex w-full cursor-pointer items-start gap-3 rounded-lg border px-3 py-2.5 text-sm transition-colors',
+              isSelected && 'border-primary bg-primary-50',
               optionDisabled && 'pointer-events-none cursor-not-allowed opacity-50'
             )}
           >

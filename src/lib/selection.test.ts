@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest'
 import { COMPONENTS, GROUPS } from '../generated/registry.js'
 import {
   allComponentSlugs,
-  cssFilesFor,
   demoFilesFor,
   extraFilesFor,
   navGroupsFor,
@@ -106,14 +105,7 @@ describe('demoFilesFor', () => {
   })
 })
 
-describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
-  it('cssFilesFor only returns files for components that actually declare one', () => {
-    const closure = resolveUiClosure(['button', 'direction'])
-    const files = cssFilesFor(closure)
-    expect(files.has('button.css')).toBe(true)
-    expect(COMPONENTS.direction.cssFile).toBeNull()
-  })
-
+describe('extraFilesFor / npmDepsFor', () => {
   it('extraFilesFor surfaces sidebar\'s use-mobile hook', () => {
     const files = extraFilesFor(resolveUiClosure(['sidebar']))
     expect(files.has('hooks/use-mobile.ts')).toBe(true)
@@ -133,7 +125,6 @@ describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
     expect(COMPONENTS['crud-table'].uiDeps).toEqual(
       expect.arrayContaining(['dialog', 'alert-dialog', 'field', 'table', 'button', 'pagination'])
     )
-    expect(COMPONENTS['crud-table'].cssFile).toBe('crud-screen.css')
   })
 
   it('extraFilesFor surfaces auth companions', () => {
@@ -156,12 +147,10 @@ describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
     expect(COMPONENTS.auth.uiDeps).toEqual(
       expect.arrayContaining(['field', 'input', 'button', 'checkbox', 'alert', 'sonner', 'spinner'])
     )
-    expect(COMPONENTS.auth.cssFile).toBeNull()
     expect(COMPONENTS.auth.npmDeps).toEqual(expect.arrayContaining(['sonner', 'lucide-react']))
   })
 
   it('chat uiDeps include message/bubble/sonner from EXTRA_FILES scan', () => {
-    expect(COMPONENTS.chat.cssFile).toBeNull()
     expect(COMPONENTS.chat.uiDeps).toEqual(
       expect.arrayContaining([
         'sonner',

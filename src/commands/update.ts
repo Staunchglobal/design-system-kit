@@ -9,7 +9,6 @@ import { templateSharedDir, templateNextDir, templateViteDir } from '../lib/path
 import { fetchTemplateText, mapWithConcurrency, remoteUrl } from '../lib/remote.js'
 import { ALWAYS_SHARED_FILES, ALWAYS_NEXT_FILES, ALWAYS_VITE_FILES, frameworkExtraFilesFor } from '../lib/managed-files.js'
 import {
-  cssFilesFor,
   demoFilesFor,
   extraFilesFor,
   navGroupsFor,
@@ -25,6 +24,7 @@ type Managed = { relPath: string; templateSrc: string }
 type Pending = Managed & { newContent: string }
 
 const TOKEN_FILES = [
+  'styles/theme/index.css',
   'styles/theme/tokens/color-scales.css',
   'styles/theme/tokens/colors.css',
   'styles/theme/tokens/shadows.css',
@@ -79,7 +79,6 @@ export async function update(options: UpdateOptions) {
 
   const navGroups = navGroupsFor(userClosure)
   const uiFiles = [...userClosure].filter((s) => s !== 'patterns').map((s) => `components/ui/${s}.tsx`)
-  const cssFiles = [...cssFilesFor(userClosure)].map((f) => `styles/theme/components/${f}`)
   const extraFilesList = [...extraFilesFor(userClosure)]
   const sectionFiles = demoFilesFor(navGroups).map((f) => `${sectionsRel}/${f}`)
   const frameworkExtraFiles = frameworkExtraFilesFor(
@@ -95,7 +94,6 @@ export async function update(options: UpdateOptions) {
   const managed: Managed[] = [
     ...ALWAYS_SHARED_FILES.map((f) => ({ relPath: f, templateSrc: remoteUrl(sharedSrc, f) })),
     ...uiFiles.map((f) => ({ relPath: f, templateSrc: remoteUrl(sharedSrc, f) })),
-    ...cssFiles.map((f) => ({ relPath: f, templateSrc: remoteUrl(sharedSrc, f) })),
     ...extraFilesList.map((f) => ({ relPath: f, templateSrc: remoteUrl(sharedSrc, f) })),
     ...TOKEN_FILES.map((f) => ({ relPath: f, templateSrc: remoteUrl(sharedSrc, f) })),
     ...alwaysFixed.map((f) => ({ relPath: f, templateSrc: remoteUrl(frameworkSrc, f) })),
@@ -210,7 +208,6 @@ export async function update(options: UpdateOptions) {
     destRoot,
     framework: project.framework,
     navGroups,
-    cssFiles: [...cssFilesFor(userClosure)],
     closure: userClosure,
   })
 

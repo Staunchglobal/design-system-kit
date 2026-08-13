@@ -12,20 +12,19 @@ edit every line) rather than shipping a compiled component library from `node_mo
 ## What you get
 
 - **95 shadcn/ui-based components** (`src/components/ui/*.tsx`) — Radix-based, already wired to the theme
-  system (every component reads its colors/spacing/typography from CSS custom properties, not
-  hardcoded Tailwind values). The catalog includes advanced building blocks such as sortable
-  lists, rich-text editing, address autocomplete, uploads/image cropping, payment methods,
-  Stripe Elements, OAuth sign-in, notifications, and PDF documents.
+  system (every component's Tailwind classes reference the design tokens directly — no separate
+  per-component CSS file to keep in sync). The catalog includes advanced building blocks such as
+  sortable lists, rich-text editing, address autocomplete, uploads/image cropping, payment
+  methods, Stripe Elements, OAuth sign-in, notifications, and PDF documents.
 - **A token-driven theme system** (`src/styles/theme/`) — global tokens (colors, radius, fonts,
-  typography, shadows, and semantic Success/Warning/Info families) plus one CSS file per
-  component, editable by hand. Manrope is the default sans/heading family and Geist Mono is used
-  for code.
+  typography, shadows, and semantic Success/Warning/Info families) that every component's Tailwind
+  classes read from. Manrope is the default sans/heading family and Geist Mono is used for code.
 - **`/design-system`** — every installed component rendered in every variant/size/state, for visual
   QA.
 - **Pick only the components you want.** `init` prompts you with a searchable component picker
-  (type to filter by name or category, Space to toggle); only the npm packages, `.tsx` files, and
-  CSS those components need are installed. Re-run `init` any time to add more — it never deletes
-  or overwrites your own edits.
+  (type to filter by name or category, Space to toggle); only the npm packages and `.tsx` files
+  those components need are installed. Re-run `init` any time to add more — it never deletes or
+  overwrites your own edits.
 
 ## Requirements
 
@@ -326,7 +325,7 @@ npx staunch-shadcn-design-system-kit init --components crud-table
 npx staunch-shadcn-design-system-kit remove calendar,chart
 ```
 
-Deletes that component's `ui/*.tsx`, theme CSS, and design-system demo file — but only if nothing
+Deletes that component's `ui/*.tsx` and design-system demo file — but only if nothing
 else you've kept still needs it (e.g. `remove button` while `combobox` is still installed just
 prints "kept — still required by: combobox" and leaves it alone). Prints the exact file list and
 asks for confirmation before deleting anything (skip with `-y`/`--yes`), since these are your

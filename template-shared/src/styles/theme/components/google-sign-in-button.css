@@ -1,5 +1,0 @@
-[data-slot='google-sign-in-button'] {
-  --google-sign-in-radius: var(--radius-lg);
-  border-radius: var(--google-sign-in-radius);
-  overflow: hidden;
-}

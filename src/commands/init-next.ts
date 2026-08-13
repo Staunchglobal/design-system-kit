@@ -22,7 +22,6 @@ import { confirm } from '../lib/confirm.js'
 import { templateSharedDir, templateNextDir, templateRootDir } from '../lib/paths.js'
 import { pickComponents, priorSelectionFor } from '../lib/prompt-components.js'
 import {
-  cssFilesFor,
   demoFilesFor,
   extraFilesFor,
   navGroupsFor,
@@ -123,7 +122,6 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
 
   log.title('Files')
   const uiFiles = [...userClosure].filter((s) => s !== 'patterns').map((s) => `components/ui/${s}.tsx`)
-  const cssFiles = [...cssFilesFor(userClosure)].map((f) => `styles/theme/components/${f}`)
   const extraFiles = [...extraFilesFor(userClosure)]
   const navGroups = navGroupsFor(userClosure)
   const sectionFiles = demoFilesFor(navGroups).map((f) => `app/design-system/_sections/${f}`)
@@ -137,7 +135,6 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
       categories: [
         { label: 'Shared fixed files', baseDir: sharedSrc, relPaths: ALWAYS_SHARED_FILES },
         { label: 'UI components', baseDir: sharedSrc, relPaths: uiFiles },
-        { label: 'Theme CSS', baseDir: sharedSrc, relPaths: cssFiles },
         { label: 'Extra files', baseDir: sharedSrc, relPaths: extraFiles },
         { label: 'Next.js fixed files', baseDir: nextSrc, relPaths: ALWAYS_NEXT_FILES },
         { label: 'Design-system demo files', baseDir: nextSrc, relPaths: sectionFiles },
@@ -151,12 +148,12 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
   const dryRun = !!options.dryRun
   const sharedFixed = await copySelectedFiles(sharedSrc, destRoot, ALWAYS_SHARED_FILES, dryRun)
   const sharedUi = await copySelectedFiles(sharedSrc, destRoot, uiFiles, dryRun)
-  const sharedCss = await copySelectedFiles(sharedSrc, destRoot, cssFiles, dryRun)
   const sharedExtra = await copySelectedFiles(sharedSrc, destRoot, extraFiles, dryRun)
   const sharedTokens = await copySelectedFiles(
     sharedSrc,
     destRoot,
     [
+      'styles/theme/index.css',
       'styles/theme/tokens/color-scales.css',
       'styles/theme/tokens/colors.css',
       'styles/theme/tokens/shadows.css',
@@ -174,7 +171,6 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
   const copied = [
     sharedFixed,
     sharedUi,
-    sharedCss,
     sharedExtra,
     sharedTokens,
     nextFixed,
@@ -184,7 +180,6 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
   const skipped = [
     sharedFixed,
     sharedUi,
-    sharedCss,
     sharedExtra,
     sharedTokens,
     nextFixed,
@@ -198,7 +193,6 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
     recordFileHashes(root, [
       ...hashEntriesFor(sharedFixed),
       ...hashEntriesFor(sharedUi),
-      ...hashEntriesFor(sharedCss),
       ...hashEntriesFor(sharedExtra),
       ...hashEntriesFor(sharedTokens),
       ...hashEntriesFor(nextFixed),
@@ -223,7 +217,6 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
     destRoot,
     framework: 'next',
     navGroups,
-    cssFiles: [...cssFilesFor(userClosure)],
     closure: userClosure,
     dryRun,
   })

@@ -44,7 +44,7 @@ function FilePreviewCard({ file, onRemove, onReplace, error, className }: FilePr
       variant="outline"
       size="sm"
       className={cn(
-        'flex-nowrap',
+        'flex-nowrap gap-2.5 rounded-lg border-border px-3 py-2.5',
         error && 'border-destructive/50',
         className
       )}

@@ -46,9 +46,15 @@ export function CrudToolbar({
   if (!showTabs && !showSearchRow) return null
 
   return (
-    <div data-slot="crud-toolbar" className={cn(className)}>
+    <div
+      data-slot="crud-toolbar"
+      className={cn(
+        'flex flex-col gap-3 border-b border-border bg-neutral-50 px-3 py-3 dark:border-neutral-800 dark:bg-neutral-900',
+        className
+      )}
+    >
       {showTabs ? (
-        <div data-slot="crud-toolbar-tabs">
+        <div data-slot="crud-toolbar-tabs" className="flex w-full flex-wrap [&_[data-slot=segmented-control]]:w-fit [&_[data-slot=segmented-control]]:max-w-full max-md:[&_[data-slot=segmented-control]]:w-full">
           <SegmentedControl
             ariaLabel="Filter list"
             value={activeTab ?? tabs![0]!.value}
@@ -63,11 +69,21 @@ export function CrudToolbar({
       ) : null}
 
       {showSearchRow ? (
-        <div data-slot="crud-toolbar-filters">
-          <div data-slot="crud-toolbar-row">
+        <div data-slot="crud-toolbar-filters" className="contents">
+          <div
+            data-slot="crud-toolbar-row"
+            className="flex w-full flex-wrap items-center justify-between gap-3"
+          >
             {showSearch && onSearchChange ? (
-              <div data-slot="crud-search">
-                <Search data-ui="crud-search-icon" aria-hidden />
+              <div
+                data-slot="crud-search"
+                className="relative w-full max-w-[248px] min-w-[200px] shrink-0 flex-none max-md:max-w-none max-md:min-w-0 max-md:flex-[1_1_100%]"
+              >
+                <Search
+                  data-ui="crud-search-icon"
+                  aria-hidden
+                  className="text-muted-600 pointer-events-none absolute top-1/2 left-2.5 z-1 size-4 -translate-y-1/2"
+                />
                 <input
                   data-ui="crud-search-input"
                   type="search"
@@ -76,9 +92,14 @@ export function CrudToolbar({
                   placeholder={searchPlaceholder}
                   aria-label={searchPlaceholder}
                   autoComplete="off"
+                  className="text-foreground border-muted-400 placeholder:text-muted-400 box-border block h-[34px] min-h-[34px] w-full min-w-[200px] appearance-none rounded-lg border py-2.5 ps-8 pe-8 text-xs leading-3 outline-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none max-md:min-w-0 dark:border-neutral-700 dark:bg-neutral-950"
                 />
                 {isSearchPending ? (
-                  <span data-ui="crud-search-pending" aria-hidden>
+                  <span
+                    data-ui="crud-search-pending"
+                    aria-hidden
+                    className="text-muted-600 absolute top-1/2 right-2.5 z-1 inline-flex size-4 -translate-y-1/2 cursor-default items-center justify-center"
+                  >
                     <Spinner className="size-3.5" />
                   </span>
                 ) : search ? (
@@ -87,6 +108,7 @@ export function CrudToolbar({
                     data-ui="crud-search-clear"
                     aria-label="Clear search"
                     onClick={() => onSearchChange('')}
+                    className="text-muted-600 absolute top-1/2 right-2.5 z-1 inline-flex size-4 -translate-y-1/2 cursor-pointer items-center justify-center border-0 bg-transparent p-0 [&>svg]:size-3.5"
                   >
                     <X />
                   </button>
@@ -96,7 +118,7 @@ export function CrudToolbar({
               <div className="flex-1" />
             )}
 
-            <div data-slot="crud-toolbar-actions">
+            <div data-slot="crud-toolbar-actions" className="flex flex-wrap items-center justify-end gap-2 max-md:w-full max-md:justify-stretch max-md:[&>*]:flex-1">
               {toolbar}
               {onAdd ? (
                 <Button type="button" size="sm" onClick={onAdd}>

@@ -59,7 +59,7 @@ function FieldRow({
       )}
     >
       <div data-slot="field-row-content" className="flex flex-1 flex-col gap-0.5 min-w-0">
-        <div data-slot="field-row-label" className="font-medium leading-snug">
+        <div data-slot="field-row-label" className="text-muted-foreground font-medium leading-snug">
           {label}
         </div>
         {description && (
@@ -77,7 +77,7 @@ function FieldRow({
           className="flex shrink-0 items-center gap-2 text-muted-foreground"
         >
           {value != null && (
-            <span data-slot="field-row-value" className="text-sm">
+            <span data-slot="field-row-value" className="text-foreground text-sm">
               {value}
             </span>
           )}

@@ -11,14 +11,14 @@ function Checkbox({ className, ...props }: React.ComponentProps<typeof CheckboxP
     <CheckboxPrimitive.Root
       data-slot="checkbox"
       className={cn(
-        'peer border-input focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 aria-invalid:aria-checked:border-primary dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 data-checked:border-primary data-checked:bg-primary data-checked:text-primary-foreground dark:data-checked:bg-primary relative flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-[4px] border transition-colors outline-none group-has-disabled/field:opacity-50 after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:ring-3 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-3',
+        'peer relative flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-sm border border-neutral-950/40 bg-neutral-0 text-primary-foreground transition-colors outline-none after:absolute after:-inset-x-3 after:-inset-y-2 group-has-disabled/field:opacity-50 data-checked:border-primary data-checked:bg-primary focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/35 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/35 aria-invalid:aria-checked:border-primary disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-0/40 dark:bg-neutral-900',
         className
       )}
       {...props}
     >
       <CheckboxPrimitive.Indicator
         data-slot="checkbox-indicator"
-        className="grid place-content-center text-current transition-none [&>svg]:size-3.5"
+        className="grid place-content-center text-current transition-none [&>svg]:size-3"
       >
         <AppIcon name="checkbox.check" />
       </CheckboxPrimitive.Indicator>

@@ -106,10 +106,15 @@ function NotificationList({
   }
 
   return (
-    <div data-slot="notification-list" className={cn(className)}>
+    <div data-slot="notification-list" className={cn('flex min-w-0 flex-col gap-2 p-2', className)}>
       {groups.map((group) => (
-        <div key={group.sortKey} data-slot="notification-group">
-          <div data-slot="notification-group-label">{group.label}</div>
+        <div key={group.sortKey} data-slot="notification-group" className="flex min-w-0 flex-col gap-2">
+          <div
+            data-slot="notification-group-label"
+            className="sticky top-0 z-1 bg-popover px-2 py-1.5 text-xs font-normal text-muted-foreground"
+          >
+            {group.label}
+          </div>
           {group.items.map((item) => (
             <NotificationRow
               key={item.id}

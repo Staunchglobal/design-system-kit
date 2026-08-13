@@ -6,7 +6,6 @@ import {
   generateDesignSystemPage,
   generateNavTs,
   generateRoutesTsx,
-  generateThemeIndexCss,
 } from './codegen.js'
 import { writeGeneratedFile } from './copy.js'
 import { log } from './log.js'
@@ -16,7 +15,6 @@ type RegenerateGeneratedFilesOptions = {
   destRoot: string
   framework: Framework
   navGroups: NavGroup[]
-  cssFiles: string[]
   closure: Set<string>
   dryRun?: boolean
 }
@@ -29,7 +27,6 @@ export function regenerateGeneratedFiles({
   destRoot,
   framework,
   navGroups,
-  cssFiles,
   closure,
   dryRun = false,
 }: RegenerateGeneratedFilesOptions): void {
@@ -52,11 +49,6 @@ export function regenerateGeneratedFiles({
     }),
     dryRun
   )
-  writeGeneratedFile(
-    path.join(destRoot, 'styles/theme/index.css'),
-    generateThemeIndexCss(cssFiles),
-    dryRun
-  )
 
   if (isNext) {
     writeGeneratedFile(
@@ -70,6 +62,6 @@ export function regenerateGeneratedFiles({
 
   log.success(
     `${dryRun ? 'Would regenerate' : 'Regenerated'} nav.ts, the design-system page, ` +
-      `theme/index.css, and ${isNext ? 'app/(app)/_nav.ts' : 'routes.tsx'}.`
+      `and ${isNext ? 'app/(app)/_nav.ts' : 'routes.tsx'}.`
   )
 }

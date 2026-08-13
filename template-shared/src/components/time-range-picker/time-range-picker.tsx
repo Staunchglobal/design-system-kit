@@ -194,7 +194,7 @@ function TimeRangePicker({
           <div
             key={day.day}
             data-slot="time-range-day"
-            className="flex flex-col gap-2 border-b pb-4 last:border-b-0 last:pb-0"
+            className="flex flex-col gap-2 border-b border-border pb-4 last:border-b-0 last:pb-0"
           >
             <div className="flex items-center justify-between gap-3">
               <label className="text-sm font-medium">{labels[day.day]}</label>

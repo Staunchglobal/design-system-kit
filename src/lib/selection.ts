@@ -58,12 +58,3 @@ export function extraFilesFor(closure: Set<string>): Set<string> {
   }
   return out
 }
-
-export function cssFilesFor(closure: Set<string>): Set<string> {
-  const out = new Set<string>()
-  for (const slug of closure) {
-    const cssFile = COMPONENTS[slug]?.cssFile
-    if (cssFile) out.add(cssFile)
-  }
-  return out
-}
