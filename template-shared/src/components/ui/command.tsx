@@ -58,10 +58,11 @@ function CommandDialog({
 
 function CommandInput({
   className,
+  wrapperClassName,
   ...props
-}: React.ComponentProps<typeof CommandPrimitive.Input>) {
+}: React.ComponentProps<typeof CommandPrimitive.Input> & { wrapperClassName?: string }) {
   return (
-    <div data-slot="command-input-wrapper" className="p-1 pb-0">
+    <div data-slot="command-input-wrapper" className={cn('p-1 pb-0', wrapperClassName)}>
       <InputGroup className="h-8! rounded-lg! border-transparent bg-input/30 shadow-none ring-0 focus-within:border-transparent focus-within:ring-0 has-[[data-slot=input]:focus-visible]:border-transparent has-[[data-slot=input]:focus-visible]:ring-0 *:data-[slot=input-group-addon]:pl-2!">
         <CommandPrimitive.Input
           data-slot="command-input"
@@ -113,7 +114,7 @@ function CommandGroup({
     <CommandPrimitive.Group
       data-slot="command-group"
       className={cn(
-        'text-foreground **:[[cmdk-group-heading]]:text-muted-foreground overflow-hidden p-1 **:[[cmdk-group-heading]]:px-2 **:[[cmdk-group-heading]]:py-1.5 **:[[cmdk-group-heading]]:text-xs **:[[cmdk-group-heading]]:font-medium',
+        'text-foreground **:[[cmdk-group-heading]]:text-muted-foreground overflow-hidden p-1 **:[[cmdk-group-heading]]:px-2 **:[[cmdk-group-heading]]:py-1.5 **:[[cmdk-group-heading]]:text-xs **:[[cmdk-group-heading]]:font-normal',
         className
       )}
       {...props}
@@ -162,7 +163,7 @@ function CommandShortcut({ className, ...props }: React.ComponentProps<'span'>) 
     <span
       data-slot="command-shortcut"
       className={cn(
-        'text-muted-foreground group-data-selected/command-item:text-foreground ml-auto text-xs tracking-widest',
+        'text-muted-foreground group-data-selected/command-item:text-foreground ml-auto text-[0.625rem] tracking-wider',
         className
       )}
       {...props}

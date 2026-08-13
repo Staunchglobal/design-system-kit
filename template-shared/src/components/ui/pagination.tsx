@@ -10,7 +10,7 @@ function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
       role="navigation"
       aria-label="pagination"
       data-slot="pagination"
-      className={cn('mx-auto flex w-full justify-center', className)}
+      className={cn('mx-0 flex w-auto justify-end', className)}
       {...props}
     />
   )
@@ -20,7 +20,7 @@ function PaginationContent({ className, ...props }: React.ComponentProps<'ul'>) 
   return (
     <ul
       data-slot="pagination-content"
-      className={cn('flex items-center gap-0.5', className)}
+      className={cn('flex items-center gap-1', className)}
       {...props}
     />
   )
@@ -37,7 +37,24 @@ type PaginationLinkProps = {
 
 function PaginationLink({ className, isActive, size = 'icon', ...props }: PaginationLinkProps) {
   return (
-    <Button asChild variant={isActive ? 'outline' : 'ghost'} size={size} className={cn(className)}>
+    <Button
+      asChild
+      variant={isActive ? 'outline' : 'ghost'}
+      size={size}
+      className={cn(
+        size === 'icon'
+          ? [
+              'box-border w-8! h-6! min-w-8! min-h-6! p-0! rounded-md! border! border-border! bg-neutral-0! text-muted-600! text-xs! font-medium! leading-none! shadow-none! ring-0! outline-none!',
+              'hover:bg-neutral-50! hover:text-foreground!',
+              'focus-visible:border-info-500! focus-visible:shadow-none! focus-visible:outline-none! focus-visible:ring-0!',
+              'data-[active=true]:bg-info-50! data-[active=true]:text-info-700! data-[active=true]:border-transparent! dark:data-[active=true]:bg-info-950! dark:data-[active=true]:text-info-300!',
+              'data-[active=true]:hover:bg-info-100! data-[active=true]:hover:text-info-700!',
+              'dark:bg-neutral-900! dark:text-muted-400! dark:border-neutral-700!',
+            ]
+          : 'w-auto! min-w-0! px-2!',
+        className
+      )}
+    >
       <a
         aria-current={isActive ? 'page' : undefined}
         data-ui="pagination-link"
@@ -90,7 +107,7 @@ function PaginationEllipsis({ className, ...props }: React.ComponentProps<'span'
       aria-hidden
       data-slot="pagination-ellipsis"
       className={cn(
-        "flex size-8 items-center justify-center [&_svg:not([class*='size-'])]:size-4",
+        "flex w-8 h-6 items-center justify-center rounded-md border border-neutral-200 bg-neutral-0 text-muted-600 text-xs font-medium before:content-['…'] before:leading-none [&_svg]:hidden dark:border-neutral-700 dark:bg-neutral-900 dark:text-muted-400",
         className
       )}
       {...props}

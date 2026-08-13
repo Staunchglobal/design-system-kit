@@ -9,8 +9,6 @@ import { templateSharedDir, templateNextDir, templateViteDir } from '../lib/path
 import { fetchTemplateText, mapWithConcurrency, remoteUrl } from '../lib/remote.js'
 import { ALWAYS_SHARED_FILES, ALWAYS_NEXT_FILES, ALWAYS_VITE_FILES, frameworkExtraFilesFor } from '../lib/managed-files.js'
 import {
-  THEME_EDITOR_REQUIRED_COMPONENTS,
-  cssFilesFor,
   demoFilesFor,
   extraFilesFor,
   navGroupsFor,
@@ -18,7 +16,6 @@ import {
   resolveUiClosure,
 } from '../lib/selection.js'
 import { ALL_RUNTIME_DEPENDENCIES, missingDeps, runInstall } from '../lib/deps.js'
-import { applyRenameHistory, loadRenameHistory } from '../lib/rename-history.js'
 import { regenerateGeneratedFiles } from '../lib/regenerate-generated-files.js'
 
 export type UpdateOptions = { cwd: string; yes: boolean; force: boolean; dryRun?: boolean }
@@ -27,6 +24,7 @@ type Managed = { relPath: string; templateSrc: string }
 type Pending = Managed & { newContent: string }
 
 const TOKEN_FILES = [
+  'styles/theme/index.css',
   'styles/theme/tokens/color-scales.css',
   'styles/theme/tokens/colors.css',
   'styles/theme/tokens/shadows.css',
@@ -72,9 +70,7 @@ export async function update(options: UpdateOptions) {
 
   const selection = readSelectionConfig(root)
   const userChosen = new Set(selection.components)
-  const toolOnly = resolveUiClosure(THEME_EDITOR_REQUIRED_COMPONENTS)
   const userClosure = resolveUiClosure(userChosen)
-  const closure = new Set([...userClosure, ...toolOnly])
 
   const srcDir = project.framework === 'next' ? (project.appDirRelative === 'src/app' ? 'src' : '') : 'src'
   const destRoot = path.join(root, srcDir)
@@ -82,9 +78,8 @@ export async function update(options: UpdateOptions) {
   const sectionsRel = project.framework === 'next' ? 'app/design-system/_sections' : 'design-system/_sections'
 
   const navGroups = navGroupsFor(userClosure)
-  const uiFiles = [...closure].filter((s) => s !== 'patterns').map((s) => `components/ui/${s}.tsx`)
-  const cssFiles = [...cssFilesFor(closure)].map((f) => `styles/theme/components/${f}`)
-  const extraFilesList = [...extraFilesFor(closure)]
+  const uiFiles = [...userClosure].filter((s) => s !== 'patterns').map((s) => `components/ui/${s}.tsx`)
+  const extraFilesList = [...extraFilesFor(userClosure)]
   const sectionFiles = demoFilesFor(navGroups).map((f) => `${sectionsRel}/${f}`)
   const frameworkExtraFiles = frameworkExtraFilesFor(
     userClosure,
@@ -96,38 +91,23 @@ export async function update(options: UpdateOptions) {
   const sharedSrc = remoteUrl(templateSharedDir, 'src')
   const frameworkSrc = remoteUrl(frameworkTemplateDir, 'src')
 
-  const manifestScriptRelPath = path.relative(destRoot, path.join(root, 'scripts/generate-theme-manifest.mjs'))
-
   const managed: Managed[] = [
     ...ALWAYS_SHARED_FILES.map((f) => ({ relPath: f, templateSrc: remoteUrl(sharedSrc, f) })),
     ...uiFiles.map((f) => ({ relPath: f, templateSrc: remoteUrl(sharedSrc, f) })),
-    ...cssFiles.map((f) => ({ relPath: f, templateSrc: remoteUrl(sharedSrc, f) })),
     ...extraFilesList.map((f) => ({ relPath: f, templateSrc: remoteUrl(sharedSrc, f) })),
     ...TOKEN_FILES.map((f) => ({ relPath: f, templateSrc: remoteUrl(sharedSrc, f) })),
     ...alwaysFixed.map((f) => ({ relPath: f, templateSrc: remoteUrl(frameworkSrc, f) })),
-    {
-      relPath: manifestScriptRelPath,
-      templateSrc: remoteUrl(frameworkTemplateDir, 'scripts/generate-theme-manifest.mjs'),
-    },
     ...sectionFiles.map((f) => ({ relPath: f, templateSrc: remoteUrl(frameworkSrc, f) })),
     ...frameworkExtraFiles.map((f) => ({ relPath: f, templateSrc: remoteUrl(frameworkSrc, f) })),
   ]
-
-  // A previously-renamed token (via /theme-editor) only touched files that existed at
-  // the time — reapply it to every freshly-fetched template file below, before any
-  // comparison, so an already-renamed local file is never mistaken for drift against
-  // the (otherwise still-original-named) template, and a component added after the
-  // rename doesn't land back on the original name.
-  const renameHistory = loadRenameHistory(destRoot)
 
   const toWrite: Pending[] = []
   const skippedCustomized: string[] = []
   let upToDateCount = 0
 
   await mapWithConcurrency(managed, 8, async ({ relPath, templateSrc }) => {
-    let newContent = await fetchTemplateText(templateSrc)
+    const newContent = await fetchTemplateText(templateSrc)
     if (newContent === null) return
-    if (renameHistory.length) newContent = applyRenameHistory(relPath, newContent, renameHistory)
     const destPath = path.join(destRoot, relPath)
 
     if (!fs.existsSync(destPath)) {
@@ -162,7 +142,7 @@ export async function update(options: UpdateOptions) {
     ...((project.packageJson.devDependencies as Record<string, string>) ?? {}),
   }
   const neededRuntime: Record<string, string> = {}
-  for (const dep of npmDepsFor(closure)) {
+  for (const dep of npmDepsFor(userClosure)) {
     if (ALL_RUNTIME_DEPENDENCIES[dep]) neededRuntime[dep] = ALL_RUNTIME_DEPENDENCIES[dep]
   }
   const runtimeToInstall = missingDeps(neededRuntime, existingDeps)
@@ -225,12 +205,10 @@ export async function update(options: UpdateOptions) {
   )
 
   regenerateGeneratedFiles({
-    root,
     destRoot,
     framework: project.framework,
     navGroups,
-    cssFiles: [...cssFilesFor(closure)],
-    closure,
+    closure: userClosure,
   })
 
   log.title('Done')

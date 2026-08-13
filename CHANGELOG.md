@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.0.0
+
+### Major Changes
+
+- Inline every component's CSS into its own `.tsx` via Tailwind classes, and delete `styles/theme/components/*.css` entirely — the 92 per-component stylesheets that architecture existed to support the removed theme editor's rewriter, which is gone. Every component's variants/states/dark-mode now live as literal Tailwind classes in the same file as its markup, with no separate stylesheet to keep in sync.
+
+  - Deleted: all 92 `template-shared/src/styles/theme/components/*.css` files. `styles/theme/index.css` now imports only the 7 token files (colors, color-scales, radius, fonts, typography, typography-patterns, shadows) and is a plain static file, copied like any other always-included file instead of being regenerated per selection.
+  - **Breaking**: removed the `cssFile` field from `ComponentEntry` (`src/generated/registry.ts`), the `cssFilesFor` selection helper, and the CSS-copy step from `init`/`update`/`remove` — there is no more per-component CSS file to select, copy, or delete.
+  - A handful of real, currently-shipping visual bugs surfaced by this pass were fixed rather than reproduced: invisible dark-mode text on `crud-table` and toast notifications (a fixed-light surface paired with a theme-tracking text color), a checkbox/radio-item text-overlap in dropdown/context menus, an `Empty`/`ErrorState` placeholder with no actual visible border, and a `Sidebar` menu badge that never rendered a visible background at all.
+  - Numerous components had drifted from what their now-deleted CSS actually rendered (translucent-vs-solid rings/shadows/borders, wrong color-scale steps, dead Tailwind classes overridden by higher-specificity CSS) — every component's visible output should be unchanged from before this release; only the styling's location moved.
+  - Consumers who already ran `init` keep their existing `styles/theme/components/*.css` files on disk (this only changes what a fresh `init`/`update` fetches) — `design-kit update` won't delete them either, since `update` never deletes; remove the directory by hand once you've confirmed your own edits, if any, are already reflected upstream or no longer needed.
+
+- 1c0a8b1: Remove the live `/theme-editor` and the element inspector overlay — both were unconditionally installed on every `init` with no opt-out, and the theme editor's own chrome forced `field`/`input-group`/`combobox` into every project regardless of selection, even blocking `design-kit remove` from ever deleting them.
+
+  - Deleted: the `/theme-editor` route and its components (Next + Vite), the `/api/theme/save` and `/api/theme/rename-token` routes, `vite-plugin-design-kit.ts` (the Vite dev-server equivalent), `scripts/generate-theme-manifest.mjs` and the generated `theme.manifest.json`, the repo-wide token-rename engine, and the `components/inspector/*` overlay (previously mounted on both `/theme-editor` and `/design-system`).
+  - **Breaking**: `field`, `input-group`, and `combobox` are ordinary optional components again — they're only installed if you pick them yourself (or another component you picked depends on them), and `design-kit remove` can delete them like any other component now.
+  - **Breaking**: the "Renaming design tokens" workflow (repo-wide token identifier rename via `/theme-editor`) is gone with no replacement — rename a CSS custom property and its Tailwind `@theme` bridge entry by hand if you need this.
+  - Consumers who already ran `init` keep whatever theme-editor/inspector files they have on disk (this only changes what a fresh `init`/`update` fetches); `design-kit update` won't delete them either, since `update` never deletes — remove them by hand if you want them gone from an existing project.
+
 ## 1.0.0
 
 ### Major Changes

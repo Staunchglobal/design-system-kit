@@ -47,6 +47,8 @@ function PaymentMethodCard({
       data-slot="payment-method-card"
       variant={selected ? 'muted' : 'outline'}
       className={cn(
+        'gap-2.5 rounded-lg px-3 py-2.5',
+        selected ? 'border-transparent bg-neutral-100 dark:bg-neutral-800' : 'border-border',
         onSelect && 'cursor-pointer',
         selected && 'ring-ring ring-2',
         className

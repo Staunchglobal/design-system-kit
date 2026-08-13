@@ -214,7 +214,7 @@ function InputOTPGroup({ className, ...props }: React.ComponentProps<'div'>) {
     <div
       data-slot="input-otp-group"
       className={cn(
-        'has-aria-invalid:border-destructive has-aria-invalid:ring-destructive/20 dark:has-aria-invalid:ring-destructive/40 flex items-center rounded-lg has-aria-invalid:ring-3',
+        'flex items-center overflow-clip rounded-2xl',
         className
       )}
       {...props}
@@ -275,7 +275,7 @@ function InputOTPSlot({
         onBlur?.(e)
       }}
       className={cn(
-        'border-input aria-invalid:border-destructive data-[active=true]:border-ring data-[active=true]:ring-ring/50 data-[active=true]:aria-invalid:border-destructive data-[active=true]:aria-invalid:ring-destructive/20 dark:bg-input/30 dark:data-[active=true]:aria-invalid:ring-destructive/40 relative flex size-8 items-center justify-center border-y border-r text-center text-sm transition-all outline-none first:rounded-l-lg first:border-l last:rounded-r-lg data-[active=true]:z-10 data-[active=true]:ring-3 disabled:cursor-not-allowed',
+        'relative flex size-12 items-center justify-center border-y border-r border-input bg-neutral-0 p-0 text-center text-base text-foreground appearance-none transition-all outline-none first:border-l first:rounded-s-2xl last:rounded-e-2xl data-[active=true]:z-10 data-[active=true]:border-primary aria-invalid:border-destructive data-[active=true]:aria-invalid:border-destructive disabled:cursor-not-allowed dark:bg-neutral-900',
         className
       )}
     />

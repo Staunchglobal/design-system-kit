@@ -35,12 +35,12 @@ function StatCard({ label, value, icon, loading = false, trend, className }: Sta
   const TrendIcon = trend ? TREND_ICON[trend.direction] : null
 
   return (
-    <Card data-slot="stat-card" size="sm" className={cn(className)}>
+    <Card data-slot="stat-card" size="sm" className={cn('rounded-2xl', className)}>
       <CardContent className="flex items-start gap-3">
         {icon ? (
           <div
             data-slot="stat-card-icon"
-            className="bg-primary text-primary-foreground flex size-9 shrink-0 items-center justify-center rounded-lg [&_svg]:size-4"
+            className="bg-primary-500 text-neutral-0 flex size-9 shrink-0 items-center justify-center rounded-lg [&_svg]:size-4"
           >
             {icon}
           </div>
@@ -52,7 +52,7 @@ function StatCard({ label, value, icon, loading = false, trend, className }: Sta
           {loading ? (
             <Skeleton className="h-6 w-20" />
           ) : (
-            <p data-slot="stat-card-value" className="font-heading tracking-tight">
+            <p data-slot="stat-card-value" className="text-foreground font-sans text-2xl font-semibold tracking-tight">
               {value}
             </p>
           )}

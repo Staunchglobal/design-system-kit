@@ -62,8 +62,8 @@ function PasswordStrengthMeter({ password, className }: PasswordStrengthMeterPro
           className={cn(
             'text-xs font-medium',
             level === 'weak' && 'text-destructive',
-            level === 'fair' && 'text-warning-600 dark:text-warning-400',
-            level === 'strong' && 'text-success-600 dark:text-success-400'
+            level === 'fair' && 'text-warning-600',
+            level === 'strong' && 'text-success-600'
           )}
         >
           {label}

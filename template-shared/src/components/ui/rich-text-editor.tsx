@@ -246,7 +246,7 @@ function RichTextEditor({
           editor={editor}
           data-slot="rich-text-editor-content"
           className={cn(
-            'min-h-32 px-3 py-2',
+            'min-h-40 px-3 py-2',
             '[&_.tiptap]:outline-none',
             '[&_.tiptap_>*+*]:mt-2',
             '[&_.tiptap_p]:leading-relaxed',

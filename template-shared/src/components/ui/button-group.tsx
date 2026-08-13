@@ -7,14 +7,17 @@ import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
 
 const buttonGroupVariants = cva(
-  "group/button-group flex w-fit items-stretch *:focus-visible:relative *:focus-visible:z-10 has-[>[data-slot=button-group]]:gap-2 has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-lg [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1",
+  "group/button-group isolate flex w-fit items-stretch *:focus-visible:relative *:focus-visible:z-10 has-[>[data-slot=button-group]]:gap-2 has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-lg [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1",
   {
     variants: {
       orientation: {
+        // Joined-border look: each non-edge child loses the radius on its shared side and
+        // overlaps its neighbor by 1px (border-l-0 avoids a doubled-up 2px seam); the two
+        // edge children keep a full pill on their outer corner.
         horizontal:
-          '[&>*:not(:first-child)]:rounded-l-none [&>*:not(:first-child)]:border-l-0 [&>*:not(:last-child)]:rounded-r-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-lg!',
+          "[&>*:not(:first-child)]:rounded-l-none! [&>*:not(:first-child)]:border-l-0 [&>*:not(:first-child)]:-ml-px [&>*:not(:last-child)]:rounded-r-none! [&>*:first-child]:rounded-l-full! [&>*:last-child]:rounded-r-full! [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-lg!",
         vertical:
-          'flex-col [&>*:not(:first-child)]:rounded-t-none [&>*:not(:first-child)]:border-t-0 [&>*:not(:last-child)]:rounded-b-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-b-lg!',
+          "flex-col [&>*:not(:first-child)]:rounded-t-none! [&>*:not(:first-child)]:border-t-0 [&>*:not(:first-child)]:-mt-px [&>*:not(:last-child)]:rounded-b-none! [&>*:first-child]:rounded-t-full! [&>*:last-child]:rounded-b-full! [&>[data-slot]:not(:has(~[data-slot]))]:rounded-b-lg!",
       },
     },
     defaultVariants: {
@@ -51,7 +54,7 @@ function ButtonGroupText({
   return (
     <Comp
       className={cn(
-        "bg-muted flex items-center gap-2 rounded-lg border px-2.5 text-sm font-medium [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
+        "bg-neutral-100 border-neutral-200 flex items-center gap-2 rounded-lg border px-2.5 text-sm font-medium [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -69,7 +72,7 @@ function ButtonGroupSeparator({
       data-slot="button-group-separator"
       orientation={orientation}
       className={cn(
-        'bg-input relative self-stretch data-horizontal:mx-px data-horizontal:w-auto data-vertical:my-px data-vertical:h-auto',
+        'bg-neutral-200 relative self-stretch data-horizontal:mx-px data-horizontal:w-auto data-vertical:my-px data-vertical:h-auto data-vertical:w-px',
         className
       )}
       {...props}

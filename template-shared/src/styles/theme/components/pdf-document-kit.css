@@ -1,6 +1,0 @@
-[data-slot='pdf-document-preview'] {
-  --pdf-document-preview-bg: var(--muted);
-  --pdf-document-preview-radius: var(--radius-xl);
-  background: var(--pdf-document-preview-bg);
-  border-radius: var(--pdf-document-preview-radius);
-}

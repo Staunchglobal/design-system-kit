@@ -48,7 +48,7 @@ function Rating({
       aria-disabled={disabled || undefined}
       aria-readonly={readOnly || undefined}
       className={cn(
-        'flex items-center gap-0.5',
+        'flex items-center gap-1',
         disabled && 'pointer-events-none opacity-50',
         className
       )}

@@ -12,7 +12,7 @@ const program = new Command()
 program
   .name('design-kit')
   .description(
-    'Scaffolds a full shadcn/ui component set, a token-driven theme system, a /design-system showcase, and a live /theme-editor into a Next.js (App Router) + TypeScript + Tailwind v4 project.'
+    'Scaffolds a full shadcn/ui component set, a token-driven theme system, and a /design-system showcase into a Next.js (App Router) + TypeScript + Tailwind v4 project.'
   )
   .version(packageJson.version)
   .option(
@@ -27,7 +27,7 @@ program
 
 program
   .command('init')
-  .description('Install dependencies and copy the design system + theme editor into this project')
+  .description('Install dependencies and copy the design system into this project')
   .option('--cwd <path>', 'run against a different project directory', process.cwd())
   .option('--pm <manager>', 'force a package manager (npm, pnpm, yarn, bun)')
   .option('-y, --yes', 'skip confirmation prompts (implies --all unless --components is given)', false)
@@ -54,7 +54,7 @@ program
 
 program
   .command('remove')
-  .description('Uninstall one or more previously-installed components and regenerate the design-system/theme-editor')
+  .description('Uninstall one or more previously-installed components and regenerate the design-system')
   .argument('<components>', 'comma-separated component slugs to remove (e.g. button,dialog)')
   .option('--cwd <path>', 'run against a different project directory', process.cwd())
   .option('-y, --yes', 'skip the confirmation prompt', false)

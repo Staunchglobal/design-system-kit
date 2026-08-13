@@ -26,16 +26,16 @@ function RadioGroupItem({
     <RadioGroupPrimitive.Item
       data-slot="radio-group-item"
       className={cn(
-        'group/radio-group-item peer border-input focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 aria-invalid:aria-checked:border-primary dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 data-checked:border-primary data-checked:bg-primary data-checked:text-primary-foreground dark:data-checked:bg-primary relative flex aspect-square size-4 shrink-0 cursor-pointer rounded-full border outline-none after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:ring-3 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-3',
+        'group/radio-group-item peer relative flex aspect-square size-6 shrink-0 cursor-pointer rounded-full border border-input bg-neutral-0 outline-none after:absolute after:-inset-x-3 after:-inset-y-2 hover:border-primary data-checked:border-primary data-checked:hover:border-primary-600 dark:data-checked:hover:border-primary-300 focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/35 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/35 aria-invalid:aria-checked:border-primary disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-input dark:bg-neutral-900',
         className
       )}
       {...props}
     >
       <RadioGroupPrimitive.Indicator
         data-slot="radio-group-indicator"
-        className="flex size-4 items-center justify-center"
+        className="relative flex size-full items-center justify-center"
       >
-        <span className="bg-primary-foreground absolute top-1/2 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full" />
+        <span className="absolute top-1/2 left-1/2 size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary group-hover/radio-group-item:bg-primary-600 dark:group-hover/radio-group-item:bg-primary-300" />
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
   )

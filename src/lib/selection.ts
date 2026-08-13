@@ -1,18 +1,6 @@
 import { COMPONENTS, GROUPS } from '../generated/registry.js'
 import type { NavGroup } from '../generated/registry.js'
 
-/**
- * The theme editor's own chrome (Save/Reset buttons, filter Input, the Add-color/font/
- * typography mini-forms, its searchable Select dropdowns) — needed no matter which
- * components the user picks for their app. Resolved with plain resolveUiClosure, so it
- * never drags an unrelated demo section into the design-system showcase just because the
- * editor itself needs a Field/Input/Button — each component now has its own demo file
- * (scripts/split-sections.mjs), so pulling in a ui-dep no longer means pulling in its whole
- * category's demos too. `combobox` (not `native-select`) backs every select field now —
- * it's self-contained on @base-ui/react, no popover/command chain.
- */
-export const THEME_EDITOR_REQUIRED_COMPONENTS = ['field', 'input-group', 'combobox']
-
 export function allComponentSlugs(): string[] {
   return Object.keys(COMPONENTS)
 }
@@ -67,15 +55,6 @@ export function extraFilesFor(closure: Set<string>): Set<string> {
   for (const slug of closure) {
     const entry = COMPONENTS[slug]
     if (entry) for (const f of entry.extraFiles) out.add(f)
-  }
-  return out
-}
-
-export function cssFilesFor(closure: Set<string>): Set<string> {
-  const out = new Set<string>()
-  for (const slug of closure) {
-    const cssFile = COMPONENTS[slug]?.cssFile
-    if (cssFile) out.add(cssFile)
   }
   return out
 }

@@ -16,7 +16,7 @@ function textResponse(text: string): Response {
 let tmpDir: string
 
 beforeEach(() => {
-  tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'copy-rename-history-test-'))
+  tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'copy-test-'))
 })
 
 afterEach(() => {
@@ -24,8 +24,8 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 
-describe('copySelectedFiles + renameHistory', () => {
-  it('applies the rename history to a newly-copied CSS file before writing it', async () => {
+describe('copySelectedFiles', () => {
+  it('fetches and writes a newly-copied file verbatim', async () => {
     vi.stubGlobal(
       'fetch',
       vi.fn(async () => textResponse(':root {\n  --accent-500: #000;\n}\n'))
@@ -34,52 +34,68 @@ describe('copySelectedFiles + renameHistory', () => {
       'https://cdn.example.com/repo',
       tmpDir,
       ['styles/theme/tokens/color-scales.css'],
-      false,
-      [{ family: 'color', from: 'accent', to: 'info' }]
+      false
     )
     expect(result.copied).toEqual(['styles/theme/tokens/color-scales.css'])
     const written = fs.readFileSync(path.join(tmpDir, 'styles/theme/tokens/color-scales.css'), 'utf8')
-    expect(written).toContain('--info-500: #000;')
-    expect(written).not.toContain('--accent-500')
+    expect(written).toBe(':root {\n  --accent-500: #000;\n}\n')
   })
 
-  it('never touches an already-existing file, regardless of rename history', async () => {
+  it('never touches an already-existing file', async () => {
     const dest = path.join(tmpDir, 'components/ui/button.tsx')
     fs.mkdirSync(path.dirname(dest), { recursive: true })
     fs.writeFileSync(dest, 'className="bg-accent"')
     vi.stubGlobal(
       'fetch',
-      vi.fn(async () => textResponse('className="bg-accent"'))
+      vi.fn(async () => textResponse('className="bg-info"'))
     )
-    const result = await copySelectedFiles('https://cdn.example.com/repo', tmpDir, ['components/ui/button.tsx'], false, [
-      { family: 'color', from: 'accent', to: 'info' },
-    ])
+    const result = await copySelectedFiles('https://cdn.example.com/repo', tmpDir, ['components/ui/button.tsx'], false)
     expect(result.skipped).toEqual(['components/ui/button.tsx'])
     expect(fs.readFileSync(dest, 'utf8')).toBe('className="bg-accent"')
   })
 
-  it('does not apply rename history when the list is empty (default)', async () => {
+  it('omits a path that 404s at srcBase from both copied and skipped', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => ({ ok: false, status: 404 }) as unknown as Response)
+    )
+    const result = await copySelectedFiles('https://cdn.example.com/repo', tmpDir, ['does-not-exist.css'], false)
+    expect(result.copied).toEqual([])
+    expect(result.skipped).toEqual([])
+  })
+
+  it('dry-run classifies copied/skipped without writing anything', async () => {
     vi.stubGlobal(
       'fetch',
       vi.fn(async () => textResponse('--accent-500: #000;'))
     )
-    const result = await copySelectedFiles('https://cdn.example.com/repo', tmpDir, ['a.css'], false)
+    const result = await copySelectedFiles('https://cdn.example.com/repo', tmpDir, ['a.css'], true)
     expect(result.copied).toEqual(['a.css'])
-    expect(fs.readFileSync(path.join(tmpDir, 'a.css'), 'utf8')).toBe('--accent-500: #000;')
+    expect(fs.existsSync(path.join(tmpDir, 'a.css'))).toBe(false)
   })
 })
 
-describe('copyTemplateFile + renameHistory', () => {
-  it('applies the rename history to a newly-copied file', async () => {
+describe('copyTemplateFile', () => {
+  it('fetches and writes a newly-copied file verbatim', async () => {
     vi.stubGlobal(
       'fetch',
       vi.fn(async () => textResponse('className="bg-accent"'))
     )
     const dest = path.join(tmpDir, 'components/ui/badge.tsx')
-    const result = await copyTemplateFile('https://cdn.example.com/repo/badge.tsx', dest, false, [
-      { family: 'color', from: 'accent', to: 'info' },
-    ])
+    const result = await copyTemplateFile('https://cdn.example.com/repo/badge.tsx', dest, false)
     expect(result).toBe('copied')
-    expect(fs.readFileSync(dest, 'utf8')).toBe('className="bg-info"')
+    expect(fs.readFileSync(dest, 'utf8')).toBe('className="bg-accent"')
+  })
+
+  it('skips an already-existing destination file without fetching new content', async () => {
+    const dest = path.join(tmpDir, 'components/ui/badge.tsx')
+    fs.mkdirSync(path.dirname(dest), { recursive: true })
+    fs.writeFileSync(dest, 'className="bg-accent"')
+    const fetchMock = vi.fn(async () => textResponse('className="bg-info"'))
+    vi.stubGlobal('fetch', fetchMock)
+    const result = await copyTemplateFile('https://cdn.example.com/repo/badge.tsx', dest, false)
+    expect(result).toBe('skipped')
+    expect(fetchMock).not.toHaveBeenCalled()
+    expect(fs.readFileSync(dest, 'utf8')).toBe('className="bg-accent"')
   })
 })

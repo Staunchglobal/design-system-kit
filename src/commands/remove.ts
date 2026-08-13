@@ -6,8 +6,6 @@ import { detectProject } from '../lib/detect.js'
 import { confirm } from '../lib/confirm.js'
 import { readSelectionConfig, writeSelectionConfig } from '../lib/selection-state.js'
 import {
-  THEME_EDITOR_REQUIRED_COMPONENTS,
-  cssFilesFor,
   demoFilesFor,
   extraFilesFor,
   navGroupsFor,
@@ -71,7 +69,6 @@ export async function remove(options: RemoveOptions) {
 
   const selection = readSelectionConfig(root)
   const userChosen = new Set(selection.components)
-  const toolOnly = resolveUiClosure(THEME_EDITOR_REQUIRED_COMPONENTS)
 
   const notInstalled = requested.filter((s) => !userChosen.has(s))
   if (notInstalled.length) log.warn(`Not currently installed (skipping): ${notInstalled.join(', ')}`)
@@ -82,16 +79,14 @@ export async function remove(options: RemoveOptions) {
     return
   }
 
-  const oldUserClosure = resolveUiClosure(userChosen)
-  const oldClosure = new Set([...oldUserClosure, ...toolOnly])
+  const oldClosure = resolveUiClosure(userChosen)
   const remaining = new Set([...userChosen].filter((s) => !toRemove.has(s)))
-  const newUserClosure = resolveUiClosure(remaining)
-  const newClosure = new Set([...newUserClosure, ...toolOnly])
+  const newClosure = resolveUiClosure(remaining)
 
   const keptDueToDeps = [...toRemove].filter((s) => newClosure.has(s))
   for (const slug of keptDueToDeps) {
     const dependents = [...remaining].filter((other) => resolveUiClosure([other]).has(slug))
-    log.warn(`Kept "${slug}" — still required by: ${dependents.length ? dependents.join(', ') : 'the theme editor'}`)
+    log.warn(`Kept "${slug}" — still required by: ${dependents.join(', ')}`)
   }
 
   const orphaned = [...oldClosure].filter((s) => !newClosure.has(s))
@@ -105,13 +100,8 @@ export async function remove(options: RemoveOptions) {
   const rel = (p: string) => (srcDir ? `${srcDir}/${p}` : p)
   const sectionsRel = project.framework === 'next' ? 'app/design-system/_sections' : 'design-system/_sections'
 
-  // Nav/demo generation must key off the *user's own* closure, not the tool-chrome-inclusive
-  // one — toolOnly components (field, input-group, native-select) get their ui/*.tsx installed
-  // for the theme editor's own use but never get a demo file copied or a nav entry at all (see
-  // the same distinction in init-next.ts/init-vite.ts). Using oldClosure/newClosure here would
-  // regenerate a page.tsx that imports demo files that were never actually installed.
-  const oldNavGroups = navGroupsFor(oldUserClosure)
-  const newNavGroups = navGroupsFor(newUserClosure)
+  const oldNavGroups = navGroupsFor(oldClosure)
+  const newNavGroups = navGroupsFor(newClosure)
   const oldDemoFiles = new Set(demoFilesFor(oldNavGroups))
   const newDemoFiles = new Set(demoFilesFor(newNavGroups))
   const orphanedDemoFiles = [...oldDemoFiles].filter((f) => !newDemoFiles.has(f))
@@ -121,16 +111,12 @@ export async function remove(options: RemoveOptions) {
   const orphanedExtraFiles = [...oldExtraFiles].filter((f) => !newExtraFiles.has(f))
 
   const frameworkKey = project.framework === 'next' ? 'next' : 'vite'
-  const oldFrameworkExtra = new Set(frameworkExtraFilesFor(oldUserClosure, frameworkKey))
-  const newFrameworkExtra = new Set(frameworkExtraFilesFor(newUserClosure, frameworkKey))
+  const oldFrameworkExtra = new Set(frameworkExtraFilesFor(oldClosure, frameworkKey))
+  const newFrameworkExtra = new Set(frameworkExtraFilesFor(newClosure, frameworkKey))
   const orphanedFrameworkExtra = [...oldFrameworkExtra].filter((f) => !newFrameworkExtra.has(f))
 
   const filesToDelete: string[] = [
     ...orphaned.filter((s) => s !== 'patterns').map((s) => rel(`components/ui/${s}.tsx`)),
-    ...orphaned
-      .map((s) => COMPONENTS[s]?.cssFile)
-      .filter((f): f is string => !!f)
-      .map((f) => rel(`styles/theme/components/${f}`)),
     ...orphanedExtraFiles.map((f) => rel(f)),
     ...orphanedDemoFiles.map((f) => rel(`${sectionsRel}/${f}`)),
     ...orphanedFrameworkExtra.map((f) => rel(f)),
@@ -160,11 +146,9 @@ export async function remove(options: RemoveOptions) {
   log.success(`Deleted ${deletedCount} file(s).`)
 
   regenerateGeneratedFiles({
-    root,
     destRoot,
     framework: project.framework,
     navGroups: newNavGroups,
-    cssFiles: [...cssFilesFor(newClosure)],
     closure: newClosure,
   })
 

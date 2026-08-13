@@ -5,51 +5,23 @@
  */
 export const ALWAYS_SHARED_FILES = [
   'lib/utils.ts',
-  'lib/theme/types.ts',
-  'lib/theme/token-families.json',
-  'lib/theme/field-types.ts',
-  'lib/theme/value-parsers.ts',
-  'lib/theme/humanize.ts',
-  'lib/theme/descriptions.ts',
+  // Used by chart.tsx (isSafeCssValue, guarding a caller-supplied color before
+  // it lands in a generated <style> block) — kept independent of any dev tooling.
   'lib/theme/validation.ts',
-  'lib/theme/google-fonts.ts',
+  'hooks/use-mounted.ts',
   'components/icons/icon.tsx',
   'components/icons/icon-context.tsx',
   'components/icons/icon-map.ts',
-  'components/inspector/inspector.tsx',
-  'components/inspector/inspector-context.tsx',
-  'components/inspector/inspector-toggle.tsx',
-  'components/inspector/inspector-overlay.tsx',
-  'components/inspector/inspector-panel.tsx',
-  'components/inspector/use-element-tracking.ts',
-  'components/inspector/style-reader.ts',
-  'components/inspector/find-target.ts',
-  'components/inspector/use-mounted.ts',
 ]
 
 export const ALWAYS_NEXT_FILES = [
   'app/design-system/_components/sidebar-nav.tsx',
   'app/design-system/_lib/showcase.tsx',
-  'app/theme-editor/page.tsx',
-  'app/theme-editor/_components/smart-field.tsx',
-  'app/theme-editor/_components/theme-editor-shell.tsx',
-  'app/theme-editor/_components/theme-nav.tsx',
-  'app/theme-editor/_components/variable-form.tsx',
-  'app/theme-editor/_lib/theme-editor-context.tsx',
-  'app/api/theme/save/route.ts',
-  'app/api/theme/rename-token/route.ts',
-  'lib/theme/rename-engine.ts',
 ]
 
 export const ALWAYS_VITE_FILES = [
   'design-system/_components/sidebar-nav.tsx',
   'design-system/_lib/showcase.tsx',
-  'theme-editor/ThemeEditorPage.tsx',
-  'theme-editor/_components/smart-field.tsx',
-  'theme-editor/_components/theme-editor-shell.tsx',
-  'theme-editor/_components/theme-nav.tsx',
-  'theme-editor/_components/variable-form.tsx',
-  'theme-editor/_lib/theme-editor-context.tsx',
 ]
 
 export const FRAMEWORK_EXTRA_FILES: Record<

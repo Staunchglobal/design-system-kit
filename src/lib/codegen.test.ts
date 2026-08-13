@@ -1,26 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { navGroupsFor, resolveUiClosure } from './selection.js'
-import {
-  generateDesignSystemPage,
-  generateLivePreview,
-  generateNavTs,
-  generateThemeIndexCss,
-} from './codegen.js'
-
-describe('generateThemeIndexCss', () => {
-  it('always imports the token files, in order, regardless of selection', () => {
-    const css = generateThemeIndexCss([])
-    expect(css).toContain("@import './tokens/colors.css';")
-    expect(css.indexOf("tokens/colors.css")).toBeLessThan(css.indexOf('tokens/radius.css'))
-  })
-
-  it('imports exactly the given component css files, nothing extra', () => {
-    const css = generateThemeIndexCss(['button.css', 'dialog.css'])
-    expect(css).toContain("@import './components/button.css';")
-    expect(css).toContain("@import './components/dialog.css';")
-    expect(css).not.toContain('combobox.css')
-  })
-})
+import { generateDesignSystemPage, generateNavTs } from './codegen.js'
 
 describe('generateNavTs', () => {
   it('escapes single quotes in titles/labels', () => {
@@ -87,41 +67,5 @@ describe('generateDesignSystemPage', () => {
     })
     const buttonImportCount = out.split("_sections/button'").length - 1
     expect(buttonImportCount).toBe(1)
-  })
-})
-
-describe('generateLivePreview', () => {
-  it('maps every selected nav item slug to its own demo module', () => {
-    const navGroups = navGroupsFor(resolveUiClosure(['button', 'dialog']))
-    const out = generateLivePreview({
-      navGroups,
-      designSystemImportBase: '@/app/design-system',
-      themeEditorImportBase: '@/app/theme-editor',
-    })
-    expect(out).toContain("'button': ButtonDemo,")
-    expect(out).toContain("'dialog': DialogDemo,")
-  })
-
-  it('aliases sonner-toast/typography-patterns manifest group ids to their real slug\'s module', () => {
-    const navGroups = navGroupsFor(resolveUiClosure(['sonner']))
-    const out = generateLivePreview({
-      navGroups,
-      designSystemImportBase: '@/app/design-system',
-      themeEditorImportBase: '@/app/theme-editor',
-    })
-    expect(out).toContain("'sonner-toast': SonnerDemo,")
-  })
-
-  it('does not map sonner-toast to a module when sonner was never selected', () => {
-    // 'sonner-toast' as a bare string always appears in the hardcoded SECTION_ID_ALIASES
-    // constant (unconditional in every generated file) — what must NOT happen without sonner
-    // selected is a GROUP_TO_MODULE entry pointing it at a component that was never installed.
-    const navGroups = navGroupsFor(resolveUiClosure(['kbd']))
-    const out = generateLivePreview({
-      navGroups,
-      designSystemImportBase: '@/app/design-system',
-      themeEditorImportBase: '@/app/theme-editor',
-    })
-    expect(out).not.toContain("'sonner-toast': SonnerDemo,")
   })
 })

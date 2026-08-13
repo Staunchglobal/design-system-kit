@@ -19,7 +19,7 @@ import {
 
 import { cn } from '@/lib/utils'
 import { SortableItem } from '@/components/sortable/sortable-item'
-import { useMounted } from '@/components/inspector/use-mounted'
+import { useMounted } from '@/hooks/use-mounted'
 import { GripVertical } from 'lucide-react'
 
 type SortableListProps<T extends { id: string }> = {
@@ -52,7 +52,7 @@ function SortableItemPlaceholder({
   disabled?: boolean
 }) {
   return (
-    <div data-slot="sortable-item" className="flex items-center gap-2">
+    <div data-slot="sortable-item" className="bg-card flex items-center gap-2 rounded-lg">
       <button
         type="button"
         aria-label="Drag to reorder"

@@ -33,13 +33,13 @@ function ItemSeparator({ className, ...props }: React.ComponentProps<typeof Sepa
 }
 
 const itemVariants = cva(
-  'group/item flex w-full flex-wrap items-center rounded-lg border text-sm transition-colors duration-100 outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:transition-colors [a]:hover:bg-muted',
+  'group/item flex w-full flex-wrap items-center rounded-lg border text-sm transition-colors duration-100 outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-neutral-400 dark:focus-visible:ring-neutral-500 [a]:transition-colors [a]:hover:bg-muted',
   {
     variants: {
       variant: {
         default: 'border-transparent',
         outline: 'border-border',
-        muted: 'border-transparent bg-muted/50',
+        muted: 'border-transparent bg-neutral-100 dark:bg-neutral-800',
       },
       size: {
         default: 'gap-2.5 px-3 py-2.5',
@@ -123,7 +123,7 @@ function ItemTitle({ className, ...props }: React.ComponentProps<'div'>) {
     <div
       data-slot="item-title"
       className={cn(
-        'line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4',
+        'line-clamp-1 flex w-fit items-center gap-2 font-sans text-sm leading-5 font-medium underline-offset-4',
         className
       )}
       {...props}
@@ -136,7 +136,7 @@ function ItemDescription({ className, ...props }: React.ComponentProps<'p'>) {
     <p
       data-slot="item-description"
       className={cn(
-        'text-muted-foreground [&>a:hover]:text-primary line-clamp-2 text-left text-sm leading-normal font-normal group-data-[size=xs]/item:text-xs [&>a]:underline [&>a]:underline-offset-4',
+        'text-muted-foreground [&>a:hover]:text-primary line-clamp-2 text-left text-sm leading-5 font-normal group-data-[size=xs]/item:text-xs [&>a]:underline [&>a]:underline-offset-4',
         className
       )}
       {...props}
@@ -144,9 +144,20 @@ function ItemDescription({ className, ...props }: React.ComponentProps<'p'>) {
   )
 }
 
+// Icon buttons dropped into a row must fit the item's own height — Button's
+// icon/icon-sm/icon-xs sizes (2.5rem/2.25rem/2rem) would otherwise overflow a
+// 0.625rem/0.5rem/0.375rem-padded row, so every icon-sized Button placed here
+// is clamped to 1.5rem (1.25rem inside an `xs`-sized Item).
+const ITEM_ACTIONS_ICON_BUTTON_CLASS =
+  '[&_[data-slot=button][data-size=icon]]:size-6 [&_[data-slot=button][data-size=icon]]:min-w-6 [&_[data-slot=button][data-size=icon]]:min-h-6 [&_[data-slot=button][data-size=icon]]:p-0 [&_[data-slot=button][data-size=icon-sm]]:size-6 [&_[data-slot=button][data-size=icon-sm]]:min-w-6 [&_[data-slot=button][data-size=icon-sm]]:min-h-6 [&_[data-slot=button][data-size=icon-sm]]:p-0 [&_[data-slot=button][data-size=icon-xs]]:size-6 [&_[data-slot=button][data-size=icon-xs]]:min-w-6 [&_[data-slot=button][data-size=icon-xs]]:min-h-6 [&_[data-slot=button][data-size=icon-xs]]:p-0 group-data-[size=xs]/item:[&_[data-slot=button][data-size=icon]]:size-5 group-data-[size=xs]/item:[&_[data-slot=button][data-size=icon]]:min-w-5 group-data-[size=xs]/item:[&_[data-slot=button][data-size=icon]]:min-h-5 group-data-[size=xs]/item:[&_[data-slot=button][data-size=icon-sm]]:size-5 group-data-[size=xs]/item:[&_[data-slot=button][data-size=icon-sm]]:min-w-5 group-data-[size=xs]/item:[&_[data-slot=button][data-size=icon-sm]]:min-h-5 group-data-[size=xs]/item:[&_[data-slot=button][data-size=icon-xs]]:size-5 group-data-[size=xs]/item:[&_[data-slot=button][data-size=icon-xs]]:min-w-5 group-data-[size=xs]/item:[&_[data-slot=button][data-size=icon-xs]]:min-h-5'
+
 function ItemActions({ className, ...props }: React.ComponentProps<'div'>) {
   return (
-    <div data-slot="item-actions" className={cn('flex items-center gap-2', className)} {...props} />
+    <div
+      data-slot="item-actions"
+      className={cn('flex items-center gap-2', ITEM_ACTIONS_ICON_BUTTON_CLASS, className)}
+      {...props}
+    />
   )
 }
 

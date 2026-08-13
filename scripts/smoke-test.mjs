@@ -73,15 +73,37 @@ function mountVitePages(dir) {
   assert(src.includes("import './App.css'"), "App.tsx doesn't look like the stock create-vite template — can't auto-mount")
   src = src.replace(
     "import './App.css'",
-    "import './App.css'\nimport DesignSystemPage from './design-system/DesignSystemPage'\nimport ThemeEditorPage from './theme-editor/ThemeEditorPage'"
+    "import './App.css'\nimport DesignSystemPage from './design-system/DesignSystemPage'"
   )
-  src = src.replace('<>', '<>\n      <DesignSystemPage />\n      <ThemeEditorPage />')
+  src = src.replace('<>', '<>\n      <DesignSystemPage />')
   fs.writeFileSync(appPath, src)
+}
+
+/**
+ * Regression guard for the theme-editor/inspector removal: neither should ever be fetched or
+ * written by `init` again, for either framework. Cheap enough to run after every install.
+ */
+function assertNoThemeEditorOrInspector(dir, framework) {
+  // Both scaffolds always use a src/ layout here (scaffoldNext passes --src-dir; create-vite's
+  // react-ts template is src/ by default), so this doesn't need init-next.ts's srcDir detection.
+  const srcDir = path.join(dir, 'src')
+  const themeEditorDir = framework === 'next' ? 'app/theme-editor' : 'theme-editor'
+  const paths = [
+    path.join(srcDir, themeEditorDir),
+    path.join(srcDir, 'components/inspector'),
+    path.join(dir, 'scripts/generate-theme-manifest.mjs'),
+  ]
+  if (framework === 'next') paths.push(path.join(srcDir, 'app/api/theme'))
+  else paths.push(path.join(dir, 'vite-plugin-design-kit.ts'))
+  for (const p of paths) {
+    assert(!fs.existsSync(p), `Expected ${p} not to exist — theme-editor/inspector should never be installed`)
+  }
 }
 
 function initAndBuildNext(dir, initArgs) {
   scaffoldNext(dir)
   assert(run('node', [cli, '--templates', root, 'init', '--yes', ...initArgs], dir), 'design-kit init failed')
+  assertNoThemeEditorOrInspector(dir, 'next')
   assert(run('npm', ['run', 'build'], dir), 'next build failed')
   assert(run('npm', ['run', 'lint'], dir), 'next lint failed')
 }
@@ -89,6 +111,7 @@ function initAndBuildNext(dir, initArgs) {
 function initAndBuildVite(dir, initArgs) {
   scaffoldVite(dir)
   assert(run('node', [cli, '--templates', root, 'init', '--yes', ...initArgs], dir), 'design-kit init failed')
+  assertNoThemeEditorOrInspector(dir, 'vite')
   mountVitePages(dir)
   assert(run('npm', ['run', 'build'], dir), 'vite build failed')
   assert(run('npm', ['run', 'lint'], dir), 'vite lint failed')
@@ -133,12 +156,8 @@ async function runtimeCheckNext(dir) {
       })
       page.on('pageerror', (error) => runtimeErrors.push(error.message))
 
-      for (const route of ['/design-system', '/theme-editor']) {
-        const response = await page.goto(`${baseUrl}${route}`, { waitUntil: 'networkidle' })
-        assert(response?.ok(), `${route} returned HTTP ${response?.status() ?? 'unknown'}`)
-      }
-
-      await page.goto(`${baseUrl}/design-system`, { waitUntil: 'networkidle' })
+      const response = await page.goto(`${baseUrl}/design-system`, { waitUntil: 'networkidle' })
+      assert(response?.ok(), `/design-system returned HTTP ${response?.status() ?? 'unknown'}`)
       const cardTitle = page.locator("#card [data-slot='card-title']").first()
       await cardTitle.waitFor()
       const cardTypography = await cardTitle.evaluate((element) => {
@@ -226,7 +245,15 @@ await scenario('Next.js — full install (--all)', () => {
 })
 
 await scenario('Next.js — partial selection', () => {
-  initAndBuildNext(path.join(scratchBase, 'next-partial'), ['--components', PARTIAL_COMPONENTS])
+  const dir = path.join(scratchBase, 'next-partial')
+  initAndBuildNext(dir, ['--components', PARTIAL_COMPONENTS])
+  // Regression check: `field` used to be force-installed for the theme editor's own chrome
+  // regardless of selection. Nothing in PARTIAL_COMPONENTS depends on it, so its absence here
+  // confirms that forcing is actually gone, not just that the theme editor's own files are.
+  assert(
+    !fs.existsSync(path.join(dir, 'src/components/ui/field.tsx')),
+    '`field` was installed despite not being selected or depended on — the old forced-install behavior may have regressed'
+  )
 })
 
 await scenario('Vite — full install (--all)', () => {
@@ -234,7 +261,12 @@ await scenario('Vite — full install (--all)', () => {
 })
 
 await scenario('Vite — partial selection', () => {
-  initAndBuildVite(path.join(scratchBase, 'vite-partial'), ['--components', PARTIAL_COMPONENTS])
+  const dir = path.join(scratchBase, 'vite-partial')
+  initAndBuildVite(dir, ['--components', PARTIAL_COMPONENTS])
+  assert(
+    !fs.existsSync(path.join(dir, 'src/components/ui/field.tsx')),
+    '`field` was installed despite not being selected or depended on — the old forced-install behavior may have regressed'
+  )
 })
 
 await scenario('Next.js — runtime pages and interactions', async () => {

@@ -35,7 +35,7 @@ function FilterChips({
       data-slot="filter-chips"
       className={cn('flex flex-wrap items-center gap-2', className)}
     >
-      <span data-slot="filter-chips-summary">
+      <span data-slot="filter-chips-summary" className="text-sm/5 text-muted-foreground">
         {filters.length} active filter{filters.length === 1 ? '' : 's'}
       </span>
       {filters.map((filter) => {
@@ -51,7 +51,7 @@ function FilterChips({
             key={filter.id}
             variant="secondary"
             data-slot="filter-chip"
-            className="gap-1 rounded-sm pr-0.5 font-normal"
+            className="inline-flex h-8 items-center gap-0.5 overflow-hidden rounded-md border border-border bg-neutral-0 ps-2 pe-1 py-1 text-sm/5 font-medium text-foreground dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100"
           >
             <span
               data-slot="filter-chip-content"
@@ -59,14 +59,20 @@ function FilterChips({
             >
               {filter.value != null ? (
                 <>
-                  <span data-slot="filter-chip-key">{filter.label}</span>
-                  <span data-slot="filter-chip-sep" aria-hidden>
+                  <span data-slot="filter-chip-key" className="font-medium text-muted-foreground">
+                    {filter.label}
+                  </span>
+                  <span data-slot="filter-chip-sep" aria-hidden className="text-muted-foreground">
                     :
                   </span>
-                  <span data-slot="filter-chip-value">{filter.value}</span>
+                  <span data-slot="filter-chip-value" className="font-medium text-foreground">
+                    {filter.value}
+                  </span>
                 </>
               ) : (
-                <span data-slot="filter-chip-value">{filter.label}</span>
+                <span data-slot="filter-chip-value" className="font-medium text-foreground">
+                  {filter.label}
+                </span>
               )}
             </span>
             <Button

@@ -11,11 +11,9 @@ import {
   runInstall,
 } from '../lib/deps.js'
 import { copySelectedFiles, copyTemplateFile, hashEntriesFor } from '../lib/copy.js'
-import { loadRenameHistory } from '../lib/rename-history.js'
 import { patchGlobalsCss } from '../lib/patch-globals-css.js'
 import { patchTsconfig } from '../lib/patch-tsconfig.js'
 import { logTypeScriptCompat } from '../lib/check-typescript-compat.js'
-import { addPackageJsonScript } from '../lib/patch-package-json.js'
 import { patchViteConfig, VITE_CONFIG_MANUAL_SNIPPET } from '../lib/patch-vite-config.js'
 import { patchMainEntry } from '../lib/patch-main-entry.js'
 import { confirm } from '../lib/confirm.js'
@@ -23,8 +21,6 @@ import { templateSharedDir, templateViteDir, templateRootDir } from '../lib/path
 import { fetchRequiredTemplateText, remoteUrl } from '../lib/remote.js'
 import { pickComponents, priorSelectionFor } from '../lib/prompt-components.js'
 import {
-  THEME_EDITOR_REQUIRED_COMPONENTS,
-  cssFilesFor,
   demoFilesFor,
   extraFilesFor,
   navGroupsFor,
@@ -47,19 +43,17 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   }
 
   if (!project.viteConfigPath) {
-    log.warn('Could not find vite.config.{ts,js,mts} — the Tailwind/theme-save plugin wiring will need to be manual.')
+    log.warn('Could not find vite.config.{ts,js,mts} — the Tailwind plugin wiring will need to be manual.')
   }
 
   log.title('Components')
-  const toolOnly = resolveUiClosure(THEME_EDITOR_REQUIRED_COMPONENTS)
-  const prior = priorSelectionFor(root, toolOnly)
+  const prior = priorSelectionFor(root)
   const picked = await pickComponents(prior, options)
   const userChosen = new Set([...picked, ...prior])
   const userClosure = resolveUiClosure(userChosen)
   const addedByDeps = new Set([...userClosure].filter((s) => !userChosen.has(s)))
-  const closure = new Set([...userClosure, ...toolOnly])
   if (!userClosure.size) {
-    log.warn('No components selected — installing just the theme system and design-system/theme-editor shell.')
+    log.warn('No components selected — installing just the theme system and design-system shell.')
   } else {
     log.info(`Installing: ${[...userClosure].sort().join(', ')}`)
   }
@@ -72,7 +66,7 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
     ...((project.packageJson.devDependencies as Record<string, string>) ?? {}),
   }
   const neededRuntime = { ...CORE_RUNTIME_DEPENDENCIES, ...VITE_FONT_DEPENDENCIES }
-  for (const dep of npmDepsFor(closure)) {
+  for (const dep of npmDepsFor(userClosure)) {
     if (ALL_RUNTIME_DEPENDENCIES[dep]) neededRuntime[dep] = ALL_RUNTIME_DEPENDENCIES[dep]
   }
   const runtimeToInstall = missingDeps(neededRuntime, existingDeps)
@@ -112,11 +106,8 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   }
 
   log.title('Files')
-  const uiFiles = [...closure].filter((s) => s !== 'patterns').map((s) => `components/ui/${s}.tsx`)
-  const cssFiles = [...cssFilesFor(closure)].map((f) => `styles/theme/components/${f}`)
-  const extraFiles = [...extraFilesFor(closure)]
-  // Only the user's own picks decide what shows up in the design-system showcase — the
-  // theme editor's tool-chrome deps (toolOnly) must never drag in an unrelated demo section.
+  const uiFiles = [...userClosure].filter((s) => s !== 'patterns').map((s) => `components/ui/${s}.tsx`)
+  const extraFiles = [...extraFilesFor(userClosure)]
   const navGroups = navGroupsFor(userClosure)
   const sectionFiles = demoFilesFor(navGroups).map((f) => `design-system/_sections/${f}`)
   const frameworkExtraFiles = frameworkExtraFilesFor(userClosure, 'vite')
@@ -129,7 +120,6 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
       categories: [
         { label: 'Shared fixed files', baseDir: sharedSrc, relPaths: ALWAYS_SHARED_FILES },
         { label: 'UI components', baseDir: sharedSrc, relPaths: uiFiles },
-        { label: 'Theme CSS', baseDir: sharedSrc, relPaths: cssFiles },
         { label: 'Extra files', baseDir: sharedSrc, relPaths: extraFiles },
         { label: 'Vite fixed files', baseDir: viteSrc, relPaths: ALWAYS_VITE_FILES },
         { label: 'Design-system demo files', baseDir: viteSrc, relPaths: sectionFiles },
@@ -141,18 +131,14 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   }
 
   const dryRun = !!options.dryRun
-  // A previously-renamed token (via /theme-editor) only touched files that existed at
-  // the time — reapply that history to anything newly copied now, so a component added
-  // after the rename doesn't arrive still using the original name.
-  const renameHistory = loadRenameHistory(path.join(root, 'src'))
-  const sharedFixed = await copySelectedFiles(sharedSrc, path.join(root, 'src'), ALWAYS_SHARED_FILES, dryRun, renameHistory)
-  const sharedUi = await copySelectedFiles(sharedSrc, path.join(root, 'src'), uiFiles, dryRun, renameHistory)
-  const sharedCss = await copySelectedFiles(sharedSrc, path.join(root, 'src'), cssFiles, dryRun, renameHistory)
-  const sharedExtra = await copySelectedFiles(sharedSrc, path.join(root, 'src'), extraFiles, dryRun, renameHistory)
+  const sharedFixed = await copySelectedFiles(sharedSrc, path.join(root, 'src'), ALWAYS_SHARED_FILES, dryRun)
+  const sharedUi = await copySelectedFiles(sharedSrc, path.join(root, 'src'), uiFiles, dryRun)
+  const sharedExtra = await copySelectedFiles(sharedSrc, path.join(root, 'src'), extraFiles, dryRun)
   const sharedTokens = await copySelectedFiles(
     sharedSrc,
     path.join(root, 'src'),
     [
+      'styles/theme/index.css',
       'styles/theme/tokens/color-scales.css',
       'styles/theme/tokens/colors.css',
       'styles/theme/tokens/shadows.css',
@@ -161,23 +147,15 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
       'styles/theme/tokens/typography.css',
       'styles/theme/tokens/typography-patterns.css',
     ],
-    dryRun,
-    renameHistory
+    dryRun
   )
-  const viteFixed = await copySelectedFiles(viteSrc, path.join(root, 'src'), ALWAYS_VITE_FILES, dryRun, renameHistory)
-  const viteSections = await copySelectedFiles(viteSrc, path.join(root, 'src'), sectionFiles, dryRun, renameHistory)
-  const viteFrameworkExtra = await copySelectedFiles(
-    viteSrc,
-    path.join(root, 'src'),
-    frameworkExtraFiles,
-    dryRun,
-    renameHistory
-  )
+  const viteFixed = await copySelectedFiles(viteSrc, path.join(root, 'src'), ALWAYS_VITE_FILES, dryRun)
+  const viteSections = await copySelectedFiles(viteSrc, path.join(root, 'src'), sectionFiles, dryRun)
+  const viteFrameworkExtra = await copySelectedFiles(viteSrc, path.join(root, 'src'), frameworkExtraFiles, dryRun)
 
   const copied = [
     sharedFixed,
     sharedUi,
-    sharedCss,
     sharedExtra,
     sharedTokens,
     viteFixed,
@@ -187,7 +165,6 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
   const skipped = [
     sharedFixed,
     sharedUi,
-    sharedCss,
     sharedExtra,
     sharedTokens,
     viteFixed,
@@ -201,7 +178,6 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
     recordFileHashes(root, [
       ...hashEntriesFor(sharedFixed),
       ...hashEntriesFor(sharedUi),
-      ...hashEntriesFor(sharedCss),
       ...hashEntriesFor(sharedExtra),
       ...hashEntriesFor(sharedTokens),
       ...hashEntriesFor(viteFixed),
@@ -221,37 +197,13 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
       : 'components.json (already exists — left untouched)'
   )
 
-  const manifestScriptResult = await copyTemplateFile(
-    remoteUrl(templateViteDir, 'scripts/generate-theme-manifest.mjs'),
-    path.join(root, 'scripts/generate-theme-manifest.mjs'),
-    dryRun
-  )
-  log[manifestScriptResult === 'copied' ? 'success' : 'skip'](
-    manifestScriptResult === 'copied'
-      ? `${dryRun ? 'Would copy' : ''} scripts/generate-theme-manifest.mjs`.trim()
-      : 'scripts/generate-theme-manifest.mjs (already exists — left untouched)'
-  )
-
   regenerateGeneratedFiles({
-    root,
     destRoot: path.join(root, 'src'),
     framework: 'vite',
     navGroups,
-    cssFiles: [...cssFilesFor(closure)],
-    closure,
+    closure: userClosure,
     dryRun,
   })
-
-  const pluginResult = await copyTemplateFile(
-    remoteUrl(templateViteDir, 'vite-plugin-design-kit.ts'),
-    path.join(root, 'vite-plugin-design-kit.ts'),
-    dryRun
-  )
-  log[pluginResult === 'copied' ? 'success' : 'skip'](
-    pluginResult === 'copied'
-      ? `${dryRun ? 'Would copy' : ''} vite-plugin-design-kit.ts`.trim()
-      : 'vite-plugin-design-kit.ts (already exists — left untouched)'
-  )
 
   if (dryRun) {
     log.title('Wiring it up')
@@ -292,7 +244,7 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
 
   if (project.viteConfigPath) {
     const result = patchViteConfig(project.viteConfigPath)
-    if (result.action === 'patched') log.success('Wired Tailwind + the theme-save plugin into vite.config.ts')
+    if (result.action === 'patched') log.success('Wired Tailwind into vite.config.ts')
     else if (result.action === 'already-present') log.skip('vite.config.ts already wired up')
     else {
       log.warn(`Couldn't auto-wire vite.config.ts (${result.reason})`)
@@ -315,19 +267,8 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
 
   logTypeScriptCompat(project.tsconfigPath, project.typeScriptVersion, existingDeps)
 
-  const scriptResult = addPackageJsonScript(
-    project.packageJsonPath,
-    'theme:manifest',
-    'node scripts/generate-theme-manifest.mjs'
-  )
-  log[scriptResult === 'added' ? 'success' : 'skip'](
-    scriptResult === 'added'
-      ? 'Added "theme:manifest" script to package.json'
-      : 'package.json already has a "theme:manifest" script'
-  )
-
-  const includeTooltip = closure.has('tooltip')
-  const includeToaster = closure.has('sonner')
+  const includeTooltip = userClosure.has('tooltip')
+  const includeToaster = userClosure.has('sonner')
   const hasPageRoutes =
     userClosure.has('auth') ||
     userClosure.has('chat') ||
@@ -351,13 +292,11 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
     'Vite has no built-in router, so wire these up yourself — e.g. with react-router-dom:\n' +
       `  import { BrowserRouter, Route, Routes } from 'react-router-dom'\n` +
       `  import DesignSystemPage from '@/design-system/DesignSystemPage'\n` +
-      `  import ThemeEditorPage from '@/theme-editor/ThemeEditorPage'\n` +
       (hasPageRoutes ? `  import { AppRoutes } from '@/routes'\n` : '') +
       '  …\n' +
       '  <BrowserRouter>\n' +
       '    <Routes>\n' +
       '      <Route path="/design-system" element={<DesignSystemPage />} />\n' +
-      '      <Route path="/theme-editor" element={<ThemeEditorPage />} />\n' +
       '    </Routes>\n' +
       (hasPageRoutes
         ? '    {/* auth/chat/account-settings/user-management routes are already generated — mount them alongside the above: */}\n' +
@@ -373,7 +312,7 @@ export async function runViteInit(project: ProjectInfo, pm: PackageManager, opti
 
   log.title('Done')
   log.success('Design system kit installed.')
-  log.info(`Run your dev server, then visit whatever route you mounted ${pc.bold('DesignSystemPage')}/${pc.bold('ThemeEditorPage')} at.`)
+  log.info(`Run your dev server, then visit whatever route you mounted ${pc.bold('DesignSystemPage')} at.`)
   if (userClosure.has('chat')) {
     log.info(`Chat inbox: ${pc.bold('/chat')}, ${pc.bold('/chat/:id')}, ${pc.bold('/chat/archived')} (private route — requires a session) — set VITE_GRAPHQL_URL / VITE_GRAPHQL_WS_URL for the real saas_kit Rails backend (falls back to the in-memory mock otherwise)`)
   }
