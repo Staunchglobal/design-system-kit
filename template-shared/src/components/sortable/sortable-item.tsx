@@ -30,7 +30,10 @@ function SortableItem({ id, children, disabled = false }: SortableItemProps) {
       style={style}
       data-slot="sortable-item"
       data-dragging={isDragging ? '' : undefined}
-      className={cn('flex items-center gap-2', isDragging && 'opacity-50')}
+      className={cn(
+        'bg-card flex items-center gap-2 rounded-lg',
+        isDragging && 'opacity-50 shadow-(--shadow-lg)'
+      )}
     >
       <button
         type="button"

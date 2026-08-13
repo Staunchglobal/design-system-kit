@@ -52,7 +52,7 @@ function SortableItemPlaceholder({
   disabled?: boolean
 }) {
   return (
-    <div data-slot="sortable-item" className="flex items-center gap-2">
+    <div data-slot="sortable-item" className="bg-card flex items-center gap-2 rounded-lg">
       <button
         type="button"
         aria-label="Drag to reorder"

@@ -20,7 +20,7 @@ const NPM_PACKAGES = [
   'tw-animate-css',
 ]
 
-const CSS_FILE_OVERRIDES = { sonner: 'sonner-toast.css', 'crud-table': 'crud-screen.css' }
+const CSS_FILE_OVERRIDES = { sonner: 'sonner-toast.css' }
 const NO_CSS = new Set([
   'direction',
   'auth',
@@ -84,13 +84,26 @@ const NO_CSS = new Set([
   'menubar',
   'command',
   'notification-center',
-  // 'dropdown-menu' is NOT here yet — its .css file is still on disk and still
-  // imported. dropdown-menu.tsx's own Tailwind classes are already fixed/correct,
-  // but crud-screen.css (batch 4, not yet migrated) reads dropdown-menu.css's
-  // custom properties (--dropdown-menu-item-gap etc.) via CSS variable
-  // inheritance, so deleting the file now would silently break crud-screen's
-  // still-css-driven styling. Add 'dropdown-menu' here and delete its .css only
-  // once crud-screen itself is migrated (or given its own literal values).
+  'dropdown-menu',
+  'table',
+  'card',
+  'stat-card',
+  'info-row',
+  'avatar',
+  'badge',
+  'separator',
+  'aspect-ratio',
+  'accordion',
+  'collapsible',
+  'tabs',
+  'pagination',
+  'breadcrumb',
+  'truncate',
+  'notification-row',
+  'field-row',
+  'count-badge',
+  'sortable-list',
+  'crud-table',
 ])
 const EXTRA_FILES = {
   sidebar: ['hooks/use-mobile.ts'],

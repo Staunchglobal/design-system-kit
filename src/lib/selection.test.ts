@@ -108,9 +108,9 @@ describe('demoFilesFor', () => {
 
 describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
   it('cssFilesFor only returns files for components that actually declare one', () => {
-    const closure = resolveUiClosure(['card', 'direction'])
+    const closure = resolveUiClosure(['navigation-menu', 'direction'])
     const files = cssFilesFor(closure)
-    expect(files.has('card.css')).toBe(true)
+    expect(files.has('navigation-menu.css')).toBe(true)
     expect(COMPONENTS.direction.cssFile).toBeNull()
   })
 
@@ -133,7 +133,8 @@ describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
     expect(COMPONENTS['crud-table'].uiDeps).toEqual(
       expect.arrayContaining(['dialog', 'alert-dialog', 'field', 'table', 'button', 'pagination'])
     )
-    expect(COMPONENTS['crud-table'].cssFile).toBe('crud-screen.css')
+    // crud-screen.css was migrated into Tailwind classes (Data Display batch) — no cssFile left.
+    expect(COMPONENTS['crud-table'].cssFile).toBeNull()
   })
 
   it('extraFilesFor surfaces auth companions', () => {

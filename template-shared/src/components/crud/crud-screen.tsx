@@ -168,14 +168,28 @@ export function CrudScreen<T>({
   const addInHeader = Boolean(title && openCreate)
 
   return (
-    <div className={cn('w-full', className)} data-slot="crud-page">
+    <div
+      className={cn(
+        'flex w-full max-w-[1200px] flex-col gap-4 mx-auto min-[1400px]:max-w-[1320px]',
+        className
+      )}
+      data-slot="crud-page"
+    >
       {withToaster ? <Toaster /> : null}
 
       {title ? (
-        <header data-slot="crud-header">
-          <div data-slot="crud-header-copy">
-            <div data-slot="crud-header-title-row">
-              <h2 data-slot="crud-header-title">{title}</h2>
+        <header
+          data-slot="crud-header"
+          className="flex w-full flex-wrap items-start justify-between gap-x-4 gap-y-3"
+        >
+          <div data-slot="crud-header-copy" className="flex min-w-0 flex-1 basis-48 flex-col gap-1">
+            <div data-slot="crud-header-title-row" className="flex flex-wrap items-center gap-2">
+              <h2
+                data-slot="crud-header-title"
+                className="text-foreground m-0 font-sans text-2xl font-semibold"
+              >
+                {title}
+              </h2>
               {/* Always render so the count badge doesn't shift the title on fetch. */}
               <Badge
                 variant="secondary"
@@ -189,11 +203,16 @@ export function CrudScreen<T>({
               </Badge>
             </div>
             {description ? (
-              <p data-slot="crud-header-description">{description}</p>
+              <p data-slot="crud-header-description" className="text-muted-600 m-0 text-sm">
+                {description}
+              </p>
             ) : null}
           </div>
           {addInHeader ? (
-            <div data-slot="crud-header-actions">
+            <div
+              data-slot="crud-header-actions"
+              className="flex flex-wrap items-center justify-end gap-2 max-md:w-full max-md:[&>*]:w-full"
+            >
               <Button type="button" size="sm" onClick={openCreate}>
                 <Plus />
                 {addLabel}
@@ -203,7 +222,10 @@ export function CrudScreen<T>({
         </header>
       ) : null}
 
-      <div data-slot="crud-screen">
+      <div
+        data-slot="crud-screen"
+        className="flex w-full flex-col gap-0 overflow-clip rounded-xl border border-border bg-neutral-0 dark:bg-neutral-950 dark:border-neutral-800"
+      >
         <CrudToolbar
           showSearch={showSearch}
           search={list.search}
@@ -253,6 +275,14 @@ export function CrudScreen<T>({
           }
           actions={actions.length ? actions : undefined}
           listMutators={listMutators}
+          // CrudToolbar always renders here (mirrors its own showTabs/showSearchRow
+          // check) — the header row gets a top border to avoid a double edge.
+          headerTopBorder={
+            Boolean(tabs?.length) ||
+            showSearch ||
+            Boolean(toolbar) ||
+            (!addInHeader && Boolean(openCreate))
+          }
         />
 
         <CrudPagination

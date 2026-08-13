@@ -10,7 +10,7 @@ function Accordion({ className, ...props }: React.ComponentProps<typeof Accordio
   return (
     <AccordionPrimitive.Root
       data-slot="accordion"
-      className={cn('flex w-full flex-col', className)}
+      className={cn('flex w-full flex-col rounded-md border border-border overflow-clip', className)}
       {...props}
     />
   )
@@ -23,7 +23,7 @@ function AccordionItem({
   return (
     <AccordionPrimitive.Item
       data-slot="accordion-item"
-      className={cn('not-last:border-b', className)}
+      className={cn('not-last:border-b not-last:border-border', className)}
       {...props}
     />
   )
@@ -39,7 +39,7 @@ function AccordionTrigger({
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
-          'group/accordion-trigger focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:after:border-ring **:data-[slot=accordion-trigger-icon]:text-muted-foreground relative flex flex-1 items-start justify-between rounded-lg border border-transparent py-2.5 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:ring-3 disabled:pointer-events-none disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:ml-auto **:data-[slot=accordion-trigger-icon]:size-4',
+          'group/accordion-trigger focus-visible:border-ring focus-visible:ring-ring **:data-[slot=accordion-trigger-icon]:text-muted-600 text-foreground relative flex flex-1 items-start justify-between gap-2 rounded-none border border-transparent px-3 py-2.5 text-left text-sm font-medium transition-all outline-none focus-visible:ring-3 disabled:pointer-events-none disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:ml-auto **:data-[slot=accordion-trigger-icon]:size-5',
           className
         )}
         {...props}
@@ -68,12 +68,12 @@ function AccordionContent({
   return (
     <AccordionPrimitive.Content
       data-slot="accordion-content"
-      className="data-open:animate-accordion-down data-closed:animate-accordion-up overflow-hidden text-sm"
+      className="data-open:animate-accordion-down data-closed:animate-accordion-up text-foreground overflow-hidden text-sm font-normal"
       {...props}
     >
       <div
         className={cn(
-          '[&_a]:hover:text-foreground h-(--radix-accordion-content-height) pt-0 pb-2.5 [&_a]:underline [&_a]:underline-offset-3 [&_p:not(:last-child)]:mb-4',
+          '[&_a]:hover:text-foreground h-(--radix-accordion-content-height) px-3 pt-1 pb-2.5 [&_a]:underline [&_a]:underline-offset-3 [&_p:not(:last-child)]:mb-2',
           className
         )}
       >

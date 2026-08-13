@@ -42,7 +42,16 @@ export type DataTableProps<T> = {
   /** Passed through to every action's onClick as its 2nd argument — lets a custom action update the visible list directly from its own mutation's response instead of refetching. */
   listMutators?: CrudListMutators<T>
   className?: string
+  /** Adds a top border to the header row — set when a toolbar renders directly above this table (e.g. CrudScreen) to avoid a double edge; leave false when the table is the first child of its container. */
+  headerTopBorder?: boolean
 }
+
+const CRUD_TABLE_HEAD_CLASS =
+  'text-muted-600 h-10 px-3 py-3.5 align-middle font-medium text-xs tracking-[0.075em] leading-none whitespace-nowrap uppercase bg-transparent'
+const CRUD_TABLE_CELL_CLASS = 'px-3 py-2 min-h-12 align-middle text-sm text-foreground'
+const CRUD_TABLE_ROW_CLASS = 'border-border hover:bg-neutral-50 dark:hover:bg-neutral-900'
+const CRUD_DROPDOWN_ITEM_CLASS =
+  'px-3 py-2 gap-3 font-medium data-[variant=destructive]:focus:bg-[color-mix(in_oklab,var(--destructive)_10%,transparent)] dark:data-[variant=destructive]:focus:bg-[color-mix(in_oklab,var(--destructive)_10%,transparent)]'
 
 function cellValue<T>(column: CrudColumn<T>, row: T): React.ReactNode {
   if (column.render) return column.render(row)
@@ -113,7 +122,7 @@ function ActionButtons<T>({
         data-ui="crud-row-actions-menu"
         // Override the shared menu's trigger-width sizing — icon triggers
         // would otherwise collapse the panel to ~32px.
-        className="w-auto min-w-44"
+        className="w-auto min-w-44 shadow-(--shadow-sm) ring-border"
       >
         {visibleActions.map((action) => {
           const destructive = action.variant === 'destructive' || Boolean(action.confirm)
@@ -122,6 +131,7 @@ function ActionButtons<T>({
               key={action.key}
               variant={destructive ? 'destructive' : 'default'}
               disabled={pendingKey === action.key}
+              className={CRUD_DROPDOWN_ITEM_CLASS}
               onSelect={(e) => {
                 if (action.confirm) {
                   onConfirmRequest(action, row)
@@ -191,7 +201,7 @@ function MobileCards<T>({
           <div
             key={getRowId(row)}
             className={cn(
-              'bg-card relative space-y-3 rounded-lg border p-4',
+              'bg-card relative mx-3 space-y-3 rounded-lg border p-4 first:mt-3 last:mb-3',
               hasActions && 'pt-12'
             )}
             data-slot="crud-mobile-card"
@@ -236,7 +246,12 @@ function MobileCards<T>({
 function MobileField<T>({ column, row }: { column: CrudColumn<T>; row: T }) {
   return (
     <div className="min-w-0 space-y-0.5">
-      <div data-ui="crud-mobile-label">{column.mobileLabel ?? column.header}</div>
+      <div
+        data-ui="crud-mobile-label"
+        className="text-muted-600 text-xs font-medium tracking-[0.075em] uppercase"
+      >
+        {column.mobileLabel ?? column.header}
+      </div>
       <div className={cn('text-sm break-words whitespace-normal', column.className)}>
         {cellValue(column, row)}
       </div>
@@ -255,6 +270,7 @@ function DesktopTable<T>({
   actions,
   onConfirmRequest,
   listMutators,
+  headerTopBorder,
 }: {
   columns: CrudColumn<T>[]
   data: T[]
@@ -266,6 +282,7 @@ function DesktopTable<T>({
   actions?: CrudAction<T>[]
   onConfirmRequest: (action: CrudAction<T>, row: T) => void
   listMutators: CrudListMutators<T>
+  headerTopBorder?: boolean
 }) {
   const columnDefs = React.useMemo<ColumnDef<T, unknown>[]>(() => {
     const defs: ColumnDef<T, unknown>[] = columns.map((column) => ({
@@ -319,13 +336,19 @@ function DesktopTable<T>({
   return (
     <div className="w-full overflow-x-auto">
       <Table>
-        <TableHeader>
+        <TableHeader className="bg-neutral-0 dark:bg-neutral-950">
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
+            <TableRow
+              key={headerGroup.id}
+              className={cn(CRUD_TABLE_ROW_CLASS, headerTopBorder && 'border-t')}
+            >
               {headerGroup.headers.map((header) => (
                 <TableHead
                   key={header.id}
-                  className={header.column.id === '__actions' ? 'w-12 text-end' : undefined}
+                  className={cn(
+                    CRUD_TABLE_HEAD_CLASS,
+                    header.column.id === '__actions' && 'w-12 text-end'
+                  )}
                 >
                   {header.isPlaceholder
                     ? null
@@ -338,15 +361,14 @@ function DesktopTable<T>({
         <TableBody>
           {table.getRowModel().rows.length ? (
             table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id}>
+              <TableRow key={row.id} className={CRUD_TABLE_ROW_CLASS}>
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
                     key={cell.id}
-                    className={
-                      cell.column.id === '__actions'
-                        ? 'w-12 text-end'
-                        : 'whitespace-normal'
-                    }
+                    className={cn(
+                      CRUD_TABLE_CELL_CLASS,
+                      cell.column.id === '__actions' ? 'w-12 text-end' : 'whitespace-normal'
+                    )}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
@@ -380,6 +402,7 @@ export function DataTable<T>({
   actions,
   listMutators,
   className,
+  headerTopBorder = false,
 }: DataTableProps<T>) {
   const isMobile = useIsMobile()
   const resolvedListMutators = listMutators ?? noopListMutators<T>()
@@ -392,7 +415,7 @@ export function DataTable<T>({
 
   return (
     <div
-      className={cn('relative w-full', className)}
+      className={cn('bg-neutral-0 relative w-full', className)}
       data-slot="crud-table"
       aria-busy={isLoading || undefined}
     >
@@ -419,6 +442,7 @@ export function DataTable<T>({
           actions={actions}
           onConfirmRequest={onConfirmRequest}
           listMutators={resolvedListMutators}
+          headerTopBorder={headerTopBorder}
         />
       )}
 

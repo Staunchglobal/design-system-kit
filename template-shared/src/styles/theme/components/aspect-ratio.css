@@ -1,6 +1,0 @@
-[data-slot='aspect-ratio'] {
-  --aspect-ratio-radius: 0;
-  --aspect-ratio-overflow: visible;
-  border-radius: var(--aspect-ratio-radius);
-  overflow: var(--aspect-ratio-overflow);
-}
