@@ -118,6 +118,14 @@ const NO_CSS = new Set([
   'skeleton',
   'sonner',
   'impersonation-banner',
+  'sidebar',
+  'resizable',
+  'scroll-area',
+  'bubble',
+  'message',
+  'message-scroller',
+  'attachment',
+  'marker',
 ])
 const EXTRA_FILES = {
   sidebar: ['hooks/use-mobile.ts'],

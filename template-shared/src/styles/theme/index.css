@@ -5,11 +5,3 @@
 @import './tokens/fonts.css';
 @import './tokens/typography.css';
 @import './tokens/typography-patterns.css';
-@import './components/sidebar.css';
-@import './components/resizable.css';
-@import './components/scroll-area.css';
-@import './components/bubble.css';
-@import './components/message.css';
-@import './components/message-scroller.css';
-@import './components/attachment.css';
-@import './components/marker.css';

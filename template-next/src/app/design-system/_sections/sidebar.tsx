@@ -16,9 +16,9 @@ export default function SidebarDemo() {
           description="Toggle the panel-left control to collapse the sidebar to icons."
           contentClassName="p-0"
         >
-          <div data-sidebar-demo className="h-[420px] w-full overflow-hidden rounded-lg border">
+          <div data-sidebar-demo className="relative h-[420px] w-full overflow-hidden rounded-lg border">
             <SidebarProvider className="h-full min-h-0">
-              <Sidebar collapsible="icon">
+              <Sidebar collapsible="icon" className="absolute! h-full! max-h-full!">
                 <SidebarHeader>
                   <div className="flex items-center gap-2 px-2 py-1.5 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
                     <div className="bg-primary text-primary-foreground flex size-6 shrink-0 items-center justify-center rounded-md">

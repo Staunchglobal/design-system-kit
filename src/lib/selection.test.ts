@@ -107,10 +107,16 @@ describe('demoFilesFor', () => {
 })
 
 describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
-  it('cssFilesFor only returns files for components that actually declare one', () => {
+  // Batch 7 (Layout & Chat) was the last group in the "inline component CSS" refactor —
+  // every component's styling now lives in its own .tsx, so cssFile is null across the
+  // board and cssFilesFor always returns an empty set. This test intentionally has no
+  // "still has a real cssFile" case left to assert on; cssFilesFor itself (and the
+  // cssFile field, and the CSS-copy step that consumes it) are dead code pending removal.
+  it('cssFilesFor returns an empty set now that every component has cssFile: null', () => {
     const closure = resolveUiClosure(['sidebar', 'direction'])
     const files = cssFilesFor(closure)
-    expect(files.has('sidebar.css')).toBe(true)
+    expect(files.size).toBe(0)
+    expect(COMPONENTS.sidebar.cssFile).toBeNull()
     expect(COMPONENTS.direction.cssFile).toBeNull()
   })
 

@@ -102,7 +102,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": "attachment.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "audit-trail-viewer": {
@@ -247,7 +247,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "class-variance-authority",
       "radix-ui"
     ],
-    "cssFile": "bubble.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "button-group": {
@@ -831,7 +831,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": "marker.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "menubar": {
@@ -849,7 +849,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "@shadcn/react"
     ],
-    "cssFile": "message-scroller.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "message": {
@@ -857,7 +857,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": "message.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "native-select": {
@@ -1020,7 +1020,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "react-resizable-panels"
     ],
-    "cssFile": "resizable.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "rich-text-editor": {
@@ -1044,7 +1044,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": "scroll-area.css",
+    "cssFile": null,
     "extraFiles": []
   },
   "segmented-control": {
@@ -1108,7 +1108,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": "sidebar.css",
+    "cssFile": null,
     "extraFiles": [
       "hooks/use-mobile.ts"
     ]
