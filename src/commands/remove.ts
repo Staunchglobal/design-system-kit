@@ -6,7 +6,6 @@ import { detectProject } from '../lib/detect.js'
 import { confirm } from '../lib/confirm.js'
 import { readSelectionConfig, writeSelectionConfig } from '../lib/selection-state.js'
 import {
-  cssFilesFor,
   demoFilesFor,
   extraFilesFor,
   navGroupsFor,
@@ -118,10 +117,6 @@ export async function remove(options: RemoveOptions) {
 
   const filesToDelete: string[] = [
     ...orphaned.filter((s) => s !== 'patterns').map((s) => rel(`components/ui/${s}.tsx`)),
-    ...orphaned
-      .map((s) => COMPONENTS[s]?.cssFile)
-      .filter((f): f is string => !!f)
-      .map((f) => rel(`styles/theme/components/${f}`)),
     ...orphanedExtraFiles.map((f) => rel(f)),
     ...orphanedDemoFiles.map((f) => rel(`${sectionsRel}/${f}`)),
     ...orphanedFrameworkExtra.map((f) => rel(f)),
@@ -154,7 +149,6 @@ export async function remove(options: RemoveOptions) {
     destRoot,
     framework: project.framework,
     navGroups: newNavGroups,
-    cssFiles: [...cssFilesFor(newClosure)],
     closure: newClosure,
   })
 

@@ -7,22 +7,6 @@ function toPascalCase(slug: string): string {
     .join('')
 }
 
-const TOKEN_IMPORTS = [
-  "@import './tokens/color-scales.css';",
-  "@import './tokens/colors.css';",
-  "@import './tokens/shadows.css';",
-  "@import './tokens/radius.css';",
-  "@import './tokens/fonts.css';",
-  "@import './tokens/typography.css';",
-  "@import './tokens/typography-patterns.css';",
-]
-
-export function generateThemeIndexCss(cssFiles: string[]): string {
-  const componentImports = cssFiles.map((f) => `@import './components/${f}';`)
-  return `${[...TOKEN_IMPORTS, ...componentImports].join('\n')}
-`
-}
-
 export function generateNavTs(groups: NavGroup[]): string {
   const body = groups
     .map(

@@ -205,10 +205,6 @@ function Sidebar({
           'relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear',
           'group-data-[collapsible=offcanvas]:w-0',
           'group-data-[side=right]:rotate-180',
-          // The css's own icon-collapsed width rule (2 attribute selectors) out-
-          // specifies this group-data variant's single utility class regardless
-          // of variant, so the floating/inset "+1rem" allowance below never
-          // actually rendered — width is always exactly --sidebar-width-icon.
           'group-data-[collapsible=icon]:w-(--sidebar-width-icon)'
         )}
       />

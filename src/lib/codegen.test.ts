@@ -1,21 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { navGroupsFor, resolveUiClosure } from './selection.js'
-import { generateDesignSystemPage, generateNavTs, generateThemeIndexCss } from './codegen.js'
-
-describe('generateThemeIndexCss', () => {
-  it('always imports the token files, in order, regardless of selection', () => {
-    const css = generateThemeIndexCss([])
-    expect(css).toContain("@import './tokens/colors.css';")
-    expect(css.indexOf("tokens/colors.css")).toBeLessThan(css.indexOf('tokens/radius.css'))
-  })
-
-  it('imports exactly the given component css files, nothing extra', () => {
-    const css = generateThemeIndexCss(['button.css', 'dialog.css'])
-    expect(css).toContain("@import './components/button.css';")
-    expect(css).toContain("@import './components/dialog.css';")
-    expect(css).not.toContain('combobox.css')
-  })
-})
+import { generateDesignSystemPage, generateNavTs } from './codegen.js'
 
 describe('generateNavTs', () => {
   it('escapes single quotes in titles/labels', () => {

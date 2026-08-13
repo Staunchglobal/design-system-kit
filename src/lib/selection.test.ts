@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest'
 import { COMPONENTS, GROUPS } from '../generated/registry.js'
 import {
   allComponentSlugs,
-  cssFilesFor,
   demoFilesFor,
   extraFilesFor,
   navGroupsFor,
@@ -106,20 +105,7 @@ describe('demoFilesFor', () => {
   })
 })
 
-describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
-  // Batch 7 (Layout & Chat) was the last group in the "inline component CSS" refactor —
-  // every component's styling now lives in its own .tsx, so cssFile is null across the
-  // board and cssFilesFor always returns an empty set. This test intentionally has no
-  // "still has a real cssFile" case left to assert on; cssFilesFor itself (and the
-  // cssFile field, and the CSS-copy step that consumes it) are dead code pending removal.
-  it('cssFilesFor returns an empty set now that every component has cssFile: null', () => {
-    const closure = resolveUiClosure(['sidebar', 'direction'])
-    const files = cssFilesFor(closure)
-    expect(files.size).toBe(0)
-    expect(COMPONENTS.sidebar.cssFile).toBeNull()
-    expect(COMPONENTS.direction.cssFile).toBeNull()
-  })
-
+describe('extraFilesFor / npmDepsFor', () => {
   it('extraFilesFor surfaces sidebar\'s use-mobile hook', () => {
     const files = extraFilesFor(resolveUiClosure(['sidebar']))
     expect(files.has('hooks/use-mobile.ts')).toBe(true)
@@ -139,8 +125,6 @@ describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
     expect(COMPONENTS['crud-table'].uiDeps).toEqual(
       expect.arrayContaining(['dialog', 'alert-dialog', 'field', 'table', 'button', 'pagination'])
     )
-    // crud-screen.css was migrated into Tailwind classes (Data Display batch) — no cssFile left.
-    expect(COMPONENTS['crud-table'].cssFile).toBeNull()
   })
 
   it('extraFilesFor surfaces auth companions', () => {
@@ -163,12 +147,10 @@ describe('cssFilesFor / extraFilesFor / npmDepsFor', () => {
     expect(COMPONENTS.auth.uiDeps).toEqual(
       expect.arrayContaining(['field', 'input', 'button', 'checkbox', 'alert', 'sonner', 'spinner'])
     )
-    expect(COMPONENTS.auth.cssFile).toBeNull()
     expect(COMPONENTS.auth.npmDeps).toEqual(expect.arrayContaining(['sonner', 'lucide-react']))
   })
 
   it('chat uiDeps include message/bubble/sonner from EXTRA_FILES scan', () => {
-    expect(COMPONENTS.chat.cssFile).toBeNull()
     expect(COMPONENTS.chat.uiDeps).toEqual(
       expect.arrayContaining([
         'sonner',

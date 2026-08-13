@@ -13,9 +13,7 @@ const buttonGroupVariants = cva(
       orientation: {
         // Joined-border look: each non-edge child loses the radius on its shared side and
         // overlaps its neighbor by 1px (border-l-0 avoids a doubled-up 2px seam); the two
-        // edge children keep a full pill on their outer corner. `!` (not plain :not(:first-child)
-        // vs. size-variant specificity) mirrors the `!important` this replaces — see button-group.css's
-        // former [data-orientation] rules, now folded in here instead of a separate stylesheet.
+        // edge children keep a full pill on their outer corner.
         horizontal:
           "[&>*:not(:first-child)]:rounded-l-none! [&>*:not(:first-child)]:border-l-0 [&>*:not(:first-child)]:-ml-px [&>*:not(:last-child)]:rounded-r-none! [&>*:first-child]:rounded-l-full! [&>*:last-child]:rounded-r-full! [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-lg!",
         vertical:

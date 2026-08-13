@@ -415,12 +415,6 @@ export function DataTable<T>({
 
   return (
     <div
-      // The source CSS never gave this its own dark background (only the header row
-      // got one) while its text color is the theme-dependent --foreground token —
-      // in dark mode that's near-white text on this fixed-white surface, i.e.
-      // unreadable. Every other crud-screen section (toolbar, pagination, the
-      // header row itself) does adapt to dark, so this reads as an oversight, not
-      // a deliberate fixed-light surface — fixed here rather than reproduced.
       className={cn('bg-neutral-0 dark:bg-neutral-950 relative w-full', className)}
       data-slot="crud-table"
       aria-busy={isLoading || undefined}

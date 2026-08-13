@@ -95,9 +95,8 @@ ${colorConfig
   .map(([key, itemConfig]) => {
     const color = itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ?? itemConfig.color
     // `key`/`color` ultimately come from a `ChartConfig` object a caller
-    // provides — same untrusted-value shape the theme editor's own CSS
-    // writer guards against, so this needs the same guard before landing
-    // in a `dangerouslySetInnerHTML` <style> block.
+    // provides, so this needs a guard before landing in a
+    // `dangerouslySetInnerHTML` <style> block.
     if (!color || !isSafeCssValue(color) || !isSafeCssValue(key)) return null
     return `  --color-${key}: ${color};`
   })
@@ -258,12 +257,9 @@ function ChartLegendContent({
   className,
   hideIcon = false,
   payload,
-  // Recharts still needs this to position the legend wrapper, but chart.css's
-  // `.recharts-legend-wrapper > div` rule (a class + attribute selector, so it
-  // out-specifies a single Tailwind utility) forces symmetric padding-block
-  // regardless of alignment — the old top/bottom-only padding never actually
-  // took visual effect, so it's reproduced here as the always-on `py-3` it
-  // really renders as, not the asymmetric split the props implied.
+  // Recharts still needs this prop to position the legend wrapper, even
+  // though this component doesn't use the value itself (padding is always
+  // symmetric regardless of alignment).
   verticalAlign: _verticalAlign = 'bottom',
   nameKey,
 }: React.ComponentProps<'div'> & {

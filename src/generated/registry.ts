@@ -2,7 +2,6 @@
 export type ComponentEntry = {
   uiDeps: string[]
   npmDeps: string[]
-  cssFile: string | null
   extraFiles: string[]
   isPattern?: boolean
 }
@@ -20,7 +19,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "account-settings": {
@@ -37,7 +35,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "lucide-react",
       "react-router-dom"
     ],
-    "cssFile": null,
     "extraFiles": [
       "components/account-settings/account-settings-operations.ts",
       "components/account-settings/account-settings-mock-client.ts",
@@ -56,7 +53,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "item"
     ],
     "npmDeps": [],
-    "cssFile": null,
     "extraFiles": [
       "components/crud/use-debounced-value.ts",
       "components/address-autocomplete/google-places-client.ts",
@@ -71,7 +67,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "alert": {
@@ -82,7 +77,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "class-variance-authority",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "aspect-ratio": {
@@ -90,7 +84,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "attachment": {
@@ -102,7 +95,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "audit-trail-viewer": {
@@ -128,7 +120,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "sonner",
       "react-router-dom"
     ],
-    "cssFile": null,
     "extraFiles": [
       "components/audit-trail-viewer/types.ts",
       "components/audit-trail-viewer/audit-trail-operations.ts",
@@ -174,7 +165,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "lucide-react",
       "react-router-dom"
     ],
-    "cssFile": null,
     "extraFiles": [
       "components/auth/types.ts",
       "components/auth/auth-operations.ts",
@@ -211,7 +201,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "badge": {
@@ -221,7 +210,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "brand-color-picker": {
@@ -229,7 +217,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "breadcrumb": {
@@ -238,7 +225,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "bubble": {
@@ -247,7 +233,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "class-variance-authority",
       "radix-ui"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "button-group": {
@@ -261,7 +246,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "button": {
@@ -273,7 +257,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "calendar": {
@@ -283,7 +266,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "react-day-picker"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "card": {
@@ -293,7 +275,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "carousel": {
@@ -303,7 +284,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "embla-carousel-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "chart": {
@@ -311,7 +291,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "recharts"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "chat": {
@@ -343,7 +322,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "@types/rails__actioncable",
       "react-router-dom"
     ],
-    "cssFile": null,
     "extraFiles": [
       "components/chat/types.ts",
       "components/chat/chat-constants.ts",
@@ -386,7 +364,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "collapsible": {
@@ -396,7 +373,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "combobox": {
@@ -408,7 +384,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "@base-ui/react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "command": {
@@ -421,7 +396,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "cmdk",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "context-menu": {
@@ -430,7 +404,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "copy-input": {
@@ -440,7 +413,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "count-badge": {
@@ -450,7 +422,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "crud-table": {
@@ -475,7 +446,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "sonner",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": [
       "hooks/use-mobile.ts",
       "components/crud/types.ts",
@@ -501,7 +471,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "date-fns",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "delivery-logs": {
@@ -526,7 +495,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "sonner",
       "react-router-dom"
     ],
-    "cssFile": null,
     "extraFiles": [
       "components/delivery-logs/types.ts",
       "components/delivery-logs/delivery-logs-operations.ts",
@@ -565,7 +533,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "direction": {
@@ -576,7 +543,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "drawer": {
@@ -586,7 +552,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "vaul"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "dropdown-menu": {
@@ -597,7 +562,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "dropzone": {
@@ -611,7 +575,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "lucide-react",
       "react-image-crop"
     ],
-    "cssFile": null,
     "extraFiles": [
       "components/upload/use-file-drop.ts",
       "components/upload/file-preview-card.tsx",
@@ -627,7 +590,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "class-variance-authority",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "error-state": {
@@ -638,7 +600,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "feature-flags-admin": {
@@ -654,7 +615,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "lucide-react",
       "react-router-dom"
     ],
-    "cssFile": null,
     "extraFiles": [
       "components/feature-flags-admin/types.ts",
       "components/feature-flags-admin/feature-flags-admin-operations.ts",
@@ -682,7 +642,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "field": {
@@ -695,7 +654,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "class-variance-authority"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "filter-chips": {
@@ -706,7 +664,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "filter-popover": {
@@ -720,7 +677,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "google-sign-in-button": {
@@ -730,7 +686,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "@react-oauth/google"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "hover-card": {
@@ -742,7 +697,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "impersonation-banner": {
@@ -752,7 +706,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "info-row": {
@@ -761,7 +714,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "button"
     ],
     "npmDeps": [],
-    "cssFile": null,
     "extraFiles": []
   },
   "input-group": {
@@ -774,13 +726,11 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "class-variance-authority",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "input-otp": {
     "uiDeps": [],
     "npmDeps": [],
-    "cssFile": null,
     "extraFiles": []
   },
   "input": {
@@ -790,7 +740,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "item": {
@@ -804,13 +753,11 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "kbd": {
     "uiDeps": [],
     "npmDeps": [],
-    "cssFile": null,
     "extraFiles": []
   },
   "label": {
@@ -821,7 +768,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "marker": {
@@ -831,7 +777,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "menubar": {
@@ -839,7 +784,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "message-scroller": {
@@ -849,7 +793,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "@shadcn/react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "message": {
@@ -857,13 +800,11 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "native-select": {
     "uiDeps": [],
     "npmDeps": [],
-    "cssFile": null,
     "extraFiles": []
   },
   "navigation-menu": {
@@ -872,7 +813,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "class-variance-authority",
       "radix-ui"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "notification-center": {
@@ -891,7 +831,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "@rails/actioncable",
       "@types/rails__actioncable"
     ],
-    "cssFile": null,
     "extraFiles": [
       "components/notification-center/notification-list.tsx",
       "components/notification-center/notification-center.tsx",
@@ -916,7 +855,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "date-fns",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "pagination": {
@@ -924,7 +862,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "button"
     ],
     "npmDeps": [],
-    "cssFile": null,
     "extraFiles": []
   },
   "password-strength-meter": {
@@ -934,7 +871,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": [
       "components/auth/password-policy.ts",
       "components/auth/password-input.tsx"
@@ -949,7 +885,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": [
       "components/payment-methods/card-brand-icon.tsx",
       "components/payment-methods/payment-method-card.tsx",
@@ -963,7 +898,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "@react-pdf/renderer"
     ],
-    "cssFile": null,
     "extraFiles": [
       "components/pdf/pdf-document-shell.tsx",
       "components/pdf/pdf-tag.tsx",
@@ -976,7 +910,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "input"
     ],
     "npmDeps": [],
-    "cssFile": null,
     "extraFiles": []
   },
   "popover": {
@@ -988,7 +921,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "progress": {
@@ -996,7 +928,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "radio-group": {
@@ -1006,13 +937,11 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "rating": {
     "uiDeps": [],
     "npmDeps": [],
-    "cssFile": null,
     "extraFiles": []
   },
   "resizable": {
@@ -1020,7 +949,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "react-resizable-panels"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "rich-text-editor": {
@@ -1036,7 +964,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "@tiptap/starter-kit",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "scroll-area": {
@@ -1044,7 +971,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "segmented-control": {
@@ -1053,7 +979,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "toggle-group"
     ],
     "npmDeps": [],
-    "cssFile": null,
     "extraFiles": [
       "hooks/use-mobile.ts"
     ]
@@ -1063,7 +988,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radio-group"
     ],
     "npmDeps": [],
-    "cssFile": null,
     "extraFiles": []
   },
   "select": {
@@ -1071,7 +995,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "separator": {
@@ -1079,7 +1002,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "sheet": {
@@ -1091,7 +1013,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "sidebar": {
@@ -1108,7 +1029,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": [
       "hooks/use-mobile.ts"
     ]
@@ -1116,7 +1036,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
   "skeleton": {
     "uiDeps": [],
     "npmDeps": [],
-    "cssFile": null,
     "extraFiles": []
   },
   "slider": {
@@ -1124,7 +1043,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "sonner": {
@@ -1134,7 +1052,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "sonner"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "sortable-list": {
@@ -1145,7 +1062,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "lucide-react",
       "@dnd-kit/core"
     ],
-    "cssFile": null,
     "extraFiles": [
       "components/sortable/sortable-item.tsx",
       "components/sortable/sortable-list.tsx"
@@ -1154,7 +1070,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
   "spinner": {
     "uiDeps": [],
     "npmDeps": [],
-    "cssFile": null,
     "extraFiles": []
   },
   "stat-card": {
@@ -1165,7 +1080,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "stepper-input": {
@@ -1175,7 +1089,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "stepper": {
@@ -1183,7 +1096,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "stripe-payment-method": {
@@ -1199,7 +1111,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "@stripe/react-stripe-js",
       "@stripe/stripe-js"
     ],
-    "cssFile": null,
     "extraFiles": [
       "components/stripe/stripe-elements-provider.tsx",
       "components/stripe/payment-method-form.tsx",
@@ -1213,7 +1124,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "radix-ui"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "table": {
@@ -1221,7 +1131,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "badge"
     ],
     "npmDeps": [],
-    "cssFile": null,
     "extraFiles": []
   },
   "tabs": {
@@ -1230,7 +1139,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "class-variance-authority",
       "radix-ui"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "tag-input": {
@@ -1240,13 +1148,11 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "textarea": {
     "uiDeps": [],
     "npmDeps": [],
-    "cssFile": null,
     "extraFiles": []
   },
   "time-range-picker": {
@@ -1258,7 +1164,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": [
       "components/time-range-picker/generate-time-options.ts",
       "components/time-range-picker/validate-ranges.ts",
@@ -1274,7 +1179,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "toggle": {
@@ -1284,7 +1188,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "tooltip": {
@@ -1295,7 +1198,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "radix-ui",
       "lucide-react"
     ],
-    "cssFile": null,
     "extraFiles": []
   },
   "truncate": {
@@ -1304,7 +1206,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "tooltip"
     ],
     "npmDeps": [],
-    "cssFile": null,
     "extraFiles": []
   },
   "user-management": {
@@ -1332,7 +1233,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "lucide-react",
       "react-router-dom"
     ],
-    "cssFile": null,
     "extraFiles": [
       "components/user-management/types.ts",
       "components/user-management/user-management-operations.ts",
@@ -1376,7 +1276,6 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "npmDeps": [
       "@tanstack/react-table"
     ],
-    "cssFile": null,
     "extraFiles": [],
     "isPattern": true
   }
