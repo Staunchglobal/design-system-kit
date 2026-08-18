@@ -5,6 +5,8 @@ type StoredUser = AuthUser & {
   password: string
   otpCode: string | null
   otpPurpose: 'signup' | 'login' | 'password_reset' | null
+  firstName?: string
+  lastName?: string
 }
 
 const users = new Map<string, StoredUser>()
@@ -54,8 +56,19 @@ function requireMatch(password: string, confirmation: string) {
   }
 }
 
+// Mirrors UserType#full_name's own real backend logic exactly (compute
+// from first+last, else fall back to email) — kept in sync rather than
+// introduced as a second, drifting place this same fallback lives.
 function publicUser(user: StoredUser): AuthUser {
-  return { id: user.id, email: user.email, createdAt: user.createdAt }
+  const fullName = [user.firstName, user.lastName].filter(Boolean).join(' ') || user.email
+  return {
+    id: user.id,
+    email: user.email,
+    createdAt: user.createdAt,
+    firstName: user.firstName ?? null,
+    lastName: user.lastName ?? null,
+    fullName,
+  }
 }
 
 // No real inbox in mock mode — surface the code a real email would have contained.
@@ -203,6 +216,25 @@ export async function authMockFetch<T>(
       requireMatch(String(v.password ?? ''), String(v.passwordConfirmation ?? ''))
       user.password = String(v.password ?? '')
       return { updatePassword: { success: true } } as T
+    }
+
+    case 'UpdateUser': {
+      const authHeader =
+        typeof headers === 'object' && headers && 'Authorization' in (headers as Record<string, string>)
+          ? (headers as Record<string, string>).Authorization
+          : Array.isArray(headers)
+            ? undefined
+            : headers instanceof Headers
+              ? headers.get('Authorization')
+              : undefined
+      const bearer = authHeader?.replace(/^Bearer\s+/i, '') ?? ''
+      const email = sessions.get(bearer)
+      if (!email) throw new Error('Unauthorized')
+      const user = users.get(email)
+      if (!user) throw new Error('User not found')
+      if (v.firstName) user.firstName = String(v.firstName)
+      if (v.lastName) user.lastName = String(v.lastName)
+      return { updateUser: { user: publicUser(user) } } as T
     }
 
     case 'CurrentUser': {

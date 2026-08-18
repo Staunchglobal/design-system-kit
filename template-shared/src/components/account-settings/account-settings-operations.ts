@@ -60,6 +60,9 @@ export const VERIFY_NEW_EMAIL_CHANGE = `
         id
         email
         createdAt
+        firstName
+        lastName
+        fullName
       }
     }
   }

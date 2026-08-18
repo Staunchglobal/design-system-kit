@@ -4,10 +4,17 @@ import * as React from 'react'
 import { toast } from 'sonner'
 
 import { useAuthSession } from '@/components/auth/use-auth-store'
+import { getAuthSession, setAuthSession } from '@/components/auth/auth-session'
 import { createAuthFetch } from '@/components/auth/auth-fetch'
-import { UPDATE_PASSWORD, type UpdatePasswordResult } from '@/components/auth/auth-operations'
+import {
+  UPDATE_PASSWORD,
+  UPDATE_USER,
+  type UpdatePasswordResult,
+  type UpdateUserResult,
+} from '@/components/auth/auth-operations'
 import { ChangePasswordForm } from '@/components/auth/change-password-form'
-import type { ChangePasswordFormValues } from '@/components/auth/types'
+import { UpdateUserForm } from '@/components/auth/update-user-form'
+import type { ChangePasswordFormValues, UpdateUserFormValues } from '@/components/auth/types'
 import { Field, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -25,12 +32,37 @@ export function AccountSettingsScreen({ endpoint, onUnauthenticated }: AccountSe
   const authFetch = React.useMemo(() => createAuthFetch({ endpoint }), [endpoint])
   const [pwLoading, setPwLoading] = React.useState(false)
   const [pwError, setPwError] = React.useState<string | null>(null)
+  const [nameLoading, setNameLoading] = React.useState(false)
+  const [nameError, setNameError] = React.useState<string | null>(null)
 
   React.useEffect(() => {
     if (!session) onUnauthenticated?.()
   }, [session, onUnauthenticated])
 
   if (!session) return null
+
+  async function handleUpdateUser(values: UpdateUserFormValues) {
+    setNameLoading(true)
+    setNameError(null)
+    try {
+      const data = await authFetch<UpdateUserResult>(UPDATE_USER, {
+        input: {
+          ...(values.firstName ? { firstName: values.firstName } : {}),
+          ...(values.lastName ? { lastName: values.lastName } : {}),
+        },
+      })
+      // Same session-merge mechanism the email-change flow already relies
+      // on — refreshes what every useAuthSession() subscriber displays,
+      // no reload needed.
+      const current = getAuthSession()
+      if (current) setAuthSession({ ...current, user: data.updateUser.user })
+      toast.success('Name updated')
+    } catch (err) {
+      setNameError(err instanceof Error ? err.message : 'Update failed')
+    } finally {
+      setNameLoading(false)
+    }
+  }
 
   async function handleChangePassword(values: ChangePasswordFormValues) {
     setPwLoading(true)
@@ -67,12 +99,23 @@ export function AccountSettingsScreen({ endpoint, onUnauthenticated }: AccountSe
             </h2>
           </div>
           <p data-slot="crud-header-description" className="text-muted-600 m-0 text-sm">
-            Manage your email and password.
+            Manage your name, email, and password.
           </p>
         </div>
       </header>
 
       <div className="flex max-w-md flex-col gap-8">
+        <section className="flex flex-col gap-3">
+          <h3 className="text-sm font-medium">Name</h3>
+          <UpdateUserForm
+            onSubmit={handleUpdateUser}
+            defaultFirstName={session.user.firstName ?? ''}
+            defaultLastName={session.user.lastName ?? ''}
+            loading={nameLoading}
+            error={nameError}
+          />
+        </section>
+
         <section className="flex flex-col gap-3">
           <Field>
             <FieldLabel htmlFor="account-email">Email</FieldLabel>

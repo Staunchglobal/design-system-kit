@@ -192,6 +192,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "components/auth/verify-otp-form.tsx",
       "components/auth/set-password-form.tsx",
       "components/auth/change-password-form.tsx",
+      "components/auth/update-user-form.tsx",
       "components/auth/app-shell.tsx",
       "components/auth/index.ts"
     ]
