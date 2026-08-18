@@ -3,11 +3,11 @@
 import { useRouter } from 'next/navigation'
 
 import { useCurrentUser } from '@/components/auth/use-current-user'
-import { EmailChangeSettings } from '@/components/account-settings/email-change-settings'
+import { AccountSettingsScreen } from '@/components/account-settings/account-settings-screen'
 
 const GRAPHQL_URL = process.env.NEXT_PUBLIC_GRAPHQL_URL
 
-export default function EmailChangePage() {
+export default function AccountSettingsPage() {
   const router = useRouter()
   const { can, loading } = useCurrentUser(GRAPHQL_URL)
 
@@ -21,9 +21,8 @@ export default function EmailChangePage() {
   }
 
   return (
-    <EmailChangeSettings
-      endpoint={GRAPHQL_URL}
-      onUnauthenticated={() => router.replace('/login')}
-    />
+    <div className="flex w-full flex-col p-4 sm:p-6">
+      <AccountSettingsScreen endpoint={GRAPHQL_URL} onUnauthenticated={() => router.replace('/login')} />
+    </div>
   )
 }

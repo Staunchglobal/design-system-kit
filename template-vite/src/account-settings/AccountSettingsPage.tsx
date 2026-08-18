@@ -3,11 +3,11 @@
 import { useNavigate } from 'react-router-dom'
 
 import { useCurrentUser } from '@/components/auth/use-current-user'
-import { EmailChangeSettings } from '@/components/account-settings/email-change-settings'
+import { AccountSettingsScreen } from '@/components/account-settings/account-settings-screen'
 
 const GRAPHQL_URL = import.meta.env.VITE_GRAPHQL_URL as string | undefined
 
-export default function EmailChangePage() {
+export default function AccountSettingsPage() {
   const navigate = useNavigate()
   const { can, loading } = useCurrentUser(GRAPHQL_URL)
 
@@ -20,5 +20,9 @@ export default function EmailChangePage() {
     )
   }
 
-  return <EmailChangeSettings endpoint={GRAPHQL_URL} onUnauthenticated={() => navigate('/login')} />
+  return (
+    <div className="flex w-full flex-col p-4 sm:p-6">
+      <AccountSettingsScreen endpoint={GRAPHQL_URL} onUnauthenticated={() => navigate('/login')} />
+    </div>
+  )
 }
