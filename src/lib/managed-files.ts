@@ -62,8 +62,8 @@ export const FRAMEWORK_EXTRA_FILES: Record<
     ],
   },
   'account-settings': {
-    next: ['app/(app)/layout.tsx', 'app/(app)/email-change/page.tsx'],
-    vite: ['account-settings/EmailChangePage.tsx', 'auth/PrivateLayout.tsx'],
+    next: ['app/(app)/layout.tsx', 'app/(app)/account-settings/page.tsx'],
+    vite: ['account-settings/AccountSettingsPage.tsx', 'auth/PrivateLayout.tsx'],
   },
   chat: {
     next: [
@@ -197,11 +197,11 @@ export const VITE_ROUTES: Record<string, RouteEntry[]> = {
   ],
   'account-settings': [
     {
-      path: '/email-change',
-      file: 'account-settings/EmailChangePage',
-      component: 'EmailChangePage',
+      path: '/account-settings',
+      file: 'account-settings/AccountSettingsPage',
+      component: 'AccountSettingsPage',
       private: true,
-      navLabel: 'Email settings',
+      navLabel: 'Account settings',
       requiredAbility: 'account_settings:access',
     },
   ],

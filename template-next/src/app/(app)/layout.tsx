@@ -28,12 +28,12 @@ const NAV_ICONS: Record<string, React.ReactNode> = {
   '/chat': <MessageSquare />,
   '/dashboard': <LayoutDashboard />,
   '/audit-trail-viewer': <History />,
-  '/email-change': <Settings />,
+  '/account-settings': <Settings />,
 }
 
 /**
  * Wraps every private route under `(app)` (chat, account home, change
- * password, email change, ...) — redirects to /login with no session,
+ * password, account settings, ...) — redirects to /login with no session,
  * otherwise renders the sidebar app shell. `PRIVATE_NAV_ITEMS` is generated
  * (see `_nav.ts`) from whichever private-page slugs are actually installed.
  */

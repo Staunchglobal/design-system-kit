@@ -5,6 +5,7 @@ export { ForgotPasswordForm } from '@/components/auth/forgot-password-form'
 export { VerifyOtpForm } from '@/components/auth/verify-otp-form'
 export { SetPasswordForm } from '@/components/auth/set-password-form'
 export { ChangePasswordForm } from '@/components/auth/change-password-form'
+export { UpdateUserForm } from '@/components/auth/update-user-form'
 export { createAuthFetch, AUTH_MOCK_ENDPOINT } from '@/components/auth/auth-fetch'
 export {
   getAuthSession,

@@ -58,6 +58,9 @@ export const VERIFY_OTP = `
         id
         email
         createdAt
+        firstName
+        lastName
+        fullName
       }
     }
   }
@@ -130,6 +133,9 @@ export const RESET_PASSWORD = `
         id
         email
         createdAt
+        firstName
+        lastName
+        fullName
       }
     }
   }
@@ -174,6 +180,30 @@ export type UpdatePasswordResult = {
   }
 }
 
+// Both arguments are optional on the backend (partial update — only the
+// fields actually provided get written), but this form always submits both
+// together, so both are always sent here.
+export const UPDATE_USER = `
+  mutation UpdateUser($input: UpdateUserInput!) {
+    updateUser(input: $input) {
+      user {
+        id
+        email
+        createdAt
+        firstName
+        lastName
+        fullName
+      }
+    }
+  }
+`
+
+export type UpdateUserResult = {
+  updateUser: {
+    user: AuthUser
+  }
+}
+
 // Unlike SignUp/Login, this issues a token immediately — Google's own ID
 // token already proves the account holder controls the email address, so
 // there's no OTP step-up afterward. `idToken` is the credential
@@ -187,6 +217,9 @@ export const SIGN_IN_WITH_GOOGLE = `
         id
         email
         createdAt
+        firstName
+        lastName
+        fullName
       }
     }
   }

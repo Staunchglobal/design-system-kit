@@ -25,13 +25,14 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     "uiDeps": [
       "sonner",
       "auth",
-      "alert",
       "field",
       "input",
       "button",
+      "dialog",
       "sidebar"
     ],
     "npmDeps": [
+      "sonner",
       "lucide-react",
       "react-router-dom"
     ],
@@ -39,10 +40,10 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "components/account-settings/account-settings-operations.ts",
       "components/account-settings/account-settings-mock-client.ts",
       "components/account-settings/account-settings-fetch.ts",
-      "components/account-settings/email-change-storage.ts",
-      "components/account-settings/use-email-change.ts",
-      "components/account-settings/request-email-change-form.tsx",
-      "components/account-settings/email-change-settings.tsx",
+      "components/account-settings/use-email-change-dialog.ts",
+      "components/account-settings/new-email-form.tsx",
+      "components/account-settings/email-change-dialog.tsx",
+      "components/account-settings/account-settings-screen.tsx",
       "components/account-settings/index.ts",
       "components/auth/app-shell.tsx"
     ]
@@ -191,6 +192,7 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "components/auth/verify-otp-form.tsx",
       "components/auth/set-password-form.tsx",
       "components/auth/change-password-form.tsx",
+      "components/auth/update-user-form.tsx",
       "components/auth/app-shell.tsx",
       "components/auth/index.ts"
     ]

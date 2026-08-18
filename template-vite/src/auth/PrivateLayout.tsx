@@ -28,7 +28,7 @@ const NAV_ICONS: Record<string, React.ReactNode> = {
   '/chat': <MessageSquare />,
   '/dashboard': <LayoutDashboard />,
   '/audit-trail-viewer': <History />,
-  '/email-change': <Settings />,
+  '/account-settings': <Settings />,
 }
 
 /**

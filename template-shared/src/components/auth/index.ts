@@ -8,6 +8,7 @@ export { ForgotPasswordForm } from '@/components/auth/forgot-password-form'
 export { VerifyOtpForm } from '@/components/auth/verify-otp-form'
 export { SetPasswordForm } from '@/components/auth/set-password-form'
 export { ChangePasswordForm } from '@/components/auth/change-password-form'
+export { UpdateUserForm } from '@/components/auth/update-user-form'
 export { PasswordInput } from '@/components/auth/password-input'
 export { createAuthFetch, AUTH_MOCK_ENDPOINT, graphqlFetch } from '@/components/auth/auth-fetch'
 export { authMockFetch } from '@/components/auth/auth-mock-client'
@@ -21,6 +22,7 @@ export {
   RESET_PASSWORD,
   ACCEPT_INVITATION,
   UPDATE_PASSWORD,
+  UPDATE_USER,
 } from '@/components/auth/auth-operations'
 export { validatePassword, isPasswordStrong, getPasswordRequirementErrors, validateEmail, validateLoginPassword, PASSWORD_POLICY_MESSAGE } from '@/components/auth/password-policy'
 export { useAuthSession } from '@/components/auth/use-auth-store'

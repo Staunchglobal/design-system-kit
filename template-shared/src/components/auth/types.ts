@@ -2,6 +2,9 @@ export type AuthUser = {
   id: string
   email: string
   createdAt?: string
+  firstName?: string | null
+  lastName?: string | null
+  fullName?: string
 }
 
 export type AuthSession = {
@@ -39,6 +42,11 @@ export type ChangePasswordFormValues = {
   currentPassword: string
   password: string
   passwordConfirmation: string
+}
+
+export type UpdateUserFormValues = {
+  firstName: string
+  lastName: string
 }
 
 export type AuthFetch = <T>(

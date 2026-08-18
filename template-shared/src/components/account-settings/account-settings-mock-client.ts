@@ -6,6 +6,10 @@ export const ACCOUNT_SETTINGS_MOCK_ENDPOINT = 'mock://account-settings'
 // only ever has one fixed demo code since there's no mail to actually send.
 const DEMO_CODE = '123456'
 
+// ResendEmailChangeOtp takes no arguments — like the real backend, the mock
+// has to infer which OTP is outstanding purely from state, not from an
+// argument the caller passes.
+let pendingStage: 'current' | 'new' | null = null
 let pendingNewEmail: string | null = null
 
 function opName(query: string): string {
@@ -28,33 +32,50 @@ export async function accountSettingsMockFetch<T>(
 
   switch (name) {
     case 'RequestEmailChange': {
-      const currentPassword = String(v.currentPassword ?? '')
-      const newEmail = String(v.newEmail ?? '').toLowerCase().trim()
-      if (!currentPassword) throw new Error('Current password is required')
-      if (!newEmail) throw new Error('New email is required')
-      pendingNewEmail = newEmail
-      return { requestEmailChange: { success: true } } as T
+      pendingStage = 'current'
+      pendingNewEmail = null
+      return { requestEmailChange: { success: true, otp: DEMO_CODE } } as T
     }
 
     case 'VerifyCurrentEmailChange': {
       const otp = String(v.otp ?? '')
+      if (pendingStage !== 'current') throw new Error('No pending email change')
       if (otp !== DEMO_CODE) throw new Error('Invalid code')
+      // Waiting on the new-email step now — no OTP outstanding yet.
+      pendingStage = null
       return { verifyCurrentEmailChange: { success: true } } as T
+    }
+
+    case 'RequestNewEmailChange': {
+      const newEmail = String(v.newEmail ?? '')
+        .toLowerCase()
+        .trim()
+      if (!newEmail) throw new Error('New email is required')
+      pendingNewEmail = newEmail
+      pendingStage = 'new'
+      return { requestNewEmailChange: { success: true, otp: DEMO_CODE } } as T
     }
 
     case 'VerifyNewEmailChange': {
       const otp = String(v.otp ?? '')
+      if (pendingStage !== 'new' || !pendingNewEmail) throw new Error('No pending email change')
       if (otp !== DEMO_CODE) throw new Error('Invalid code')
-      if (!pendingNewEmail) throw new Error('No pending email change')
       const email = pendingNewEmail
       pendingNewEmail = null
+      pendingStage = null
       const session = getAuthSession()
       const user = session ? { ...session.user, email } : { id: 'user_demo', email }
       if (session) setAuthSession({ ...session, user })
       return { verifyNewEmailChange: { user } } as T
     }
 
+    case 'ResendEmailChangeOtp': {
+      if (!pendingStage) throw new Error('No verification code is pending.')
+      return { resendEmailChangeOtp: { message: 'Code resent', otpSent: true, otp: DEMO_CODE } } as T
+    }
+
     case 'CancelEmailChange': {
+      pendingStage = null
       pendingNewEmail = null
       return { cancelEmailChange: { success: true } } as T
     }

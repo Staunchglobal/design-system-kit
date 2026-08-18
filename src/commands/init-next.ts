@@ -366,7 +366,7 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
       `Private pages (${[
         userClosure.has('auth') ? '/dashboard, /change-password' : null,
         userClosure.has('chat') ? '/chat' : null,
-        userClosure.has('account-settings') ? '/email-change' : null,
+        userClosure.has('account-settings') ? '/account-settings' : null,
         userClosure.has('user-management') ? '/user-management' : null,
         userClosure.has('feature-flags-admin') ? '/feature-flags-admin' : null,
         userClosure.has('delivery-logs') ? '/delivery-logs' : null,
