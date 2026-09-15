@@ -212,6 +212,15 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     ],
     "extraFiles": []
   },
+  "banner": {
+    "uiDeps": [
+      "button"
+    ],
+    "npmDeps": [
+      "class-variance-authority"
+    ],
+    "extraFiles": []
+  },
   "brand-color-picker": {
     "uiDeps": [],
     "npmDeps": [
@@ -363,6 +372,26 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     ],
     "npmDeps": [
       "radix-ui"
+    ],
+    "extraFiles": []
+  },
+  "chip": {
+    "uiDeps": [],
+    "npmDeps": [
+      "class-variance-authority",
+      "radix-ui",
+      "lucide-react"
+    ],
+    "extraFiles": []
+  },
+  "choice-card": {
+    "uiDeps": [
+      "checkbox",
+      "radio-group",
+      "switch"
+    ],
+    "npmDeps": [
+      "class-variance-authority"
     ],
     "extraFiles": []
   },
@@ -1150,6 +1179,13 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
     ],
     "extraFiles": []
   },
+  "tag": {
+    "uiDeps": [],
+    "npmDeps": [
+      "class-variance-authority"
+    ],
+    "extraFiles": []
+  },
   "textarea": {
     "uiDeps": [],
     "npmDeps": [],
@@ -1205,6 +1241,11 @@ export const COMPONENTS: Record<string, ComponentEntry> = {
       "button",
       "tooltip"
     ],
+    "npmDeps": [],
+    "extraFiles": []
+  },
+  "typography": {
+    "uiDeps": [],
     "npmDeps": [],
     "extraFiles": []
   },

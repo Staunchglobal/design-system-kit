@@ -4,6 +4,7 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
 /** Digits that appear as literals in the pattern (e.g. `1` in `+1 (###) …`). */
 function literalDigitsInPattern(pattern: string): string {
@@ -125,12 +126,8 @@ function PhoneInput({
   const invalid = validate && touched && hasNationalDigits && !isPhoneComplete(value, pattern)
 
   return (
-    <div data-slot="phone-input" className={cn('flex flex-col gap-1.5', className)}>
-      {label ? (
-        <label htmlFor={resolvedId} className="text-sm font-medium">
-          {label}
-        </label>
-      ) : null}
+    <div data-slot="phone-input" className={cn('flex w-full flex-col gap-2', className)}>
+      {label ? <Label htmlFor={resolvedId}>{label}</Label> : null}
       <Input
         id={resolvedId}
         type="tel"

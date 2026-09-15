@@ -17,11 +17,22 @@ function Separator({
       decorative={decorative}
       orientation={orientation}
       className={cn(
-        'bg-border shrink-0 data-horizontal:h-px data-horizontal:w-full data-vertical:w-px data-vertical:self-stretch',
+        'flex shrink-0',
+        orientation === 'horizontal'
+          ? 'w-full items-center py-2'
+          : 'h-full justify-center self-stretch px-3',
         className
       )}
       {...props}
-    />
+    >
+      <span
+        data-slot="separator-line"
+        className={cn(
+          'bg-border shrink-0',
+          orientation === 'horizontal' ? 'h-px w-full' : 'h-full w-px'
+        )}
+      />
+    </SeparatorPrimitive.Root>
   )
 }
 

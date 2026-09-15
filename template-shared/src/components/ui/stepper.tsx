@@ -58,10 +58,11 @@ function StepperItem({
           data-slot="stepper-indicator"
           className={cn(
             'relative z-[1] flex size-8 shrink-0 items-center justify-center rounded-full border text-xs font-medium transition-colors',
-            state === 'upcoming' && 'border-border bg-background text-muted-foreground',
-            state === 'active' && 'border-primary bg-primary text-primary-foreground',
-            state === 'complete' && 'border-primary bg-primary text-primary-foreground',
-            state === 'error' && 'border-destructive bg-destructive text-destructive-foreground'
+            state === 'upcoming' &&
+              'border-border bg-card text-muted-foreground hover:bg-neutral-100',
+            state === 'active' && 'border-primary-500 bg-primary-500 text-primary-foreground',
+            state === 'complete' && 'border-transparent bg-success-50 text-success-700',
+            state === 'error' && 'border-transparent bg-destructive-50 text-destructive-700'
           )}
         >
           {state === 'complete' ? (
@@ -82,7 +83,7 @@ function StepperItem({
                 ? 'mt-2 h-8 w-px'
                 :
                   'absolute top-1/2 left-[calc(50%+1.25rem)] right-[calc(-50%+1.25rem)] h-px -translate-y-1/2',
-              connectorActive && 'bg-primary'
+              connectorActive && 'bg-primary-500'
             )}
           />
         ) : null}
@@ -92,14 +93,7 @@ function StepperItem({
         data-slot="stepper-copy"
         className={cn(!vertical && 'w-full text-center', vertical && 'min-w-0 pt-0.5')}
       >
-        <p
-          data-slot="stepper-label"
-          className={cn(
-            'text-sm font-medium',
-            state === 'upcoming' && 'text-muted-foreground',
-            state === 'error' && 'text-destructive'
-          )}
-        >
+        <p data-slot="stepper-label" className="text-foreground text-sm font-medium">
           {label}
         </p>
         {description ? (

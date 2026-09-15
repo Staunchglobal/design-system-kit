@@ -26,18 +26,19 @@ function RadioGroupItem({
     <RadioGroupPrimitive.Item
       data-slot="radio-group-item"
       className={cn(
-        'group/radio-group-item peer relative flex aspect-square size-6 shrink-0 cursor-pointer rounded-full border border-input bg-neutral-0 outline-none after:absolute after:-inset-x-3 after:-inset-y-2 hover:border-primary data-checked:border-primary data-checked:hover:border-primary-600 dark:data-checked:hover:border-primary-300 focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary/35 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/35 aria-invalid:aria-checked:border-primary disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-input dark:bg-neutral-900',
+        'peer relative aspect-square size-5 shrink-0 cursor-pointer rounded-full border border-neutral-200 bg-background outline-none transition-[background-color,border-color,box-shadow] after:absolute after:-inset-x-3 after:-inset-y-2',
+        'hover:border-neutral-400 hover:ring-4 hover:ring-primary-50',
+        'active:border-neutral-400 active:bg-neutral-0 active:ring-4 active:ring-primary-100',
+        'aria-checked:border-4 aria-checked:border-primary aria-checked:bg-neutral-0',
+        'aria-checked:hover:border-primary-500 aria-checked:hover:ring-primary-50',
+        'aria-checked:active:border-primary-700 aria-checked:active:ring-primary-100',
+        'focus-visible:ring-4 focus-visible:ring-primary-100',
+        'aria-invalid:border-destructive-700 aria-invalid:hover:border-destructive-700 aria-invalid:hover:ring-0 aria-invalid:aria-checked:border-primary',
+        'disabled:pointer-events-none disabled:cursor-not-allowed disabled:border-transparent disabled:bg-neutral-200 disabled:hover:ring-0 disabled:aria-checked:border-4 disabled:aria-checked:border-primary disabled:aria-checked:bg-neutral-0',
         className
       )}
       {...props}
-    >
-      <RadioGroupPrimitive.Indicator
-        data-slot="radio-group-indicator"
-        className="relative flex size-full items-center justify-center"
-      >
-        <span className="absolute top-1/2 left-1/2 size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary group-hover/radio-group-item:bg-primary-600 dark:group-hover/radio-group-item:bg-primary-300" />
-      </RadioGroupPrimitive.Indicator>
-    </RadioGroupPrimitive.Item>
+    />
   )
 }
 

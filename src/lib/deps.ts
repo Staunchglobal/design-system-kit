@@ -44,7 +44,7 @@ export const VITE_DEV_DEPENDENCIES: Record<string, string> = {
 }
 
 export const VITE_FONT_DEPENDENCIES: Record<string, string> = {
-  '@fontsource/manrope': '^5.2.5',
+  '@fontsource/instrument-sans': '^5.2.5',
   '@fontsource/geist-mono': '^5.2.8',
 }
 

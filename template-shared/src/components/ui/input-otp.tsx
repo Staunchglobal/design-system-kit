@@ -197,7 +197,7 @@ function InputOTP({
         role="group"
         aria-label={ariaLabel}
         className={cn(
-          'cn-input-otp flex items-center has-disabled:opacity-50',
+          'cn-input-otp flex items-center',
           containerClassName,
           className
         )}
@@ -213,10 +213,7 @@ function InputOTPGroup({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot="input-otp-group"
-      className={cn(
-        'flex items-center overflow-clip rounded-2xl',
-        className
-      )}
+      className={cn('flex items-center gap-3', className)}
       {...props}
     />
   )
@@ -275,7 +272,15 @@ function InputOTPSlot({
         onBlur?.(e)
       }}
       className={cn(
-        'relative flex size-12 items-center justify-center border-y border-r border-input bg-neutral-0 p-0 text-center text-base text-foreground appearance-none transition-all outline-none first:border-l first:rounded-s-2xl last:rounded-e-2xl data-[active=true]:z-10 data-[active=true]:border-primary aria-invalid:border-destructive data-[active=true]:aria-invalid:border-destructive disabled:cursor-not-allowed dark:bg-neutral-900',
+        'relative flex size-12 shrink-0 appearance-none items-center justify-center rounded-lg border border-border bg-neutral-0 p-0 text-center text-base font-normal text-foreground shadow-none outline-none transition-[border-color,box-shadow]',
+        'hover:border-neutral-400 hover:shadow-[0_0_0_4px_var(--primary-50)]',
+        'data-[active=true]:z-10 data-[active=true]:border-primary data-[active=true]:shadow-[0_0_0_4px_var(--primary-100)]',
+        'data-[active=true]:hover:border-primary data-[active=true]:hover:shadow-[0_0_0_4px_var(--primary-100)]',
+        'aria-invalid:border-destructive-700 aria-invalid:hover:border-destructive-700 aria-invalid:hover:shadow-none',
+        'data-[active=true]:aria-invalid:border-destructive-700 data-[active=true]:aria-invalid:shadow-[0_0_0_4px_var(--destructive-100)]',
+        'data-[active=true]:aria-invalid:hover:border-destructive-700 data-[active=true]:aria-invalid:hover:shadow-[0_0_0_4px_var(--destructive-100)]',
+        'disabled:pointer-events-none disabled:cursor-not-allowed disabled:border-transparent disabled:bg-neutral-200 disabled:text-neutral-500 disabled:shadow-none',
+        'dark:bg-neutral-900',
         className
       )}
     />
