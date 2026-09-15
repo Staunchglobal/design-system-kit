@@ -39,15 +39,20 @@ function DatePicker({
           data-slot="date-picker"
           data-empty={!value}
           className={cn(
-            'data-[empty=true]:text-muted-foreground w-56 justify-start text-left font-normal',
+            'h-12 w-56 justify-between gap-2 rounded-lg border-border bg-card px-3 text-sm font-normal text-foreground hover:bg-card hover:border-neutral-300 active:bg-card active:border-neutral-300 aria-expanded:bg-card aria-expanded:border-primary-500 disabled:border-border disabled:bg-neutral-200 disabled:text-neutral-500 disabled:opacity-100 data-[empty=true]:text-muted-foreground',
             className
           )}
         >
-          <CalendarIcon />
-          {value ? format(value, formatStr) : <span>{placeholder}</span>}
+          <span className="truncate">
+            {value ? format(value, formatStr) : placeholder}
+          </span>
+          <CalendarIcon className="size-4 shrink-0" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+      <PopoverContent
+        className="w-auto overflow-hidden rounded-lg border border-border bg-card p-0 shadow-[0px_12px_24px_0px_rgba(0,0,0,0.12)] ring-0"
+        align="start"
+      >
         <Calendar
           mode="single"
           selected={value}

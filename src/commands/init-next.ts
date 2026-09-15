@@ -283,11 +283,11 @@ export async function runNextInit(project: ProjectInfo, pm: PackageManager, opti
 
   const fontResult = patchLayoutFonts(layoutPath)
   if (fontResult.action === 'patched') {
-    log.success(`Switched default font to Manrope in ${rel('app/layout.tsx')}`)
+    log.success(`Switched default font to Instrument Sans in ${rel('app/layout.tsx')}`)
   } else if (fontResult.action === 'already-present') {
-    log.skip(`${rel('app/layout.tsx')} already uses Manrope`)
+    log.skip(`${rel('app/layout.tsx')} already uses Instrument Sans`)
   } else if (fontResult.action === 'needs-manual') {
-    log.warn(`Couldn't auto-wire Manrope in ${rel('app/layout.tsx')} (${fontResult.reason})`)
+    log.warn(`Couldn't auto-wire Instrument Sans in ${rel('app/layout.tsx')} (${fontResult.reason})`)
   }
 
   const layoutResult = patchLayout(layoutPath, { includeTooltip, includeToaster })

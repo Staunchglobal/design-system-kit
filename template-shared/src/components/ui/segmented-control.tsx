@@ -78,17 +78,17 @@ function SegmentedControl({
         if (next) onValueChange(next)
       }}
       aria-label={ariaLabel}
-      className={cn('rounded-full! border-0 bg-neutral-100 p-1 shadow-none dark:bg-neutral-800', className)}
+      className={cn('rounded-lg! border-0 bg-background p-1 shadow-none', className)}
     >
       {options.map((opt) => (
         <ToggleGroupItem
           key={opt.value}
           value={opt.value}
           className={cn(
-            'h-[1.875rem] min-w-0 gap-2 rounded-full! border-0! bg-transparent px-6 py-1 text-sm font-medium text-muted-600 shadow-none transition-[background-color,color,box-shadow] duration-150',
-            'hover:bg-transparent hover:text-muted-600 dark:text-muted-400 dark:hover:text-muted-400',
-            'data-[state=on]:bg-neutral-0 data-[state=on]:text-foreground data-[state=on]:font-semibold data-[state=on]:shadow-(--shadow-xs) dark:data-[state=on]:bg-neutral-900',
-            'data-[state=on]:hover:bg-neutral-0 data-[state=on]:hover:text-foreground dark:data-[state=on]:hover:bg-neutral-900'
+            'h-[1.875rem] min-w-0 gap-1 rounded-md! border-0! bg-transparent px-2 py-1 text-sm font-medium text-muted-foreground shadow-none transition-[background-color,color,box-shadow] duration-150',
+            'hover:bg-neutral-100 hover:text-muted-foreground',
+            'data-[state=on]:bg-card data-[state=on]:text-foreground data-[state=on]:font-semibold data-[state=on]:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.08),0_0_0_1px_var(--border)]',
+            'data-[state=on]:hover:bg-card data-[state=on]:hover:text-foreground'
           )}
           // Radix focuses the item on pointer down, which scrolls it into
           // view and jerks the page up/down inside overflow containers.

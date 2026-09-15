@@ -6,12 +6,12 @@ export type LayoutFontPatchResult =
   | { action: 'not-needed' }
   | { action: 'needs-manual'; reason: string }
 
-const MANROPE_IMPORT = `import { Manrope, Geist_Mono } from "next/font/google";`
+const INSTRUMENT_SANS_IMPORT = `import { Instrument_Sans, Geist_Mono } from "next/font/google";`
 
-const MANROPE_DECL = `const manrope = Manrope({
-  variable: "--font-manrope",
+const INSTRUMENT_SANS_DECL = `const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
 });`
 
 const GEIST_MONO_DECL = `const geistMono = Geist_Mono({
@@ -26,7 +26,7 @@ export function patchLayoutFonts(filePath: string): LayoutFontPatchResult {
 
   let src = fs.readFileSync(filePath, 'utf8')
 
-  if (src.includes('--font-manrope')) {
+  if (src.includes('--font-instrument-sans')) {
     return { action: 'already-present' }
   }
 
@@ -37,12 +37,12 @@ export function patchLayoutFonts(filePath: string): LayoutFontPatchResult {
   ) {
     src = src.replace(
       /import\s*\{[^}]*Geist[^}]*\}\s*from\s*["']next\/font\/google["']\s*;?/,
-      MANROPE_IMPORT
+      INSTRUMENT_SANS_IMPORT
     )
 
     src = src.replace(
       /const\s+geistSans\s*=\s*Geist\(\{[\s\S]*?\}\)\s*;?/,
-      MANROPE_DECL
+      INSTRUMENT_SANS_DECL
     )
 
     if (!src.includes('Geist_Mono') && src.includes('geistMono')) {
@@ -52,7 +52,7 @@ export function patchLayoutFonts(filePath: string): LayoutFontPatchResult {
       )
     }
 
-    src = src.replace(/\bgeistSans\.variable\b/g, 'manrope.variable')
+    src = src.replace(/\bgeistSans\.variable\b/g, 'instrumentSans.variable')
 
     fs.writeFileSync(filePath, src)
     return { action: 'patched' }
@@ -65,6 +65,6 @@ export function patchLayoutFonts(filePath: string): LayoutFontPatchResult {
   return {
     action: 'needs-manual',
     reason:
-      'layout.tsx does not use the stock Geist Sans setup — add Manrope via next/font/google with variable `--font-manrope` by hand.',
+      'layout.tsx does not use the stock Geist Sans setup — add Instrument Sans via next/font/google with variable `--font-instrument-sans` by hand.',
   }
 }

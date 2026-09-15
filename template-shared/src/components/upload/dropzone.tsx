@@ -24,6 +24,38 @@ type DropzoneProps = {
   disabled?: boolean
 }
 
+// Visual constants ported from saferHealth-web's file-uploader
+// (app/components/file-uploader/constants.ts), folded in flat here per this
+// kit's one-file-per-component convention. Only Tailwind classes/visual
+// output are ported — structure/behavior (react-dropzone-free hook +
+// accepted/rejected file model) already matches and is left as-is.
+const dropzoneIdleClass =
+  'relative flex min-h-[188px] w-full flex-col items-center justify-center gap-4 rounded-xl p-6 text-center outline-none transition-colors select-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-100'
+
+const dropzoneIdleStateClass = {
+  default: 'border border-dashed border-border bg-card',
+  dragging: 'border-2 border-solid border-primary bg-accent',
+} as const
+
+const dropzoneDisabledClass = 'pointer-events-none cursor-not-allowed'
+
+const dropzoneIconClass =
+  'flex size-12 shrink-0 items-center justify-center overflow-clip rounded-full [&_svg]:size-6'
+
+const dropzoneIconStateClass = {
+  default: 'bg-background text-muted-foreground',
+  dragging: 'bg-card text-primary shadow-[0px_4px_12px_0px_rgba(0,0,0,0.08)]',
+} as const
+
+const dropzoneTextGroupClass = 'flex w-full flex-col items-center gap-1'
+
+const dropzoneBrowseLinkClass =
+  'text-accent-700 underline decoration-dotted decoration-[14%] underline-offset-2 hover:text-accent-500 active:text-accent-800'
+
+const dropzoneFileItemClass = 'gap-3 rounded-xl border-border bg-card px-4 py-4'
+
+const dropzoneFileItemErrorClass = 'border-destructive-200 bg-destructive-50'
+
 function Dropzone({
   accept,
   maxSizeBytes,
@@ -124,26 +156,31 @@ function Dropzone({
         onClick={handleZoneClick}
         onKeyDown={handleZoneKeyDown}
         className={cn(
-          'border-dashed py-8 transition-colors focus-visible:border-ring focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50',
+          dropzoneIdleClass,
+          isDragging ? dropzoneIdleStateClass.dragging : dropzoneIdleStateClass.default,
           !disabled && 'cursor-pointer',
-          isDragging && 'border-primary bg-muted',
-          disabled && 'pointer-events-none opacity-50'
+          disabled && dropzoneDisabledClass
         )}
       >
-        <div className="flex flex-col items-center gap-2 px-4 text-center">
-          <div className="bg-muted text-muted-foreground flex size-10 items-center justify-center rounded-lg">
-            <Upload className="size-5" />
-          </div>
-          <p className="text-sm font-medium">
+        <span
+          className={cn(
+            dropzoneIconClass,
+            isDragging ? dropzoneIconStateClass.dragging : dropzoneIconStateClass.default
+          )}
+        >
+          <Upload aria-hidden />
+        </span>
+        <span className={dropzoneTextGroupClass}>
+          <p className="text-foreground text-sm font-medium">
             {isDragging ? 'Drop files here' : 'Drag & drop files here'}
           </p>
-          <p className="text-muted-foreground text-xs">
-            or{' '}
+          <span className="flex items-center gap-1">
+            <p className="text-muted-foreground text-sm">or</p>
             <Button
               type="button"
               variant="link"
               size="sm"
-              className="h-auto p-0"
+              className={cn('h-auto p-0 text-sm font-medium', dropzoneBrowseLinkClass)}
               disabled={disabled}
               onClick={(e) => {
                 e.stopPropagation()
@@ -151,19 +188,16 @@ function Dropzone({
               }}
             >
               browse
-            </Button>{' '}
-            to choose files
+            </Button>
+          </span>
+        </span>
+        {accept || maxSizeBytes ? (
+          <p className="text-muted-foreground text-xs">
+            {accept ? `Accepts ${accept}` : null}
+            {accept && maxSizeBytes ? ' · ' : null}
+            {maxSizeBytes ? `Max ${(maxSizeBytes / (1024 * 1024)).toFixed(0)} MB` : null}
           </p>
-          {accept || maxSizeBytes ? (
-            <p className="text-muted-foreground text-xs">
-              {accept ? `Accepts ${accept}` : null}
-              {accept && maxSizeBytes ? ' · ' : null}
-              {maxSizeBytes
-                ? `Max ${(maxSizeBytes / (1024 * 1024)).toFixed(0)} MB`
-                : null}
-            </p>
-          ) : null}
-        </div>
+        ) : null}
         <input
           ref={inputRef}
           type="file"
@@ -182,6 +216,7 @@ function Dropzone({
             <li key={`accepted-${file.name}-${file.size}-${index}`}>
               <FilePreviewCard
                 file={file}
+                className={dropzoneFileItemClass}
                 onRemove={() => removeAt('accepted', index)}
                 onReplace={
                   multiple
@@ -198,6 +233,7 @@ function Dropzone({
               <FilePreviewCard
                 file={entry.file}
                 error={entry.error}
+                className={cn(dropzoneFileItemClass, entry.error && dropzoneFileItemErrorClass)}
                 onRemove={() => removeAt('rejected', index)}
               />
             </li>
